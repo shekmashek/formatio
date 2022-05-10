@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Catégorie</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 <section class="formation mb-5">
@@ -21,7 +24,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="d-flex flex-row flex-wrap ps-5">
+                <div class="d-flex flex-row flex-wrap" style="padding-left: 4rem">
                     @foreach ($categorie as $ctg )
                     <div class="content_domaines my-4">
                         <a href="{{route('select_par_formation',$ctg->id)}}">
@@ -60,9 +63,8 @@
         <div class="row">
             <div class= "col-12 d-flex flex-wrap justify-content-cente">
                 @foreach ($module as $mod)
-                <a href="{{route('select_par_module',$mod->module_id)}}">
                 <div class="card_formation">
-                    <div class="imageLogo text-center mb-2">
+                    <div class="imageLogo text-center mb-2 mt-3">
                          <img src="{{asset('images/CFP/'.$mod->logo)}}" alt="logo" class="img-fluid"title="organisme de formation">
                     </div>
                     <div class="titre_module">
@@ -71,18 +73,20 @@
                     <div class="details_module">
                         <div class="row">
                             <div class="col-6">
-                                <p class="text-capitalize"><i class='bx bx-detail me-2'></i>{{$mod->nom_formation}}</p>
+                                <p class="text-capitalize text-dark"><i class='bx bx-detail me-2'></i>{{$mod->nom_formation}}</p>
                                 <p class="text-capitalize"><i class='bx bx-alarm me-2'></i>{{$mod->duree_jour}}
                                     jours/{{$mod->duree}}heures</p>
                                 <p class="text-capitalize"><i
                                         class='bx bxs-notification me-2'></i>{{$mod->modalite_formation}}</p>
                             </div>
                             <div class="col-6 text-center">
-                                <p class="text-capitalize"><span class="prix">{{$mod->prix}}&nbsp;{{$devise->devise}}&nbsp;<span class="text-muted">HT</span></span> </p>
+                                <p class="text-capitalize"><strong>{{$mod->prix}}&nbsp;{{$devise->devise}}&nbsp;<span class="text-muted">HT</span></strong> </p>
                             </div>
                         </div>
                     </div>
-                   </a>
+                    <div class="text-center">
+                        <a href="{{route('select_par_module',$mod->module_id)}}" role="button" class="btn_enregistrer">Voir la formation</a>
+                    </div>
 
                 </div>
                 @endforeach

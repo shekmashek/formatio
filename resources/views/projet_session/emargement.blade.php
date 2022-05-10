@@ -37,7 +37,7 @@
                 </div>
                 <hr class="m-2 p-0">
                 <div class="collapse" id="stagiaire_presence_{{ $dt->detail_id }}">
-                    @foreach ($presence_detail as $pre)    
+                    @foreach ($presence_detail as $pre)
                         @if ($pre->detail_id == $dt->detail_id && $pre->text_status == "non")
                             @php
                                 $status='non';
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                         @endif
-                    @endforeach  
+                    @endforeach
                     @if ($status == 'non')
                         <div align="center">
                             <input type="submit" name="insert_form"  class="btn inserer_emargement w-25" value="Enregistrer">
@@ -219,14 +219,14 @@
                     html += '<div class="col-md-1 text-center">'+userData['matricule']+'</div>';
                     html += '<div class="col-md-2 text-center">'+userData['nom_stagiaire']+'</div>';
                     html += '<div class="col-md-2 text-center">'+userData['prenom_stagiaire']+'</div>';
-                    html += '<div class="col-md-2 text-center" id="resultat_presence_'+userData['detail_id']+userData['stagiaire_id']+'>';                
+                    html += '<div class="col-md-2 text-center" id="resultat_presence_'+userData['detail_id']+userData['stagiaire_id']+'>';
                     if(userData['status'] == 1){
                         html += '<label class="present_label">';
                         html += '<input class="m-2 present" type="radio" id="present" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="1" checked required>';
                         html += '<span class="present_label">Présent</span>';
                         html += '</label>';
                         html += '<label class="absent_label">';
-                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" required>';          
+                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" required>';
                         html += 'Absent';
                         html += '</label>';
                     }
@@ -236,32 +236,32 @@
                         html += '<span class="present_label">Présent</span>';
                         html += '</label>';
                         html += '<label class="absent_label">';
-                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" checked required>';          
+                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" checked required>';
                         html += 'Absent';
                         html += '</label>';
-                    }    
+                    }
                     html += '</div>';
                     html += '<div class="col-md-2">';
-                    html += '<div class="row" class="pointage" id="pointage">';         
+                    html += '<div class="row" class="pointage" id="pointage">';
                     html += '<div class="col-md-6 text-center p-0 m-0">';
-                    html += '<input type="time" class="m-0 pointage_entree" value="'+userData['h_debut']+'" name="edit_h_entree" style="width: 67.1px" onfocus="(this.type="time")" >';                 
-                    html += '</div>';            
-                    html += '<div class="col-md-6 text-center p-0 m-0">';            
-                    html += '<input type="time" class="m-0 pointage_sortie" value="'+userData['h_fin']+'" name="edit_h_sortie" style="width: 67.1px" onfocus="(this.type="time")" >';                            
-                    html += '</div>';                    
+                    html += '<input type="time" class="m-0 pointage_entree" value="'+userData['h_debut']+'" name="edit_h_entree" style="width: 67.1px" onfocus="(this.type="time")" >';
                     html += '</div>';
-                    html += '</div>';                            
+                    html += '<div class="col-md-6 text-center p-0 m-0">';
+                    html += '<input type="time" class="m-0 pointage_sortie" value="'+userData['h_fin']+'" name="edit_h_sortie" style="width: 67.1px" onfocus="(this.type="time")" >';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
                     html += '<div class="col-md-2 p-0">';
-                    html += '<input type="text" class="mt-0 p-0 m-0" value="'+userData['note']+'"  name="edit_note_desc" placeholder="Note(s)">';                    
+                    html += '<input type="text" class="mt-0 p-0 m-0" value="'+userData['note']+'"  name="edit_note_desc" placeholder="Note(s)">';
                     html += '</div>';
-                    html += '<input type="hidden" name="edit_stg_id" value="'+userData['stagiaire_id']+'">';  
+                    html += '<input type="hidden" name="edit_stg_id" value="'+userData['stagiaire_id']+'">';
                     html += '<input type="hidden" name="edit_detail_id" value="'+userData['detail_id']+'">';
-                    html += '<div class="col-md-1 mt-0 p-0">';  
-                    html += '<input type="submit" name="edit_form"  class="btn edit_pointage" value="Modifier">';                   
+                    html += '<div class="col-md-1 mt-0 p-0">';
+                    html += '<input type="submit" name="edit_form"  class="btn edit_pointage" value="Modifier">';
                     html += '</div>';
-                    html += '</tr>';              
+                    html += '</tr>';
                     html += '</div>';
-                                  
+
                     $(id).html(html);
                 },
                 error: function(error) {

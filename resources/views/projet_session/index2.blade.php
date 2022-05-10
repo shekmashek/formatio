@@ -2,6 +2,9 @@
 @section('title')
     <p class="text_header m-0 mt-1">Projets</p>
 @endsection
+
+@inject('groupe', 'App\groupe')
+
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
 
@@ -10,7 +13,6 @@
             border-radius: 1rem;
             background-color: #637381;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -18,7 +20,6 @@
             border-radius: 1rem;
             background-color: #00CDAC;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -26,7 +27,6 @@
             border-radius: 1rem;
             background-color: #314755;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -34,7 +34,6 @@
             border-radius: 1rem;
             background-color: #26a0da;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -42,7 +41,6 @@
             border-radius: 1rem;
             background-color: #b31217;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -50,7 +48,6 @@
             border-radius: 1rem;
             background-color: #1E9600;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -58,15 +55,14 @@
             border-radius: 1rem;
             background-color: #2B32B2;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-end:1rem;
         }
 
         .statut_active {
             border-radius: 1rem;
             background-color: rgb(15, 126, 145);
             color: whitesmoke;
-            width: 60%;
             align-items: center margin: 0 auto;
         }
 
@@ -161,7 +157,13 @@
                     class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
 
         </div>
-
+        @if (Session::has('pdf_error'))
+            <div class="alert alert-danger ms-4 me-4">
+                <ul>
+                    <li>{!! \Session::get('pdf_error') !!}</li>
+                </ul>
+            </div>
+        @endif
         <div class="row w-100">
 
             <div class="col-12 ps-5">
@@ -248,11 +250,11 @@
                                         <th> Date du projet</th>
 
                                         <th> Statut </th>
-                                            <th></th>
+                                        <th rowspan="2"></th>
                                         @if ($prj->type_formation_id == 1)
                                             <th></th>
                                         @endif
-                                        <th></th>
+                                        {{-- <th></th> --}}
                                     </thead>
                                     <tbody class="tbody_projet">
 
@@ -272,7 +274,7 @@
                                                         <td>
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    {{ $etp->nom_etp }}
+                                                                    {{ $etp->nom_etp}}
                                                                 @endif
                                                             @endforeach
                                                         </td>
@@ -281,12 +283,13 @@
                                                         <td align="center" style="min-width: 6rem;">
                                                             <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1">
                                                                 {{ $pj->item_status_groupe }}</p>
+                                                                
                                                         </td>
+                                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                                         @if ($prj->type_formation_id == 1)
-                                                            <td>
-                                                                <a style="background: none"
-                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}"><button
-                                                                        class="btn rapport_finale">Rapport</button></a>
+                                                            <td class="p-0">
+                                                                <a class="mt-2"
+                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank"><button class="btn">Rapport</button></a>
                                                             </td>
                                                         @endif
                                                         @can('isCFP')
@@ -296,7 +299,7 @@
                                                                     </a></td>
                                                         @endcan
 
-                                                        <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td>
+                                                        {{-- <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td> --}}
 
                                                         {{-- debut supprimer session --}}
                                                             <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
@@ -870,6 +873,7 @@
                                 <th> Date du projet</th>
                                 <th> Modalité</th>
                                 <th> Statut </th>
+                                <th rowspan="2"></th>
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
@@ -900,9 +904,22 @@
                                         </td>
                                         <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
                                         <td>{{ $pj->modalite }}</td>
-                                        <td class="text-center m-0">
+                                        <td>
                                             <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
                                                 {{ $pj->item_status_groupe }}</p>
+                                        </td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                        <td align="left">
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
+                                            @php
+                                                echo $groupe->statut_presences($pj->groupe_id);
+                                            @endphp
+                                            "></i>&nbsp;Emargement</p>
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
+                                            @php
+                                                echo $groupe->statut_evaluation($pj->groupe_id);
+                                            @endphp
+                                            "></i>&nbsp;Evaluation</p>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -926,6 +943,7 @@
                                 {{-- <th> Date du projet</th> --}}
                                 <th>Modalité</th>
                                 <th> Statut </th>
+                                <th></th>
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
@@ -954,6 +972,7 @@
                                             <p class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}
                                             </p>
                                         </td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -974,6 +993,7 @@
                                 <th> Centre de formation </th>
                                 <th> Formation </th>
                                 <th> Module</th>
+                                <th></th>
                                 <th>Evaluation </th>
                             </thead>
                             <tbody class="tbody_projet">
@@ -986,6 +1006,7 @@
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ $pj->nom_formation }} </td>
                                         <td> {{ $pj->nom_module }} </td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td>
                                             @if ($pj->statut_eval == 0)
                                                 <a class="btn btn_filtre filtre_appliquer"

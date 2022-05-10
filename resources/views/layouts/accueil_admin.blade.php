@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Tableau de bord</h3>
+@endsection
 @section('content')
 <script src="https://unpkg.com/boxicons@2.1.1/dist/boxicons.js"></script>
 <link rel="stylesheet" href="{{asset('css/stagiaires.css')}}">

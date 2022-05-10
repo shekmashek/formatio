@@ -27,6 +27,7 @@ use App\Mail\acceptation_session;
 use App\Mail\annuler_session;
 use App\Models\getImageModel;
 use App\Presence;
+use PDF;
 use Exception;
 use Illuminate\Support\Facades\URL;
 
@@ -135,6 +136,8 @@ class SessionController extends Controller
             // $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $requette = $projet->requette_detail_session_of($cfp_id,$id);
             $datas = DB::select($requette);
+
+
             // dd($datas);
             if($type_formation_id  == 1){
                 $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
@@ -199,6 +202,7 @@ class SessionController extends Controller
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
         // end public
         $presence_detail = DB::select("select * from v_emargement where groupe_id = ?", [$projet[0]->groupe_id]);
+        // dd($presence_detail);
         // ----evaluation
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
@@ -247,7 +251,7 @@ class SessionController extends Controller
             $stg_id = DB::select('select id from stagiaires where matricule = ?',[$id])[0]->id;
             $existe = DB::select('select count(stagiaire_id) as nombre from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$stg_id,$groupe])[0]->nombre;
             $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
-            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]); 
+            return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]);
         }else{
             return response()->json(['status'=>'400']);
         }
@@ -283,6 +287,8 @@ class SessionController extends Controller
     public function ajout_ressource(Request $request){
         $ressource = $request->ressource;
         $groupe_id = $request->groupe;
+        $pris_en_charge = $request->pris_en_charge;
+        $note = $request->note;
         $id_user = Auth::user()->id;
         $demandeur = '';
         if (Gate::allows('isCFP')){
@@ -294,7 +300,7 @@ class SessionController extends Controller
         if(Gate::allows('isReferent')){
             $demandeur = DB::select('select nom_etp from v_responsable_entreprise where user_id= ?',[$id_user])[0]->nom_etp;
         }
-        DB::insert('insert into ressources(description,demandeur,groupe_id) values(?,?,?)',[$ressource,$demandeur,$groupe_id]);
+        DB::insert('insert into ressources(description,demandeur,groupe_id,pris_en_charge,note) values(?,?,?,?,?)',[$ressource,$demandeur,$groupe_id,$pris_en_charge,$note]);
         $all_ressources = DB::select('select * from ressources where groupe_id = ?',[$groupe_id]);
         return response()->json($all_ressources);
     }
@@ -495,7 +501,7 @@ class SessionController extends Controller
             DB::insert('insert into groupe_entreprises (groupe_id, entreprise_id) values (?, ?)', [$request->id_groupe, $etp_id]);
             return redirect()->route('detail_session',['id_session'=>$request->id_groupe]);
         }catch(Exception $e){
-            return back()->with('error','Insription échouée!');
+            return redirect()->route('detail_session',[$request->id_groupe,2]);
         }
     }
 
@@ -509,9 +515,27 @@ class SessionController extends Controller
             return response()->json(['status'=>'400']);
         }elseif($salle != null){
             DB::insert("insert into salle_formation_of(cfp_id,salle_formation) value(?,?)",[$cfp_id,$salle]);
-            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]); 
+            $salles = DB::select('select * from salle_formation_of where cfp_id = ? order by id desc',[$cfp_id]);
             return response()->json(['status'=>'200','salles'=>$salles]);
         }
+    }
+
+    public function fiche_technique_pdf($id)
+    {   
+        try{
+            $info_projet = DB::select('select type_formation,nom_cfp,logo_cfp,nom_projet,groupe_id,nom_groupe,item_status_groupe,nom_formation,nom_module from v_groupe_projet_module where groupe_id = ?',[$id])[0];
+            $entreprise = DB::select('select nom_etp,logo from v_groupe_entreprise where groupe_id = ?',[$id])[0];
+            $formateurs = DB::select('select photos,nom_formateur,prenom_formateur,numero_formateur,mail_formateur from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by photos,nom_formateur,prenom_formateur,numero_formateur,mail_formateur',[$id]);
+            $lieux = DB::select('select lieu from details where groupe_id = ? group by lieu',[$id]);
+            $stagiaires = DB::select('select * from  v_stagiaire_groupe where groupe_id = ?',[$id]);
+            $date_groupe =  DB::select('select date_detail,h_debut,h_fin from details where groupe_id = ?',[$id]);
+            // return view('projet_session.fiche_technique_pdf' ,compact('info_projet','formateurs','lieux','stagiaires', 'date_groupe','entreprise'));
+            $pdf = PDF::loadView('projet_session.fiche_technique_pdf', compact('info_projet','formateurs','lieux','stagiaires', 'date_groupe','entreprise'));
+            return $pdf->download('fiche_technique.pdf');
+        }catch(Exception $e){
+            return back()->with('pdf_error','Impossible de télécharger le pdf.');
+        }
+        
     }
 
 }

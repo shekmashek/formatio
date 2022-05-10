@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="row detail__formation__detail justify-content-space-between py-5 px-5 mb-5">
-            <div class="col-lg-9 detail__formation__content">
+            <div class="col-lg-12 detail__formation__content">
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}

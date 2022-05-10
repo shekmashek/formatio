@@ -233,12 +233,6 @@ INSERT INTO `formations_interne` ( `nom_formation`, `domaine_id`, `created_at`, 
 ( 'Chauffeur de Bus', 34, '2021-11-17 04:06:54', '2021-11-17 04:06:54', 1),
 ( 'VTC', 34, '2021-11-17 04:06:54', '2021-11-17 04:06:54', 1);
 
-ALTER TABLE `formations_interne`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `formations_interne`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-COMMIT;
 
 CREATE TABLE modules_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

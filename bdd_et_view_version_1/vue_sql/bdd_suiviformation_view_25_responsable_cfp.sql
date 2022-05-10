@@ -1,5 +1,10 @@
 create or replace  view v_responsable_cfp as SELECT
     responsables_cfp.*,
+    cfps.slogan,
+    cfps.nif,
+    cfps.stat,
+    cfps.rcs,
+    cfps.cif,
     genre.genre,
     (cfps.nom) nom_cfp,
     (cfps.logo) logo_cfp

@@ -1,8 +1,8 @@
 <style>
-    .icon_plus {
+    /* .icon_plus {
         border: 2px solid whitesmoke;
         font-size: 0.5rem;
-    }
+    } */
 
     .nouveau_detail {
         background-color: #822164;
@@ -42,7 +42,7 @@
         text-align: center;
     }
 
-    .icon_plus {
+    /* .icon_plus {
         color: #b8368f;
         margin-top: -1rem;
         font-size: 3rem;
@@ -52,7 +52,7 @@
 
     .icon_plus:hover {
         cursor: pointer;
-    }
+    } */
 
     p {
         text-align: center !important;
@@ -116,7 +116,18 @@
     </div>
 @endif
 <nav class="d-flex justify-content-between mb-1 ">
-    <span class="titre_detail_session"><strong style="font-size: 14px">Séance(s) de la session</strong></span>
+    <span class="titre_detail_session">
+    @php
+        $info = $groupe->infos_session($projet[0]->groupe_id);
+        if ($info->difference == null && $info->nb_detail == 0) {
+            echo $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }elseif ($info->difference != null && $info->nb_detail == 1) {
+            echo $info->nb_detail. ' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }elseif ($info->difference != null && $info->nb_detail > 1) {
+            echo $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }
+    @endphp  
+    </span>
     @canany(['isCFP'])
     <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
         data-bs-target="#modal_nouveau_detail">
@@ -192,7 +203,7 @@
                                             <select name="formateur[]" style="height: 2.361rem" id=""
                                                 class="form-control  my-1" required>
                                                 <option value="" selected hidden> Choisir formateur </option>
-                                                @foreach ($formateur_cfp as $format)
+                                                @foreach ($formateur as $format)
                                                     <option value="{{ $format->formateur_id }}">
                                                         {{ $format->nom_formateur . ' ' . $format->prenom_formateur }}
                                                     </option>
@@ -387,7 +398,7 @@
                                             {{-- test commit --}}
                                             <td>
                                                 @if ($d->photos == null)
-                                                    <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photo }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                    <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @else
                                                     <img src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif

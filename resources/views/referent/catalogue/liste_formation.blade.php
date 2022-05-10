@@ -21,9 +21,9 @@
     </div>
 
     </div>
-    <div class="container pb-5">
-        <div class="row">
-            <div class="col-lg-3 filtre_formation">
+    <div class="container pb-5 ">
+        <div class="row justify-content-center">
+            {{-- <div class="col-lg-3 filtre_formation">
                 <div class="row">
                     <p class="liste__formation__titre">Catégories</p>
                     <div class="form-check liste__formation__radio">
@@ -35,7 +35,7 @@
                         <label class="form-check-label" for="flexRadioListe2">Tous nos Contenus</label>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-8">
 
                 @if (count($infos)>0)

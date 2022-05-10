@@ -45,7 +45,6 @@ textarea:focus::placeholder{
     outline-width: 0 !important;
 }
 
-
 .form-control-placeholder {
     position: relative;
     bottom: 2.5rem;

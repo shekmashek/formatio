@@ -134,15 +134,15 @@ class ResponsableController extends Controller
     public function index($id = null)
     {
         $liste = entreprise::orderBy("nom_etp")->get();
-        
+
         $info_impression = [
             'id' => null,
             'nom_entreprise' => 'Tout'
         ];
-       
+
         if ($id) $datas = responsable::orderBy('nom_resp')->with('User', 'entreprise')->take($id)->get();
         else  $datas =  responsable::orderBy("nom_resp")->with('User', 'entreprise')->get();
-        
+
         return view('admin.responsable.responsable', compact('datas', 'liste', 'info_impression'));
     }
 
@@ -271,40 +271,40 @@ class ResponsableController extends Controller
         //  dd($rqt);
         return redirect()->route('liste_responsable');
     }
-    public function affReferent($id = null)
+    public function affReferent()
     {
         $user_id = Auth::user()->id;
-        
-        if (Gate::allows('isReferent')) {
-           
-            if ($id != null) {
-               
-                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-            
-            } else {
-               
+         if (Gate::allows('isReferentPrincipale')) {
+
+
+            // if ($id != null) {
+
+            //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+
+            // } else {
+
                 $id = responsable::where('user_id', Auth::user()->id)->value('id');
-               
+
                 $entreprise = responsable::where('user_id',$user_id)->value('id');
-                
-                $branche = branche::findorFail($id);
-               
+
+                // $branche = branche::findorFail($id);
+
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
                 $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
-            }
+            // }
             // dd($refs);
-            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise','branche'));
+            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
-           
+
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-            dd($refs);
+           
             return view('admin.responsable.profilResponsable', compact('refs'));
         }
     }
 
 
-    public function affParametreReferent(){
+    public function affParametreReferent($id = null){
 
         // $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
@@ -325,14 +325,20 @@ class ResponsableController extends Controller
 
             return view('admin.responsable.affichage_parametreReferent', compact('refs','nom_entreprise','branche','referent','entreprise'));
         }
-        // // if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
-
-        // //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-        // //     return view('admin.responsable.affichage_parametreReferent', compact('refs'));
-        // }
+         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
+            $refs = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
+            $entreprise = entreprise::with('Secteur')->findOrFail($id);
+            $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
+            $referent = entreprise::findOrFail($id);
+             $entreprise_id=entreprise::where('id',$id)->value('id');
+            
+             $abonnement = $fonct->findWhere("v_abonnement_facture_entreprise",["entreprise_id"],[$entreprise_id]);
+             
+            $responsables=responsable::where('entreprise_id',$entreprise_id)->where('prioriter',0)->get();
+         
+           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','referent','responsables','abonnement'));
+        }
     }
-
-
     public function show($id)
     {
         $liste = entreprise::orderBy("nom_etp")->get();
