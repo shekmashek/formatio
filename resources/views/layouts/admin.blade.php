@@ -432,7 +432,7 @@
             @endcanany
 
             {{-- plan de formation --}}
-            @canany(['isStagiaire','isManager','isReferent'])
+            {{-- @canany(['isStagiaire','isManager','isReferent'])
             <li>
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
@@ -447,7 +447,7 @@
                     <span class="links_name">Liste Plan</span>
                 </a>
             </li> --}}
-            @endcanany
+            {{-- @endcanany --}}
             {{-- abonemment --}}
             @canany(['isSuperAdmin','isAdmin'])
             <li>

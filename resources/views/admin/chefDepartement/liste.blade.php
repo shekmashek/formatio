@@ -12,36 +12,45 @@
                     <button type="button" class="btn_enregistrer"><a href="{{route('departement.create')}}">Nouveau
                             Employé</a></button>
                 </div> --}}
-                <div class="col-md-12 mb-3">
-                    <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
-                        <li class="nav-item ms-5">
-                            <a href="#" class="btn_next" id="employé" data-bs-toggle="tab" data-bs-target="#tab-employé"
-                                type="button" role="tab" aria-controls="tab-employé" aria-selected="false">
-                                Employés
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="btn_next" id="referent" data-bs-toggle="tab"
-                                data-bs-target="#tab-referent" type="button" role="tab" aria-controls="tab-referent"
-                                aria-selected="true">
-                                Référents
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="btn_next" id="referent" data-bs-toggle="tab"
-                                data-bs-target="#tab-referent" type="button" role="tab" aria-controls="tab-referent"
-                                aria-selected="true">
-                                Formateur interne
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="btn_next" id="manager" data-bs-toggle="tab" data-bs-target="#tab-manager"
-                                type="button" role="tab" aria-controls="tab-manager" aria-selected="false">
-                                Chef de département
-                            </a>
-                        </li>
-                    </ul>
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
+                            <li class="nav-item ms-5">
+                                <a href="#" class="btn_next" id="employé" data-bs-toggle="tab" data-bs-target="#tab-employé"
+                                    type="button" role="tab" aria-controls="tab-employé" aria-selected="false">
+                                    Référents
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="btn_next" id="referent" data-bs-toggle="tab"
+                                    data-bs-target="#tab-employe" type="button" role="tab" aria-controls="tab-referent"
+                                    aria-selected="true">
+                                    Employés
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="btn_next" id="formateur" data-bs-toggle="tab"
+                                    data-bs-target="#tab-referent" type="button" role="tab" aria-controls="tab-referent"
+                                    aria-selected="true">
+                                    Formateur interne
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="btn_next" id="manager" data-bs-toggle="tab" data-bs-target="#tab-manager"
+                                    type="button" role="tab" aria-controls="tab-manager" aria-selected="false">
+                                    Chef de département
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+    
+                    <div class="col-md">
+                        <div class="">
+                            <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+                        </div>
+                    </div>
                 </div>
+
                 @if(Session::has('error'))
                 <div class="alert alert-danger">
                     {{Session::get('error')}}
@@ -109,7 +118,7 @@
                                                         count($roles_not_actif_referent[$i]["role_inactif"]); $ii++)
                                                         @if($referent[$i]->user_id ==
                                                         $roles_not_actif_referent[$i]["user_id"])
-                                                        <span style="color:blueviolet">attribué role pour
+                                                        {{-- <span style="color:blueviolet">attribué role pour
                                                             {{$roles_not_actif_referent[$i]["role_inactif"][$ii]->role_name}}
                                                             {{-- <button class="btn modifier pt-0"><a
                                                                     href="{{route('add_role_user',[$referent[$i]->user_id,$roles_not_actif_referent[$i]["
@@ -260,7 +269,7 @@
                         </table>
                     </div>
                     {{-- employé --}}
-                    <div class="tab-pane fade show" id="tab-referent" role="tabpanel" aria-labelledby="employé">
+                    <div class="tab-pane fade show" id="tab-employe" role="tabpanel" aria-labelledby="employé">
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped" id="dataTables-example">
@@ -279,9 +288,9 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @for($i = 0; $i < count($stagiaires); $i++) <tr
-                                            class="text-center content_table">
+                                    <tbody id="dynamic_row">
+                                        @for($i = 0; $i < count($stagiaires); $i++) 
+                                        <tr class="text-center content_table">
                                             <td>
                                                 @if($stagiaires[$i]->photos == null)
                                                 <center>
@@ -298,9 +307,9 @@
                                                         style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
                                                 {{-- <img src="/stagiaire-image/{{$stagiaires[$i]->photos}}" width="50"
                                                     height="50">
-                                            </td> --}}
-                                            @endif
-                                            </td>
+                                                </td> --}}
+                                                @endif
+                                            </td>   
                                             <td>{{$stagiaires[$i]->matricule}}</td>
                                             <td>{{$stagiaires[$i]->nom_stagiaire}}</td>
                                             <td>{{$stagiaires[$i]->prenom_stagiaire}}</td>
@@ -478,8 +487,6 @@
                                             <td>{{$chef[$i]->matricule}}</td>
                                             <td>{{$chef[$i]->nom_chef}}</td>
                                             <td>{{$chef[$i]->prenom_chef}}</td>
-
-
                                             <td>{{$chef[$i]->fonction_chef}}</td>
                                             <td>{{$chef[$i]->mail_chef}}</td>
                                             <td>{{$chef[$i]->telephone_chef}}</td>
@@ -605,7 +612,52 @@
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="filtrer mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0">Filter vos équipes</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+        </div>
+        <hr class="mt-2">
+        {{-- @canany(['isReferent', 'isCFP']) --}}
+        <div class="col-12 pe-3">
+            <div class="row mb-3 p-2 pt-0">
+                <div class="row">
+                    <form action="/employes/filtre/query" method="post">
+                        @csrf
+                        
+                        <select name="test" id="test" class="form-control form-control-sm" style="width: 300px">
+                            <option value="0" selected="true" disabled="true">-- selectionner une fonction --</option>
+                            @foreach ($stagiaires as $stg)
+                                <option value="{{ $stg->id }}">{{ $stg->fonction_stagiaire }}</option> 
+                            @endforeach
+                        </select>
+                        <input type="submit" value="Filtrer" class="btn btn-sm btn-info mt-2" style="width: 150px">
+                    </form>
+                    <form action="/employes/filtre/query/name" method="post">
+                        @csrf
+                        <input style="width: 300px" type="text" name="name" id="name" class="mt-3 form-control form-sm mb-2" placeholder="Entrez un nom ou maricule ...">
+                    </form>
+                    <form action="/employes/filtre/query/matricule" method="post">
+                        @csrf
+                        <input style="width: 300px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-sm mb-2" placeholder="Entrez une matricule ...">
+                    </form>
+                    {{-- <form action="/employes/filtre/query" method="POSt">
+                        @csrf
+                        <input type="text" name="searchPers" id="searchPers" class="form-control form-sm mb-2" placeholder="Entrez une Fonction ...">
+                        <input type="submit" value="Filtrer" class="btn btn-sm btn-success mb-2 fl">
+                    </form> --}}
+                </div>
+                <a style="color: blue" href="{{ route('employes') }}"><i class="fa-solid fa-arrow-rotate-right"></i> Actualiser</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
@@ -775,5 +827,90 @@
     });
 });
 
+</script>
+
+{{--filtre name--}}
+<script type="text/javascript">
+    $('body').on('keyup','#name',function(){
+        var name = $(this).val();
+        console.log(name)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("stagiaire.filter.name") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                name: name,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_row').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/stagiaires/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.matricule+
+                        '</td><td>'+value.nom_stagiaire+
+                        '</td><td>'+value.prenom_stagiaire+
+                        '</td><td>'+value.fonction_stagiaire+
+                        '</td><td>'+value.mail_stagiaire+
+                        '</td><td>'+value.telephone_stagiaire+
+                        '</td><tr>';
+                    
+                   
+                    console.log(tableRow);
+                });
+                $('#dynamic_row').append(tableRow);
+            }
+            
+        });
+    });
+</script>
+
+{{--filtre matricule--}}
+<script type="text/javascript">
+    $('body').on('keyup','#matricule',function(){
+        var matricule = $(this).val();
+        console.log(matricule)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("stagiaire.filter.matricule") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                matricule: matricule,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#dynamic_row').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr>';
+                    tableRow +='<td><img src="{{asset("images/stagiaires/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.matricule+
+                        '</td><td>'+value.nom_stagiaire+
+                        '</td><td>'+value.prenom_stagiaire+
+                        '</td><td>'+value.fonction_stagiaire+
+                        '</td><td>'+value.mail_stagiaire+
+                        '</td><td>'+value.telephone_stagiaire+
+                        '</td><tr>';
+                    
+                    $('#dynamic_row').append(tableRow);
+                    console.log(tableRow);
+                });
+            }
+            
+        });
+    });
 </script>
 @endsection
