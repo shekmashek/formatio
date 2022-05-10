@@ -50,14 +50,14 @@ class CollaborationController extends Controller
       $verify = $verify1->id;
             if ($verify <= 0) {
                 $msg = $this->collaboration->verify_collaboration_cfp_etp($cfp_id, $responsable->entreprise_id, $req->nom_format);
-                Mail::to($req->email_resp)->send(new invitation_cfp_etp_mail($cfp->nom, $responsable_cfp, $responsable->nom_resp . " " . $responsable->prenom_resp, $req->email_resp));
+  //              Mail::to($req->email_resp)->send(new invitation_cfp_etp_mail($cfp->nom, $responsable_cfp, $responsable->nom_resp . " " . $responsable->prenom_resp, $req->email_resp));
 
                 return $msg;
             } else {
                 return back()->with('error', "une invitation a été déjà envoyer sur ce responsable!");
             }
         } else { // demande de creer un compte
-            Mail::to($req->email_resp)->send(new inscription_cfp_etp_mail($cfp->nom, $responsable_cfp->nom_resp_cfp, $responsable_cfp->prenom_resp_cfp, $responsable_cfp->email_resp_cfp, $req->email_resp));
+       //     Mail::to($req->email_resp)->send(new inscription_cfp_etp_mail($cfp->nom, $responsable_cfp->nom_resp_cfp, $responsable_cfp->prenom_resp_cfp, $responsable_cfp->email_resp_cfp, $req->email_resp));
             return back()->with('success', "une invitation a été envoyé sur l'adresse mail en démandant!");
         }
     }
@@ -80,7 +80,7 @@ class CollaborationController extends Controller
             if ($verify <= 0) {
 
                 $msg = $this->collaboration->verify_collaboration_etp_cfp($responsable_cfp->cfp_id, $entreprise_id, $req->nom_cfp);
-                Mail::to($responsable_cfp->email_resp_cfp)->send(new invitation_etp_cfp_mail($entreprise->nom_etp, $responsable_etp, $responsable_cfp->nom_resp_cfp . " " . $responsable_cfp->prenom_resp_cfp, $req->email_cfp));
+       //         Mail::to($responsable_cfp->email_resp_cfp)->send(new invitation_etp_cfp_mail($entreprise->nom_etp, $responsable_etp, $responsable_cfp->nom_resp_cfp . " " . $responsable_cfp->prenom_resp_cfp, $req->email_cfp));
 
                 return $msg;
             } else {
@@ -88,8 +88,7 @@ class CollaborationController extends Controller
             }
         } else { // send mail inscription
 
-            dd($responsable_cfp);
-            Mail::to($responsable_cfp->email_resp_cfp)->send(new inscription_etp_cfp_mail($entreprise->nom_etp, $responsable_etp->nom_resp, $responsable_etp->prenom_resp, $responsable_etp->email_resp, $req->email_cfp));
+       //       Mail::to($responsable_cfp->email_resp_cfp)->send(new inscription_etp_cfp_mail($entreprise->nom_etp, $responsable_etp->nom_resp, $responsable_etp->prenom_resp, $responsable_etp->email_resp, $req->email_cfp));
             return back()->with('success', "une invitation a été envoyeé sur l'adresse mail en démandant!");
         }
     }

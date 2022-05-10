@@ -287,47 +287,83 @@
         <div class="infos mt-3">
             <div class="row">
                 <div class="col">
-                    <p class="m-0">infos</p>
+                    <p class="m-0 text-center">INFORMATION</p>
                 </div>
                 <div class="col text-end">
                     <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
                 </div>
                 <hr class="mt-2">
                 <div style="font-size: 13px">
-                    <div class="text-center mt-2">
-                        <span class="text-center" id="logo">
-                        </span>
-                    </div>
-                    <div class="text-center mt-2">
-                        <span id="nom_entreprise"> </span>
-                    </div>
-                    <div class="text-center mt-2">
-                        <span id="nom_reponsable"></span>
-                        <span id="prenom_responsable"></span>
-                    </div>
-                    {{-- <div class="text-center mt-2">
-                            <span id="adresse_etp">
-                            <span> --}}
-                    <div class="text-center mt-2">
-                        <span id="email_etp"><span>
-                    </div>
-                    <div class="text-center mt-2">
-                        <span id="telephone_etp">
-                            <span>
 
+                    <div class="mt-1 text-center mb-3">
+                        <span id="logo"></span>
                     </div>
-                    <div class="text-center mt-2">
-                        <span id="adrlot"></span>
-                        <span id="adrlot2"></span>
-                        <span id="adrlot3"></span>
-                        <span id="adrlot4"></span>
+                    <div class="mt-1 text-center">
+                        <span id="nom_entreprise" style="color: #64b5f6; font-size: 22px; text-transform: uppercase; "></span>
                     </div>
-                    <div class="text-center mt-2">
-
-                        <span id="site_etp"> </span>
-
+                   
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                            <div class="col-md-3">Responsable</div>
+                            <div class="col-md">
+                                <span id="nom_reponsable" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                                <span id="prenom_responsable" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                            </div>
+                        </div>
                     </div>
-
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="col-md-3">Adresse</div>
+                            <div class="col-md">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span id="adrlot"></span>
+                                    </div>
+                                    <div class="com-md-12">
+                                        <span id="adrlot2"></span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span id="adrlot3"></span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span id="adrlot4"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="mt-2">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="col-md-3">E-mail</div>
+                            <div class="col-md">
+                                <span id="email_etp"><span>
+                        </div>
+                        
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                            <div class="col-md-3">Tel</div>
+                            <div class="col-md">
+                                <span id="telephone_etp"><span>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                            <div class="col-md-3">Site web</div>
+                            <div class="col-md"><span id="site_etp"></span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -478,15 +514,15 @@
                         $("#logo").html(" ");
                         $("#logo").append(url_photo);
                         $("#nom_entreprise").text(userData[$i].nom_etp);
-                        $("#nom_reponsable").text(userData[$i].nom_resp);
+                        $("#nom_reponsable").text(': '+userData[$i].nom_resp);
                         $("#prenom_responsable").text(userData[$i].prenom_resp);
-                        $("#adrlot").text(userData[$i].adresse_rue_etp);
-                        $("#adrlot2").text(userData[$i].adresse_quartier_etp);
-                        $("#adrlot3").text(userData[$i].adresse_ville_etp);
-                        $("#adrlot4").text(userData[$i].adresse_region_etp);
-                        $("#email_etp").text(userData[$i].email_responsable);
-                        $("#telephone_etp").text(userData[$i].telephone_etp);
-                        $("#site_etp").text(userData[$i].site_etp);
+                        $("#adrlot").text(': '+userData[$i].adresse_rue_etp);
+                        $("#adrlot2").text(': '+userData[$i].adresse_quartier_etp);
+                        $("#adrlot3").text(': '+userData[$i].adresse_ville_etp);
+                        $("#adrlot4").text(': '+userData[$i].adresse_region_etp);
+                        $("#email_etp").text(': '+userData[$i].email_responsable);
+                        $("#telephone_etp").text(': '+userData[$i].telephone_etp);
+                        $("#site_etp").text(': '+userData[$i].site_etp);
                     }
                 }
             });
