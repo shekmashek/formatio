@@ -1094,7 +1094,7 @@ Route::post('devise_enregistrer','HomeController@devise_enregistrer')->name('dev
 // Route::get('delete_taux/{id}','HomeController@delete_taux')->name('delete_taux');
 // Route::post('update_taux/{id}','HomeController@update_taux')->name('update_taux');
 //Route iframe
-Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
+Route::get('creer_iframe/{pag_cfp?}/{pag_etp?}/{prio?}','HomeController@creer_iframe')->name('creer_iframe');
 Route::post('enregistrer_iframe_etp','HomeController@enregistrer_iframe_etp')->name('enregistrer_iframe_etp');
 Route::post('enregistrer_iframe_cfp','HomeController@enregistrer_iframe_cfp')->name('enregistrer_iframe_cfp');
 

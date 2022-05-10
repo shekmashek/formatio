@@ -1077,13 +1077,48 @@ public function recherche_cfp(Request $request,$page = null)
         return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
     }
     //creation iframe
-    public function creer_iframe(){
-        $fonct = new FonctionGenerique();
-        // $entreprise = $fonct->findAll("entreprises");
-        $of = $fonct->findAll('cfps');
-        $iframe_etp = $fonct->findAll("v_entreprise_iframe");
-        $iframe_of = $fonct->findAll("v_cfp_iframe");
-        return view('bi.iframe',compact('of','iframe_etp','iframe_of'));
+    public function creer_iframe($nbPagination_etp=null,$nbPagination_cfp=null,$pour_list=null){
+        $nb_limit = 2;
+        if ($nbPagination_cfp == null || $nbPagination_cfp <= 0) {
+            $nbPagination_cfp = 1;
+        }
+        if ($nbPagination_etp == null || $nbPagination_etp <= 0) {
+            $nbPagination_etp = 1;
+        }
+
+        $iframe_etp = $this->fonct->findWhereTrieOrderBy(
+            "v_entreprise_iframe",
+            [],
+            [],
+            [],
+            ["nom_etp"],
+            "ASC",
+            $nbPagination_etp,
+            $nb_limit
+        );
+
+        $iframe_of = $this->fonct->findWhereTrieOrderBy(
+            "v_cfp_iframe",
+            [],
+            [],
+            [],
+            ["nom"],
+            "ASC",
+            $nbPagination_cfp,
+            $nb_limit
+        );
+
+        $totaleData_etp = $this->fonct->getNbrePagination("v_entreprise_iframe","nom_etp",[],[],[], "" );
+        $pagination_etp = $this->fonct->nb_liste_pagination($totaleData_etp, $nbPagination_etp, $nb_limit);
+
+        $totaleData_cfp = $this->fonct->getNbrePagination("v_cfp_iframe","nom",[],[],[], "" );
+        $pagination_cfp = $this->fonct->nb_liste_pagination($totaleData_cfp, $nbPagination_cfp, $nb_limit);
+
+        // dd($pagination_cfp);
+
+        // $iframe_etp = $this->fonct->findAll("v_entreprise_iframe");
+        // $iframe_of = $this->fonct->findAll("v_cfp_iframe");
+        return view('bi.iframe',compact('iframe_etp','iframe_of','pagination_cfp','pagination_etp','pour_list'));
     }
     //taxe
     public function taxe(){
