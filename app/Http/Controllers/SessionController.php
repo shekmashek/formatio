@@ -215,7 +215,15 @@ class SessionController extends Controller
         $modalite = DB::select('select modalite from groupes where id = ?',[$id])[0]->modalite;
         $devise = DB::select('select * from devise')[0]->devise;
 
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','devise','module_session','formateur_cfp','modalite','salle_formation'));
+        $lieu_formation = DB::select('select lieu from details where groupe_id = ?', [$id]);
+        if(count($lieu_formation)>0){
+            $lieu_formation = explode(', ',$lieu_formation[0]->lieu);
+        }else{
+            $lieu_formation[0]='';
+            $lieu_formation[1]='';
+        }
+    
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation'));
     }
 
     public function getFormateur(){
@@ -337,6 +345,11 @@ class SessionController extends Controller
         $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$groupe_id,$etp_id]);
         $devise = DB::select('select * from devise')[0]->devise;
         return response()->json(['data'=>$all_frais_annexe,'devise'=>$devise]);
+    }
+
+    public function modifier_frais_annexe_formation(Request $request){
+        DB::update('update frais_annexe_formation set description = ? , montant = ? where id = ?',[$request->description,$request->montant,$request->id]);
+        return back();
     }
 
     public function insert_presence(Request $request){

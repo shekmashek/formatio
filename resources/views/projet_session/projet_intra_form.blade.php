@@ -70,7 +70,7 @@
                                     <select class="form-select selectP input" id="etp_id" name="modalite"
                                         aria-label="Default select example">
                                         {{-- <option value="null" selected hidden>Choisir l'entreprise souhaité...</option> --}}
-                                        <option value="Présentielle">Présentielle</option>
+                                        <option value="Présentiel">Présentielle</option>
                                         <option value="En ligne">En ligne</option>
                                         <option value="Présentiel/En ligne">Présentiel/En ligne</option>
                                     </select>

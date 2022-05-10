@@ -1218,3 +1218,4 @@ Route::get('tri_client','AbonnementController@tri_client')->name('tri_client');
 Route::get('statut_presence_emargement','HomeController@statut_presence_emargement')->name('statut_presence_emargement');
 
 Route::get('get_devise','SessionController@get_devise')->name('get_devise');
+Route::post('modifier_frais_annexe_formation','SessionController@modifier_frais_annexe_formation')->name('modifier_frais_annexe_formation');
