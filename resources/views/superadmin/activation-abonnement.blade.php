@@ -1,7 +1,11 @@
 @extends('layouts.admin')
+@section('title')
+<p class="text_header m-0 mt-1">Abonnement
+</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
 <style>
 .navigation_module .nav-link {
     color: #637381;
@@ -30,7 +34,7 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#types" class="nav-link active" data-bs-toggle="tab">Nouveau type d'abonnement</a>
+                <a href="#types" class="nav-link active" data-bs-toggle="tab">Liste des abonnements</a>
             </li>
             <li class="nav-item">
                 <a href="#entreprise" class="nav-link" data-bs-toggle="tab">Entreprise</a>
@@ -41,170 +45,62 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="types">
-                <div class="shadow p-5 mb-5 mx-auto bg-body w-50 mt-5" style="border-radius: 15px">
-                    @if (Session::has('message'))
-                        <div class="alert alert-success ms-4 me-4">
-                            <ul>
-                                <li>{!! \Session::get('message') !!}</li>
-                            </ul>
-                        </div>
-                    @endif
-                    <form action="{{route('abonnement.store')}}" method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row px-3">
-                                    <div class="form-group">
-                                        <select class="form-select selectP input" id="type_abonne" name="type_abonne" aria-label="Default select example">
-                                            <option value="of">Organisme de Formation</option>
-                                            <option value="etp">Entreprise</option>
-                                        </select>
-                                        <label class="form-control-placeholder" for="type_enregistrement">Type d'abonnés<strong style="color:#ff0000;">*</strong></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-12">
-                                <div class="row px-3">
-                                    <div class="form-group">
-                                        <input type="text" autocomplete="off"  name="nom_type" class="form-control input" id="nom_type" placeholder="Nom" required>
-                                        <label for="nom" class="form-control-placeholder" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
-                                        @error('nom')
-                                        <div class="col-sm-6">
-                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="row px-3">
-                                    <div class="form-group">
-                                        <input type="text" autocomplete="off"  name="description" class="form-control input" id="description" placeholder="Description" required />
-                                        <label for="description" class="form-control-placeholder" align="left">Description<strong style="color:#ff0000;">*</strong></label>
-                                        @error('description')
-                                        <div class="col-sm-6">
-                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row  mt-4">
-                            <div class="col-12">
-                                <div class="row px-3">
-                                    <div class="form-group">
-                                        <input type="text" name="prix" class="form-control input" id="prix" placeholder="Prix" required />
-                                        <label for="prix" class="form-control-placeholder" align="left">Prix</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row  mt-4">
-                            <div class="col-4">
-                                <div class="row px-3">
-                                    <div class="form-group">
-                                        <input type="number" min="1" name="nb_utilisateur" class="form-control input" id="utilisateur" placeholder="Nombre d'utilisateur" required />
-                                        <label for="utilisateur" class="form-control-placeholder" align="left">Nombre d'utilisateur<strong style="color:#ff0000;">*</strong></label>
-                                        @error('utilisateur')
-                                        <div class="col-sm-6">
-                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="row px-3">
-                                    <div class="form-group">
-                                        <input type="number" name="nb_formateur" min="1" class="form-control input" id="formateur" placeholder="Nombre de formateur" required />
-                                        <label for="formateur" class="form-control-placeholder" align="left">Nombre de formateur<strong style="color:#ff0000;">*</strong></label>
-                                        @error('formateur')
-                                        <div class="col-sm-6">
-                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="illimite_utilisateur" type="checkbox" value="illimite" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                    Illimite
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row  mt-4">
-                            <div class="col-4">
-                                <div class="row px-3">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control input" min="1" id="min_emp" name="min_emp" placeholder="Nombre minimum d' employé"/>
-                                        <label for="min" class="form-control-placeholder" align="left">Nombre minimum d' employé<strong style="color:#ff0000;">*</strong></label>
-                                        <span style="color:#ff0000;" id="mail_err"></span>
-                                        @error('min')
-                                        <div class="col-sm-6">
-                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <input type="number" class="form-control input" id="max_emp" name="max_emp" placeholder="Nombre maximum d' employé"/>
-                                    <label for="max" class="form-control-placeholder" align="left">Nombre maximum d' employé<strong style="color:#ff0000;">*</strong></label>
-                                    <span style="color:#ff0000;" id="mail_err"></span>
-                                    @error('max')
-                                    <div class="col-sm-6">
-                                        <span style="color:#ff0000;"> {{$message}} </span>
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="illimite_etp" type="checkbox" value="" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                      Illimite
-                                    </label>
-                                </div>
-                            </div>
+                <div class="row mt-3">
+                    <p>Offre pour organisme de formation</p>
+                    <div class="col-lg-12 d-flex">
+                        @foreach ($typeAbonnement_of as $types_of)
+                            <div class="col mt-5 justify-content-between">
+                                <div class="card d-flex align-items-center justify-content-center">
+                                     <span class="nom_type mt-5">{{ $types_of->nom_type }}</span>
+                                     <span class="description mt-5">{{ $types_of->description }}</span>
+                                     <span class="tarif"> <span class="number"> {{number_format($types_of->tarif,0, ',', '.')}}</span> <sup
+                                            class="sup">AR</sup>/ mois</span>
+                                   <ul class="mb-5 list-unstyled text-muted">
+                                        @if($types_of->illimite == 1)
+                                            <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Projets illimités</li>
+                                        @else
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_utilisateur}} utilisateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_formateur}} formateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_projet}} projets</li>
+                                        @endif
 
-                        </div>
-                        <div class="row  mt-4">
-                            <div class="col-6">
-                                <div class="row px-3">
-                                    <div class="form-group">
-                                        <input type="number" name="nb_projet" class="form-control input" min="1" id="projet" placeholder="Nombre de projet"/>
-                                        <label for="projet" class="form-control-placeholder" align="left">Nombre de projet<strong style="color:#ff0000;">*</strong></label>
-                                        <span style="color:#ff0000;" id="mail_err"></span>
-                                        @error('projet')
-                                        <div class="col-sm-6">
-                                            <span style="color:#ff0000;"> {{$message}} </span>
-                                        </div>
-                                        @enderror
-                                    </div>
+                                    </ul>
+                                    <button class="btn btn-primary"><a href="{{route('modifier_abonnement_of',$types_of->id)}}">Modifier</a></button>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="illimite_of" type="checkbox" value="illimite" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                    Illimite
-                                    </label>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <p>Offre pour entreprise</p>
+                    <div class="col-lg-12 d-flex">
+                        @foreach ($typeAbonnement_etp as $types_etp)
+                            <div class="col mt-5 justify-content-between">
+                                <div class="card d-flex align-items-center justify-content-center">
+                                    <p class="h-1 pt-5 nom_type mt-5">{{ $types_etp->nom_type }}</p>
+                                    <span class="description mt-5">{{ $types_etp->description }}</span>
+                                    <span class="tarif"> <span class="number"> {{number_format($types_etp->tarif,0, ',', '.')}}</span> <sup
+                                            class="sup">AR</sup>/ mois</span>
+
+                                    <ul class="mb-5 list-unstyled text-muted">
+                                        @if($types_etp->illimite == 1)
+                                            <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Employés illimités</li>
+                                        @else
+                                            <li><span class="bx bx-check me-2"></span>{{$types_etp->nb_utilisateur}} utilisateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_etp->nb_formateur}} formateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_etp->min_emp}} - {{$types_etp->max_emp}}  employés</li>
+                                        @endif
+
+                                    </ul>
+                                    <button class="btn btn-primary"><a href="">Modifier</a></button>
                                 </div>
                             </div>
-                        </div>
-                        <div class=" text-center">
-                            <button type="submit" class="btn btn-lg btn_enregistrer">Sauvegarder</button>
-                        </div>
-                    </form>
+                        @endforeach
+                    </div>
                 </div>
             </div>
             <div class="tab-pane fade " id="entreprise">
@@ -306,19 +202,6 @@
         tmpDate.setDate(tmpDate.getDate() + noOfDays);
         return tmpDate;
     }
-    // $("#type_abonne" ).on("change", function() {
-    //     alert($(this).val() );
-    //     if($(this).val() == 'of'){
-    //         $('#projet').prop('disabled','false');
-    //         $('#min_emp').prop('disabled','true');
-    //         $('#max_emp').prop('disabled','true');
-    //     }
-    //     if($(this).val() == 'etp'){
-    //         $('#projet').prop('disabled','true');
-    //         $('#min_emp').prop('disabled','false');
-    //         $('#max_emp').prop('disabled','false');
-    //     }
-    // });
     /* activation compte entreprise */
     $(".activer" ).on( "change", function() {
         var statut,idAbonnement;

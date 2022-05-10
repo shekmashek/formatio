@@ -40,6 +40,7 @@ class AbonnementController extends Controller
             return $next($request);
         });
         $this->fact = new Facture();
+        $this->fonct = new FonctionGenerique();
         $this->abonnement_model = new AbonnementModel();
     }
     public function index()
@@ -71,9 +72,9 @@ class AbonnementController extends Controller
     {
 
         $type_abonne = $request->type_abonne;
-        dd($type_abonne);
         $limite_projet = $request->illimite_of;
         $illimite_etp = $request->illimite_etp;
+        $illimite_utilisateur = $request->illimite_utilisateur;
         $nom_type = $request->nom_type;
         $description = $request->description;
         $prix = $request->prix;
@@ -92,12 +93,15 @@ class AbonnementController extends Controller
                 $nb_formateur =  $request->nb_formateur;
                 $nb_projet = $request->nb_projet;
             }
-            DB::insert('insert into type_abonnements_of (nom_type,description,tarif,nb_utilisateur,nb_formateur,min_emp,max_emp,illimite) values (?,?,?,?,?,?,?,?)', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$min_emp,$max_emp,$illimite]);
+            DB::insert('insert into type_abonnements_of (nom_type,description,tarif,nb_utilisateur,nb_formateur,nb_projet,illimite) values (?,?,?,?,?,?,?)', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$nb_projet,$illimite]);
+
 
         }
            //enregistrement du type d'abonnement pour of
         if($type_abonne == "etp"){
-            if($illimite_etp != null and $request->illimite_utilisateur != null){
+
+
+            if($illimite_etp != null and  $illimite_utilisateur!= null){
                 $illimite = 1;
                 $nb_utilisateur = 0;
                 $nb_formateur = 0;
@@ -110,9 +114,9 @@ class AbonnementController extends Controller
                 $nb_formateur =  $request->nb_formateur;
                 $min_emp = $request->min_emp;
                 $max_emp = $request->max_emp;
-            }
-            DB::insert('insert into type_abonnements_etp (nom_type,description,tarif,nb_utilisateur,nb_formateur,nb_projet,illimite) values (?,?,?,?,?,?,?)', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$nb_projet,$illimite]);
 
+            }
+            DB::insert('insert into type_abonnements_etp (nom_type,description,tarif,nb_utilisateur,nb_formateur,min_emp,max_emp,illimite) values (?,?,?,?,?,?,?,?)', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$min_emp,$max_emp,$illimite]);
         }
 
         // $typeAbonnement = new type_abonnement();
@@ -221,27 +225,26 @@ class AbonnementController extends Controller
     {
 
         if (Gate::allows('isReferent')) {
-            $fonct = new FonctionGenerique();
             $offregratuit = offre_gratuit::with('type_abonne')->where('type_abonne_id', 1)->get();
-            $responsable = $fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
+            $responsable =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
             $abn =type_abonnement::all();
             $typeAbonne_id = 1;
 
-            $test_abonne = $fonct->findWhere('abonnements',['entreprise_id','status'],[$responsable[0]->entreprise_id,'En attente']);
+            $test_abonne =$this->fonct->findWhere('abonnements',['entreprise_id','status'],[$responsable[0]->entreprise_id,'En attente']);
 
 
             /** on récupère l'abonnement actuel */
             $abonnement_actuel = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$responsable[0]->entreprise_id]);
 
             // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->get();
-            $typeAbonnement = $fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
+            $typeAbonnement =$this->fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
 
             $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '1')->orderBy('tarif','asc')->get();
 
             $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '2')->get();
 
             //liste facturation
-            // $facture = $fonct->findWhere('v_abonnement_facture_entreprise',['entreprise_id'],[$responsable[0]->entreprise_id]);
+            // $facture =$this->fonct->findWhere('v_abonnement_facture_entreprise',['entreprise_id'],[$responsable[0]->entreprise_id]);
             $facture = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by date_demande desc ',[$responsable[0]->entreprise_id]);
             // facture du mois suivant
             $facture_suivant = [];
@@ -251,7 +254,7 @@ class AbonnementController extends Controller
             //generation nouvelle facture chaque mois si l'utilisateur a choisi l'offre mensuel
             $max_id_facture = $this->abonnement_model->findMax('v_abonnement_facture_entreprise','facture_id');
 
-            $dernier_facture = $fonct->findWhere('v_abonnement_facture_entreprise',['entreprise_id','facture_id'],[$responsable[0]->entreprise_id,$max_id_facture[0]->id_max]);
+            $dernier_facture =$this->fonct->findWhere('v_abonnement_facture_entreprise',['entreprise_id','facture_id'],[$responsable[0]->entreprise_id,$max_id_facture[0]->id_max]);
 
 
 
@@ -302,7 +305,7 @@ class AbonnementController extends Controller
 
             if($facture!=null){
 
-                $test_assujetti = $fonct->findWhere('entreprises',['id'],[$responsable[0]->entreprise_id]);
+                $test_assujetti =$this->fonct->findWhere('entreprises',['id'],[$responsable[0]->entreprise_id]);
 
                     //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
                 if($test_assujetti[0]->assujetti_id == 1) {
@@ -339,9 +342,8 @@ class AbonnementController extends Controller
         }
 
         if (Gate::allows('isCFP')) {
-            $fonct = new FonctionGenerique();
 
-            $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+            $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->where('status','!=','En attente')->exists();
 
@@ -352,13 +354,13 @@ class AbonnementController extends Controller
             /** on récupère l'abonnement actuel */
             $abonnement_actuel = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
 
-            $typeAbonnement = $fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
+            $typeAbonnement =$this->fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
 
             $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '1')->get();
             $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '2')->get();
 
                //liste facturation
-            // $facture = $fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
+            // $facture =$this->fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
             $facture = DB::select('select * from v_abonnement_facture where cfp_id = ? order by date_demande desc',[$cfp_id] );
             // facture du mois suivant
              $facture_suivant = [];
@@ -368,7 +370,7 @@ class AbonnementController extends Controller
             //generation nouvelle facture chaque mois si l'utilisateur a choisi l'offre mensuel
             $max_id_facture = $this->abonnement_model->findMax('v_abonnement_facture','facture_id');
 
-            $dernier_facture = $fonct->findWhere('v_abonnement_facture',['cfp_id','facture_id'],[$cfp_id,$max_id_facture[0]->id_max]);
+            $dernier_facture =$this->fonct->findWhere('v_abonnement_facture',['cfp_id','facture_id'],[$cfp_id,$max_id_facture[0]->id_max]);
 
 
 
@@ -417,7 +419,7 @@ class AbonnementController extends Controller
 
 
             if($facture!=null){
-                $test_assujetti = $fonct->findWhere('cfps',['id'],[$cfp_id]);
+                $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
                     //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
                 if($test_assujetti[0]->assujetti_id == 1) {
                     for ($i=0; $i < count($facture); $i++) {
@@ -478,22 +480,21 @@ class AbonnementController extends Controller
     //abonnement
     public function Abonnement()
     {
-        $fonct = new FonctionGenerique();
         $tarif_id = request()->id;
         $tarif = tarif_categorie::where('id', $tarif_id)->get();
         $categorie_paiement_id = tarif_categorie::where('id', $tarif_id)->value('categorie_paiement_id');
         $type_abonnement_role_id = tarif_categorie::where('id', $tarif_id)->value('type_abonnement_role_id');
         // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('id', $type_abonnement_role_id)->get();
-        $typeAbonnement = $fonct->findWhere('v_abonnement_role',['types_id'],[$type_abonnement_role_id]);
+        $typeAbonnement =$this->fonct->findWhere('v_abonnement_role',['types_id'],[$type_abonnement_role_id]);
 
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
         $nb = abonnement::where('entreprise_id', $entreprise_id)->count();
 
         if (Gate::allows('isReferent')) {
-            $resp = $fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
+            $resp =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
             $entreprise_id = $resp[0]->entreprise_id;
-            $entreprise = $fonct->findWhere('v_responsable_entreprise',['entreprise_id','prioriter'],[$entreprise_id,1]);
+            $entreprise =$this->fonct->findWhere('v_responsable_entreprise',['entreprise_id','prioriter'],[$entreprise_id,1]);
             $cfps = null;
 
               //on verifie l'abonnemennt de l'entreprise
@@ -550,7 +551,7 @@ class AbonnementController extends Controller
         }
 
         if(Gate::allows(('isCFP'))) {
-            $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+            $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
             $cfps = cfp::where('id', $cfp_id)->get();
               //on verifie l'abonnemennt de l'of
@@ -622,7 +623,6 @@ class AbonnementController extends Controller
     //enregistrer abonnement des utilisateurs;
     public function enregistrer_abonnement(Request $request)
     {
-        $fonct = new FonctionGenerique();
         $abonnement = new abonnement();
         $abonnement_cfp = new abonnement_cfp();
         $dt = Carbon::today()->toDateString();
@@ -631,7 +631,7 @@ class AbonnementController extends Controller
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
 
-        $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+        $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
         if($resp!=null) $cfp_id = $resp[0]->cfp_id;
         else $cfp_id = null;
 
@@ -647,12 +647,12 @@ class AbonnementController extends Controller
 
               //générer une facture
 
-            // $abonnement_cfp_id = $fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
+            // $abonnement_cfp_id =$this->fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
             $abonnement_id = DB::select('select * from abonnements where entreprise_id = ? and status = ? order by id desc limit 1', [$entreprise_id,'En attente']);
-            $montant = $fonct->findWhere('v_categorie_abonnement_etp',['type_abonnement_role_id'],[$abonnement_id[0]->type_abonnement_role_id]);
+            $montant =$this->fonct->findWhere('v_categorie_abonnement_etp',['type_abonnement_role_id'],[$abonnement_id[0]->type_abonnement_role_id]);
 
 
-            // $last_num_facture = $fonct->fin
+            // $last_num_facture =$this->fonct->fin
             $this->abonnement_model->insert_factures_abonnements_etp($abonnement_id[0]->id,$dt,$due_date,$montant[0]->tarif);
 
         }
@@ -668,12 +668,12 @@ class AbonnementController extends Controller
 
             //générer une facture
 
-            // $abonnement_cfp_id = $fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
+            // $abonnement_cfp_id =$this->fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
             $abonnement_cfp_id = DB::select('select * from abonnement_cfps where cfp_id = ? and status = ? order by id desc limit 1', [$cfp_id,'En attente']);
-            $montant = $fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
+            $montant =$this->fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
 
 
-            // $last_num_facture = $fonct->fin
+            // $last_num_facture =$this->fonct->fin
             $this->abonnement_model->insert_factures_abonnements_cfp($abonnement_cfp_id[0]->id,$dt,$due_date,$montant[0]->tarif);
             // DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$due_date,1,$montant[0]->tarif]);
 
@@ -689,17 +689,21 @@ class AbonnementController extends Controller
         // // dd($abonnementETP);
         // $abonnementETP = DB::select('select nom_type,tarif,abonnement_id,count(type_abonnement_role_id) as total_inscrit from v_categorie_abonnement_etp group by nom_type,tarif');
         //return view('superadmin.listeAbonne', compact('abonnementETP', 'abonnementCFP'));
-        $fonct = new FonctionGenerique();
-        // $liste = $fonct->findAll('v_abonnement_facture_entreprise');
+
+        // $liste =$this->fonct->findAll('v_abonnement_facture_entreprise');
         $liste = DB::select('select * from v_abonnement_facture_entreprise order by date_demande desc');
-        // $cfpListe = $fonct->findAll('v_abonnement_facture');
+        // $cfpListe =$this->fonct->findAll('v_abonnement_facture');
         $cfpListe = DB::select('select * from v_abonnement_facture order by date_demande desc');
-        return view('superadmin.activation-abonnement', compact('liste','cfpListe'));
+        //liste des types d'abonnements
+        $typeAbonnement_etp =$this->fonct->findAll('type_abonnements_etp');
+        $typeAbonnement_of =$this->fonct->findAll('type_abonnements_of');
+
+        return view('superadmin.activation-abonnement', compact('liste','cfpListe','typeAbonnement_etp','typeAbonnement_of'));
     }
     //activation de compte
     public function activation()
     {
-        $fonct = new FonctionGenerique();
+
         $id = request()->id;
         $type_abonnement_role_id = abonnement::where('id', $id)->value('type_abonnement_role_id');
 
@@ -711,7 +715,7 @@ class AbonnementController extends Controller
 
             $nbAbonnement = type_abonnement_role::withCount('abonnement')->where('id', $type_abonnement_role_id)->get();
             // $liste = abonnement::with('type_abonnement_role', 'entreprise', 'categorie_paiement')->where('type_abonnement_role_id', $type_abonnement_role_id)->get();
-            $liste = $fonct->findWhere('v_abonnement_facture_entreprise',['type_abonnement_role_id'],[$type_abonnement_role_id]);
+            $liste =$this->fonct->findWhere('v_abonnement_facture_entreprise',['type_abonnement_role_id'],[$type_abonnement_role_id]);
             $nom_entreprise = [];
             for ($i=0; $i < count($liste); $i++) {
                 array_push($nom_entreprise ,$fonct->findWhere('entreprises',['id'],[$liste[$i]->entreprise_id]));
@@ -793,18 +797,17 @@ class AbonnementController extends Controller
     //detail facture
     public function detail_facture($id){
 
-        $fonct = new FonctionGenerique();
-        $mode_paiements = $fonct->findAll('mode_financements');
+        $mode_paiements =$this->fonct->findAll('mode_financements');
 
         if(Gate::allows('isCFP')){
             $entreprises = null;
-            $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+            $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
-            $cfp = $fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
-            $facture = $fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
+            $cfp =$this->fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
+            $facture =$this->fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
 
             if($facture!=null){
-                $test_assujetti = $fonct->findWhere('cfps',['id'],[$cfp_id]);
+                $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
                     //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
                 if($test_assujetti[0]->assujetti_id == 1) {
                     $tva = ($facture[0]->montant_facture * 20) / 100;
@@ -819,19 +822,19 @@ class AbonnementController extends Controller
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
-            $dates_abonnement = $fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
+            $dates_abonnement =$this->fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
             return view('superadmin.detail_facture',compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
         }
         if(Gate::allows('isReferent')){
             $cfp = null;
-            $resp = $fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
+            $resp =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
             $entreprise_id = $resp[0]->entreprise_id;
-            $entreprises = $fonct->findWhereMulitOne('entreprises',['id'],[$entreprise_id]);
+            $entreprises =$this->fonct->findWhereMulitOne('entreprises',['id'],[$entreprise_id]);
 
-            $facture = $fonct->findWhere('v_abonnement_facture_entreprise',['facture_id'],[$id]);
+            $facture =$this->fonct->findWhere('v_abonnement_facture_entreprise',['facture_id'],[$id]);
 
             if($facture!=null){
-                $test_assujetti = $fonct->findWhere('entreprises',['id'],[$entreprise_id]);
+                $test_assujetti =$this->fonct->findWhere('entreprises',['id'],[$entreprise_id]);
                     //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
                 if($test_assujetti[0]->assujetti_id == 1) {
                     $tva = ($facture[0]->montant_facture * 20) / 100;
@@ -846,7 +849,7 @@ class AbonnementController extends Controller
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
-            $dates_abonnement = $fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
+            $dates_abonnement =$this->fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
 
             return view('superadmin.detail_facture',compact('dates_abonnement','cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
         }
@@ -873,19 +876,17 @@ class AbonnementController extends Controller
             "defaultPaperSize" => "a4",
             "dpi" => 130
         ]);
-
-        $fonct = new FonctionGenerique();
-        $mode_paiements = $fonct->findAll('mode_financements');
+        $mode_paiements =$this->fonct->findAll('mode_financements');
 
         if(Gate::allows('isCFP')){
             $entreprises = null;
-            $resp = $fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+            $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
-            $cfp = $fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
-            $facture = $fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
+            $cfp =$this->fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
+            $facture =$this->fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
 
             if($facture!=null){
-                $test_assujetti = $fonct->findWhere('cfps',['id'],[$cfp_id]);
+                $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
                     //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
                 if($test_assujetti[0]->assujetti_id == 1) {
                     $tva = ($facture[0]->montant_facture * 20) / 100;
@@ -900,21 +901,21 @@ class AbonnementController extends Controller
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
-            $dates_abonnement = $fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
+            $dates_abonnement =$this->fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
             $lettre_montant = $this->fact->int2str($net_ttc);
             $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','lettre_montant','entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
 
         }
         if(Gate::allows('isReferent')){
             $cfp = null;
-            $resp = $fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
+            $resp =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
             $entreprise_id = $resp[0]->entreprise_id;
-            $entreprises = $fonct->findWhereMulitOne('entreprises',['id'],[$entreprise_id]);
+            $entreprises =$this->fonct->findWhereMulitOne('entreprises',['id'],[$entreprise_id]);
 
-            $facture = $fonct->findWhere('v_abonnement_facture_entreprise',['facture_id'],[$id]);
+            $facture =$this->fonct->findWhere('v_abonnement_facture_entreprise',['facture_id'],[$id]);
 
             if($facture!=null){
-                $test_assujetti = $fonct->findWhere('entreprises',['id'],[$entreprise_id]);
+                $test_assujetti =$this->fonct->findWhere('entreprises',['id'],[$entreprise_id]);
                     //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
                 if($test_assujetti[0]->assujetti_id == 1) {
                     $tva = ($facture[0]->montant_facture * 20) / 100;
@@ -929,7 +930,7 @@ class AbonnementController extends Controller
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
-            $dates_abonnement = $fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
+            $dates_abonnement =$this->fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
             $lettre_montant = $this->fact->int2str($net_ttc);
             $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('lettre_montant','dates_abonnement','cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
             // return view('admin.pdf.pdf_facture_abonnement', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
@@ -952,9 +953,8 @@ class AbonnementController extends Controller
         return back()->with('arret_immediat','Vous venez de désactiver votre abonnement');
     }
     public function arret_fin_abonnement_entreprise($id){
-        $fonct = new FonctionGenerique();
         $dateNow = Carbon::today()->toDateString();
-        $date_fin = $fonct->findWhere('abonnements',['id'],[$id]);
+        $date_fin =$this->fonct->findWhere('abonnements',['id'],[$id]);
         if($dateNow == $date_fin)  DB::update('update abonnements set status = ?,activite = ?, type_arret = ? where id = ?', ["Désactivé",0,"fin abonnement",$id]);
         return back()->with('arret_fin','Votre abonnement sera désactivé automatiquement dans un mois');
     }
@@ -965,9 +965,8 @@ class AbonnementController extends Controller
     }
 
     public function arret_fin_abonnement_of($id){
-        $fonct = new FonctionGenerique();
         $dateNow = Carbon::today()->toDateString();
-        $date_fin = $fonct->findWhere('abonnements',['id'],[$id]);
+        $date_fin =$this->fonct->findWhere('abonnements',['id'],[$id]);
         if($dateNow == $date_fin)  DB::update('update abonnement_cfps set status = ?, activite = ?, type_arret = ? where id = ?', ["Désactivé",0,"fin abonnement",$id]);
         return back()->with('arret_fin','Votre abonnement sera désactivé automatiquement dans un mois');
     }
@@ -976,5 +975,34 @@ class AbonnementController extends Controller
         $tri_nom =  DB::select('select * from v_abonnement_facture_entreprise  order by nom_entreprise');
         return response()->json($tri_nom);
     }
+    /** MODIFICATION TYPE D'ABONNEMENT */
+    public function modifier_abonnement_of($id){
+        $abonnement = $this->fonct->findWhereMulitOne("type_abonnements_of",["id"],[$id]);
+        return view('superadmin.modifier_type',compact('abonnement'));
+    }
+    public function enregistrer_modification_abonnement_of(Request $request,$id){
+        $nom_type = $request->nom_type;
+        $description = $request->description;
+        $prix = $request->prix;
+        $illimite_utilisateur = $request->illimite_utilisateur;
+        $illimite_of = $request->illimite_of;
+        if($illimite_utilisateur!=null){
+            $nb_utilisateur = $request->nb_utilisateur;
+            $nb_formateur = $request->nb_formateur;
+            $illimite = 0;
+        }
+        else{
+            $nb_utilisateur = 0;
+            $nb_formateur = 0;
+            $illimite = 1;
+        }
+        if($illimite_of!=null){
+            $nb_projet = $request->nb_projet;
+        }
+        else{
+            $nb_projet = 0;
+        }
+        DB::update('update type_abonnements_of set nom_type = ?, tarif = ?, nb_utilisateur = ?,nb_formateur = ?,nb_projet = ?,illimite = ? where id = ?', [$nom_type,$prix,$nb_utilisateur,$nb_formateur,$nb_projet,$illimite]);
 
+    }
 }

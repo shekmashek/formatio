@@ -698,7 +698,15 @@ Route::post('/update_chef/{id}','ChefDepartementController@update_chef')->name('
 
 // =======================  ABONNEMENT
 Route::resource('abonnement','AbonnementController');
-
+Route::get('/', function () {
+    return view('index_accueil');
+// return view('page_travaux.plateforme_en_travaux');
+})->name('accueil_perso');
+Route::get('nouveau_type',function(){
+    return view('superadmin.nouveau_type');
+})->name('nouveau_type');
+Route::get('modifier_abonnement_of/{id}','AbonnementController@modifier_abonnement_of')->name('modifier_abonnement_of');
+Route::post('enregistrer_modification_abonnement_of/{id}','AbonnementController@enregistrer_modification_abonnement_of')->name('enregistrer_modification_abonnement_of');
 //ajouter nouveau plan
 Route::get('ajout_plan', function () {
     return view('referent.ajout_plan');

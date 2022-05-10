@@ -1,6 +1,6 @@
 
 --abonnement pour entreprise
-CREATE TABLE `type_abonnements_etp` (
+CREATE TABLE `type_abonnements_of` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE `type_abonnements_etp` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --abonnement pour of
-CREATE TABLE `type_abonnements_of` (
+CREATE TABLE `type_abonnements_etp` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,

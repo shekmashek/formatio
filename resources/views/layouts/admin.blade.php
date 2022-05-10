@@ -679,6 +679,21 @@
                                 </ul>
                             </div>
                             @endcan
+                            @can('isSuperAdmin')
+                                <div class="btn_creer dropdown">
+
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                        data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none"
+                                        aria-haspopup="true">
+                                        <i class='bx bx-plus-medical icon_creer'></i>Créer
+                                    </a>
+
+                                    <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" href="{{route('nouveau_type')}}"> <i
+                                                    class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouveau type d'abonnement</a></li>
+                                    </ul>
+                                </div>
+                            @endcan
                             @can('isManager')
                             <div class="btn_creer dropdown">
 

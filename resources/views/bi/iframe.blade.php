@@ -1,6 +1,8 @@
 @extends('./layouts.admin')
+
 @section('title')
-    <h3 class="text-white ms-5">Bussness intelligent</h3>
+<p class="text_header m-0 mt-1">Business Intelligent
+</p>
 @endsection
 <style>
     .navigation_module .nav-link {

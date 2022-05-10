@@ -48,6 +48,7 @@
     width: 320px;
     border-radius: 1rem;
     margin: 10px 10px;
+
 }
 ul p{
     color: rgb(142,155,178);
@@ -184,12 +185,42 @@ ul p{
 
 .card {
     width: 250px;
-    height: 380px;
+    min-height: 380px;
     position: relative;
     padding: 20px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
     margin: 0 auto;
     transition: all .5s ease;
+    border-color: #f3d9ef!important;
+    border: 5px solid #f3d9ef!important;
+    border-radius: 7px;
+    background: #fff9fe!important;
+}
+.card_equipe {
+    width: 250px;
+    min-height: 380px;
+    position: relative;
+    padding: 20px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    margin: 0 auto;
+    transition: all .5s ease;
+    border-color: #f3d9ef!important;
+    border: 5px solid #f3d9ef!important;
+    border-radius: 7px;
+    background: #fff9fe!important;
+}
+.card_orga {
+    width: 250px;
+    min-height: 380px;
+    position: relative;
+    padding: 20px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    margin: 0 auto;
+    transition: all .5s ease;
+    border-color: #f3d9ef!important;
+    border: 5px solid #f3d9ef!important;
+    border-radius: 7px;
+    background: #fff9fe!important;
 }
 
 .h-1 {
@@ -356,4 +387,19 @@ ul p{
 
 .btn-primary a:hover{
     color: white;
+}
+.nom_type{
+   font-size: 22pt;
+   margin-bottom:0px;
+   color:#37097B;
+}
+.description{
+    font-size: 12pt;
+}
+.tarif{
+    font-size: 15pt;
+    color:  #4EBCF5;
+    font-weight: bold;
+    padding-top: 20px;
+    margin-bottom: 20px;
 }
