@@ -50,6 +50,7 @@ class ParticipantController extends Controller
     }
 
 
+
 public function desactiver_stagiaire(Request $req){
 
     $stg = new stagiaire();
@@ -230,7 +231,8 @@ public function new_emp(){
     {
         //condition de validation de formulaire
 
-        /*     $request->validate(
+
+       /*      $request->validate(
             [
                 'matricule' => ["required"],
                 'nom' => ["required"],
@@ -267,8 +269,8 @@ public function new_emp(){
                 'cin.required' => 'Entrer le CIN',
             ]
         );
-*/
 
+*/
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');

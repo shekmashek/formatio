@@ -684,6 +684,7 @@ Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')-
 
 
 Route::get('employes.liste/{nbPag?}','ParticipantController@liste_employer')->name('employes.liste');
+
 Route::get('employes.export.nouveau','ParticipantController@export_excel_new_participant')->name('employes.export.nouveau');
 Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
 
@@ -984,7 +985,8 @@ Route::post('remplir_info_manager','HomeController@remplir_info_manager')->name(
 
 //================ saisir employé,responsable,chef de département
 
-Route::resource('employeur','EmployeurController');
+Route::resource('employeur','EmployeurController')->except('destroy');
+Route::get('employeur.destroy/{id}','EmployeurController@destroy')->name('employeur.destroy');
 
 // ============== demande de devis
 Route::resource('demande_devis', 'DemandeDevisController');

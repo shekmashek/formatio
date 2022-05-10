@@ -3,7 +3,7 @@
 <p class="text_header m-0 mt-1">Facture</p>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+<link rel="stylesheet" href="{{asset('css/facture.css')}}">
 
 <style>
     table,

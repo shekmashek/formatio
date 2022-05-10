@@ -3,7 +3,7 @@
 <p class="text_header m-0 mt-1">Facture</p>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+<link rel="stylesheet" href="{{asset('css/facture.css')}}">
 
 <style>
     table,
@@ -231,7 +231,7 @@
 
 
     @if (isset($invoice_dte))
-        {{-- {{dd($invoice_dte)}} --}}
+    {{-- {{dd($invoice_dte)}} --}}
     @endif
     {{-- @if($pagination_full["debut_aff"]>1 || $pagination_brouillon["debut_aff"]>1 || $pagination_actif["debut_aff"]>1 || $pagination_payer["debut_aff"]>1 )
 
@@ -1214,95 +1214,95 @@
                                                     </p>
                                                     <div class="collapse multi-collapse" id="detail_par_rest">
                                                         <form class="mt-1 mb-2 form_colab" action="{{route('search_par_solde')}}" method="GET" enctype="multipart/form-data">
-                                                            @csrf
+                                                    @csrf
 
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
-                                                                        <input required type="number" min="0" placeholder="valeur" name="reste_solde_payer_debut" id="reste_solde_payer_debut" class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
-                                                                        <input required type="number" name="reste_solde_payer_fin" id="reste_solde_payer_fin" class="form-control" />
-                                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
+                                                                <input required type="number" min="0" placeholder="valeur" name="reste_solde_payer_debut" id="reste_solde_payer_debut" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
+                                                                <input required type="number" name="reste_solde_payer_fin" id="reste_solde_payer_fin" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div align="center">
+                                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                    </div>
+                                                    </form>
+                                                </div> --}}
+                                                <hr>
+                                                <p>
+                                                    <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Recherche par entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                </p>
+                                                <div class="collapse multi-collapse" id="detail_par_etp">
+                                                    <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <select class="form-select" name="entiter_id" id="entiter_id">
+                                                                        @foreach ($entreprise as $etp)
+                                                                        <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
-                                                            <div align="center">
+                                                            <div class="col-4">
                                                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                                            </div>
-                                                        </form>
-                                                    </div> --}}
-                                                    <hr>
-                                                    <p>
-                                                        <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Recherche par entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
-                                                    </p>
-                                                    <div class="collapse multi-collapse" id="detail_par_etp">
-                                                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
-                                                            @csrf
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <select class="form-select" name="entiter_id" id="entiter_id">
-                                                                            @foreach ($entreprise as $etp)
-                                                                            <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
 
-                                                                </div>
                                                             </div>
+                                                        </div>
 
-                                                            {{-- <label for="dte_debut" class="form-label" align="left">Entreprise<strong style="color:#ff0000;">*</strong></label>
+                                                        {{-- <label for="dte_debut" class="form-label" align="left">Entreprise<strong style="color:#ff0000;">*</strong></label>
                                                                 <br>
                                                                 <select class="form-select" name="entiter_id" id="entiter_id">
                                                                     @foreach ($entreprise as $etp)
                                                                     <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
-                                                            @endforeach
-                                                            </select>
-                                                            <br>
-                                                            <button type="submit" class="btn_creer mt-2">Recherche</button> --}}
-                                                        </form>
-                                                    </div>
-                                                    <hr>
-                                                    <p>
-                                                        <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status(mbol vita) <i class='bx icon_trie bxs-chevron-up'></i></a>
-                                                    </p>
-                                                    <div class="collapse multi-collapse" id="detail_par_status">
-                                                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_status')}}" method="GET" enctype="multipart/form-data">
-                                                            @csrf
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <select class="form-select" name="status" id="status">
-                                                                            <option value="INACTIF">Nom envoyé</option>
-                                                                            <option value="ACTIF">Envoyé</option>
-                                                                            <option value="EN_COUR">Partiellement payé</option>
-                                                                            <option value="PAYER">Payé</option>
-                                                                            <option value="RETARD">En retard</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
-
+                                                        @endforeach
+                                                        </select>
+                                                        <br>
+                                                        <button type="submit" class="btn_creer mt-2">Recherche</button> --}}
+                                                    </form>
+                                                </div>
+                                                <hr>
+                                                <p>
+                                                    <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status(mbol vita) <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                </p>
+                                                <div class="collapse multi-collapse" id="detail_par_status">
+                                                    <form class="mt-1 mb-2 form_colab" action="{{route('search_par_status')}}" method="GET" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <select class="form-select" name="status" id="status">
+                                                                        <option value="INACTIF">Nom envoyé</option>
+                                                                        <option value="ACTIF">Envoyé</option>
+                                                                        <option value="EN_COUR">Partiellement payé</option>
+                                                                        <option value="PAYER">Payé</option>
+                                                                        <option value="RETARD">En retard</option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-4">
+                                                                <button type="submit" class="btn_creer mt-2">Recherche</button>
 
-                                                            <br>
-                                                        </form>
-                                                    </div>
+                                                            </div>
+                                                        </div>
 
+                                                        <br>
+                                                    </form>
                                                 </div>
+
                                             </div>
                                         </div>
+                                    </div>
 
-                                        {{-- inmportation fonction js pour cfp --}}
-                                        @include("admin.facture.function_js.js_cfp")
+                                    {{-- inmportation fonction js pour cfp --}}
+                                    @include("admin.facture.function_js.js_cfp")
 
-                                        @endsection
+                                    @endsection

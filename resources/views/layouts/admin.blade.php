@@ -251,31 +251,7 @@
 
             </li> --}}
             @endcanany
-            @canany(['isReferent'])
-            <li>
-                <a href="{{route('employes.liste')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Mes employer</span>
-                </a>
 
-            </li>
-
-            <li>
-                <a href="{{route('employes')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Equipe admnistrative</span>
-                </a>
-
-            </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_manager')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Manager</span>
-                </a>
-
-            </li> --}}
-            @endcanany
             {{-- Referent --}}
             @canany(['isAdmin','isSuperAdmin'])
             <li>
@@ -544,8 +520,9 @@
                                         onclick="afficher_annuaire()"><span class="d-flex flex-column"><i class='bx bx-analyse'></i><span class="text_racourcis">Annuaire</span></span></a>
                                     @canany(['isReferent','isStagiaire','isManager'])
                                         <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
-                                        <a href="{{route('employes')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-group'></i><span class="text_racourcis">Listes employées</span></span></a>
-                                    @endcan
+                                        <a href="{{route('employes.liste')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-group'></i><span class="text_racourcis">Listes employées</span></span></a>
+                                        <a href="{{route('employes')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-group'></i><span class="text_racourcis">Equipe Administratif</span></span></a>
+                                        @endcan
                                     @canany(['isCFP','isFormateur'])
                                     <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
                                     @endcanany
@@ -633,7 +610,7 @@
                                     </a>
 
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" href="{{route('departement.create')}}"><i
+                                        <li><a class="dropdown-item" href="{{route('employes.new')}}"><i
                                                     class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés</a></li>
                                         <li><a class="dropdown-item" href="{{route('nouveau+appel+offre')}}"> <i
                                                     class="fas fa-envelope-open-text icon_plus"></i>&nbsp; Appel d'offre</a>

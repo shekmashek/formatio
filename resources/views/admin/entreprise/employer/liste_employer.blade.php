@@ -3,7 +3,7 @@
 <p class="text_header m-0 mt-1">Liste employer</p>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 
 <style>
     table,
@@ -207,6 +207,35 @@
         color: blue;
     }
 
+    .navigation_module .nav-link {
+        color: #637381;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 0.900rem;
+        transition: all 200ms;
+        margin-right: 1rem;
+        text-transform: uppercase;
+        padding-top: 10px;
+        border: none;
+    }
+
+    .nav-item .nav-link.active {
+        border-bottom: 3px solid #7635dc !important;
+        border: none;
+        color: #7635dc
+    }
+
+    .nav-tabs .nav-link:hover {
+        background-color: rgb(245, 243, 243);
+        transform: scale(1.1);
+        border: none;
+    }
+
+    .nav-tabs .nav-item a {
+        text-decoration: none;
+        text-decoration-line: none;
+    }
+
 </style>
 
 <div class="container-fluid">
@@ -279,6 +308,7 @@
                             <th scope="col">Télephone
                             </th>
                             <th scope="col">Action</th>
+                            <th style="width: 10px;">Rétirer</th>
                         </tr>
                     </thead>
                     <tbody id="list_data_trie_valider">
@@ -287,15 +317,13 @@
                         <tr>
                             <td>
                                 <a href="#">
-                                    <center>
-                                        @if($emp->photos == null)
-                                        <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
-                                            <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
-                                        </p>
-                                        @else
-                                        <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
-                                        @endif
-                                    </center>
+                                    @if($emp->photos == null)
+                                    <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
+                                        <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
+                                    </p>
+                                    @else
+                                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                    @endif
                                 </a>
                             </td>
                             <td>
@@ -336,41 +364,35 @@
                                 </div>
                                 @endif
                             </td>
-
+                            <td>
+                                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                               </td>
                         </tr>
-                        @endforeach
-                        {{-- <tr>
-                            <td>
-                                <a href="#">
-                                    <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ;">
-                                        <span class="" style="position:relative; top: .5rem;"><b>ANF</b></span>
-                                    </p>
-                                </a>
-                            </td>
-                            <td>
-                                <span style="color:green; "> <i class="bx bxs-circle"></i> </span> ETU000976
-                            </td>
-                            <th>
-                                ANTOENJARA (teste)
-                            </th>
-                            <td>
-                                Noam Francisco
-                            </td>
-                            <td>
-                                antoenjara1998@gmail.com
-                            </td>
-                            <td>
-                                032 86 837 25
-                            </td>
-                            <td>
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
-                                    <input class="form-check-input ajouter_stg" type="checkbox" data-user-id="1" data-role-id="3" value="2" checked>
+
+                        <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
+                                @csrf
+
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                        <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                    </div>
+                                    <div class="modal-body">
+                                        <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
+                                    </div>
+
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                    </div>
                                 </div>
-                            </td>
+                            </div>
+                        </form>
 
-                        </tr> --}}
-
+                        </div>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

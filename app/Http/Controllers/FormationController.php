@@ -299,20 +299,19 @@ class FormationController extends Controller
 
     public function annuaire($nbPagination = null)
     {
-
-        if ($nbPagination == null) {
-            $nbPagination = 1;
-        }
-        if ($nbPagination <= 0) {
+        $nb_limit = 3;
+        if ($nbPagination == null || $nbPagination <= 0) {
             $nbPagination = 1;
         }
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
-            $cfps = $this->fonct->findWhereTrieOrderBy("cfps", [], [], [], ["nom"], "ASC", ($nbPagination - 1), 5);
+            $cfps = $this->fonct->findWhereTrieOrderBy("cfps", [], [], [], ["created_at"], "ASC", ($nbPagination), $nb_limit);
 
+            // dd($this->fonct->queryWhereTrieOrderBy("cfps", [], [], [], ["created_at"], "ASC", ($nbPagination - 1), $nb_limit));
             $totaleData = $this->fonct->getNbrePagination("cfps", "id", [], [], [], "");
-            $pagination = $this->fonct->nb_liste_pagination($totaleData,  $nbPagination, 5);
+            $pagination = $this->fonct->nb_liste_pagination($totaleData,  $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
+
             return view('referent.catalogue.cfp_tous', compact('secteurs', 'cfps', 'pagination', 'initial'));
         }
     }
@@ -320,13 +319,11 @@ class FormationController extends Controller
     public function search_par_nom_entiter(Request $req, $nbPagination = null, $nom_entiter_pag = null)
     {
         $nom_entiter = null;
+        $nb_limit = 5;
+        if ($nbPagination == null || $nbPagination <= 0) {
+            $nbPagination = 1;
+        }
 
-        if ($nbPagination == null) {
-            $nbPagination = 1;
-        }
-        if ($nbPagination <= 0) {
-            $nbPagination = 1;
-        }
         if ($nom_entiter_pag != null) {
             $nom_entiter = $nom_entiter_pag;
         } else {
@@ -335,13 +332,13 @@ class FormationController extends Controller
 
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
-            $test = $this->fonct->queryWhereTrieOrderBy("cfps", ["nom"], ["LIKE"], ["%" . $nom_entiter . "%"], ["nom"], "ASC", ($nbPagination - 1), 5);
+            $test = $this->fonct->queryWhereTrieOrderBy("cfps", ["nom"], ["LIKE"], ["%" . $nom_entiter . "%"], ["created_at"], "ASC", ($nbPagination), $nb_limit);
 
-            $cfps = $this->fonct->findWhereTrieOrderBy("cfps", ["nom"], ["LIKE"], ["%" . $nom_entiter . "%"], ["nom"], "ASC", ($nbPagination - 1), 5);
+            $cfps = $this->fonct->findWhereTrieOrderBy("cfps", ["nom"], ["LIKE"], ["%" . $nom_entiter . "%"], ["created_at"], "ASC", ($nbPagination), $nb_limit);
             // dd($cfps);
 
-            $totaleData = $this->fonct->getNbrePagination("cfps", "id", [], [], [], "");
-            $pagination = $this->formation->nb_entiter_pagination($nom_entiter,  $nbPagination, 5);
+            $totaleData = $this->fonct->getNbrePagination("cfps", "id", ["nom"], ["LIKE"], ["%" . $nom_entiter . "%"], "AND");
+            $pagination = $this->formation->nb_entiter_pagination($nom_entiter,  $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
             return view('referent.catalogue.cfp_tous', compact('nom_entiter', 'secteurs', 'cfps', 'pagination', 'initial'));
         }
@@ -354,12 +351,11 @@ class FormationController extends Controller
         $code_postal = null;
         $region = null;
 
-        if ($nbPagination == null) {
+        $nb_limit = 5;
+        if ($nbPagination == null || $nbPagination <= 0) {
             $nbPagination = 1;
         }
-        if ($nbPagination <= 0) {
-            $nbPagination = 1;
-        }
+
         if ($qter != null) {
             $quartier = $qter;
             $ville = $vlle;
@@ -382,10 +378,10 @@ class FormationController extends Controller
                 ["adresse_quartier", "adresse_ville", "adresse_code_postal", "adresse_region"],
                 ["=", "=", "=", "="],
                 [$quartier, $ville, $code_postal, $region],
-                ["nom"],
+                ["created_at"],
                 "ASC",
-                ($nbPagination - 1),
-                5
+                ($nbPagination),
+                $nb_limit
             );
 
             $totaleData = $this->fonct->getNbrePagination(
@@ -397,7 +393,7 @@ class FormationController extends Controller
                 "AND"
             );
 
-            $pagination = $this->fonct->nb_liste_pagination($totaleData,$nbPagination, 5);
+            $pagination = $this->fonct->nb_liste_pagination($totaleData,$nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
             return view('referent.catalogue.cfp_tous', compact('quartier','ville','code_postal','region', 'secteurs', 'cfps', 'pagination', 'initial'));
         }
