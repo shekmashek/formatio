@@ -146,7 +146,7 @@ Route::resource('utilisateur','UtilisateurControlleur')->except([
     'index','create'
 ]);
 Route::get('/show_stagiaire/{id?}','UtilisateurControlleur@show_stagiaire')->name('show_stagiaire');
-Route::get('/liste_utilisateur/{id?}','UtilisateurControlleur@index')->name('liste_utilisateur');
+Route::get('/liste_utilisateur/{id?}/{page?}','UtilisateurControlleur@index')->name('liste_utilisateur');
 // Route::get('/show_etp/{id?}','UtilisateurControlleur@show_etp')->name('show_etp');
 Route::get('/utilisateur_stagiaire/{id?}','UtilisateurControlleur@create')->name('utilisateur_stagiaire');
 Route::get('/utilisateur_formateur','UtilisateurControlleur@liste_formateur')->name('utilisateur_formateur');
@@ -155,7 +155,7 @@ Route::get('/utilisateur_admin','UtilisateurControlleur@admin')->name('utilisate
 Route::get('/utilisateur_new_admin','UtilisateurControlleur@new_admin')->name('utilisateur_new_admin');
 
 //route cfp
-Route::get('/utilisateur_cfp/{id?}','UtilisateurControlleur@cfp')->name('utilisateur_cfp');
+Route::get('/utilisateur_cfp/{id?}/{page?}','UtilisateurControlleur@cfp')->name('utilisateur_cfp');
 Route::get('/utilisateur_resp_cfp','UtilisateurControlleur@show_resp_cfp')->name('utilisateur_resp_cfp');
 Route::get('/update_resp_cfp/{id}','UtilisateurControlleur@update_resp_cfp')->name('update_resp_cfp');
 Route::get('/update_resp_etp/{id}','UtilisateurControlleur@update_resp_etp')->name('update_resp_etp');
@@ -1074,7 +1074,7 @@ Route::post('devise_enregistrer','HomeController@devise_enregistrer')->name('dev
 // Route::get('delete_taux/{id}','HomeController@delete_taux')->name('delete_taux');
 // Route::post('update_taux/{id}','HomeController@update_taux')->name('update_taux');
 //Route iframe
-Route::get('creer_iframe','HomeController@creer_iframe')->name('creer_iframe');
+Route::get('creer_iframe/{id?}/{page?}','HomeController@creer_iframe')->name('creer_iframe');
 Route::post('enregistrer_iframe_etp','HomeController@enregistrer_iframe_etp')->name('enregistrer_iframe_etp');
 Route::post('enregistrer_iframe_cfp','HomeController@enregistrer_iframe_cfp')->name('enregistrer_iframe_cfp');
 

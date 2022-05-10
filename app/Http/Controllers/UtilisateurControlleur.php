@@ -33,15 +33,58 @@ class UtilisateurControlleur extends Controller
             return $next($request);
         });
     }
-    public function index($id = null)
-    {
-        // $liste = entreprise::orderBy('nom_etp')->get();
-        // dd($liste);
-        if ($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
-        else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
-
-        return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
-    }
+  
+  
+        public function index($id = null,$page = null)
+        {
+            $nb_par_page = 10;
+            if($page == null){
+            $page = 1;
+            }
+            $nb_resp= DB::select('select count(id) as nb_resp from responsables  where prioriter=1')[0]->nb_resp;
+            // ≈pagination
+            $fin_page = ceil($nb_resp/$nb_par_page);
+        
+            if($page == 1){
+                $offset = 0;
+                $debut = 1;
+                if($nb_par_page > $nb_resp){
+                    $fin = $nb_resp;
+                }else{
+                    $fin = $nb_par_page;
+                }
+            }
+            elseif($page == $fin_page){
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $nb_resp;
+            }
+            else{
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $page * $nb_par_page;
+            }
+            // $liste = entreprise::orderBy('nom_etp')->get();
+            // dd($liste);
+            //fin pagination
+            if ($id) {
+                $datas = responsable::orderBy('created_at',"DESC")->with('entreprise')->where('prioriter',1)->take($id)->offset($offset)->limit($nb_par_page)->get();
+                // dd('1');
+            }
+            else  {
+                $datas = responsable::orderBy("created_at","DESC")->with('entreprise')->where('prioriter',1)->offset($offset)->limit($nb_par_page)->get();
+                // dd('2');
+            }
+        //    $data=responsable::with('entreprise')->get();
+      
+            // return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
+         
+            $entreprise = $this->fonct->findAll("entreprises");
+            // dd($datas);
+            $branches = $this->fonct->findAll("departement_entreprises");
+            return view('admin.utilisateur.entreprise', compact('entreprise', 'branches','datas','debut','fin','nb_resp','nb_par_page','page','fin_page'));
+        }
+ 
 
     public function create($id = null)
     {
@@ -89,16 +132,51 @@ class UtilisateurControlleur extends Controller
         $user->save();
         return back();
     }
-    public function cfp()
+    public function cfp($id = null,$page = null)
     {
         // $liste = entreprise::orderBy('nom_etp')->get();
         // $cfps = cfp::orderBy("nom")->with('responsable_cfp')->get();
         // $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
         // dd($cfps);
-        $datas = responsable_cfp::orderBy("nom_resp_cfp")->with('cfp')->where('prioriter',1)->get();
+        $nb_par_page = 10;
+            if($page == null){
+            $page = 1;
+            }
+            
+        $nb_resp= DB::select('select count(id) as nb_resp from responsables_cfp where prioriter=1')[0]->nb_resp;
+        $fin_page = ceil($nb_resp/$nb_par_page);
+        
+            if($page == 1){
+                $offset = 0;
+                $debut = 1;
+                if($nb_par_page > $nb_resp){
+                    $fin = $nb_resp;
+                }else{
+                    $fin = $nb_par_page;
+                }
+            }
+            elseif($page == $fin_page){
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $nb_resp;
+            }
+            else{
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $page * $nb_par_page;
+             }
+             if ($id) {
+                 $datas = responsable_cfp::orderBy("created_at","DESC")->with('cfp')->where('prioriter',1)->take($id)->offset($offset)->limit($nb_par_page)->get();
+            }
+            else  {
+                $datas = responsable_cfp::orderBy("created_at","DESC")->with('cfp')->where('prioriter',1)->offset($offset)->limit($nb_par_page)->get();
+
+            }
+            
          $responsables = $this->fonct->findWhere("v_responsable_cfp ", ["prioriter"], ["1"]);
+        
         //  dd($responsables);
-        return view('admin.utilisateur.cfp', compact('responsables','datas'));
+        return view('admin.utilisateur.cfp', compact('responsables','datas','debut','fin','nb_resp','nb_par_page','page','fin_page'));
     }
     public function entreprise()
     {
