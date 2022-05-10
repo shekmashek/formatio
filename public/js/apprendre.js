@@ -63,7 +63,8 @@ $(document).ready(function(){
             // break;
 
             case "Calendrier":
-            // $('.tutorielApprendre').html();
+                $('.tutorielApprendreCfp').addClass('collapse');
+                // $('.tutorielApprendre').html();
             break;
 
             // case "Nouveau employée":
@@ -132,7 +133,8 @@ $(document).ready(function(){
             // break;
 
             case "Projets":
-            // $('.tutorielApprendre').html();
+                $('.tutorielApprendreCfp').addClass('collapse');
+                // $('.tutorielApprendre').html();
             break;
 
             // case "Formation interne":
@@ -198,7 +200,7 @@ $(document).ready(function(){
                             '</a>'+
                             '<div id="apprPlan" class="collapse p-1">'+
                                 '<hr>'+
-                                '<a href="#"><span>Le planning est composé d\'une ou plusieurs séances</span></a>'+
+                                '<span>Le planning est composé d\'une ou plusieurs séances</span>'+
                             '</div>'+
                         '</li>';
                 data += '<li class="list-group-item align-items-start ">'+
@@ -210,8 +212,8 @@ $(document).ready(function(){
                         '</a>'+
                         '<div id="apprAppr" class="collapse ">'+
                             '<hr>'+
-                            '<a href="#"><span>La liste des apprenants devrait vous être fourni au préalable par l\'entreprise.'+
-                            ' Vous devez ensuite ajouter les apprenants dans le projet de formation. Vous êtes le seul autorisé à ajouter des apprenants en projets de formation intra.</span></a>'+
+                            '<span>La liste des apprenants devrait vous être fourni au préalable par l\'entreprise.'+
+                            ' Vous devez ensuite ajouter les apprenants dans le projet de formation. Vous êtes le seul autorisé à ajouter des apprenants en projets de formation intra.</span>'+
                         '</div>'+
                     '</li>';
                 data += '<li class="list-group-item align-items-start ">'+
@@ -223,7 +225,7 @@ $(document).ready(function(){
                         '</a>'+
                         '<div id="apprRess" class="collapse ">'+
                             '<hr>'+
-                            '<a href="#"><span>Les ressources sonts les matériels nécessaires pour le bon déroulement de la formation.</span></a>'+
+                            '<span>Les ressources sonts les matériels nécessaires pour le bon déroulement de la formation.</span>'+
                         '</div>'+
                     '</li>';
                 data += '<li class="list-group-item align-items-start ">'+
@@ -235,7 +237,7 @@ $(document).ready(function(){
                     '</a>'+
                     '<div id="apprEm" class="collapse ">'+
                         '<hr>'+
-                        '<a href="#"><span>Le formateur est le seul habilité à remplir l\'émargement en ligne.</span></a>'+
+                        '<span>Le formateur est le seul habilité à remplir l\'émargement en ligne.</span>'+
                     '</div>'+
                 '</li>';
                 data += '<li class="list-group-item align-items-start ">'+
@@ -247,7 +249,7 @@ $(document).ready(function(){
                     '</a>'+
                     '<div id="apprAvis" class="collapse ">'+
                         '<hr>'+
-                        '<a href="#"><span>Le stagiaire est le seul habilité à remplir le questionnaire d\'Évaluation à chaud de la formation.</span></a>'+
+                        '<span>Le stagiaire est le seul habilité à remplir le questionnaire d\'Évaluation à chaud de la formation.</span>'+
                     '</div>'+
                 '</li>';
                 data += '<li class="list-group-item align-items-start ">'+
@@ -259,7 +261,7 @@ $(document).ready(function(){
                     '</a>'+
                     '<div id="apprEval" class="collapse ">'+
                         '<hr>'+
-                        '<a href="#"><span>Le formateur est le seul habilité à évaluer les compétences acquises par les stagiaires.</span></a>'+
+                        '<span>Le formateur est le seul habilité à évaluer les compétences acquises par les stagiaires.</span>'+
                     '</div>'+
                 '</li>';
                 data += '<li class="list-group-item align-items-start ">'+
@@ -271,7 +273,7 @@ $(document).ready(function(){
                     '</a>'+
                     '<div id="apprRapport" class="collapse ">'+
                         '<hr>'+
-                        '<a href="#"><span>Le formateur est le seul habilité à rédiger le rapport de formation .</span></a>'+
+                        '<span>Le formateur est le seul habilité à rédiger le rapport de formation .</span>'+
                     '</div>'+
                 '</li>';
                 data += '</div>';
