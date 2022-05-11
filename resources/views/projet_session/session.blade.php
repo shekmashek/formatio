@@ -351,6 +351,13 @@
         color: #191818;
     }
 
+    .testAvatar{
+        border-radius: 50%;
+    }
+    .testAvatar:hover{
+        cursor: pointer;
+        border-radius: 50%;
+    }
     
 </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -456,8 +463,8 @@
                         <div class="d-flex flex-row">
                             <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
                                 {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
-                            <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
-                                height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                            <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2 testAvatar"
+                                height="30px" width="30px" data-id={{$projet[0]->cfp_id}} id={{$projet[0]->cfp_id}} onclick="afficherInfos();">&nbsp;
                         </div>
                     </div>
                     @canany(['isCFP'])
@@ -466,7 +473,7 @@
                                 <p class="p-0 mt-3 me-2 text-center"> Formateur(s) :&nbsp;</p>
                                 @foreach ($formateur_cfp as $form)
                                     <img src="{{ asset('images/formateurs/' . $form->photos) }}" alt=""
-                                        class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%;">
+                                        class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%">
                                 @endforeach()
                             </div>
                             </strong></p>
@@ -700,35 +707,108 @@
             </div>
         </section>
     </div>
+    
     <div class="infos mt-3">
         <div class="row">
             <div class="col">
-                <p class="m-0">infos</p>
+                <p class="m-0 text-center">INFORMATION</p>
             </div>
             <div class="col text-end">
                 <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
             </div>
             <hr class="mt-2">
-            <div class="text-center mt-2">
-                @if ($type_formation_id == 1)
-                    <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" class="img-fluid text-center"
-                        style="width:120px;height:60px;" role="button" onclick="afficherInfos();">
+
+            @if ($type_formation_id == 1)
+                <div class="mt-1 text-center mb-3">
+                    <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" class="img-fluid text-center"
+                        style="width:120px;height: auto;" role="button" onclick="afficherInfos();">
                     <div>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong> Adresse:{{ $projet[0]->adresse_rue }}
-                                {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal }}
-                                {{ $projet[0]->adresse_ville }} {{ $projet[0]->adresse_region }}</strong></p>
+                </div>
+        
+                <div class="mt-1 text-center">
+                    <strong style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: 700">{{ $projet[0]->nom_cfp }}</strong>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                        <div class="col-md-3" style="text-align: left">Responsable</div>
+                        <div class="col-md">
+                            <span style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                            <span style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                        </div>
                     </div>
-                @endif
-
-            </div>
-
-
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                        <div class="col-md-3" style="text-align: left">Tel</div>
+                        <div class="col-md"><strong>{{ $projet[0]->tel_cfp }}</strong></div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="col-md-3" style="text-align: left">Adresse</div>
+                        <div class="col-md">
+                            <span>{{ $projet[0]->adresse_lot_cfp }}</span>
+                            <span>{{ $projet[0]->adresse_ville_cfp }}</span>
+                            <span>{{ $projet[0]->adresse_region_cfp }}</span>
+                        </div>
+                    </div> 
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="col-md-3" style="text-align: left">E-mail</div>
+                        <div class="col-md">
+                            <span>{{ $projet[0]->mail_cfp }}</span>
+                    </div>
+                    
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                        <div class="col-md-3" style="text-align: left">Site web</div>
+                        <div class="col-md">
+                            <span>{{ $projet[0]->site_web }}</span>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
-    </div>
+
+        {{-- <div class="infos mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0">INFORMATION</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                </div>
+                <hr class="mt-2">
+                <div class="text-center mt-2">
+                    @if ($type_formation_id == 1)
+                        <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" class="img-fluid text-center"
+                            style="width:120px;height:60px;" role="button" onclick="afficherInfos();">
+                        <div>
+                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_cfp }}</strong></p>
+                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->tel_cfp }}</strong></p>
+                            <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->mail_cfp }}</strong></p>
+                            <p class="p-0 m-0 text-center"> <strong> Adresse:{{ $projet[0]->adresse_lot_cfp }}
+                                {{ $projet[0]->adresse_ville_cfp }}
+                                {{ $projet[0]->adresse_region_cfp }}</strong></p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div> --}}
+    {{-- </div> --}}
     {{-- affiche prof --}}
     <div class="prof mt-3">
         <div class="row">

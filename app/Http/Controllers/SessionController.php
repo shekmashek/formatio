@@ -200,7 +200,7 @@ class SessionController extends Controller
             $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
 
-        $prix = $fonct->findWhereMulitOne('v_montant_session',['groupe_id'],[$id]);
+   //     $prix = $fonct->findWhereMulitOne('v_montant_session',['groupe_id'],[$id]);
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);
@@ -223,7 +223,7 @@ class SessionController extends Controller
             $lieu_formation[1]='';
         }
 
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation'));
     }
 
     public function getFormateur(){
