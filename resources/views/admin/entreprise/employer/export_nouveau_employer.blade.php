@@ -31,7 +31,6 @@
 
     .form_colab input {
         height: 30px;
-        width: auto;
     }
 
     .form_colab span {
@@ -96,7 +95,7 @@
 
 <div class="container-fluid">
 
-    <div class="row">
+    <div class="row g-0">
 
         <div class="m-4">
 
@@ -161,9 +160,9 @@
                             @for($i = 1; $i <= 30; $i++) <tr align="center">
                                 <td>
                                     <div class="form-group">
-                                        <input autocomplete="off" class=" ml-2 form-control form-control-sm" id="matricule_{{$i}}" type="text" name="matricule_{{$i}}" placeholder="Matricule N° {{$i}}">
+                                        <input autocomplete="off" class="form-control mx-0 " id="matricule_{{$i}}" type="text" name="matricule_{{$i}}" placeholder="Matricule N° {{$i}}">
                                         <br>
-                                        <p style="color: red" id="matricule_err_{{$i}}"></p>
+                                        <p class="m-0" style="color: red" id="matricule_err_{{$i}}"></p>
                                         <div class="invalid-feedback">
                                             Please choose a matricule.
                                         </div>
@@ -183,7 +182,7 @@
                                     <div class="form-group">
                                         <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_{{$i}}" placeholder="CIN">
                                         <br>
-                                        <p style="color: red" id="cin_err_{{$i}}"></p>
+                                        <p class="m-0" style="color: red" id="cin_err_{{$i}}"></p>
 
                                     </div>
                                 </td>
@@ -191,7 +190,7 @@
                                     <div class="form-group">
                                         <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_{{$i}}" placeholder="E-mail">
                                         <br>
-                                        <p style="color: red" id="email_err_{{$i}}"></p>
+                                        <p class="m-0" style="color: red" id="email_err_{{$i}}"></p>
 
                                     </div>
                                 </td>

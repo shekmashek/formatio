@@ -1,6 +1,6 @@
 @extends('./layouts.admin')
 @section('title')
-<h3 class="text-white ms-5">Bussness intelligent</h3>
+<h3 class="text_header m-0 mt-1">Bussness intelligent</h3>
 @endsection
 <style>
     .navigation_module .nav-link {
@@ -35,7 +35,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12 mt-5">
+        <div class="col-md-12 mt-2">
             <div class="m-4">
                 <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
 
@@ -73,7 +73,7 @@
                     </li>
 
                 </ul>
-                <div class="tab-content mt-5" id="myTabContent">
+                <div class="tab-content mt-2" id="myTabContent">
                     {{-- entreprises --}}
                     @if (isset($pour_list))
                     @if ($pour_list == "ETP")
@@ -275,7 +275,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
 
-                                                <div class="shadow p-3 mb-5 bg-body rounded ">
+                                                <div class="shadow p-3 mb-2 bg-body rounded ">
 
                                                     <h4>Organisme de formation</h4>
 
@@ -466,7 +466,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <input name="name_of" id="name_of" required class="form-control" required type="text" aria-label="Search" placeholder="Nom Organisme">
+                                            <input autocomplete="off" name="name_of" id="name_of" required class="form-control" required type="text" aria-label="Search" placeholder="Nom Organisme">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -486,7 +486,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <input name="name_etp" id="name_etp" required class="form-control" required type="text" aria-label="Search" placeholder="Nom Entreprise">
+                                            <input autocomplete="off" name="name_etp" id="name_etp" required class="form-control" required type="text" aria-label="Search" placeholder="Nom Entreprise">
                                         </div>
                                     </div>
                                     <div class="col-4">

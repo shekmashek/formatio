@@ -299,7 +299,7 @@ class FormationController extends Controller
 
     public function annuaire($nbPagination = null)
     {
-        $nb_limit = 5;
+        $nb_limit = 10;
         if ($nbPagination == null || $nbPagination <= 0) {
             $nbPagination = 1;
         }
@@ -318,7 +318,7 @@ class FormationController extends Controller
     public function search_par_nom_entiter(Request $req, $nbPagination = null, $nom_entiter_pag = null)
     {
         $nom_entiter = null;
-        $nb_limit = 4;
+        $nb_limit = 10;
         if ($nbPagination == null || $nbPagination <= 0) {
             $nbPagination = 1;
         }
@@ -347,7 +347,7 @@ class FormationController extends Controller
         $code_postal = null;
         $region = null;
 
-        $nb_limit = 5;
+        $nb_limit = 10;
         if ($nbPagination == null || $nbPagination <= 0) {
             $nbPagination = 1;
         }
@@ -401,7 +401,7 @@ class FormationController extends Controller
 
     public function alphabet_filtre(Request $request)
     {
-        $nb_limit = 5;
+        $nb_limit = 10;
         $query = "";
         if (isset($request->nom_entiter)) {
             $cfp = $this->fonct->findWhereTrieOrderBy(

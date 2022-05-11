@@ -1057,7 +1057,7 @@ class HomeController extends Controller
     //creation iframe
     public function creer_iframe($nbPagination_etp = null, $nbPagination_cfp = null, $pour_list = null)
     {
-        $nb_limit = 2;
+        $nb_limit = 10;
         if ($nbPagination_cfp == null || $nbPagination_cfp <= 0) {
             $nbPagination_cfp = 1;
         }
@@ -1101,7 +1101,7 @@ class HomeController extends Controller
 
     public function creer_iframe_filtre(Request $req, $nbPagination_etp = null, $nbPagination_cfp = null, $pour_list = null, $nom_entiter_cfp_pag = null, $nom_entiter_etp_pag = null)
     {
-        $nb_limit = 2;
+        $nb_limit = 10;
         if ($nbPagination_cfp == null || $nbPagination_cfp <= 0) {
             $nbPagination_cfp = 1;
         }

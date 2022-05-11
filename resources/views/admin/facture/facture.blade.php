@@ -1172,7 +1172,7 @@
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <div class="form-group">
-                                                                        <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
+                                                                        <input autocomplete="off" name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-4">
@@ -1193,7 +1193,7 @@
                                                                 <div class="col">
                                                                     <div class="form-group">
                                                                         <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
-                                                                        <input required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
+                                                                        <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="col">
