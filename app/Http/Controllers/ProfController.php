@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\URL;
-
+use Image;
 class ProfController extends Controller
 {
 
@@ -129,7 +129,7 @@ class ProfController extends Controller
         ->where('cfp_id', '=', $cfp_id)
         ->where('nom_formateur', 'like', '%'. $request->get('nameFormateur') .'%')
         ->get();
-        
+
         // dd(json_encode($formateur));
         return json_encode($formateur);
     }
@@ -161,14 +161,14 @@ class ProfController extends Controller
 
         $image = $request->file('image');
         if($image != null){
-            if($image->getSize() > 60000){
-                return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 60Ko');
-            }
-            else{
+
+            // if($image->getSize() > 60000){
+            //     return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 60Ko');
+            // }
+            // else{
                 if($request->sexe == "homme") $genre = 2;
                 if($request->sexe == "femme") $genre = 1;
                 if($request->sexe == "null") $genre = null;
-
 
                 $frm = new formateur();
                 $frm->nom_formateur = $request->nom;
@@ -185,10 +185,19 @@ class ProfController extends Controller
                 $date = date('d-m-Y');
                 $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
                 $str = 'images/formateurs';
+                $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
+                //imager  resize
 
-                // $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
+                $image_name = $nom_image;
 
-                $request->image->move(public_path($str), $nom_image);
+                $destinationPath = public_path('images/formateurs');
+
+                $resize_image = Image::make($image->getRealPath());
+
+                $resize_image->resize(228, 128, function($constraint){
+                    $constraint->aspectRatio();
+                })->save($destinationPath . '/' .  $image_name);
+                // $request->image->move(public_path($str), $nom_image);
 
                 $frm->photos = $nom_image;
                 // $frm->url_photo = $url_photo;
@@ -249,7 +258,7 @@ class ProfController extends Controller
 
                 // return redirect()->route('utilisateur_formateur');
                 return back()->with('success', 'Formateur ajouté avec succès!');
-            }
+            // }
         }
     }
 

@@ -753,6 +753,7 @@ class HomeController extends Controller
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
@@ -774,11 +775,16 @@ class HomeController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
+
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request, $nb_par_page, $offset);
+
             $projet = DB::select($sql);
 
+            // dd( $projet);
             $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
+
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
+
             // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
@@ -789,6 +795,7 @@ class HomeController extends Controller
             $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
             $module = $fonct->findWhere("v_module", ['cfp_id', 'status'], [$cfp_id, 2]);
             $payement = $fonct->findAll("type_payement");
+
             // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
             // dd($data);
