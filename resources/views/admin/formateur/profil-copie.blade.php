@@ -37,7 +37,7 @@
                             <i class="fa fa-map-marker" aria-hidden="true" style="font-size:30px"></i>
                         </div>
                         <div class="col-lg-10">
-                        <p class="text-capitalize">{{$formateur[0]->adresse}}</p>
+                        <p class="text-capitalize">{{ $formateur[0]->adresse }}</p>
                         </div>
                     </div>
                     <div class="row">

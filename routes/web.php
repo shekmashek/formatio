@@ -228,6 +228,10 @@ Route::get('/editer_fonction/{id}','ProfController@editer_fonction')->name('edit
 //     Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
 // });
 
+
+
+
+
 Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
 Route::get('/nouveau_formateur',function(){
     return view('admin.formateur.nouveauFormateur');
