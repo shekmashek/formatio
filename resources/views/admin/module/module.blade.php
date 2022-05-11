@@ -22,8 +22,10 @@
                 <a href="#nonPublies" class="nav-link" data-toggle="tab">Configurer Compétence&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>
             </li>
             <li class="nav-item">
-                <a href="#publies" class="nav-link" data-toggle="tab">Votre
-                    Catalogue&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
+                <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
+            </li>
+            <li class="nav-item">
+                <a href="#publies" class="nav-link" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
             </li>
         </ul>
 
@@ -300,20 +302,20 @@
                                         </div>
                                         <div class="row row-cols-auto liste__formation__result__item3 justify-content-center text-center py-1">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            {{-- <div class="col-3" id="preview_niveau">
+                                            <div class="col-3" id="preview_niveau">
                                                 <button class="btn modifier pt-0"><a
-                                                        href="{{route('modifier_module_prog',$mod->module_id)}}"><i
+                                                        href="{{route('modif_programmes',$mod->module_id)}}"><i
                                                             class='bx bx-edit background_grey'
                                                             style="color: #0052D4 !important;font-size: 15px"
                                                             title="modifier les informations"></i></a></button>
-                                            </div> --}}
-                                            <div class="" id="preview_niveau">
+                                            </div>
+                                            {{-- <div class="" id="preview_niveau">
                                                 <button class="btn modifier_prog pt-0"><a
-                                                        href="{{route('modif_programmes',$mod->module_id)}}"><i
+                                                        href="{{route('modifier_module_prog',$mod->module_id)}}"><i
                                                             class='bx bx-edit-alt background_grey4'
                                                             style="color: #801d68 !important;font-size: 15px"
                                                             title="modifier les programmes"></i></a></button>
-                                            </div>
+                                            </div> --}}
                                             <div class="" id="preview_niveau">
                                                 <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal_{{$mod->module_id}}"><i
@@ -434,6 +436,189 @@
                 </div>
             </div>
 
+            <div class="tab-pane show fade" id="hors_ligne">
+                <div class="container-fluid p-0 mt-3 me-3">
+                    <div class="row instruction mb-3">
+                        <div class="col-12">
+                            <p class="mb-0 ">L'onglet Publiés regroupe tous les modules qui sont déjá mises en ligne.
+                                <br>
+                                Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
+                                visibles publiquement.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col-lg-12 ps-3">
+                            <div class="row pading_bas d-flex flex-wrap">
+                                @if($mod_hors_ligne == null)
+                                <div class="si_vide row mt-4">
+                                    <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
+                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
+                                            class='bx bx-layer-plus icon_vide'></i></a>
+                                </div>
+                                @else
+                                @foreach($mod_hors_ligne as $mod)
+                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
+                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
+                                        id="border_premier">
+                                        <div class="col-lg-12 col-md-12 detail__formation__result__content">
+                                            <div class="detail__formation__result__item ">
+                                                <h4 class="mt-2">
+                                                    <span id="preview_module"><span
+                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
+
+                                                </h4>
+                                                <span id="preview_categ"><span class=" acf-categorie"
+                                                        style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
+                                                <p id="preview_descript"><span
+                                                        class="acf-description">{{$mod->description}}</span></p>
+                                            </div>
+                                            <div class="d-flex ">
+                                                <div class="col-6 detail__formation__result__avis">
+                                                    <div style="--note: 4.5;">
+                                                        <i class='bx bxs-star'></i>
+                                                        <i class='bx bxs-star'></i>
+                                                        <i class='bx bxs-star'></i>
+                                                        <i class='bx bxs-star'></i>
+                                                        <i class='bx bxs-star-half'></i>
+                                                    </div>
+                                                    <span><strong>0.0</strong>/5 (aucun avis)</span>
+                                                    @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                                    <span
+                                                        class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-6 w-100">
+                                                    <p class="m-0">
+                                                        <span class="new_module_prix">
+                                                            @php
+                                                            echo number_format($mod->prix, 0, ' ', ' ');
+                                                            @endphp
+                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
+                                                    </p>
+                                                    <p class="m-0 ">
+                                                        <span class="new_module_prix">
+                                                            @if($mod->prix_groupe == null)
+                                                            <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
+                                                            @else
+                                                            @php
+                                                            echo number_format($mod->prix_groupe, 0, ' ', ' ');
+                                                            @endphp
+                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-0 row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
+                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
+                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
+                                                <span id="preview_jour"><span class="acf-jour">
+                                                        {{$mod->duree_jour}}
+                                                    </span>j</span>
+                                                <span id="preview_heur">/<span class="acf-heur">
+                                                        {{$mod->duree}}
+                                                    </span>h</span>
+                                            </div>
+                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
+                                                    class="bx bxs-devices bx_icon"
+                                                    style="color: #7635dc !important;"></i>&nbsp;<span
+                                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
+                                            </div>
+                                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
+                                                <i class='bx bx-equalizer bx_icon'
+                                                    style="color: #7635dc !important;"></i>&nbsp;<span
+                                                    class="acf-niveau">{{$mod->niveau}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row g-0">
+                                            @canany(['isCFP','isAdmin','isSuperAdmin'])
+                                            <div class="col-4 d-flex flex-row">
+                                                <div class="col" id="preview_niveau">
+                                                    <button class="btn modifier pt-0"><a
+                                                            href="{{route('modif_programmes',$mod->module_id)}}"><i
+                                                                class='bx bx-edit background_grey'
+                                                                style="color: #0052D4 !important;font-size: 15px"
+                                                                title="modifier les informations"></i></a></button>
+                                                </div>
+                                                {{-- <div class="col-3" id="preview_niveau">
+                                                    <button class="btn modifier_prog pt-0"><a
+                                                            href="{{route('modifier_module_prog',$mod->module_id)}}"><i
+                                                                class='bx bx-edit-alt background_grey4'
+                                                                style="color: #801d68 !important;font-size: 15px"
+                                                                title="modifier les programmes"></i></a></button>
+                                                </div> --}}
+                                                <div class="col" id="preview_niveau">
+                                                    <button class="btn supprimer pt-0" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal_{{$mod->module_id}}"><i
+                                                            class="bx bx-trash background_grey2"
+                                                            style="color: #ff0000 !important;font-size: 15px"
+                                                            title="supprimer le module"></i></button>
+                                                </div>
+                                                <div class="col" id="preview_niveau">
+                                                    <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
+                                                        data-bs-toggle="modal" data-bs-target="#ModalAffichage"
+                                                        id="{{$mod->module_id}}"><i
+                                                            class='bx bx-low-vision background_grey3'
+                                                            style="color: #799F0C !important;font-size: 15px"
+                                                            title="afficher les informations"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="new_btn_programme text-center">
+                                                    <div class="text-uppercase">
+                                                        @if ($mod->etat_id == 2)
+                                                        <div class="form-check form-switch d-flex flex-row">
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">Hors&nbsp;Ligne</span></label>
+                                                            <input class="form-check-input mettre_en_ligne ms-3" type="checkbox" value="{{$mod->module_id}}" title="désactiver pour mettre hors ligne">
+                                                        </div>
+                                                        @else
+                                                        <div class="form-check form-switch d-flex flex-row">
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;ligne</span></label>
+                                                            <input class="form-check-input  ms-3" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne" checked>
+                                                        </div>
+                                                        @endif
+                                                        {{-- <a href="{{route('mettre_')}}" role="button"><span class="btn py-1 button_choix active_mod">Hors Ligne</span></a>
+                                                        <a href="" role="button"><span class="btn py-1 button_choix">En ligne</span></a> --}}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header  d-flex justify-content-center"
+                                                        style="background-color:rgb(224,182,187);">
+                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <small>Vous êtes sur le point d'effacer une donnée,
+                                                            cette
+                                                            action
+                                                            est irréversible. Continuer ?</small>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal"> Non
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary suppression"
+                                                            id="{{$mod->module_id}}"> Oui</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endcanany
+                                    </div>
+                                </div>
+                                @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="tab-pane show fade" id="publies">
                 <div class="container-fluid p-0 mt-3 me-3">
@@ -533,29 +718,29 @@
                                         </div>
                                         <div class="row">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="col-8 d-flex flex-row">
-                                                <div class="col-3" id="preview_niveau">
+                                            <div class="col-4 d-flex flex-row">
+                                                <div class="col" id="preview_niveau">
                                                     <button class="btn modifier pt-0"><a
-                                                            href="{{route('modifier_module_prog',$mod->module_id)}}"><i
+                                                            href="{{route('modif_programmes',$mod->module_id)}}"><i
                                                                 class='bx bx-edit background_grey'
                                                                 style="color: #0052D4 !important;font-size: 15px"
                                                                 title="modifier les informations"></i></a></button>
                                                 </div>
-                                                <div class="col-3" id="preview_niveau">
+                                                {{-- <div class="col-3" id="preview_niveau">
                                                     <button class="btn modifier_prog pt-0"><a
-                                                            href="{{route('modif_programmes',$mod->module_id)}}"><i
+                                                            href="{{route('modifier_module_prog',$mod->module_id)}}"><i
                                                                 class='bx bx-edit-alt background_grey4'
                                                                 style="color: #801d68 !important;font-size: 15px"
                                                                 title="modifier les programmes"></i></a></button>
-                                                </div>
-                                                <div class="col-3" id="preview_niveau">
+                                                </div> --}}
+                                                <div class="col" id="preview_niveau">
                                                     <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal_{{$mod->module_id}}"><i
                                                             class="bx bx-trash background_grey2"
                                                             style="color: #ff0000 !important;font-size: 15px"
                                                             title="supprimer le module"></i></button>
                                                 </div>
-                                                <div class="col-3" id="preview_niveau">
+                                                <div class="col" id="preview_niveau">
                                                     <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
                                                         data-bs-toggle="modal" data-bs-target="#ModalAffichage"
                                                         id="{{$mod->module_id}}"><i
@@ -564,9 +749,21 @@
                                                             title="afficher les informations"></i></button>
                                                 </div>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-8">
                                                 <div class="new_btn_programme text-center">
-                                                    <span class="btn text-success">En ligne</span>
+                                                    <div class="text-uppercase">
+                                                        @if ($mod->etat_id == 1)
+                                                        <div class="form-check form-switch d-flex flex-row">
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;Ligne</span></label>
+                                                            <input class="form-check-input mettre_hors_ligne ms-3" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre hors ligne" >
+                                                        </div>
+                                                        @else
+                                                        <div class="form-check form-switch d-flex flex-row">
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">Hors&nbsp;ligne</span></label>
+                                                            <input class="form-check-input  ms-3" type="checkbox" value="{{$mod->module_id}}"  title="désactiver pour mettre en ligne " checked>
+                                                        </div>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1186,14 +1383,14 @@
 </div>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{asset('js/modules.js')}}"></script>
-<script>
+<script >
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
-        localStorage.setItem('activeTab', lien);
+        localStorage.setItem('Tabactive', lien);
     });
-    let activeTab = localStorage.getItem('activeTab');
-    if(activeTab){
-        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    let Tabactive = localStorage.getItem('Tabactive');
+    if(Tabactive){
+        $('#myTab a[href="' + Tabactive + '"]').tab('show');
     }
     document.getElementById('prix_pers').addEventListener('input', function (e) {
         let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
@@ -1219,5 +1416,37 @@
         let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
         rangeThird1.value = valeur;
     });
+
+    $(".mettre_en_ligne").on('click', function(e) {
+         var mod_id = $(this).val();
+
+        $.ajax({
+            method: "GET"
+            , url: "{{route('mettre_en_ligne')}}"
+            , data: {Id : mod_id}
+            , success: function(response) {
+                window.location.reload();
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+     });
+
+     $(".mettre_hors_ligne").on('click', function(e) {
+         var mod_id = $(this).val();
+        $.ajax({
+            method: "GET"
+            , url: "{{route('mettre_hors_ligne')}}"
+            , data: {Id : mod_id}
+            , success: function(response) {
+                window.location.reload();
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+     });
+
 </script>
 @endsection

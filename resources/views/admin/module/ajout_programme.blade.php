@@ -5,26 +5,14 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/ajoutProgramme.css')}}">
-<div class="row navigation_detail">
-    <div class="ps-5 col justify-content-between d-flex flex-row">
-        <div>
-            <ul class="d-flex flex-row">
-                <li class="me-5"><a href="#objectif">objectif</a></li>
-                <li class="me-5"><a href="#pour_qui">pour qui ?</a></li>
-                <li class="me-5"><a href="#programme">programme</a></li>
-            </ul>
-        </div>
-        <div>
-            <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
-            href="{{route('liste_module')}}">
-            <span class="btn_enregistrer text-center">Précedent</span>
-        </a>
-        </div>
-    </div>
-</div>
+
+<a class="new_list_nouvelle ms-5{{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
+href="{{route('liste_module')}}">
+<span class="btn_enregistrer text-center">Précedent</span>
+</a>
 <section class="detail__formation">
     <div class="container py-4">
-        <div class="row bg-light justify-content-space-between py-3 px-5">
+        {{-- <div class="row bg-light justify-content-space-between py-3 px-5">
             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
@@ -77,97 +65,9 @@
                 <div class="col"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
                 <div class="col"><span>&nbsp;{{$devise->devise}}&nbsp;<span>{{number_format($res->prix, 0, ' ', ' ')}}</span>&nbsp;HT</span></div>
             </div>
-        </div>
+        </div> --}}
         <div class="row detail__formation__detail justify-content-space-between py-5 px-5">
-            <div class="col-lg-12 detail__formation__content">
-                {{-- section 0 --}}
-                {{-- FIXME:mise en forme de design --}}
-                <h3 class="pb-3">Objectifs de la formation  </h3>
-                <div class="row detail__formation__item__left__objectif">
-                    <div id="pour_qui"></div>
-                    <div class="col-lg-12">
-                        <p>{{$res->objectif}}</p>
-                    </div>
-                </div>
-                {{-- section 1 --}}
-                {{-- FIXME:mise en forme de design --}}
-                <h3 class="pt-3 pb-3">A qui s'adresse cette formation?</h3>
-                <div class="row detail__formation__item__left__adresse">
-                    <div class="col-lg-5 d-flex flex-row">
-                        <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui
-                                ?</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->cible}}</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-5">
-                        <div class="row d-flex flex-row w-100">
-                            <span class="adresse__text"><i
-                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->prerequis}}</p>
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-row">
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row detail__formation__item__left__adresse">
-                    <div class="col-lg-5 d-flex flex-row">
-                        <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i
-                                    class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
-                                necessaire</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->materiel_necessaire}}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-5">
-                        <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i
-                                    class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
-                                a savoir</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->bon_a_savoir}}</p>
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-row">
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="programme"></div>
-                <div class="row detail__formation__item__left__adresse">
-                    <div class="col-lg-12 d-flex flex-row">
-                        <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i
-                                    class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                pedagogiques</span>
-                            <div class="col-1"><i class="bx bx-chevron-right"></i></div>
-                            <div class="col-11">
-                                <p>{{$res->prestation}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
                 @if (\Session::has('success'))
@@ -212,117 +112,6 @@
                                 <button type="submit" class="btn btn-primary btn_enregistrer">Enregistrer</button>
                             </div>
                         </form>
-                    </div>
-                </div>
-
-                {{-- section 5 --}}
-                {{-- FIXME:mise en forme de design --}}
-                <div class="row detail__formation__programme__avis">
-                    <div>
-                        <h3 class="pt-5 pb-0">Avis sur la formation</h3>
-                    </div>
-                    <div class="col-12 mb-5">
-                        <div class="card p-2 pt-1">
-                            <div class="row detail__formation__programme__avis__rated d-flex">
-                                <div class="col-md-4 text-center d-flex flex-column">
-                                    <div class="rating-box">
-                                        <h1 class="pt-4">{{ $res->pourcentage }}</h1>
-                                        <p class="">sur 5</p>
-                                    </div>
-                                    <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
-                                </div>
-                                <div class="col-md-8 pt-2">
-                                    <div class="table-rating-bar justify-content-center">
-                                        <table class="text-left mx-auto">
-                                            <tr>
-                                                <td class="rating-label">Excellent</td>
-                                                <td class="rating-bar">
-                                                    <div class="bar-container">
-                                                        {{-- <div class="bar-5"
-                                                            style="--progress_bar: {{ $statistiques[0]->pourcentage_note }}%;">
-                                                        </div> --}}
-                                                    </div>
-                                                </td>
-                                                {{-- <td class="text-right">{{ $statistiques[0]->pourcentage_note }}%
-                                                </td> --}}
-                                            </tr>
-                                            <tr>
-                                                <td class="rating-label">Bien</td>
-                                                <td class="rating-bar">
-                                                    <div class="bar-container">
-                                                        {{-- <div class="bar-4"
-                                                            style="--progress_bar: {{ $statistiques[1]->pourcentage_note }}%;">
-                                                        </div> --}}
-                                                    </div>
-                                                </td>
-                                                {{-- <td class="text-right">{{ $statistiques[1]->pourcentage_note }}%
-                                                </td> --}}
-                                            </tr>
-                                            <tr>
-                                                <td class="rating-label">Moyenne</td>
-                                                <td class="rating-bar">
-                                                    <div class="bar-container">
-                                                        {{-- <div class="bar-3"
-                                                            style="--progress_bar: {{ $statistiques[2]->pourcentage_note }}%;">
-                                                        </div> --}}
-                                                    </div>
-                                                </td>
-                                                {{-- <td class="text-right">{{ $statistiques[2]->pourcentage_note }}%
-                                                </td> --}}
-                                            </tr>
-                                            <tr>
-                                                <td class="rating-label">Normal</td>
-                                                <td class="rating-bar">
-                                                    <div class="bar-container">
-                                                        {{-- <div class="bar-2"
-                                                            style="--progress_bar: {{ $statistiques[3]->pourcentage_note }}%;">
-                                                        </div> --}}
-                                                    </div>
-                                                </td>
-                                                {{-- <td class="text-right">{{ $statistiques[3]->pourcentage_note }}%
-                                                </td> --}}
-                                            </tr>
-                                            <tr>
-                                                <td class="rating-label">Terrible</td>
-                                                <td class="rating-bar">
-                                                    <div class="bar-container">
-                                                        {{-- <div class="bar-1"
-                                                            style="--progress_bar: {{ $statistiques[4]->pourcentage_note }}%;">
-                                                        </div> --}}
-                                                    </div>
-                                                </td>
-                                                {{-- <td class="text-right">{{ $statistiques[4]->pourcentage_note }}%
-                                                </td> --}}
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="detail__formation__programme__avis__donnes">
-                            @foreach ($liste_avis as $avis)
-                            <div class="row">
-                                <div class="d-flex flex-row">
-                                    <div class="col">
-                                        <h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }} {{ $avis->prenom_stagiaire }}
-                                        </h5>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-left d-flex flex-row">
-                                        <div class="Stars" style="--note: {{ $avis->note }};"></div>&nbsp;<span
-                                            class="text-muted">{{ $avis->note }}</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row ms-1">
-                                <p>{{ $avis->commentaire }}</p>
-                            </div>
-                            <hr>
-                            @endforeach
-                        </div>
                     </div>
                 </div>
             </div>

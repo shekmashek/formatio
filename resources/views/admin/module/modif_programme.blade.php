@@ -3,7 +3,7 @@
     <h3 class="text_header m-0 mt-1">Modification programme</h3>
 @endsection
 @section('content')
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modif_programme.css')}}">
 <div class="row navigation_detail">
@@ -28,7 +28,7 @@
         <div class="row justify-content-space-between py-3 px-5" id="border_premier">
             <div class="col-lg-6 col-md-6 ">
                 <div class="">
-                    <h5 class="text-success">Pour faire vos modifications cliquer sur l'icone modifier &nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier titre module"></i></span></h5>
+                    <h5 class="text-success">Pour faire vos modifications cliquer sur l'icone modifier&nbsp;<i class='bx bxs-hand-right'></i>&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier titre module"></i></span></h5>
                     @foreach ($infos as $res)
                     <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier titre module"></i></span></h4>
                     <p class="text_black">{{$res->nom_formation}} </p>
@@ -87,14 +87,14 @@
             </div>
         </div>
         <div class="row detail__formation__detail justify-content-space-between py-5 px-5 mb-5">
-            <div class="col-lg-12 detail__formation__content">
+            <div class="col-lg-9 detail__formation__content">
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <h3 class="pb-3">Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></h3>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
-                        <p>{{$res->objectif}}</p>
+                        <p>@php echo html_entity_decode($res->objectif) @endphp</p>
                     </div>
                 </div>
 
@@ -104,9 +104,9 @@
                 <div class="row detail__formation__item__left__adresse">
                     <div class="col-lg-5 d-flex flex-row">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?</span>
+                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></h3></span>
                             <div class="col-12">
-                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->cible}}</p>
+                                <p>@php echo html_entity_decode($res->cible) @endphp</p>
                             </div>
                         </div>
                     </div>
@@ -114,9 +114,9 @@
                     <div class="col-lg-5">
                         <div class="row d-flex flex-row w-100">
                             <span class="adresse__text"><i
-                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
+                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
-                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->prerequis}}</p>
+                                <p>@php echo html_entity_decode($res->prerequis) @endphp</p>
                             </div>
                         </div>
                     </div>
@@ -127,9 +127,9 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
-                                necessaire</span>
+                                necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
-                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->materiel_necessaire}}</p>
+                                <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p>
                             </div>
                         </div>
                     </div>
@@ -138,9 +138,9 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
-                                a savoir</span>
+                                a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
-                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->bon_a_savoir}}</p>
+                                <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p>
                             </div>
                         </div>
                     </div>
@@ -152,9 +152,9 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                pedagogiques</span>
+                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
-                                <p><i class="bx bx-chevron-right"></i>&nbsp;{{$res->prestation}}</p>
+                                <p>@php echo html_entity_decode($res->prestation) @endphp</p>
                             </div>
                         </div>
                     </div>
@@ -608,12 +608,12 @@
                         </div>
                     </div>
                 </div>
-                {{-- modification detail --}}
+                {{-- modification objectif --}}
                 <div>
                     <div class="modal" id="objectif_module" aria-labelledby="objectif_module" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action="{{route('modification_detail',$res->module_id)}}" method="POST">
+                        <div class="modal-dialog width_large">
+                            <div class="modal-content ">
+                                <form action="{{route('modification_objectif',$res->module_id)}}" method="POST">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Objectif de la formation</h5>
@@ -621,11 +621,134 @@
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="objectif_text" name="objectif" value="{{$res->objectif}}"></textarea>
-                                            <p>Hello World!</p>
-  <p>Some initial <strong>bold</strong> text</p>
+                                            <textarea id="objectif_text" name="objectif" placeholder="Ajouter des textes">{{$res->objectif}}</textarea>
                                         </div>
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- modification pour_qui --}}
+                <div>
+                    <div class="modal" id="cible" aria-labelledby="cible" aria-hidden="true">
+                        <div class="modal-dialog width_large">
+                            <div class="modal-content ">
+                                <form action="{{route('modification_pour_qui',$res->module_id)}}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Public cible</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
                                         <div>
+                                            <textarea id="public_cible" name="public_cible" placeholder="Ajouter des textes">{{$res->cible}}</textarea>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- modification prerequis --}}
+                <div>
+                    <div class="modal" id="prerequis_module" aria-labelledby="prerequis_module" aria-hidden="true">
+                        <div class="modal-dialog width_large">
+                            <div class="modal-content ">
+                                <form action="{{route('modification_prerequis',$res->module_id)}}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Prérequis</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <textarea id="prerequis" name="prerequis" placeholder="Ajouter des textes">{{$res->prerequis}}</textarea>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- modification equipement --}}
+                <div>
+                    <div class="modal" id="equipement_module" aria-labelledby="equipement_module" aria-hidden="true">
+                        <div class="modal-dialog width_large">
+                            <div class="modal-content ">
+                                <form action="{{route('modification_equipement',$res->module_id)}}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Equipement necessaire</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <textarea id="equipement" name="equipement" placeholder="Ajouter des textes">{{$res->materiel_necessaire}}</textarea>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- modification bon_a_savoir --}}
+                <div>
+                    <div class="modal" id="bon_a_savoir_module" aria-labelledby="bon_a_savoir_module" aria-hidden="true">
+                        <div class="modal-dialog width_large">
+                            <div class="modal-content ">
+                                <form action="{{route('modification_bon_a_savoir',$res->module_id)}}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Bon à savoir</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <textarea id="bon_a_savoir" name="bon_a_savoir" placeholder="Ajouter des textes">{{$res->bon_a_savoir}}</textarea>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- modification prestation --}}
+                <div>
+                    <div class="modal" id="prestation_module" aria-labelledby="prestation_module" aria-hidden="true">
+                        <div class="modal-dialog width_large">
+                            <div class="modal-content ">
+                                <form action="{{route('modification_prestation',$res->module_id)}}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Préstation pédagogique</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <textarea id="prestation" name="prestation" placeholder="Ajouter des textes">{{$res->prestation}}</textarea>
+                                        </div>
+                                        <div class="mt-3">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                                         </div>
@@ -640,20 +763,15 @@
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
-    let container = document.getElementById("objectif_text");
-    let options = {
-        debug: 'info',
-        modules: {
-            toolbar: '#toolbar'
-        },
-        placeholder: 'Compose an epic...',
-        readOnly: true,
-        theme: 'snow'
-    };
-    let editor = new Quill(container, options);
+    let editor = new FroalaEditor('#objectif_text');
+    let editor2 = new FroalaEditor('#public_cible');
+    let editor3 = new FroalaEditor('#prerequis');
+    let editor4 = new FroalaEditor('#equipement');
+    let editor5 = new FroalaEditor('#bon_a_savoir');
+    let editor6 = new FroalaEditor('#prestation');
 </script>
 @endsection

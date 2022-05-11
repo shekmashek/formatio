@@ -391,6 +391,14 @@ Route::get('/suppression_competence','ModuleController@destroy_competence')->nam
 Route::post('modification_nom_module/{id}','ModuleController@edit_name_module')->name('modification_nom_module');
 Route::post('modification_description/{id}','ModuleController@edit_description')->name('modification_description');
 Route::post('modification_detail/{id}','ModuleController@edit_detail')->name('modification_detail');
+Route::post('modification_objectif/{id}','ModuleController@edit_objectif')->name('modification_objectif');
+Route::post('modification_pour_qui/{id}','ModuleController@edit_public_cible')->name('modification_pour_qui');
+Route::post('modification_prerequis/{id}','ModuleController@edit_prerequis')->name('modification_prerequis');
+Route::post('modification_equipement/{id}','ModuleController@edit_equipement')->name('modification_equipement');
+Route::post('modification_bon_a_savoir/{id}','ModuleController@edit_bon_a_savoir')->name('modification_bon_a_savoir');
+Route::post('modification_prestation/{id}','ModuleController@edit_prestation')->name('modification_prestation');
+Route::get('mettre_en_ligne','ModuleController@mettre_en_ligne')->name('mettre_en_ligne');
+Route::get('mettre_hors_ligne','ModuleController@mettre_hors_ligne')->name('mettre_hors_ligne');
 
 
 
