@@ -12,8 +12,8 @@ $(document).ready(function(){
             event.preventDefault();
             $('.apprendre').toggleClass('afficher');
         }); 
-    }
 
+    }
     Tutoriel();
 
     function Tutoriel(){
@@ -198,7 +198,7 @@ $(document).ready(function(){
                                 '</div>'+
                                 '<span class="fas fa-angle-down"></span>'+
                             '</a>'+
-                            '<div id="apprPlan" class="collapse p-1">'+
+                            '<div id="apprPlan" class="collapse">'+
                                 '<hr>'+
                                 '<span>Le planning est composé d\'une ou plusieurs séances</span>'+
                             '</div>'+

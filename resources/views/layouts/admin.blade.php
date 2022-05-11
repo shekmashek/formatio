@@ -612,7 +612,7 @@
                     <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
                         <div class="btn_creer me-2" id="text_apprendre">
                             <!--<span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>--->
-                            <span class="text_apprendre" role="button">Apprendre</span>
+                            <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
                         </div>
 
                         <div class="">
@@ -634,8 +634,7 @@
                                                 class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de
                                             formation</a></li>
                                     <li><a class="dropdown-item" href="{{route('budget')}}"><i
-                                                class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
-
+                                        class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
                                 </ul>
                             </div>
                             @endcan
