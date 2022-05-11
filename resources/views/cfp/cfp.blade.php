@@ -68,67 +68,64 @@
                     @if (count($cfp)<=0) <tr>
                         <td colspan="3" class="text-center"> Aucun Organisme de formation collaboré</td>
                         </tr>
-                        @else
+                    @else
                         @foreach($cfp as $centre)
-                        <tr>
-                            <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:60px; width:120px;"><span class="ms-3">{{$centre->nom}} </span></td>
-                            <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span></td>
+                            <tr>
+                                <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:70px; width:70px;"><span class="ms-3">{{$centre->nom}} </span></td>
+                                <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span></td>
 
-                            <td>
-                                <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
-                            </td>
-                            <td>
-                                <div class="dropdown mt-3">
-                                    <div class="btn-group dropstart">
-                                        <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            {{-- <li class="dropdown-item">
-                                                <a href="{{route('tous_projets')}}"> <button type="button" class="btn btn_creer" style="text-decoration:none">Voir les projets</button>
-                                                </a>
-                                            </li> --}}
-                                            <li>
-                                                <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
-                                            </li>
-                                        </ul>
+                                <td>
+                                    <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
+                                </td>
+                                <td>
+                                    <div class="dropdown mt-3">
+                                        <div class="btn-group dropstart">
+                                            <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                {{-- <li class="dropdown-item">
+                                                    <a href="{{route('tous_projets')}}"> <button type="button" class="btn btn_creer" style="text-decoration:none">Voir les projets</button>
+                                                    </a>
+                                                </li> --}}
+                                                <li>
+                                                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                            {{-- modal delete  --}}
+                            <div class="modal fade" id="exampleModal_{{$centre->cfp_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
+                                    @csrf
+
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                            <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                        </div>
+                                        <div class="modal-body">
+                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                        </div>
+
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                            <input name="cfp_id" type="text" value="{{$centre->cfp_id}}" hidden>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
+                            </form>
 
-
-                        {{-- modal delete  --}}
-                        <div class="modal fade" id="exampleModal_{{$centre->cfp_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
-                                @csrf
-
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                                        <h4 class="modal-title text-white">Avertissement !</h4>
-
-                                    </div>
-                                    <div class="modal-body">
-                                        <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                    </div>
-
-                                    <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                        <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                                        <input name="cfp_id" type="text" value="{{$centre->cfp_id}}" hidden>
-                                    </div>
-                                </div>
                             </div>
-                        </form>
 
-                        </div>
-
-                        {{-- fin  --}}
-
-
-
+                            {{-- fin  --}}
                         @endforeach
-                        @endif
+                    @endif
                 </tbody>
             </table>
             {{-- </div> --}}
@@ -300,7 +297,7 @@
 <div class="infos mt-3">
     <div class="row">
         <div class="col">
-            <p class="m-0">Infos</p>
+            <p class="m-0 text-center">INFORMATION</p>
         </div>
         <div class="col text-end">
             <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
@@ -320,31 +317,68 @@
             </div>
         </div>
         @endforeach --}}
-        <div class="text-center mt-2" style="font-size:14px">
+        <div class="mt-2" style="font-size:14px">
             {{-- <div class="mt-1">
                     <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
         </div> --}}
+        <div class="mt-1 text-center mb-3">
+            <span id="donner"></span>
+        </div>
+
+        <div class="mt-1 text-center">
+            <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+        </div>
+        {{-- <div class="mt-1 mb-3 text-center">
+            <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
+        </div> --}}
         <div class="mt-1">
-            <span style="text-center" id="donner"></span>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                <div class="col-md-3">Responsable</div>
+                <div class="col-md">
+                    <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                    <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                </div>
+            </div>
         </div>
         <div class="mt-1">
-            <span id="donnerrrr"></span>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                <div class="col-md-3">Tel</div>
+                <div class="col-md"><span id="tel"></span></div>
+            </div>
         </div>
         <div class="mt-1">
-            <span id="nom"></span>
-            <span id="prenom"></span>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="col-md-3">Adresse</div>
+                <div class="col-md">
+                    <span id="adrlot"></span>
+                    <span id="adrlot4"></span>
+                    <span></span><span id="adrlot2"></span>
+                    <span></span><span id="adrlot3"></span>
+                </div>
+            </div> 
         </div>
         <div class="mt-1">
-            <span id="tel"></span>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                <div class="col-md-3">E-mail</div>
+                <div class="col-md"><span id="mail"></span></div>
+            </div>
+            
         </div>
         <div class="mt-1">
-            <span id="adrlot"></span>
-            <span id="adrlot2"></span>
-            <span id="adrlot3"></span>
-            <span id="adrlot4"></span>
-        </div>
-        <div class="mt-1">
-            <span id="mail"></span>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                <div class="col-md-3">Site web</div>
+                <div class="col-md"><span id="donnerrrr"></span></div>
+            </div>
         </div>
     </div>
 </div>
@@ -366,22 +400,24 @@
                 console.log(userData);
                 //parcourir le premier tableau contenant les info sur les programmes
                 for (let $i = 0; $i < userData.length; $i++) {
-                    let url_photo = '<img src="{{asset("images/CFP/:url_img")}}" style="height:60px; width:120px;">';
+                    let url_photo = '<img src="{{asset("images/CFP/:url_img")}}" style="height80px; width:80px;">';
                     url_photo = url_photo.replace(":url_img", userData[$i].logo_cfp);
                     $("#donner").html(" ");
                     $("#donner").append(url_photo);
-                    $("#donnerrrr").text(userData[$i].site_web);
+                    $("#donnerrrr").text(': '+userData[$i].site_web);
                     $("#nom").text(userData[$i].nom_resp_cfp);
                     $("#prenom").text(userData[$i].prenom_resp_cfp);
-                    $("#tel").text(userData[$i].telephone);
-                    $("#adrlot").text(userData[$i].adresse_lot);
+                    $("#tel").text(': '+userData[$i].telephone);
+                    $("#adrlot").text(': '+userData[$i].adresse_lot);
                     $("#adrlot2").text(userData[$i].adresse_quartier);
                     $("#adrlot3").text(userData[$i].adresse_ville);
                     $("#adrlot4").text(userData[$i].adresse_region);
                     // $("#adrqurt").text(userData[$i].adresse_Quartier);
                     // $("#adrv").text(userData[$i].adresse_ville);
                     // $("#adrr").text(userData[$i].adresse_region);
-                    $("#mail").text(userData[$i].email);
+                    $("#mail").text(': '+userData[$i].email);
+
+                    $("#nomEtp").text(userData[$i].nom);
                 }
             }
         });
