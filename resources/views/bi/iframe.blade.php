@@ -39,6 +39,11 @@
             <div class="m-4">
                 <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
 
+                @if(isset($nom_entiter_of) || isset($nom_entiter_etp))
+                <a href="{{route('creer_iframe')}}" class="btn_creer text-center filter" role="button">
+                    filtre activé <i class="fas fa-times"></i> </a>
+                @endif
+
                 <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                     <li class="nav-item">
                         @if (isset($pour_list))
@@ -95,41 +100,58 @@
                                                         {{-- =============== condition pagination ==================== --}}
                                                         @if ($pagination_etp["nb_limit"] >= $pagination_etp["totale_pagination"])
 
-
+                                                        @if(isset($nom_entiter_etp))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
                                                         <a href="{{ route('creer_iframe',[($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
                                                         <a href="{{ route('creer_iframe',[($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @endif
 
                                                         {{-- ======================= condition pagination=================== --}}
 
                                                         @elseif (($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]) >= $pagination_etp["totale_pagination"])
 
 
-
+                                                        @if(isset($nom_entiter_etp))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
                                                         <a href="{{ route('creer_iframe',[ ($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
                                                         <a href="{{ route('creer_iframe',[ ($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @endif
 
                                                         {{-- =============== condition pagination ==================== --}}
                                                         @elseif ($pagination_etp["debut_aff"] == 1)
 
+                                                        @if(isset($nom_entiter_etp))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
                                                         <a href="{{ route('creer_iframe',[($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
                                                         <a href="{{ route('creer_iframe',[($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-
-
+                                                        @endif
 
                                                         {{-- =============== condition pagination ==================== --}}
                                                         @elseif ($pagination_etp["debut_aff"] == $pagination_etp["fin_aff"] || $pagination_etp["debut_aff"]> $pagination_etp["fin_aff"])
 
-                                                        <a href="{{ route('creer_iframe',[($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"] ) }}" role="button">
-                                                            <i class='bx bx-chevron-left pagination'></i></a>
-                                                        <a href="{{ route('creer_iframe',[($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-
+                                                        @if(isset($nom_entiter_etp))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
+                                                        <a href="{{ route('creer_iframe',[ ($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe',[ ($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @endif
 
                                                         {{-- =============== condition pagination ==================== --}}
                                                         @else
-
+                                                        @if(isset($nom_entiter_etp))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP","",$nom_entiter_etp] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
                                                         <a href="{{ route('creer_iframe',[($pagination_etp["debut_aff"]-$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
                                                         <a href="{{ route('creer_iframe',[($pagination_etp["debut_aff"]+$pagination_etp["nb_limit"]),$pagination_cfp["debut_aff"],"ETP"] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @endif
 
                                                         @endif
                                                     </span>
@@ -262,41 +284,58 @@
                                                         {{-- =============== condition pagination ==================== --}}
                                                         @if ($pagination_cfp["nb_limit"] >= $pagination_cfp["totale_pagination"])
 
-
+                                                        @if(isset($nom_entiter_of))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-
+                                                        @endif
                                                         {{-- ======================= condition pagination=================== --}}
 
                                                         @elseif (($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]) >= $pagination_cfp["totale_pagination"])
 
-
-
+                                                        @if(isset($nom_entiter_of))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @endif
 
                                                         {{-- =============== condition pagination ==================== --}}
                                                         @elseif ($pagination_cfp["debut_aff"] == 1)
 
+                                                        @if(isset($nom_entiter_of))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF"] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
-
-
-
+                                                        @endif
 
                                                         {{-- =============== condition pagination ==================== --}}
                                                         @elseif ($pagination_cfp["debut_aff"] == $pagination_cfp["fin_aff"] || $pagination_cfp["debut_aff"]> $pagination_cfp["fin_aff"])
 
+                                                        @if(isset($nom_entiter_of))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF"] ) }}" role="button">
                                                             <i class='bx bx-chevron-left pagination'></i></a>
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF"] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-
+                                                        @endif
 
                                                         {{-- =============== condition pagination ==================== --}}
                                                         @else
-
+                                                        @if(isset($nom_entiter_of))
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                                                        <a href="{{ route('creer_iframe+entiter+filtre',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF",$nom_entiter_of] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @else
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]-$pagination_cfp["nb_limit"]),"OF"] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
                                                         <a href="{{ route('creer_iframe',[$pagination_etp["debut_aff"],($pagination_cfp["debut_aff"]+$pagination_cfp["nb_limit"]),"OF"] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+                                                        @endif
+
 
                                                         @endif
                                                     </span>
@@ -419,15 +458,15 @@
                     <div class="row mt-0 navigation_module">
 
                         <p>
-                            <a data-bs-toggle="collapse" class="num_fact_filtre" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par nom Organisme <i class='bx icon_trie bxs-chevron-up'></i></a>
+                            <a data-bs-toggle="collapse" class="dte_facturation_filtre" href="#search_nom_of" role="button" aria-expanded="false" aria-controls="search_nom_of">Recherche par nom organisme <i class='bx icon_trie bxs-chevron-up'></i></a>
                         </p>
-                        <div class="collapse multi-collapse" id="search_num_fact">
-                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
+                        <div class="collapse multi-collapse" id="search_nom_of">
+                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('creer_iframe+entiter+filtre')}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
+                                            <input name="name_of" id="name_of" required class="form-control" required type="text" aria-label="Search" placeholder="Nom Organisme">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -439,15 +478,15 @@
                         <hr>
 
                         <p>
-                            <a data-bs-toggle="collapse" class="num_fact_filtre" href="#search_nom_etp" role="button" aria-expanded="false" aria-controls="search_nom_etp">Recherche par nom Entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
+                            <a data-bs-toggle="collapse" class="dte_facturation_etp_filtre" href="#search_nom_etp" role="button" aria-expanded="false" aria-controls="search_nom_etp">Recherche par nom entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
                         </p>
                         <div class="collapse multi-collapse" id="search_nom_etp">
-                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
+                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('creer_iframe+entiter+filtre')}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
+                                            <input name="name_etp" id="name_etp" required class="form-control" required type="text" aria-label="Search" placeholder="Nom Entreprise">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -458,9 +497,82 @@
                         </div>
                         <hr>
 
-
-
                     </div>
+                    <input type="text" id="search" name="search" placeholder="Search" class="form-control" />
+
                 </div>
             </div>
+
+            <script src="{{ asset('assets/js/jquery.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+
+            {{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
+            </script> --}}
+
+            <meta name="csrf-token" content="{{ csrf_token() }}" />
+            <script type="text/javascript">
+                $('#name_of').typeahead({
+                    source: function(query, process) {
+                        console.log("nom_of: " + query);
+                        var path_of = "{{ route('creer_iframe+of+autocomplete') }}";
+
+                        return $.get(path_of, {
+                            query: query
+                        }, function(data) {
+                            return process(data);
+                        });
+                    }
+                });
+
+                $('#name_etp').typeahead({
+                    source: function(query, process) {
+                        var path_etp = "{{ route('creer_iframe+etp+autocomplete') }}";
+
+                        return $.get(path_etp, {
+                            query: query
+                        }, function(data) {
+                            return process(data);
+                        });
+                    }
+                });
+
+
+                $(".dte_facturation_etp_filtre").on('click', function(e) {
+                    if (
+                        $(".dte_facturation_etp_filtre")
+                        .find(".icon_trie")
+                        .hasClass("bxs-chevron-down")
+                    ) {
+                        $(".dte_facturation_etp_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-down")
+                            .addClass("bxs-chevron-up");
+                    } else {
+                        $(".dte_facturation_etp_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-up")
+                            .addClass("bxs-chevron-down");
+                    }
+                });
+
+                $(".dte_facturation_filtre").on('click', function(e) {
+                    if (
+                        $(".dte_facturation_filtre")
+                        .find(".icon_trie")
+                        .hasClass("bxs-chevron-down")
+                    ) {
+                        $(".dte_facturation_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-down")
+                            .addClass("bxs-chevron-up");
+                    } else {
+                        $(".dte_facturation_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-up")
+                            .addClass("bxs-chevron-down");
+                    }
+                });
+
+            </script>
             @endsection

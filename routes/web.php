@@ -1098,6 +1098,14 @@ Route::get('creer_iframe/{pag_cfp?}/{pag_etp?}/{prio?}','HomeController@creer_if
 Route::post('enregistrer_iframe_etp','HomeController@enregistrer_iframe_etp')->name('enregistrer_iframe_etp');
 Route::post('enregistrer_iframe_cfp','HomeController@enregistrer_iframe_cfp')->name('enregistrer_iframe_cfp');
 
+
+Route::get('creer_iframe+entiter+filtre/{pag_cfp?}/{pag_etp?}/{prio?}/{nom_of?}/{nom_etp?}','HomeController@creer_iframe_filtre')->name('creer_iframe+entiter+filtre');
+
+
+// autocomplete
+Route::get('creer_iframe+of+autocomplete','HomeController@auto_complete_iframe_of')->name('creer_iframe+of+autocomplete');
+Route::get('creer_iframe+etp+autocomplete','HomeController@auto_complete_iframe_etp')->name('creer_iframe+etp+autocomplete');
+
 Route::get('afficher_iframe_entreprise','HomeController@iframe_etp')->name('afficher_iframe_entreprise');
 Route::get('afficher_iframe_cfp','HomeController@iframe_cfp')->name('afficher_iframe_cfp');
 
