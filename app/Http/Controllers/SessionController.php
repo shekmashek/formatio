@@ -187,7 +187,12 @@ class SessionController extends Controller
                 $entreprise_id = null;
             }
             $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
-            $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id","groupe_id"], [$cfp_id,$formateur_id,$id]);
+            // $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id","groupe_id"], [$cfp_id,$formateur_id,$id]);
+            $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
+
+            // $datas = $projet->detail_session_formateur($cfp_id,$id,$formateur_id);
+            // $datas = DB::select($requette);
+
             // $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             // $entreprise_id = $projet[0]->entreprise_id;
@@ -208,7 +213,17 @@ class SessionController extends Controller
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         //--modalite de formation
         $modalite = DB::select('select modalite from groupes where id = ?',[$id])[0]->modalite;
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','module_session','formateur_cfp','modalite','salle_formation'));
+        $devise = DB::select('select * from devise')[0]->devise;
+
+        $lieu_formation = DB::select('select lieu from details where groupe_id = ?', [$id]);
+        if(count($lieu_formation)>0){
+            $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
+        }else{
+            $lieu_formation[0]='';
+            $lieu_formation[1]='';
+        }
+
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation'));
     }
 
     public function getFormateur(){
@@ -328,7 +343,13 @@ class SessionController extends Controller
             DB::insert('insert into frais_annexe_formation(description,montant,entreprise_id,groupe_id) values(?,?,?,?)',[$description[$i],$montant[$i],$etp_id,$groupe_id]);
         }
         $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$groupe_id,$etp_id]);
-        return response()->json($all_frais_annexe);
+        $devise = DB::select('select * from devise')[0]->devise;
+        return response()->json(['data'=>$all_frais_annexe,'devise'=>$devise]);
+    }
+
+    public function modifier_frais_annexe_formation(Request $request){
+        DB::update('update frais_annexe_formation set description = ? , montant = ? where id = ?',[$request->description,$request->montant,$request->id]);
+        return back();
     }
 
     public function insert_presence(Request $request){
@@ -521,7 +542,7 @@ class SessionController extends Controller
     }
 
     public function fiche_technique_pdf($id)
-    {   
+    {
         try{
             $info_projet = DB::select('select type_formation,nom_cfp,logo_cfp,nom_projet,groupe_id,nom_groupe,item_status_groupe,nom_formation,nom_module from v_groupe_projet_module where groupe_id = ?',[$id])[0];
             $entreprise = DB::select('select nom_etp,logo from v_groupe_entreprise where groupe_id = ?',[$id])[0];
@@ -535,7 +556,12 @@ class SessionController extends Controller
         }catch(Exception $e){
             return back()->with('pdf_error','Impossible de télécharger le pdf.');
         }
-        
+
+    }
+
+    public function get_devise(){
+        $devise = DB::select('select * from devise')[0]->devise;
+        return response()->json(['devise'=>$devise]);
     }
 
 }

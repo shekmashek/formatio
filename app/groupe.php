@@ -70,4 +70,18 @@ class Groupe extends Model
             return 0;
         }
     }
+
+    public function get_lieu_fromation($groupe_id){
+        $lieu_formation = DB::select('select lieu from details where groupe_id = ?', [$groupe_id]);
+        $res ='';
+        if(count($lieu_formation)>0){
+            $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
+            $res = $lieu_formation[0].', '.$lieu_formation[1];
+        }else{
+            $lieu_formation[0]='';
+            $lieu_formation[1]='';
+            $res = 'Indéfini';
+        }
+        return $res;
+    }
 }
