@@ -25,7 +25,7 @@ JOIN entreprises e ON
     e.id = a.entreprise_id;
 
 CREATE OR REPLACE VIEW v_type_abonnement_cfp AS SELECT
-    t.id AS type_abonnements_etp_id,
+    t.id AS type_abonnements_cfp_id,
     t.nom_type,
     t.description,
     t.tarif,

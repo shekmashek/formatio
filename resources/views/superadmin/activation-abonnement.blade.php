@@ -48,9 +48,10 @@
                 <div class="row mt-3">
                     <p>Offre pour organisme de formation</p>
                     <div class="col-lg-12 d-flex">
+                        <?php $i = 0; ?>
                         @foreach ($typeAbonnement_of as $types_of)
                             <div class="col mt-5 justify-content-between">
-                                <div class="card d-flex align-items-center justify-content-center">
+                                <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
                                      <span class="nom_type mt-5">{{ $types_of->nom_type }}</span>
                                      <span class="description mt-5">{{ $types_of->description }}</span>
                                      <span class="tarif"> <span class="number"> {{number_format($types_of->tarif,0, ',', '.')}}</span> <sup
@@ -70,15 +71,17 @@
                                     <button class="btn btn-primary"><a href="{{route('modifier_abonnement_of',$types_of->id)}}">Modifier</a></button>
                                 </div>
                             </div>
+                        <?php $i+=1; ?>
                         @endforeach
                     </div>
                 </div>
                 <div class="row mt-3">
                     <p>Offre pour entreprise</p>
                     <div class="col-lg-12 d-flex">
+                        <?php $i = 0; ?>
                         @foreach ($typeAbonnement_etp as $types_etp)
                             <div class="col mt-5 justify-content-between">
-                                <div class="card d-flex align-items-center justify-content-center">
+                                <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
                                     <p class="h-1 pt-5 nom_type mt-5">{{ $types_etp->nom_type }}</p>
                                     <span class="description mt-5">{{ $types_etp->description }}</span>
                                     <span class="tarif"> <span class="number"> {{number_format($types_etp->tarif,0, ',', '.')}}</span> <sup
@@ -99,6 +102,7 @@
                                     <button class="btn btn-primary"><a href="{{route('modifier_abonnement_entreprise',$types_etp->id)}}">Modifier</a></button>
                                 </div>
                             </div>
+                        <?php $i+=1; ?>
                         @endforeach
                     </div>
                 </div>

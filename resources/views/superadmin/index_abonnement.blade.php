@@ -50,11 +50,21 @@
                             @if($typeAbonnement->illimite == 1)
                                 <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
                                 <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
-                                <li><span class="bx bx-check me-2"></span>Employés illimités</li>
+                                @can('isReferent')
+                                    <li><span class="bx bx-check me-2"></span>Employés illimités</li>
+                                @endcan
+                                @can('isCFP')
+                                    <li><span class="bx bx-check me-2"></span>Projets illimités</li>
+                                @endcan
                             @else
                                 <li><span class="bx bx-check me-2"></span>{{$typeAbonnement->nb_utilisateur}} utilisateurs</li>
                                 <li><span class="bx bx-check me-2"></span>{{$typeAbonnement->nb_formateur}} formateurs</li>
-                                <li><span class="bx bx-check me-2"></span>{{$typeAbonnement->min_emp}} - {{$typeAbonnement->max_emp}}  employés</li>
+                                @can('isReferent')
+                                    <li><span class="bx bx-check me-2"></span>{{$typeAbonnement->min_emp}} - {{$typeAbonnement->max_emp}}  employés</li>
+                                @endcan
+                                @can('isCFP')
+                                    <li><span class="bx bx-check me-2"></span>{{$typeAbonnement->nb_projet}} projets</li>
+                                @endcan
                             @endif
 
                         </ul>
