@@ -100,7 +100,7 @@
                 var url_pdf_liste_encaissement_facture = "{{ route('pdf+liste+encaissement', ':id') }}";
                 url_pdf_liste_encaissement_facture = url_pdf_liste_encaissement_facture.replace(":id", full_facture[i_act].num_facture);
                 var url_pdf_facture_facture = "{{ route('imprime_feuille_facture', ':id') }}";
-                url_pdf_facture_facture = url_pdf_facture_facture.replace(":id", facture_payer[i_payer].num_facture);
+                url_pdf_facture_facture = url_pdf_facture_facture.replace(":id", full_facture[i_act].num_facture);
 
                 var url_form_encaissement = "{{ route('encaisser') }}";
 
@@ -723,6 +723,20 @@
                 , nb_pagination_actif: @php echo $pagination_actif["debut_aff"];@endphp
                 , nb_pagination_payer: @php echo $pagination_payer["debut_aff"];@endphp
                 , entiter_id: "@php echo $entiter_id;@endphp"
+                , trie_par: trie_par_rep
+            };
+
+            @php
+        } else if (isset($status)) {
+        @endphp
+
+            dataValiny = {
+                data_value: $(idName).val()
+                , nb_pagination_brouillon: @php echo $pagination_brouillon["debut_aff"];@endphp
+                , nb_pagination_full: @php echo $pagination_full["debut_aff"];@endphp
+                , nb_pagination_actif: @php echo $pagination_actif["debut_aff"];@endphp
+                , nb_pagination_payer: @php echo $pagination_payer["debut_aff"];@endphp
+                , status: "@php echo $status;@endphp"
                 , trie_par: trie_par_rep
             };
 

@@ -225,7 +225,9 @@
     @elseif(isset($entiter_id))
     <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
         filtre activé <i class="fas fa-times"></i> </a>
-    @else
+        @elseif(isset($status))
+        <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
+            filtre activé <i class="fas fa-times"></i> </a>
 
     @endif
 
@@ -266,7 +268,7 @@
                     <a href="#" class="nav-link" id="nav-tous-tab" data-bs-toggle="tab" data-bs-target="#nav-tous" type="button" role="tab" aria-controls="nav-tous" aria-selected="false">
                         @endif
                         @else
-                        <a href="#" class="nav-link" id="nav-tous-tab" data-bs-toggle="tab" data-bs-target="#nav-tous" type="button" role="tab" aria-controls="nav-tous" aria-selected="false">
+                        <a href="#" class="nav-link active" id="nav-tous-tab" data-bs-toggle="tab" data-bs-target="#nav-tous" type="button" role="tab" aria-controls="nav-tous" aria-selected="true">
                             @endif
                             TOUT
                             {{count($full_facture)}}
@@ -281,7 +283,7 @@
                     <a href="#" class="nav-link" id="nav-brouilon-tab" data-bs-toggle="tab" data-bs-target="#nav-brouilon" type="button" role="tab" aria-controls="nav-brouilon" aria-selected="false">
                         @endif
                         @else
-                        <a href="#" class="nav-link active" id="nav-brouilon-tab" data-bs-toggle="tab" data-bs-target="#nav-brouilon" type="button" role="tab" aria-controls="nav-brouilon" aria-selected="true">
+                        <a href="#" class="nav-link " id="nav-brouilon-tab" data-bs-toggle="tab" data-bs-target="#nav-brouilon" type="button" role="tab" aria-controls="nav-brouilon" aria-selected="false">
                             @endif
                             Brouillon
                             {{count($facture_inactif)}}
@@ -332,7 +334,7 @@
                         <div class="tab-pane fade" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
                             @endif
                             @else
-                            <div class="tab-pane fade" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
+                            <div class="tab-pane fade  show active" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
                                 @endif
 
                                 {{------------------------------------------------------------------------------- pagination facture full--}}
@@ -608,7 +610,7 @@
                             <div class="tab-pane fade" id="nav-brouilon" role="tabpanel" aria-labelledby="nav-brouilon-tab">
                                 @endif
                                 @else
-                                <div class="tab-pane fade show active" id="nav-brouilon" role="tabpanel" aria-labelledby="nav-brouilon-tab">
+                                <div class="tab-pane fade " id="nav-brouilon" role="tabpanel" aria-labelledby="nav-brouilon-tab">
                                     @endif
 
                                     {{------------------------------------------------------------------------------- pagination facture brouillon--}}
@@ -1269,7 +1271,7 @@
                                                 </div>
                                                 <hr>
                                                 <p>
-                                                    <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status(mbol vita) <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                    <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status <i class='bx icon_trie bxs-chevron-up'></i></a>
                                                 </p>
                                                 <div class="collapse multi-collapse" id="detail_par_status">
                                                     <form class="mt-1 mb-2 form_colab" action="{{route('search_par_status')}}" method="GET" enctype="multipart/form-data">

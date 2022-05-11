@@ -225,7 +225,10 @@
     @elseif(isset($entiter_id))
     <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
         filtre activé <i class="fas fa-times"></i> </a>
-    @else
+    @elseif(isset($status))
+    <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
+        filtre activé <i class="fas fa-times"></i> </a>
+
 
     @endif
 
@@ -241,7 +244,7 @@
                     <a href="#" class="nav-link" id="nav-tous-tab" data-bs-toggle="tab" data-bs-target="#nav-tous" type="button" role="tab" aria-controls="nav-tous" aria-selected="false">
                         @endif
                         @else
-                        <a href="#" class="nav-link" id="nav-tous-tab" data-bs-toggle="tab" data-bs-target="#nav-tous" type="button" role="tab" aria-controls="nav-tous" aria-selected="false">
+                        <a href="#" class="nav-link active" id="nav-tous-tab" data-bs-toggle="tab" data-bs-target="#nav-tous" type="button" role="tab" aria-controls="nav-tous" aria-selected="true">
                             @endif
                             TOUT
                             {{count($full_facture)}}
@@ -256,7 +259,7 @@
                     <a href="#" class="nav-link" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
                         @endif
                         @else
-                        <a href="#" class="nav-link active" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="true">
+                        <a href="#" class="nav-link" id="nav-valide-tab" data-bs-toggle="tab" data-bs-target="#nav-valide" type="button" role="tab" aria-controls="nav-valide" aria-selected="false">
                             @endif
                             Impayé
                             {{count($facture_actif)}}
@@ -291,7 +294,7 @@
                         <div class="tab-pane fade" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
                             @endif
                             @else
-                            <div class="tab-pane fade" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
+                            <div class="tab-pane fade  show active" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
                                 @endif
 
                                 {{------------------------------------------------------------------------------- pagination facture full--}}
@@ -375,46 +378,45 @@
                                             <td>
                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
 
-                                                    @if($actif->dernier_montant_ouvert<=0)
-                                                    <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
+                                                    @if($actif->dernier_montant_ouvert<=0) <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
                                                         payé
-                                                    </div>
-                                                    @else
-                                                    @if($actif->facture_encour =="valider")
-                                                    @if ($actif->jour_restant >0)
-                                                    <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                                        envoyé
-                                                    </div>
-                                                    @else
-                                                    <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
-                                                        en retard
-                                                    </div>
-                                                    @endif
-                                                    @elseif($actif->facture_encour =="en_cour")
-                                                    @if ($actif->jour_restant >0)
-                                                    <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                                        partiellement payé
-                                                    </div>
-                                                    @else
-                                                    <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
-                                                        en retard
-                                                    </div>
-                                                    @endif
-                                                    @endif
-                                                    @endif
+                            </div>
+                            @else
+                            @if($actif->facture_encour =="valider")
+                            @if ($actif->jour_restant >0)
+                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                envoyé
+                            </div>
+                            @else
+                            <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                en retard
+                            </div>
+                            @endif
+                            @elseif($actif->facture_encour =="en_cour")
+                            @if ($actif->jour_restant >0)
+                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                partiellement payé
+                            </div>
+                            @else
+                            <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                en retard
+                            </div>
+                            @endif
+                            @endif
+                            @endif
 
-                                                    </a>
-                                            </td>
+                            </a>
+                            </td>
 
-                                            </tr>
-                                            @endforeach
-                                            @else
-                                            <tr>
-                                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
-                                            </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                            </tr>
+                            @endif
+                            </tbody>
+                            </table>
 
                         </div>
 
@@ -428,7 +430,7 @@
                             <div class="tab-pane fade" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
                                 @endif
                                 @else
-                                <div class="tab-pane fade  show active" id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
+                                <div class="tab-pane fade " id="nav-valide" role="tabpanel" aria-labelledby="nav-valide-tab">
                                     @endif
 
                                     {{------------------------------------------------------------------------------- pagination facture activer--}}
@@ -756,16 +758,15 @@
                                             </div>
                                             <hr>
                                             <p>
-                                                <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status(mbol vita) <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status <i class='bx icon_trie bxs-chevron-up'></i></a>
                                             </p>
                                             <div class="collapse multi-collapse" id="detail_par_status">
-                                                <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
+                                                <form class="mt-1 mb-2 form_colab" action="{{route('search_par_status')}}" method="GET" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <select class="form-select" name="entiter_id" id="entiter_id">
-                                                                    <option value="INACTIF">Nom envoyé</option>
+                                                                <select class="form-select" name="status" id="status">
                                                                     <option value="ACTIF">Envoyé</option>
                                                                     <option value="EN_COUR">Partiellement payé</option>
                                                                     <option value="PAYER">Payé</option>
@@ -779,7 +780,11 @@
                                                         </div>
                                                     </div>
 
+                                                    <br>
+                                                </form>
                                             </div>
+
+
                                         </div>
                                     </div>
 

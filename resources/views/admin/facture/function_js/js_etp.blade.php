@@ -377,6 +377,19 @@
             };
 
             @php
+        } else if (isset($status)) {
+        @endphp
+
+            dataValiny = {
+                data_value: $(idName).val()
+                , nb_pagination_full: @php echo $pagination_full["debut_aff"];@endphp
+                , nb_pagination_actif: @php echo $pagination_actif["debut_aff"];@endphp
+                , nb_pagination_payer: @php echo $pagination_payer["debut_aff"];@endphp
+                , status: "@php echo $status;@endphp"
+                , trie_par: trie_par_rep
+            };
+
+            @php
         }
         @endphp
 
