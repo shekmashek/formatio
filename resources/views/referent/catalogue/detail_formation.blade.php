@@ -1,5 +1,5 @@
 @extends('./layouts/admin')
-@inject('groupe', 'App\Groupe')
+@inject('groupe', 'App\groupe')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 @if (Session::has('error'))
@@ -340,7 +340,11 @@
                                             echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</span>
                                     </div>
                                     <div class="col-3 text-center">
-                                        <span>{{ $data->adresse_ville.', '.$data->adresse_lot }}</span>
+                                        <span>
+                                            @php
+                                                echo $groupe->get_lieu_fromation($data->groupe_id);
+                                            @endphp
+                                        </span>
                                     </div>
                                     <div class="col-3 text-center">
                                         <span>{{ number_format($infos[0]->prix, 0, ' ', ' ') }} AR HT</span>
