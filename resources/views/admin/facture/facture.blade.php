@@ -448,59 +448,7 @@
                             </a>
                             </td>
                             <td>
-                                @if($actif->facture_encour =="valider")
-
-                                <div class="dropdown">
-                                    <div class="btn-group dropstart">
-                                        <button type="button" class="btn  btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <a href="#" class="dropdown-item">
-                                                <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
-                                            </a>
-                                            <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                @elseif($actif->facture_encour =="en_cour")
-
-                                <div class="dropdown">
-                                    <div class="btn-group dropstart">
-                                        <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <a href="#" class="dropdown-item">
-                                                <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
-                                            </a>
-                                            <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                            <hr class="dropdown-divider">
-                                            <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
-                                                <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                @elseif($actif->facture_encour =="terminer")
-                                <div class="dropdown">
-                                    <div class="btn-group dropstart">
-                                        <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF Facture</button></a>
-                                            <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                            <hr class="dropdown-divider">
-                                            <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
-                                                <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                                @else
-
+                                @if($actif->activiter==0)
                                 <div class="dropdown">
                                     <div class="btn-group dropstart">
                                         <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -526,6 +474,56 @@
                                         </ul>
                                     </div>
                                 </div>
+                                @else
+
+                                @if($actif->facture_encour == "valider")
+                                <div class="dropdown">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn  btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <a href="#" class="dropdown-item">
+                                                <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
+                                        </ul>
+                                    </div>
+                                </div>
+                                @elseif($actif->facture_encour =="en_cour")
+                                <div class="dropdown">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <a href="#" class="dropdown-item">
+                                                <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
+                                            <hr class="dropdown-divider">
+                                            <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
+                                                <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
+                                        </ul>
+                                    </div>
+                                </div>
+                                @else
+                                <div class="dropdown">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF Facture</button></a>
+                                            <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
+                                            <hr class="dropdown-divider">
+                                            <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
+                                                <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                @endif
                                 @endif
 
                             </td>

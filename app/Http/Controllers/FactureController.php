@@ -366,13 +366,19 @@ class FactureController extends Controller
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
         $nb_limit = 10;
-
         $status = null;
-
-        $para = null;
-        $opt = null;
-        $val = null;
-
+        $para = [];
+        $opt = [];
+        $val = [];
+        $para_inactif = [];
+        $opt_inactif = [];
+        $val_inactif = [];
+        $para_actif = [];
+        $opt_actif = [];
+        $val_actif = [];
+        $para_payer = [];
+        $opt_payer = [];
+        $val_payer = [];
 
         if ($status_pag != null) {
             $status = $status_pag;
@@ -387,50 +393,110 @@ class FactureController extends Controller
 
 
             if ($status == "EN_COUR") { // partiellement payer
+                $para = ["cfp_id", "facture_encour", "jour_restant", "activiter"];
+                $opt = ["=", "=", ">=", "="];
+                $val = [$cfp_id, "en_cour", 1, True];
 
-                $para = [  "cfp_id", "jour_restant", "dernier_montant_ouvert", "facture_encour","activiter" ];
-                $opt = ["=", ">=", ">", "=","="];
-                $val = [$cfp_id, 1, 0, "en_cour",True];
+                $para_inactif =  ["cfp_id", "facture_encour", "activiter"];
+                $opt_inactif = ["=", "=", "="];
+                $val_inactif = [$cfp_id, "en_cour", True];
+
+                $para_actif =  ["cfp_id", "facture_encour", "jour_restant", "activiter"];
+                $opt_actif = ["=", "=", ">=", "="];
+                $val_actif = [$cfp_id, "en_cour", 1, True];
+
+                $para_payer =  ["cfp_id", "facture_encour", "activiter"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$cfp_id, "en_cour", False];
 
             } else if ($status == "ACTIF") { // actif
 
-                $para = ["cfp_id", "jour_restant", "activiter","facture_encour"];
-                $opt = ["=", ">=", "=","!="];
-                $val = [$cfp_id, 1, True,"terminer"];
+                $para = ["cfp_id", "activiter", "jour_restant", "facture_encour"];
+                $opt = ["=", "=", ">=", "!="];
+                $val = [$cfp_id, True, 1, "terminer"];
 
+                $para_inactif =  ["cfp_id", "facture_encour", "activiter"];
+                $opt_inactif = ["=", "=", "="];
+                $val_inactif = [$cfp_id, "en_cour", True];
+
+                $para_actif =  ["cfp_id", "facture_encour", "jour_restant", "activiter"];
+                $opt_actif = ["=", "!=", ">=", "="];
+                $val_actif = [$cfp_id, "terminer", 1, True];
+
+                $para_payer =  ["cfp_id", "facture_encour", "activiter"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$cfp_id, "en_cour", False];
+
+                // dd($para);
             } else if ($status == "INACTIF") { // inactif
 
-                $para = ["cfp_id", "jour_restant", "activiter"];
-                $opt = ["=", ">=", "="];
-                $val = [$cfp_id, 1, FALSE];
+                $para = ["cfp_id", "activiter"];
+                $opt = ["=", "="];
+                $val = [$cfp_id, FALSE];
+
+                $para_inactif = ["cfp_id", "activiter"];
+                $opt_inactif = ["=", "="];
+                $val_inactif = [$cfp_id, FALSE];
+
+                $para_actif = ["cfp_id", "activiter"];
+                $opt_actif = ["=", "="];
+                $val_actif = [$cfp_id, FALSE];
+
+                $para_payer = ["cfp_id", "activiter"];
+                $opt_payer = ["=", "="];
+                $val_payer = [$cfp_id, FALSE];
 
             } else if ($status == "PAYER") { // payer
 
-                $para = ["cfp_id", "dernier_montant_ouvert","activiter","facture_encour"];
-                $opt = ["=", "<=","=","="];
-                $val = [$cfp_id, 0,True,"terminer"];
+                $para = ["cfp_id", "dernier_montant_ouvert", "activiter", "facture_encour"];
+                $opt = ["=", "<=", "=", "="];
+                $val = [$cfp_id, 0, True, "terminer"];
+
+                $para_inactif = ["cfp_id", "activiter"];
+                $opt_inactif = ["=", "="];
+                $val_inactif = [$cfp_id, True];
+
+                $para_actif = ["cfp_id", "activiter"];
+                $opt_actif = ["=", "="];
+                $val_actif = [$cfp_id, FALSE];
+
+                $para_payer = ["cfp_id", "activiter","facture_encour"];
+                $opt_payer = ["=", "=","="];
+                $val_payer = [$cfp_id, True,"terminer"];
 
             } else { // retard
 
                 $para = ["cfp_id", "jour_restant", "facture_encour"];
                 $opt = ["=", "<=", "!="];
                 $val = [$cfp_id, 0, "terminer"];
+
+                $para_inactif = ["cfp_id", "activiter","jour_restant"];
+                $opt_inactif = ["=", "=","<="];
+                $val_inactif = [$cfp_id, FALSE,0];
+
+                $para_actif = ["cfp_id", "activiter","jour_restant","facture_encour"];
+                $opt_actif = ["=", "=","<=","!="];
+                $val_actif = [$cfp_id, True,0,"terminer"];
+
+                $para_payer = ["cfp_id", "activiter","facture_encour"];
+                $opt_payer = ["=", "=","="];
+                $val_payer = [$cfp_id, FALSE,"terminer"];
             }
 
             $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", $para, $opt, $val, "AND");
-            $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", $para, $opt, $val, "AND");
-            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para, $opt, $val, "AND");
-            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para, $opt, $val, "AND");
+            $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", $para_inactif, $opt_inactif, $val_inactif, "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para_actif, $opt_actif, $val_actif, "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para_payer, $opt_payer, $val_payer, "AND");
 
             $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
             $pagination_brouillon = $this->fonct->nb_liste_pagination($totale_pag_brouillon, $nb_pag_inactif, $nb_limit);
             $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
             $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
 
-            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture",$para, $opt, $val,["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
-            $facture_inactif = $this->fonct->findWhereTrieOrderBy("v_facture_inactif",$para, $opt, $val,["invoice_date"], "DESC", $nb_pag_inactif, $nb_limit);
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para, $opt, $val, ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para, $opt, $val, ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", $para, $opt, $val, ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_inactif = $this->fonct->findWhereTrieOrderBy("v_facture_inactif", $para_inactif, $opt_inactif, $val_inactif, ["invoice_date"], "DESC", $nb_pag_inactif, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para_actif, $opt_actif, $val_actif, ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para_payer, $opt_payer, $val_payer, ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
 
             return view(
                 'admin.facture.facture',
@@ -446,28 +512,24 @@ class FactureController extends Controller
 
             if ($status == "EN_COUR") { // partiellement payer
 
-                $para = [  "entreprise_id", "jour_restant", "dernier_montant_ouvert", "facture_encour","activiter" ];
-                $opt = ["=", ">=", ">", "=","="];
-                $val = [$entreprise_id, 1, 0, "en_cour",True];
-
+                $para = ["entreprise_id", "jour_restant", "dernier_montant_ouvert", "facture_encour", "activiter"];
+                $opt = ["=", ">=", ">", "=", "="];
+                $val = [$entreprise_id, 1, 0, "en_cour", True];
             } else if ($status == "ACTIF") { // actif
 
                 $para = ["entreprise_id", "jour_restant", "activiter"];
                 $opt = ["=", ">=", "="];
                 $val = [$entreprise_id, 1, True];
-
             } else if ($status == "INACTIF") { // inactif
 
                 $para = ["entreprise_id", "jour_restant", "activiter"];
                 $opt = ["=", ">=", "="];
                 $val = [$entreprise_id, 1, FALSE];
-
             } else if ($status == "PAYER") { // payer
 
-                $para = ["entreprise_id", "dernier_montant_ouvert","activiter"];
-                $opt = ["=", "<=","="];
-                $val = [$entreprise_id, 0,True];
-
+                $para = ["entreprise_id", "dernier_montant_ouvert", "activiter"];
+                $opt = ["=", "<=", "="];
+                $val = [$entreprise_id, 0, True];
             } else { // retard
 
                 $para = ["entreprise_id", "jour_restant", "facture_encour"];
