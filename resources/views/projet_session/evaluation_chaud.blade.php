@@ -33,6 +33,14 @@
         outline: none;
         box-shadow: none;
     }
+
+    .bouton_stg:hover{
+        background-color: rgb(226, 226, 226);
+    }
+    .bouton_stg:hover *{
+        cursor: pointer;
+    }
+
     </style>
     <nav class="d-flex justify-content-between mb-1 ">
         <span class="titre_detail_session"><strong style="font-size: 14px">Note des apprenants de la session</strong></span>
@@ -47,21 +55,48 @@
     @canany(['isFormateur'])
     <div id="modifier_note" style="display: block">
         <div class="row d-flex text-center mt-2">
-            <div class="col-lg-4">
-                <div class="corps_evaluation m-0 bg-light" id="myTab" data-id="refresh" role="tablist">
-                    <div class="nav-item" role="presentation">
-                        <a href="#chaud" class="nav-link p-0" id="chaud-tab" data-toggle="tab" type="button"
-                            role="tab" aria-controls="home" aria-selected="true">
-                            <button class="planning d-flex justify-content-between "
-                                onclick="openCity(event, 'chaud')" style="width: 100%">
-                                <p class="m-0 pt-2 pb-2">EVALUATION</p>
-                                <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
-                            </button>
-                        </a>
+            <div class="col-lg-2">
+                @foreach ($stagiaire as $stg)
+                    <div class="d-flex justify-content-arround bouton_stg pt-1 pb-1">
+                        <input class="form-check-input ms-1 mt-1 me-3" type="radio" value="{{ $stg->stagiaire_id }}" name="stagiaire" data-id="{{ $stg->stagiaire_id }}" id="stagiaire_eval_{{ $stg->stagiaire_id }}" required>
+                        <label class="form-check-label" for="stagiaire_eval_{{ $stg->stagiaire_id }}">
+                            {{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }}
+                        </label><br>
+                    </div>
+                @endforeach
+            </div>
+            <div class="col-lg-9" style="border: 1px solid;">
+                <div class="row p-2">
+                    @foreach ($competences as $comp)
+                        <div class="col-lg-4 text-start p-1"><span class="mt-2">{{ $comp->titre_competence }}</span></div>
+                        <div class="col-lg-2"><input class="p-0 m-1" style="height: 1.563rem; width: 9rem;" type="number" min="1" max="10" placeholder="notes sur 10" name="note[{{ $comp->id }}]"></div>
+                        <div class="col-lg-6 d-flex justify-content-arround">
+                            <input class="form-check-input ms-1 mt-2 me-1" style="color: red" type="radio" name="status[{{ $comp->id }}]" data-id="{{ $comp->id }}">
+                            <label class="form-check-label mt-1 me-2" style="color: red">NON-ACQUIS</label>
+                            <input class="form-check-input ms-1 mt-2 me-1" type="radio" style="color: orange" name="status[{{ $comp->id }}]" data-id="{{ $comp->id }}">
+                            <label class="form-check-label mt-1 me-2" style="color: orange">EN COURS</label>
+                            <input class="form-check-input ms-1 mt-2 me-1" type="radio" style="color: green" name="status[{{ $comp->id }}]" data-id="{{ $comp->id }}">
+                            <label class="form-check-label mt-1 me-2" style="color: green">ACQUIS</label>
+                        </div>
+
+                    @endforeach
+                </div>
+                <div class="row mt-2">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-8 d-flex justify-content-arround mb-2">
+                        <span class="me-4 mt-1">Validation globale pour le module :</span>
+                        <input class="form-check-input ms-1 mt-2 me-1" type="radio" name="status_module[{{ $comp->id }}]">
+                        <label class="form-check-label mt-1 me-4" style="color: green">VALIDÉ</label>
+                        <input class="form-check-input ms-1 mt-2 me-1" type="radio" name="status_module[{{ $comp->id }}]">
+                        <label class="form-check-label mt-1 me-4" style="color: red">NON-VALIDÉ</label>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8"></div>
+        </div>
+        <div class="d-flex justify-content-arround">
+            <div class="d-grid gap-2 col-6 mx-auto mt-3">
+                <button class="btn inserer_emargement" type="submit">Sauvegarder</button>
+            </div>
         </div>
     </div>
     @endcanany

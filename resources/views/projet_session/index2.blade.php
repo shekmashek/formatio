@@ -1169,5 +1169,7 @@
                     //         $('.collapse').remove('show');
                     //     } ;
                     // });
+
+                    localStorage.setItem('activeTab', 'detail'); 
                 </script>
             @endsection
