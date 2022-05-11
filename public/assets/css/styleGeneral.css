@@ -305,6 +305,16 @@ ul li a {
 } */
 
 /* apprendre */
+
+.icons_creer{
+    background-color: #637381;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 1.2rem;
+    margin-right: .4rem;
+    position: fixed;
+}
 .apprendre{
     position: fixed;
     top: 3rem;
