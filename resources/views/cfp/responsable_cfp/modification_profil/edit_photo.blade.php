@@ -34,7 +34,9 @@
 @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            <p style="text-align: left">Modifier la photo de profil <strong>(60Ko max)</strong></p><br>
+            <p style="text-align: left">Modifier photos
+                 {{-- <strong>(60Ko max)</strong> --}}
+                </p><br>
             <form   class="btn-submit" action="{{route('enregistrer_modification_photo',$responsable->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" value="   {{ $responsable->nom_resp_cfp }}" class="form-control test input"  name="nom">
@@ -74,7 +76,22 @@
     </div>
 
 
+    <style>
 
+        .image-ronde{
+          width : 120px; height : 120px;
+          border: none;
+          -moz-border-radius : 75px;
+          -webkit-border-radius : 75px;
+          border-radius : 75px;
+          cursor: pointer;
+        }
+            .image-upload > input
+            {
+                display: none;
+            }
+              </style>
+    
 
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

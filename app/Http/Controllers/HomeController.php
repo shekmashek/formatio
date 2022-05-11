@@ -1089,75 +1089,81 @@ public function recherche_cfp(Request $request,$page = null)
         return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
     }
     //creation iframe
-    public function creer_iframe(Request $request,$id = null,$page = null){
-        $nb_par_page = 1;
-        if($page == null){
-        $page = 1;
-        }
-        $nb_etp= DB::select('select count(entreprise_id) as nb_etp from v_entreprise_iframe')[0]->nb_etp;
-        $nb_of= DB::select('select count(cfp_id) as nb_of from v_cfp_iframe')[0]->nb_of;
+    public function creer_iframe(Request $request,$id = null,$page = null,$page_of = null){
+        // $nb_par_page = 2;
+        // $nb_par_page_of= 1;
+        //pour etp
+        // if($page == null){
+        // $page = 1;
+        // }
+        //pour of
+        // if($page_of == null){
+        //     $page_of = 1;
+        //     }
+        // $nb_etp= DB::select('select count(entreprise_id) as nb_etp from v_entreprise_iframe')[0]->nb_etp;
+        // $nb_of= DB::select('select count(cfp_id) as nb_of from v_cfp_iframe')[0]->nb_of;
     
        // ≈pagination pour etp
-       $fin_page = ceil($nb_etp/$nb_par_page);
+    //    $fin_page = ceil($nb_etp/$nb_par_page);
         
-       if($page == 1){
-           $offset = 0;
-           $debut = 1;
-           if($nb_par_page > $nb_etp){
-               $fin = $nb_etp;
-           }else{
-               $fin = $nb_par_page;
-           }
-       }
-       elseif($page == $fin_page){
-           $offset = ($page - 1) * $nb_par_page;
-           $debut = ($page - 1) * $nb_par_page;
-           $fin =  $nb_etp;
-       }
-       else{
-           $offset = ($page - 1) * $nb_par_page;
-           $debut = ($page - 1) * $nb_par_page;
-           $fin =  $page * $nb_par_page;
-       }
-       //pagination pour cfp
-       $fin_page = ceil($nb_of/$nb_par_page);
+    //    if($page == 1){
+    //        $offset = 0;
+    //        $debut = 1;
+    //        if($nb_par_page > $nb_etp){
+    //            $fin = $nb_etp;
+    //        }else{
+    //            $fin = $nb_par_page;
+    //        }
+    //    }
+    //    elseif($page == $fin_page){
+    //        $offset = ($page - 1) * $nb_par_page;
+    //        $debut = ($page - 1) * $nb_par_page;
+    //        $fin =  $nb_etp;
+    //    }
+    //    else{
+    //        $offset = ($page - 1) * $nb_par_page;
+    //        $debut = ($page - 1) * $nb_par_page;
+    //        $fin =  $page * $nb_par_page;
+    //    }
+    //    //pagination pour cfp
+    //    $fin_page_of= ceil($nb_of/$nb_par_page_of);
         
-       if($page == 1){
-           $offset = 0;
-           $debut = 1;
-           if($nb_par_page > $nb_of){
-               $fin = $nb_of;
-           }else{
-               $fin = $nb_par_page;
-           }
-       }
-       elseif($page == $fin_page){
-           $offset = ($page - 1) * $nb_par_page;
-           $debut = ($page - 1) * $nb_par_page;
-           $fin =  $nb_of;
-       }
-       else{
-           $offset = ($page - 1) * $nb_par_page;
-           $debut = ($page - 1) * $nb_par_page;
-           $fin =  $page * $nb_par_page;
-       }
+    //    if($page_of == 1){
+    //        $offset_of = 0;
+    //        $debut_of = 1;
+    //        if($nb_par_page_of > $nb_of){
+    //            $fin_of= $nb_of;
+    //        }else{
+    //            $fin_of = $nb_par_page_of;
+    //        }
+    //    }
+    //    elseif($page_of == $fin_page_of){
+    //        $offset_of = ($page_of- 1) * $nb_par_page_of;
+    //        $debut_of = ($page_of - 1) * $nb_par_page_of;
+    //        $fin_of =  $nb_of;
+    //    }
+    //    else{
+    //        $offset_of = ($page_of - 1) * $nb_par_page_of;
+    //        $debut_of = ($page_of - 1) * $nb_par_page_of;
+    //        $fin_of =  $page_of * $nb_par_page_of;
+    //    }
 
     $fonct = new FonctionGenerique();
     // $entreprise = $fonct->findAll("entreprises");
     $of = $fonct->findAll('cfps');
   
-    // $iframe_etp = $fonct->findAll("v_entreprise_iframe");
-    $iframe_etp = DB::table('v_entreprise_iframe')
-                ->offset($offset)
-                ->limit($nb_par_page)
-                ->get();
+    $iframe_etp = $fonct->findAll("v_entreprise_iframe");
+    // $iframe_etp = DB::table('v_entreprise_iframe')
+    //             ->offset($offset)
+    //             ->limit($nb_par_page)
+    //             ->get();
     $iframe_of = $fonct->findAll("v_cfp_iframe");
-    $iframe_of= DB::table('v_cfp_iframe')
-                ->offset($offset)
-                ->limit($nb_par_page)
-                ->get();
-    // dd($iframe_of );
-    return view('bi.iframe',compact('of','iframe_etp','iframe_of','debut','fin','nb_etp','nb_par_page','page','fin_page','nb_of'));
+    // $iframe_of= DB::table('v_cfp_iframe')
+    //             ->offset($offset)
+    //             ->limit($nb_par_page)
+    //             ->get();
+
+    return view('bi.iframe',compact('of','iframe_etp','iframe_of'));
     }
     //taxe
     public function taxe(){

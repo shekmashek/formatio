@@ -163,12 +163,12 @@
             <tr>
                 {{-- <td colspan="3" style="width: 40px;"><a class="dropdown-item" href="{{ route('profil_du_responsable',$resp->id) }}"> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$resp->logo)}}" style="width:120px;hei" cellspacing="0"> </a></td> --}}
 
-                <td colspan="3" style="width: 40px;"><a class="dropdown-item" href=""> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$resp->cfp->logo)}}" style="width:120px;hei" cellspacing="0"> </a></td>
-                <td>{{ $resp->cfp->nom}}</td>
+                <td colspan="3" ><a class="dropdown-item" href=""> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.optional(optional($resp)->cfp)->logo)}}" style="width:120px;height:60px"cellspacing="0" width="80" height="50"> </a></td>
+                <td>{{optional(optional($resp)->cfp)->nom}}
+               </td>
                 <td> <a class="dropdown-item" href=""><span>{{ $resp->nom_resp_cfp}}</span><span class="ms-1">{{ $resp->prenom_resp_cfp}}</span>  </a></td>
                 <td>{{ $resp->email_resp_cfp}}</td>
                 <td>{{ $resp->telephone_resp_cfp}}</td>
-              
                 <td>{{ $resp->created_at}}</td>
                 <td>
 

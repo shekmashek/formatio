@@ -24,6 +24,7 @@ use App\Exports\ResponsableExport;
 use Excel;
 use Illuminate\Support\Facades\URL;
 use Exception;
+use Image;
 
 class ResponsableController extends Controller
 {
@@ -544,10 +545,10 @@ class ResponsableController extends Controller
         //tableau contenant les types d'extension d'images
         $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
         if($image != null){
-            if($image->getSize() > 60000){
-                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
-            }
-            elseif(in_array($request->image->extension(),$extension_type)){
+            // if($image->getSize() > 60000){
+            //     return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+            // }
+            if(in_array($request->image->extension(),$extension_type)){
                 $user_id =  $users = Auth::user()->id;
                 $responsable = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id]);
                 $image_ancien = $responsable->photos;
@@ -556,7 +557,18 @@ class ResponsableController extends Controller
                 //enregiistrer la nouvelle photo
                 $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
                 $destinationPath = 'images/responsables';
-                $image->move($destinationPath, $nom_image);
+                 //imager  resize
+             
+                 $image_name = $nom_image;
+
+                 $destinationPath = public_path('images/responsables');
+ 
+                 $resize_image = Image::make($image->getRealPath());
+ 
+                 $resize_image->resize(228,128, function($constraint){
+                     $constraint->aspectRatio();
+                 })->save($destinationPath . '/' .  $image_name);
+                // $image->move($destinationPath, $nom_image);
                 $url_photo = URL::to('/')."/images/responsables/".$nom_image;
                 DB::update('update responsables set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
                 return redirect()->route('profil_referent');

@@ -17,6 +17,7 @@ use App\Mail\entrepriseMail;
 use App\Models\getImageModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
+use Image;
 
 class EntrepriseController extends Controller
 {
@@ -446,7 +447,18 @@ class EntrepriseController extends Controller
         if ($image = $request->file('image')) {
             $destinationPath = 'images/entreprises';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
+                     //imager  resize
+             
+                     $image_name = $profileImage ;
+
+                     $destinationPath = public_path('images/entreprises');
+     
+                     $resize_image = Image::make($image->getRealPath());
+     
+                     $resize_image->resize(256, 128, function($constraint){
+                         $constraint->aspectRatio();
+                     })->save($destinationPath . '/' .  $image_name);
+            // $image->move($destinationPath, $profileImage);
             $input = "$profileImage";
         }
         if($input== null){

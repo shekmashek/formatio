@@ -1056,8 +1056,9 @@ Route::get('delete_tva/{id}','HomeController@delete_tva')->name('delete_tva');
 Route::post('update_devise','HomeController@update_devise')->name('update_devise');
 Route::get('delete_devise/{id}','HomeController@delete_devise')->name('delete_devise');
 
-
-
+//Route rizise image
+Route::get('resize', 'ImageController@resizeImage')->name('resize');
+Route::post('resizeImagePost', 'ImageController@resizeImagePost')->name('resizeImagePost');
 Route::get('devise','HomeController@devise')->name('devise');
 // Route::get('getDevise','HomeController@getDevise')->name('getDevise');
 Route::post('taxe_enregistrer','HomeController@taxe_enregistrer')->name('taxe_enregistrer');

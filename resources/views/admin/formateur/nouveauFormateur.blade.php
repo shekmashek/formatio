@@ -66,7 +66,8 @@
                                     <p style="font-size: 15px;">Profil Formateur</p>
 
                                     <div class="form-control-file mt-2">
-                                        <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required><strong>Taille du fichier: 60Ko max</strong>
+                                        <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required>
+                                        {{-- <strong>Taille du fichier: 60Ko max</strong> --}}
                                     </div><br>
                                     @error('image')
                                     <div class="col-sm-6">
@@ -102,8 +103,8 @@
                                             <div class="select-group">
                                                 <select name="sexe" id="sexe" class="form-control">
                                                     <option value="null" disabled selected hidden>Sexe</option>
-                                                    <option value="1">Homme</option>
-                                                    <option value="2">Femme</option>
+                                                    <option value="homme">Homme</option>
+                                                    <option value="femme">Femme</option>
                                                 </select>
                                             </div>
                                             @error('sexe')

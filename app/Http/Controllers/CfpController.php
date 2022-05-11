@@ -16,6 +16,7 @@ use App\Models\getImageModel;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 use App\projet;
+use Image;
 
 class CfpController extends Controller
 {
@@ -169,10 +170,10 @@ class CfpController extends Controller
     public function modifier_logo($id,Request $request){
         $image = $request->file('image');
         if($image != null){
-            if($image->getSize() > 60000){
-                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
-            }
-            else{
+            // if($image->getSize() > 60000){
+            //     return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+            // }
+            // else{
 
                     $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
                     $image_ancien = $cfp->logo;
@@ -181,14 +182,25 @@ class CfpController extends Controller
                     //enregiistrer la nouvelle photo
                     $nom_image = str_replace(' ', '_', $request->nom . '.' . $request->image->extension());
                     $destinationPath = 'images/CFP';
-                    $image->move($destinationPath, $nom_image);
+                    //imager  resize
+             
+                $image_name = $nom_image;
+
+                $destinationPath = public_path('images/CFP');
+
+                $resize_image = Image::make($image->getRealPath());
+
+                $resize_image->resize(256, 128, function($constraint){
+                    $constraint->aspectRatio();
+                })->save($destinationPath . '/' .  $image_name);
+                    // $image->move($destinationPath, $nom_image);
                     //onn modifie ainsi l'url
                     $url_logo = URL::to('/')."/images/CFP/".$nom_image;
 
                     DB::update('update cfps set logo = ?,url_logo = ? where id = ?', [$nom_image,$url_logo,$id]);
                     return redirect()->route('affichage_parametre_cfp',[$id]);
 
-                }
+                // }
             }
             else{
                 return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');

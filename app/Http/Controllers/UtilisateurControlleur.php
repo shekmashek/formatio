@@ -37,7 +37,7 @@ class UtilisateurControlleur extends Controller
   
         public function index($id = null,$page = null)
         {
-            $nb_par_page = 10;
+            $nb_par_page = 5;
             if($page == null){
             $page = 1;
             }
@@ -138,7 +138,7 @@ class UtilisateurControlleur extends Controller
         // $cfps = cfp::orderBy("nom")->with('responsable_cfp')->get();
         // $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
         // dd($cfps);
-        $nb_par_page = 10;
+        $nb_par_page = 5;
             if($page == null){
             $page = 1;
             }

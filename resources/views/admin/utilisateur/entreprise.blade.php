@@ -118,8 +118,10 @@
 
         .nombre_pagination {
             color: #626262;
+            
 
         }
+
 
     </style>
 
@@ -194,7 +196,7 @@
                    
                     <tr>
                         <td>
-                            <img width="80" height="50" class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/entreprises/'.$data->entreprise->logo)}}" style="cellapading=0;" cellspacing="0">
+                            <img  class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/entreprises/'.$data->entreprise->logo)}}" style="width:120px;height:60px" cellspacing="0">
                         </td>
                         <td><span>{{ $data->entreprise->nom_etp }}</span></td>
                         <td><span>{{ $data->nom_resp}}</span><span class="ms-1">{{ $data->prenom_resp}}</span></td>

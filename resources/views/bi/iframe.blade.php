@@ -66,32 +66,7 @@
                 <div class="tab-content mt-5" id="myTabContent">
                     {{-- entreprises --}}
                     <div class="tab-pane fade show active" id="etp" role="tabpanel" aria-labelledby="tab_etp">
-                        <div class="d-flex flex-row justify-content-end mt-3">
-                            <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
-                                {{ $nb_etp}}</span>
-                                @if ($nb_par_page >= $nb_etp)
-                                    <a href="{{ route('creer_iframe', [1, $page - 1]) }}" role="button"
-                                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{ route('creer_iframe', [1, $page + 1]) }}" role="button"
-                                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                                @elseif ($page == 1)
-                                    <a href="{{ route('creer_iframe', [1, $page - 1]) }}" role="button"
-                                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{ route('creer_iframe', [1, $page + 1]) }}" role="button"><i
-                                            class='bx bx-chevron-right pagination'></i></a>
-                                @elseif ($page == $fin_page || $page > $fin_page)
-                                    <a href="{{ route('creer_iframe', [1, $page - 1]) }}" role="button"><i
-                                            class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{ route('creer_iframe', [1, $page + 1]) }}" role="button"
-                                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                                @else
-                                    <a href="{{ route('creer_iframe', [1, $page - 1]) }}" role="button"><i
-                                            class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{ route('creer_iframe', [1, $page + 1]) }}" role="button"><i
-                                            class='bx bx-chevron-right pagination'></i></a>
-                                @endif
-                            </span>
-                        </div>
+                      
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12"><div class="p-3 mb-12 bg-body rounded ">
@@ -199,30 +174,8 @@
                     {{-- organisme de formation --}}
                     <div class="tab-pane fade show" id="of" role="tabpanel" aria-labelledby="tab_of">
                         <div class="d-flex flex-row justify-content-end mt-3">
-                            <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
-                                    {{ $nb_of}}</span>
-                                @if ($nb_par_page >= $nb_of)
-                                    <a href="{{ route('creer_iframe', [1, $page - 1]) }}" role="button"
-                                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{ route('creer_iframe', [1, $page + 1]) }}" role="button"
-                                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                                @elseif ($page == 1)
-                                    <a href="{{ route('creer_iframe', [1, $page - 1]) }}" role="button"
-                                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{ route('creer_iframe', [1, $page + 1]) }}" role="button"><i
-                                            class='bx bx-chevron-right pagination'></i></a>
-                                @elseif ($page == $fin_page || $page > $fin_page)
-                                    <a href="{{ route('creer_iframe', [1, $page - 1]) }}" role="button"><i
-                                            class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{ route('creer_iframe', [1, $page + 1]) }}" role="button"
-                                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                                @else
-                                    <a href="{{ route('creer_iframe', [1, $page - 1]) }}" role="button"><i
-                                            class='bx bx-chevron-left pagination'></i></a>
-                                    <a href="{{ route('creer_iframe', [1, $page + 1]) }}" role="button"><i
-                                            class='bx bx-chevron-right pagination'></i></a>
-                                @endif
-                            </span>
+                        
+               
                         </div>
                         <div class="container-fluid">
                             <div class="row">
