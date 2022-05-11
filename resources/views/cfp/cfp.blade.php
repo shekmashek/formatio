@@ -326,10 +326,21 @@
         </div>
 
         <div class="mt-1 text-center">
-            <span id="nom" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+            <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
         </div>
-        <div class="mt-1 mb-3 text-center">
+        {{-- <div class="mt-1 mb-3 text-center">
             <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
+        </div> --}}
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                <div class="col-md-3">Responsable</div>
+                <div class="col-md">
+                    <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                    <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                </div>
+            </div>
         </div>
         <div class="mt-1">
             <div class="row">
@@ -338,7 +349,6 @@
                 <div class="col-md-3">Tel</div>
                 <div class="col-md"><span id="tel"></span></div>
             </div>
-            
         </div>
         <div class="mt-1">
             <div class="row">
@@ -406,6 +416,8 @@
                     // $("#adrv").text(userData[$i].adresse_ville);
                     // $("#adrr").text(userData[$i].adresse_region);
                     $("#mail").text(': '+userData[$i].email);
+
+                    $("#nomEtp").text(userData[$i].nom);
                 }
             }
         });
