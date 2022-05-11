@@ -120,7 +120,7 @@
                             @foreach($liste as $listes)
                                     <tr>
                                         <td class="th_color"> {{$listes->nom_entreprise}} </td>
-                                        <td class="th_color"> {{$listes->nom_type}},&nbsp;{{$listes->categorie}},&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td>
+                                        <td class="th_color"> {{$listes->nom_type}},&nbsp;Mensuel,&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td>
                                         <td class="th_color">  {{$listes->date_demande}} </td>
                                         <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                         <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
@@ -162,7 +162,7 @@
                             @foreach ($cfpListe as $listes)
                                 <tr>
                                     <td class="th_color"> {{$listes->nom_of}} </td>
-                                    <td class="th_color"> {{$listes->nom_type}},&nbsp;{{$listes->categorie}},&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td></td>
+                                    <td class="th_color"> {{$listes->nom_type}},&nbsp;Mensuel,&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td></td>
                                     <td class="th_color">  {{$listes->date_demande}} </td>
                                     <td class="th_color"> <span id = "debut_of_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                     <td class="th_color"><span id = "fin_of_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>

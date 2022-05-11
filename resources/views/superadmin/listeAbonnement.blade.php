@@ -67,9 +67,16 @@
                                         <li><span class="bx bx-check me-2"></span>{{$types_etp->nb_formateur}} formateurs</li>
                                         <li><span class="bx bx-check me-2"></span>{{$types_etp->min_emp}} - {{$types_etp->max_emp}}  employés</li>
                                     @endif
-
                                 </ul>
-                                <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_etp->id)}}">S'abonner</a></button>
+                                @if($abonnement_actuel != null)
+                                    @if($types_etp->id == $abonnement_actuel[0]->type_abonnements_etp_id and $abonnement_actuel[0]->activite == 1)
+                                        <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types_etp->id])}}">Désactivation immédiat de mon offre</a></div>
+                                    @else
+                                        <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_etp->id)}}">S'abonner</a></button>
+                                    @endif
+                                @else
+                                    <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_etp->id)}}">S'abonner</a></button>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -155,7 +162,7 @@
                             <tr>
                                 <td>{{$fact->invoice_date}}</td>
 
-                                <td>{{$fact->nom_type}}&nbsp;,&nbsp;{{$fact->categorie}}&nbsp;,&nbsp; {{number_format($fact->montant_facture, 0, ',', '.')}}Ar</td>
+                                <td>{{$fact->nom_type}}&nbsp;, Mensuel, &nbsp; {{number_format($fact->montant_facture, 0, ',', '.')}}Ar</td>
                                 <td>{{$facture_suivant[$i]}}</td>
                                 @if($fact->activite == 1)
                                     <td><span style="background-color: green;padding:10px;color:white;border-radius:10px"> En cours </span></td>

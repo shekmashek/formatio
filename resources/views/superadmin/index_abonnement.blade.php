@@ -38,7 +38,7 @@
             </nav>
         </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-2">
                 <div class="col mt-5 justify-content-between">
                     <div class="card d-flex align-items-center justify-content-center">
                         <p class="h-1 pt-5 nom_type mt-5">{{ $typeAbonnement->nom_type }}</p>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-10">
                 @if(session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}

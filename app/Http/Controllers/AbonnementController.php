@@ -639,15 +639,14 @@ class AbonnementController extends Controller
             $abonnement->type_arret = "";
             $abonnement->save();
 
-              //générer une facture
+            /**générer une facture*/
 
             // $abonnement_cfp_id =$this->fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
             $abonnement_id = DB::select('select * from abonnements where entreprise_id = ? and status = ? order by id desc limit 1', [$entreprise_id,'En attente']);
-            $montant =$this->fonct->findWhere('v_categorie_abonnement_etp',['type_abonnement_role_id'],[$abonnement_id[0]->type_abonnement_role_id]);
+             // $montant =$this->fonct->findWhere('v_categorie_abonnement_etp',['type_abonnement_role_id'],[$abonnement_id[0]->type_abonnement_role_id]);
+            $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_etp",['abonnement_id'],[$abonnement_id[0]->id]);
 
-
-            // $last_num_facture =$this->fonct->fin
-            $this->abonnement_model->insert_factures_abonnements_etp($abonnement_id[0]->id,$dt,$due_date,$montant[0]->tarif);
+            $this->abonnement_model->insert_factures_abonnements_etp($abonnement_id[0]->id,$dt,$due_date,$tarif->tarif);
 
         }
         if ($entreprise_id == null) {
@@ -742,13 +741,14 @@ class AbonnementController extends Controller
         $mensuel = strtotime(date("Y-m-d", strtotime($dt)) . " + 31 days");
         $annuel = strtotime(date("Y-m-d", strtotime($dt)) . " +1 year");
 
+        // $ctg_id =abonnement::where('id', $id)->value('categorie_paiement_id');
 
-        $ctg_id =abonnement::where('id', $id)->value('categorie_paiement_id');
-        if ($ctg_id == 1) $date_fin = date("Y-m-d", $mensuel);
-        if ($ctg_id == 2)  $date_fin = date("Y-m-d", $annuel);
+        $date_fin = date("Y-m-d", $mensuel);
+        // $date_fin = date("Y-m-d", $annuel);
+
         DB::table('abonnements')
             ->where('id', $id)
-            ->update(['status' => $Statut, 'date_debut' => $dt, 'date_fin' => $date_fin]);
+            ->update(['status' => $Statut, 'date_debut' => $dt, 'date_fin' => $date_fin, 'activite' => 1]);
 
         DB::table('factures_abonnements')
             ->where('abonnement_id',$id)
