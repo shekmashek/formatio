@@ -246,3 +246,20 @@ color: #7635dc;
     border: none;
     transform: scale(1.1);
 }
+
+.fix_top{
+    position: sticky;
+    top: 6rem;
+    z-index: 1;
+    background-color: white;
+}
+
+.fix_top_row{
+    position: sticky !important;
+    top: 4rem;
+    z-index: 1;
+    background-color: white;
+}
+.pagination{
+    font-size: 1.5rem;
+}

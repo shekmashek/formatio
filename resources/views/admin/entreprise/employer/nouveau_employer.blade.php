@@ -5,20 +5,59 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
-<div id="page-wrapper">
-    {{-- <div class="shadow-sm p-3 mb-5 bg-body rounded"> --}}
-    <div class="container-fluid">
-        <div class="panel-heading d-flex mb-5">
-            <div class="mx-2">
-                <li class="btn_enregistrer text-center"><a href="{{route('employes')}}">Précedent</a></li>&nbsp;
-            </div>
-        </div>
-    </div>
+<style>
+    .navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
 
-    <!-- /.row -->
+.nav-item .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+    transform: scale(1.1);
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+</style>
 
 
-    <div class="row">
+<div class="container-fluid">
+
+    <div class="m-4">
+
+    <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+        <li class="nav-item">
+            <a href="{{route('employes.liste')}}" class="nav-link">
+                liste des employers
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('employes.new')}}" class="nav-link active">
+                nouveau
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('employes.export.nouveau')}}" class="nav-link">
+                export EXCEL employer
+            </a>
+        </li>
+    </ul>
+    <div class="row mt-3">
         <div class="col-md-12">
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
                 {{-- <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2> --}}
@@ -148,6 +187,7 @@
         </div>
     </div>
 </div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -167,7 +207,7 @@
         document.getElementById("cin_err").innerHTML = "";
 
         var result = $(this).val();
-       if ($(this).val().length > 12 || $(this).val().length < 12) {
+       if ($(this).val().length<5) {
             document.getElementById("cin_err").innerHTML = "Le CIN est invalid";
 
         } else {
@@ -220,7 +260,7 @@
     $(document).on('change', '#phone', function() {
         var result = $(this).val();
 
-        if ($(this).val().length > 13 || $(this).val().length < 10) {
+        if ($(this).val().length <7) {
             document.getElementById("phone_err").innerHTML = "le numéro du télephone n'est pas correct";
         } else {
             document.getElementById("phone_err").innerHTML = '';

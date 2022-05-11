@@ -3,7 +3,7 @@
 <h3 class="text_header m-0 mt-1">Détail facture</h3>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+{{-- <link rel="stylesheet" href="{{asset('css/facture.css')}}"> --}}
 
 
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">

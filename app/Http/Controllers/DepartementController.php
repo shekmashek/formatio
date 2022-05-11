@@ -69,6 +69,7 @@ class DepartementController extends Controller
         return back();
     }
 
+
     public function liste()
     {
         $fonct = new FonctionGenerique();
@@ -107,58 +108,104 @@ class DepartementController extends Controller
         return view('admin.chefDepartement.liste', compact('nom_chef','prenom_chef','roles_actif_stg', 'roles_not_actif_stg', 'roles_actif_referent', 'roles_not_actif_referent', 'roles_actif_manager', 'roles_not_actif_manager', 'chef', 'referent', 'stagiaires', 'user_role', 'roles'));
     }
 
-    // filtre fonction
-    public function filtre(Request $request){
-
-        $user_id = Auth::user()->id;
-
-        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-
-        $emps = DB::table("stagiaires")
-                ->select("*")
-                ->where('entreprise_id', '=', $etp_id)
-                // ->where('fonction_stagiaire', 'like', '%'.$request->get('test').'%')
-                ->where('stagiaires.id',$request->test)
-                ->get();
-
-        // dd($emps);        
-        return view('admin.chefDepartement.filtre', compact('emps'));
+//start filtre 
+ // filtre Employes fonction
+    public function filtreFonction(Request $request){
+        $function = new FonctionGenerique();
+        $emps = $function->filtreEmploye('fonction_stagiaire', $request->get('test'));   
+  
+        return json_encode($emps);      
     }
     
-    // filtre name
+    // filtre employes name
     public function filtreName(Request $request){
-
-        $user_id = Auth::user()->id;
-
-        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-
-        $emps = DB::table("stagiaires")
-                ->select("*")
-                ->where('entreprise_id', '=', $etp_id)
-                ->where('nom_stagiaire', 'like', '%'.$request->get('name').'%')
-                ->orWhere('matricule', 'like', '%'.$request->get('name').'%')
-                ->get();
-
-        // dd($emps);    
-        return json_encode($emps);    
+        $function = new FonctionGenerique();
+        $emps = $function->filtreEmploye('nom_stagiaire', $request->get('name'));   
+  
+        return json_encode($emps);   
     }
 
-    // filtre matricule
+    // filtre employes matricule
     public function filtreMatricule(Request $request){
-
-        $user_id = Auth::user()->id;
-
-        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
-
-        $emps = DB::table("stagiaires")
-                ->select("*")
-                ->where('entreprise_id', '=', $etp_id)
-                ->where('matricule', 'like', '%'.$request->get('matricule').'%')
-                ->get();
-
-        // dd($emps);   
+        $function = new FonctionGenerique();
+        $emps = $function->filtreEmploye('matricule', $request->get('matricule'));
+ 
         return json_encode($emps);    
     }
+
+    // filtre employes role
+    public function filtreRole(Request $request){
+        $function = new FonctionGenerique();
+        $emps = $function->filtreEmploye('role_name', $request->get('role_name'));
+ 
+        return json_encode($emps);   
+    }
+
+
+    //filtre referent fonction
+    public function filtreReferent(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreReferent('fonction_resp', $request->get('fonctionReferent'));
+
+        return json_encode($referents);
+    }
+
+    //filtre referent name
+    public function filtreReferentName(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreReferent('nom_resp', $request->get('nameReferent'));
+
+        return json_encode($referents);
+    }
+
+    //filtre referent matricule
+    public function filtreReferentMatricule(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreReferent('matricule', $request->get('matriculeReferent'));
+
+        return json_encode($referents);
+    }
+
+    //filtre referent role
+    public function filtreReferentRole(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreReferent('role_name', $request->get('roleReferent'));
+
+        return json_encode($referents);
+    }
+
+    //filtre chef fonction
+    public function filtreChef(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreChef('fonction_chef', $request->get('fonctionChef'));
+
+        return json_encode($referents);
+    }
+
+    //filtre chef name
+    public function filtreChefName(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreChef('nom_chef', $request->get('nameChef'));
+
+        return json_encode($referents);
+    }
+
+    //filtre chef matricule
+    public function filtreChefMatricule(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreChef('chef_departements.id', $request->get('matriculeChef'));
+
+        return json_encode($referents);
+    }
+
+    //filtre chef matricule
+    public function filtreChefRole(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreChef('role_name', $request->get('roleChef'));
+
+        return json_encode($referents);
+    }
+//end filtre
 
     /*   public function liste()
     {

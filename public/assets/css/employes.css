@@ -51,3 +51,5 @@ input:checked + .slider:before {
 .slider.round {
   border-radius: 34px;
 }
+
+

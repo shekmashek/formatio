@@ -100,7 +100,7 @@ CREATE TABLE users (
   name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   email varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
   cin varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
-  telephone varchar(20) COLLATE utf8mb4_unicode_ci ,
+  telephone varchar(100) COLLATE utf8mb4_unicode_ci ,
   email_verified_at timestamp NULL DEFAULT NULL,
   password varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   remember_token varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
