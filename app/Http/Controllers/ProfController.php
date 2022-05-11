@@ -118,6 +118,22 @@ class ProfController extends Controller
         return response()->json($formateur);
     }
 
+
+    //filter formateurs name
+    public function filtreProfName(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $cfp_id = cfp::where('user_id', [$user_id])->value('id');
+
+        $formateur = DB::table('v_demmande_cfp_formateur')
+        ->where('cfp_id', '=', $cfp_id)
+        ->where('nom_formateur', 'like', '%'. $request->get('nameFormateur') .'%')
+        ->get();
+        
+        // dd(json_encode($formateur));
+        return json_encode($formateur);
+    }
+
     public function create()
     {
     }
@@ -170,12 +186,12 @@ class ProfController extends Controller
                 $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
                 $str = 'images/formateurs';
 
-                $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
+                // $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
 
                 $request->image->move(public_path($str), $nom_image);
 
                 $frm->photos = $nom_image;
-                $frm->url_photo = $url_photo;
+                // $frm->url_photo = $url_photo;
 
                 $user = new User();
                 $user->name = $request->nom . " " . $request->prenom;

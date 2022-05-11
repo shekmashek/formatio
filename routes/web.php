@@ -1069,7 +1069,7 @@ Route::get('/fonctionnalitea', function () {
     return view('/fonctionnalitea');
 });
 //Route budgetisation
-Route::get('budget','PlanFormationController@budfgetisation')->name('budget');
+Route::get('budget','PlanFormationController@budgetisation')->name('budget');
 Route::get('cout_prev','PlanFormationController@cout_previsionnel')->name('cout_prev');
 Route::post('enregistrer_budget','PlanFormationController@enregistrer_budget')->name('enregistrer_budget');
 //Routerecherche cfp et entreprise
@@ -1235,3 +1235,26 @@ Route::get('parametrage_salle','SalleFormationController@index')->name('parametr
 Route::post('enregistrer_salle_of','SalleFormationController@store')->name('enregistrer_salle_of');
 Route::get('supprimer_salle/{id?}','SalleFormationController@destroy')->name('supprimer_salle');
 Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('modifier_salle');
+
+//filtre employes
+Route::get('/employes/filtre/query/fonction', 'DepartementController@filtreFonction')->name('stagiaire.filter.fonction');
+Route::get('/employes/filtre/query/name', 'DepartementController@filtreName')->name('stagiaire.filter.name');
+Route::get('/employes/filtre/query/matricule', 'DepartementController@filtreMatricule')->name('stagiaire.filter.matricule');
+Route::get('/employes/filtre/query/role', 'DepartementController@filtreRole')->name('stagiaire.filter.role');
+
+//filtre referents
+Route::get('/referents/filtre/query/fonction', 'DepartementController@filtreReferent')->name('referent.filter.fonction');
+Route::get('/referents/filtre/query/name', 'DepartementController@filtreReferentName')->name('referent.filter.name');
+Route::get('/referents/filtre/query/matricule', 'DepartementController@filtreReferentMatricule')->name('referent.filter.matricule');
+Route::get('/referents/filtre/query/role', 'DepartementController@filtreReferentRole')->name('referent.filter.role');
+
+//filtre chef departement
+Route::get('/chefs/filtre/query/fonction', 'DepartementController@filtreChef')->name('chef.filter.fonction');
+Route::get('/chefs/filtre/query/name', 'DepartementController@filtreChefName')->name('chef.filter.name');
+Route::get('/chefs/filtre/query/matricule', 'DepartementController@filtreChefMatricule')->name('chef.filter.matricule');
+Route::get('/chefs/filtre/query/role', 'DepartementController@filtreChefRole')->name('chef.filter.role');
+
+//filtre formateurs
+Route::get('/formateurs/filtre/query/name', 'ProfController@filtreProfName')->name('prof.filter.name');
+
+

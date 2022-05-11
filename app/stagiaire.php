@@ -16,6 +16,7 @@ class Stagiaire extends Model
     {
         return $this->belongsTo('App\Departement');
     }
+
     public function entreprise()
     {
         return $this->belongsTo('App\entreprise');

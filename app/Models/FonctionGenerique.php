@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Responsable;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class FonctionGenerique extends Model
 {
@@ -285,6 +287,78 @@ class FonctionGenerique extends Model
         $query = $query . " " . $para;
         return $query;
     }
+
+    //start refactor ------------------------------------------------
+
+    // filtre employes
+    public function filtreEmploye($search_param_name, $input){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = Responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $emps = DB::table('users')
+                ->join('v_role_user_etp_stg', 'v_role_user_etp_stg.user_id', 'users.id')
+                ->join('stagiaires', 'stagiaires.user_id', 'v_role_user_etp_stg.user_id')
+                ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
+                ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
+                    'role_id', 'mail_stagiaire', 'photos',
+                    'stagiaires.user_id', 'fonction_stagiaire', 
+                    'users.name', 'users.telephone', 'users.email')
+                ->where('stagiaires.entreprise_id', '=', $etp_id)
+                ->where($search_param_name, 'like', '%'. $input .'%')
+                ->get();
+  
+        return $emps;   
+    }
+
+    //filtre Réferent
+    public function filtreReferent($search_param_name, $input){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $referents = DB::table('users')
+                ->join('v_role_user_etp_referent', 'v_role_user_etp_referent.user_id', 'users.id')
+                ->join('responsables', 'responsables.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'responsables.entreprise_id')
+                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name', 
+                'matricule', 
+                'nom_resp', 'prenom_resp',
+                    'role_id', 'email_resp', 'photos',
+                    'responsables.user_id', 'fonction_resp')
+                ->where('responsables.entreprise_id', '=', $etp_id)
+                ->where($search_param_name, 'like', '%'. $input .'%')
+                ->get();
+
+        // dd($referents);
+        return $referents;
+    }
+
+    //filtre Chef
+    public function filtreChef($search_param_name, $input){
+
+        $user_id = Auth::user()->id;
+
+        $etp_id = responsable::where('user_id', [$user_id])->value('entreprise_id');
+
+        $chefs = DB::table('users')
+                ->join('v_role_user_etp_manager', 'v_role_user_etp_manager.user_id', 'users.id')
+                ->join('chef_departements', 'chef_departements.user_id', 'users.id')
+                ->join('entreprises', 'entreprises.id', 'chef_departements.entreprise_id')
+                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name', 
+                    'chef_departements.id', 'nom_chef', 'prenom_chef',
+                    'role_id', 'mail_chef', 'photos',
+                    'chef_departements.user_id', 'fonction_chef')
+                ->where('chef_departements.entreprise_id', '=', $etp_id)
+                ->where($search_param_name, 'like', '%'. $input .'%')
+                ->get();
+
+        // dd($chefs);
+        return $chefs;
+    }
+    //end refactor -------------------------------------
 
     public function getNotCollaborer($nomTab, $list)
     {
