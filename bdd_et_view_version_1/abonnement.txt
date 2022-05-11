@@ -1,1 +1,2 @@
-Recopier view_6 (abonnement)
+Recopier les scripts dans bdd_suiviformation_mis_a_jour_18(abonnements)
+Recopier les scripts dans bdd_suiviformation_view_6(abonnement)
