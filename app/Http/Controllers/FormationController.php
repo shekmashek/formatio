@@ -140,7 +140,7 @@ class FormationController extends Controller
 
         if ($nom_formation == null) {
             // $infos = DB::select('select * from moduleFormation');
-            $infos = DB::select('select * from moduleFormation where status = 2');
+            $infos = DB::select('select * from moduleformation where status = 2');
             $liste_avis = DB::select('select * from v_liste_avis limit 5');
             return view('referent.catalogue.liste_formation', compact('infos', 'datas', 'liste_avis', 'categorie'));
         } else {
