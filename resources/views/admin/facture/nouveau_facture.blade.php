@@ -166,7 +166,7 @@
                                     <h6 class="m-0">Unité</h6>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">Prix unitaire ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">Prix unitaire ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>
@@ -241,7 +241,7 @@
                         <h6 class="m-0">Quantité</h6>
                     </div>
                     <div class="col-2">
-                        <h6 class="m-0">Prix unitaire ({{$devise->devise}})</h6>
+                        <h6 class="m-0">Prix unitaire ({{$devise->reference}})</h6>
                     </div>
                     <div class="col-1 text-end">
                         <h6 class="m-0"></h6>
@@ -249,9 +249,6 @@
                 </div>
 
                 <div id="newRow"></div>
-
-
-
             </div>
             <div class="row nouveau_service g-0">
                 <div class="col-12 py-2 text-center">

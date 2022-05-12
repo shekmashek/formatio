@@ -614,7 +614,6 @@
                             <!--<span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>--->
                             <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
                         </div>
-
                         <div class="">
                             @can('isManager')
                             <div class="btn_creer dropdown">
@@ -624,7 +623,6 @@
                                     aria-haspopup="true">
                                     <i class='bx bx-plus-medical icon_creer'></i>Créer
                                 </a>
-
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 
                                     <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
@@ -646,7 +644,6 @@
                                         data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
                                         style="text-decoration: none">
                                         <i class='bx bx-plus-medical icon_creer'></i>Créer
-
                                     </a>
 
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">

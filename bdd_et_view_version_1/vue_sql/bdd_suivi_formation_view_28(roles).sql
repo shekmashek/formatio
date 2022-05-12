@@ -33,4 +33,4 @@ CREATE OR REPLACE VIEW v_role_user_etp_manager AS SELECT
 FROM
     role_users,chef_departements,roles
 WHERE
-    role_users.role_id = roles.id AND role_users.user_id = chef_departements.user_id ;
+    role_users.role_id = roles.id AND role_users.user_id = chef_departements.user_id
