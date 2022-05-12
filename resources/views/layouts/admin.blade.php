@@ -730,7 +730,7 @@
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
                                             style="text-decoration: none">
-                                            <i class='bx bxs-cog icones_creer'></i>
+                                            <i class='bx bxs-cog icon_creer_admin'></i>
                                             Paramètres
                                         </a>
 

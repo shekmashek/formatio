@@ -6,86 +6,7 @@
 @inject('groupe', 'App\groupe')
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
-
-    <style>
-        .status_grise {
-            border-radius: 1rem;
-            background-color: #637381;
-            color: white;
-        }
-
-        .status_reprogrammer {
-            border-radius: 1rem;
-            background-color: #00CDAC;
-            color: white;
-            align-items: center margin: 0 auto;
-        }
-
-        .status_cloturer {
-            border-radius: 1rem;
-            background-color: #314755;
-            color: white;
-            align-items: center margin: 0 auto;
-        }
-
-        .status_reporter {
-            border-radius: 1rem;
-            background-color: #26a0da;
-            color: white;
-            align-items: center margin: 0 auto;
-        }
-
-        .status_annulee {
-            border-radius: 1rem;
-            background-color: #b31217;
-            color: white;
-            align-items: center margin: 0 auto;
-        }
-
-        .status_termine {
-            border-radius: 1rem;
-            background-color: #1E9600;
-            color: white;
-            align-items: center margin: 0 auto;
-        }
-
-        .status_confirme {
-            border-radius: 1rem;
-            background-color: #2B32B2;
-            color: white;
-            align-items: center margin: 0 auto;
-            padding-end:1rem;
-        }
-
-        .statut_active {
-            border-radius: 1rem;
-            background-color: rgb(15, 126, 145);
-            color: whitesmoke;
-            align-items: center margin: 0 auto;
-        }
-
-
-        .pagination {
-            background-clip: text;
-            margin-right: .3rem;
-            font-size: 2rem;
-            position: relative;
-            top: .7rem;
-        }
-
-        .pagination:hover {
-            color: #000000;
-            background-color: rgb(239, 239, 239);
-            border-radius: 1.3rem;
-        }
-
-        .nombre_pagination {
-            color: #626262;
-
-        }
-
-    </style>
+<link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
             <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
@@ -191,8 +112,7 @@
                                             @if ($prj->type_formation_id == 1)
                                                 <span role="button" class=" m-0 nouvelle_session " data-bs-toggle="modal"
                                                     data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static'
-                                                    title="Nouvelle session"><i class="bx bx-plus-medical me-3"></i>Ajouter une
-                                                    session</span>
+                                                    title="Nouvelle session"><i class="bx bx-plus-medical icon_creer me-3"></i>Session</span>
                                             @endif
                                         @endcan
                                     </div>

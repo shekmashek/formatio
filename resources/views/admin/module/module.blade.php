@@ -569,13 +569,8 @@
                                                     <div class="text-uppercase">
                                                         @if ($mod->etat_id == 2)
                                                         <div class="form-check form-switch d-flex flex-row">
-                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">Hors&nbsp;Ligne</span></label>
-                                                            <input class="form-check-input mettre_en_ligne ms-3" type="checkbox" value="{{$mod->module_id}}" title="désactiver pour mettre hors ligne">
-                                                        </div>
-                                                        @else
-                                                        <div class="form-check form-switch d-flex flex-row">
-                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;ligne</span></label>
-                                                            <input class="form-check-input  ms-3" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne" checked>
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix_hors_ligne">Hors&nbsp;Ligne</span></label>
+                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" data-bs-target="#en_ligne_{{$mod->module_id}}" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne">
                                                         </div>
                                                         @endif
                                                         {{-- <a href="{{route('mettre_')}}" role="button"><span class="btn py-1 button_choix active_mod">Hors Ligne</span></a>
@@ -604,6 +599,30 @@
                                                             data-bs-dismiss="modal"> Non
                                                         </button>
                                                         <button type="button" class="btn btn-secondary suppression"
+                                                            id="{{$mod->module_id}}"> Oui</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="en_ligne_{{$mod->module_id}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="en_ligne_{{$mod->module_id}}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header  d-flex justify-content-center"
+                                                        style="background-color:rgb(224,182,187);">
+                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="text-center my-2">
+                                                            <i class="fa-solid fa-circle-exclamation warning"></i>
+                                                        </div>
+                                                        <p class="text-center">Vous allez mettre en ligne cette module. Êtes-vous sur?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary non_en_ligne"
+                                                            data-bs-dismiss="modal"> Non
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary mettre_en_ligne"
                                                             id="{{$mod->module_id}}"> Oui</button>
                                                     </div>
                                                 </div>
@@ -755,12 +774,7 @@
                                                         @if ($mod->etat_id == 1)
                                                         <div class="form-check form-switch d-flex flex-row">
                                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;Ligne</span></label>
-                                                            <input class="form-check-input mettre_hors_ligne ms-3" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre hors ligne" >
-                                                        </div>
-                                                        @else
-                                                        <div class="form-check form-switch d-flex flex-row">
-                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">Hors&nbsp;ligne</span></label>
-                                                            <input class="form-check-input  ms-3" type="checkbox" value="{{$mod->module_id}}"  title="désactiver pour mettre en ligne " checked>
+                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" data-bs-target="#hors_ligne_{{$mod->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked>
                                                         </div>
                                                         @endif
                                                     </div>
@@ -786,6 +800,30 @@
                                                             data-bs-dismiss="modal"> Non
                                                         </button>
                                                         <button type="button" class="btn btn-secondary suppression"
+                                                            id="{{$mod->module_id}}">Oui</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="hors_ligne_{{$mod->module_id}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="hors_ligne_{{$mod->module_id}}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header  d-flex justify-content-center"
+                                                        style="background-color:rgb(224,182,187);">
+                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="text-center my-2">
+                                                            <i class="fa-solid fa-circle-exclamation warning"></i>
+                                                        </div>
+                                                        <p class="text-center">Vous allez mettre hors ligne cette module. Êtes-vous sur?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary non_hors_ligne"
+                                                            data-bs-dismiss="modal"> Non
+                                                        </button>
+                                                        <button type="button" class="btn btn-secondary mettre_hors_ligne"
                                                             id="{{$mod->module_id}}"> Oui</button>
                                                     </div>
                                                 </div>
@@ -803,7 +841,7 @@
             </div>
 
             <div>
-                <div class="modal" id="ModalAffichage">
+                {{-- <div class="modal" id="ModalAffichage">
                     <div class="modal-dialog">
                         <div class="modal-content modal_grand">
                             <div class="container-fluid">
@@ -838,11 +876,7 @@
                                             </div>
                                             <div class="col-lg-6 col-md-6 detail__formation__result__content">
                                                 <div class="detail__formation__result__item2">
-                                                    {{-- <div class="text-center" id="imgDiv"><img
-                                                            src='{{asset("images/CFP/".$mod_en_cours[0]->logo)}}'
-                                                            alt="logo" id="logos" class="img-fluid"
-                                                            style="width: 200px; height: 100px;">
-                                                    </div> --}}
+
                                                 </div>
                                             </div>
                                             <div
@@ -1027,7 +1061,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="filtrer mt-3">
@@ -1418,12 +1452,11 @@
     });
 
     $(".mettre_en_ligne").on('click', function(e) {
-         var mod_id = $(this).val();
-
+        let id = e.target.id;
         $.ajax({
             method: "GET"
             , url: "{{route('mettre_en_ligne')}}"
-            , data: {Id : mod_id}
+            , data: {Id : id}
             , success: function(response) {
                 window.location.reload();
             }
@@ -1433,12 +1466,20 @@
         });
      });
 
+     $(".non_hors_ligne").on('click', function(e) {
+        $(".form-check-input").prop('checked',true);
+     });
+
+     $(".non_en_ligne").on('click', function(e) {
+        $(".form-check-input").prop('checked',false);
+     });
+
      $(".mettre_hors_ligne").on('click', function(e) {
-         var mod_id = $(this).val();
+        let id = e.target.id;
         $.ajax({
             method: "GET"
             , url: "{{route('mettre_hors_ligne')}}"
-            , data: {Id : mod_id}
+            , data: {Id : id}
             , success: function(response) {
                 window.location.reload();
             }
@@ -1447,6 +1488,8 @@
             }
         });
      });
+
+
 
 </script>
 @endsection

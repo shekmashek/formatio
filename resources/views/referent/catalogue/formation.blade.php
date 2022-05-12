@@ -4,6 +4,17 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
+<div class="row navigation_detail">
+    <div class="ps-5 col justify-content-between d-flex flex-row">
+        <div>
+            <ul class="d-flex flex-row">
+                <li class="me-5"><a href="#objectif">objectif</a></li>
+                <li class="me-5"><a href="#pour_qui">pour qui ?</a></li>
+                <li class="me-5"><a href="#programme">programme</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 <section class="formation mb-5">
     <div class="container-fluid g-0 m-0 p-0 justify-content-center ">
         <div class="row g-0 m-0 content_formation p-5">
