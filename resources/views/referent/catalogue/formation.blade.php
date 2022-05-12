@@ -1,18 +1,72 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Catégorie</p>
+<p class="text_header m-0 mt-1">Catégorie</p>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
-<div class="row navigation_detail">
-    <div class="ps-5 col justify-content-between d-flex flex-row">
-        <div>
-            <ul class="d-flex flex-row">
-                <li class="me-5"><a href="#objectif">objectif</a></li>
-                <li class="me-5"><a href="#pour_qui">pour qui ?</a></li>
-                <li class="me-5"><a href="#programme">programme</a></li>
-            </ul>
-        </div>
+<div class="row navigation_detail ">
+    <div class="ps-5">
+        <ul class="">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <li>
+                        <h3 class="text-center">Que voulez-vous apprendre?</h3>
+                    </li>
+                </div>
+                <div class="col-6">
+                    <li class="me-5">
+                        <div class="row content_search text-center">
+                            <form method="GET" action="{{route('result_formation')}}">
+                                @csrf
+                                <div class="form-row">
+                                    <div class="d-flex flex-row">
+                                        <input class="form-control me-2" type="text" name=""
+                                            placeholder="Rechercher par formations ex. Excel">
+                                        <i class="bx bx-search"></i>
+                                        {{-- <button class="btn_search_formation" href="#">
+
+                                        </button> --}}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                </div>
+                <div class="col-3">
+                    <div class="dropdown">
+                        <button class="dropbtn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <div class="header">
+                                <h2>Mega Menu</h2>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <h3>Category 1</h3>
+                                    <a href="#">Link 1</a>
+                                    <a href="#">Link 2</a>
+                                    <a href="#">Link 3</a>
+                                </div>
+                                <div class="column">
+                                    <h3>Category 2</h3>
+                                    <a href="#">Link 1</a>
+                                    <a href="#">Link 2</a>
+                                    <a href="#">Link 3</a>
+                                </div>
+                                <div class="column">
+                                    <h3>Category 3</h3>
+                                    <a href="#">Link 1</a>
+                                    <a href="#">Link 2</a>
+                                    <a href="#">Link 3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" type="btn"><i class='bx bx-menu'></i>domaines des formations</button>
+                </div>
+            </div>
+        </ul>
     </div>
 </div>
 <section class="formation mb-5">
@@ -20,7 +74,7 @@
         <div class="row g-0 m-0 content_formation p-5">
             <div class="col-6 ">
                 <h3 class="text-center mb-4">Que voulez-vous apprendre?</h3>
-                <div class="row content_search text-center mb-5">
+                {{-- <div class="row content_search text-center mb-5">
                     <form method="GET" action="{{route('result_formation')}}">
                         @csrf
                         <div class="form-row">
@@ -34,12 +88,12 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                </div> --}}
                 <div class="d-flex flex-row flex-wrap" style="padding-left: 4rem">
                     @foreach ($categorie as $ctg )
                     <div class="content_domaines my-4">
                         <a href="{{route('select_par_formation',$ctg->id)}}">
-                                {{$ctg->nom_formation}}</a>
+                            {{$ctg->nom_formation}}</a>
 
                     </div>
                     @endforeach
@@ -72,11 +126,12 @@
     <div class="container mt-5">
         <h3 class="mb-5">Les formations les plus recherchées </h3>
         <div class="row">
-            <div class= "col-12 d-flex flex-wrap justify-content-cente">
+            <div class="col-12 d-flex flex-wrap justify-content-cente">
                 @foreach ($module as $mod)
                 <div class="card_formation">
                     <div class="imageLogo text-center mb-2 mt-3">
-                         <img src="{{asset('images/CFP/'.$mod->logo)}}" alt="logo" class="img-fluid"title="organisme de formation">
+                        <img src="{{asset('images/CFP/'.$mod->logo)}}" alt="logo" class="img-fluid"
+                            title="organisme de formation">
                     </div>
                     <div class="titre_module">
                         <p class="text-capitalize text-">{{$mod->nom_module}}</p>
@@ -84,19 +139,22 @@
                     <div class="details_module">
                         <div class="row">
                             <div class="col-6">
-                                <p class="text-capitalize text-dark"><i class='bx bx-detail me-2'></i>{{$mod->nom_formation}}</p>
+                                <p class="text-capitalize text-dark"><i
+                                        class='bx bx-detail me-2'></i>{{$mod->nom_formation}}</p>
                                 <p class="text-capitalize"><i class='bx bx-alarm me-2'></i>{{$mod->duree_jour}}
                                     jours/{{$mod->duree}}heures</p>
                                 <p class="text-capitalize"><i
                                         class='bx bxs-notification me-2'></i>{{$mod->modalite_formation}}</p>
                             </div>
                             <div class="col-6 text-center">
-                                <p class="text-capitalize"><strong>{{$mod->prix}}&nbsp;{{$devise->devise}}&nbsp;<span class="text-muted">HT</span></strong> </p>
+                                <p class="text-capitalize"><strong>{{$mod->prix}}&nbsp;{{$devise->devise}}&nbsp;<span
+                                            class="text-muted">HT</span></strong> </p>
                             </div>
                         </div>
                     </div>
                     <div class="text-center">
-                        <a href="{{route('select_par_module',$mod->module_id)}}" role="button" class="btn_enregistrer">Voir la formation</a>
+                        <a href="{{route('select_par_module',$mod->module_id)}}" role="button"
+                            class="btn_enregistrer">Voir la formation</a>
                     </div>
 
                 </div>

@@ -22,15 +22,13 @@ a:focus {
     border-bottom-right-radius: 50%;
 }
 
-.content_formation h3 {
-    color: aqua;
-    font-size: 2.5rem;
-    margin-top: 2rem;
+.navigation_detail h3 {
+    font-size: 1.3rem;
+    text-transform: capitalize;
 }
 
 .content_search input {
-    width: 50%;
-    border: none;
+    border: 1px solid #7635dc;
     border-radius: 5px;
     height: 50px;
     padding-left: 10px;
@@ -40,36 +38,45 @@ a:focus {
     transition: all 0.5s ease;
 }
 
-.content_search input:hover {
+.content_search input:focus{
+    outline: none;
+    box-shadow: none;
+    border-color: #4222c3;
+}
+
+/* .content_search input:hover {
     transform: scale(1.05);
     color: black;
 }
 
 .content_search input:focus {
     transform: scale(1.02);
-}
+} */
 
 .content_search input::placeholder {
     color: #7635dc;
 }
 
-.content_search button {
+.content_search .bx{
+    background-color: #4222c3;
     width: 50px;
-    height: 50px;
+    height: 45px;
     border: none;
-    border-radius: 50%;
-    color: #7635dc;
+    border-radius: 100px;
+    color: white;
     transition: all 0.5s ease;
-}
-
-.content_search button .bx {
+    display: grid;
+    place-content: center;
     position: relative;
     top: 3px;
+    font-size: 1.5rem;
 }
-.content_search button:hover {
-    transform: scale(0.9);
-    color: #4222c3;
-    background-color: aqua;
+
+.content_search .bx:hover {
+    transform: scale(1.01);
+    color: white;
+    background-color: #5433FF;
+    cursor: pointer;
 }
 
 #myCarousel img {
@@ -378,7 +385,7 @@ a:focus {
     top: 4rem;
     background-color: white;
     z-index: 1;
-    padding: 1rem;
+    padding: 0rem 1rem 1rem 1rem;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     text-transform: uppercase;
 }
