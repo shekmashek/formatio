@@ -548,9 +548,9 @@ class FactureController extends Controller
                 $val_payer = [$entreprise_id, True, "terminer"];
             } else { // retard
 
-                $para = ["entreprise_id", "jour_restant", "facture_encour","activiter"];
-                $opt = ["=", "<=", "!=","="];
-                $val = [$entreprise_id, 0, "terminer",True];
+                $para = ["entreprise_id", "jour_restant", "facture_encour", "activiter"];
+                $opt = ["=", "<=", "!=", "="];
+                $val = [$entreprise_id, 0, "terminer", True];
 
                 $para_actif = ["entreprise_id", "activiter", "jour_restant", "facture_encour"];
                 $opt_actif = ["=", "=", "<=", "!="];
@@ -900,6 +900,7 @@ class FactureController extends Controller
 
     public function create(Request $request)
     {
+
         $remise = $this->fonct->findWhereMulitOne("type_remise", ["id"], [$request->type_remise_id]);
         $type_facture = $this->fonct->findWhereMulitOne("type_facture", ["id"], [$request->type_facture]);
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
@@ -1083,6 +1084,14 @@ class FactureController extends Controller
     {
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $data["entreprise"] = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$req->id]);
+        $assujetti = $this->fonct->findWhereMulitOne("assujetti", ["id"], [$data["entreprise"]->assujetti_id]);
+        if ($assujetti->assujetti == true) { // true
+            $data["taxes"] = $this->fonct->findWhereMulitOne("taxes", ["id"], [1]); // tva
+        } else { // false
+            $data["taxes"] = $this->fonct->findWhereMulitOne("taxes", ["id"], [2]); // HT
+        }
+        // $data["taxes"] = $assujetti;
+
         $data["projet"] = $this->fonct->findWhere("v_projet_facture", ["entreprise_id", "cfp_id"], [$req->id, $cfp_id]);
         return response()->json($data);
     }
@@ -1922,9 +1931,9 @@ class FactureController extends Controller
                     $val_payer = [$entreprise_id, True, "terminer"];
                 } else { // retard
 
-                    $para = ["entreprise_id", "jour_restant", "facture_encour","activiter"];
-                    $opt = ["=", "<=", "!=","="];
-                    $val = [$entreprise_id, 0, "terminer",True];
+                    $para = ["entreprise_id", "jour_restant", "facture_encour", "activiter"];
+                    $opt = ["=", "<=", "!=", "="];
+                    $val = [$entreprise_id, 0, "terminer", True];
 
                     $para_actif = ["entreprise_id", "activiter", "jour_restant", "facture_encour"];
                     $opt_actif = ["=", "=", "<=", "!="];
@@ -1965,7 +1974,7 @@ class FactureController extends Controller
                     $req->nb_pagination_payer,
                     $nb_limit
                 );
-            }else { // simple
+            } else { // simple
 
                 $full_facture = $this->fonct->findWhereTrieOrderBy(
                     "v_full_facture",
