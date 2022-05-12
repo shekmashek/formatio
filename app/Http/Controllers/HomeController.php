@@ -466,7 +466,7 @@ class HomeController extends Controller
 
                 $typeAbonne_id = 1;
                 // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->value('id');
-                // $name = DB::select('select nom_type from type_abonnements where id = ?', [$typeAbonnement]);
+                $name = DB::select('select nom_type from v_type_abonnement_etp where entreprise_id = ? order by abonnement_id desc limit 1', [$entreprise_id]);
 
 
                 if ($id != null) {

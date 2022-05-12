@@ -1,4 +1,5 @@
 @extends('./layouts.admin')
+
 @section('title')
 <h3 class="text_header m-0 mt-1">Bussness intelligent</h3>
 @endsection
@@ -77,7 +78,6 @@
                     @if (isset($pour_list))
                     @if ($pour_list == "ETP")
                     <div class="tab-pane fade show active" id="etp" role="tabpanel" aria-labelledby="tab_etp">
-<<<<<<< HEAD
                         @else
                         <div class="tab-pane fade" id="etp" role="tabpanel" aria-labelledby="tab_etp">
                             @endif
@@ -172,29 +172,6 @@
                                                                     <td>{{$f_etp->nom_etp}}</td>
                                                                     <td>
                                                                         @if($f_etp->iframe == null)
-=======
-
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-12"><div class="p-3 mb-12 bg-body rounded ">
-                                        <h4>Entreprises</h4>
-                                        <div class="table-responsive text-center">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Nom</th>
-                                                        <th scope="col">Iframe</th>
-                                                        <th scope="col">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if(count($iframe_etp)>0)
-                                                        @foreach($iframe_etp as $f_etp)
-                                                            <tr>
-                                                                <td>{{$f_etp->nom_etp}}</td>
-                                                                <td>
-                                                                    @if($f_etp->iframe == null)
->>>>>>> origin/Super_Admins
                                                                         <form action="enregistrer_iframe_etp" method="post" class="d-flex flex-row">
                                                                             @csrf
                                                                             <input type="hidden" name="entreprise_id" value={{$f_etp->entreprise_id}}>
@@ -280,7 +257,6 @@
                                 </div>
                             </div>
                         </div>
-<<<<<<< HEAD
                         {{-- organisme de formation --}}
 
                         @if (isset($pour_list))
@@ -401,59 +377,6 @@
                                                                                     <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="" id="" data-bs-toggle="modal" data-bs-target="#deletecfp_modal_{{$f_etp->cfp_id}}" style="color: red">Supprimer</button></a>
                                                                                 </ul>
                                                                             </div>
-=======
-                    </div>
-                    {{-- organisme de formation --}}
-                    <div class="tab-pane fade show" id="of" role="tabpanel" aria-labelledby="tab_of">
-                        <div class="d-flex flex-row justify-content-end mt-3">
-
-
-                        </div>
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <div class="p-3 mb-5 bg-body rounded ">
-
-                                        <h4>Organisme de formation</h4>
-
-                                        <div class="table-responsive text-center">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Nom</th>
-                                                        <th scope="col">Iframe</th>
-                                                        <th scope="col">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if(count($iframe_of)>0)
-                                                    @foreach($iframe_of as $f_etp)
-                                                        <tr>
-                                                            <td>{{$f_etp->nom}}</td>
-                                                            <td>
-                                                                @if($f_etp->iframe == null)
-                                                                    <form action="enregistrer_iframe_cfp" method="post" class="d-flex flex-row">
-                                                                        @csrf
-                                                                        <input type="hidden" name="cfp_id" value={{$f_etp->cfp_id}}>
-                                                                        <input type="text" name="iframe_url" class="form-control "><button class="btn btn_next ms-2" type="submit">Ajouter </button>
-                                                                    </form>
-                                                                @else
-                                                                    {{$f_etp->iframe}}
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                @if($f_etp->iframe != null)
-                                                                    <div class="dropdown">
-                                                                        <div class="btn-group dropstart">
-                                                                            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                <i class="fa fa-ellipsis-v"></i>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modalcfp_{{$f_etp->cfp_id}}"> <i class="bx bx-edit"></i> Modifier</button></a>
-                                                                                <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="" id="" data-bs-toggle="modal" data-bs-target="#deletecfp_modal_{{$f_etp->cfp_id}}" style="color: red">Supprimer</button></a>
-                                                                            </ul>
->>>>>>> origin/Super_Admins
                                                                         </div>
                                                                         @endif
                                                                     </td>
