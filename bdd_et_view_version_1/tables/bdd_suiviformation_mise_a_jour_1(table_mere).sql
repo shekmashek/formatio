@@ -178,8 +178,7 @@ CREATE TABLE cfps (
   updated_at timestamp NULL DEFAULT current_timestamp(),
   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  'XXXXXXX',
-  user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
+  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  'XXXXXXX'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE horaires (
