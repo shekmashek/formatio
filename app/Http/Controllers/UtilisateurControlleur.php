@@ -40,7 +40,7 @@ class UtilisateurControlleur extends Controller
         if ($id) $datas = responsable::orderBy('nom_resp')->with('entreprise')->take($id)->get();
         else  $datas = responsable::orderBy("nom_resp")->with('entreprise')->get();
 
-        return view('admin.utilisateur.utilisateur', compact('datas', 'liste'));
+        return view('admin.utilisateur.utilisateur', compact('datas'));
     }
 
     public function create($id = null)

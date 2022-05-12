@@ -283,6 +283,11 @@ Route::get('/edit_photos_resp/{id}','ResponsableController@edit_photos')->name('
 Route::get('/edit_pwd_resp/{id}','ResponsableController@edit_pwd')->name('edit_pwd_resp');
 Route::get('/edit_poste_resp/{id}','ResponsableController@edit_poste')->name('edit_poste_resp');
 
+// ======================= desactiver personne =====================
+Route::get('desactiver_personne','ResponsableCfpController@desactiver_personne')->name('desactiver_personne');
+Route::get('activer_personne','ResponsableCfpController@activer_personne')->name('activer_personne');
+
+
 // update password
 Route::post('/update_responsable_mdp/{id}','ResponsableController@update_responsable_mdp')->name('update_responsable_mdp');
 //update image
@@ -482,6 +487,8 @@ Route::get('editer_programme','ProgrammeController@edit')->name('editer_programm
 
 // route liste equipe adminb pour O.F
 Route::get('liste_equipe_admin','ResponsableCfpController@listeEquipeAdminCFP')->name('liste_equipe_admin');
+
+Route::post('update_roleReferent','ResponsableCfpController@modifReferent')->name('update_roleReferent');
 
 // cours
 Route::get('ajouter_cours/{id_prog?}', 'CoursControlleur@index')->name('ajouter_cours');
