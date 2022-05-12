@@ -290,12 +290,10 @@ class HomeController extends Controller
             // dd($user_id, $centre_fp, $top_10_par_client);
 
 
-/*
 
-            $drive = new getImageModel();
-            $drive->create_folder($cfp);
-            $drive->create_sub_folder($cfp, "Mes documents");
-*/
+
+         
+
             $formateur = DB::select('select * from demmande_cfp_formateur where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $dmd_cfp_etp = DB::select('select * from demmande_cfp_etp where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $resp_cfp = DB::select('select * from responsables_cfp where user_id = ' . $user_id . ' ');

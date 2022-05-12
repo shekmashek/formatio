@@ -93,9 +93,9 @@
                                     <select class="form-select selectP input" id="module_id" name="module_id"
                                         aria-label="Default select example">
                                         <option onselected>Choisir la module du session</option>
-                                        {{-- @foreach ($modules as $mod)
+                                        @foreach ($modules as $mod)
                                         <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
-                                        @endforeach --}}
+                                        @endforeach
                                     </select>
                                     <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
                                         class="text-danger">*</strong></label>

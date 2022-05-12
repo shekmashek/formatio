@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\cfp;
 use App\ChefDepartement;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\session;
 use App\detail;
@@ -148,12 +148,17 @@ class SessionController extends Controller
                 $entreprise_id = null;
             }
 
+
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
             $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
             // dd($formateur_cfp);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
+            $drive = new getImageModel();
+            $drive->create_folder($cfp_nom);
+            $drive->create_sub_folder($cfp_nom, "Mes documents");
             $documents = $drive->file_list($cfp_nom,"Mes documents");
+       
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
         if(Gate::allows('isReferent')){
@@ -222,7 +227,7 @@ class SessionController extends Controller
             $lieu_formation[0]='';
             $lieu_formation[1]='';
         }
-
+        // dd($formateur);
         return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation'));
     }
 

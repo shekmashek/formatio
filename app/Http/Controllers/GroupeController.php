@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\groupe;
 use App\projet;
 use App\cfp;
+use App\Formation;
 use App\Models\FonctionGenerique;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -50,12 +51,19 @@ class GroupeController extends Controller
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
         $type_formation = request()->type_formation;
         $formations = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
+
+        // $formations = DB::table('v_formation')
+        //     ->select('*')
+        //     ->where('cfp_id', $cfp_id)
+        //     ->get();
+
         $modules = $fonct->findAll("modules");
 
         $etp1 = $fonct->findWhere("v_demmande_cfp_etp", ['cfp_id'], [$cfp_id]);
         $etp2 = $fonct->findWhere("v_demmande_etp_cfp", ['cfp_id'], [$cfp_id]);
         $entreprise = $fonct->concatTwoList($etp1, $etp2);
         $payement = $fonct->findAll("type_payement");
+        // dd($formations);
         return view('projet_session.projet_intra_form', compact('type_formation', 'formations', 'modules', 'entreprise', 'payement'));
     }
 

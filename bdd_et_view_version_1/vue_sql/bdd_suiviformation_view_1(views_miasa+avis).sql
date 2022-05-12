@@ -231,16 +231,15 @@ ORDER BY
     date_avis
 DESC
     ;
+    
 CREATE OR REPLACE VIEW v_avis AS SELECT
     module_id,
-    ROUND(
-        (SUM(note) / COUNT(note)) / COUNT(module_id),
-        1
-    ) AS pourcentage
+    ROUND((SUM(note) / COUNT(note)) / COUNT(module_id),1) AS pourcentage
 FROM
     avis
 GROUP BY
     module_id;
+
 CREATE OR REPLACE VIEW v_nombre_avis_par_module AS SELECT
     module_id,
     COUNT(*) AS nombre

@@ -462,7 +462,7 @@
 
                         <div class="d-flex flex-row">
                             <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
-                                {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
+                                <span style="margin-left: 8px; font-size: 16px ; font-weight: 400; text-transform: capitalize; color: #0765f3">{{ $projet[0]->nom_cfp }}</span></p>&nbsp;&nbsp;
                             <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2 testAvatar"
                                 height="30px" width="30px" data-id={{$projet[0]->cfp_id}} id={{$projet[0]->cfp_id}} onclick="afficherInfos();">&nbsp;
                         </div>
@@ -734,8 +734,18 @@
                         <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
                         <div class="col-md-3" style="text-align: left">Responsable</div>
                         <div class="col-md">
-                            <span style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
-                            <span style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                            <div style="font-size: 14px; text-transform: uppercase; font-weight: bold; text-align: left">
+                                    @if ( $formateur != null) {{ $formateur[0]->nom_formateur }}
+                                    @else
+                                        <span>---</span>
+                                    @endif 
+                                <span style="font-size: 12px; text-transform: Capitalize; font-weight: bold ">
+                                    @if ($formateur != null) {{ $formateur[0]->prenom_formateur }}
+                                    @else
+                                        
+                                    @endif 
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -744,7 +754,7 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
                         <div class="col-md-3" style="text-align: left">Tel</div>
-                        <div class="col-md"><strong>{{ $projet[0]->tel_cfp }}</strong></div>
+                        <div class="col-md" style="text-align: left">: {{ $projet[0]->tel_cfp }}</div>
                     </div>
                 </div>
                 <div class="mt-1">
@@ -752,10 +762,10 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
                         <div class="col-md-3" style="text-align: left">Adresse</div>
-                        <div class="col-md">
-                            <span>{{ $projet[0]->adresse_lot_cfp }}</span>
-                            <span>{{ $projet[0]->adresse_ville_cfp }}</span>
-                            <span>{{ $projet[0]->adresse_region_cfp }}</span>
+                        <div class="col-md" style="text-align: left">
+                            <div>: {{ $projet[0]->adresse_lot_cfp }}</div>
+                            <div>: {{ $projet[0]->adresse_ville_cfp }}</div>
+                            <div>: {{ $projet[0]->adresse_region_cfp }}</div>
                         </div>
                     </div> 
                 </div>
@@ -764,8 +774,8 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
                         <div class="col-md-3" style="text-align: left">E-mail</div>
-                        <div class="col-md">
-                            <span>{{ $projet[0]->mail_cfp }}</span>
+                        <div class="col-md" style="text-align: left">
+                            : {{ $projet[0]->mail_cfp }}
                     </div>
                     
                 </div>
@@ -774,8 +784,74 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
                         <div class="col-md-3" style="text-align: left">Site web</div>
+                        <div class="col-md" style="text-align: left">
+                            : {{ $projet[0]->site_web }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if ($type_formation_id == 2)
+                <div class="mt-1 text-center mb-3">
+                    <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" class="img-fluid text-center"
+                        style="width:120px;height: auto;" role="button" onclick="afficherInfos();">
+                    <div>
+                </div>
+        
+                <div class="mt-1 text-center">
+                    <strong style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: 700">{{ $projet[0]->nom_cfp }}</strong>
+                </div>
+                {{-- <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                        <div class="col-md-3" style="text-align: left">Responsable</div>
                         <div class="col-md">
-                            <span>{{ $projet[0]->site_web }}</span>
+                            <div style="font-size: 14px; text-transform: uppercase; font-weight: bold; text-align: left">
+                                <span style="font-size: 12px; text-transform: Capitalize; font-weight: bold ">
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                        <div class="col-md-3" style="text-align: left">Tel</div>
+                        <div class="col-md" style="text-align: left">: {{ $projet[0]->tel_cfp }}</div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="col-md-3" style="text-align: left">Adresse</div>
+                        <div class="col-md" style="text-align: left">
+                            <div>: {{ $projet[0]->adresse_lot_cfp }}</div>
+                            <div>: {{ $projet[0]->adresse_ville_cfp }}</div>
+                            <div>: {{ $projet[0]->adresse_region_cfp }}</div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="col-md-3" style="text-align: left">E-mail</div>
+                        <div class="col-md" style="text-align: left">
+                            : {{ $projet[0]->mail_cfp }}
+                    </div>
+                    
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                        <div class="col-md-3" style="text-align: left">Site web</div>
+                        <div class="col-md" style="text-align: left">
+                            : {{ $projet[0]->site_web }}
                         </div>
                     </div>
                 </div>

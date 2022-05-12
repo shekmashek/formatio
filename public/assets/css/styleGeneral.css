@@ -385,6 +385,43 @@ ul li a {
 .infos_btn button{
     display: grid;
 }
+
+.drawer{
+    position: fixed;
+    top: 3rem;
+    right: -50px;
+    height: 100%;
+    width: 0px;
+    background: white;
+    padding: 6px 14px;
+    transition: all 0.5s ease;
+    align-items: center;
+    color: var(--font-sidebar-color);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-left: 1px solid grey;
+    float: right;
+    z-index: 999;
+}
+
+.drawer.draws {
+    width: 400px;
+    overflow-y: auto;
+    right: 0px;
+}
+
+.drawer p{
+    font-size: 1rem;
+}
+.drawer .bx{
+    font-size: 1.5rem;
+}
+
+.infos_btn button{
+    display: grid;
+} */
+
+/* draw end */
+
 .prof{
     position: fixed;
     top: 3rem;

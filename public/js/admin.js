@@ -136,11 +136,19 @@ $(document).ready(function() {
 
 
 let sidebar = document.querySelector(".sidebar");
-//let affichertuto = document.querySelector(".apprendre");
 let afficherinfos = document.querySelector(".infos");
 let afficherfiltre = document.querySelector(".filtrer");
 let menu = document.querySelector(".bx-menu");
 
+
+//test drawer
+let afficherdrawer = document.querySelector(".drawer");
+
+function afficherDrawer(){
+    afficherdrawer.classList.toggle("draws")
+}
+
+//end test drawer
   /* function afficherTuto() {
         affichertuto.classList.toggle("afficher");
     }*/

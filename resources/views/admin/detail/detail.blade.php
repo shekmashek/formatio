@@ -386,7 +386,7 @@
                                         $i = 1;
                                     @endphp
                                     @foreach ($datas as $d)
-                                        <tr>
+                                        <tr onclick="afficherDrawer();">
                                             <td>{{ $i }}</td>
                                             @canany(['isReferent', 'isManager'])
                                                 <td>{{ $d->nom_cfp }}</td>
@@ -421,19 +421,19 @@
                                                             style="color:rgb(130,33,100);"></i></button>
                                                 </td>
                                             @endcanany
-                                            {{-- @canany(['isFormateur'])
-                                        <td><i data-toggle="collapse" href="#stagiaire_presence" class="fa fa-edit"
-                                                style="color:rgb(130,33,100);">Emargement</i></td>
-                                        @endcanany --}}
-                                            {{-- <td>
-                                            <a href="{{route('execution',[$d->detail_id])}}" class="btn btn-info"
-                                                id="{{$d->detail_id}}"><span
-                                                    class="glyphicon glyphicon-eye-open"></span></a>
-                                        </td>
-                                        <td><button class="btn btn-success modifier" id="{{$d->detail_id}}"
-                                                data-toggle="modal" data-target="#myModal"><span
-                                                    class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
-                                        <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span
+                                                {{-- @canany(['isFormateur'])
+                                            <td><i data-toggle="collapse" href="#stagiaire_presence" class="fa fa-edit"
+                                                    style="color:rgb(130,33,100);">Emargement</i></td>
+                                            @endcanany --}}
+                                                {{-- <td>
+                                                <a href="{{route('execution',[$d->detail_id])}}" class="btn btn-info"
+                                                    id="{{$d->detail_id}}"><span
+                                                        class="glyphicon glyphicon-eye-open"></span></a>
+                                            </td>
+                                            <td><button class="btn btn-success modifier" id="{{$d->detail_id}}"
+                                                    data-toggle="modal" data-target="#myModal"><span
+                                                        class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
+                                            <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span
                                                     class="glyphicon glyphicon-remove"></span> Supprimer</button></td> --}}
                                             @canany('isCFP')
                                                 <div class="modal fade" id="delete_detail_{{ $d->detail_id }}"
@@ -478,7 +478,7 @@
                                                                         <select class="form-control" id="formateur"
                                                                             name="formateur">
                                                                             <option value="{{ $d->formateur_id }}">
-                                                                                {{                                                                                 $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                                                {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                                             </option>
                                                                             @foreach ($formateur as $format)
                                                                                 <option
@@ -657,6 +657,158 @@
 
         </div>
     </div>
+
+    {{--test drawer--}}
+        <div class="drawer mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0 text-center">INFORMATION</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x " role="button" onclick="afficherDrawer();"></i>
+                </div>
+                <hr class="mt-2">
+
+                @if ($type_formation_id == 1)
+                    <div class="mt-1 text-center mb-3">
+                        <img src="{{ asset('images/formateurs/'.$d->photos) }}" class="img-fluid text-center"
+                            style="width:120px;height: auto;" role="button" onclick="afficherDrawer();">
+                        <div>
+                    </div>
+            
+                    <div class="mt-1 text-center">
+                        <strong style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: 700">{{ $d->nom_formateur }}{{ $d->prenom_formateur }}</strong>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                            <div class="col-md-3" style="text-align: left">Organisme de formation</div>
+                            <div class="col-md" style="text-align: left">: {{ $d->nom_cfp }}</div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="col-md-3" style="text-align: left">Module</div>
+                            <div class="col-md" style="text-align: left">
+                                <div>: {{ $d->nom_module }}</div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="col-md-3" style="text-align: left">Date</div>
+                            <div class="col-md" style="text-align: left">
+                                : {{ $d->date_detail }}
+                        </div>
+                        
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                            <div class="col-md-3" style="text-align: left">Début</div>
+                            <div class="col-md" style="text-align: left">
+                                : {{ $d->h_debut }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                            <div class="col-md-3" style="text-align: left">Fin</div>
+                            <div class="col-md" style="text-align: left">
+                                : {{ $d->h_fin }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="col-md-3" style="text-align: left">Lieu de formation</div>
+                            <div class="col-md" style="text-align: left">
+                                : {{ $d->lieu }}
+                        </div>
+                        
+                    </div>
+                @endif
+
+                @if ($type_formation_id == 2)
+                    <div class="mt-1 text-center mb-3">
+                        <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" class="img-fluid text-center"
+                            style="width:120px;height: auto;" role="button" onclick="afficherInfos();">
+                        <div>
+                    </div>
+            
+                    <div class="mt-1 text-center">
+                        <strong style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: 700">{{ $projet[0]->nom_cfp }}</strong>
+                    </div>
+                    {{-- <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                            <div class="col-md-3" style="text-align: left">Responsable</div>
+                            <div class="col-md">
+                                <div style="font-size: 14px; text-transform: uppercase; font-weight: bold; text-align: left">
+                                    <span style="font-size: 12px; text-transform: Capitalize; font-weight: bold ">
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                            <div class="col-md-3" style="text-align: left">Tel</div>
+                            <div class="col-md" style="text-align: left">: {{ $projet[0]->tel_cfp }}</div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="col-md-3" style="text-align: left">Adresse</div>
+                            <div class="col-md" style="text-align: left">
+                                <div>: {{ $projet[0]->adresse_lot_cfp }}</div>
+                                <div>: {{ $projet[0]->adresse_ville_cfp }}</div>
+                                <div>: {{ $projet[0]->adresse_region_cfp }}</div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="col-md-3" style="text-align: left">E-mail</div>
+                            <div class="col-md" style="text-align: left">
+                                : {{ $projet[0]->mail_cfp }}
+                        </div>
+                        
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                            <div class="col-md-3" style="text-align: left">Site web</div>
+                            <div class="col-md" style="text-align: left">
+                                : {{ $projet[0]->site_web }}
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+    {{--endTestDrawer--}}
+
 @endif
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
