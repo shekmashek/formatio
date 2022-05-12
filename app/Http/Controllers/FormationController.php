@@ -53,7 +53,7 @@ class FormationController extends Controller
 
             $categorie = DB::select('select * from formations where status = 1 limit 5');
             $module = DB::select('select * from moduleformation where  status = 2 limit 6');
-            return view('referent.catalogue.formation', compact('devise','categorie', 'module'));
+            return view('referent.catalogue.formation', compact('devise', 'categorie', 'module'));
         }
     }
 
@@ -193,7 +193,7 @@ class FormationController extends Controller
 
         $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2', [$id]);
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin from v_session_projet where formation_id = ? and type_formation_id = 2', [$id]);
-        return view('referent.catalogue.liste_formation', compact('devise','infos', 'datas'));
+        return view('referent.catalogue.liste_formation', compact('devise', 'infos', 'datas'));
     }
 
     public function affichageTousCategories()
@@ -224,7 +224,7 @@ class FormationController extends Controller
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
             $competences = DB::select('select titre_competence from competence_a_evaluers where module_id = ?',[$id]);
-            $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_session_projet where module_id = ? and type_formation_id = 2', [$id]);
+            $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id,adresse_ville,adresse_lot from v_session_projet where module_id = ? and type_formation_id = 2', [$id]);
             return view('referent.catalogue.detail_formation', compact('devise','infos', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categories', 'id','competences'));
         } else return redirect()->route('liste_formation');
     }
@@ -304,20 +304,18 @@ class FormationController extends Controller
 
     public function annuaire($nbPagination = null)
     {
+        $nb_limit = 10;
+        if ($nbPagination == null || $nbPagination <= 0) {
+            $nbPagination = 1;
+        }
 
-        if ($nbPagination == null) {
-            $nbPagination = 1;
-        }
-        if ($nbPagination <= 0) {
-            $nbPagination = 1;
-        }
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
-            $cfps = $this->fonct->findWhereTrieOrderBy("cfps", [], [], [], ["nom"], "ASC", ($nbPagination - 1), 5);
-
+            $cfps = $this->fonct->findWhereTrieOrderBy("cfps", [1], ["="], [1], ["nom"], "ASC", ($nbPagination), $nb_limit);
             $totaleData = $this->fonct->getNbrePagination("cfps", "id", [], [], [], "");
-            $pagination = $this->fonct->nb_liste_pagination($totaleData,  $nbPagination, 5);
+            $pagination = $this->fonct->nb_liste_pagination($totaleData,  $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
+
             return view('referent.catalogue.cfp_tous', compact('secteurs', 'cfps', 'pagination', 'initial'));
         }
     }
@@ -325,13 +323,11 @@ class FormationController extends Controller
     public function search_par_nom_entiter(Request $req, $nbPagination = null, $nom_entiter_pag = null)
     {
         $nom_entiter = null;
+        $nb_limit = 10;
+        if ($nbPagination == null || $nbPagination <= 0) {
+            $nbPagination = 1;
+        }
 
-        if ($nbPagination == null) {
-            $nbPagination = 1;
-        }
-        if ($nbPagination <= 0) {
-            $nbPagination = 1;
-        }
         if ($nom_entiter_pag != null) {
             $nom_entiter = $nom_entiter_pag;
         } else {
@@ -340,13 +336,10 @@ class FormationController extends Controller
 
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
-            $test = $this->fonct->queryWhereTrieOrderBy("cfps", ["nom"], ["LIKE"], ["%" . $nom_entiter . "%"], ["nom"], "ASC", ($nbPagination - 1), 5);
+            $cfps = $this->fonct->findWhereTrieOrderBy("cfps", ["upper(nom)"], ["LIKE"], ["%" . $nom_entiter . "%"], ["nom"], "ASC", ($nbPagination), $nb_limit);
 
-            $cfps = $this->fonct->findWhereTrieOrderBy("cfps", ["nom"], ["LIKE"], ["%" . $nom_entiter . "%"], ["nom"], "ASC", ($nbPagination - 1), 5);
-            // dd($cfps);
-
-            $totaleData = $this->fonct->getNbrePagination("cfps", "id", [], [], [], "");
-            $pagination = $this->formation->nb_entiter_pagination($nom_entiter,  $nbPagination, 5);
+            $totaleData = $this->fonct->getNbrePagination("cfps", "id", ["upper(nom)"], ["LIKE"], ["%" . $nom_entiter . "%"], "AND");
+            $pagination = $this->formation->nb_entiter_pagination($nom_entiter,  $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
             return view('referent.catalogue.cfp_tous', compact('nom_entiter', 'secteurs', 'cfps', 'pagination', 'initial'));
         }
@@ -359,12 +352,11 @@ class FormationController extends Controller
         $code_postal = null;
         $region = null;
 
-        if ($nbPagination == null) {
+        $nb_limit = 10;
+        if ($nbPagination == null || $nbPagination <= 0) {
             $nbPagination = 1;
         }
-        if ($nbPagination <= 0) {
-            $nbPagination = 1;
-        }
+
         if ($qter != null) {
             $quartier = $qter;
             $ville = $vlle;
@@ -389,8 +381,8 @@ class FormationController extends Controller
                 [$quartier, $ville, $code_postal, $region],
                 ["nom"],
                 "ASC",
-                ($nbPagination - 1),
-                5
+                ($nbPagination),
+                $nb_limit
             );
 
             $totaleData = $this->fonct->getNbrePagination(
@@ -402,9 +394,9 @@ class FormationController extends Controller
                 "AND"
             );
 
-            $pagination = $this->fonct->nb_liste_pagination($totaleData,$nbPagination, 5);
+            $pagination = $this->fonct->nb_liste_pagination($totaleData, $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
-            return view('referent.catalogue.cfp_tous', compact('quartier','ville','code_postal','region', 'secteurs', 'cfps', 'pagination', 'initial'));
+            return view('referent.catalogue.cfp_tous', compact('quartier', 'ville', 'code_postal', 'region', 'secteurs', 'cfps', 'pagination', 'initial'));
         }
     }
 
@@ -414,9 +406,56 @@ class FormationController extends Controller
 
     public function alphabet_filtre(Request $request)
     {
-        $alpha = $request->Alpha;
-        $cfp = DB::select('select * from cfps where nom like "' . $alpha . '%" order by nom asc');
-        // $cfp = $this->fonct->findWhereTrieOrderBy("cfps", ["nom"], ["LIKE"], [$alpha."%"], ["nom"], "ASC", 0, 5);
+        $nb_limit = 10;
+        $query = "";
+        if (isset($request->nom_entiter)) {
+            $cfp = $this->fonct->findWhereTrieOrderBy(
+                "cfps",
+                ["nom", "nom"],
+                ["LIKE", "LIKE"],
+                [$request->Alpha . "%", "%" . $request->nom_entiter . "%"],
+                ["nom"],
+                "ASC",
+                0,
+                $nb_limit
+            );
+        } else if (isset($request->quartier) && isset($request->ville) && isset($request->code_postal) && isset($request->region)) {
+
+            $cfp = $this->fonct->findWhereTrieOrderBy(
+                "cfps",
+                ["nom", "adresse_quartier", "adresse_ville", "adresse_code_postal", "adresse_region"],
+                ["LIKE", "=", "=", "=", "="],
+                [$request->Alpha . "%", $request->quartier, $request->ville, $request->code_postal, $request->region],
+                ["nom"],
+                "ASC",
+                0,
+                $nb_limit
+            );
+        } else {
+            // $query = $this->fonct->queryWhereTrieOrderBy(
+            //     "cfps",
+            //     ["nom"],
+            //     ["LIKE"],
+            //     [$request->Alpha . "%"],
+            //     ["nom"],
+            //     "ASC",
+            //     0,
+            //     $nb_limit
+            // );
+
+            $cfp = $this->fonct->findWhereTrieOrderBy(
+                "cfps",
+                ["nom"],
+                ["LIKE"],
+                [$request->Alpha . "%"],
+                ["nom"],
+                "ASC",
+                0,
+                $nb_limit
+            );
+        }
+
+        //    $cfp = DB::select('select * from cfps where nom like "' . $alpha . '%" order by nom asc');
         return response()->json($cfp);
     }
 

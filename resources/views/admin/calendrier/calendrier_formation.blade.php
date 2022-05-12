@@ -234,7 +234,8 @@
                         <label class="gauche">Formation:</label>&nbsp;<label class="contenu" id="formation"> </label><br>
                         <label class="gauche">Module:</label>&nbsp;<label class="contenu" id="module"></label><br>
                         <label class="gauche">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
-                        <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br>
+                        <label class="gauche">Ville:</label>&nbsp;<label id="lieu"> </label><br>
+                        <label class="gauche">Salle:</label>&nbsp;<label id="salle"> </label><br>
                         <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
                          <hr>
@@ -455,6 +456,8 @@
                                         formateur.innerHTML = '';
                                         var lieu = document.getElementById('lieu');
                                         lieu.innerHTML = '';
+                                        var salle = document.getElementById('salle');
+                                        salle.innerHTML = '';
                                         @canany(['isReferent','isCFP','isFormateur'])
                                         var liste_app = document.getElementById('liste_app');
                                         liste_app.innerHTML = '';
@@ -496,7 +499,17 @@
                                             $("#projet").append(userData[$i].nom_projet);
                                             $('#statut').append(statut_pj);
                                             $('#types').append(userData[$i].type_formation);
-                                            $('#lieu').append(userData[$i].lieu);
+                                            if(userData[$i].type_formation == "INTRA"){
+                                                $('#types').css('background-color',"rgba(222, 222, 222, 0.822)");
+                                                $('#types').css('font-size','40px');
+                                            }
+                                            else{
+                                                $('#types').css('background-color',"rgb(136, 136, 136)");
+                                                $('#types').css('font-size','40px');
+                                            }
+                                            const lieu_array = userData[$i].lieu.split(",  ",2);
+                                            $('#lieu').append(lieu_array[0]);
+                                            $('#salle').append(lieu_array[1]);
 
                                             session+='<a href = "{{url("detail_session/:?/:!")}}" target = "_blank">'+userData[$i].nom_groupe+'</a>'
                                             session = session.replace(":?",userData[$i].groupe_id);

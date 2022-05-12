@@ -217,7 +217,7 @@
                             <tr>
                                 <td>{{$montant_facture->reference}}</td>
                                 <td>{{$montant_facture->nom_module}}</td>
-                                <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe." du ".$montant_facture->date_debut_session}}</td>
+                                <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe.",avec ".$montant_facture->nbre_participant." participant(s) du ".$montant_facture->date_debut_session}}</td>
                                 <td>{{$montant_facture->nom_groupe}}</td>
                                 <td>{{$montant_facture->qte}}</td>
                                 <td>

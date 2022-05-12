@@ -9,7 +9,7 @@
                 <h4 class="h4">Résultat du filtre</h4>
             </div>
             <div class="col-md-2">
-                <a href="{{ route('employes') }}" class="btn btn-success btn-sm" style="width: 120px">Retour</a>
+                <a href="{{ route('employes') }}" class="btn btn-success btn-sm" style="width: 120px; background-color: #7635dc">Retour</a>
             </div>
         </div>
     <table class="table table-hover table-striped">
@@ -33,7 +33,7 @@
                             <p class="randomColor text-center"
                                 style="color:white; font-size: 15px; border: none; border-radius: 100%; height:50px; width:50px ;">
                                 <span class=""
-                                    style="position:relative; top: .9rem;"><b>{{$v->nom}}{{$v->prenom}}</b></span>
+                                    style="position:relative; top: .9rem;"><b>{{$v->nom_stagiaire}}{{$v->prenom_stagiaire}}</b></span>
                             </p>
                         </center>
                         @else

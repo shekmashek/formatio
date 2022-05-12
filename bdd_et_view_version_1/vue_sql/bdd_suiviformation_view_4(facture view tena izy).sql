@@ -473,6 +473,48 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
         v_facture_existant.activiter = FALSE  AND  v_facture_existant.cfp_id = cfps.id AND v_facture_existant.entreprise_id = entreprises.id AND v_facture_existant.projet_id = projets.id;
 
 
+CREATE OR REPLACE VIEW v_full_facture AS SELECT
+    v_facture_existant.cfp_id,
+    v_facture_existant.activiter,
+    (cfps.nom) nom_cfp,
+    entreprises.nom_etp,
+    projets.nom_projet,
+    v_facture_existant.entreprise_id,
+    v_facture_existant.num_facture,
+    v_facture_existant.other_message,
+    v_facture_existant.mode_financement_id,
+    v_facture_existant.description_financement,
+    (
+        DATEDIFF(
+            v_facture_existant.due_date,
+            v_facture_existant.invoice_date
+        )
+    ) totale_jour,
+    (
+        IFNULL(
+            (
+                DATEDIFF(v_facture_existant.due_date, NOW())),
+                0
+            )
+        ) jour_restant,
+        facture_encour,
+        v_facture_existant.description_type_facture,
+        v_facture_existant.due_date,v_facture_existant.invoice_date,
+        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,
+        v_facture_existant.remise,
+        v_facture_existant.valeur_remise,
+        v_facture_existant.description_remise,
+        v_facture_existant.remise_id,
+        v_facture_existant.reference_remise,
+        v_facture_existant.net_commercial,v_facture_existant.net_ht,
+        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
+        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
+    FROM
+        v_facture_existant,cfps,entreprises,projets
+    WHERE
+       v_facture_existant.cfp_id = cfps.id AND v_facture_existant.entreprise_id = entreprises.id AND v_facture_existant.projet_id = projets.id;
+
+
 CREATE OR REPLACE VIEW v_encaissement AS SELECT
     encaissements.*,
     mf.description

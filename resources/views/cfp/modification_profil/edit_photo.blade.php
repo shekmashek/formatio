@@ -81,7 +81,9 @@
 @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            <p style="text-align: left">Modifier le logo <strong>(60Ko Max)</strong></p>
+            <p style="text-align: left">Modifier le logo 
+                {{-- <strong>(60Ko Max)</strong> --}}
+            </p>
             <form   class="btn-submit" action="{{route('enregistrer_modification_logo_cfp',$cfp->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" value="   {{ $cfp->nom}}" class="form-control test input"  name="nom">
@@ -98,7 +100,7 @@
                         </div>
                         </label>
                             <input id="file-input" type="file" name="image" value="{{$cfp->logo}}"/>
-                            <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
+                            <button style=" background-color: float: right;" class="btn_enregistrer mt-1 btn modification "> Enregister</button>
                         </div>
                     </center>
 

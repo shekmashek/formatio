@@ -1,6 +1,11 @@
 @extends('layouts.admin')
+@section('title')
+<p class="text_header m-0 mt-1">Abonnement
+</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
 <style>
 .navigation_module .nav-link {
     color: #637381;
@@ -29,14 +34,80 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#entreprise" class="nav-link active" data-bs-toggle="tab">Entreprise</a>
+                <a href="#types" class="nav-link active" data-bs-toggle="tab">Liste des abonnements</a>
+            </li>
+            <li class="nav-item">
+                <a href="#entreprise" class="nav-link" data-bs-toggle="tab">Entreprise</a>
             </li>
             <li class="nav-item">
                 <a href="#of" class="nav-link " data-bs-toggle="tab">Organisme de formation</a>
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="entreprise">
+            <div class="tab-pane fade show active" id="types">
+                <div class="row mt-3">
+                    <p>Offre pour organisme de formation</p>
+                    <div class="col-lg-12 d-flex">
+                        <?php $i = 0; ?>
+                        @foreach ($typeAbonnement_of as $types_of)
+                            <div class="col mt-5 justify-content-between">
+                                <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
+                                     <span class="nom_type mt-5">{{ $types_of->nom_type }}</span>
+                                     <span class="description mt-5">{{ $types_of->description }}</span>
+                                     <span class="tarif"> <span class="number"> {{number_format($types_of->tarif,0, ',', '.')}}</span> <sup
+                                            class="sup">AR</sup>/ mois</span>
+                                   <ul class="mb-5 list-unstyled text-muted">
+                                        @if($types_of->illimite == 1)
+                                            <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Projets illimités</li>
+                                        @else
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_utilisateur}} utilisateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_formateur}} formateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_projet}} projets</li>
+                                        @endif
+
+                                    </ul>
+                                    <button class="btn btn-primary"><a href="{{route('modifier_abonnement_of',$types_of->id)}}">Modifier</a></button>
+                                </div>
+                            </div>
+                        <?php $i+=1; ?>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <p>Offre pour entreprise</p>
+                    <div class="col-lg-12 d-flex">
+                        <?php $i = 0; ?>
+                        @foreach ($typeAbonnement_etp as $types_etp)
+                            <div class="col mt-5 justify-content-between">
+                                <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
+                                    <p class="h-1 pt-5 nom_type mt-5">{{ $types_etp->nom_type }}</p>
+                                    <span class="description mt-5">{{ $types_etp->description }}</span>
+                                    <span class="tarif"> <span class="number"> {{number_format($types_etp->tarif,0, ',', '.')}}</span> <sup
+                                            class="sup">AR</sup>/ mois</span>
+
+                                    <ul class="mb-5 list-unstyled text-muted">
+                                        @if($types_etp->illimite == 1)
+                                            <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Employés illimités</li>
+                                        @else
+                                            <li><span class="bx bx-check me-2"></span>{{$types_etp->nb_utilisateur}} utilisateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_etp->nb_formateur}} formateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_etp->min_emp}} - {{$types_etp->max_emp}}  employés</li>
+                                        @endif
+
+                                    </ul>
+                                    <button class="btn btn-primary"><a href="{{route('modifier_abonnement_entreprise',$types_etp->id)}}">Modifier</a></button>
+                                </div>
+                            </div>
+                        <?php $i+=1; ?>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade " id="entreprise">
                 <table class="table table-hover">
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client_etp" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
@@ -53,7 +124,7 @@
                             @foreach($liste as $listes)
                                     <tr>
                                         <td class="th_color"> {{$listes->nom_entreprise}} </td>
-                                        <td class="th_color"> {{$listes->nom_type}},&nbsp;{{$listes->categorie}},&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td>
+                                        <td class="th_color"> {{$listes->nom_type}},&nbsp;Mensuel,&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td>
                                         <td class="th_color">  {{$listes->date_demande}} </td>
                                         <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                         <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
@@ -68,7 +139,7 @@
                                             <!-- Default switch -->
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input activer" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
-                                                <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$listes->abonnement_id}}">Activer</label>
+                                                {{-- <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$listes->abonnement_id}}">Activer</label> --}}
                                             </div>
                                         </td>
                                     </tr>
@@ -78,7 +149,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade" id="of">
+            <div class="tab-pane fade " id="of">
                 <table class="table table-hover">
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
@@ -95,7 +166,7 @@
                             @foreach ($cfpListe as $listes)
                                 <tr>
                                     <td class="th_color"> {{$listes->nom_of}} </td>
-                                    <td class="th_color"> {{$listes->nom_type}},&nbsp;{{$listes->categorie}},&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td></td>
+                                    <td class="th_color"> {{$listes->nom_type}},&nbsp;Mensuel,&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td></td>
                                     <td class="th_color">  {{$listes->date_demande}} </td>
                                     <td class="th_color"> <span id = "debut_of_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                     <td class="th_color"><span id = "fin_of_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
@@ -113,7 +184,7 @@
                                         <!-- Default switch -->
                                         <div class="form-check form-switch">
                                             <input class="form-check-input activer_of" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
-                                            <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_of_{{$listes->abonnement_id}}">Activer</label>
+                                            {{-- <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_of_{{$listes->abonnement_id}}">Activer</label> --}}
                                         </div>
                                     </td>
                                 </tr>

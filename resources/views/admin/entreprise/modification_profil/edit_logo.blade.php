@@ -31,7 +31,7 @@
             </div>
         </div>
                    
-<button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
+<button style=" background-color: float: right;" class=" btn btn btn_enregistrer modification "> Enregister</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center> 

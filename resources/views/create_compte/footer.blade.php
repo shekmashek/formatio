@@ -41,7 +41,6 @@
         $('.field-etp input').change(function() {
 
             if (document.getElementById("name_etp_err").innerHTML == '' &&
-                document.getElementById("error_logo_etp").innerHTML == '' &&
                 document.getElementById("nif_etp_err").innerHTML == '') {
                 $('#suivant_etp_1').prop('disabled', false);
             } else {
@@ -79,7 +78,6 @@
 
         $('.field-cfp input').change(function() {
             if ($("#name_cfp_err").html() == '' &&
-                $("#error_logo_cfp").html() == '' &&
                 $("#nif_cfp_err").html() == '') {
                 $('#suivant_of_1').prop('disabled', false);
             } else {
@@ -116,8 +114,7 @@
         if (result.length < 2) {
             document.getElementById("name_cfp_err").innerHTML = "Veuillez indqué votre Raison sociale";
 
-            if ($("#error_logo_cfp").html() == '' &&
-                $("#nif_cfp_err").html() == '') {
+            if ($("#nif_cfp_err").html() == '') {
                 $('#suivant_of_1').prop('disabled', false);
             } else {
                 $('#suivant_of_1').prop('disabled', true);
@@ -138,8 +135,7 @@
                     if (userData.length > 0) {
                         document.getElementById("name_cfp_err").innerHTML = "Entité existe déjà";
 
-                        if ($("#error_logo_cfp").html() == '' &&
-                            $("#nif_cfp_err").html() == '') {
+                        if ($("#nif_cfp_err").html() == '') {
                             $('#suivant_of_1').prop('disabled', false);
                         } else {
                             $('#suivant_of_1').prop('disabled', true);
@@ -147,8 +143,7 @@
                     } else {
                         document.getElementById("name_cfp_err").innerHTML = "";
 
-                        if ($("#error_logo_cfp").html() == '' &&
-                            $("#nif_cfp_err").html() == '') {
+                        if ($("#nif_cfp_err").html() == '') {
                             $('#suivant_of_1').prop('disabled', false);
                         } else {
                             $('#suivant_of_1').prop('disabled', true);
@@ -164,7 +159,7 @@
 
     /*-----------------------------------------------*/
 
-    $(document).on('keyup change', '#logo_cfp', function() {
+  /*  $(document).on('keyup change', '#logo_cfp', function() {
         var test = $(this).val().split('.').pop();
         document.getElementById("error_logo_cfp").innerHTML = '';
 
@@ -199,7 +194,7 @@
             }
         }
     });
-
+*/
     /*-----------------------------------------------*/
 
     $(document).on('keyup change', '#nif_cfp', function() {
@@ -207,8 +202,7 @@
         if ($('#nif_cfp').val().length < 7) {
             document.getElementById("nif_cfp_err").innerHTML = "NIF incomplète!";
 
-            if (document.getElementById("name_cfp_err").innerHTML == '' &&
-                document.getElementById("error_logo_cfp").innerHTML == '') {
+            if (document.getElementById("name_cfp_err").innerHTML == '') {
                 $('#suivant_of_1').prop('disabled', false);
             } else {
                 $('#suivant_of_1').prop('disabled', true);
@@ -228,8 +222,7 @@
                     if (userData.length > 0) {
                         document.getElementById("nif_cfp_err").innerHTML = "NIF appartient déjà sur d'autre organisme de formation!";
 
-                        if ($("#name_cfp_err").html() == '' &&
-                            $("#error_logo_cfp").html() == '') {
+                        if ($("#name_cfp_err").html() == '') {
                             $('#suivant_of_1').prop('disabled', false);
                         } else {
                             $('#suivant_of_1').prop('disabled', true);
@@ -238,8 +231,7 @@
                     } else {
                         document.getElementById("nif_cfp_err").innerHTML = "";
 
-                        if ($("#name_cfp_err").html() == '' &&
-                            $("#error_logo_cfp").html() == '') {
+                        if ($("#name_cfp_err").html() == '') {
                             $('#suivant_of_1').prop('disabled', false);
                         } else {
                             $('#suivant_of_1').prop('disabled', true);
@@ -364,8 +356,7 @@
         if (result.length < 2) {
             document.getElementById("name_etp_err").innerHTML = "Veuillez indqué votre Raison sociale";
 
-            if (document.getElementById("error_logo_etp").innerHTML == '' &&
-                document.getElementById("nif_etp_err").innerHTML == '') {
+            if (document.getElementById("nif_etp_err").innerHTML == '') {
                 $('#suivant_etp_1').prop('disabled', false);
             } else {
                 $('#suivant_etp_1').prop('disabled', true);
@@ -387,8 +378,7 @@
                     if (userData.length > 0) {
                         document.getElementById("name_etp_err").innerHTML = "Entité existe déjà";
 
-                        if (document.getElementById("error_logo_etp").innerHTML == '' &&
-                            document.getElementById("nif_etp_err").innerHTML == '') {
+                        if (document.getElementById("nif_etp_err").innerHTML == '') {
                             $('#suivant_etp_1').prop('disabled', false);
                         } else {
                             $('#suivant_etp_1').prop('disabled', true);
@@ -396,8 +386,7 @@
                     } else {
                         document.getElementById("name_etp_err").innerHTML = "";
 
-                        if (document.getElementById("error_logo_etp").innerHTML == '' &&
-                            document.getElementById("nif_etp_err").innerHTML == '') {
+                        if (document.getElementById("nif_etp_err").innerHTML == '') {
                             $('#suivant_etp_1').prop('disabled', false);
                         } else {
                             $('#suivant_etp_1').prop('disabled', true);
@@ -412,7 +401,7 @@
     });
 
     /*-------------------------------------------------------------------*/
-    $(document).on('keyup change', '#logo_etp', function() {
+  /*  $(document).on('keyup change', '#logo_etp', function() {
         var test = $(this).val().split('.').pop();
         document.getElementById("error_logo_etp").innerHTML = '';
 
@@ -449,7 +438,7 @@
         }
     });
 
-
+*/
     /*-----------------------------------------------------------------------*/
     $(document).on('keyup change', '#nif_etp', function() {
         var nif = $(this).val();
@@ -457,8 +446,7 @@
         if (nif.length < 7) {
             document.getElementById("nif_etp_err").innerHTML = "NIF incomplète!";
 
-            if (document.getElementById("name_etp_err").innerHTML == '' &&
-                document.getElementById("error_logo_etp").innerHTML == '') {
+            if (document.getElementById("name_etp_err").innerHTML == '') {
                 $('#suivant_etp_1').prop('disabled', false);
             } else {
                 $('#suivant_etp_1').prop('disabled', true);
@@ -478,8 +466,7 @@
                     if (userData.length > 0) {
                         document.getElementById("nif_etp_err").innerHTML = "NIF appartient déjà sur d'autre entreprise!";
 
-                        if (document.getElementById("name_etp_err").innerHTML == '' &&
-                            document.getElementById("error_logo_etp").innerHTML == '') {
+                        if (document.getElementById("name_etp_err").innerHTML == '') {
                             $('#suivant_etp_1').prop('disabled', false);
                         } else {
                             $('#suivant_etp_1').prop('disabled', true);
@@ -487,8 +474,7 @@
                     } else {
                         document.getElementById("nif_etp_err").innerHTML = "";
 
-                        if (document.getElementById("name_etp_err").innerHTML == '' &&
-                            document.getElementById("error_logo_etp").innerHTML == '') {
+                        if (document.getElementById("name_etp_err").innerHTML == '') {
                             $('#suivant_etp_1').prop('disabled', false);
                         } else {
                             $('#suivant_etp_1').prop('disabled', true);

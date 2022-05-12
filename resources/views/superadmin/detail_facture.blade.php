@@ -198,9 +198,9 @@
                                     <tbody class="mb-1">
                                         <tr>
                                             @if($dates_abonnement[0]->date_debut == null)
-                                                <td>Abonnement {{$facture[0]->nom_type}} - {{$facture[0]->categorie}} <br> Debut : <span style="color: red" > En attente d'activation </span> <br> Fin: <span style="color: red">En attente d'activation</span>  </td>
+                                                <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : <span style="color: red" > En attente d'activation </span> <br> Fin: <span style="color: red">En attente d'activation</span>  </td>
                                             @else
-                                                <td>Abonnement {{$facture[0]->nom_type}} - {{$facture[0]->categorie}} <br> Debut : {{$dates_abonnement[0]->date_debut}} <br> Fin: {{$dates_abonnement[0]->date_fin}}</td>
+                                                <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : {{$dates_abonnement[0]->date_debut}} <br> Fin: {{$dates_abonnement[0]->date_fin}}</td>
                                             @endif
                                             <td>{{number_format($facture[0]->montant_facture, 0, ',', '.')}} Ar</td>
                                             <td>{{number_format($tva,0,',','.')}} Ar</td>

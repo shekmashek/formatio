@@ -32,6 +32,7 @@ body {
     overflow: auto;
 }
 
+
 .content_body {
     background: white;
     /* min-height: 100vh; */
@@ -440,6 +441,10 @@ ul li a {
     width: 400px;
     overflow-y: auto;
     right: 0px;
+}
+
+.testFilter.afficher{
+    width: 350px;
 }
 
 .filtrer p{

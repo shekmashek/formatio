@@ -50,7 +50,7 @@
                                 <span style="color:#ff0000; font-size: 0.8rem" id="nif_cfp_err"></span>
                             </div>
                             <div class="form-group">
-                                <label for="exampleFormControlInput1" class="form-control-label">Logo(60Ko max)<strong style="color:#ff0000;">*</strong></label>
+                                <label for="exampleFormControlInput1" class="form-control-label">Logo<strong style="color:#ff0000;">*</strong></label>
                                 <input type="file" required name="logo_cfp" class="form-control input_file" id="logo_cfp" />
                                 @error('logo_cfp')
                                 <div class="col-sm-6">
@@ -62,7 +62,7 @@
                                     {{ $errors->first('logo_cfp') }}
                                 </div>
                                 @endif
-                                <p id="error_logo_cfp" style="color:#ff0000; font-size: 0.8rem">les extension de type *.jpg, *.png, *.jpeg et *.webp seulement sont autorisé</p>
+                                {{-- <p id="error_logo_cfp" style="color:#ff0000; font-size: 0.8rem">les extension de type *.jpg, *.png, *.jpeg et *.webp seulement sont autorisé</p> --}}
 
                             </div>
                                 <input type="button" name="next" class="next btn action-button suivant_of_1"  id="suivant_of_1"  value="Suivant" />

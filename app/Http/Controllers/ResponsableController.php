@@ -24,6 +24,7 @@ use App\Exports\ResponsableExport;
 use Excel;
 use Illuminate\Support\Facades\URL;
 use Exception;
+use Image;
 
 class ResponsableController extends Controller
 {
@@ -298,7 +299,7 @@ class ResponsableController extends Controller
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-           
+
             return view('admin.responsable.profilResponsable', compact('refs'));
         }
     }
@@ -326,17 +327,19 @@ class ResponsableController extends Controller
             return view('admin.responsable.affichage_parametreReferent', compact('refs','nom_entreprise','branche','referent','entreprise'));
         }
          if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
-            $refs = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
-            $entreprise = entreprise::with('Secteur')->findOrFail($id);
-            $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
-            $referent = entreprise::findOrFail($id);
-             $entreprise_id=entreprise::where('id',$id)->value('id');
-            
-             $abonnement = $fonct->findWhere("v_abonnement_facture_entreprise",["entreprise_id"],[$entreprise_id]);
-             
-            $responsables=responsable::where('entreprise_id',$entreprise_id)->where('prioriter',0)->get();
-         
-           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','referent','responsables','abonnement'));
+            $refs = $fonct->findWhereMulitOne("responsables",["id"],[$id]);
+
+            $entreprise = entreprise::with('Secteur')->findOrFail($refs->entreprise_id);
+
+            $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$refs->entreprise_id]);
+            // $referent = entreprise::findOrFail($id);
+            //  $entreprise_id=entreprise::where('id',$id)->value('id');
+
+             $abonnement = $fonct->findWhere("v_abonnement_facture_entreprise",["entreprise_id"],[$refs->entreprise_id]);
+
+            $responsables=responsable::where('entreprise_id',$refs->entreprise_id)->where('prioriter',0)->get();
+
+           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','responsables','abonnement'));
         }
     }
     public function show($id)
@@ -544,10 +547,10 @@ class ResponsableController extends Controller
         //tableau contenant les types d'extension d'images
         $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
         if($image != null){
-            if($image->getSize() > 60000){
-                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
-            }
-            elseif(in_array($request->image->extension(),$extension_type)){
+            // if($image->getSize() > 60000){
+            //     return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+            // }
+            if(in_array($request->image->extension(),$extension_type)){
                 $user_id =  $users = Auth::user()->id;
                 $responsable = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id]);
                 $image_ancien = $responsable->photos;
@@ -556,7 +559,18 @@ class ResponsableController extends Controller
                 //enregiistrer la nouvelle photo
                 $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
                 $destinationPath = 'images/responsables';
-                $image->move($destinationPath, $nom_image);
+                 //imager  resize
+
+                 $image_name = $nom_image;
+
+                 $destinationPath = public_path('images/responsables');
+
+                 $resize_image = Image::make($image->getRealPath());
+
+                 $resize_image->resize(228,128, function($constraint){
+                     $constraint->aspectRatio();
+                 })->save($destinationPath . '/' .  $image_name);
+                // $image->move($destinationPath, $nom_image);
                 $url_photo = URL::to('/')."/images/responsables/".$nom_image;
                 DB::update('update responsables set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
                 return redirect()->route('profil_referent');

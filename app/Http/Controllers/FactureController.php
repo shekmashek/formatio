@@ -54,43 +54,61 @@ class FactureController extends Controller
             $type_facture = $this->fonct->findAll("type_facture");
             $mode_payement = $this->fonct->findAll("mode_financements");
             $type_remise = $this->fonct->findAll("type_remise");
-            return view('admin.facture.nouveau_facture', compact('devise','type_remise', 'cfp', 'project', 'entreprise', 'taxe', 'mode_payement', 'type_facture'));
+            return view('admin.facture.nouveau_facture', compact('devise', 'type_remise', 'cfp', 'project', 'entreprise', 'taxe', 'mode_payement', 'type_facture'));
         }
     }
 
-    public function listeFacture($nbPagination = null)
+    public function listeFacture($nb_pag_full = null, $nb_pag_inactif = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $user_id = Auth::user()->id;
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-        $pagination =  $this->fact->nb_liste_fact($nbPagination, ["cfp_id"], [$cfp_id]);
         $mode_payement = DB::select('select * from mode_financements');
         $etp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
         $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
         $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
 
-        if ($nbPagination != null) {
-            $facture_inactif = $this->fact->getListDataFacture("v_facture_inactif", ["cfp_id"], [$cfp_id], $nbPagination, 10, "invoice_date", "DESC");
-            $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "cfp_id"], ["terminer", $cfp_id], $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], $nbPagination, 10, "invoice_date", "DESC");
+        $nb_limit = 10;
+
+        $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["cfp_id"], ["="], [$cfp_id], "AND");
+        $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", ["cfp_id"], ["="], [$cfp_id], "AND");
+        $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "cfp_id"], ["!=", "="], ["terminer", $cfp_id], "AND");
+        $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "cfp_id"], ["=", "="], ["terminer", $cfp_id], "AND");
+
+        $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+
+        // dd($pagination_full);
+        $pagination_brouillon = $this->fonct->nb_liste_pagination($totale_pag_brouillon, $nb_pag_inactif, $nb_limit);
+        $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+        $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+
+        if ($nb_pag_full != null && $nb_pag_inactif != null && $nb_pag_actif != null &&  $nbPagination_payer != null) {
+
+            $full_facture = $this->fact->getListDataFacture("v_full_facture", ["cfp_id"], [$cfp_id], $nb_pag_full, $nb_limit, "invoice_date", "DESC");
+            $facture_inactif = $this->fact->getListDataFacture("v_facture_inactif", ["cfp_id"], [$cfp_id], $nb_pag_inactif, $nb_limit, "invoice_date", "DESC");
+            $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "cfp_id"], ["terminer", $cfp_id], $nb_pag_actif, $nb_limit, "invoice_date", "DESC");
+            $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], $nbPagination_payer, $nb_limit, "invoice_date", "DESC");
         } else {
-            $facture_inactif = $this->fact->getListDataFacture("v_facture_inactif", ["cfp_id"], [$cfp_id], 0, 10, "invoice_date", "DESC");
-            $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "cfp_id"], ["terminer", $cfp_id], 0, 10, "invoice_date", "DESC");
-            $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], 0, 10, "invoice_date", "DESC");
+            $full_facture = $this->fact->getListDataFacture("v_full_facture", ["cfp_id"], [$cfp_id], 0, $nb_limit, "invoice_date", "DESC");
+            $facture_inactif = $this->fact->getListDataFacture("v_facture_inactif", ["cfp_id"], [$cfp_id], 0, $nb_limit, "invoice_date", "DESC");
+            $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "cfp_id"], ["terminer", $cfp_id], 0, $nb_limit, "invoice_date", "DESC");
+            $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], 0, $nb_limit, "invoice_date", "DESC");
         }
+
         $facture_actif_guide = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
         $facture_inactif_guide = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
         $test = count($facture_inactif_guide) + count($facture_actif_guide);
         if ($test <= 0) {
             return view('admin.facture.guide');
         } else {
-            return view('admin.facture.facture', compact('devise','entreprise', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            return view('admin.facture.facture', compact('pour_list', 'devise', 'entreprise', 'pagination_full', 'pagination_brouillon', 'pagination_actif', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_inactif', 'facture_payer'));
         }
     }
 
 
-    public function listeFacture_referent($nbPagination = null)
+    public function listeFacture_referent($nb_pag_full = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $user_id = Auth::user()->id;
@@ -100,31 +118,52 @@ class FactureController extends Controller
 
         $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
 
-        $pagination =  $this->fact->nb_liste_fact($nbPagination, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+        $nb_limit = 10;
 
-        if ($nbPagination != null) {
+        $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["activiter", "entreprise_id"], ["=", "="], [True, $entreprise_id], "AND");
+        $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
 
-            if($nbPagination<=0){
-                $nbPagination=1;
-            }
-            $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "entreprise_id"], ["terminer", $entreprise_id], $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id], $nbPagination, 10, "invoice_date", "DESC");
+        $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "entreprise_id"], ["!=", "="], ["terminer", $entreprise_id], "AND");
+        $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+
+        $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "entreprise_id"], ["=", "="], ["terminer", $entreprise_id], "AND");
+        $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+        if ($nb_pag_full != null && $nb_pag_actif != null &&  $nbPagination_payer != null) {
+
+            $full_facture = $this->fact->getListDataFacture("v_full_facture", ["activiter", "entreprise_id"], [True, $entreprise_id], $nb_pag_full, $nb_limit, "invoice_date", "DESC");
+            $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "entreprise_id"], ["terminer", $entreprise_id], $nb_pag_actif, $nb_limit, "invoice_date", "DESC");
+            $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id], $nbPagination_payer, $nb_limit, "invoice_date", "DESC");
         } else {
-            $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "entreprise_id"], ["terminer", $entreprise_id], 0, 10, "invoice_date", "DESC");
-            $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id], 0, 10, "invoice_date", "DESC");
+            $full_facture = $this->fact->getListDataFacture("v_full_facture", ["activiter", "entreprise_id"], [True, $entreprise_id], 0, $nb_limit, "invoice_date", "DESC");
+            $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "entreprise_id"], ["terminer", $entreprise_id], 0, $nb_limit, "invoice_date", "DESC");
+            $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id], 0, $nb_limit, "invoice_date", "DESC");
         }
-        return view('admin.facture.facture_etp', compact('devise','cfp', 'pagination', 'facture_actif', 'facture_payer'));
+        return view('admin.facture.facture_etp', compact('pour_list', 'devise', 'cfp', 'full_facture', 'facture_actif', 'facture_payer', 'pagination_full', 'pagination_actif', 'pagination_payer'));
+    }
+
+
+    public function redirection_facture($nb_pag_full = null, $nb_pag_inactif = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null)
+    {
+        if (Gate::allows('isCFP')) {
+            return $this->listeFacture($nb_pag_full, $nb_pag_inactif, $nb_pag_actif, $nbPagination_payer, $pour_list);
+        }
+        if (Gate::allows('isReferent')) {
+            return $this->listeFacture_referent($nb_pag_full, $nb_pag_actif, $nbPagination_payer, $pour_list);
+        }
     }
 
     // ================== Rehcerche Par critère ==================
 
 
-    public function search_par_intervale_solde(Request $req, $nbPagination = null, $solde_debut_pag = null, $solde_fin_pag = null)
+    public function search_par_intervale_solde(Request $req, $nb_pag_full = null, $nb_pag_inactif = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null, $solde_debut_pag = null, $solde_fin_pag = null)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $solde_debut = $req->solde_debut;
         $solde_fin = $req->solde_fin;
         $mode_payement = DB::select('select * from mode_financements');
+
+        $nb_limit = 10;
         if ($solde_debut_pag != null || $solde_fin_pag != null) {
             $solde_debut = $solde_debut_pag;
             $solde_fin = $solde_fin_pag;
@@ -136,36 +175,65 @@ class FactureController extends Controller
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
 
-            $facture_actif =  $this->fact->search_intervale_solde_generique_actif($solde_debut, $solde_fin, "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_inactif =  $this->fact->search_intervale_solde_generique_inactif($solde_debut, $solde_fin, "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer =  $this->fact->search_intervale_solde_generique_payer($solde_debut, $solde_fin, "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $pagination =  $this->fact->nb_liste_fact_intervale_solde($nbPagination, $solde_debut, $solde_fin, ["cfp_id"], [$cfp_id]);
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["montant_total", "montant_total", "cfp_id"], [">=", "<=", "="], [$solde_debut, $solde_fin, $cfp_id], "AND");
+            $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", ["montant_total", "montant_total", "cfp_id"], [">=", "<=", "="], [$solde_debut, $solde_fin, $cfp_id], "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "montant_total", "montant_total", "cfp_id"], ["!=", ">=", "<=", "="], ["terminer", $solde_debut, $solde_fin, $cfp_id], "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "montant_total", "montant_total", "cfp_id"], ["=", ">=", "<=", "="], ["terminer", $solde_debut, $solde_fin, $cfp_id], "AND");
+
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_brouillon = $this->fonct->nb_liste_pagination($totale_pag_brouillon, $nb_pag_inactif, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", ["montant_total", "montant_total", "cfp_id"], [">=", "<=", "="], [$solde_debut, $solde_fin, $cfp_id], ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_inactif = $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["montant_total", "montant_total", "cfp_id"], [">=", "<=", "="], [$solde_debut, $solde_fin, $cfp_id], ["invoice_date"], "DESC", $nb_pag_inactif, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "montant_total", "montant_total", "cfp_id"], ["!=", ">=", "<=", "="], ["terminer", $solde_debut, $solde_fin, $cfp_id], ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "montant_total", "montant_total", "cfp_id"], ["=", ">=", "<=", "="], ["terminer", $solde_debut, $solde_fin, $cfp_id], ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
             $etp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
 
-            return view('admin.facture.facture', compact('devise','entreprise', 'solde_debut', 'solde_fin', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            return view(
+                'admin.facture.facture',
+                compact('pour_list', 'devise', 'entreprise', 'solde_debut', 'solde_fin', 'facture_payer', 'pagination_actif', 'pagination_brouillon', 'pagination_full', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_inactif', 'facture_payer')
+            );
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
 
-            $facture_actif =  $this->fact->search_intervale_solde_generique_actif($solde_debut, $solde_fin, "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer =  $this->fact->search_intervale_solde_generique_payer($solde_debut, $solde_fin, "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
-            $pagination =  $this->fact->nb_liste_fact_intervale_solde($nbPagination, $solde_debut, $solde_fin, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["activiter", "montant_total", "montant_total", "entreprise_id"], ["=", ">=", "<=", "="], [True, $solde_debut, $solde_fin, $entreprise_id], "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "montant_total", "montant_total", "entreprise_id"], ["!=", ">=", "<=", "="], ["terminer", $solde_debut, $solde_fin, $entreprise_id], "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "montant_total", "montant_total", "entreprise_id"], ["=", ">=", "<=", "="], ["terminer", $solde_debut, $solde_fin, $entreprise_id], "AND");
+
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", ["activiter", "montant_total", "montant_total", "entreprise_id"], ["=", ">=", "<=", "="], [True, $solde_debut, $solde_fin, $entreprise_id], ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "montant_total", "montant_total", "entreprise_id"], ["!=", ">=", "<=", "="], ["terminer", $solde_debut, $solde_fin, $entreprise_id], ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "montant_total", "montant_total", "entreprise_id"], ["=", ">=", "<=", "="], ["terminer", $solde_debut, $solde_fin, $entreprise_id], ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
             $cfp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
             $cfp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
             $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
 
-            return view('admin.facture.facture_etp', compact('devise','cfp', 'solde_debut', 'solde_fin', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
+            return view(
+                'admin.facture.facture_etp',
+                compact('pour_list', 'devise', 'cfp', 'solde_debut', 'solde_fin', 'pagination_full', 'pagination_actif', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_payer')
+            );
         }
     }
 
-    public function search_par_date(Request $req, $nbPagination = null, $invoice_dte_pag = null, $due_dte_pag = null)
+
+    public function search_par_date(Request $req, $nb_pag_full = null, $nb_pag_inactif = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null, $invoice_dte_pag = null, $due_dte_pag = null)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
         $invoice_dte = null;
         $due_dte = null;
+        $nb_limit = 10;
 
         if ($invoice_dte_pag != null && $due_dte_pag != null) {
             $invoice_dte = $invoice_dte_pag;
@@ -181,12 +249,25 @@ class FactureController extends Controller
             $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
 
-            $facture_actif =  $this->fact->search_intervale_dte_generique_actif($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_inactif =  $this->fact->search_intervale_dte_generique_inactif($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte, "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $pagination =  $this->fact->nb_liste_fact_intervale_dte($nbPagination, $invoice_dte, $due_dte, ["cfp_id"], [$cfp_id]);
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["invoice_date", "invoice_date", "cfp_id"], [">=", "<=", "="], [$invoice_dte, $due_dte, $cfp_id], "AND");
+            $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", ["invoice_date", "invoice_date", "cfp_id"], [">=", "<=", "="], [$invoice_dte, $due_dte, $cfp_id], "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "invoice_date", "invoice_date", "cfp_id"], ["!=", ">=", "<=", "="], ["terminer", $invoice_dte, $due_dte, $cfp_id], "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "invoice_date", "invoice_date", "cfp_id"], ["=", ">=", "<=", "="], ["terminer", $invoice_dte, $due_dte, $cfp_id], "AND");
 
-            return view('admin.facture.facture', compact('devise','entreprise', 'invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_brouillon = $this->fonct->nb_liste_pagination($totale_pag_brouillon, $nb_pag_inactif, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", ["invoice_date", "invoice_date", "cfp_id"], [">=", "<=", "="], [$invoice_dte, $due_dte, $cfp_id], ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_inactif = $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["invoice_date", "invoice_date", "cfp_id"], [">=", "<=", "="], [$invoice_dte, $due_dte, $cfp_id], ["invoice_date"], "DESC", $nb_pag_inactif, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "invoice_date", "invoice_date", "cfp_id"], ["!=", ">=", "<=", "="], ["terminer", $invoice_dte, $due_dte, $cfp_id], ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "invoice_date", "invoice_date", "cfp_id"], ["=", ">=", "<=", "="], ["terminer", $invoice_dte, $due_dte, $cfp_id], ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
+            return view(
+                'admin.facture.facture',
+                compact('pour_list', 'devise', 'entreprise', 'invoice_dte', 'due_dte', 'pagination_full', 'pagination_brouillon', 'pagination_actif', 'pagination_payer', 'mode_payement', 'facture_actif', 'full_facture', 'facture_inactif', 'facture_payer')
+            );
         }
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
@@ -194,20 +275,33 @@ class FactureController extends Controller
             $cfp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
             $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
 
-            $facture_actif =  $this->fact->search_intervale_dte_generique_actif($invoice_dte, $due_dte, "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer =  $this->fact->search_intervale_dte_generique_payer($invoice_dte, $due_dte, "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
-            $pagination =  $this->fact->nb_liste_fact_intervale_dte($nbPagination, $invoice_dte, $due_dte, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["activiter", "invoice_date", "invoice_date", "entreprise_id"], ["=", ">=", "<=", "="], [True, $invoice_dte, $due_dte, $entreprise_id], "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "invoice_date", "invoice_date", "entreprise_id"], ["!=", ">=", "<=", "="], ["terminer", $invoice_dte, $due_dte, $entreprise_id], "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "invoice_date", "invoice_date", "entreprise_id"], ["=", ">=", "<=", "="], ["terminer", $invoice_dte, $due_dte, $entreprise_id], "AND");
 
-            return view('admin.facture.facture_etp', compact('devise','cfp', 'invoice_dte', 'due_dte', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", ["activiter", "invoice_date", "invoice_date", "entreprise_id"], ["=", ">=", "<=", "="], [True, $invoice_dte, $due_dte, $entreprise_id], ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "invoice_date", "invoice_date", "entreprise_id"], ["!=", ">=", "<=", "="], ["terminer", $invoice_dte, $due_dte, $entreprise_id], ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "invoice_date", "invoice_date", "entreprise_id"], ["=", ">=", "<=", "="], ["terminer", $invoice_dte, $due_dte, $entreprise_id], ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
+            return view(
+                'admin.facture.facture_etp',
+                compact('pour_list', 'pagination_actif', 'pagination_payer', 'devise', 'cfp', 'invoice_dte', 'due_dte', 'pagination_full', 'mode_payement', 'full_facture', 'facture_actif', 'facture_payer')
+            );
         }
     }
 
 
-    public function search_par_entiter(Request $req, $nbPagination = null, $entiter_id_pag = null)
+
+    public function search_par_entiter(Request $req, $nb_pag_full = null, $nb_pag_inactif = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null, $entiter_id_pag = null)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
         $entiter_id = null;
+        $nb_limit = 10;
 
         if ($entiter_id_pag != null) {
             $entiter_id = $entiter_id_pag;
@@ -220,12 +314,25 @@ class FactureController extends Controller
             $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
 
-            $facture_actif =  $this->fact->search_entiter_actif("v_facture_actif", "entreprise_id", $entiter_id, "facture_encour", "!=", "terminer", "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_inactif =  $this->fact->search_etp_inactif($entiter_id, $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer =  $this->fact->search_entiter_actif("v_facture_actif", "entreprise_id", $entiter_id, "facture_encour", "=", "terminer", "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $pagination =  $this->fact->nb_liste_fact_entiter($nbPagination, "entreprise_id", $entiter_id, ["cfp_id"], [$cfp_id]);
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["entreprise_id", "cfp_id"], ["=", "="], [$entiter_id, $cfp_id], "AND");
+            $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", ["entreprise_id", "cfp_id"], ["=", "="], [$entiter_id, $cfp_id], "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "entreprise_id", "cfp_id"], ["!=", "=", "="], ["terminer", $entiter_id, $cfp_id], "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "entreprise_id", "cfp_id"], ["=", "=", "="], ["terminer", $entiter_id, $cfp_id], "AND");
 
-            return view('admin.facture.facture', compact('devise','entreprise', 'entiter_id', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_brouillon = $this->fonct->nb_liste_pagination($totale_pag_brouillon, $nb_pag_inactif, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", ["entreprise_id", "cfp_id"], ["=", "="], [$entiter_id, $cfp_id], ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_inactif = $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["entreprise_id", "cfp_id"], ["=", "="], [$entiter_id, $cfp_id], ["invoice_date"], "DESC", $nb_pag_inactif, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "entreprise_id", "cfp_id"], ["!=", "=", "="], ["terminer", $entiter_id, $cfp_id], ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "entreprise_id", "cfp_id"], ["=", "=", "="], ["terminer", $entiter_id, $cfp_id], ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
+            return view(
+                'admin.facture.facture',
+                compact('pagination_full', 'pagination_brouillon', 'pagination_actif', 'pagination_payer', 'pour_list', 'devise', 'entreprise', 'entiter_id', 'full_facture', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer')
+            );
         }
 
         if (Gate::allows('isReferent')) {
@@ -234,36 +341,299 @@ class FactureController extends Controller
             $cfp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
             $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
 
-            $facture_actif =  $this->fact->search_entiter_actif("v_facture_actif", "cfp_id", $entiter_id, "facture_encour", "!=", "terminer", "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer =  $this->fact->search_entiter_actif("v_facture_actif", "cfp_id", $entiter_id, "facture_encour", "=", "terminer", "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
-            $pagination =  $this->fact->nb_liste_fact_entiter($nbPagination, "cfp_id", $entiter_id, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["activiter", "cfp_id", "entreprise_id"], ["=", "=", "="], [True, $entiter_id, $entreprise_id], "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "cfp_id", "entreprise_id"], ["!=", "=", "="], ["terminer", $entiter_id, $entreprise_id], "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "cfp_id", "entreprise_id"], ["=", "=", "="], ["terminer", $entiter_id, $entreprise_id], "AND");
 
-            return view('admin.facture.facture_etp', compact('devise','cfp', 'entiter_id', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", ["activiter", "cfp_id", "entreprise_id"], ["=", "=", "="], [True, $entiter_id, $entreprise_id], ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "cfp_id", "entreprise_id"], ["!=", "=", "="], ["terminer", $entiter_id, $entreprise_id], ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "cfp_id", "entreprise_id"], ["=", "=", "="], ["terminer", $entiter_id, $entreprise_id], ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
+            return view(
+                'admin.facture.facture_etp',
+                compact('pour_list', 'devise', 'cfp', 'entiter_id', 'pagination_full', 'pagination_actif', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_payer')
+            );
         }
     }
 
-    public function search_par_num_fact(Request $req, $nbPagination = null, $num_fact_pag = null)
+
+    public function search_par_status(Request $req, $nb_pag_full = null, $nb_pag_inactif = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null, $status_pag = null)
+    {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+        $mode_payement = DB::select('select * from mode_financements');
+        $nb_limit = 10;
+        $status = null;
+        $para = [];
+        $opt = [];
+        $val = [];
+        $para_inactif = [];
+        $opt_inactif = [];
+        $val_inactif = [];
+        $para_actif = [];
+        $opt_actif = [];
+        $val_actif = [];
+        $para_payer = [];
+        $opt_payer = [];
+        $val_payer = [];
+
+        if ($status_pag != null) {
+            $status = $status_pag;
+        } else {
+            $status = $req->status;
+        }
+        if (Gate::allows('isCFP')) {
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+            $etp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
+            $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
+
+
+            if ($status == "EN_COUR") { // partiellement payer
+                $para = ["cfp_id", "facture_encour", "jour_restant", "activiter"];
+                $opt = ["=", "=", ">=", "="];
+                $val = [$cfp_id, "en_cour", 1, True];
+
+                $para_inactif =  ["cfp_id", "facture_encour", "activiter"];
+                $opt_inactif = ["=", "=", "="];
+                $val_inactif = [$cfp_id, "en_cour", True];
+
+                $para_actif =  ["cfp_id", "facture_encour", "jour_restant", "activiter"];
+                $opt_actif = ["=", "=", ">=", "="];
+                $val_actif = [$cfp_id, "en_cour", 1, True];
+
+                $para_payer =  ["cfp_id", "facture_encour", "activiter"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$cfp_id, "en_cour", False];
+            } else if ($status == "ACTIF") { // actif
+
+                $para = ["cfp_id", "activiter", "facture_encour"];
+                $opt = ["=", "=", "!="];
+                $val = [$cfp_id, True, "terminer"];
+
+                $para_inactif =  ["cfp_id", "facture_encour", "activiter"];
+                $opt_inactif = ["=", "=", "="];
+                $val_inactif = [$cfp_id, "en_cour", True];
+
+                $para_actif =  ["cfp_id", "facture_encour", "activiter"];
+                $opt_actif = ["=", "!=", "="];
+                $val_actif = [$cfp_id, "terminer", True];
+
+                $para_payer =  ["cfp_id", "facture_encour", "activiter"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$cfp_id, "terminer", False];
+
+                // dd($para);
+            } else if ($status == "INACTIF") { // inactif
+
+                $para = ["cfp_id", "activiter"];
+                $opt = ["=", "="];
+                $val = [$cfp_id, FALSE];
+
+                $para_inactif = ["cfp_id", "activiter"];
+                $opt_inactif = ["=", "="];
+                $val_inactif = [$cfp_id, FALSE];
+
+                $para_actif = ["cfp_id", "activiter"];
+                $opt_actif = ["=", "="];
+                $val_actif = [$cfp_id, FALSE];
+
+                $para_payer = ["cfp_id", "activiter"];
+                $opt_payer = ["=", "="];
+                $val_payer = [$cfp_id, FALSE];
+            } else if ($status == "PAYER") { // payer
+
+                $para = ["cfp_id", "dernier_montant_ouvert", "activiter", "facture_encour"];
+                $opt = ["=", "<=", "=", "="];
+                $val = [$cfp_id, 0, True, "terminer"];
+
+                $para_inactif = ["cfp_id", "activiter"];
+                $opt_inactif = ["=", "="];
+                $val_inactif = [$cfp_id, True];
+
+                $para_actif = ["cfp_id", "activiter"];
+                $opt_actif = ["=", "="];
+                $val_actif = [$cfp_id, FALSE];
+
+                $para_payer = ["cfp_id", "activiter", "facture_encour"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$cfp_id, True, "terminer"];
+            } else { // retard
+
+                $para = ["cfp_id", "jour_restant", "facture_encour"];
+                $opt = ["=", "<=", "!="];
+                $val = [$cfp_id, 0, "terminer"];
+
+                $para_inactif = ["cfp_id", "activiter", "jour_restant"];
+                $opt_inactif = ["=", "=", "<="];
+                $val_inactif = [$cfp_id, FALSE, 0];
+
+                $para_actif = ["cfp_id", "activiter", "jour_restant", "facture_encour"];
+                $opt_actif = ["=", "=", "<=", "!="];
+                $val_actif = [$cfp_id, True, 0, "terminer"];
+
+                $para_payer = ["cfp_id", "activiter", "facture_encour"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$cfp_id, FALSE, "terminer"];
+            }
+
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", $para, $opt, $val, "AND");
+            $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", $para_inactif, $opt_inactif, $val_inactif, "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para_actif, $opt_actif, $val_actif, "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para_payer, $opt_payer, $val_payer, "AND");
+
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_brouillon = $this->fonct->nb_liste_pagination($totale_pag_brouillon, $nb_pag_inactif, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", $para, $opt, $val, ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_inactif = $this->fonct->findWhereTrieOrderBy("v_facture_inactif", $para_inactif, $opt_inactif, $val_inactif, ["invoice_date"], "DESC", $nb_pag_inactif, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para_actif, $opt_actif, $val_actif, ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para_payer, $opt_payer, $val_payer, ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
+            return view(
+                'admin.facture.facture',
+                compact('pagination_full', 'pagination_brouillon', 'pagination_actif', 'pagination_payer', 'pour_list', 'devise', 'entreprise', 'status', 'full_facture', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer')
+            );
+        }
+
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+            $cfp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
+            $cfp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
+            $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
+
+            if ($status == "EN_COUR") { // partiellement payer
+
+                $para = ["entreprise_id", "facture_encour", "jour_restant", "activiter"];
+                $opt = ["=", "=", ">=", "="];
+                $val = [$entreprise_id, "en_cour", 1, True];
+
+                $para_actif =  ["entreprise_id", "facture_encour", "jour_restant", "activiter"];
+                $opt_actif = ["=", "=", ">=", "="];
+                $val_actif = [$entreprise_id, "en_cour", 1, True];
+
+                $para_payer =  ["entreprise_id", "facture_encour", "activiter"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$entreprise_id, "en_cour", False];
+            } else if ($status == "ACTIF") { // actif
+
+                $para = ["entreprise_id", "activiter", "facture_encour"];
+                $opt = ["=", "=", "!="];
+                $val = [$entreprise_id, True, "terminer"];
+
+                $para_actif =  ["entreprise_id", "facture_encour", "activiter"];
+                $opt_actif = ["=", "!=", "="];
+                $val_actif = [$entreprise_id, "terminer", True];
+
+                $para_payer =  ["entreprise_id", "facture_encour", "activiter"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$entreprise_id, "terminer", False];
+            } else if ($status == "PAYER") { // payer
+
+                $para = ["entreprise_id", "dernier_montant_ouvert", "activiter", "facture_encour"];
+                $opt = ["=", "<=", "=", "="];
+                $val = [$entreprise_id, 0, True, "terminer"];
+
+                $para_actif = ["entreprise_id", "activiter"];
+                $opt_actif = ["=", "="];
+                $val_actif = [$entreprise_id, FALSE];
+
+                $para_payer = ["entreprise_id", "activiter", "facture_encour"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$entreprise_id, True, "terminer"];
+            } else { // retard
+
+                $para = ["entreprise_id", "jour_restant", "facture_encour","activiter"];
+                $opt = ["=", "<=", "!=","="];
+                $val = [$entreprise_id, 0, "terminer",True];
+
+                $para_actif = ["entreprise_id", "activiter", "jour_restant", "facture_encour"];
+                $opt_actif = ["=", "=", "<=", "!="];
+                $val_actif = [$entreprise_id, True, 0, "terminer"];
+
+                $para_payer = ["entreprise_id", "activiter", "facture_encour"];
+                $opt_payer = ["=", "=", "="];
+                $val_payer = [$entreprise_id, FALSE, "terminer"];
+            }
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", $para, $opt, $val, "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para_actif, $opt_actif, $val_actif, "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", $para_payer, $opt_payer, $val_payer, "AND");
+
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", $para, $opt, $val, ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para_actif, $opt_actif, $val_actif, ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", $para_payer, $opt_payer, $val_payer, ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
+            return view(
+                'admin.facture.facture_etp',
+                compact('pour_list', 'devise', 'cfp', 'status', 'pagination_full', 'pagination_actif', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_payer')
+            );
+        }
+    }
+
+    public function search_par_num_fact(Request $req, $nb_pag_full = null,  $nb_pag_inactif = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null, $num_fact_pag = null)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
         $num_fact = null;
+        $nb_limit = 10;
 
         if ($num_fact_pag != null) {
             $num_fact = $num_fact_pag;
         } else {
             $num_fact = $req->num_fact;
         }
+
+        if ($nb_pag_full <= 0 || $nb_pag_full == null) {
+            $nb_pag_full = 1;
+        }
+
+        if ($nb_pag_inactif <= 0 || $nb_pag_inactif == null) {
+            $nb_pag_inactif = 1;
+        }
+
+        if ($nb_pag_actif <= 0 || $nb_pag_actif == null) {
+            $nb_pag_actif = 1;
+        }
+
+        if ($nbPagination_payer <= 0 || $nbPagination_payer == null) {
+            $nbPagination_payer = 1;
+        }
+
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $facture_actif =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "facture_encour", "!=", "terminer", "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_inactif =  $this->fact->search_num_fact_inactif($num_fact, $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "facture_encour", "=", "terminer", "cfp_id", $cfp_id, $nbPagination, 10, "invoice_date", "DESC");
-            $pagination =  $this->fact->nb_liste_fact_num_fact($nbPagination, $num_fact, ["cfp_id"], [$cfp_id]);
+
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["num_facture", "cfp_id"], ["LIKE", "="], ["%" . $num_fact . "%", $cfp_id], "AND");
+            $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", ["num_facture", "cfp_id"], ["LIKE", "="], ["%" . $num_fact . "%", $cfp_id], "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "num_facture", "cfp_id"], ["!=", "LIKE", "="], ["terminer", "%" . $num_fact . "%", $cfp_id], "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "num_facture", "cfp_id"], ["=", "LIKE", "="], ["terminer", "%" . $num_fact . "%", $cfp_id], "AND");
+
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_brouillon = $this->fonct->nb_liste_pagination($totale_pag_brouillon, $nb_pag_inactif, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", ["num_facture", "cfp_id"], ["LIKE", "="], ["%" . $num_fact . "%", $cfp_id], ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_inactif = $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["num_facture", "cfp_id"], ["LIKE", "="], ["%" . $num_fact . "%", $cfp_id], ["invoice_date"], "DESC", $nb_pag_inactif, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "num_facture", "cfp_id"], ["!=", "LIKE", "="], ["terminer", "%" . $num_fact . "%", $cfp_id], ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "num_facture", "cfp_id"], ["=", "LIKE", "="], ["terminer", "%" . $num_fact . "%", $cfp_id], ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
             $etp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
 
-            return view('admin.facture.facture', compact('devise','entreprise', 'num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            return view(
+                'admin.facture.facture',
+                compact('pour_list', 'devise', 'entreprise', 'num_fact', 'pagination_full', 'pagination_brouillon', 'pagination_actif', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_inactif', 'facture_payer')
+            );
         }
 
         if (Gate::allows('isReferent')) {
@@ -272,23 +642,25 @@ class FactureController extends Controller
             $cfp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
             $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
 
-            $facture_actif =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "facture_encour", "!=", "terminer", "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
-            $facture_payer =  $this->fact->search_num_fact_actif("v_facture_actif", $num_fact, "facture_encour", "=", "terminer", "entreprise_id", $entreprise_id, $nbPagination, 10, "invoice_date", "DESC");
-            $pagination =  $this->fact->nb_liste_fact_num_fact($nbPagination, $num_fact, ["entreprise_id", "activiter"], [$entreprise_id, True]);
+            $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["activiter", "num_facture", "entreprise_id"], ["=", "LIKE", "="], [True, "%" . $num_fact . "%", $entreprise_id], "AND");
+            $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "num_facture", "entreprise_id"], ["!=", "LIKE", "="], ["terminer", "%" . $num_fact . "%", $entreprise_id], "AND");
+            $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "num_facture", "entreprise_id"], ["=", "LIKE", "="], ["terminer", "%" . $num_fact . "%", $entreprise_id], "AND");
 
-            return view('admin.facture.facture_etp', compact('devise','cfp', 'num_fact', 'pagination', 'mode_payement', 'facture_actif', 'facture_payer'));
+            $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
+            $pagination_actif = $this->fonct->nb_liste_pagination($totale_pag_actif, $nb_pag_actif, $nb_limit);
+            $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+
+            $full_facture = $this->fonct->findWhereTrieOrderBy("v_full_facture", ["activiter", "num_facture", "entreprise_id"], ["=", "LIKE", "="], [True, "%" . $num_fact . "%", $entreprise_id], ["invoice_date"], "DESC", $nb_pag_full, $nb_limit);
+            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "num_facture", "entreprise_id"], ["!=", "LIKE", "="], ["terminer", "%" . $num_fact . "%", $entreprise_id], ["invoice_date"], "DESC", $nb_pag_actif, $nb_limit);
+            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["facture_encour", "num_facture", "entreprise_id"], ["=", "LIKE", "="], ["terminer", "%" . $num_fact . "%", $entreprise_id], ["invoice_date"], "DESC", $nbPagination_payer, $nb_limit);
+
+            return view(
+                'admin.facture.facture_etp',
+                compact('pour_list', 'devise', 'cfp', 'num_fact', 'pagination_full', 'pagination_actif', 'pagination_payer', 'full_facture', 'mode_payement', 'facture_actif', 'facture_payer')
+            );
         }
     }
 
-    public function redirection_facture($nbPage = null)
-    {
-        if (Gate::allows('isCFP')) {
-            return $this->listeFacture($nbPage);
-        }
-        if (Gate::allows('isReferent')) {
-            return $this->listeFacture_referent($nbPage);
-        }
-    }
 
 
     public function detail_facture($numero_fact)
@@ -324,7 +696,7 @@ class FactureController extends Controller
             } else {
                 $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
             }
-            return view("admin.facture.detail_facture", compact('devise','entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+            return view("admin.facture.detail_facture", compact('devise', 'entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
         }
     }
 
@@ -364,7 +736,7 @@ class FactureController extends Controller
         }
 
 
-        return view("admin.facture.detail_facture", compact('devise','entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        return view("admin.facture.detail_facture", compact('devise', 'entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
     }
 
     public function generatePDF($numero_fact)
@@ -408,7 +780,7 @@ class FactureController extends Controller
             "dpi" => 130
         ]);
 
-        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('devise','entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('devise', 'entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
 
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
@@ -461,7 +833,7 @@ class FactureController extends Controller
             "dpi" => 130
         ]);
 
-        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('devise','entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
+        $pdf = PDF::loadView('admin.pdf.pdf_facture', compact('devise', 'entreprise', 'cfp', 'facture', 'frais_annexes', 'montant_totale', 'facture_avoir', 'facture_acompte', 'lettre_montant'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
@@ -750,7 +1122,7 @@ class FactureController extends Controller
             $type_facture = $this->fonct->findWhereParam("type_facture", ["id"], ["!="], [$session[0]->type_facture_id]);
             $mode_payement = $this->fonct->findWhereParam("mode_financements", ["id"], ["!="], [$session[0]->type_facture_id]);
             $type_remise = $this->fonct->findWhereParam("type_remise", ["id"], ["!="], [$montant_totale->remise_id]);
-            return view('admin.facture.edit_facture', compact('devise','init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
+            return view('admin.facture.edit_facture', compact('devise', 'init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
         }
     }
 
@@ -938,28 +1310,405 @@ class FactureController extends Controller
 
     // ====================================================JSON pour les tries par COLONNE TABLE
 
-    public function trie_par_num_facture(Request $req)
-    {
-        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
+    public function trie_par(Request $req)
+    {
+        $nb_limit = 10;
+
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $data_num_fact_trie = null;
-        if ($req->data_value == 0) {
-            $data_num_fact_trie = "ASC";
-        } else {
-            $data_num_fact_trie = "DESC";
-        }
+        $rep_par_trie = "";
+        $para = [];
+        $opt = [];
+        $val = [];
+        $para_inactif = [];
+        $opt_inactif = [];
+        $val_inactif = [];
+        $para_actif = [];
+        $opt_actif = [];
+        $val_actif = [];
+        $para_payer = [];
+        $opt_payer = [];
+        $val_payer = [];
 
+
+        // -------------------------------------------------------------
         if (Gate::allows('isCFP')) {
 
+            // ---------------------------------- ts mhz fafana
+            if ($req->data_value == 0) {
+                $data_num_fact_trie = "ASC";
+            } else {
+                $data_num_fact_trie = "DESC";
+            }
+
+            if ($req->trie_par == "NUM_FACT") {
+                $rep_par_trie = "num_facture";
+            }
+
+            if ($req->trie_par == "DUE_DTE") {
+                $rep_par_trie = "due_date";
+            }
+
+            if ($req->trie_par == "TOTAL_SOLDE") {
+                $rep_par_trie = "montant_total";
+            }
+
+            if ($req->trie_par == "RESTE_SOLDE") {
+                $rep_par_trie = "dernier_montant_ouvert";
+            }
+
+
+            if ($req->trie_par == "ENTITE") {
+                $rep_par_trie = "nom_etp";
+            }
+
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination - 1), 10);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination - 1), 10);
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
-            $data["facture_payer"] = $facture_payer;
+
+            if (isset($req->invoice_dte) && isset($req->due_dte)) { // dte exist
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["due_date", "due_date", "cfp_id"],
+                    [">=", "<=", "="],
+                    [$req->invoice_dte, $req->due_dte, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_inactif = $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_inactif",
+                    ["due_date", "due_date", "cfp_id"],
+                    [">=", "<=", "="],
+                    [$req->invoice_dte, $req->due_dte, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_brouillon,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "due_date", "due_date", "cfp_id"],
+                    ["!=", ">=", "<=", "="],
+                    ["terminer", $req->invoice_dte, $req->due_dte, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "due_date", "due_date", "cfp_id"],
+                    ["=", ">=", "<=", "="],
+                    ["terminer", $req->invoice_dte, $req->due_dte, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            } else if (isset($req->solde_debut) && isset($req->solde_fin)) { // reste à payer par client
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["montant_total", "montant_total", "cfp_id"],
+                    [">=", "<=", "="],
+                    [$req->solde_debut, $req->solde_fin, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_inactif = $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_inactif",
+                    ["montant_total", "montant_total", "cfp_id"],
+                    [">=", "<=", "="],
+                    [$req->solde_debut, $req->solde_fin, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_brouillon,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "montant_total", "montant_total", "cfp_id"],
+                    ["!=", ">=", "<=", "="],
+                    ["terminer", $req->solde_debut, $req->solde_fin, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "montant_total", "montant_total", "cfp_id"],
+                    ["=", ">=", "<=", "="],
+                    ["terminer", $req->solde_debut, $req->solde_fin, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            } else if (isset($req->num_fact)) { // par N° facture
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["num_facture", "cfp_id"],
+                    ["LIKE", "="],
+                    ["%" . $req->num_fact . "%", $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_inactif = $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_inactif",
+                    ["num_facture", "cfp_id"],
+                    ["LIKE", "="],
+                    ["%" . $req->num_fact . "%", $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_brouillon,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "num_facture", "cfp_id"],
+                    ["!=", "LIKE", "="],
+                    ["terminer", "%" . $req->num_fact . "%", $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "num_facture", "cfp_id"],
+                    ["=", "LIKE", "="],
+                    ["terminer", "%" . $req->num_fact . "%", $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            } else if (isset($req->entiter_id)) { // par ETP
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["entreprise_id", "cfp_id"],
+                    ["=", "="],
+                    [$req->entiter_id, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_inactif = $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_inactif",
+                    ["entreprise_id", "cfp_id"],
+                    ["=", "="],
+                    [$req->entiter_id, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_brouillon,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "entreprise_id", "cfp_id"],
+                    ["!=", "=", "="],
+                    ["terminer", $req->entiter_id, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "entreprise_id", "cfp_id"],
+                    ["=", "=", "="],
+                    ["terminer", $req->entiter_id, $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            } else if (isset($req->status)) { // par status
+
+                if ($req->status == "EN_COUR") { // partiellement payer
+                    $para = ["cfp_id", "facture_encour", "jour_restant", "activiter"];
+                    $opt = ["=", "=", ">=", "="];
+                    $val = [$cfp_id, "en_cour", 1, True];
+
+                    $para_inactif =  ["cfp_id", "facture_encour", "activiter"];
+                    $opt_inactif = ["=", "=", "="];
+                    $val_inactif = [$cfp_id, "en_cour", True];
+
+                    $para_actif =  ["cfp_id", "facture_encour", "jour_restant", "activiter"];
+                    $opt_actif = ["=", "=", ">=", "="];
+                    $val_actif = [$cfp_id, "en_cour", 1, True];
+
+                    $para_payer =  ["cfp_id", "facture_encour", "activiter"];
+                    $opt_payer = ["=", "=", "="];
+                    $val_payer = [$cfp_id, "en_cour", False];
+                } else if ($req->status == "ACTIF") { // actif
+
+                    $para = ["cfp_id", "activiter", "facture_encour"];
+                    $opt = ["=", "=", "!="];
+                    $val = [$cfp_id, True, "terminer"];
+
+                    $para_inactif =  ["cfp_id", "facture_encour", "activiter"];
+                    $opt_inactif = ["=", "=", "="];
+                    $val_inactif = [$cfp_id, "en_cour", True];
+
+                    $para_actif =  ["cfp_id", "facture_encour", "activiter"];
+                    $opt_actif = ["=", "!=", "="];
+                    $val_actif = [$cfp_id, "terminer", True];
+
+                    $para_payer =  ["cfp_id", "facture_encour", "activiter"];
+                    $opt_payer = ["=", "=", "="];
+                    $val_payer = [$cfp_id, "terminer", False];
+
+                    // dd($para);
+                } else if ($req->status == "INACTIF") { // inactif
+
+                    $para = ["cfp_id", "activiter"];
+                    $opt = ["=", "="];
+                    $val = [$cfp_id, FALSE];
+
+                    $para_inactif = ["cfp_id", "activiter"];
+                    $opt_inactif = ["=", "="];
+                    $val_inactif = [$cfp_id, FALSE];
+
+                    $para_actif = ["cfp_id", "activiter"];
+                    $opt_actif = ["=", "="];
+                    $val_actif = [$cfp_id, FALSE];
+
+                    $para_payer = ["cfp_id", "activiter"];
+                    $opt_payer = ["=", "="];
+                    $val_payer = [$cfp_id, FALSE];
+                } else if ($req->status == "PAYER") { // payer
+
+                    $para = ["cfp_id", "dernier_montant_ouvert", "activiter", "facture_encour"];
+                    $opt = ["=", "<=", "=", "="];
+                    $val = [$cfp_id, 0, True, "terminer"];
+
+                    $para_inactif = ["cfp_id", "activiter"];
+                    $opt_inactif = ["=", "="];
+                    $val_inactif = [$cfp_id, True];
+
+                    $para_actif = ["cfp_id", "activiter"];
+                    $opt_actif = ["=", "="];
+                    $val_actif = [$cfp_id, FALSE];
+
+                    $para_payer = ["cfp_id", "activiter", "facture_encour"];
+                    $opt_payer = ["=", "=", "="];
+                    $val_payer = [$cfp_id, True, "terminer"];
+                } else { // retard
+
+                    $para = ["cfp_id", "jour_restant", "facture_encour"];
+                    $opt = ["=", "<=", "!="];
+                    $val = [$cfp_id, 0, "terminer"];
+
+                    $para_inactif = ["cfp_id", "activiter", "jour_restant"];
+                    $opt_inactif = ["=", "=", "<="];
+                    $val_inactif = [$cfp_id, FALSE, 0];
+
+                    $para_actif = ["cfp_id", "activiter", "jour_restant", "facture_encour"];
+                    $opt_actif = ["=", "=", "<=", "!="];
+                    $val_actif = [$cfp_id, True, 0, "terminer"];
+
+                    $para_payer = ["cfp_id", "activiter", "facture_encour"];
+                    $opt_payer = ["=", "=", "="];
+                    $val_payer = [$cfp_id, FALSE, "terminer"];
+                }
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    $para,
+                    $opt,
+                    $val,
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_inactif = $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_inactif",
+                    $para_inactif,
+                    $opt_inactif,
+                    $val_inactif,
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_brouillon,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    $para_actif,
+                    $opt_actif,
+                    $val_actif,
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    $para_payer,
+                    $opt_payer,
+                    $val_payer,
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            } else { // simple
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["cfp_id"],
+                    ["="],
+                    [$cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_inactif = $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_inactif",
+                    ["cfp_id"],
+                    ["="],
+                    [$cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_brouillon,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour",  "cfp_id"],
+                    ["!=",  "="],
+                    ["terminer",  $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour",  "cfp_id"],
+                    ["=", "="],
+                    ["terminer",  $cfp_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            }
 
             return response()->json([
+                "full_facture" => $full_facture,
                 "facture_inactif" => $facture_inactif,
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
@@ -968,207 +1717,290 @@ class FactureController extends Controller
             ]);
         }
 
+        // ===========================================================================================================================================================================
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["num_facture"], $data_num_fact_trie, ($req->nb_pagination - 1), 10);
 
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_payer"] = $facture_payer;
+            // ---------------------------------- ts mhz fafana
+            if ($req->data_value == 0) {
+                $data_num_fact_trie = "ASC";
+            } else {
+                $data_num_fact_trie = "DESC";
+            }
+
+            if ($req->trie_par == "NUM_FACT") {
+                $rep_par_trie = "num_facture";
+            }
+
+            if ($req->trie_par == "DUE_DTE") {
+                $rep_par_trie = "due_date";
+            }
+
+            if ($req->trie_par == "TOTAL_SOLDE") {
+                $rep_par_trie = "montant_total";
+            }
+
+            if ($req->trie_par == "RESTE_SOLDE") {
+                $rep_par_trie = "dernier_montant_ouvert";
+            }
+
+
+            if ($req->trie_par == "ENTITE") {
+                $rep_par_trie = "nom_cfp";
+            }
+
+
+            if (isset($req->invoice_dte) && isset($req->due_dte)) { // par dte
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["activiter", "due_date", "due_date", "entreprise_id"],
+                    ["=", ">=", "<=", "="],
+                    [True, $req->invoice_dte, $req->due_dte, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "due_date", "due_date", "entreprise_id"],
+                    ["!=", ">=", "<=", "="],
+                    ["terminer", $req->invoice_dte, $req->due_dte, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "due_date", "due_date", "entreprise_id"],
+                    ["=", ">=", "<=", "="],
+                    ["terminer", $req->invoice_dte, $req->due_dte, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            } else if (isset($req->solde_debut) && isset($req->solde_fin)) { // reste à payer
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["activiter", "montant_total", "montant_total", "entreprise_id"],
+                    ["=", ">=", "<=", "="],
+                    [True, $req->solde_debut, $req->solde_fin, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "montant_total", "montant_total", "entreprise_id"],
+                    ["!=", ">=", "<=", "="],
+                    ["terminer", $req->solde_debut, $req->solde_fin, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "montant_total", "montant_total", "entreprise_id"],
+                    ["=", ">=", "<=", "="],
+                    ["terminer", $req->solde_debut, $req->solde_fin, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            } else if (isset($req->num_fact)) { // par N° facture
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["activiter", "num_facture", "entreprise_id"],
+                    ["=", "LIKE", "="],
+                    [True, "%" . $req->num_fact . "%", $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "num_facture", "entreprise_id"],
+                    ["!=", "LIKE", "="],
+                    ["terminer", "%" . $req->num_fact . "%", $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "num_facture", "entreprise_id"],
+                    ["=", "LIKE", "="],
+                    ["terminer", "%" . $req->num_fact . "%", $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            } else if (isset($req->entiter_id)) { // OF
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["activiter", "cfp_id", "entreprise_id"],
+                    ["=", "=", "="],
+                    [True, $req->entiter_id, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "cfp_id", "entreprise_id"],
+                    ["!=", "=", "="],
+                    ["terminer", $req->entiter_id, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour", "cfp_id", "entreprise_id"],
+                    ["=", "=", "="],
+                    ["terminer", $req->entiter_id, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            } else if (isset($req->status)) { // par status
+
+                if ($req->status == "EN_COUR") { // partiellement payer
+                    $para = ["entreprise_id", "facture_encour", "jour_restant", "activiter"];
+                    $opt = ["=", "=", ">=", "="];
+                    $val = [$entreprise_id, "en_cour", 1, True];
+
+                    $para_actif =  ["entreprise_id", "facture_encour", "jour_restant", "activiter"];
+                    $opt_actif = ["=", "=", ">=", "="];
+                    $val_actif = [$entreprise_id, "en_cour", 1, True];
+
+                    $para_payer =  ["entreprise_id", "facture_encour", "activiter"];
+                    $opt_payer = ["=", "=", "="];
+                    $val_payer = [$entreprise_id, "en_cour", False];
+                } else if ($req->status == "ACTIF") { // actif
+
+                    $para = ["entreprise_id", "activiter", "facture_encour"];
+                    $opt = ["=", "=", "!="];
+                    $val = [$entreprise_id, True, "terminer"];
+
+                    $para_actif =  ["entreprise_id", "facture_encour", "activiter"];
+                    $opt_actif = ["=", "!=", "="];
+                    $val_actif = [$entreprise_id, "terminer", True];
+
+                    $para_payer =  ["entreprise_id", "facture_encour", "activiter"];
+                    $opt_payer = ["=", "=", "="];
+                    $val_payer = [$entreprise_id, "terminer", False];
+
+                    // dd($para);
+                } else if ($req->status == "PAYER") { // payer
+
+                    $para = ["entreprise_id", "dernier_montant_ouvert", "activiter", "facture_encour"];
+                    $opt = ["=", "<=", "=", "="];
+                    $val = [$entreprise_id, 0, True, "terminer"];
+
+                    $para_actif = ["entreprise_id", "activiter"];
+                    $opt_actif = ["=", "="];
+                    $val_actif = [$entreprise_id, FALSE];
+
+                    $para_payer = ["entreprise_id", "activiter", "facture_encour"];
+                    $opt_payer = ["=", "=", "="];
+                    $val_payer = [$entreprise_id, True, "terminer"];
+                } else { // retard
+
+                    $para = ["entreprise_id", "jour_restant", "facture_encour","activiter"];
+                    $opt = ["=", "<=", "!=","="];
+                    $val = [$entreprise_id, 0, "terminer",True];
+
+                    $para_actif = ["entreprise_id", "activiter", "jour_restant", "facture_encour"];
+                    $opt_actif = ["=", "=", "<=", "!="];
+                    $val_actif = [$entreprise_id, True, 0, "terminer"];
+
+                    $para_payer = ["entreprise_id", "activiter", "facture_encour"];
+                    $opt_payer = ["=", "=", "="];
+                    $val_payer = [$entreprise_id, FALSE, "terminer"];
+                }
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    $para,
+                    $opt,
+                    $val,
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    $para_actif,
+                    $opt_actif,
+                    $val_actif,
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    $para_payer,
+                    $opt_payer,
+                    $val_payer,
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            }else { // simple
+
+                $full_facture = $this->fonct->findWhereTrieOrderBy(
+                    "v_full_facture",
+                    ["activiter", "entreprise_id"],
+                    ["=", "="],
+                    [True, $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_full,
+                    $nb_limit
+                );
+                $facture_actif =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour",  "entreprise_id"],
+                    ["!=",  "="],
+                    ["terminer",  $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_actif,
+                    $nb_limit
+                );
+                $facture_payer =  $this->fonct->findWhereTrieOrderBy(
+                    "v_facture_actif",
+                    ["facture_encour",  "entreprise_id"],
+                    ["=", "="],
+                    ["terminer",  $entreprise_id],
+                    [$rep_par_trie],
+                    $data_num_fact_trie,
+                    $req->nb_pagination_payer,
+                    $nb_limit
+                );
+            }
 
             return response()->json([
-                "facture_actif" => $facture_actif,
-                "facture_payer" => $facture_payer,
-                "devise" => $devise,
-                "entiter" => "ETP"
-            ]);
-        }
-    }
-
-    public function trie_par_entiter(Request $req)
-    {
-        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
-        $data_etp_trie = null;
-        if ($req->data_value == 0) {
-            $data_etp_trie = "ASC";
-        } else {
-            $data_etp_trie = "DESC";
-        }
-
-        if (Gate::allows('isCFP')) {
-
-            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["nom_etp"], $data_etp_trie, ($req->nb_pagination - 1), 10);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["nom_etp"], $data_etp_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["nom_etp"], $data_etp_trie, ($req->nb_pagination - 1), 10);
-
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
-            $data["facture_payer"] = $facture_payer;
-
-            return response()->json([
-                "facture_inactif" => $facture_inactif,
-                "facture_actif" => $facture_actif,
-                "facture_payer" => $facture_payer,
-                "devise" => $devise,
-                "entiter" => "OF"
-            ]);
-        }
-
-        if (Gate::allows('isReferent')) {
-            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["nom_cfp"], $data_etp_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["nom_cfp"], $data_etp_trie, ($req->nb_pagination - 1), 10);
-
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_payer"] = $facture_payer;
-
-            return response()->json([
-                "facture_actif" => $facture_actif,
-                "facture_payer" => $facture_payer,
-                "devise" => $devise,
-                "entiter" => "ETP"
-            ]);
-        }
-    }
-
-    public function trie_par_dte(Request $req)
-    {
-        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
-        $data_dte_trie = null;
-        if ($req->data_value == 0) {
-            $data_dte_trie = "ASC";
-        } else {
-            $data_dte_trie = "DESC";
-        }
-
-        if (Gate::allows('isCFP')) {
-
-            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["due_date"], $data_dte_trie, ($req->nb_pagination - 1), 10);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["due_date"], $data_dte_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["num_facture"], $data_dte_trie, ($req->nb_pagination - 1), 10);
-
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
-            $data["facture_payer"] = $facture_payer;
-
-            return response()->json([
-                "facture_inactif" => $facture_inactif,
-                "facture_actif" => $facture_actif,
-                "facture_payer" => $facture_payer,
-                "devise" => $devise,
-                "entiter" => "OF"
-            ]);
-        }
-
-        if (Gate::allows('isReferent')) {
-            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["due_date"], $data_dte_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["due_date"], $data_dte_trie, ($req->nb_pagination - 1), 10);
-
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_payer"] = $facture_payer;
-
-            return response()->json([
-                "facture_actif" => $facture_actif,
-                "facture_payer" => $facture_payer,
-                "devise" => $devise,
-                "entiter" => "ETP"
-            ]);
-        }
-    }
-
-    public function trie_par_totale_payer(Request $req)
-    {
-        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
-        $data_total_payer_trie = null;
-        if ($req->data_value == 0) {
-            $data_total_payer_trie = "ASC";
-        } else {
-            $data_total_payer_trie = "DESC";
-        }
-
-        if (Gate::allows('isCFP')) {
-
-            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination - 1), 10);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["num_facture"], $data_total_payer_trie, ($req->nb_pagination - 1), 10);
-
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
-            $data["facture_payer"] = $facture_payer;
-
-            return response()->json([
-                "facture_inactif" => $facture_inactif,
-                "facture_actif" => $facture_actif,
-                "facture_payer" => $facture_payer,
-                "devise" => $devise,
-                "entiter" => "OF"
-            ]);
-        }
-
-        if (Gate::allows('isReferent')) {
-            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["montant_total"], $data_total_payer_trie, ($req->nb_pagination - 1), 10);
-
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_payer"] = $facture_payer;
-
-            return response()->json([
-                "facture_actif" => $facture_actif,
-                "facture_payer" => $facture_payer,
-                "devise" => $devise,
-                "entiter" => "ETP"
-            ]);
-        }
-    }
-
-    public function trie_par_reste_payer(Request $req)
-    {
-        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
-        $data_reste_payer_trie = null;
-        if ($req->data_value == 0) {
-            $data_reste_payer_trie = "ASC";
-        } else {
-            $data_reste_payer_trie = "DESC";
-        }
-
-        if (Gate::allows('isCFP')) {
-
-            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "!="], [$cfp_id, "terminer"], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination - 1), 10);
-            $facture_inactif =  $this->fonct->findWhereTrieOrderBy("v_facture_inactif", ["cfp_id"], ["="], [$cfp_id], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["cfp_id", "facture_encour"], ["=", "="], [$cfp_id, "terminer"], ["num_facture"], $data_reste_payer_trie, ($req->nb_pagination - 1), 10);
-
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_inactif"] = $facture_inactif;
-            $data["facture_payer"] = $facture_payer;
-
-            return response()->json([
-                "facture_inactif" => $facture_inactif,
-                "facture_actif" => $facture_actif,
-                "facture_payer" => $facture_payer,
-                "devise" => $devise,
-                "entiter" => "OF"
-            ]);
-        }
-
-        if (Gate::allows('isReferent')) {
-            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
-            $facture_actif =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "!="], [$entreprise_id, "terminer"], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination - 1), 10);
-            $facture_payer =  $this->fonct->findWhereTrieOrderBy("v_facture_actif", ["entreprise_id", "facture_encour"], ["=", "="], [$entreprise_id, "terminer"], ["dernier_montant_ouvert"], $data_reste_payer_trie, ($req->nb_pagination - 1), 10);
-
-            $data["facture_actif"] = $facture_actif;
-            $data["facture_payer"] = $facture_payer;
-
-            return response()->json([
+                "full_facture" => $full_facture,
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
                 "devise" => $devise,

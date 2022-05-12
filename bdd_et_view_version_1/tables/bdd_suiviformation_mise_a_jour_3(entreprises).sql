@@ -60,23 +60,6 @@ CREATE TABLE `branches` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `abonnements` (
-  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date default current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
-  `mode_financement_id` bigint(20) UNSIGNED NOT NULL  REFERENCES mode_financements(id) ON DELETE CASCADE,
-  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type_abonnement_role_id` bigint(20) UNSIGNED NOT NULL  REFERENCES type_abonnement_roles(id) ON DELETE CASCADE,
-  `entreprise_id` bigint(20) UNSIGNED NOT NULL  REFERENCES entreprises(id) ON DELETE CASCADE,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `categorie_paiement_id` bigint(20) NOT NULL  REFERENCES categorie_paiements(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
-
 CREATE TABLE chef_departements (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   matricule varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
