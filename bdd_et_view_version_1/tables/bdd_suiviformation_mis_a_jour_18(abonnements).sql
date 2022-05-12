@@ -6,6 +6,7 @@ DROP TABLE type_abonnement_roles;
 DROP TABLE type_abonnes;
 DROP TABLE abonnements;
 DROP TABLE abonnement_cfps;
+DROP TABLE factures_abonnements;
 DROP TABLE factures_abonnements_cfp;
 
 CREATE TABLE `type_abonnements_of` (
@@ -108,6 +109,18 @@ CREATE TABLE `encaissements_abonnements_cfps` (
   `type_paiement_id` bigint(20) NOT NULL REFERENCES type_payement(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+INSERT INTO `type_abonnements_of` (`id`, `nom_type`, `description`, `tarif`, `nb_utilisateur`, `nb_formateur`, `nb_projet`, `illimite`, `created_at`, `updated_at`) VALUES
+(1, 'INDEP', 'Une offre unique dédiée aux formateurs indépendants', '100000.00', 1, 1, 50, 0, '2022-05-10 07:11:13', '2022-05-10 07:11:13'),
+(2, 'EQUIPE', 'La seule plateforme tout intégrée pour les petites équipes de formation', '200000.00', 2, 4, 200, 0, '2022-05-10 07:12:47', '2022-05-10 07:12:47'),
+(3, 'ORGA', 'La plateforme pour les organismes à la pointe de la transformation digitale', '300000.00', 3, 10, 1000, 0, '2022-05-10 07:13:55', '2022-05-10 07:13:55'),
+(4, 'ORGA +', 'Gestion administrative illimitée pour les organismes', '400000.00', 0, 0, 0, 1, '2022-05-10 07:15:07', '2022-05-10 07:15:07');
+
+INSERT INTO `type_abonnements_etp` (`id`, `nom_type`, `description`, `tarif`, `nb_utilisateur`, `nb_formateur`, `min_emp`, `max_emp`, `illimite`, `created_at`, `updated_at`) VALUES
+(1, 'TPE', 'Une offre unique dédiée aux Très Petite Entreprise', '100000.00', 1, 1, 1, 9, 0, '2022-05-10 07:16:26', '2022-05-10 07:16:26'),
+(2, 'PME', 'Offre spéciale pour les Petites et Moyennes Entreprise', '200000.00', 2, 2, 10, 49, 0, '2022-05-10 07:17:28', '2022-05-10 07:17:28'),
+(3, 'EI', 'La seule plateforme tout integrée pour les Entreprise Intermediaire', '300000.00', 3, 4, 50, 249, 0, '2022-05-10 07:18:46', '2022-05-10 07:18:46'),
+(4, 'GE', 'La plateforme pour les Grandes Entreprises à la pointe de la transformation digitale', '400000.00', 0, 0, 0, 0, 1, '2022-05-10 07:27:16', '2022-05-10 07:27:16');
 
 --Add column : entreprises / OF and create table assujetti
 CREATE TABLE `assujetti` (
