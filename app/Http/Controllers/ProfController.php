@@ -168,6 +168,28 @@ class ProfController extends Controller
                 $frm->CIN = $request->cin;
                 $frm->specialite = $request->specialite;
                 $frm->niveau = $request->niveau;
+                $frm->description = $request->description;
+
+
+                // $validator = Validator::make($request->all(), [
+                //     'nom' => 'required|string|max:255',
+                //     'prenom' => 'required|string|max:255',
+                //     'mail' => 'required|string|email|max:255|unique:formateurs',
+                //     'phone' => 'required|string|max:255',
+                //     'date_naissance' => 'required|string|max:255',
+                //     'adresse' => 'required|string|max:255',
+                //     'cin' => 'required|string|max:255',
+                //     'specialite' => 'required|string|max:255',
+                //     'niveau' => 'required|string|max:255',
+                //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                // ]);
+
+                // if ($validator->fails()) {
+                //     return redirect()->back()->withErrors($validator)->withInput();
+                // } else {
+                //     $frm->save();
+
+
 
                 $date = date('d-m-Y');
                 $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
@@ -180,6 +202,7 @@ class ProfController extends Controller
                 $frm->photos = $nom_image;
                 $frm->url_photo = $url_photo;
 
+                // enregistrer la nouvelle entrée dans la table des utilisateur
                 $user = new User();
                 $user->name = $request->nom . " " . $request->prenom;
                 $user->email = $request->mail;
@@ -187,9 +210,14 @@ class ProfController extends Controller
                 $user->cin = $request->cin;
                 $user->telephone = $request->phone;
 
+
+
+                // mot de passe de test par defaut
                 $ch1 = '0000';
                 // $ch2 = substr($request->phone, 8, 2);
                 $user->password = Hash::make($ch1);
+
+
                 $user->save();
 
                 $user_id = $fonct->findWhereMulitOne("users", ["email"], [$request->mail])->id;

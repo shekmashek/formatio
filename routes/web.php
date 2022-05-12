@@ -67,6 +67,7 @@ Route::get('/compte','HomeController@compte')->name('compte');
 Route::get('/detail_projet/{id}','HomeController@detail')->name('detail_projet');
 Route::get('/profil/{id}','HomeController@profil')->name('profil');
 Route::get('accueil_admin','HomeController@accueil')->name('accueil_admin');
+
 // Route::get('accueil_admin','AdminController@admin')->name('accueil_admin');
 Route::get('admin_count','AdminController@admin')->name('admin_count');
 Route::get('admin_count_etp','AdminController@admin_etp')->name('admin_count_etp');
