@@ -298,6 +298,9 @@ class DetailController extends Controller
         ",[$detail[0]->groupe_id]);
 
         $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
+
+        $nombre_stg = DB::select('select count(stagiaire_id) as nombre from v_participant_groupe_detail where detail_id = ?',[$id])[0]->nombre;
+
         $initial_stg = array();
         //on récupère l'initial
         for ($i=0; $i < count($stg); $i++) {
@@ -332,7 +335,7 @@ class DetailController extends Controller
             $photo_form = 'oui';
         }
 
-        return response()->json(['nb_seance'=>$nb_seance,'id_detail'=>$id,'formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
+        return response()->json(['nombre_stg'=>$nombre_stg,'nb_seance'=>$nb_seance,'id_detail'=>$id,'formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
     }
     //impression
     public function detail_printpdf($id)
