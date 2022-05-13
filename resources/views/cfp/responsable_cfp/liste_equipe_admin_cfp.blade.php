@@ -81,16 +81,20 @@
                             <td class="td_hover" role="button"  onclick="afficherInfos();" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
                             @if($resp_connecte->prioriter == 1)
                                     @if($responsables_cfp->prioriter == 1)
-                                        {{-- <td id="demo" onclick="myFunction()" title="Résponsable principale" role="button" onclick="afficherInfos();" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i class='bx bxs-star'></i></td> --}}
                                         <td data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="myFunction()" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class='bx bxs-star'></i></td>
                                     @elseif($responsables_cfp->prioriter == 0)
+                                        @if($responsables_cfp->activiter == 0)
+                                            <td desabled title="Résponsable" role="button" onclick="afficherInfos()" class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
+                                                <i desabled data-bs-toggle="modal" data-bs-target="" class='bx bxs-star'></i>
+                                            </td>
+                                        @elseif($responsables_cfp->activiter == 1)
                                             <td title="Résponsable" role="button" onclick="afficherInfos()" class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
                                                 <i data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{ $responsables_cfp->id }}" class='bx bxs-star'></i>
                                             </td>
+                                        @endif
                                     @endif
                             @elseif($resp_connecte->prioriter == 0)
                                 @if($responsables_cfp->prioriter == 1)
-                                    {{-- <td id="demo" onclick="myFunction()" title="Résponsable principale" role="button" onclick="afficherInfos();" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i class='bx bxs-star'></i></td> --}}
                                     <td onclick="myFunction()" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i class='bx bxs-star'></i></td>
                                 @elseif($responsables_cfp->prioriter == 0)
                                         <td title="Résponsable" role="button" onclick="afficherInfos()" class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
@@ -234,70 +238,6 @@
 
                 tick();
             }
-
-
-            // $('.show_confirm').click(function(event) {
-            //         alert($('.responsable_cible').val());
-            //       var form =  $(this).closest("form");
-            //       var name = $(this).data("name");
-            //       event.preventDefault();
-            //       swal({
-            //           title: `Vous êtes sur de designer cette personne comme referent principale?`,
-            //           icon: "warning",
-            //           buttons: true,
-            //           dangerMode: true,
-            //       })
-            //       .then((value) => {
-            //         if (value) {
-            //             console.log("eto");
-            //             $("#form_test").submit();
-            //         }
-            //       });
-            //   });
-
-
-
-            // $(".activer" ).on( "change", function() {
-            //     var statut,idActiver;
-            //     if($( this ).prop('checked')){
-            //         statut = "Activé";
-            //         idActiver = $(this).data('id');
-            //     }
-            //     else{
-            //         statut = "Désactivé";
-            //         idActiver = $(this).data('id');
-            //     }
-
-            //     $.ajax({
-            //         type: "GET",
-            //         url: "{{route('activer_compte')}}",
-            //         data:{Id:idActiver,Statut:statut},
-            //         dataType: "html",
-            //         success:function(response){
-            //             var userData=JSON.parse(response);
-            //             for (var $i = 0; $i < userData.length; $i++){
-            //                 $('#span_statut').text(userData[$i].status);
-            //                 if (userData[$i].status === "Activé") {
-            //                     $('#label_statut_'+userData[$i].id).text(userData[$i].status);
-            //                     $('#statut_'+userData[$i].id).text('Désactivé');
-            //                     // $('#label_statut_'+userData[$i].id).css("background","red");
-            //                     $('#label_statut_'+userData[$i].id).css("background","green");
-            //                 }
-            //                 else{
-            //                     $('#label_statut_'+userData[$i].id).text(userData[$i].status);
-            //                     $('#statut_'+userData[$i].id).text('Activé');
-            //                     // $('#label_statut_'+userData[$i].id).css("background","green");
-            //                     $('#label_statut_'+userData[$i].id).css("background","red");
-            //                 }
-            //                 $('#debut_'+userData[$i].id).text(userData[$i].date_debut);
-            //                 $('#fin_'+userData[$i].id).text(userData[$i].date_fin);
-            //             }
-            //         },
-            //         error:function(error){
-            //             console.log(error)
-            //         }
-            //     });
-            // });
 
     $(".randomColor").each(function() {
         //On change la couleur de fond au hasard
