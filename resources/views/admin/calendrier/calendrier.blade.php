@@ -584,7 +584,7 @@
                                     var etp = '';
                                     var printpdf = '';
                                     for (var $i = 0; $i < userData.length; $i++) {
-                                        printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
+                                        printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><button class="btn liste_projet ms-3 me-1"><i class="bx bxs-cloud-download"></i>&nbsp;&nbsp;&nbsp;PDF</button></a>';
                                         printpdf = printpdf.replace(":?",id_detail);
                                         $('#printpdf').append(printpdf);
 
