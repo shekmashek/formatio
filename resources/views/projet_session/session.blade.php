@@ -351,6 +351,16 @@
         color: #191818;
     }
 
+    .pdf_download{
+            background-color: #e73827 !important;
+            border-radius: 5px;
+    }
+    .pdf_download:hover{
+        background-color: #af3906 !important;
+    }
+    .pdf_download button{
+        color: #ffffff !important;
+    }
     
 </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -429,7 +439,7 @@
                         </div>
                     @endcanany
                     <div>
-                        <p><a href="{{ route('fiche_technique_pdf', [$projet[0]->groupe_id]) }}" ><button class="btn liste_projet ms-3 me-1"><i class='bx bxs-cloud-download'></i>&nbsp;&nbsp;&nbsp;PDF</button></a></p>
+                        <p><a href="{{ route('fiche_technique_pdf', [$projet[0]->groupe_id]) }}" class="pdf_download py-2" ><button class="btn"><i class='bx bxs-file-pdf'></i>&nbsp;&nbsp;&nbsp;PDF</button></a></p>
                     </div>
                     {{-- <div>
                         <p class="text-end"><a href="{{ route('liste_projet') }}" ><button class="btn liste_projet ms-1"> <span>Retour sur les projets</span></button></a></p>

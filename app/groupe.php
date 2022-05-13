@@ -80,4 +80,8 @@ class Groupe extends Model
             return 0;
         }
     }
+
+    public function module_session($module_id){
+        return DB::select('select nom_module from modules where id = ?',[$module_id])[0]->nom_module;
+    }
 }
