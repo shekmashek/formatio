@@ -31,6 +31,14 @@
 
     .form_colab input {
         height: 30px;
+        border: none;
+        text-align: center
+    }
+
+    .form_colab input:focus{
+        border: none;
+        outline: none;
+        box-shadow: none;
     }
 
     .form_colab span {
@@ -91,6 +99,11 @@
         text-decoration-line: none;
     }
 
+    td{
+        padding: 0 !important;
+        height: 30px !important;
+    }
+
 </style>
 
 <div class="container-fluid">
@@ -145,8 +158,8 @@
                     </div>
                     @endif
 
-                    <table id="example" class="table">
-                        <thead>
+                    <table id="example" class="table table-bordered" >
+                        <thead style="background-color: #6e717339">
                             <tr align="center">
                                 <th>Matricule <span style="color: red">*</span> </th>
                                 <th>Nom <span style="color: red">*</span> </th>
@@ -159,14 +172,12 @@
 
                             @for($i = 1; $i <= 30; $i++) <tr align="center">
                                 <td>
-                                    <div class="form-group">
                                         <input autocomplete="off" class="form-control mx-0 " id="matricule_{{$i}}" type="text" name="matricule_{{$i}}" placeholder="Matricule N° {{$i}}">
-                                        <br>
+
                                         <p class="m-0" style="color: red" id="matricule_err_{{$i}}"></p>
                                         <div class="invalid-feedback">
                                             Please choose a matricule.
                                         </div>
-                                    </div>
                                 </td>
                                 <td>
                                     {{-- <div class="form-group"> --}}
@@ -174,25 +185,17 @@
                                     {{-- </div> --}}
                                 </td>
                                 <td>
-                                    <div class="form-group">
                                         <input autocomplete="off" class="form-control" id="inlineFormInput" type="text" name="prenom_{{$i}}" placeholder="Prénom">
-                                    </div>
                                 </td>
                                 <td>
-                                    <div class="form-group">
                                         <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_{{$i}}" placeholder="CIN">
-                                        <br>
-                                        <p class="m-0" style="color: red" id="cin_err_{{$i}}"></p>
 
-                                    </div>
+                                        <p class="m-0" style="color: red" id="cin_err_{{$i}}"></p>
                                 </td>
                                 <td>
-                                    <div class="form-group">
                                         <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_{{$i}}" placeholder="E-mail">
-                                        <br>
-                                        <p class="m-0" style="color: red" id="email_err_{{$i}}"></p>
 
-                                    </div>
+                                        <p class="m-0" name="email_err[]" style="color: red" id="email_err_{{$i}}"></p>
                                 </td>
                                 </tr>
                                 @endfor
@@ -252,7 +255,7 @@
         for (var i = 0; i < str.length; i += 1) {
             if (str[i] == '@') {
                 result = true;
-                break;
+
             } else {
                 result = false;
             }
@@ -268,6 +271,7 @@
 
         $('#formInsert input').keyup(function() {
 
+            var mail_err = document.getElementsByName("email_err[]");
             for (let i = 1; i <= 30; i += 1) {
 
                 /*         if ($("matricule_err_" + i).html() == '' &&
@@ -310,12 +314,14 @@
                     if ($("#email_" + i).val() != null) {
                         var email = $("#email_" + i).val();
 
-                        var verify = verify_email(email);
-                        if (verify == false && $("#matricule_" + i).val().length > 0) {
-                            document.getElementById("email_err_" + i).innerHTML = 'E-mail invalid';
-                        } else {
-                            document.getElementById("email_err_" + i).innerHTML = '';
+                        if ($("#matricule_" + i).val() != null) {
+                            if (email.indexOf('@') == -1) {
+                                document.getElementById("email_err_" + i).innerHTML = 'E-mail invalid';
+                            } else {
+                                document.getElementById("email_err_" + i).innerHTML = '';
+                            }
                         }
+
                         $.ajax({
                             url: "{{route('employes.export.verify_email_stg')}}"
                             , type: 'get'
@@ -326,18 +332,6 @@
                                 var userData = response;
                                 if (userData.length > 0) {
                                     document.getElementById("email_err_" + i).innerHTML = 'E-mail existe déjà';
-                                    /*         if ($("matricule_err_" + i).html() == '' &&
-                                                 $("cin_err_" + i).html() == '') {
-                                                 $('#saver_multi_stg').prop('disabled', false);
-                                             } else {
-                                                 $('#saver_multi_stg').prop('disabled', true);
-                                             } */
-                                } else {
-                                    if (verify == false && $("#matricule_" + i).val().length > 0) {
-                                        document.getElementById("email_err_" + i).innerHTML = 'E-mail invalid';
-                                    } else {
-                                        document.getElementById("email_err_" + i).innerHTML = '';
-                                    }
                                 }
                             }
                             , error: function(error) {

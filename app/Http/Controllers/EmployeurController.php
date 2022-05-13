@@ -46,7 +46,6 @@ class EmployeurController extends Controller
      */
     public function store(Request $request)
     {
-
         $rules = [
             'nom.required' => 'le Nom ne doit pas être null',
             'matricule.required' => 'invalid',
