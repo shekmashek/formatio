@@ -194,6 +194,25 @@
             background-color: white;
             border: 1px solid #7635dc;
         }
+        .type_formation_cal{
+            border-radius: 1rem;
+            background-color: #826bf3;
+            color: rgb(255, 255, 255);
+        }
+        .status_grise {
+            border-radius: 1rem;
+            background-color: #637381;
+            color: white;
+            /* width: 60%; */
+            align-items: center margin: 0 auto;
+            padding: .1rem .5rem;
+         }
+         .liste_projet{
+            background-color: #637381;
+            margin: 0;
+            padding: 1;
+            color: #ffffff;
+         }
 
     </style>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
@@ -215,7 +234,7 @@
                     <div id="editor"></div>
                     <div class="card-body" id="test">--}}
                         <h2 class="card-title" style="text-align: center;">
-                            Projet de formation: <label id="types"></label><br>
+                            {{-- Projet de formation: <label id="types"></label><br> --}}
                             <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label>
                         </h2>
 
@@ -224,8 +243,25 @@
                             <h5 class="card-title" style="text-align: center;">
                                 <span id="etp" class="contenu"></span> <label for="logo" id="logo_etp"></label>  <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label></h5>
                         @endcanany --}}
-
-                        <label class="gauche" for="">Entreprise client: </label>&nbsp;<label for="logo" id="logo_etp"></label> &nbsp;<label id="etp" class="contenu"> </label><br>
+                        <div class="p-0 m-0 d-flex justify-content-start">
+                            <i class='bx bxs-book-open mt-2 me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i> <span class="type_formation_cal pt-1 mt-2 ps-2 pe-2" id="types"> </span>
+                            <label class="status_grise pt-1 mt-2 ps-2 pe-2 ms-2" id="statut"></label>
+                            <label class="contenu mt-3 ps-2 pe-2 ms-2" id="formation"> </label><label class="mt-3 ps-2 pe-2">-</label> <label class="contenu mt-3 ps-2 pe-2 ms-2" id="module"></label>
+                        </div>
+                        <div>
+                            <label  class="contenu ps-3 pt-2" id="projet"> </label>
+                            <label class="contenu ps-3 pt-2" id="session"></label>
+                            <i class = "bx bxs-time icones"></i> Du <label class="" id="debut"></label> au <label class="" id="fin"></label>
+                            <i class='bx bx-group ms-3' style="font-size: 1rem;"></i> apprenants inscrits: <label id="nb_apprenant"></label>
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i> <label id="lieu"></label>
+                            <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i><label id="salle"></label>
+                        </div>
+                        <div>
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i> </label> &nbsp;<label id="etp" class="contenu"> </label> <label for="logo" id="logo_etp"></label>
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i><label id="cfp" class="contenu"> </label><label for="logo" id="logo_cfp"></label><br>
+                            <label class="ps-3 pt-2"">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
+                        </div>
+                        {{-- <label class="gauche" for="">Entreprise client: </label>&nbsp;<label for="logo" id="logo_etp"></label> &nbsp;<label id="etp" class="contenu"> </label><br>
                         <label class="gauche" for="">Organisme de formation: </label>&nbsp;<label for="logo" id="logo_cfp"></label>&nbsp;<label id="cfp" class="contenu"> </label><br>
                         <label class="gauche" for="">Nom du projet: </label>&nbsp;<label id="projet"> </label><br>
                         <label class="gauche" for="">Session: </label>&nbsp;<label class="contenu" id="session"></label><br>
@@ -233,7 +269,7 @@
                         <label class="gauche">Formation:</label>&nbsp;<label class="contenu" id="formation"> </label><br>
                         <label class="gauche">Module:</label>&nbsp;<label class="contenu" id="module"></label><br>
                         <label class="gauche">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
-                        <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br>
+                        <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br> --}}
                         <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
                          <hr>
@@ -467,12 +503,17 @@
                                     statut.innerHTML = '';
                                     var printpdf = document.getElementById('printpdf');
                                     printpdf.innerHTML = '';
-
+                                    var debut = document.getElementById('debut');
+                                    debut.innerHTML = '';
+                                    var fin = document.getElementById('fin');
+                                    fin.innerHTML = '';
                                     var nom_cfp = document.getElementById('cfp');
                                     var etp = document.getElementById('etp');
                                     var logo_etp = document.getElementById('logo_etp');
-                                     var logo_cfp = document.getElementById('logo_cfp');
-                                     var logo_formateur = document.getElementById('logo_formateur');
+                                    var logo_cfp = document.getElementById('logo_cfp');
+                                    var logo_formateur = document.getElementById('logo_formateur');
+                                    var nb_apprenant = document.getElementById('nb_apprenant');
+                                    nb_apprenant.innerHTML = '';
                                     if ( nom_cfp == null) {
                                         console.log('null');
                                     }
@@ -528,6 +569,7 @@
                                     var photo_formateur = userDataDetail['initial'];
                                     var initial_stg = userDataDetail['initial_stg'];
                                     var entreprises = userDataDetail['entreprises'];
+                                    var nombre_stg = userDataDetail['nombre_stg'];
                                     var formations = userDataDetail['formations'];
                                     var id_detail = userDataDetail['id_detail'];
                                     var images = '';
@@ -546,11 +588,26 @@
                                         printpdf = printpdf.replace(":?",id_detail);
                                         $('#printpdf').append(printpdf);
 
+                                        date_debut = new Date(userData[$i].date_debut);
+                                        date_fin= new Date(userData[$i].date_fin);
+
+                                        $('#nb_apprenant').append(nombre_stg);
+
+                                        const event1 = new Date(date_debut);
+                                        const event2 = new Date(date_fin);
+
+                                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+                                        $('#debut').append(event1.toLocaleDateString('fr-FR',options));
+                                        $('#fin').append(event2.toLocaleDateString('fr-FR',options));
+
 
                                         $("#projet").append(userData[$i].nom_projet);
                                         $('#statut').append(statut_pj);
                                         $('#types').append(userData[$i].type_formation);
-                                        $('#lieu').append(userData[$i].lieu);
+                                        const lieu_array = userData[$i].lieu.split(",  ",2);
+                                        $('#lieu').append(lieu_array[0]);
+                                        $('#salle').append(lieu_array[1]);
 
                                         session+='<a href = "{{url("detail_session/:?/:!")}}" target = "_blank">'+userData[$i].nom_groupe+'</a>'
                                         session = session.replace(":?",userData[$i].groupe_id);
