@@ -49,9 +49,6 @@
 
             for (var i_act = 0; i_act < full_facture.length; i_act += 1) {
 
-                if (full_facture[i_act].reference_type_facture == "Acompte") {
-                    console.log(JSON.stringify(full_facture[i_act]));
-                }
                 var url_detail_facture = "{{ route('detail_facture', ':id') }}";
                 url_detail_facture = url_detail_facture.replace(":id", full_facture[i_act].num_facture);
 
@@ -95,8 +92,8 @@
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].invoice_date + " </a> </td><td>";
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].due_date + " </a> </td><td>";
 
-                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(full_facture[i_act].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(full_facture[i_act].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + full_facture[i_act].montant_total.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
+                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + full_facture[i_act].dernier_montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
 
                 html_tous += "  <a href=" + url_detail_facture + "> ";
 
@@ -189,8 +186,8 @@
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].invoice_date + " </a> </td><td>";
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].due_date + " </a> </td><td>";
 
-                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_actif[i_actif].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_actif[i_actif].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_actif[i_actif].montant_total.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
+                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_actif[i_actif].dernier_montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
 
 
 
@@ -271,8 +268,8 @@
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].invoice_date + " </a> </td><td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].due_date + " </a> </td><td>";
 
-                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_payer[i_payer].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_payer[i_payer].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_payer[i_payer].montant_total.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
+                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_payer[i_payer].dernier_montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
 
                 html_payer += "  <a href=" + url_detail_facture + "> ";
                 html_payer += '<div style="background-color:  rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">  payé </div>';

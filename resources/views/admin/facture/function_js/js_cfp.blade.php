@@ -80,9 +80,6 @@
 
             for (var i_act = 0; i_act < full_facture.length; i_act += 1) {
 
-                if (full_facture[i_act].reference_type_facture == "Acompte") {
-                    console.log(JSON.stringify(full_facture[i_act]));
-                }
                 var url_detail_facture = "{{ route('detail_facture', ':id') }}";
                 url_detail_facture = url_detail_facture.replace(":id", full_facture[i_act].num_facture);
 
@@ -136,8 +133,8 @@
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].invoice_date + " </a> </td><td>";
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].due_date + " </a> </td><td>";
 
-                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(full_facture[i_act].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(full_facture[i_act].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + full_facture[i_act].montant_total.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
+                html_tous += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + full_facture[i_act].dernier_montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
 
                 html_tous += "  <a href=" + url_detail_facture + "> ";
 
@@ -178,9 +175,14 @@
                     html_tous += '<button type="submit" class="btn ">Valider facture</button>';
                     html_tous += "</form>";
                     html_tous += "</li> <li>";
-                    html_tous += '<a class="dropdown-item" href="' + url_delete_facture + '">';
-                    html_tous += '<button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>';
-                    html_tous += " </a> </li></ul> </div> </div>";
+                    /*   html_tous += '<a class="dropdown-item" href="' + url_delete_facture + '">';
+                       html_tous += '<button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>'; */
+                    /* html_tous += " </a> </li></ul> </div> </div>"; */
+                    html_tous += '<a class="dropdown-item" href="#">';
+                    html_tous += '<button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_fature_' + full_facture[i_act].num_facture + '"><span class="fa fa-trash"></span> Supprimer</button>';
+                    html_tous += '</a>';
+
+                    html_tous += "</li></ul> </div> </div>";
                 } else {
 
                     if (full_facture[i_act].facture_encour == "valider") {
@@ -238,7 +240,7 @@
                 html_tous += '<div class="modal-title text-md">';
                 html_tous += '<h6>Encaisser la facture  N° : <span class="text-mued" id="num_fact_encaissement">' + full_facture[i_act].num_facture + '</span></h6>';
 
-                html_tous += '<h5>Reste à payer : <strong><label id="montant"></label> ' + devise.devise + ' ' + number_format(full_facture[i_act].dernier_montant_ouvert, 0, ",", " ") + '</strong></h5>';
+                html_tous += '<h5>Reste à payer : <strong><label id="montant"></label> ' + devise.devise + ' ' + full_facture[i_act].dernier_montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</strong></h5>';
                 html_tous += '</div>';
                 html_tous += '</div>';
                 html_tous += '<div class="modal-body">';
@@ -274,7 +276,22 @@
                 html_tous += '</div>';
                 html_tous += '</div>';
 
-
+                html_tous += '<div class="modal fade" id="delete_fature_' + full_facture[i_act].num_facture + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+                html_tous += '<div class="modal-dialog modal-dialog-centered" role="document">';
+                html_tous += '<div class="modal-content">';
+                html_tous += '<div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">';
+                html_tous += '<h4 class="modal-title text-white">Avertissement !</h4>';
+                html_tous += '</div>';
+                html_tous += '<div class="modal-body">';
+                html_tous += "<small>Vous <span style='color: red'> êtes </span>sur le point d'enlever une facture qui est déjà créer, voulez vous continuer ?</small>";
+                html_tous += '</div>';
+                html_tous += '<div class="modal-footer justify-content-center">';
+                html_tous += '<button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>';
+                html_tous += '<a href="' + url_delete_facture + '"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>';
+                html_tous += '</div>';
+                html_tous += '</div>';
+                html_tous += '</div>';
+                html_tous += '</div>';
             }
         } else {
             html_tous += '<tr><td colspan = "10" class = "text-center" style = "color:red;" > Aucun Résultat </td> </tr> ';
@@ -331,8 +348,8 @@
                 html_inactif += "  <a href=" + url_detail_facture + ">" + facture_inactif[i_act].invoice_date + " </a> </td><td>";
                 html_inactif += "  <a href=" + url_detail_facture + ">" + facture_inactif[i_act].due_date + " </a> </td><td>";
 
-                html_inactif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_inactif[i_act].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_inactif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_inactif[i_act].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_inactif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_inactif[i_act].montant_total.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
+                html_inactif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_inactif[i_act].dernier_montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
 
                 html_inactif += "  <a href=" + url_detail_facture + "> ";
 
@@ -359,11 +376,33 @@
                 html_inactif += '<button type="submit" class="btn ">Valider facture</button>';
                 html_inactif += "</form>";
                 html_inactif += "</li> <li>";
-                html_inactif += '<a class="dropdown-item" href="' + url_delete_facture + '">';
+
+                /*       html_inactif += '<a class="dropdown-item" href="' + url_delete_facture + '">';
                 html_inactif += '<button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>';
                 html_inactif += " </a> </li></ul> </div> </div></td> </tr>";
+*/
 
+                html_inactif += '<a class="dropdown-item" href="#">';
+                html_inactif += '<button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_fature_inactif' + facture_inactif[i_act].num_facture + '"><span class="fa fa-trash"></span> Supprimer</button>';
+                html_inactif += '</a>';
+                html_inactif += "</li></ul> </div> </div>";
 
+                html_inactif += '<div class="modal fade" id="delete_fature_inactif' + facture_inactif[i_act].num_facture + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+                html_inactif += '<div class="modal-dialog modal-dialog-centered" role="document">';
+                html_inactif += '<div class="modal-content">';
+                html_inactif += '<div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">';
+                html_inactif += '<h4 class="modal-title text-white">Avertissement !</h4>';
+                html_inactif += '</div>';
+                html_inactif += '<div class="modal-body">';
+                html_inactif += "<small>Vous <span style='color: red'> êtes </span>sur le point d'enlever une facture qui est déjà créer, voulez vous continuer ?</small>";
+                html_inactif += '</div>';
+                html_inactif += '<div class="modal-footer justify-content-center">';
+                html_inactif += '<button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>';
+                html_inactif += '<a href="' + url_delete_facture + '"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>';
+                html_inactif += '</div>';
+                html_inactif += '</div>';
+                html_inactif += '</div>';
+                html_inactif += '</div>';
             }
         } else {
             html_inactif += '<tr><td colspan = "10" class = "text-center" style = "color:red;" > Aucun Résultat </td> </tr> ';
@@ -430,8 +469,8 @@
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].invoice_date + " </a> </td><td>";
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].due_date + " </a> </td><td>";
 
-                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_actif[i_actif].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_actif[i_actif].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_actif[i_actif].montant_total.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
+                html_actif += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_actif[i_actif].dernier_montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
 
 
 
@@ -485,7 +524,7 @@
                 html_actif += '<div class="modal-title text-md">';
                 html_actif += '<h6>Encaisser la facture  N° : <span class="text-mued" id="num_fact_encaissement">' + facture_actif[i_actif].num_facture + '</span></h6>';
 
-                html_actif += '<h5>Reste à payer : <strong><label id="montant"></label> ' + devise.devise + ' ' + number_format(facture_actif[i_actif].dernier_montant_ouvert, 0, ",", " ") + '</strong></h5>';
+                html_actif += '<h5>Reste à payer : <strong><label id="montant"></label> ' + devise.devise + ' ' + facture_actif[i_actif].dernier_montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</strong></h5>';
                 html_actif += '</div>';
                 html_actif += '</div>';
                 html_actif += '<div class="modal-body">';
@@ -582,8 +621,8 @@
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].invoice_date + " </a> </td><td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].due_date + " </a> </td><td>";
 
-                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_payer[i_payer].montant_total, 0, ",", " ") + " </a> </td><td>";
-                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + number_format(facture_payer[i_payer].dernier_montant_ouvert, 0, ",", " ") + " </a> </td><td>";
+                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_payer[i_payer].montant_total.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
+                html_payer += "  <a href=" + url_detail_facture + ">  " + devise.devise + " " + facture_payer[i_payer].dernier_montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + " </a> </td><td>";
 
                 html_payer += "  <a href=" + url_detail_facture + "> ";
                 html_payer += '<div style="background-color:  rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">  payé </div>';
@@ -728,7 +767,7 @@
 
             @php
         } else if (isset($status)) {
-        @endphp
+            @endphp
 
             dataValiny = {
                 data_value: $(idName).val()

@@ -413,18 +413,26 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
                 0
             )
         ) jour_restant,
-        v_facture_existant.facture_encour,
+          facture_encour,
         v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
-        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,
-        v_facture_existant.remise,
-        v_facture_existant.valeur_remise,
+        v_facture_existant.projet_id,
+        (ROUND(v_facture_existant.montant_brut_ht)) montant_brut_ht,
+        (ROUND(v_facture_existant.remise)) remise,
+        (ROUND(v_facture_existant.valeur_remise)) valeur_remise,
         v_facture_existant.description_remise,
         v_facture_existant.remise_id,
         v_facture_existant.reference_remise,
-        v_facture_existant.net_commercial,v_facture_existant.net_ht,
-        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
-        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
+        (ROUND(v_facture_existant.net_commercial)) net_commercial,
+        (ROUND(v_facture_existant.net_ht)) net_ht,
+        (ROUND(v_facture_existant.tva)) tva,
+        (ROUND(v_facture_existant.net_ttc)) net_ttc,
+        v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,
+        (ROUND(v_facture_existant.rest_payer)) rest_payer,
+        (ROUND(v_facture_existant.montant_total)) montant_total,
+        (ROUND(v_facture_existant.payement_totale)) payement_totale,
+        (ROUND(v_facture_existant.dernier_montant_ouvert)) dernier_montant_ouvert,
+        v_facture_existant.date_facture
     FROM
         v_facture_existant,cfps,entreprises,projets
     WHERE
@@ -455,18 +463,26 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
                 0
             )
         ) jour_restant,
-        facture_encour,
+          facture_encour,
         v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
-        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,
-        v_facture_existant.remise,
-        v_facture_existant.valeur_remise,
+        v_facture_existant.projet_id,
+        (ROUND(v_facture_existant.montant_brut_ht)) montant_brut_ht,
+        (ROUND(v_facture_existant.remise)) remise,
+        (ROUND(v_facture_existant.valeur_remise)) valeur_remise,
         v_facture_existant.description_remise,
         v_facture_existant.remise_id,
         v_facture_existant.reference_remise,
-        v_facture_existant.net_commercial,v_facture_existant.net_ht,
-        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
-        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
+        (ROUND(v_facture_existant.net_commercial)) net_commercial,
+        (ROUND(v_facture_existant.net_ht)) net_ht,
+        (ROUND(v_facture_existant.tva)) tva,
+        (ROUND(v_facture_existant.net_ttc)) net_ttc,
+        v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,
+        (ROUND(v_facture_existant.rest_payer)) rest_payer,
+        (ROUND(v_facture_existant.montant_total)) montant_total,
+        (ROUND(v_facture_existant.payement_totale)) payement_totale,
+        (ROUND(v_facture_existant.dernier_montant_ouvert)) dernier_montant_ouvert,
+        v_facture_existant.date_facture
     FROM
         v_facture_existant,cfps,entreprises,projets
     WHERE
@@ -500,15 +516,23 @@ CREATE OR REPLACE VIEW v_full_facture AS SELECT
         facture_encour,
         v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
-        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,
-        v_facture_existant.remise,
-        v_facture_existant.valeur_remise,
+        v_facture_existant.projet_id,
+        (ROUND(v_facture_existant.montant_brut_ht)) montant_brut_ht,
+        (ROUND(v_facture_existant.remise)) remise,
+        (ROUND(v_facture_existant.valeur_remise)) valeur_remise,
         v_facture_existant.description_remise,
         v_facture_existant.remise_id,
         v_facture_existant.reference_remise,
-        v_facture_existant.net_commercial,v_facture_existant.net_ht,
-        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
-        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
+        (ROUND(v_facture_existant.net_commercial)) net_commercial,
+        (ROUND(v_facture_existant.net_ht)) net_ht,
+        (ROUND(v_facture_existant.tva)) tva,
+        (ROUND(v_facture_existant.net_ttc)) net_ttc,
+        v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,
+        (ROUND(v_facture_existant.rest_payer)) rest_payer,
+        (ROUND(v_facture_existant.montant_total)) montant_total,
+        (ROUND(v_facture_existant.payement_totale)) payement_totale,
+        (ROUND(v_facture_existant.dernier_montant_ouvert)) dernier_montant_ouvert,
+        v_facture_existant.date_facture
     FROM
         v_facture_existant,cfps,entreprises,projets
     WHERE

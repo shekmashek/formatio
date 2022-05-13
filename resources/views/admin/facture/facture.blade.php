@@ -225,9 +225,9 @@
     @elseif(isset($entiter_id))
     <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
         filtre activé <i class="fas fa-times"></i> </a>
-        @elseif(isset($status))
-        <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
-            filtre activé <i class="fas fa-times"></i> </a>
+    @elseif(isset($status))
+    <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
+        filtre activé <i class="fas fa-times"></i> </a>
 
     @endif
 
@@ -469,8 +469,8 @@
                                                 </form>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="{{route('delete_facture',$actif->num_facture)}}">
-                                                    <button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>
+                                                <a class="dropdown-item" href="#">
+                                                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_fature_{{$actif->num_facture}}"><span class="fa fa-trash"></span> Supprimer</button>
                                                 </a>
                                             </li>
                                         </ul>
@@ -588,6 +588,25 @@
 
                                     </div>
 
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="delete_fature_{{$actif->num_facture}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                            <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                        </div>
+                                        <div class="modal-body">
+                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever une facture qui est déjà créer, voulez vous continuer ?</small>
+                                        </div>
+
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                            <a href="{{route('delete_facture',$actif->num_facture)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             @endforeach
@@ -727,8 +746,11 @@
                                                                     </form>
                                                                 </li>
                                                                 <li>
-                                                                    <a class="dropdown-item" href="{{route('delete_facture',$actif->num_facture)}}">
+                                                                    {{-- <a class="dropdown-item" href="{{route('delete_facture',$actif->num_facture)}}">
                                                                         <button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>
+                                                                    </a> --}}
+                                                                    <a class="dropdown-item" href="#">
+                                                                        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_fature_inactif_{{$actif->num_facture}}"><span class="fa fa-trash"></span> Supprimer</button>
                                                                     </a>
                                                                 </li>
                                                             </ul>
@@ -736,6 +758,27 @@
                                                     </div>
                                                 </td>
                                             </tr>
+
+
+                                            <div class="modal fade" id="delete_fature_inactif_{{$actif->num_facture}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                                            <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever une facture qui est déjà créer, voulez vous continuer ?</small>
+                                                        </div>
+
+                                                        <div class="modal-footer justify-content-center">
+                                                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                                            <a href="{{route('delete_facture',$actif->num_facture)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             @endforeach
                                             @else
                                             <tr>
