@@ -51,7 +51,7 @@
 <div class="container-fluid ">
     <div class="row">
         <div class="col-lg-12">
-            @if($resp_connecte->prioriter == 1)
+            @if($resp_connecte->prioriter == 1 || $resp_connecte->activiter == 1)
             <table class="mt-4 table  table-borderless table-lg">
                 <thead  style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
                     <th>Photo</th>
@@ -105,17 +105,20 @@
 
 
                             <td class="td_hover" role="button"  onclick="afficherInfos();" style="vertical-align: middle">
-                                @if($responsables_cfp->prioriter == 1 && $responsables_cfp->activiter == 1)
+                                @if($resp_connecte->prioriter == 1 && $resp_connecte->activiter == 1)
+                                    @if($responsables_cfp->id == $resp_connecte->id)
+                                        <div style="display: grid; place-content: center" class="form-check form-switch">
+                                            <input  class="form-check-input activer" data-id="" type="checkbox" role="switch" checked disabled/>
+                                        </div>
+                                    @else
+                                        <div style="display: grid; place-content: center" class="form-check form-switch">
+                                            <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked/>
+                                        </div>
+                                    @endif
+                                @endif
+                                @if($resp_connecte->prioriter == 0 && $resp_connecte->activiter == 1)
                                     <div style="display: grid; place-content: center" class="form-check form-switch">
-                                        <input  class="form-check-input activer" data-id="" type="checkbox" role="switch" checked disabled/>
-                                    </div>
-                                @elseif($responsables_cfp->prioriter == 0 && $responsables_cfp->activiter == 1)
-                                    <div style="display: grid; place-content: center" class="form-check form-switch">
-                                        <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked>
-                                    </div>
-                                @else
-                                    <div style="display: grid; place-content: center" class="form-check form-switch">
-                                        <input class="form-check-input {{$responsables_cfp->id}}" data-bs-toggle="modal" id="switch_{{$responsables_cfp->id}}" name="switch" data-bs-target="#test2_{{$responsables_cfp->id}}" title="activer la personne selectionner" type="checkbox"/>
+                                        <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked disabled>
                                     </div>
                                 @endif
                             </td>
@@ -202,15 +205,15 @@
                   </div>
                 </div>
             </div>
-            @elseif($resp_connecte->prioriter == 0)
-                @foreach($cfpPrincipale as $prioriter)
+            @elseif($resp_connecte->prioriter == 0 || $resp_connecte->activiter == 0 )
+                {{-- @foreach($cfpPrincipale as $prioriter)
                     <div id="in2" class=" text-center p-2 mt-5 m-0  alert alert-danger text-center" role="alert">
                         <h4 class="alert-heading animation_alert"><i class="fas fa-exclamation-triangle"></i></h4>
-                        <p style="color: rgb(228, 128, 128)">Veuillez-vous contactez votre réferent principale pour réactiver votre compte !</p>
+                        <p style="color: rgb(228, 128, 128)">Veuillez-vous contactez votre réferent principale pour activer votre compte !</p>
                         <hr>
                         <p class="mb-0" style="color: rgb(213, 97, 97);">{{$prioriter->nom_resp_cfp}} {{$prioriter->prenom_resp_cfp}} &nbsp; | &nbsp; {{$prioriter->email_resp_cfp}} &nbsp; | &nbsp;{{$prioriter->telephone_resp_cfp}}</p>
                     </div>
-                @endforeach
+                @endforeach --}}
             @endif
         </div>
     </div>
@@ -244,24 +247,24 @@
             $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
         });
 
-    //  $(".non_active2").on('click', function(e) {
-    //     let id = e.target.id;
-    //     let id2 = $("#switch_"+id).val();
-    //     $("#switch_"+id).prop('checked',false);
-    //  });
+     $(".non_active2").on('click', function(e) {
+        let id = e.target.id;
+        let id2 = $("#switch_"+id).val();
+        $("#switch_"+id).prop('checked',false);
+     });
 
-    //  $(".non_active").on('click', function(e) {
-    //     let id = e.target.id;
-    //     let id2 = $("#switch_"+id).val();
-    //     $("#switch2_"+id).prop('checked',true);
-    //  });
+     $(".non_active").on('click', function(e) {
+        let id = e.target.id;
+        let id2 = $("#switch_"+id).val();
+        $("#switch2_"+id).prop('checked',true);
+     });
 
-     $('body').click(function (event){
-        if(!$(event.target).closest('#openModal').length && !$(event.target).is('#openModal')){
-            event.preventDefault();
-            // window.location.reload();
-        }     
-    });
+    //  $('.container-fluid').click(function (event){
+    //     if(!$(event.target).closest('#openModal').length && !$(event.target).is('#openModal')){
+    //         event.preventDefault();
+    //         // window.location.reload();
+    //     }
+    // });
 
      $('.desactiver_personne').on('click',function(e){
         let id = e.target.id;

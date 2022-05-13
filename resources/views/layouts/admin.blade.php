@@ -31,7 +31,7 @@
             </div>
 
         </div> --}}
-        <ul class="nav_list mb-5" onclick="activer(event);" id="menu">
+        <ul class="nav_list mb-5" id="menu">
 
             <li>
                 <a href="{{ route('home') }}" class="d-flex active nav_linke">

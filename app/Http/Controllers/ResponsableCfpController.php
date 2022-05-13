@@ -49,7 +49,7 @@ class ResponsableCfpController extends Controller
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
             $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
             return view('cfp.responsable_cfp.profiles', compact('refs'));
-            
+
         }
 
     }
@@ -78,19 +78,19 @@ class ResponsableCfpController extends Controller
                 $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
                 $tva = DB::select('select * from taxes where id = ?', [1]);
-               
+
 
             }
             return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts','tva'));
 
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
-           
+
             $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
             $cfp_id=cfp::where('id',$id)->value('id');
             // dd($cfp_id);
             $abonnement = $fonct->findWhere("v_abonnement_facture",["cfp_id"],[$cfp_id]);
-           
+
             // dd($cfp_id);
             // $responsables_cfp = $this->fonct->findWhere("v_responsable_cfp ", ["prioriter"], ["0"], ["cfp_id"], [$cfp_id]);
             $responsables=responsable_cfp::where('cfp_id',$cfp_id)->where('prioriter',0)->get();
@@ -127,7 +127,7 @@ class ResponsableCfpController extends Controller
         $user_id = Auth::id();
         if (Gate::allows('isCFP')){
             $resp_connecte = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[Auth::user()->id]);
-          
+
             $cfp_id = $resp_connecte->cfp_id;
             $cfp = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where cfp_id = ?' , [$cfp_id]);
             $cfpPrincipale = DB::select('select * from responsables_cfp where prioriter = 1');
@@ -154,11 +154,11 @@ class ResponsableCfpController extends Controller
 
         $user_id = Auth::id();
         if (Gate::allows('isCFP')) {
-      
+
             $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
             if ($resp_cfp_connecter->prioriter == 1) {
                 $resp->verify_form($request);
-             
+
                 $verify_cin = $resp->verify_cin($request->cin);
                 $verify_email = $fonct->findWhere("users", ["email"], [$request->email]);
                 $verify_phone = $fonct->findWhere("users", ["telephone"], [$request->phone]);
