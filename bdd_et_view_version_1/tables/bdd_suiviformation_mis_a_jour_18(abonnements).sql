@@ -122,6 +122,16 @@ INSERT INTO `type_abonnements_etp` (`id`, `nom_type`, `description`, `tarif`, `n
 (3, 'EI', 'La seule plateforme tout integrée pour les Entreprise Intermediaire', '300000.00', 3, 4, 50, 249, 0, '2022-05-10 07:18:46', '2022-05-10 07:18:46'),
 (4, 'GE', 'La plateforme pour les Grandes Entreprises à la pointe de la transformation digitale', '400000.00', 0, 0, 0, 0, 1, '2022-05-10 07:27:16', '2022-05-10 07:27:16');
 
+--STATUS DES COMPTES DES UTILISATEURS
+CREATE TABLE `statut_compte` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nom_statut` varchar(55) COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO
+
 --Add column : entreprises / OF and create table assujetti
 CREATE TABLE `assujetti` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
