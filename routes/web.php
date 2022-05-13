@@ -229,14 +229,20 @@ Route::get('/editer_fonction/{id}','ProfController@editer_fonction')->name('edit
 //     Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
 // });
 
-
-
+// test routes
+// Route::get('/domaine-formateur/{id}', function ($id) {
+//     $dom = DB::table('domaine')->where('id_formateur',$id)->get();
+//     dd($dom);
+// } );
 
 
 Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
-Route::get('/nouveau_formateur',function(){
-    return view('admin.formateur.nouveauFormateur');
-})->name('nouveau_formateur');
+
+// route pour obtenir la liste des domaines en json. Utilisé dans le formulaire d'ajout formateur dans getDomain()
+Route::get('/getDomains', 'ProfController@getDomains')->name('getDomains');
+
+Route::get('/nouveau_formateur', 'ProfController@create')->name('nouveau_formateur');
+
 Route::get('/edit_formateur','ProfController@edit')->name('edit_formateur');
 Route::post('/update_formateur','ProfController@update')->name('update_formateur');
 Route::get('/destroy_formateur','ProfController@destroy')->name('destroy_formateur');

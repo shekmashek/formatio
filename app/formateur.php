@@ -16,6 +16,12 @@ class Formateur extends Model
         return $this->belongsTo('App\genre');
     }
 
+    public function domaine()
+    {
+        return $this->hasMany(Domaine::class);
+    }
+
+
     public function getFormateur($etp1, $etp2)
     {
         $tab = array();

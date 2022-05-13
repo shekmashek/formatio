@@ -584,6 +584,7 @@
                             </form>
                         </div>
                     @endcanany
+                    
                     @canany('isCFP')
                         <div class="d-flex flex-row">
                             <a href="{{ route('liste_module') }}" class="btn_racourcis me-4" role="button"><span

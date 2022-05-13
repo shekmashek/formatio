@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\cfp;
+use App\User;
+use App\Domaine;
+use App\formateur;
+use App\responsable;
 use App\competenceFormateur;
 use App\experienceFormateur;
 use Illuminate\Http\Request;
-use App\formateur;
-use App\responsable;
-use App\User;
-use App\cfp;
 use App\Models\getImageModel;
+use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use App\Models\FonctionGenerique;
-use Illuminate\Support\Facades\URL;
 
 class ProfController extends Controller
 {
@@ -68,6 +69,7 @@ class ProfController extends Controller
     }
     public function index($id = null)
     {
+
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
         $forma = new formateur();
@@ -105,6 +107,9 @@ class ProfController extends Controller
             // return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
         }
     }
+
+
+    
     public function information_formateur(Request $request)
     {
         $fonct = new FonctionGenerique();
@@ -118,9 +123,21 @@ class ProfController extends Controller
         return response()->json($formateur);
     }
 
+
+
+    public function getDomains () {
+            $domaines = Domaine::all();
+            // dd($domaines);
+            return response()->json($domaines);
+    }
+
     public function create()
     {
+        // get all domains from database and send it as table to the view
+        $domaines = Domaine::all();
+        return view('admin.formateur.nouveauFormateur', compact('domaines'));
     }
+
     public function affiche()
     {
         $fonct = new FonctionGenerique();
@@ -231,6 +248,9 @@ class ProfController extends Controller
                 }
 
                 //get user id
+
+
+
                 $frm->user_id = $user_id;
                 $frm->save();
 
@@ -244,6 +264,7 @@ class ProfController extends Controller
                     $competence->domaine = $input['domaine'][$i];
                     $competence->formateur_id = $idmail_formateur;
                     $competence->save();
+
                 }
 
                 for ($i = 0; $i < count($input['entreprise']); $i++) {

@@ -554,13 +554,20 @@
             , type: 'get'
             , success: function(response) {
                 var userData = response;
+                console.log(userData);
                 $("#addRow").val(userData.length);
                 var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
-                if ($("#addRow").val() > 1) {
-                    $("#addRow").css("display", "inline-block");
-                } else {
-                    $("#addRow").css("display", "none");
-                }
+                
+                // if ($("#addRow").val() > 1) {
+                //     console.log($("#addRow").val() );   
+                //     $("#addRow").css("display", "inline-block");
+                // } else {
+                //     $("#addRow").css("display", "none");
+                // }
+
+                console.log(($("#addRow").val() + 1));
+                console.log('total'+total_frais_annexe_possible);
+
                 if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
                     $("#addRow").css("display", "inline-block");
                     for (var $i = 0; $i < userData.length; $i++) {

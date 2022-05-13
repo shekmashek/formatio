@@ -35,12 +35,14 @@ class FactureController extends Controller
         });
     }
 
+
+    // retourne le formulaiere de facturation
     public function fullFacture(Request $request)
     {
         $user_id = Auth::user()->id;
 
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
+// dd($devise);
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
@@ -659,6 +661,8 @@ class FactureController extends Controller
         return $status;
     }
 
+
+    // retourne la liste des frais annexes pour le select js
     public function getFrais_annexe()
     {
         $data = $this->fonct->findAll("frais_annexes");
