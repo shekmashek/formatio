@@ -553,6 +553,8 @@
                                     formateur.innerHTML = '';
                                     var lieu = document.getElementById('lieu');
                                     lieu.innerHTML = '';
+                                    var salle = document.getElementById('salle');
+                                    salle.innerHTML = '';
 
                                     var liste_app = document.getElementById('liste_app');
                                     liste_app.innerHTML = '';
