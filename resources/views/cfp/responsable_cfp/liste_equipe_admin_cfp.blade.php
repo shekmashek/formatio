@@ -244,17 +244,24 @@
             $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
         });
 
-     $(".non_active2").on('click', function(e) {
-        let id = e.target.id;
-        let id2 = $("#switch_"+id).val();
-        $("#switch_"+id).prop('checked',false);
-     });
+    //  $(".non_active2").on('click', function(e) {
+    //     let id = e.target.id;
+    //     let id2 = $("#switch_"+id).val();
+    //     $("#switch_"+id).prop('checked',false);
+    //  });
 
-     $(".non_active").on('click', function(e) {
-        let id = e.target.id;
-        let id2 = $("#switch_"+id).val();
-        $("#switch2_"+id).prop('checked',true);
-     });
+    //  $(".non_active").on('click', function(e) {
+    //     let id = e.target.id;
+    //     let id2 = $("#switch_"+id).val();
+    //     $("#switch2_"+id).prop('checked',true);
+    //  });
+
+     $('body').click(function (event){
+        if(!$(event.target).closest('#openModal').length && !$(event.target).is('#openModal')){
+            event.preventDefault();
+            // window.location.reload();
+        }     
+    });
 
      $('.desactiver_personne').on('click',function(e){
         let id = e.target.id;
