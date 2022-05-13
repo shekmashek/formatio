@@ -123,7 +123,7 @@ class SessionController extends Controller
         $salle_formation = [];
         $fonct = new FonctionGenerique();
         $projet = new projet();
-        $module_session = DB::select('select reference,nom_module from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
+        $module_session = DB::select('select reference,nom_module, module_id from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
         if(Gate::allows('isCFP')){
             $drive = new getImageModel();
 
@@ -422,21 +422,44 @@ class SessionController extends Controller
     }
 
     public function insert_evaluation_stagiaire_apres(Request $request){
-        $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$request->groupe]);
-        $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$request->module]);
-        foreach($stagiaire as $stg){
+        try{
+            DB::beginTransaction();
+            $stagiaire = $request->stagiaire;
+            // dd($request['status']);
+            $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$request->module]);
             foreach($competences as $comp){
-                $stag = $request['stagiaire'][$stg->stagiaire_id];
-                $note = $request['note'][$stg->stagiaire_id][$comp->id];
-                DB::update('update evaluation_stagiaires set note_apres = ? where stagiaire_id = ? and groupe_id = ? and competence_id = ?',[$note,$stag,$request->groupe,$comp->id]);
+                $note = $request['note'][$comp->id];
+                $status = $request['status'][$comp->id];
+                if($note == null || $note>10 || $note < 0){
+                    throw new Exception("La note doit être entre 0 et 10.");
+                }
+                if($request->note_globale == null){
+                    throw new Exception("La validation globale pour le module est indéfinie.");
+                }
+                if($status == null){
+                    throw new Exception("La validation par compétence est incomplete.");
+                }
+                DB::update('update evaluation_stagiaires set note_apres = ? ,status = ? where stagiaire_id = ? and groupe_id = ? and competence_id = ?',[$note,$status,$stagiaire,$request->groupe,$comp->id]);
             }
+            DB::update('update participant_groupe set status = ? where groupe_id = ? and stagiaire_id = ?',[$request->note_globale,$request->groupe,$stagiaire]);
+            DB::commit();
+            return back();
+        }catch(Exception $e){
+            DB::rollBack();
+            return back()->with('eval_error',$e->getMessage());
         }
-        return back();
     }
 
     public function get_competence_stagiaire(Request $request){
-        $data = DB::select('select * from v_evaluation_stagiaire_competence where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
-        return response()->json($data);
+        $detail = DB::select('select * from v_evaluation_stagiaire_competence where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
+        $globale = DB::select('select * from v_evaluation_globale where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
+        $note_avant = DB::select('select * from evaluation_stagiaires where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
+        if(count($note_avant)>0){
+            $note_avant = 1;
+        }else{
+            $note_avant = 0;
+        }
+        return response()->json(['detail'=>$detail,'globale'=>$globale,'note_avant'=>$note_avant]);
     }
 
     public function acceptation_session(Request $request){

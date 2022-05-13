@@ -33,6 +33,78 @@
         outline: none;
         box-shadow: none;
     }
+
+    .bouton_stg:hover{
+        background-color: rgb(226, 226, 226);
+    }
+    .bouton_stg_eval:hover *{
+        cursor: pointer;
+    }
+
+    .btn-outline-danger{
+        border: 1px solid #00CDAC !important;
+        outline: none !important;
+        box-shadow: none !important;
+        color: black;
+    }
+
+    .btn-outline-warning{
+        border: 1px solid #00CDAC !important;
+        outline: none !important;
+        box-shadow: none !important;
+        color: black;
+    }
+
+    .btn-outline-primary{
+        border: 1px solid #00CDAC !important;
+        outline: none !important;
+        box-shadow: none !important;
+        color: black;
+    }
+
+    .btn-check:checked+.btn-outline-warning{
+        background-color: #F16529 !important;
+        color: white !important;
+        border-color: #F16529 !important;
+    }
+
+    .btn-check:hover+.btn-outline-warning{
+        background-color: #F16529 !important;
+        color: white !important;
+        border-color: #F16529 !important;
+    }
+
+    .btn-check:checked+.btn-outline-danger{
+        background-color: #e90721 !important;
+        border-color: #e90721 !important;
+    }
+
+    .btn-check:hover+.btn-outline-danger{
+        background-color: #e90721 !important;
+        border-color: #e90721 !important;
+    }
+
+    .btn-check:checked+.btn-outline-primary{
+        background-color: #00CDAC !important;
+    }
+
+    .btn-check:hover+.btn-outline-primary{
+        background-color: #00CDAC !important;
+    }
+
+    .border_rad_1{
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+    .border_rad_2{
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .mb_top{
+        margin-top: 4px;
+    }
+
     </style>
     <nav class="d-flex justify-content-between mb-1 ">
         <span class="titre_detail_session"><strong style="font-size: 14px">Note des apprenants de la session</strong></span>
@@ -46,23 +118,83 @@
     </nav>
     @canany(['isFormateur'])
     <div id="modifier_note" style="display: block">
-        <div class="row d-flex text-center mt-2">
-            <div class="col-lg-4">
-                <div class="corps_evaluation m-0 bg-light" id="myTab" data-id="refresh" role="tablist">
-                    <div class="nav-item" role="presentation">
-                        <a href="#chaud" class="nav-link p-0" id="chaud-tab" data-toggle="tab" type="button"
-                            role="tab" aria-controls="home" aria-selected="true">
-                            <button class="planning d-flex justify-content-between "
-                                onclick="openCity(event, 'chaud')" style="width: 100%">
-                                <p class="m-0 pt-2 pb-2">EVALUATION</p>
-                                <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
-                            </button>
-                        </a>
+        @if (count($stagiaire) > 0)
+            <form action="{{ route('insert_evaluation_stagiaire_apres') }}" method="POST">
+                @csrf
+                <input type="hidden" name="module" value={{ $module_session->module_id }}>
+                <input type="hidden" name="groupe" value={{ $projet[0]->groupe_id }}>
+                <div class="row d-flex text-center mt-2">
+                    <div class="col-lg-2">
+                        @foreach ($stagiaire as $stg)
+                            <div class=" row bouton_stg pt-1 pb-1 pe-1">
+                                <div class="col-lg-10 d-flex justify-content-arround mt-1 bouton_stg_eval">
+                                    <input class="form-check-input stagiaire ms-1 mt-1 me-1" type="radio" value="{{ $stg->stagiaire_id }}" name="stagiaire" data-id="{{ $stg->stagiaire_id }}" id="stagiaire_eval_{{ $stg->stagiaire_id }}" required>
+                                    <label class="form-check-label" for="stagiaire_eval_{{ $stg->stagiaire_id }}">
+                                        {{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }}
+                                    </label>
+                                </div>
+                                <div class="col-lg-2">
+                                    <i class='bx bx-circle' style="font-size: 1.5rem; margin-top :.29rem; color:
+                                    @php
+                                        echo $groupe->statut_evaluation_apres($projet[0]->groupe_id,$stg->stagiaire_id);
+                                    @endphp
+                                    "></i>
+                                </div>
+                                <br>
+                            </div>
+                        @endforeach
+                    </div>
+                    {{-- 1.563rem --}}
+                    <div class="col-lg-9 ms-5" id="validation_module">
+                        <div class="row p-2">
+                            @foreach ($competences as $comp)
+                                <div class="col-lg-4 text-start p-1"><span class="mt-2">{{ $comp->titre_competence }}</span></div>
+                                <div class="col-lg-2"><input class="p-0 m-1 py-1" style="height: 1.98rem; width: 4rem; justify-content:center; text-align:right;" type="number" min="1" max="10" placeholder="  ../10" name="note[{{ $comp->id }}]" required></div>
+                                <div class="col-lg-6 d-flex justify-content-arround " >
+                                    <div class="mb_top">
+                                        <input type="radio" class="btn-check" name="status[{{ $comp->id }}]" id="danger-outlined_{{ $comp->id }}" data-id="{{ $comp->id }}" autocomplete="off" value="1" required>
+                                        <label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_{{ $comp->id }}">NON-ACQUIS</label>
+                                    </div>
+                                    <div class="mb_top">
+                                        <input type="radio" class="btn-check" name="status[{{ $comp->id }}]" id="warning-outlined_{{ $comp->id }}" data-id="{{ $comp->id }}" autocomplete="off" value="2" required>
+                                        <label class=" button_test mb-1 px-2 py-1 btn-outline-warning" role="button" for="warning-outlined_{{ $comp->id }}">EN COURS</label>
+                                    </div>
+                                    <div class="mb_top">
+                                        <input type="radio" class="btn-check" name="status[{{ $comp->id }}]" id="success-outlined_{{ $comp->id }}" data-id="{{ $comp->id }}" autocomplete="off" value="3" required>
+                                        <label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="success-outlined_{{ $comp->id }}">ACQUIS</label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="row mt-2 p-2">
+                            <div class="col-lg-4 py-1">
+                                <span class="me-4 mt-1">Validation globale pour le module :</span>
+                            </div>
+                            <div class="col-lg-8 d-flex justify-content-arround">
+                                <div class="">
+                                    <input type="radio" class="btn-check" name="note_globale" id="danger-outlined_nv"  autocomplete="off" value="1" required>
+                                    <label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_nv">NON-VALIDÉ</label>
+                                </div>
+                                <div class="">
+                                    <input type="radio" class="btn-check" name="note_globale" id="danger-outlined_v"  autocomplete="off" value="2" required>
+                                    <label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="danger-outlined_v">VALIDÉ</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-8"></div>
+                <div class="d-flex justify-content-arround">
+                    <div class="d-grid gap-2 col-6 mx-auto mt-3">
+                        <button class="btn inserer_emargement" id="boutton_save_eval" type="submit">Sauvegarder</button>
+                    </div>
+                </div>
+            </form>
+        @else
+        <div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide">
+            <span class="text-center">Aucun apprenant inscrit</span>
         </div>
+        @endif
+        
     </div>
     @endcanany
     @canany(['isFormateur'])
@@ -93,6 +225,93 @@
 <script src="https://fonts.googleapis.com/css?family=Lato"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript">
+
+    $('.stagiaire').on('click',function(e){
+        var stg_id = $("input[type='radio'][name='stagiaire']:checked").val();
+        var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
+        $.ajax({
+            type: "GET",
+            url: "{{ route('competence_stagiaire') }}",
+            data: {
+                stg: stg_id,
+                groupe: groupe_id,
+            },
+            dataType: "html",
+            success: function(response) {
+                var data = JSON.parse(response);
+                var detail = data['detail'];
+                var globale = data['globale'];
+                var note_avant = data['note_avant'];
+                if(note_avant == 1){
+                    $('#validation_module').html('');     
+
+                    var html = '<div class="row p-2">';
+                    for(let i = 0 ; i < detail.length ; i++){
+                        html += '<div class="col-lg-4 text-start p-1"><span class="mt-2">'+detail[i].titre_competence+'</span></div>';
+                        html += '<div class="col-lg-2"><input class="p-0 m-1 py-1" style="height: 1.98rem; width: 4rem; justify-content:center;text-align:center;" type="number" min="1" max="10" name="note['+detail[i].competence_id+']" value="'+detail[i].note_apres+'" required></div>';
+                        html += '<div class="col-lg-6 d-flex justify-content-arround " >';
+
+                            html += '<div class="mb_top">';
+                            html += '<input type="radio" class="btn-check" name="status['+detail[i].competence_id+']" id="danger-outlined_'+detail[i].competence_id+'" data-id="'+detail[i].competence_id+'" autocomplete="off" value="1" required '+detail[i].non_acquis+'>';
+                            html += '<label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_'+detail[i].competence_id+'">NON-ACQUIS</label>';
+                            html += '</div>';
+
+                            html += '<div class="mb_top">';
+                            html += '<input type="radio" class="btn-check" name="status['+detail[i].competence_id+']" id="warning-outlined_'+detail[i].competence_id+'" data-id="'+detail[i].competence_id+'" autocomplete="off" value="2" required '+detail[i].en_cours+'>';
+                            html += '<label class=" button_test mb-1 px-2 py-1 btn-outline-warning" role="button" for="warning-outlined_'+detail[i].competence_id+'">EN COURS</label>'
+                            html += '</div>';
+
+                            html += '<div class="mb_top">';
+                            html += '<input type="radio" class="btn-check" name="status['+detail[i].competence_id+']" id="success-outlined_'+detail[i].competence_id+'" data-id="'+detail[i].competence_id+'" autocomplete="off" value="3" required '+detail[i].acquis+'>';
+                            html += '<label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="success-outlined_'+detail[i].competence_id+'">ACQUIS</label>';
+                            html += '</div>';
+
+                        html += '</div>';
+                    }
+
+                    html += '</div>';
+
+                    html += '<div class="row mt-2 p-2">';
+                        html += '<div class="col-lg-4 py-1">';
+                            html += '<span class="me-4 mt-1">Validation globale pour le module :</span>';
+                        html += '</div>';
+                        html += '<div class="col-lg-8 d-flex justify-content-arround">';
+                            html += '<div class="">';
+                                html += '<input type="radio" class="btn-check" name="note_globale" id="danger-outlined_nv" autocomplete="off" value="1" required '+globale[0].non_valide+'>';
+                                html += '<label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_nv">NON-VALIDÉ</label>';
+                            html += '</div>';
+                            html += '<div class="">';
+                                html += '<input type="radio" class="btn-check" name="note_globale" id="danger-outlined_v"  autocomplete="off" value="2" required '+globale[0].valide+'>';
+                                html += '<label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="danger-outlined_v">VALIDÉ</label>';
+                            html += '</div>';
+                        html += '</div>';
+                    html += '</div>';
+
+                    $('#validation_module').append(html); 
+                }else{
+                    $('#validation_module').html('');
+
+                    var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
+                    $('#boutton_save_eval').hide();
+                    $('#validation_module').append(html); 
+                }
+                          
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+    
+    // $('.inserer_emargement').on('click',function(e){
+    //     $("input[type='radio'][name^='status']:checked").map(function() {
+    //         // attendance.push($(this).val());
+    //         alert($(this).val());
+    //     });
+
+    // });
+    
     // var marksCanvas = document.getElementById("marksChart");
 
     // var marksData = {
@@ -208,7 +427,8 @@
             },
             dataType: "html",
             success: function(response) {
-                var userData = JSON.parse(response);
+                var data = JSON.parse(response);
+                var userData = data['detail'];
                 for (var i = 0; i < userData.length; i++) {
                     if(i == userData.length - 1){
                         labels += '"'+userData[i].titre_competence+'"]';

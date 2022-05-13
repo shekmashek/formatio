@@ -484,7 +484,7 @@
                         <div class="nav-item active" role="presentation">
                             <a href="#detail" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between  active
+                                <button class="planning d-flex justify-content-between active detail-tab
                                 @can('isCFP')
                                     {{ 'action_animation' }}
                                 @endcan"
@@ -503,7 +503,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between
+                                    <button class="planning d-flex justify-content-between apprenant-tab 
                                     @if ($type_formation_id == 1)
                                         @can('isCFP')
                                             {{ 'action_animation' }}
@@ -531,7 +531,7 @@
                         <div class="nav-item" role="presentation">
                             <a href="#ressource" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between action_animation"
+                                <button class="planning d-flex justify-content-between action_animation ressource-tab"
                                     onclick="openCity(event, 'ressource')" style="width: 100%">
                                     <p class="m-0 pt-2 pb-2">RESSOURCES</p>
                                     @if (count($ressource) == 0)
@@ -547,7 +547,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#frais" class="nav-link p-0" id="frais-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between action_animation"
+                                    <button class="planning d-flex justify-content-between action_animation frais-tab"
                                         onclick="openCity(event, 'frais')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">FRAIS ANNEXES</p>
                                         @if (count($all_frais_annexe) <= 0)
@@ -562,7 +562,7 @@
                         <div class="nav-item" role="presentation">
                             <a href="#document" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between
+                                <button class="planning d-flex justify-content-between document-tab 
                                     @canany(['isCFP','isFormateur'])
                                         {{ 'action_animation' }}
                                     @endcan"
@@ -578,7 +578,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#chaud" class="nav-link p-0" id="chaud-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between "
+                                    <button class="planning d-flex justify-content-between chaud-tab"
                                         onclick="openCity(event, 'chaud')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">EVALUATION</p>
                                         <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
@@ -590,7 +590,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#emargement" class="nav-link p-0" id="emargement-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between action_animation"
+                                    <button class="planning d-flex justify-content-between action_animation emargement-tab"
                                         onclick="openCity(event, 'emargement')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">EMARGEMENT</p>
                                         @php
@@ -607,7 +607,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation" class="nav-link p-0" id="evaluation-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between  action_animation"
+                                    <button class="planning d-flex justify-content-between  action_animation evaluation-tab"
                                         onclick="openCity(event, 'evaluation')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">PRE EVALUATION</p>
                                         @if ($evaluation_avant <= 0)
@@ -621,7 +621,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between action_animation"
+                                    <button class="planning d-flex justify-content-between action_animation evaluation_pre_formation-tab"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">EVALUATION</p>
                                         @if ($evaluation_apres <= 0)
@@ -637,7 +637,7 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between"
+                                    <button class="planning d-flex justify-content-between evaluation_pre_formation-tab"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">EVALUATION</p>
                                         @if ($evaluation_apres <= 0)
@@ -689,13 +689,14 @@
                         aria-labelledby="emargement-tab" style="display: none">
                         @include('projet_session.emargement')
                     </div>
-                    <div id="evaluation_pre_formation" class=" tab-pane fade show tabcontent" role="tabpanel"
-                        aria-labelledby="evaluation_pre_formation-tab" style="display: none">
-                        @include('projet_session.evaluation_stagiaires_pre')
-                    </div>
                     <div id="evaluation" class=" tab-pane fade show tabcontent" role="tabpanel"
                         aria-labelledby="evaluation-tab" style="display: none">
                         @include('projet_session.evaluation_stagiaires')
+                    </div>
+                    <div id="evaluation_pre_formation" class="tab-pane fade show tabcontent" role="tabpanel"
+                        aria-labelledby="evaluation_pre_formation-tab" style="display: none">
+                        {{-- @include('projet_session.evaluation_stagiaires_pre') --}}
+                        @include('projet_session.evaluation_chaud')
                     </div>
                 </div>
             </div>
@@ -751,16 +752,50 @@
     </div>
     </div>
 
+    {{-- keep nav in refresh --}}
     <script>
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            let lien = ($(e.target).attr('href'));
-            localStorage.setItem('activeTab', lien);
+        $('.evaluation_pre_formation-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'evaluation_pre_formation');
         });
+        $('.evaluation-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'evaluation');
+        });
+        $('.emargement-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'emargement');
+        });
+        $('.chaud-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'chaud');
+        });
+        $('.document-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'document');
+        });
+        $('.frais-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'frais');
+        });
+        $('.ressource-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'ressource');
+        });
+        $('.apprenant-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'apprenant');
+        });
+        $('.detail-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'detail');
+        });
+
         let activeTab = localStorage.getItem('activeTab');
+        
         if(activeTab){
-            $('#myTab a[href="' + activeTab + '"]').tab('show');
+            $('.tabcontent').css('display','none');
+            $('#' + activeTab).show();
+            tablinks = document.getElementsByClassName("planning");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            $('.'+activeTab+'-tab').addClass("active");
         }
     </script>
+    {{-- keep nav in refresh --}}
+    
     <script type="text/javascript">
         function openCity(evt, cityName) {
             // Declare all variables
@@ -791,5 +826,7 @@
                 x.style.display = "none";
             }
         }
+
+               
     </script>
 @endsection
