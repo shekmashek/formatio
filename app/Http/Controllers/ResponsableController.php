@@ -545,10 +545,10 @@ class ResponsableController extends Controller
         //tableau contenant les types d'extension d'images
         $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
         if($image != null){
-            // if($image->getSize() > 60000){
-            //     return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
-            // }
-            if(in_array($request->image->extension(),$extension_type)){
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
+            }
+            elseif(in_array($request->image->extension(),$extension_type)){
                 $user_id =  $users = Auth::user()->id;
                 $responsable = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id]);
                 $image_ancien = $responsable->photos;

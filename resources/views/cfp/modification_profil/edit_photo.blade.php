@@ -82,7 +82,7 @@
     <div class="col-lg-4">
         <div class="p-3 form-control">
             <p style="text-align: left">Modifier le logo 
-                {{-- <strong>(60Ko Max)</strong> --}}
+               <strong>Taille du fichier: (1.7 MB max)</strong> 
             </p>
             <form   class="btn-submit" action="{{route('enregistrer_modification_logo_cfp',$cfp->id)}}" method="post" enctype="multipart/form-data">
                 @csrf

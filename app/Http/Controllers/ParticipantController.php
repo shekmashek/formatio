@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
+use Image;
 
 /* ====================== Exportation Excel ============= */
 use App\Exports\ParticipantExport;
@@ -961,8 +962,8 @@ class ParticipantController extends Controller
         //tableau contenant les types d'extension d'images
         $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
         if($image != null){
-            if($image->getSize() > 60000){
-                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
             }
             elseif(in_array($request->image->extension(),$extension_type)){
 
@@ -974,7 +975,14 @@ class ParticipantController extends Controller
 
                     $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
                     $destinationPath = 'images/stagiaires';
-                    $image->move($destinationPath, $nom_image);
+                      //imager  resize
+                    $image_name = $nom_image ;
+                    $destinationPath = public_path('images/stagiaires');
+                    $resize_image = Image::make($image->getRealPath());
+                    $resize_image->resize(228,128, function($constraint){
+                        $constraint->aspectRatio();
+                    })->save($destinationPath . '/' .  $image_name);
+                    // $image->move($destinationPath, $nom_image);
                     $url_photo = URL::to('/')."/images/stagiaires/".$nom_image;
 
                     DB::update('update stagiaires set photos= ?,url_photo = ? where id = ?', [$nom_image,$url_photo, $id]);

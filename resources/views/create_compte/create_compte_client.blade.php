@@ -58,7 +58,7 @@
 
                             </div>
                             <div class="form-group">
-                                <label for="exampleFormControlInput1" class="form-control-label">Logo<strong
+                                <label for="exampleFormControlInput1" class="form-control-label">Logo (1.7 MB max)<strong
                                         style="color:#ff0000;">*</strong></label>
                                 <input type="file" required name="logo_etp" class="form-control input_file" id="logo_etp" />
                                 @error('logo_etp')
@@ -66,6 +66,7 @@
                                     <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
                                 </div>
                                 @enderror
+                                <p id="error_logo_etp" style="color:#ff0000; font-size: 0.8rem"></p>
                                 {{-- <p id="error_logo_etp" style="color:#ff0000; font-size: 0.8rem">les extension de type *.jpg, *.png, *.jpeg et *.webp seulement sont autorisé</p> --}}
 
                             </div>

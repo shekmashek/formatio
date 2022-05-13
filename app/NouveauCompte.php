@@ -116,19 +116,17 @@ class NouveauCompte extends Model
     public function validation_form_photo_cfp($imput)
     {
         $rules = [
-            'logo_cfp.max' => 'la taille de votre image ne doit pas dépassé 60 Ko',
+            'logo_cfp.max' => 'la taille de votre image ne doit pas dépassé 1.7 MB',
             'logo_cfp.required' => 'le logo de votre entreprise ne doit pas être null',
             'logo_cfp.file' => 'le logo de votre entreprise doit être de type "file"',
             'logo_cfp.mimes' => 'votre logo doit être soit "*.png, *.jpg, *.jpeg"'
             ];
         $critereForm = [
-            'logo_cfp' => 'file|max:60|mimes:jpeg,png,jpg'
+            'logo_cfp' => 'file|max:1700|mimes:jpeg,png,jpg'
         ];
-
     $val = $imput->validate($critereForm, $rules);
-    return $val;
+     return $val;
     }
-
     public function validation_form_cfp($imput)
     {
       //  'logo_cfp.max' => 'la taille de votre image ne doit pas dépassé 60 Ko',
@@ -138,6 +136,7 @@ class NouveauCompte extends Model
             'nif.required' => 'le NIF de votre entreprise ne doit pas être null',
             'logo_cfp.required' => 'le logo de votre entreprise ne doit pas être null',
             'logo_cfp.file' => 'le logo de votre entreprise doit être de type "file"',
+            'logo_cfp.max' => 'la taille de votre image ne doit pas dépassé 1.7 MB',
             'logo_cfp.mimes' => 'votre logo doit être soit "*.png, *.jpg, *.jpeg"',
             'nom_resp_cfp.required' => 'le Nom de votre responsable ne doit pas être null',
             'cin_resp_cfp.required' => 'le CIN de votre responsable ne doit pas être null',
@@ -147,7 +146,7 @@ class NouveauCompte extends Model
         $critereForm = [
             'name_cfp' => 'required',
             'nif' => 'required',
-            'logo_cfp' => 'required|file|mimes:jpeg,png,jpg',
+            'logo_cfp' => 'required|file|max:1700|mimes:jpeg,png,jpg',
             'nom_resp_cfp' => 'required',
             'cin_resp_cfp' => 'required|min:6',
             'email_resp_cfp' => 'required|email'
@@ -165,6 +164,7 @@ class NouveauCompte extends Model
             'nif_etp.required' => 'le NIF de votre entreprise ne doit pas être null',
             'logo_etp.required' => 'le logo de votre entreprise ne doit pas être null',
             'logo_etp.file' => 'le logo de votre entreprise doit être de type "file"',
+            'logo_etp.max' => 'la taille de votre image ne doit pas dépassé 1.7 MB',
             'logo_etp.mimes' => 'votre logo doit être soit "*.png, *.jpg, *.jpeg"',
             'nom_resp_etp.required' => 'le Nom de votre responsable ne doit pas être null',
             'cin_resp_etp.required' => 'le CIN de votre responsable ne doit pas être null',
@@ -175,7 +175,7 @@ class NouveauCompte extends Model
             'matricule_resp_etp' => 'required',
             'name_etp' => 'required',
             'nif_etp' => 'required',
-            'logo_etp' => 'required|file|mimes:jpeg,png,jpg',
+            'logo_etp' => 'required|file|max:1700|mimes:jpeg,png,jpg',
             'nom_resp_etp' => 'required',
             'cin_resp_etp' => 'required|min:6',
             'email_resp_etp' => 'required|email'

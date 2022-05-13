@@ -78,8 +78,6 @@ class ResponsableCfpController extends Controller
                 $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
                 $tva = DB::select('select * from taxes where id = ?', [1]);
-               
-
             }
             return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts','tva'));
 
@@ -185,8 +183,6 @@ class ResponsableCfpController extends Controller
                                 DB::rollback();
                                 echo $e->getMessage();
                             }
-
-
                             if (Gate::allows('isCFP')) {
                                 $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
                                 $result = $resp->insert_resp_CFP($doner, $resp_cfp_connecter->cfp_id, $user->id);
@@ -233,7 +229,7 @@ class ResponsableCfpController extends Controller
         return $result;
     }
     //modification
-    public function edit_photo($id, Request $request)
+    public function edit_photo ($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
@@ -347,10 +343,10 @@ class ResponsableCfpController extends Controller
         //tableau contenant les types d'extension d'images
         $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
 		 if($image != null){
-			// if($image->getSize() > 60000){
-			// 	return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
-			// }
-            if(in_array($request->image->extension(),$extension_type)){
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
+            }
+            elseif(in_array($request->image->extension(),$extension_type)){
 
 					$user_id =  $users = Auth::user()->id;
 					$responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);

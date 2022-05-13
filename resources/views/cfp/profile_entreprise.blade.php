@@ -48,8 +48,11 @@
             border-bottom: 2px solid black;
         }
 
-    </style>
+        tbody tr{
+            vertical-align: middle;
+        }
 
+    </style>
 
     <div class="row w-100 bg-none mt-3 font_text">
 
@@ -71,16 +74,22 @@
                         @if (count($entreprise)<=0) <tr>
                             <td> Aucun entreprise collaborer</td>
                             </tr>
-                            @else
-
-
+                        @else
                             @foreach($entreprise as $etp)
                             <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
 
                                 <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px"><span class="ms-3">{{$etp->nom_etp}}</span></td>
-
-                                <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span></td>
-
+                                <td role="button"  onclick="afficherInfos();">  
+                                    {{-- @if($etp->photos_resp==null)
+                                        <span class="d-flex flex-row">
+                                            <div class='randomColor photo_users' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:60px; width:60px; display: grid; place-content: center"></div> 
+                                            <span class="d-flex flex-end ms-3 align-items-center">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                        </span>
+                                    @else --}}
+                                        <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                    {{-- @endif --}}
+                                </td>
+                                    
                                 {{-- <td>
                                     <div align="left">
 
@@ -109,7 +118,8 @@
                                     </div> --}}
                                 </td>
                                 {{-- modal delete  --}}
-                                <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div>
+                                    <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
@@ -130,12 +140,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
+                                
                                 {{-- fin modal delete --}}
 
                             </tr>
-
                             @endforeach
-                            @endif
+                        @endif
 
                     </tbody>
 
@@ -181,7 +192,6 @@
                 <strong> {{Session::get('error')}}</strong>
             </div>
             @endif
-
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-md-12">
@@ -201,7 +211,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="tab-content" id="myTabContent">
 
                 <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
@@ -294,11 +303,8 @@
                 </div>
 
             </div>
-
-
             {{-- </div> --}}
         </div>
-
         <div class="infos mt-3">
             <div class="row">
                 <div class="col">

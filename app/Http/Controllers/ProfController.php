@@ -146,10 +146,10 @@ class ProfController extends Controller
         $image = $request->file('image');
         if($image != null){
           
-            // if($image->getSize() > 60000){
-            //     return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 60Ko');
-            // }
-            // else{
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 1.7 MB');
+            }
+            else{
                 if($request->sexe == "homme") $genre = 2;
                 if($request->sexe == "femme") $genre = 1;
                 if($request->sexe == "null") $genre = null;
@@ -170,6 +170,7 @@ class ProfController extends Controller
                 $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
                 $str = 'images/formateurs';
                 $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
+                
                 //imager  resize
              
                 $image_name = $nom_image;
@@ -242,7 +243,7 @@ class ProfController extends Controller
 
                 // return redirect()->route('utilisateur_formateur');
                 return back()->with('success', 'Formateur ajouté avec succès!');
-            // }
+            }
         }
     }
 
@@ -557,6 +558,7 @@ class ProfController extends Controller
 
         // $resp_etp = $fonct->findWhereMulitOne("formateurs",["user_id"],[ Auth::user()->id]);
         // dd( $resp_etp );
+        
         $nom = $request->nom;
 
         $phone =  $request->phone;
@@ -567,12 +569,30 @@ class ProfController extends Controller
         $splt = $request->specialite;
         $nv = $request->niveau;
         if ($image = $request->file('image')) {
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
+            }
+            else{
             $destinationPath = 'images/formateurs';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
+            // $image->move($destinationPath, $profileImage);
+             //imager  resize
+             
+             $image_name = $profileImage ;
+
+             $destinationPath = public_path('images/formateurs');
+
+             $resize_image = Image::make($image->getRealPath());
+
+             $resize_image->resize(228,128, function($constraint){
+                 $constraint->aspectRatio();
+             })->save($destinationPath . '/' .  $image_name);
             $input = "$profileImage";
         }
+    }
         if ($input != null) {
+           
+           
             formateur::where('id',  $id)
                 ->update([
                     'nom_formateur' => $nom,
@@ -587,7 +607,8 @@ class ProfController extends Controller
                     'niveau' => $nv,
                     'photos' => $input,
                 ]);
-        } else {
+            }   
+         else {
             formateur::where('id',  $id)
                 ->update([
                     'nom_formateur' => $nom,
@@ -603,11 +624,11 @@ class ProfController extends Controller
 
                 ]);
         }
-        $password = $request->password;
-        $hashedPwd = Hash::make($password);
-        $user = User::where('id', Auth::user()->id)->update([
-            'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
-        ]);
+        // $password = $request->password;
+        // $hashedPwd = Hash::make($password);
+        // $user = User::where('id', Auth::user()->id)->update([
+        //     'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
+        // ]);
         return redirect()->route('profile_formateur', $id);
     }
 
