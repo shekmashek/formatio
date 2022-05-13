@@ -1,4 +1,9 @@
-@extends('./layouts/admin')
+@if($vue == 1)
+    @extends('./layouts/admin_non_abonne')
+@else
+    @extends('./layouts/admin')
+@endif
+
 <link rel="stylesheet" href="{{asset('css/style_dashboard.css')}}">
 @section('title') <p class="text_header m-0 mt-1">Tableau de bord</p> @endsection
 @section('content')
@@ -13,7 +18,7 @@
             </div>
             @if(count($dmd_cfp_etp) == null or count($dmd_cfp_etp) =='')
             <div id="in" class="p-2 mt-1 alert alert-danger text-center" role="alert">
-                <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez collaborer au moins avec une entreprise ! </span> &nbsp;
+                <span style="color: rgb(119, 74, 74)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez collaborer au moins avec une entreprise ! </span> &nbsp;
                 <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('liste_entreprise')}}">Collaborez-vous maintenant</a>
             </div>
 

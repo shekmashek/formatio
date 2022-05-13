@@ -130,7 +130,18 @@ CREATE TABLE `statut_compte` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO
+INSERT INTO `statut_compte` (`id`, `nom_statut`) VALUES
+(1, 'Invité'),
+(2, 'Premium'),
+(3, 'Pending');
+
+ALTER TABLE entreprises
+  add column statut_compte_id bigint(20) unsigned NOT NULL DEFAULT 1,
+  ADD CONSTRAINT FOREIGN KEY(statut_compte_id) REFERENCES statut_compte(id);
+
+ALTER TABLE cfps
+  add column statut_compte_id bigint(20) unsigned NOT NULL DEFAULT 1,
+  ADD CONSTRAINT FOREIGN KEY(statut_compte_id) REFERENCES statut_compte(id);
 
 --Add column : entreprises / OF and create table assujetti
 CREATE TABLE `assujetti` (

@@ -82,25 +82,14 @@
             </li> --}}
             @endcanany
             {{-- entreprise --}}
-            @canany(['isSuperAdmin','isAdmin'])
-            {{-- <li>
+            @canany(['isCFP'])
+            <li>
                 <a href="{{route('liste_entreprise')}}" class="d-flex nav_linke">
                     <i class='bx bx-building-house'></i>
                     <span class="links_name">Entreprises</span>
                 </a>
 
-            </li> --}}
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouvelle_entreprise')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouvelle Entreprise</span>
-                </a>
-
-            <li class="my-1 sousMenu">
-                <a href="{{route('departement.index')}}">Département</a>
             </li>
-            </li> --}}
             @endcanany
             @canany(['isReferent'])
             <li>
@@ -402,46 +391,8 @@
                     <span class="links_name">Plan</span>
                 </a>
             </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('listePlanFormation')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Liste Plan</span>
-                </a>
-            </li> --}}
             @endcanany
-            {{-- abonemment --}}
-            @canany(['isSuperAdmin','isAdmin'])
-            <li>
-                <a href="{{route('listeAbonne')}}" class="d-flex nav_linke">
-                    <i class='bx bxl-sketch'></i>
-                    <span class="links_name">Abonnées</span>
-                </a>
 
-            </li>
-
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('abonnement.index')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Abonnement</span>
-                </a>
-            </li> --}}
-            @endcanany
-            @can('isSuperAdmin')
-            <li>
-                <a href="{{route('categorie')}}" class="d-flex nav_linke">
-                    <i class='bx bx-book'></i>
-                    <span class="links_name">Catégories</span>
-                </a>
-            </li>
-            {{-- <li>
-                <a href="{{route('module')}}" class="d-flex nav_linke">
-                    <i class='bx bx-book'></i>
-                    <span class="links_name">Modules</span>
-                </a>
-            </li> --}}
-            @endcan
             @canany(['isReferent','isCFP'])
             <li>
                 <a href="{{route('ListeAbonnement')}}" class="d-flex nav_linke">
@@ -458,7 +409,6 @@
                     <span class="links_name">Mon CV</span>
                 </a>
             </li>
-
             @endcan
 
             {{-- <li>
