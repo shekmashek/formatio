@@ -367,34 +367,44 @@
         var totale_annexe = 0;
         var ensemble = 0;
         for (var i = 0; i < facture.length; i += 1) {
-            var sum = qte[i].value * facture[i].value;
-            totale_facture[i].innerHTML = number_format(sum, 0, ",", " ");
+            var sum = facture[i].value * qte[i].value;
+            totale_facture[i].innerHTML = sum;
+            totale_facture[i].innerHTML = totale_facture[i].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+       /*     totale_facture[i].innerHTML = number_format(sum, 0, ",", " "); */
             totale += sum;
         }
 
         for (var j = 0; j < montant_frais_annexe.length; j += 1) {
             var sum_annexe = qte_annexe[j].value * montant_frais_annexe[j].value;
-            totale_frais_annexe[j].innerHTML = number_format(sum_annexe, 0, ",", " ");
             totale_annexe += sum_annexe;
+            totale_frais_annexe[j].innerHTML = sum_annexe;
+            totale_frais_annexe[j].innerHTML = totale_frais_annexe[j].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
         }
-        ensemble = totale + totale_annexe;
 
-        totale_facture_ht.innerHTML = number_format(ensemble, 0, ",", " ");
+        ensemble = totale + totale_annexe;
+        totale_facture_ht.innerHTML = ensemble;
+        totale_facture_ht.innerHTML =totale_facture_ht.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
         if (type_remise.value == 1) { // MGA
             calc_re = remise.value;
             total_remise.innerHTML = "-" + calc_re;
         }
         if (type_remise.value == 2) { // %
             calc_re = (ensemble * remise.value) / 100;
-            total_remise.innerHTML = "-" + number_format(calc_re, 0, ",", " ");
+            total_remise.innerHTML = "-" + calc_re;
         }
+        total_remise.innerHTML = total_remise.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
         if (taxe_value.value > 0) {
             calc_taxe = (ensemble * taxe_value.value) / 100;
         }
-        taxe.innerHTML = number_format(calc_taxe, 0, ",", " ");
-        //TTC = TAXE+MONTANT_total-remise
-        totale_facture_ttc.innerHTML = number_format((ensemble - calc_re + calc_taxe), 0, ",", " ");
+        taxe.innerHTML = calc_taxe;
+        taxe.innerHTML = taxe.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
 
+        //TTC = TAXE+MONTANT_total-remise
+        totale_facture_ttc.innerHTML = (ensemble - calc_re + calc_taxe);
+        totale_facture_ttc.innerHTML = totale_facture_ttc.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
     });
 
     // ============================ Montant=========================
