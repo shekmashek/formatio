@@ -10,60 +10,92 @@
 
     <style>
         .status_grise {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #637381;
             color: white;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px; 
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_reprogrammer {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #00CDAC;
             color: white;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px; 
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_cloturer {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #314755;
             color: white;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px; 
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_reporter {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #26a0da;
             color: white;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px; 
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_annulee {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #b31217;
             color: white;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px; 
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_termine {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #1E9600;
             color: white;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px; 
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_confirme {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #2B32B2;
             color: white;
             align-items: center margin: 0 auto;
             padding-end:1rem;
+            padding-top: 2.5px; 
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .statut_active {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: rgb(15, 126, 145);
             color: whitesmoke;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px; 
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         /* .filter{
@@ -124,6 +156,29 @@
         .nombre_pagination {
             color: #626262;
 
+        }
+
+        .rapport_finale{
+            background-color: #F16529 !important;
+        }
+        .rapport_finale button{
+            color: #ffffff !important;
+        }
+        .rapport_finale:hover{
+            background-color: #af3906 !important;
+        }
+        .pdf_download{
+            background-color: #e73827 !important;
+        }
+        .pdf_download:hover{
+            background-color: #af3906 !important;
+        }
+        .pdf_download button{
+            color: #ffffff !important;
+        }
+
+        tbody tr{
+            vertical-align: middle;
         }
 
     </style>
@@ -285,11 +340,11 @@
                                                                 {{ $pj->item_status_groupe }}</p>
 
                                                         </td>
-                                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                                         @if ($prj->type_formation_id == 1)
                                                             <td class="p-0">
-                                                                <a class="mt-2"
-                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank"><button class="btn">Rapport</button></a>
+                                                                <a class="mt-2 rapport_finale"
+                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank"><button class="btn"><i class='bx bxs-report'></i>Rapport</button></a>
                                                             </td>
                                                         @endif
                                                         @can('isCFP')
@@ -868,6 +923,7 @@
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
+                                <th> Module </th>
                                 <th>Date session</th>
                                 <th> Entreprise </th>
                                 <th> Date du projet</th>
@@ -894,6 +950,11 @@
                                         <td> <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
+                                        <td>
+                                            @php
+                                                echo $groupe->module_session($pj->module_id)
+                                            @endphp
+                                        </td>
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td>
                                             @foreach ($entreprise as $etp)
@@ -908,7 +969,7 @@
                                             <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
                                                 {{ $pj->item_status_groupe }}</p>
                                         </td>
-                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td align="left">
                                             <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
                                             @php
@@ -938,6 +999,7 @@
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
+                                <th> Module </th>
                                 <th>Date session</th>
                                 <th> Centre de formation </th>
                                 {{-- <th> Date du projet</th> --}}
@@ -964,6 +1026,11 @@
                                         <td> <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
+                                        <td>
+                                            @php
+                                                echo $groupe->module_session($pj->module_id)
+                                            @endphp
+                                        </td>
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
@@ -972,7 +1039,7 @@
                                             <p class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}
                                             </p>
                                         </td>
-                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -989,6 +1056,7 @@
                             <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                 {{-- <th>Projet</th> --}}
                                 <th> Session </th>
+                                <th> Module </th>
                                 <th> Date du session</th>
                                 <th> Centre de formation </th>
                                 <th> Formation </th>
@@ -1001,12 +1069,17 @@
                                     <tr>
                                         {{-- <td>{{ $pj->nom_projet }}</td> --}}
                                         <td> {{ $pj->nom_groupe }}</td>
+                                        <td>
+                                            @php
+                                                echo $groupe->module_session($pj->module_id)
+                                            @endphp
+                                        </td>
                                         <td> {{ date('d-m-Y', strtotime($pj->date_debut)) }}-{{ date('d-m-Y', strtotime($pj->date_fin)) }}
                                         </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ $pj->nom_formation }} </td>
                                         <td> {{ $pj->nom_module }} </td>
-                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td>
                                             @if ($pj->statut_eval == 0)
                                                 <a class="btn btn_filtre filtre_appliquer"
