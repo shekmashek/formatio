@@ -583,6 +583,12 @@
                         <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
                                 class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span
                                     class="text_racourcis">Agenda</span></span></a>
+                        <a href="{{route('liste_equipe_admin')}}" class="btn_racourcis me-4" role="button">
+                            <span class="d-flex flex-column">
+                                <i class='bx bxs-user-account'></i>
+                                <span class="text_racourcis">equipes</span>
+                            </span>
+                        </a>
                     </div>
                     @endcanany
                     @canany('isStagiaire')
@@ -810,26 +816,21 @@
 
                                     </a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
+                                        @can('isCFPPrincipale')
+                                            <li>
+                                                <a class="dropdown-item" href="{{route('liste+responsable+cfp')}}">
+                                                    <i class="bx bx-user icon_plus"></i>&nbsp; Nouveau réferent
+                                                </a>
+                                            </li>
+                                        @endcan
                                         <li>
                                             <a class="dropdown-item" href="{{route('nouveau_module')}}">
                                                 <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
                                             </a>
                                         </li>
-                                        @can('isCFPPrincipale')
-                                            <li>
-                                                <a class="dropdown-item" href="{{route('liste+responsable+cfp')}}">
-                                                    <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau réferent
-                                                </a>
-                                            </li>
-                                        @endcan
                                         <li>
                                             <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
                                                 <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{route('liste+responsable+cfp')}}">
-                                                <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Responsable
                                             </a>
                                         </li>
                                         <li>
