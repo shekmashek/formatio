@@ -208,6 +208,13 @@
             align-items: center margin: 0 auto;
             padding: .1rem .5rem;
          }
+         .liste_projet{
+            background-color: #637381;
+            margin: 0;
+            padding: 1;
+            color: #ffffff;
+         }
+
     </style>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
@@ -251,8 +258,8 @@
                             <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i><label id="salle"></label>
                         </div>
                         <div>
-                            <label class="ps-3 pt-2">Entreprise client:</label>&nbsp;<label for="logo" id="logo_etp"></label> &nbsp;<label id="etp" class="contenu"> </label><br>
-                            <label class="ps-3 pt-2">Organisme de formation: </label>&nbsp;<label for="logo" id="logo_cfp"></label>&nbsp;<label id="cfp" class="contenu"> </label><br></label>
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i> </label> &nbsp;<label id="etp" class="contenu"> </label> <label for="logo" id="logo_etp"></label>
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i><label id="cfp" class="contenu"> </label><label for="logo" id="logo_cfp"></label><br>
                             <label class="ps-3 pt-2"">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
 
                         </div>
@@ -521,7 +528,8 @@
                                         var date_fin;
                                         for (var $i = 0; $i < userData.length; $i++) {
 
-                                            printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
+
+                                            printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><button class="btn liste_projet ms-3 me-1"><i class="bx bxs-cloud-download"></i>&nbsp;&nbsp;&nbsp;PDF</button></a>';
                                             printpdf = printpdf.replace(":?",id_detail);
                                             $('#printpdf').append(printpdf);
 
