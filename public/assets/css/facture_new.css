@@ -212,3 +212,25 @@
     text-decoration: none;
     text-decoration-line: none;
 }
+
+.icon_suppre_frais{
+    color: black;
+}
+
+.icon_suppre_frais:hover{
+    color: red;
+}
+
+.icon_suppre_frais:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.text_prix{
+    position: relative;
+    top: 15px;
+}
+
+.suppre_frais{
+    position: relative;
+}

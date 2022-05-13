@@ -197,10 +197,10 @@
                                 <div class="col-2">
                                     <input type="number" name="facture[]" autocomplete="off" min="0" id="facture[]" class="  form-control  qte input_quantite" required>
                                 </div>
-                                <div class="col-1">
-                                    <span name="totale_facture[]">0</span>
+                                <div class="col-1 text-end">
+                                    <p name="totale_facture[]" class="m-0 text_prix">0</p>
                                 </div>
-                                <div class="col-1 text-end pt-2">
+                                <div class="col-1 text-start pt-2">
                                 </div>
                             </div>
 
@@ -211,13 +211,13 @@
 
                         </div>
 
-                        <div class="nouveau_service">
+                        <div class="">
                             <p><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></p>
                         </div>
 
                         <div class="col-12 pb-4 element">
-                            <div class="row titres_services titre_annexe">
-                                <div class="col-4">
+                            <div class="row  titres_services titre_annexe">
+                                <div class="col-3">
                                     <h6 class="m-0">Frais annexes</h6>
                                 </div>
                                 <div class="col-4">
@@ -229,6 +229,9 @@
                                 <div class="col-2">
                                     <h6 class="m-0">Prix unitaire ({{$devise->devise}})</h6>
                                 </div>
+                                <div class="col-1">
+                                    <h6 class="m-0">Totale ({{$devise->devise}})</h6>
+                                </div>
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>
                                 </div>
@@ -237,7 +240,7 @@
                             <div id="newRow"></div>
                         </div>
 
-                        <div class="nouveau_service">
+                        <div class="">
                             <p> <a href="#" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
                         </div>
                         <div class="row mb-1 g-0 p-2">
@@ -248,28 +251,31 @@
                                 <div class="col-2">
                                     <p>Montant Brut HT</p>
                                 </div>
-                                <div class="col-1">
-                                    <span id="totale_facture_ht">0</span>
+                                <div class="col-2 text-end pe-2">
+                                    <p id="totale_facture_ht">0</p>
                                 </div>
-                                <div class="col-1 text-end pt-2">
+                                {{-- <div class="col-1 text-end pt-2">
+                                </div> --}}
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-8 d-flex flex-row justify-content-end">
+                                    <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" autocomplete="off" min="0" value="0" class="form-control input_tax" name="remise" id="remise">
+                                    <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label="Default select example">
+                                        @foreach ($type_remise as $re)
+                                        <option value="{{$re->id}}" selected>{{$re->description}}</option>
+                                        @endforeach
+
+                                    </select>
                                 </div>
-                            </div>
-
-                            <div class="col-8 d-flex flex-row justify-content-end">
-                                <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" autocomplete="off" min="0" value="0" class="form-control input_tax" name="remise" id="remise">
-                                <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label="Default select example">
-                                    @foreach ($type_remise as $re)
-                                    <option value="{{$re->id}}" selected>{{$re->description}}</option>
-                                    @endforeach
-
-                                </select>
-                            </div>
-                            <div class="col-1">
-                            </div>
-                            <div class="col-1">
-                            </div>
-                            <div class="col-2">
-                                <span id="total_remise">0</span>
+                                <div class="col-1 ">
+                                </div>
+                                <div class="col-1 ">
+                                </div>
+                                <div class="col-2 text-end pe-2">
+                                    <p id="total_remise">0</p>
+                                </div>
+                                {{-- <div class="col-1">
+                                </div> --}}
                             </div>
                         </div>
 
@@ -285,12 +291,12 @@
                             <div class="col-2">
                                 <span id="taxe_name" value="0"></span>
                             </div>
-                            <div class="col-1">
+                            <div class="col-2 text-end">
                                 <input type="hidden" id="taxe_value">
-                                <span id="taxe"></span>
+                                <p class="text-end" id="taxe"></p>
                             </div>
-                            <div class="col-1 text-end pt-2">
-                            </div>
+                            {{-- <div class="col-1 text-end pt-2">
+                            </div> --}}
                         </div>
 
                         <div class="row mb-1">
@@ -305,11 +311,11 @@
                             <div class="col-2">
                                 <p> Net à payer TTC</p>
                             </div>
-                            <div class="col-1">
-                                <span id="totale_facture_ttc">0</span>
+                            <div class="col-2 text-end pe-3">
+                                <p id="totale_facture_ttc">0</p>
                             </div>
-                            <div class="col-1 text-end pt-2">
-                            </div>
+                            {{-- <div class="col-1 text-end pt-2">
+                            </div> --}}
                         </div>
 
                         <hr>

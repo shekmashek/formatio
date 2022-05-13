@@ -1,4 +1,3 @@
-
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{asset('js/facture.js')}}"></script>
@@ -294,7 +293,7 @@
 
                     var html = '';
                     html += '<div class="row my-1" id="inputFormRow">';
-                    html += '<div class="col-4">';
+                    html += '<div class="col-3">';
                     html += '<select class="form-select selectP input_section4"  id="frais_annexe_id[]" name="frais_annexe_id[]" required>';
 
                     for (var $i = 0; $i < userData.length; $i++) {
@@ -316,9 +315,13 @@
                     html += '<input type="number" min="0" value="0" autocomplete="off" required name="montant_frais_annexe[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe[]" placeholder="0">';
                     html += '</div>';
 
-                    html += '<div class="col-1 text-end pt-2">';
-                    html += '<p class="m-0"><span>';
-                    html += '<button id="removeRow" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></span>';
+                    html += '<div class="col-1 text-end">';
+                    html += '<p name="totale_frais_annexe[]" class="text_prix">0</p>';
+
+                    html += '</div>';
+
+                    html += '<div class="col-1 text-start pt-2">';
+                    html += '<button id="removeRow" type="button" class="btn icon_suppre_frais "><i class="fa fa-trash suppre_frais"></i></button></p>';
                     html += '</div>';
                     html += '</div><br>';
 
@@ -343,13 +346,15 @@
 
 
     $(document).on("keyup change", ".services_factures", function() {
-        var totale_session = ($(".row #inputFormRowMontant").length + 1);
         var qte = document.getElementsByName("qte[]");
         var facture = document.getElementsByName("facture[]");
         var totale_facture = document.getElementsByName("totale_facture[]");
         var remise = document.getElementById("remise");
         var type_remise = document.getElementById("type_remise_id");
         var total_remise = document.getElementById("total_remise");
+        var montant_frais_annexe = document.getElementsByName("montant_frais_annexe[]");
+        var totale_frais_annexe = document.getElementsByName("totale_frais_annexe[]");
+        var qte_annexe = document.getElementsByName("qte_annexe[]");
         var calc_re = 0;
 
         var totale_facture_ht = document.getElementById("totale_facture_ht");
@@ -359,26 +364,36 @@
 
         var calc_taxe = 0;
         var totale = 0;
+        var totale_annexe = 0;
+        var ensemble = 0;
         for (var i = 0; i < facture.length; i += 1) {
             var sum = qte[i].value * facture[i].value;
             totale_facture[i].innerHTML = number_format(sum, 0, ",", " ");
             totale += sum;
         }
-        totale_facture_ht.innerHTML = number_format(totale, 0, ",", " ");
+
+        for (var j = 0; j < montant_frais_annexe.length; j += 1) {
+            var sum_annexe = qte_annexe[j].value * montant_frais_annexe[j].value;
+            totale_frais_annexe[j].innerHTML = number_format(sum_annexe, 0, ",", " ");
+            totale_annexe += sum_annexe;
+        }
+        ensemble = totale + totale_annexe;
+
+        totale_facture_ht.innerHTML = number_format(ensemble, 0, ",", " ");
         if (type_remise.value == 1) { // MGA
             calc_re = remise.value;
             total_remise.innerHTML = "-" + calc_re;
         }
         if (type_remise.value == 2) { // %
-            calc_re = (totale * remise.value) / 100;
+            calc_re = (ensemble * remise.value) / 100;
             total_remise.innerHTML = "-" + number_format(calc_re, 0, ",", " ");
         }
         if (taxe_value.value > 0) {
-            calc_taxe = (totale * taxe_value.value) / 100;
+            calc_taxe = (ensemble * taxe_value.value) / 100;
         }
         taxe.innerHTML = number_format(calc_taxe, 0, ",", " ");
         //TTC = TAXE+MONTANT_total-remise
-        totale_facture_ttc.innerHTML = number_format((totale - calc_re + calc_taxe), 0, ",", " ");
+        totale_facture_ttc.innerHTML = number_format((ensemble - calc_re + calc_taxe), 0, ",", " ");
 
     });
 
@@ -423,11 +438,11 @@
                     html += '<div class="col-2">';
                     html += '<input type="number" min="0" value="0" autocomplete="off" required name="facture[]" class="somme_totale_montant form-control input_quantite2 montant_session_facture" id="facture[]" placeholder="0">';
                     html += '</div>';
-                    html += '<div class="col-1">';
-                    html += '<span name="totale_facture[]">0</span>';
+                    html += '<div class="col-1 text-end pe-0">';
+                    html += '<p name="totale_facture[]" class="text_prix">0</p>';
                     html += '</div>';
-                    html += '<div class="col-1 text-end pt-2">';
-                    html += '<button id="removeRowMontant" type="button" class="btn btn-danger ms-3"><i class="fa fa-trash"></i></button></span></p>';
+                    html += '<div class="col-1 text-start pt-2">';
+                    html += '<button id="removeRowMontant" type="button" class="btn icon_suppre_frais "><i class="fa fa-trash"></i></button></span></p>';
                     html += '</div>';
                     html += '</div><br>';
 
@@ -450,11 +465,21 @@
     // remove row
     $(document).on('click', '#removeRowMontant', function() {
         $(this).closest('#inputFormRowMontant').remove();
-        $total_session_possible = ($(".row #inputFormRowMontant").length + 1);
-        if ($total_session_possible < ($("#addRowMontant").val())) {
+        var total_session_possible = ($(".row #inputFormRowMontant").length + 1);
+        if (total_session_possible < ($("#addRowMontant").val())) {
             $("#addRowMontant").css("display", "inline-block");
         } else {
             $("#addRowMontant").css("display", "none");
+        }
+    });
+
+
+    // remove row
+    $(document).on('click', '#removeRow', function() {
+        $(this).closest('#inputFormRow').remove();
+        var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
+        if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
+            $("#addRow").css("display", "inline-block");
         }
     });
 
