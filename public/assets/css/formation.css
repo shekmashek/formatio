@@ -15,7 +15,7 @@ a:focus {
 }
 .content_formation {
     background: linear-gradient(60deg, #4222c3, #7635dc);
-    height: 75vh;
+    height: 40vh;
     width: 100%;
     color: white;
     border-bottom-left-radius: 20%;
@@ -23,6 +23,11 @@ a:focus {
 }
 
 .navigation_detail h3 {
+    font-size: 1.3rem;
+    text-transform: capitalize;
+}
+
+.navigation_details h3 {
     font-size: 1.3rem;
     text-transform: capitalize;
 }
@@ -57,9 +62,15 @@ a:focus {
     color: #7635dc;
 }
 
+.content_search button:focus{
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
 .content_search .bx{
     background-color: #4222c3;
-    width: 50px;
+    width: 45px;
     height: 45px;
     border: none;
     border-radius: 100px;
@@ -68,7 +79,7 @@ a:focus {
     display: grid;
     place-content: center;
     position: relative;
-    top: 3px;
+    bottom: 5px;
     font-size: 1.5rem;
 }
 
@@ -298,7 +309,7 @@ a:focus {
 
 .detail__intra {
     position: sticky;
-    top: 8.5rem;
+    top: 13rem;
     background-color: white;
     border: 1px solid rgb(219, 217, 217);
     /* border-radius: 25px; */
@@ -384,10 +395,21 @@ a:focus {
     position: sticky;
     top: 4rem;
     background-color: white;
+    z-index: 5;
+    padding: 0rem 1rem 1rem 1rem;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    text-transform: uppercase;
+}
+
+.navigation_details{
+    position: sticky;
+    top: 9.5rem;
+    background-color: white;
     z-index: 1;
     padding: 0rem 1rem 1rem 1rem;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     text-transform: uppercase;
+    padding-top: 10px;
 }
 
 .navigation_detail ul li a{
@@ -395,6 +417,14 @@ a:focus {
 }
 
 .navigation_detail ul li a:hover{
+    color: black;
+}
+
+.navigation_details ul li a{
+    color: #637381;
+}
+
+.navigation_details ul li a:hover{
     color: black;
 }
 
@@ -420,3 +450,43 @@ a:focus {
 }
 
 /* detail module */
+
+/* Dropdown button */
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 10px 12px;
+    background: linear-gradient(60deg, #7635dc, #4222c3);
+    position: relative;
+    top: 10px;
+    font: inherit;
+    margin: 0;
+    border-radius: 50px;
+  }
+
+  .navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: ;
+    left: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 999;
+  }
+
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+
+.icon_dom{
+    position: relative;
+    top: 5px;
+}

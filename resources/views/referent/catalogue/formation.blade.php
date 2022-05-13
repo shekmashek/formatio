@@ -20,12 +20,11 @@
                                 @csrf
                                 <div class="form-row">
                                     <div class="d-flex flex-row">
-                                        <input class="form-control me-2" type="text" name=""
-                                            placeholder="Rechercher par formations ex. Excel">
-                                        <i class="bx bx-search"></i>
-                                        {{-- <button class="btn_search_formation" href="#">
-
-                                        </button> --}}
+                                        @foreach ($categorie as $categ)
+                                            <input type="hidden" name="id_formation" value="{{$categ->id}}">
+                                        @endforeach
+                                        <input class="form-control me-2" type="text" name="nom_formation" placeholder="Rechercher par formations ex. Excel">
+                                        <button type="submit" class="btn"><i class="bx bx-search"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -34,36 +33,16 @@
                 </div>
                 <div class="col-3">
                     <div class="dropdown">
-                        <button class="dropbtn">Dropdown
-                            <i class="fa fa-caret-down"></i>
-                        </button>
+                        <button class="dropbtn"><i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines des formations<i class="fa fa-caret-down ms-2"></i></button>
                         <div class="dropdown-content">
-                            <div class="header">
-                                <h2>Mega Menu</h2>
-                            </div>
-                            <div class="row">
-                                <div class="column">
-                                    <h3>Category 1</h3>
-                                    <a href="#">Link 1</a>
-                                    <a href="#">Link 2</a>
-                                    <a href="#">Link 3</a>
-                                </div>
-                                <div class="column">
-                                    <h3>Category 2</h3>
-                                    <a href="#">Link 1</a>
-                                    <a href="#">Link 2</a>
-                                    <a href="#">Link 3</a>
-                                </div>
-                                <div class="column">
-                                    <h3>Category 3</h3>
-                                    <a href="#">Link 1</a>
-                                    <a href="#">Link 2</a>
-                                    <a href="#">Link 3</a>
-                                </div>
+                            <div class="row flex-wrap">
+                                @foreach ($domaines as $dom)
+                                    <a href="#">{{$dom->nom_domaine}}</a>
+                                @endforeach
                             </div>
                         </div>
                     </div>
-                    <button class="btn" type="btn"><i class='bx bx-menu'></i>domaines des formations</button>
+                    <button class="btn" type="btn"></button>
                 </div>
             </div>
         </ul>
@@ -71,30 +50,13 @@
 </div>
 <section class="formation mb-5">
     <div class="container-fluid g-0 m-0 p-0 justify-content-center ">
-        <div class="row g-0 m-0 content_formation p-5">
+        {{--<div class="row g-0 m-0 content_formation p-5">
             <div class="col-6 ">
-                <h3 class="text-center mb-4">Que voulez-vous apprendre?</h3>
-                {{-- <div class="row content_search text-center mb-5">
-                    <form method="GET" action="{{route('result_formation')}}">
-                        @csrf
-                        <div class="form-row">
-                            <div class="">
-                                <input class="me-3" type="text" name=""
-                                    placeholder="Rechercher par formations ex. Excel">
-                                <button class="btn_search_formation" href="#">
-                                    <i class="bx bx-search">
-                                    </i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div> --}}
                 <div class="d-flex flex-row flex-wrap" style="padding-left: 4rem">
                     @foreach ($categorie as $ctg )
                     <div class="content_domaines my-4">
                         <a href="{{route('select_par_formation',$ctg->id)}}">
                             {{$ctg->nom_formation}}</a>
-
                     </div>
                     @endforeach
                     <a href="{{route('select_tous')}}">
@@ -102,8 +64,8 @@
                             les Thématiques</button>
                     </a>
                 </div>
-            </div>
-            <div class="col-6 align-items-center justify-content-center">
+            </div> --}}
+            {{-- <div class="col-6 align-items-center justify-content-center">
                 <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -121,7 +83,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
     </div>
     <div class="container mt-5">
         <h3 class="mb-5">Les formations les plus recherchées </h3>
