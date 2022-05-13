@@ -399,6 +399,19 @@ Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('a
 Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
 Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
 
+// ==================== modifications modules ========================//
+Route::post('modification_nom_module/{id}','ModuleController@edit_name_module')->name('modification_nom_module');
+Route::post('modification_description/{id}','ModuleController@edit_description')->name('modification_description');
+Route::post('modification_detail/{id}','ModuleController@edit_detail')->name('modification_detail');
+Route::post('modification_objectif/{id}','ModuleController@edit_objectif')->name('modification_objectif');
+Route::post('modification_pour_qui/{id}','ModuleController@edit_public_cible')->name('modification_pour_qui');
+Route::post('modification_prerequis/{id}','ModuleController@edit_prerequis')->name('modification_prerequis');
+Route::post('modification_equipement/{id}','ModuleController@edit_equipement')->name('modification_equipement');
+Route::post('modification_bon_a_savoir/{id}','ModuleController@edit_bon_a_savoir')->name('modification_bon_a_savoir');
+Route::post('modification_prestation/{id}','ModuleController@edit_prestation')->name('modification_prestation');
+Route::get('mettre_en_ligne','ModuleController@mettre_en_ligne')->name('mettre_en_ligne');
+Route::get('mettre_hors_ligne','ModuleController@mettre_hors_ligne')->name('mettre_hors_ligne');
+
 
 
 // affichage info OF
@@ -1240,6 +1253,8 @@ Route::get('modification_nom_entreprise/{id}','EntrepriseController@modification
 Route::post('enregistrer_nom_entreprise/{id}','EntrepriseController@enregistrer_nom_etp')->name('enregistrer_nom_entreprise');
 Route::get('modification_logo/{id}','EntrepriseController@modification_logo')->name('modification_logo');
 Route::post('enregistrer_logo/{id}','EntrepriseController@enregistrer_logo')->name('enregistrer_logo');
+Route::get('modification_assujetti_entreprise/{id}','EntrepriseController@modification_assujetti_entreprise')->name('modification_assujetti_entreprise');
+Route::post('enregistrer_assujetti_entreprise/{id}','EntrepriseController@enregistrer_assujetti_entreprise')->name('enregistrer_assujetti_entreprise');
 
 // modification session
 Route::post('modifier_session_intra', 'GroupeController@modifier_session_intra')->name('modifier_session_intra');

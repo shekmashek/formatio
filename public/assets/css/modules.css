@@ -410,6 +410,7 @@
 .nav-item.active .nav-link {
     border-bottom: 3px solid #7635dc !important;
     border: none;
+    color: #7635dc;
 }
 
 .nav-tabs .nav-link:hover {
@@ -824,3 +825,107 @@ font-size: 0.850rem;
     font-weight: 500;
 }
 
+.icon_modif{
+    position: relative;
+    bottom: .35rem;
+}
+
+#fr-logo,
+#markdown-1,
+#insertLink-1,
+#insertFiles-1,
+#insertImage-1,
+#moreRich-1,
+#undo-1,
+#redo-1,
+#moreMisc-1,
+#markdown-2,
+#insertLink-2,
+#insertFiles-2,
+#insertImage-2,
+#moreRich-2,
+#undo-2,
+#redo-2,
+#moreMisc-2,
+#markdown-3,
+#insertLink-3,
+#insertFiles-3,
+#insertImage-3,
+#moreRich-3,
+#undo-3,
+#redo-3,
+#moreMisc-3,
+#markdown-4,
+#insertLink-4,
+#insertFiles-4,
+#insertImage-4,
+#moreRich-4,
+#undo-4,
+#redo-4,
+#moreMisc-4,
+#markdown-5,
+#insertLink-5,
+#insertFiles-5,
+#insertImage-5,
+#moreRich-5,
+#undo-5,
+#redo-5,
+#moreMisc-5,
+#markdown-6,
+#insertLink-6,
+#insertFiles-6,
+#insertImage-6,
+#moreRich-6,
+#undo-6,
+#redo-6,
+#moreMisc-6,
+.fr-second-toolbar,
+.fr-quick-insert{
+    display: none;
+}
+
+.fr-box.fr-basic {
+    border-radius: 0 !important;
+}
+
+.width_large{
+    width: 50rem !important;
+    /* margin: 0 auto; */
+}
+
+.button_choix{
+    border: 1px solid #2ebf91;
+    background-color: #2ebf91;
+    color: white;
+    padding: .3rem 1rem;
+    border-radius: 15px;
+}
+
+.button_choix_hors_ligne{
+    border: 1px solid #f64f59;
+    background-color: #f64f59;
+    color: white;
+    padding: .3rem 1rem;
+    border-radius: 15px;
+}
+
+.mettre_en_ligne,
+.mettre_hors_ligne{
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: #2ebf91;
+    width: 4rem;
+    border-color: #2ebf91 !important;
+}
+
+.form-switch .form-check-input{
+    width: 4rem;
+    border-color: #f64f59;
+}
+
+.warning{
+    color: #f64f59;
+    font-size: 4rem;
+}

@@ -535,7 +535,7 @@
                     <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt=""
                             class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
-                <div class="col-5 align-items-center justify-content-start d-flex flex-row ">
+                <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
 
                     @canany('isReferent','isStagiaire','isManager')
                     <div class="row">
@@ -612,15 +612,14 @@
                     </div>
                     @endcanany
                 </div>
-                <div class="col-4 header-right align-items-center d-flex flex-row">
-                    <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
+                <div class="col-5 header-right align-items-center d-flex flex-row">
+                    <div class="col-10 d-flex flex-row justify-content-center apprendCreer pb-3">
                         @can('isStagiaire')
 
-                        <div class="col-5 header-right align-items-center d-flex flex-row">
-                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2" id="text_apprendre">
-                                    <!--<span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>--->
-                                    <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
                                 </div>
                             </div>
 
@@ -629,11 +628,10 @@
                         @endcan
                         @can('isManager')
 
-                        <div class="col-5 header-right align-items-center d-flex flex-row">
-                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2" id="text_apprendre">
-                                    <!--<span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>--->
-                                    <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
                                 </div>
                             </div>
 
@@ -642,11 +640,10 @@
                         @endcan
                         @can('isReferent')
 
-                        <div class="col-5 header-right align-items-center d-flex flex-row">
-                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2" id="text_apprendre">
-                                    <!--<span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>--->
-                                    <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
                                 </div>
                             </div>
 
@@ -655,11 +652,10 @@
 
                         @endcan
                         @can('isCFP')
-                        <div class="col-5 header-right align-items-center d-flex flex-row">
-                            <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2" id="text_apprendre">
-                                    <!--<span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>--->
-                                    <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-end apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
                                 </div>
                             </div>
 
@@ -667,52 +663,14 @@
 
                         @endcan
 
-                             <div class="">
-                                   @can('isManager')
-                            <div class="btn_creer dropdown">
-
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                    data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none"
-                                    aria-haspopup="true">
-                                    <i class='bx bx-plus-medical icon_creer'></i>Créer
-                                </a>
-
-                                <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-
-                                    <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
-                                                class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouvelle demande
-                                            stagiaire</a></li>
-                                    <li><a class="dropdown-item" href="{{route('ajout_plan')}}"> <i
-                                                class='bx bx-scatter-chart icon_plus'></i>&nbsp;Nouvelle plan de
-                                            formation</a></li>
-                                    <li><a class="dropdown-item" href="{{route('budget')}}"><i
-                                                class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
-
-                                </ul>
-                            </div>
-                            @endcan
-                            @can('isSuperAdmin')
-                                <div class="btn_creer dropdown">
-
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                        data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none"
-                                        aria-haspopup="true">
-                                        <i class='bx bx-plus-medical icon_creer'></i>Créer
-                                    </a>
-
-                                    <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" href="{{route('nouveau_type')}}"> <i
-                                                    class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouveau type d'abonnement</a></li>
-                                    </ul>
-                                </div>
-                            @endcan
+                        <div class="">
                             @can('isManager')
                             <div class="btn_creer dropdown">
 
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                     data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none"
                                     aria-haspopup="true">
-                                    <i class='bx bx-plus-medical icon_creer'></i>Créer
+                                    <i class='bx bx-plus-medical icon_creer_admin'></i>Créer
                                 </a>
 
                                 <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
@@ -736,7 +694,7 @@
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                         data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
                                         style="text-decoration: none">
-                                        <i class='bx bx-plus-medical icon_creer'></i>Créer
+                                        <i class='bx bx-plus-medical icon_creer_admin'></i>Créer
 
                                     </a>
 
@@ -780,7 +738,7 @@
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
                                             style="text-decoration: none">
-                                            <i class='bx bxs-cog icones_creer'></i>
+                                            <i class='bx bxs-cog icon_creer_admin'></i>
                                             Paramètres
                                         </a>
 
@@ -812,7 +770,7 @@
                                     <a class="dropdown-toggle ms-2" href="#" role="button" id="dropdownMenuLink"
                                         data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
                                         style="text-decoration: none">
-                                        <i class='bx bx-plus-medical icon_creer'></i>Créer
+                                        <i class='bx bx-plus-medical icon_creer_admin'></i>Créer
 
                                     </a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
@@ -857,7 +815,7 @@
 
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class='bx bxs-cog icones_creer'></i>
+                                            <i class='bx bxs-cog icon_creer_admin'></i>
                                             Paramètres
                                         </a>
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
@@ -879,13 +837,11 @@
 
                         </div>
                     </div>
-                    <div class="col-2">
-                        <div class=" btn_vous header_img" style="height: 34px">
-                            {{-- <p class="m-0 ms-2"></p> --}}
-                            {{-- <i class='bx bxs-user-circle user_icon'></i> --}}
-                            <span class="d-flex mt-1" style="text-decoration: none; color:black; font-size:12px"
+                    <div class="col-2 pb-3">
+                        <div class=" btn_vous header_img text-center" >
+                            <span style="text-decoration: none; color:black; font-size:12px"
                                 type="button">
-                                <i class=' bx bxs-user' style="font-size: 17px; position: relative; top:.1rem;"></i>
+                                <i class=' bx bxs-user' style="font-size: 20px; position: relative; top:.1rem;"></i>
                                 <span class="mt-1" style="font-size: 11.7px">Vous</span> <i class='bx bx-caret-down mt-1'></i>
                             </span>
                         </div>

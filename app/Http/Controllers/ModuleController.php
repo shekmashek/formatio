@@ -57,13 +57,15 @@ class ModuleController extends Controller
                 select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ? order by mf.nom_module desc',[$cfp_id]);
             $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
                 select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by nom_module desc',[$cfp_id]);
-            $mod_publies = DB::select('select * from moduleformation where status = 2 and cfp_id = ? order by nom_module desc',[$cfp_id]);
+            $mod_hors_ligne = DB::select('select * from moduleformation where status = 2 and etat_id = 2 and cfp_id = ? order by nom_module desc',[$cfp_id]);
+            $mod_publies = DB::select('select * from moduleformation where status = 2 and etat_id = 1 and cfp_id = ? order by nom_module desc',[$cfp_id]);
+
 
             if (count($infos) <= 0) {
                 return view('admin.module.guide');
             } else {
                 // return view('admin.module.module', compact('devise','infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
-                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp'));
+                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp', 'mod_hors_ligne'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -220,11 +222,12 @@ class ModuleController extends Controller
 
     public function create()
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $fonct = new FonctionGenerique();
         $domaine = $fonct->findAll("domaines");
         $liste = formation::orderBy('nom_formation')->get();
         $niveau = Niveau::all();
-        return view('admin.module.nouveauModule', compact('domaine', 'liste', 'niveau'));
+        return view('admin.module.nouveauModule', compact('domaine', 'liste', 'niveau','devise'));
     }
 
     public function get_formation(Request $req)
@@ -587,8 +590,79 @@ class ModuleController extends Controller
         );
     }
 
-    public function recherche_ref_nomMod_frmt(){
+    public function edit_name_module(Request $request){
+        $id = $request->id;
+        $nom = $request->nom_module;
+        DB::update('update modules set nom_module = ? where id = ?',[$nom, $id]);
+        return back();
+    }
+    public function edit_description(Request $request){
+        $id = $request->id;
+        $description = $request->description;
+        DB::update('update modules set description = ? where id = ?',[$description, $id]);
+        return back();
+    }
+    public function edit_detail(Request $request){
+        $id = $request->id;
+        $jour = $request->jour;
+        $heure = $request->heure;
+        $modalite = $request->modalite;
+        $niveau = $request->niveau;
+        $reference = $request->reference;
+        $prix = $request->prix;
+        $prix_groupe = $request->prix_groupe;
+        DB::update('update modules set duree_jour = ?, duree = ?, modalite_formation = ?, reference = ?, prix = ?, prix_groupe = ?, niveau_id = ?  where id = ?',[$jour,$heure,$modalite,$reference,$prix,$prix_groupe,$niveau, $id]);
+        return back();
+    }
+    public function edit_objectif(Request $request){
+        $id = $request->id;
+        $objectif = $request->objectif;
+        DB::update('update modules set objectif = ? where id = ?',[$objectif, $id]);
+        return back();
+    }
+    public function edit_public_cible(Request $request){
+        $id = $request->id;
+        $cible = $request->public_cible;
+        DB::update('update modules set cible = ? where id = ?',[$cible, $id]);
+        return back();
+    }
+    public function edit_prerequis(Request $request){
+        $id = $request->id;
+        $prerequis = $request->prerequis;
+        DB::update('update modules set prerequis = ? where id = ?',[$prerequis, $id]);
+        return back();
+    }
+    public function edit_equipement(Request $request){
+        $id = $request->id;
+        $equipement = $request->equipement;
+        DB::update('update modules set materiel_necessaire = ? where id = ?',[$equipement, $id]);
+        return back();
+    }
+    public function edit_bon_a_savoir(Request $request){
+        $id = $request->id;
+        $bon_a_savoir = $request->bon_a_savoir;
+        DB::update('update modules set bon_a_savoir = ? where id = ?',[$bon_a_savoir, $id]);
+        return back();
+    }
+    public function edit_prestation(Request $request){
+        $id = $request->id;
+        $prestation = $request->prestation;
+        DB::update('update modules set prestation = ? where id = ?',[$prestation, $id]);
+        return back();
+    }
 
+    public function mettre_en_ligne(Request $request){
+        $id = $request->Id;
+        $etat = 1;
+        DB::update('update modules set etat_id = ? where id = ?',[$etat, $id]);
+        return response()->json(['success' =>'ok']);
+    }
+
+    public function mettre_hors_ligne(Request $request){
+        $id = $request->Id;
+        $etat = 2;
+        DB::update('update modules set etat_id = ? where id = ?',[$etat, $id]);
+        return response()->json(['success' =>'ok']);
     }
 
 }

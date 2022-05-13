@@ -14,7 +14,7 @@
             background-color: #637381;
             color: white;
             align-items: center margin: 0 auto;
-            padding-top: 2.5px; 
+            padding-top: 2.5px;
             padding-bottom: 2.5px;
             position:relative;
             bottom: 1px;
@@ -25,7 +25,7 @@
             background-color: #00CDAC;
             color: white;
             align-items: center margin: 0 auto;
-            padding-top: 2.5px; 
+            padding-top: 2.5px;
             padding-bottom: 2.5px;
             position:relative;
             bottom: 1px;
@@ -36,7 +36,7 @@
             background-color: #314755;
             color: white;
             align-items: center margin: 0 auto;
-            padding-top: 2.5px; 
+            padding-top: 2.5px;
             padding-bottom: 2.5px;
             position:relative;
             bottom: 1px;
@@ -47,7 +47,7 @@
             background-color: #26a0da;
             color: white;
             align-items: center margin: 0 auto;
-            padding-top: 2.5px; 
+            padding-top: 2.5px;
             padding-bottom: 2.5px;
             position:relative;
             bottom: 1px;
@@ -58,7 +58,7 @@
             background-color: #b31217;
             color: white;
             align-items: center margin: 0 auto;
-            padding-top: 2.5px; 
+            padding-top: 2.5px;
             padding-bottom: 2.5px;
             position:relative;
             bottom: 1px;
@@ -69,7 +69,7 @@
             background-color: #1E9600;
             color: white;
             align-items: center margin: 0 auto;
-            padding-top: 2.5px; 
+            padding-top: 2.5px;
             padding-bottom: 2.5px;
             position:relative;
             bottom: 1px;
@@ -81,7 +81,7 @@
             color: white;
             align-items: center margin: 0 auto;
             padding-end:1rem;
-            padding-top: 2.5px; 
+            padding-top: 2.5px;
             padding-bottom: 2.5px;
             position:relative;
             bottom: 1px;
@@ -92,7 +92,7 @@
             background-color: rgb(15, 126, 145);
             color: whitesmoke;
             align-items: center margin: 0 auto;
-            padding-top: 2.5px; 
+            padding-top: 2.5px;
             padding-bottom: 2.5px;
             position:relative;
             bottom: 1px;
@@ -287,8 +287,7 @@
                                             @if ($prj->type_formation_id == 1)
                                                 <span role="button" class=" m-0 nouvelle_session " data-bs-toggle="modal"
                                                     data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static'
-                                                    title="Nouvelle session"><i class="bx bx-plus-medical me-3"></i>Ajouter une
-                                                    session</span>
+                                                    title="Nouvelle session"><i class="bx bx-plus-medical icon_creer me-3"></i>Session</span>
                                             @endif
                                         @endcan
                                     </div>
@@ -937,13 +936,11 @@
                                         <td>{{ $pj->nom_projet }}</td>
                                         <td>
                                             @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0"><button
-                                                        class="type_intra m-0 filtre_projet">{{ $pj->type_formation }}</button>
+                                                <h6 class="m-0"><button class="type_intra ">{{ $pj->type_formation }}</button>
                                                 </h6>
                                                 &nbsp;&nbsp;
                                             @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button
-                                                        class="type_inter m-0">{{ $pj->type_formation }}</button></h6>
+                                                <h6 class="m-0"><button class="type_inter ">{{ $pj->type_formation }}</button></h6>
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
@@ -1009,17 +1006,15 @@
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
-                                    <tr class="m-0">
+                                    <tr>
                                         <td>{{ $pj->nom_projet }}</td>
-                                        <td>
+                                        <td style="vertical-align: middle">
                                             @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0"><button
-                                                        class="type_intra m-0 filtre_projet">{{ $pj->type_formation }}</button>
+                                                <h6 class="m-0 "><button class="type_intra ">{{ $pj->type_formation }}</button>
                                                 </h6>
                                                 &nbsp;&nbsp;
                                             @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button
-                                                        class="type_inter m-0">{{ $pj->type_formation }}</button></h6>
+                                                <h6 class="m-0"><button class="type_inter ">{{ $pj->type_formation }}</button></h6>
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
@@ -1036,7 +1031,7 @@
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
                                         {{-- <td>{{ $pj->modalite }}</td> --}}
                                         <td>
-                                            <p class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}
+                                            <p class="{{ $pj->class_status_groupe }} m-0">{{ $pj->item_status_groupe }}
                                             </p>
                                         </td>
                                         <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
@@ -1243,6 +1238,6 @@
                     //     } ;
                     // });
 
-                    localStorage.setItem('activeTab', 'detail'); 
+                    localStorage.setItem('activeTab', 'detail');
                 </script>
             @endsection
