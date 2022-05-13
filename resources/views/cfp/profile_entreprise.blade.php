@@ -495,7 +495,8 @@
         //     });
         // });
         $(".information").on('click', function(e) {
-            let id = $(this).data("id");;
+            let id = $(this).data("id");
+            // console.log(id);
             $.ajax({
                 method: "GET"
                 , url: "{{route('information_entreprise')}}"

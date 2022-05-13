@@ -386,7 +386,7 @@
                                         $i = 1;
                                     @endphp
                                     @foreach ($datas as $d)
-                                        <tr onclick="afficherDrawer();">
+                                        <tr class="myDraw" data-id="{{$d->detail_id}}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                                             <td>{{ $i }}</td>
                                             @canany(['isReferent', 'isManager'])
                                                 <td>{{ $d->nom_cfp }}</td>
@@ -657,6 +657,28 @@
 
         </div>
     </div>
+
+    {{--Drawer--}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width: 350px">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel" class="text-center">DETAILS</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Nom</th>
+                    </tr>
+                </thead>
+                <tbody id="dynamic">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{--endDrawer--}}
 
     {{--test drawer--}}
         <div class="drawer mt-3">
@@ -1097,3 +1119,62 @@
         });
     });
 </script>
+
+{{--myDraw--}}
+
+<script>
+    $(".myDraw").on('click', function(e) {
+        let id = $(this).data("id");
+        console.log(id);
+        if(id){
+            $.ajax({
+                type: "get",
+                url: "/my_detail_session/myDetail/"+id,
+                success: function (data) {
+                    if(data){
+                        // console.log(data);
+                        var content = "";
+                        for(var i = 0; i < data.length; i++){
+                            content +=
+                            "<tr><td>"+ 
+                                 data[i].nom_module+
+                             "<td>"+
+                                 data[i].lieu+
+                             "</td><td>"+
+                                 data[i].date_detail+
+                             "</td><td>"+
+                                 data[i].h_debut+
+                             "</td><td>"+
+                                 data[i].h_fin+
+                             "</td><td>"+
+                                 data[i].nom_formateur+
+                             "</td><td>"+
+                                 data[i].prenom_formateur+
+                             "</td></tr>"
+                        }
+                        console.log(data[0].nom_module);
+                        $('#dynamic').html(content);
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+tableRow += '<tr class="text-center content_table">';
+    tableRow +='<td><img src="{{asset("images/stagiaires/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+    tableRow = tableRow.replace(":?",value.photos);
+    tableRow +=     
+        '</td><td>'+value.matricule+
+        '</td><td>'+value.nom_stagiaire+
+        '</td><td>'+value.prenom_stagiaire+
+        '</td><td>'+value.fonction_stagiaire+
+        '</td><td>'+value.mail_stagiaire+
+        '</td><td>'+value.telephone_stagiaire+
+        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
+        '</td><tr>';
+    
+   
+    console.log(tableRow);
+});
+$('#dynamic_row').append(tableRow);

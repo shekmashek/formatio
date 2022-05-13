@@ -1231,3 +1231,7 @@ Route::get('statut_presence_emargement','HomeController@statut_presence_emargeme
 
 Route::get('get_devise','SessionController@get_devise')->name('get_devise');
 Route::post('modifier_frais_annexe_formation','SessionController@modifier_frais_annexe_formation')->name('modifier_frais_annexe_formation');
+
+//test
+Route::get('/my_detail_session/myDetail/{id}', 'SessionController@my_detail_session');
+

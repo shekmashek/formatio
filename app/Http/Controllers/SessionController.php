@@ -105,6 +105,22 @@ class SessionController extends Controller
     {
         //
     }
+    
+    //tests my_detail_session
+    public function my_detail_session($id){
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        $cfp_id = $resp->cfp_id;
+
+        $result = DB::table('v_detail_session')
+                ->where('cfp_id', $cfp_id)
+                ->where('detail_id', '=', $id)
+                ->get();
+
+        // dd($result);
+        return response()->json($result);
+    }
 
     public function detail_session(){
         // dd(URL::to('/').'/sarin Gael');
@@ -205,7 +221,7 @@ class SessionController extends Controller
             $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
 
-   //     $prix = $fonct->findWhereMulitOne('v_montant_session',['groupe_id'],[$id]);
+     //     $prix = $fonct->findWhereMulitOne('v_montant_session',['groupe_id'],[$id]);
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);
@@ -227,8 +243,10 @@ class SessionController extends Controller
             $lieu_formation[0]='';
             $lieu_formation[1]='';
         }
-        // dd($formateur);
+
+        // dd($datas);
         return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation'));
+        
     }
 
     public function getFormateur(){
