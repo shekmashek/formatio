@@ -158,6 +158,7 @@ class EncaissementController extends Controller
 
     public function modifier(Request $request)
     {
+        $numero_fact =null;
         DB::beginTransaction();
         try {
             encaissement::validation($request);
@@ -174,6 +175,8 @@ class EncaissementController extends Controller
             DB::rollBack();
             return redirect()->back();
         }
+
+
     }
 
 

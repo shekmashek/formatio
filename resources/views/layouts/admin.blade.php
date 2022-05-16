@@ -558,7 +558,7 @@
                                                 class="text_racourcis">Annuaire</span></span></a>
                                     @canany(['isReferent','isStagiaire','isManager'])
                                         <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
-                                        <a href="{{route('employes.liste')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-group'></i><span class="text_racourcis">Listes employées</span></span></a>
+                                        <a href="{{route('employes.liste')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-group'></i><span class="text_racourcis">employés</span></span></a>
                                         <a href="{{route('employes')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-group'></i><span class="text_racourcis">Equipe Administratif</span></span></a>
                                         @endcan
                                     @canany(['isCFP','isFormateur'])

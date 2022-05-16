@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text_header m-0 mt-1">Export Excel Employer</h3>
+<h3 class="text_header m-0 mt-1">Import Excel Employé</h3>
 @endsection
 @section('content')
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -35,7 +35,7 @@
         text-align: center
     }
 
-    .form_colab input:focus{
+    .form_colab input:focus {
         border: none;
         outline: none;
         box-shadow: none;
@@ -99,7 +99,7 @@
         text-decoration-line: none;
     }
 
-    td{
+    td {
         padding: 0 !important;
         height: 30px !important;
     }
@@ -115,17 +115,17 @@
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item">
                     <a href="{{route('employes.liste')}}" class="nav-link">
-                        liste des employers
+                        employé
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{route('employes.new')}}" class="nav-link">
-                        nouveau
+                        nouveau employé
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{route('employes.export.nouveau')}}" class="nav-link active">
-                        export EXCEL employer
+                        import EXCEL employé
                     </a>
                 </li>
             </ul>
@@ -142,15 +142,16 @@
             {{-- <div class="col-md-4"></div> --}}
         </div>
 
-        <div class="row mt-5 justify-content-center">
+        <div class="row mt-2 justify-content-center">
 
             <div class="col jusitfy-content-center">
                 <form name="formInsert" id="formInsert" action="{{route('save_multi_stagiaire_exproter_excel')}}" method="POST" enctype="multipart/form-data" class="form_insert_formateur form_colab  needs-validation" novalidate>
                     @csrf
                     @if(Session::has('success'))
-                    <div class="alert alert-success">
-                        {{Session::get('success')}}
-                    </div>
+            <div class="alert alert-success">
+                <strong>{{Session::get('success')}}</strong>
+            </div>
+
                     @endif
                     @if(Session::has('error'))
                     <div class="alert alert-danger">
@@ -158,7 +159,11 @@
                     </div>
                     @endif
 
-                    <table id="example" class="table table-bordered" >
+                    <div class="form-group mb-2" align="center">
+                        <button type="submit" class="btn btn_creer" id="saver_multi_stg">sauvegarder</button>
+                    </div>
+
+                    <table id="example" class="table table-bordered">
                         <thead style="background-color: #6e717339">
                             <tr align="center">
                                 <th>Matricule <span style="color: red">*</span> </th>
@@ -172,40 +177,28 @@
 
                             @for($i = 1; $i <= 30; $i++) <tr align="center">
                                 <td>
-                                        <input autocomplete="off" class="form-control mx-0 " id="matricule_{{$i}}" type="text" name="matricule_{{$i}}" placeholder="Matricule N° {{$i}}">
-
-                                        <p class="m-0" style="color: red" id="matricule_err_{{$i}}"></p>
-                                        <div class="invalid-feedback">
-                                            Please choose a matricule.
-                                        </div>
+                                    <input autocomplete="off" class="form-control mx-0 " id="matricule_{{$i}}" type="text" name="matricule_{{$i}}">
+                                    <p class="m-0" style="color: red" id="matricule_err_{{$i}}"></p>
                                 </td>
                                 <td>
-                                    {{-- <div class="form-group"> --}}
-                                    <input autocomplete="off" class="form-control" id="nom_{{$i}}" type="text" name="nom_{{$i}}" placeholder="Nom">
-                                    {{-- </div> --}}
+                                    <input autocomplete="off" class="form-control" id="nom_{{$i}}" type="text" name="nom_{{$i}}">
                                 </td>
                                 <td>
-                                        <input autocomplete="off" class="form-control" id="inlineFormInput" type="text" name="prenom_{{$i}}" placeholder="Prénom">
+                                    <input autocomplete="off" class="form-control" id="inlineFormInput" type="text" name="prenom_{{$i}}">
                                 </td>
                                 <td>
-                                        <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_{{$i}}" placeholder="CIN">
-
-                                        <p class="m-0" style="color: red" id="cin_err_{{$i}}"></p>
+                                    <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_{{$i}}">
+                                    <p class="m-0" style="color: red" id="cin_err_{{$i}}"></p>
                                 </td>
                                 <td>
-                                        <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_{{$i}}" placeholder="E-mail">
-
-                                        <p class="m-0" name="email_err[]" style="color: red" id="email_err_{{$i}}"></p>
+                                    <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_{{$i}}">
+                                    <p class="m-0" name="email_err[]" style="color: red" id="email_err_{{$i}}"></p>
                                 </td>
                                 </tr>
                                 @endfor
 
                         </tbody>
                     </table>
-                    <div class="form-group mt-2" align="center">
-                        <button type="submit" class="btn btn_creer" id="saver_multi_stg">sauvegarder</button>
-
-                    </div>
                 </form>
             </div>
         </div>
@@ -267,24 +260,20 @@
 
     $(document).ready(function() {
 
-        /*     $('#saver_multi_stg').prop('disabled', true); */
-
         $('#formInsert input').keyup(function() {
+            $('#saver_multi_stg').prop('disabled', false);
 
             var mail_err = document.getElementsByName("email_err[]");
             for (let i = 1; i <= 30; i += 1) {
 
-                /*         if ($("matricule_err_" + i).html() == '' &&
-                    $("email_err_" + i).html() == '' &&
-                    $("cin_err_" + i).html() == '') {
-                    $('#saver_multi_stg').prop('disabled', false);
-                } else {
-                    $('#saver_multi_stg').prop('disabled', true);
-                }
-*/
                 if ($("#matricule_" + i).val() != null) {
                     var matricule = $("#matricule_" + i).val();
-                    document.getElementById("matricule_err_" + i).innerHTML = '';
+                    if($("#matricule_" + i).val()!="" && $("#matricule_" + i).val().length<1 && $("#email_" + i).val()!=""){
+                        document.getElementById("matricule_err_" + i).innerHTML = 'invalid';
+                    } else {
+                        document.getElementById("matricule_err_" + i).innerHTML = '';
+
+                    }
 
                     $.ajax({
                         url: "{{route('employes.export.verify_matricule_stg')}}"
@@ -296,12 +285,7 @@
                             var userData = response;
                             if (userData.length > 0) {
                                 document.getElementById("matricule_err_" + i).innerHTML = 'matricule existe déjà';
-                                /*                  if ( $("email_err_" + i).html() == '' &&
-                                                      $("cin_err_" + i).html() == '') {
-                                                      $('#saver_multi_stg').prop('disabled', false);
-                                                  } else {
-                                                      $('#saver_multi_stg').prop('disabled', true);
-                                                  } */
+                                $('#saver_multi_stg').prop('disabled', true);
                             } else {
                                 document.getElementById("matricule_err_" + i).innerHTML = '';
                             }
@@ -310,13 +294,15 @@
                             console.log(error);
                         }
                     });
-
+                    /*=============*/
                     if ($("#email_" + i).val() != null) {
                         var email = $("#email_" + i).val();
 
-                        if ($("#matricule_" + i).val() != null) {
+                        if ($("#matricule_" + i).val() != null && $("#matricule_" + i).val() != "") {
                             if (email.indexOf('@') == -1) {
                                 document.getElementById("email_err_" + i).innerHTML = 'E-mail invalid';
+                                $('#saver_multi_stg').prop('disabled', true);
+
                             } else {
                                 document.getElementById("email_err_" + i).innerHTML = '';
                             }
@@ -332,6 +318,8 @@
                                 var userData = response;
                                 if (userData.length > 0) {
                                     document.getElementById("email_err_" + i).innerHTML = 'E-mail existe déjà';
+                                    $('#saver_multi_stg').prop('disabled', true);
+
                                 }
                             }
                             , error: function(error) {
@@ -339,7 +327,7 @@
                             }
                         });
                     }
-
+                    /*=============*/
                     if ($("#cin_" + i).val() != null) {
                         var cin = $("#cin_" + i).val();
                         document.getElementById("cin_err_" + i).innerHTML = '';
@@ -353,14 +341,10 @@
                             , success: function(response) {
                                 var userData = response;
                                 if (userData.length > 0) {
-
                                     document.getElementById("cin_err_" + i).innerHTML = "CIN existe déjà";
-                                    /*                if ($("matricule_err_" + i).html() == '' &&
-                                                        $("email_err_" + i).html() == '' ) {
-                                                        $('#saver_multi_stg').prop('disabled', false);
-                                                    } else {
-                                                        $('#saver_multi_stg').prop('disabled', true);
-                                                    } */
+                                    $('#saver_multi_stg').prop('disabled', true);
+
+
                                 } else {
                                     document.getElementById("cin_err_" + i).innerHTML = '';
                                 }
@@ -374,33 +358,12 @@
 
 
 
+
             }
         });
 
 
     });
-
-
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
 
 </script>
 

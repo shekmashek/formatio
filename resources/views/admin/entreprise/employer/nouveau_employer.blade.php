@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Nouveau employée</p>
+    <p class="text_header m-0 mt-1">Nouveau employé</p>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
@@ -40,23 +40,23 @@
 
     <div class="m-4">
 
-    <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-        <li class="nav-item">
-            <a href="{{route('employes.liste')}}" class="nav-link">
-                liste des employers
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{route('employes.new')}}" class="nav-link active">
-                nouveau
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{route('employes.export.nouveau')}}" class="nav-link">
-                export EXCEL employer
-            </a>
-        </li>
-    </ul>
+        <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+            <li class="nav-item">
+                <a href="{{route('employes.liste')}}" class="nav-link">
+                    employés
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('employes.new')}}" class="nav-link active">
+                    nouveau employé
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('employes.export.nouveau')}}" class="nav-link">
+                    import EXCEL employé
+                </a>
+            </li>
+        </ul>
     <div class="row mt-3">
         <div class="col-md-12">
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
