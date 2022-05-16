@@ -619,7 +619,9 @@
                         <div class="col-5 header-right">
                             <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
                                 <div class="btn_creer">
-                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
+                                    {{-- <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span> --}}
+                                    <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
+
                                 </div>
                             </div>
 
@@ -631,7 +633,9 @@
                         <div class="col-5 header-right">
                             <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
                                 <div class="btn_creer">
-                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
+                                    {{-- <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span> --}}
+                                    <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
+
                                 </div>
                             </div>
 
@@ -643,7 +647,9 @@
                         <div class="col-5 header-right">
                             <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
                                 <div class="btn_creer">
-                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
+                                    {{-- <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span> --}}
+                                    <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
+
                                 </div>
                             </div>
 
@@ -652,10 +658,13 @@
 
                         @endcan
                         @can('isCFP')
+
                         <div class="col-5 header-right">
                             <div class="col-11 d-flex flex-row justify-content-end apprendCreer">
                                 <div class="btn_creer">
-                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
+                                    {{-- <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span> --}}
+                                    <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
+
                                 </div>
                             </div>
 
