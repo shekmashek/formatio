@@ -109,7 +109,7 @@
             </div>
         </div>
         @foreach ($all_frais_annexe as $frais)
-            <div class="row ps-5" id="inputFormRow_frais">
+            <div class="row ps-5 mt-1" id="inputFormRow_frais">
                 <div class="col-md-4">
                     <label class="w-100 pe-2">{{ $frais->description }}</label>
                 </div>
@@ -121,21 +121,27 @@
                     </ul>
                 </div>
                 <div class="col-md-3"><a href="" aria-current="page" data-bs-toggle="modal"
-                        data-bs-target="#modal_modifier_ressource_{{ $frais->id }}"><i class="bx bx-edit"
-                            style="color:rgb(130,33,100);"></i></a>
+                        data-bs-target="#modal_modifier_ressource_{{ $frais->id }}"><i class="bx bx-edit bx_modifier"
+                            style="font-size:1.1rem !important"></i></a>
                 </div>
             </div>
             <div class="modal fade" id="modal_modifier_ressource_{{ $frais->id }}">
                 <div class="modal-dialog">
                     <div class="modal-content p-3">
-                        <div class="modal-title pt-3 d-flex justify-content-between" style="height: 50px; align-items: center;">
+                        <div class="modal-title  d-flex justify-content-between mb-2" style="height: 50px; align-items: center;">
                             <h5 class="text-center my-auto">Modifier frais annexes </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form class="btn-submit" action="{{ route('modifier_frais_annexe_formation') }}" method="post">
                             @csrf
-                            <input type="text" name="description" class="form-control mb-2" value="{{ $frais->description }}" required>
-                            <input type="text" name="montant" class="form-control mb-2" value="{{ $frais->montant }}" required>
+                            <div class="d-flex">
+                                <label class="mt-2">Description&nbsp;</label>
+                                <input type="text" name="description" class="form-control mb-2" value="{{ $frais->description }}" required>
+                            </div>
+                            <div class="d-flex">
+                                <label class="me-1 mt-2">Montant&nbsp;</label>
+                                <input type="text" name="montant" class="form-control mb-2 ms-3" value="{{ $frais->montant }}" required>
+                            </div>
                             <input type="hidden"  name="id" class="form-control mb-2" value="{{ $frais->id }}" required>
                             <div class="d-flex justify-content-around">
                                 <button type="submit" class="btn modif_frais">Modifier</button>

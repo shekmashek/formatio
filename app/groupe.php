@@ -81,17 +81,15 @@ class Groupe extends Model
         }
     }
 
-    public function get_lieu_fromation($groupe_id){
-        $lieu_formation = DB::select('select lieu from details where groupe_id = ?', [$groupe_id]);
-        $res ='';
-        if(count($lieu_formation)>0){
-            $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
-            $res = $lieu_formation[0].', '.$lieu_formation[1];
-        }else{
-            $lieu_formation[0]='';
-            $lieu_formation[1]='';
-            $res = 'Indéfini';
-        }
-        return $res;
+    public function module_session($module_id){
+        return DB::select('select nom_module from modules where id = ?',[$module_id])[0]->nom_module;
+    }
+
+    public function nombre_apprenant_session($groupe_id){
+        return DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$groupe_id])[0]->nombre;
+    }
+
+    public function module_projet($projet_id){
+        return DB::select('select groupe_id,nom_module from v_groupe_projet_module where projet_id = ? group by nom_module',[$projet_id]);
     }
 }
