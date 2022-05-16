@@ -348,7 +348,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Type</th>
-                                            <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                             </th>
                                             <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                             </th>
@@ -668,7 +668,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Type</th>
-                                                <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                 </th>
                                                 <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                 </th>
@@ -835,7 +835,7 @@
                                             <table class="table table-hover">
                                                 <tr>
                                                     <th scope="col">Type</th>
-                                                    <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                    <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                     </th>
                                                     <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                     </th>
@@ -1075,7 +1075,7 @@
                                                     <table class="table table-hover">
                                                         <tr>
                                                             <th scope="col">Type</th>
-                                                            <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                            <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                             </th>
                                                             <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                             </th>
