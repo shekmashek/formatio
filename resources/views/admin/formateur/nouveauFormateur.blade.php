@@ -213,7 +213,7 @@
                                                 <input type="text" class="form-control" name="competences[]" id="competences" pattern="[A-Za-z0-9&@+' ,-]{1,255}" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 mt-3" align="center">
+                                        <div class="col-lg-2 " align="center">
                                             <button id="addRow1" class="form-control btn btn-warning envoyer" type="button"><i class="fa fa-plus" style="font-size: 15px"></i></button>
                                         </div>
                                         <div id="newRow1"></div>

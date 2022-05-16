@@ -897,7 +897,7 @@ input:-webkit-autofill:active {
 
 .apprendCreer{
     position: relative;
-    bottom: .5rem;
+    padding: .3rem;
 }
 
 .icon_plus{
@@ -906,8 +906,8 @@ input:-webkit-autofill:active {
 
 .text_apprendre{
     position: relative;
-    bottom: .3rem;
-    font-size: .8rem;
+    font-size: .9rem;
+    padding: .3rem;
     animation-name: completer_programme;
     animation-duration: 4s;
     animation-delay: 2s;

@@ -308,6 +308,7 @@
                             <th scope="col">Télephone
                             </th>
                             <th scope="col">Action</th>
+                            <th scope="col">Voir Profile</th>
                             <th style="width: 10px;">Rétirer</th>
                         </tr>
                     </thead>
@@ -365,8 +366,13 @@
                                 @endif
                             </td>
                             <td>
-                                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
-                               </td>
+                                <a href="{{route('profile_stagiaire',$emp->id)}}" class="btn btn-sm">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                            </td>
                         </tr>
 
                         <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

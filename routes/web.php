@@ -229,7 +229,7 @@ Route::get('/editer_fonction/{id}', 'ProfController@editer_fonction')->name('edi
 
 
 
-
+     
 
 
 // Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
@@ -373,6 +373,11 @@ Route::get('inscriptionInter/{type_formation_id}/{id_groupe}', 'SessionControlle
 Route::get('annuaire','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
 Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
+
+// filtre annuaire cfp
+// Route::get('annuaire+recherche+par+entiter/{page?}/{nom_entiter?}','FormationController@search_par_nom_entiter')->name('annuaire+recherche+par+entiter');
+// Route::get('annuaire+recherche+par+adresse/{page?}/{qter?}/{vlle?}/{postal?}/{reg?}','FormationController@search_par_adresse')->name('annuaire+recherche+par+adresse');
+
 
 //route module
 Route::resource('module', 'ModuleController')->except([
@@ -681,7 +686,7 @@ Route::get('employes','DepartementController@liste')->name('employes');
 Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')->name('affProfilChefDepartement');
 
 
-Route::get('employes.liste/{nbPag?}','ParticipantController@liste_employer')->name('employes.liste');
+Route::get(' /{nbPag?}','ParticipantController@liste_employer')->name('employes.liste');
 
 Route::get('employes.export.nouveau','ParticipantController@export_excel_new_participant')->name('employes.export.nouveau');
 Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');

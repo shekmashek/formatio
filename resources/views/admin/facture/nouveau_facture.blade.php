@@ -10,7 +10,7 @@
     }
 
 </style>
-{{-- <link rel="stylesheet" href="{{asset('css/facture.css')}}"> --}}
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlFactures.css')}}">
