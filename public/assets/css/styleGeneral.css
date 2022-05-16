@@ -200,8 +200,8 @@ ul li a {
 
 .sidebar ul li a:hover{
     /* color: var(--font-sidebar-color); */
-    color: black;
-    background: rgba(192, 192, 192, 0.171);
+    color: rgb(160, 43, 238);
+    background: rgba(128, 128, 128, 0.144);
 }
 
 .sidebar.active ul li{

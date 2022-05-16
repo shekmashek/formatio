@@ -243,8 +243,14 @@ Route::get('/getDomains', 'ProfController@getDomains')->name('getDomains');
 
 Route::get('/nouveau_formateur', 'ProfController@create')->name('nouveau_formateur');
 
+// otenir en json le formateur avec l'id envoyé en requete 
 Route::get('/edit_formateur','ProfController@edit')->name('edit_formateur');
-Route::post('/update_formateur','ProfController@update')->name('update_formateur');
+
+// My edit routes (pour le formateur)
+Route::get('/edit_form/{id}','ProfController@edit_form')->name('edit_form');
+Route::post('/update_formateur/{id}','ProfController@edit_save')->name('save_update_formateur');
+
+// Route::post('/update_formateur','ProfController@update')->name('update_formateur');
 Route::get('/destroy_formateur','ProfController@destroy')->name('destroy_formateur');
 Route::post('desactivation_formateur','ProfController@desactivation_formateur')->name('desactivation_formateur');
 //profil
@@ -558,7 +564,10 @@ Route::post('temp_create_facture/{id}','FactureController@createTemp')->name('te
 Route::get('feuille_facture','FactureController@getFacture')->name('feuille_facture');
 Route::get('update_facture/{id}','FactureController@edit')->name('update_facture');
 Route::get('delete_facture/{num_facture}','FactureController@destroy')->name('delete_facture');
+
+
 Route::get('frais_annexe','FactureController@getFrais_annexe')->name('frais_annexe');
+
 Route::get('groupe_projet','FactureController@getGroupe_projet')->name('groupe_projet');
 Route::get('groupe_projet_edit','FactureController@getGroupe_projet_edit')->name('groupe_projet_edit');
 Route::get('taxe','FactureController@getTaxe')->name('taxe');

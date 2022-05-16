@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProfController extends Controller
 {
@@ -301,6 +302,96 @@ class ProfController extends Controller
         $formateur = formateur::where('id', $id)->get();
         return response()->json($formateur);
     }
+
+
+    // formulaire d'edition d'un formateur 
+    public function edit_form($id)
+    {
+
+        // dd($id);
+        // $formateur = Formateur::where('id', $id)->get();
+        // $formateur = DB::select('select * from formateurs where id = ?', [$id]);
+        // dd($formateur); 
+
+        $formateur = Formateur::find($id);
+        // dd($formateur);
+
+        return view('admin.formateur.edit_form', compact('formateur'));
+    }
+
+    public function edit_save(Request $request)
+    {
+        
+        // find the id of the formateur to update and update it
+        $id = $request->id;
+        $formateur = Formateur::find($id);
+        
+        $rules = [
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'mail' => 'required|string|email|max:255|unique:formateurs,mail_formateur,'.$id,
+            // the image must be less than 60Ko
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+
+        if ($request->hasFile('image')) {
+            $date = date('d-m-Y');
+            $new_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
+            $str = 'images/formateurs';
+
+            $url_photo = URL::to('/')."/images/formateurs/".$new_image;
+
+            $request->image->move(public_path($str), $new_image);
+
+            // validate the image with rules and update the image
+          
+
+        }
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            formateur::where('id', $id)->update(['photos' => $new_image, 'url_photo' => $url_photo]);
+            $formateur->update([
+                'nom_formateur' => $request->nom,
+                'prenom_formateur' => $request->prenom,
+                'mail' => $request->mail,
+                'numero_formateur' => $request->phone,
+                'date_naissance' => $request->date_naissance,
+                'adresse' => $request->adresse,
+                'cin' => $request->cin,
+                'genre_id' => $request->sexe,
+                'specialite' => $request->specialite,
+                'niveau' => $request->niveau,
+        
+          ]);  
+        
+        }
+
+
+        // $validator = Validator::make($request->all(), $rules);
+
+
+        // $formateur->nom = $request->nom;
+        // $formateur->prenom = $request->prenom;
+        // $formateur->mail_formateur = $request->mail;
+        // $formateur->phone = $request->phone;
+        // $formateur->date_naissance = $request->date_naissance;
+        // $formateur->adresse = $request->adresse;
+        // $formateur->cin = $request->cin;
+        // $formateur->specialite = $request->specialite;
+        // $formateur->niveau = $request->niveau;
+        // $formateur->save();
+
+   
+// dd('done');
+
+
+        return back()->with('success', 'Formateur modifié avec succès!');
+    } 
+
+
     public function editer_photos($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
@@ -454,21 +545,21 @@ class ProfController extends Controller
         return redirect()->route('profile_formateur', $id);
 
     }
-    public function update(Request $request)
-    {
-        $id = $request->id_get;
-        $maj = formateur::where('id', $id)->update([
-            'nom_formateur' => $request->nom_formateur,
-            'prenom_formateur' => $request->prenom_formateur,
-            'mail_formateur' => $request->email_formateur,
-            'numero_formateur' => $request->phone_formateur,
-            'adresse' => $request->adresse_formateur,
-            'cin' => $request->cin_formateur,
-            'specialite' => $request->specialite_formateur,
-            'niveau' => $request->niveau_formateur
-        ]);
-        return back();
-    }
+    // public function update(Request $request)
+    // {
+    //     $id = $request->id_get;
+    //     $maj = formateur::where('id', $id)->update([
+    //         'nom_formateur' => $request->nom_formateur,
+    //         'prenom_formateur' => $request->prenom_formateur,
+    //         'mail_formateur' => $request->email_formateur,
+    //         'numero_formateur' => $request->phone_formateur,
+    //         'adresse' => $request->adresse_formateur,
+    //         'cin' => $request->cin_formateur,
+    //         'specialite' => $request->specialite_formateur,
+    //         'niveau' => $request->niveau_formateur
+    //     ]);
+    //     return back();
+    // }
 
     public function destroy(Request $request)
     {

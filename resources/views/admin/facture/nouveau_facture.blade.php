@@ -565,9 +565,11 @@
                 //     $("#addRow").css("display", "none");
                 // }
 
-                console.log(($("#addRow").val() + 1));
-                console.log('total'+total_frais_annexe_possible);
+        console.log(($("#addRow").val() + 1));
+        console.log('total'+total_frais_annexe_possible);
 
+
+            // le bouton d'ajout de ligne est désactivé si le nombre de ligne est égale au nombre de frais possible
                 if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
                     $("#addRow").css("display", "inline-block");
                     for (var $i = 0; $i < userData.length; $i++) {
