@@ -218,7 +218,8 @@
                         </div>
 
                         <div class="col-12 pb-4 element">
-                            <div class="row  titres_services titre_annexe">
+                            <div class="row  titres_services" style="display: none" id="titres_services_annexe">
+                                {{-- <div class="titre_annexe" style="display: inline-block"> --}}
                                 <div class="col-3">
                                     <h6 class="m-0">Frais annexes</h6>
                                 </div>
@@ -237,6 +238,7 @@
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>
                                 </div>
+                            {{-- </div> --}}
                             </div>
 
                             <div id="newRow"></div>

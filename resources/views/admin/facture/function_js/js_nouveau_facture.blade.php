@@ -33,6 +33,16 @@
 
     $(document).ready(function() {
 
+        var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
+        if (total_frais_annexe_possible < 1) {
+            $(".titre_annexe").css("display", "none");
+
+        } else {
+            $(".titre_annexe").css("display", "inline-block");
+
+        }
+        console.log("totale: " + total_frais_annexe_possible);
+
         $(".changer_carret").on("click", function() {
             if (
                 $(this)
@@ -272,6 +282,14 @@
 
     // add row
     $(document).on('click', '#addRow', function() {
+
+        var test = ($(".row #inputFormRow").length + 1);
+        if (test < 1) {
+            $("#titres_services_annexe").css("display", "none");
+        } else {
+            $("#titres_services_annexe").css("display", "flex");
+        }
+
         $('#frais').empty();
         $.ajax({
             url: "{{route('frais_annexe')}}"
@@ -327,12 +345,12 @@
 
                     $('#newRow').append(html);
 
+
                     if (total_frais_annexe_possible >= ($("#addRow").val())) {
                         $("#addRow").css("display", "none");
                     }
                 } else {
                     $("#addRow").css("display", "none");
-
                 }
 
 
@@ -371,7 +389,7 @@
             totale_facture[i].innerHTML = sum;
             totale_facture[i].innerHTML = totale_facture[i].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
 
-       /*     totale_facture[i].innerHTML = number_format(sum, 0, ",", " "); */
+            /*     totale_facture[i].innerHTML = number_format(sum, 0, ",", " "); */
             totale += sum;
         }
 
@@ -384,7 +402,7 @@
 
         ensemble = totale + totale_annexe;
         totale_facture_ht.innerHTML = ensemble;
-        totale_facture_ht.innerHTML =totale_facture_ht.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+        totale_facture_ht.innerHTML = totale_facture_ht.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
 
         if (type_remise.value == 1) { // MGA
             calc_re = remise.value;
@@ -488,6 +506,9 @@
     $(document).on('click', '#removeRow', function() {
         $(this).closest('#inputFormRow').remove();
         var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
+        if ((total_frais_annexe_possible-1) < 1) {
+            $("#titres_services_annexe").css("display", "none");
+        }
         if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
             $("#addRow").css("display", "inline-block");
         }

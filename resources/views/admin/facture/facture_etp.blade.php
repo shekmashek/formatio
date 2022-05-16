@@ -311,9 +311,13 @@
                                             <th scope="col">Date de facturation</th>
                                             <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                             </th>
-                                            <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            <th scope="col">  <div align="right">
+                                                Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                          </div>
                                             </th>
-                                            <th scope="col">Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            <th scope="col">  <div align="right">
+                                                Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                           </div>
                                             </th>
                                             <th scope="col">Statut</th>
                                         </tr>
@@ -368,11 +372,15 @@
                                                 </a>
                                             </td>
                                             <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <div align="right">
                                                     {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                </div>
                                                 </a>
                                             </td>
                                             <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <div align="right">
                                                     {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                </div>
                                                 </a>
                                             </td>
                                             <td>
@@ -448,10 +456,13 @@
                                                 <th scope="col">Date de facturation</th>
                                                 <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                 </th>
-                                                <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-
+                                                <th scope="col">  <div align="right">
+                                                    Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+</div>
                                                 </th>
-                                                <th scope="col">Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                <th scope="col">  <div align="right">
+                                                    Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                              </div>
                                                 </th>
                                                 <th scope="col">Status</th>
                                             </tr>
@@ -502,11 +513,15 @@
                                                     </a>
                                                 </td>
                                                 <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                    <div align="right">
                                                         {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                    </div>
                                                     </a>
                                                 </td>
                                                 <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                    <div align="right">
                                                         {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                    </div>
                                                     </a>
                                                 </td>
                                                 <td>
@@ -569,10 +584,13 @@
                                                         <th scope="col">Date de facturation</th>
                                                         <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                         </th>
-                                                        <th scope="col">Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-
+                                                        <th scope="col">   <div align="right">
+                                                            Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+</div>
                                                         </th>
-                                                        <th scope="col">Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        <th scope="col">  <div align="right">
+                                                            Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                       </div>
                                                         </th>
                                                         <th scope="col">Status</th>
                                                     </tr>
@@ -622,11 +640,15 @@
                                                             </a>
                                                         </td>
                                                         <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                            <div align="right">
                                                                 {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                            </div>
                                                             </a>
                                                         </td>
                                                         <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                            <div align="right">
                                                                 {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                            </div>
                                                             </a>
                                                         </td>
                                                         <td>
