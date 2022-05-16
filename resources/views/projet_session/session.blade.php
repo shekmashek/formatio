@@ -1,6 +1,7 @@
 @extends('./layouts/admin')
 @inject('groupe', 'App\groupe')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
 <style>
     .corps_planning .nav-link {
         color: #637381;
@@ -209,15 +210,6 @@
         padding: 0.1rem 0.5rem !important;
     }
 
-    .type_formation{
-        border-radius: 1rem;
-        background-color: #826bf3;
-        color: rgb(255, 255, 255);
-        /* width: 60%; */
-        align-items: center margin: 0 auto;
-
-        padding: 0.1rem 0.5rem !important;
-    }
 
     .dernier_planning {
         text-align: left;
@@ -362,6 +354,49 @@
         color: #ffffff !important;
     }
 
+    .type_formation{
+        border-radius: 1rem;
+        background-color: #826bf3;
+        color: rgb(255, 255, 255);
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+
+        padding: 0.1rem 0.5rem !important;
+    }
+    .type_intra{
+        padding: 0.1rem 0.5rem !important;
+        font-size: 0.85rem;
+        background-color: #2193b0;
+        border-radius: 1rem;
+        transition: all 200ms;
+        color: white;
+        border: none;
+        box-shadow: none;
+        outline: none;
+        position: relative;
+        align-items: center margin: 0 auto;
+    }
+
+    .type_intra:hover,
+    .type_inter:hover{
+        cursor: default;
+        color: white;
+    }
+
+    .type_inter{
+        padding: 0.1rem 0.5rem !important;
+        font-size: 0.85rem;
+        background-color: #2ebf91;
+        border-radius: 1rem;
+        transition: all 200ms;
+        color: rgb(255, 255, 255);
+        border: none;
+        box-shadow: none;
+        outline: none;
+        position: relative;
+        align-items: center margin: 0 auto;
+    }
+
 </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
         integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
@@ -377,7 +412,7 @@
                     <div class="d-flex m-0 p-0 height_default">
                         <a href="{{ route('liste_projet') }}" class="retour_projet mt-4"><i class='bx bxs-chevron-left p-0' style="font-size: 2rem;"></i></a>
                         <i class='bx bxs-book-open me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i>
-                        <span class="type_formation m-2 p-1 ps-2 pe-2">{{ $projet[0]->type_formation }}</span>
+                        <span class="@if ($type_formation_id == 1) {{ 'type_intra' }} @elseif($type_formation_id == 2) {{ 'type_inter' }} @endif m-2 p-1 ps-2 pe-2">{{ $projet[0]->type_formation }}</span>
                         <span class="modalite m-2 p-1 ps-2 pe-2"><i class='bx bxs-group mt-1 me-1' ></i>{{ $modalite }}</span>
                         <div class="{{ $projet[0]->class_status_groupe }} m-2 mb-2 me-3">{{ $projet[0]->item_status_groupe }}</div>
                         {{-- <span class="mb-2 pt-2 me-3" style="font-weight: bold;">{{ $projet[0]->slogan }}</span> --}}

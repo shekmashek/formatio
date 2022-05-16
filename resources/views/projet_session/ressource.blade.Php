@@ -27,7 +27,7 @@
     <div class="row mt-0 align-content-center">
         <div id="affiche_ressource">
             @foreach ($ressource as $r)
-                <div class="d-flex mt-0 " id="ressource_{{ $r->id }}"
+                <div class="d-flex mt-1" id="ressource_{{ $r->id }}"
                     >
                     <div class="col-md-3">
                         <section>
@@ -52,7 +52,7 @@
                     <div class="col-md-2 text-center">
                         <section>
                             <button type="button" class="supprimer_ressource" data-id="{{ $r->id }}"><i
-                                    class="fa fa-trash-alt"></i></button>
+                                    class="bx bx-trash bx_supprimer" style="font-size: 1.1rem !important;"></i></button>
                         </section>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
                 $("#description_ressource").val('');
                 var html = '';
                 for (var i = 0; i < userData.length; i++) {
-                    html += '<div class="d-flex mt-0 " id="ressource_' + userData[i].id + '">';
+                    html += '<div class="d-flex mt-1 " id="ressource_' + userData[i].id + '">';
 
                     html += '<div class="col-md-3">';
                     html += '<section>';
@@ -178,7 +178,7 @@
                     html += '<div class="col-md-2 text-center">';
                     html += '<section>';
                     html += '<button type="button" class="supprimer_ressource" data-id="' +
-                        userData[i].id + '"><i class="fa fa-trash-alt"></i></button>';
+                        userData[i].id + '"><i class="bx bx-trash bx_supprimer" style="font-size: 1.1rem !important;"></i></button>';
                     html += '</section>';
                     html += '</div>';
 

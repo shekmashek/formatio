@@ -3,6 +3,52 @@
         cursor: pointer;
     }
 
+    .btn_emargement{
+        background-color: #7635dc;
+        color: #ffffff;
+    }
+    .btn_emargement:hover{
+        background-color: rgb(227, 227, 227);
+        color: #7635dc;
+    }
+
+    .answer {
+        display: block;
+    }
+
+    .answer~.answer {
+        display: none;
+    }
+    .edit_pointage{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        background-color: #7535dc2f;
+        transition: all .5s ease;
+    }
+    .edit_pointage:hover{
+        color: #7635dc;
+        background-color: #63738141;
+        transform: scale(1.1);
+    }
+    .inserer_emargement{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        background-color: #7535dc2f;
+        transition: all .5s ease;
+    }
+    .inserer_emargement:hover{
+        color: #7635dc;
+        background-color: #63738141;
+        transform: scale(1.1);
+    }
+    .present_label{
+        color: #7635dc !important;
+    }
+    .absent_label{
+        color: red;
+    }
 </style>
 <nav class="d-flex justify-content-between mb-1 ">
     <span class="titre_detail_session"><strong style="font-size: 14px" >Emargement des apprenants</strong></span>
@@ -15,7 +61,7 @@
         <div class="col-md-1 text-center">Début</div>
         <div class="col-md-1 text-center">Fin</div>
         <div class="col-md-2 text-center">Action</div>
-        <hr class="m-2 p-0">
+        <hr class="m-2 my-1 p-0">
     </div>
     @foreach ($datas as $dt)
         @php
@@ -27,13 +73,13 @@
             <input type="hidden" name="detail_id" value="{{ $dt->detail_id }}">
             <div id="presence_stagiaire">
                 <div class="row m-0 p-0">
-                    <div class="col-md-2 text-center">{{ $dt->nom_module }}</div>
-                    <div class="col-md-4 text-center">{{ $dt->lieu }}</div>
-                    <div class="col-md-2 text-center">{{ $dt->date_detail }}</div>
-                    <div class="col-md-1 text-center">{{ $dt->h_debut }}</div>
-                    <div class="col-md-1 text-center">{{ $dt->h_fin }}</div>
-                    <div class="col-md-2 text-center fermer_collapse"><i id="faire_presence" data-bs-toggle="collapse"
-                            href="#stagiaire_presence_{{ $dt->detail_id }}" class="bx bx-edit reset_radio">Emargement</i></div>
+                    <div class="col-md-2 mt-2 text-center">{{ $dt->nom_module }}</div>
+                    <div class="col-md-4 mt-2 text-center">{{ $dt->lieu }}</div>
+                    <div class="col-md-2 mt-2 text-center">{{ $dt->date_detail }}</div>
+                    <div class="col-md-1 mt-2 text-center">{{ $dt->h_debut }}</div>
+                    <div class="col-md-1 mt-2 text-center">{{ $dt->h_fin }}</div>
+                    <div class="col-md-2 text-center fermer_collapse"><span id="faire_presence" data-bs-toggle="collapse"
+                            href="#stagiaire_presence_{{ $dt->detail_id }}" class="btn reset_radio btn_emargement">Emargement</span></div>
                 </div>
                 <hr class="m-2 p-0">
                 <div class="collapse" id="stagiaire_presence_{{ $dt->detail_id }}">
@@ -107,8 +153,8 @@
                                             {{ $pre->text_status }}
                                     </label>
                                 </div>
-                                <div class="col-md-1 mt-2">
-                                    <i type="button" class="bx bx-edit edit_presence"  data-detail="{{ $dt->detail_id }}" data-stagiaire="{{ $pre->stagiaire_id }}"></i>
+                                <div class="col-md-1">
+                                    <i type="button" class="bx bx-edit bx_modifier edit_presence" style="1rem !important;" data-detail="{{ $dt->detail_id }}" data-stagiaire="{{ $pre->stagiaire_id }}"></i>
                                 </div>
                             </div>
                         @endif
@@ -124,45 +170,7 @@
     @endforeach
 </div>
 
-<style>
-    .answer {
-        display: block;
-    }
 
-    .answer~.answer {
-        display: none;
-    }
-    .edit_pointage{
-        padding: 0 5px;
-        margin: 0;
-        color: #7635dc;
-        background-color: #7535dc2f;
-        transition: all .5s ease;
-    }
-    .edit_pointage:hover{
-        color: #7635dc;
-        background-color: #63738141;
-        transform: scale(1.1);
-    }
-    .inserer_emargement{
-        padding: 0 5px;
-        margin: 0;
-        color: #7635dc;
-        background-color: #7535dc2f;
-        transition: all .5s ease;
-    }
-    .inserer_emargement:hover{
-        color: #7635dc;
-        background-color: #63738141;
-        transform: scale(1.1);
-    }
-    .present_label{
-        color: #7635dc !important;
-    }
-    .absent_label{
-        color: red;
-    }
-</style>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
