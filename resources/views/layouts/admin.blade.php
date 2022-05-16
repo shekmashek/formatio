@@ -20,6 +20,47 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="print" onload="this.media='all'"/>
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    </noscript>
+    <link href="{{asset('assets/CV/css/font-awesome/css/all.min.css?ver=1.2.1')}}" rel="stylesheet">
+    <link href="{{asset('assets/CV/css/mdb.min.css?ver=1.2.1')}}" rel="stylesheet">
+    <link href="{{asset('assets/CV/css/aos.css?ver=1.2.1')}}" rel="stylesheet">
+    <link href="{{asset('assets/CV/css/main.css?ver=1.2.1')}}" rel="stylesheet">
+
+    {{--lien guru--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery.mCustomScrollbar.css')}}">
+
+    <script type="text/javascript" src="{{asset('assets/guru/assets/js/jquery/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/guru/assets/js/jquery-ui/jquery-ui.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/guru/assets/js/popper.js/popper.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/guru/assets/js/bootstrap/js/bootstrap.min.js')}}"></script>
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="{{asset('assets/guru/assets/js/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
+    <!-- modernizr js -->
+    <script type="text/javascript" src="{{asset('assets/guru/assets/js/modernizr/modernizr.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/guru/assets/js/modernizr/css-scrollbars.js')}}"></script>
+    <!-- classie js -->
+    <script type="text/javascript" src="{{asset('assets/guru/assets/js/classie/classie.js')}}"></script>
+    <!-- Custom js -->
+    <script type="text/javascript" src="{{asset('assets/guru/assets/js/script.js')}}"></script>
+    <script src="{{asset('assets/guru/assets/js/pcoded.min.js')}}"></script>
+    <script src="{{asset('assets/guru/assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+    <script src="{{asset('assets/guru/assets/js/demo-12.js')}}"></script>
+
+
+
+    <style type="text/css">
+        [data-aos] {
+            opacity: 1 !important;
+            transform: translate(0) scale(1) !important;
+        }
+        
+      </style>
 </head>
 
 <body>
@@ -527,7 +568,7 @@
 
     <div class="home_content">
         <div class="container-fluid p-0 height-100 bg-light" id="content">
-            <header class="header row align-items-center g-0" id="header">
+            <header class="header row align-items-center g-0" style="box-shadow: none" id="header">
                 {{-- <div class="col-1 menu_hamburger">
                     <i class="bx bx-menu" id="btn_menu" role="button" onclick="clickSidebar();"></i>
                 </div> --}}
@@ -571,15 +612,15 @@
                     </div>
                     @endcanany
                     @canany('isCFP')
-                    <div class="d-flex flex-row">
-                        <a href="{{route('liste_module')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-customize'></i><span
+                    <div class="d-flex flex-row" style="text-decoration:none">
+                        <a style="color:gray;font-size:10px" href="{{route('liste_module')}}" class="btn_racourcis me-4" role="button"><span
+                                class="d-flex flex-column mt-2"><i class='bx bxs-customize'></i><span
                                     class="text_racourcis">Modules</span></span></a>
-                        <a href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bx-library'></i><span
+                        <a style="color:gray;font-size:10px" href="{{route('liste_projet')}}" class="btn_racourcis me-4" role="button"><span
+                                class="d-flex flex-column mt-2"><i class='bx bx-library'></i><span
                                     class="text_racourcis">Projets</span></span></a>
-                        <a href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
-                                class="d-flex flex-column"><i class='bx bxs-calendar-week'></i><span
+                        <a style="color:gray;font-size:10px" href="{{route('calendrier')}}" class="btn_racourcis me-4" role="button"><span
+                                class="d-flex flex-column mt-2"><i class='bx bxs-calendar-week'></i><span
                                     class="text_racourcis">Agenda</span></span></a>
                     </div>
                     @endcanany
@@ -610,7 +651,7 @@
 
                         <div class="col-5 header-right align-items-center d-flex flex-row">
                             <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2">
+                                <div class="btn_creer mt-2">
                                     <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
                                 </div>
                             </div>
@@ -622,7 +663,7 @@
 
                         <div class="col-5 header-right align-items-center d-flex flex-row">
                             <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2">
+                                <div class="btn_creer mt-2">
                                     <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
                                 </div>
                             </div>
@@ -634,7 +675,7 @@
 
                         <div class="col-5 header-right align-items-center d-flex flex-row">
                             <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2">
+                                <div class="btn_creer mt-2">
                                     <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
                                 </div>
                             </div>
@@ -646,7 +687,7 @@
                         @can('isCFP')
                         <div class="col-5 header-right align-items-center d-flex flex-row">
                             <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer me-2">
+                                <div class="btn_creer mt-3">
                                     <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bx-book-reader me-1 icones_creer'></i>Apprendre</span>
                                 </div>
                             </div>
@@ -657,7 +698,7 @@
 
                              <div class="">
                             @can('isManager')
-                            <div class="btn_creer dropdown">
+                            <div class="btn_creer dropdown mt-3">
 
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                     data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none"
@@ -756,7 +797,7 @@
                             </div>
                             @endcan
                             @can('isCFP')
-                            <div class="d-flex flex-row">
+                            <div class="d-flex flex-row mt-2">
                                 <div class="btn_creer dropdown">
 
                                     <a class="dropdown-toggle ms-2" href="#" role="button" id="dropdownMenuLink"
@@ -808,7 +849,7 @@
                                 </div>
                                 @can('isCFPPrincipale')
                                 <div class="ms-2">
-                                    <div class="btn_creer dropdown">
+                                    <div class="btn_creer dropdown" style="margin-right: 100px">
 
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-bs-toggle="dropdown" aria-expanded="false">

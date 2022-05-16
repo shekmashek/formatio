@@ -190,9 +190,6 @@ Route::post('/update_experience/{id?}','ProfController@update_experience')->name
 Route::post('/update_domaine/{id?}','ProfController@update_domaine')->name('update_domaine');
 Route::post('/update_mdp_formateur/{id?}','ProfController@update_mdp_formateur')->name('update_mdp_formateur');
 Route::post('/update_email_formateur/{id}','ProfController@update_email_formateur')->name('update_email_formateur');
-
-
-
 //collabforfateur
 Route::get('/collabformateur','ProfController@affiche')->name('collabformateur');
 //route formateur profil
@@ -219,20 +216,18 @@ Route::get('/editer_poste/{id}','ProfController@editer_poste')->name('editer_pos
 Route::get('/editer_nom_etp/{id}','ProfController@editer_nom_etp')->name('editer_nom_etp');
 Route::get('/editer_fonction/{id}','ProfController@editer_fonction')->name('editer_fonction');
 
-
-
-
-
-
-
 // Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
 //     Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
 // });
 
 Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
-Route::get('/nouveau_formateur',function(){
+
+Route::get('/nouveau_formateur', 'ProfController@create')->name('nouveau_formateur');
+
+Route::get('/getDomaine','ProfController@getDomaine')->name('getDomaines');
+/*Route::get('/nouveau_formateur',function(){
     return view('admin.formateur.nouveauFormateur');
-})->name('nouveau_formateur');
+})->name('nouveau_formateur');*/
 Route::get('/edit_formateur','ProfController@edit')->name('edit_formateur');
 Route::post('/update_formateur','ProfController@update')->name('update_formateur');
 Route::get('/destroy_formateur','ProfController@destroy')->name('destroy_formateur');
@@ -1216,3 +1211,8 @@ Route::post('modifier_salle/{id?}','SalleFormationController@update')->name('mod
 Route::get('tri_client','AbonnementController@tri_client')->name('tri_client');
 /**Presence */
 Route::get('statut_presence_emargement','HomeController@statut_presence_emargement')->name('statut_presence_emargement');
+
+//lien Safidy Mahafaly
+Route::get('/modificationGenerale/resp','ResponsableCfpController@editG')->name('modification.general');
+Route::get('/modificationSecurite/resp','ResponsableCfpController@editM')->name('modification_mdp');
+Route::get('/modificationCoordonées/resp','ResponsableCfpController@editC')->name('modification_coo');

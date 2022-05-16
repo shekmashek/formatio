@@ -374,4 +374,38 @@ class ResponsableCfpController extends Controller
 			return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
 		}
     }
+
+
+
+
+
+
+    //manomboka eto zah
+    //edition noms,prenoms,...
+    public function editG(Request $request,ResponsableCfpModel $responsable)
+    {
+        
+        DB::update('update responsables_cfp set nom_resp_cfp = ?,prenom_resp_cfp= ?,cin_resp_cfp =?,telephone_resp_cfp=? where id = ?', [$request->nom_resp_cfp,$request->prenoms,$request->CIN,$request->phone, $request->id]);
+        DB::update('update users set name = ? where id = ?', [$request->nom_resp_cfp, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
+    //edition mots de passe 
+    public function editM(Request $request)
+    {
+        $users =  db::select('select * from users where id = ?', [Auth::id()]);
+        $pwd = $users[0]->password;
+        $new_password = Hash::make($request->nouveaux);
+        if (Hash::check($request->get('actuel'), $pwd)) {
+            DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
+            return redirect()->route('profil_du_responsable');
+        } else {
+            return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+        }
+    }
+    //edition coordoneés
+    public function editC(Request $request)
+    {
+        DB::update('update responsables_cfp set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where user_id = ?', [$request->lot,$request->quartier,$request->cp,$request->ville,$request->region, Auth::id()]);
+        return redirect()->route('profil_du_responsable');
+    }
 }

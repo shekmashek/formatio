@@ -4,8 +4,6 @@
 @endsection
 @section('content')
 <div class="container-fluid justify-content-center pb-3">
-
-
     <style type="text/css">
         button,
         value {

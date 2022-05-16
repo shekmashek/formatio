@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FonctionGenerique;
+use App\Domaine;
 use Illuminate\Support\Facades\URL;
 
 class ProfController extends Controller
@@ -58,6 +59,8 @@ class ProfController extends Controller
             return view('admin.formateur.formateur', compact('formateur'));
         }
     } */
+    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -117,9 +120,15 @@ class ProfController extends Controller
 
         return response()->json($formateur);
     }
-
+    public function getDomaine(){
+        $domaines = Domaine::All();
+        return response()->json($domaines);
+    }
     public function create()
     {
+        
+        //return response()->json($domaines);
+        return view('admin.formateur.nouveauFormateur');
     }
     public function affiche()
     {
@@ -159,7 +168,8 @@ class ProfController extends Controller
                 $frm->prenom_formateur = $request->prenom;
                 $frm->mail_formateur = $request->mail;
                 $frm->numero_formateur = $request->phone;
-                $frm->genre_id = $genre;
+                $frm->description = $request->description;
+                $frm->genre_id = 2;
                 $frm->date_naissance = $request->date_naissance;
                 $frm->adresse = $request->adresse;
                 $frm->CIN = $request->cin;

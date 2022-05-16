@@ -55,7 +55,7 @@
                                         </div>
                                     </span>
                                 @else
-                                    <img src="{{asset('images/responsables/'.$responsable->photos_resp_cfp)}}" id = "photo_stg"  class="image-ronde">
+                                    <img src="{{asset('images/responsables/'.$responsable->photos_resp_cfp)}}" id="photo_stg"  class="image-ronde">
                                 @endif
                               {{-- <input type="text" id = 'vartemp'> --}}
                             </div>

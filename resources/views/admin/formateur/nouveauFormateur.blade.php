@@ -3,41 +3,20 @@
     <p class="text_header m-0 mt-1">Nouveau formateur</p>
 @endsection
 @section('content')
-
+<style>
+    ::placeholder {
+       
+        font-size: 12px;
+        }
+    .form-group,.select-group{
+        margin-top:10px; 
+        font-size: 12px;
+    }
+    
+</style>
 <div id="page-wrapper">
     <div class="container-fluid">
-        {{-- <div class="row">
-            <div class="col-lg-12">
-                <br>
-                <h3>Nouveau Formateur</h3>
-            </div>
-
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                            <li class="nav-item">
-                                <a class="nav-link  {{ Route::currentRouteNamed('liste_formateur') || Route::currentRouteNamed('liste_formateur') ? 'active' : '' }}" href="{{route('liste_formateur')}}">
-                                    <button class="btn btn_enregistrer">Formateurs</button></a>
-                            </li>
-
-                            <li class="nav-item">
-
-                                <a class="nav-link  {{ Route::currentRouteNamed('nouveau_formateur') ? 'active' : '' }}" aria-current="page" href="{{route('nouveau_formateur')}}">
-                                    <button class="btn btn_enregistrer">Nouveau Formateur</button></a>
-
-                            </li>
-
-                        </ul>
-
-                    </div>
-                </div>
-            </nav>
-
-        </div> --}}
+        {{-- commentaire vofafa --}}
 
         <div class="row mt-3">
             <div class="col-lg-12">
@@ -58,15 +37,15 @@
                 @endcanany
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div class="container-lg">
+                        <div class="container shadow-sm" style="padding: 20px ">
                             <div class="row bg-light">
                                 <form name="formInsert" id="formInsert" action="{{route('formateur.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();" class="form_insert_formateur">
                                     @csrf
 
-                                    <p style="font-size: 15px;">Profil Formateur</p>
+                                    <p style="font-size:30px;margin-top:20px;">Profil Formateur</p>
 
                                     <div class="form-control-file mt-2">
-                                        <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required><strong>Taille du fichier: 60Ko max</strong>
+                                        <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required><span style="font-size: 12px">Taille du fichier: 60Ko max</span>
                                     </div><br>
                                     @error('image')
                                     <div class="col-sm-6">
@@ -99,7 +78,7 @@
 
                                     <div class="row">
                                         <div class="col">
-                                            <div class="select-group">
+                                            <div class="select-group" >
                                                 <select name="sexe" id="sexe" class="form-control">
                                                     <option value="null" disabled selected hidden>Sexe</option>
                                                     <option value="1">Homme</option>
@@ -195,32 +174,39 @@
                                             <div class="col-sm-6">
                                                 <span style="color:#ff0000;"> {{$message}} </span>
                                             </div>
-                                            @enderror
+                                        @enderror
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <textarea name="description" id="" cols="170" rows="7" placeholder="Votre brieve description"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
 
 
-                                    <h1>Domaine et Competence</h1>
+                                    <p style="font-size:30px;margin-top:20px;">Domaine et Competence</p>
 
                                     <div class="row mt-2">
                                         <div class="col-lg-5">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="domaine[]" id="domaine" pattern="[A-Za-z' -]{1,50}" title="5 à 50 caractères" placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>
-                                            </div>
+                                            <select style="height: 35px;" aria-placeholder="teste" name="domaine[]" class="form-select mt-2 align-middle get_domaines" aria-label="Default select example">
+                                                {{-- @foreach ($domaines as $a)   
+                                                    <option>{{$a->nom_domaine}}</option>
+                                                @endforeach --}}
+                                            </select>
                                         </div>
                                         <div class="col-lg-5">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="competences[]" id="competences" pattern="[A-Za-z0-9&@+' ,-]{1,255}" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>
+                                                <input type="text" class="form-control" name="competences[]" id="competences" pattern="[A-Za-z0-9&@+' ,-]{1,255}" title="5 à 255 caractères" placeholder="Votre competence selon le domaine sélectionné" class="domaine" required>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 mt-3" align="center">
-                                            <button id="addRow1" class="form-control btn btn-warning envoyer" type="button"><i class="fa fa-plus" style="font-size: 15px"></i></button>
+                                        <div class="col-lg-2 mt-2" align="center">
+                                            <button id="addRow1" class="form-control btn btn-warning shadow-none envoyer" type="button"><i class="fa fa-plus" style="font-size: 15px"></i></button>
                                         </div>
                                         <div id="newRow1"></div>
                                     </div>
 
 
                                     <div class="row mt-4">
-                                        <h1 class="text-center">Expériences Professionnelles</h1>
+                                        <p style="font-size:30px;margin-top:20px;">Expériences Professionnelles</p>
                                         <div class="col-lg-12">
                                             <div class="row">
                                                 <div class="col-lg-4">
@@ -251,9 +237,9 @@
                                                         <input type="text" class="form-control" name="date_fin[]" id="date_fin" class="domaine" placeholder="Date de fin du travail" onfocus="(this.type='date')" >
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 mt-3" align="center">
+                                                <div class="col-lg-4 " align="center">
                                                     <div class="form-group">
-                                                        <button id="addRow2" type="button" class="btn btn-warning envoyer"><i class="fa fa-plus" style="font-size: 15px;"></i></button>
+                                                        <button id="addRow2" type="button"  class="btn btn-warning shadow-none envoyer"><i class="fa fa-plus" style="font-size: 15px;"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -264,7 +250,7 @@
                                     <div class="row">
                                         <div class="col-lg-12 mt-5 mb-5" align="center">
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-warning btn-lg text-white envoyer" value="Envoyer le profil">
+                                                <input type="submit" class="btn btn-warning shadow-none btn-lg text-white envoyer" value="Envoyer le profil">
                                             </div>
                                         </div>
                                     </div>
@@ -362,11 +348,13 @@ $(document).on('change', '#cin', function() {
 
     //add row1
     $(document).on('click', '#addRow1', function() {
+        
         var html = '';
         html += '<div class="row" id="inputFormRow1">';
         html += '<div class="col-lg-5">';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control" name="domaine[]" id="domaine" title="5 à 50 caractères" placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>';
+        html += '<select style="height: 35px;" aria-placeholder="teste" name="domaine[]" class="form-select mt-2 align-middle get_domaines" aria-label="Default select example">';
+        html += '</select>';
         html += '</div>';
         html += '</div>';
         html += '<div class="col-lg-5">';
@@ -374,13 +362,31 @@ $(document).on('change', '#cin', function() {
         html += '<input type="text" class="form-control" name="competences[]" id="competences" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>';
         html += '</div>';
         html += '</div>';
-        html += '<div class="col-lg-2 mt-3" align="center">';
-        html += '<button id="removeRow1" type="button" class="btn btn-danger envoyer"><i class="fa fa-close style="font-size: 15px;"></i></button>';
+        html += '<div class="col-lg-2 mt-2" align="center">';
+        html += '<button id="removeRow1" type="button" class="btn btn-danger shadow-none envoyer"><i class="fa-solid fa-xmark style="font-size: 15px;"></i></button>';
         html += '</div>';
         html += '</div>';
-
+        getDomaines();
         $('#newRow1').append(html);
     });
+    getDomaines();
+    function getDomaines(){
+        $.ajax({
+            url:"{{route('getDomaines')}}",
+            type:'get',
+            dataType:'json',
+            success:function(response){
+                var data = '';
+                $.each(response,function(key,value){
+                    data  = data +'<option value="'+value.nom_domaine+'">'+value.nom_domaine+'</option>';
+                });
+                $('.get_domaines').html(data);
+            }
+        });
+    }
+   
+                                               
+                                            
 
     // remove row1
     $(document).on('click', '#removeRow1', function() {
@@ -423,9 +429,9 @@ $(document).on('change', '#cin', function() {
         html2 += '<input type="date" class="form-control" name="date_fin[]" id="date_fin" class="domaine" placeholder="Date de fin du travail" >';
         html2 += '</div>';
         html2 += '</div>';
-        html2 += '<div class="col-lg-4 mt-3" align="center">';
+        html2 += '<div class="col-lg-4 mt-2" align="center">';
         html2 += '<div class="form-group">';
-        html2 += '<button id="removeRow2" type="button" class="btn btn-danger envoyer"><i class="fa fa-close style="font-size: 15px;" ></i></button>';
+        html2 += '<button id="removeRow2" type="button" class="btn btn-danger shadow-none envoyer"><i class="fa-solid fa-xmark style="font-size: 15px;" ></i></button>';
         html2 += '</div>';
         html2 += '</div>';
         html2 += '</div>';
@@ -445,3 +451,6 @@ $(document).on('change', '#cin', function() {
 
 </script>
 @endsection
+
+
+

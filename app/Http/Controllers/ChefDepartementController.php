@@ -142,7 +142,7 @@ class ChefDepartementController extends Controller
         $chef =DB::select('select *  from chef_departements where id = ?',[$id])[0];
         if($chef->genre_id == 1) $genre = "Femme";
         if($chef->genre_id == 2) $genre = "Homme";
-        if($chef->genre_id == null) $genre = '';
+        if($chef->genre_id == null) $genre = ''; 
         return view('admin.chefDepartement.edit_nom', compact('chef','genre'));
     }
     public function editer_genre($id, Request $request)
