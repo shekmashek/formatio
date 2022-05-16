@@ -107,20 +107,43 @@ class SessionController extends Controller
     }
     
     //tests my_detail_session
-    public function my_detail_session($id){
+    public function my_detail_session(Request $request){
         $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-        $cfp_id = $resp->cfp_id;
 
+        $id = $request->Id;
         $result = DB::table('v_detail_session')
-                ->where('cfp_id', $cfp_id)
+                // ->where('cfp_id', $cfp_id)
                 ->where('detail_id', '=', $id)
                 ->get();
 
         // dd($result);
         return response()->json($result);
     }
+
+    public function my_detail_session_etp(Request $request){
+        $id = $request->Id;
+        $result = DB::table('v_detail_session')
+                ->where('detail_id', '=', $id)
+                ->get();
+
+        // dd($result);
+        return response()->json($result);
+    }
+    
+    // public function information_formateur(Request $request)
+    // {
+    //     $fonct = new FonctionGenerique();
+    //     $id = $request->Id;
+    //     // $user_id = Auth::user()->id;
+    //     // dd($user_id);
+    //     // $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+
+    //     $formateur = DB::select("select * from v_demmande_cfp_formateur where formateur_id = ?", [$id]);
+
+    //     return response()->json($formateur);
+    // }
 
     public function detail_session(){
         // dd(URL::to('/').'/sarin Gael');
@@ -221,7 +244,7 @@ class SessionController extends Controller
             $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
 
-     //     $prix = $fonct->findWhereMulitOne('v_montant_session',['groupe_id'],[$id]);
+        //  $prix = $fonct->findWhereMulitOne('v_montant_session',['groupe_id'],[$id]);
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);

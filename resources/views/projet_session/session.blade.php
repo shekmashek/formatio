@@ -355,7 +355,7 @@
         border-radius: 50%;
     }
     .testAvatar:hover{
-        cursor: pointer;
+        /* cursor: pointer; */
         border-radius: 50%;
     }
     
@@ -464,7 +464,7 @@
                             <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
                                 <span style="margin-left: 8px; font-size: 16px ; font-weight: 400; text-transform: capitalize; color: #0765f3">{{ $projet[0]->nom_cfp }}</span></p>&nbsp;&nbsp;
                             <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2 testAvatar"
-                                height="30px" width="30px" data-id={{$projet[0]->cfp_id}} id={{$projet[0]->cfp_id}} onclick="afficherInfos();">&nbsp;
+                                height="30px" width="30px" data-id={{$projet[0]->cfp_id}} id={{$projet[0]->cfp_id}}>&nbsp;
                         </div>
                     </div>
                     @canany(['isCFP'])
@@ -752,7 +752,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                        <div class="col-md-1"><i class='bx bx-phone' ></i></div>
                         <div class="col-md-3" style="text-align: left">Tel</div>
                         <div class="col-md" style="text-align: left">: {{ $projet[0]->tel_cfp }}</div>
                     </div>
@@ -760,7 +760,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
                         <div class="col-md-3" style="text-align: left">Adresse</div>
                         <div class="col-md" style="text-align: left">
                             <div>: {{ $projet[0]->adresse_lot_cfp }}</div>
@@ -772,7 +772,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
                         <div class="col-md-3" style="text-align: left">E-mail</div>
                         <div class="col-md" style="text-align: left">
                             : {{ $projet[0]->mail_cfp }}
@@ -782,7 +782,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                        <div class="col-md-1"><i class='bx bx-globe'></i></div>
                         <div class="col-md-3" style="text-align: left">Site web</div>
                         <div class="col-md" style="text-align: left">
                             : {{ $projet[0]->site_web }}
@@ -886,7 +886,7 @@
         </div> --}}
     {{-- </div> --}}
     {{-- affiche prof --}}
-    <div class="prof mt-3">
+    {{-- <div class="prof mt-3">
         <div class="row">
             <div class="col">
                 <p class="m-0">Infos</p>
@@ -903,7 +903,7 @@
             </div>
 
         </div>
-    </div>
+    </div> --}}
     </div>
 
     <script>

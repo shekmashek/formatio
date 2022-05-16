@@ -386,7 +386,7 @@
                                         $i = 1;
                                     @endphp
                                     @foreach ($datas as $d)
-                                        <tr class="myDraw" data-id="{{$d->detail_id}}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                        <tr class="information infoEtp" data-id="{{$d->detail_id}}" id="{{$d->detail_id}}" onclick="afficherInfos();">
                                             <td>{{ $i }}</td>
                                             @canany(['isReferent', 'isManager'])
                                                 <td>{{ $d->nom_cfp }}</td>
@@ -396,7 +396,8 @@
                                                 $salle = explode(",  ",$d->lieu);
                                             @endphp
                                             <td>{{ $salle[0] }}</td>
-                                            <td>{{ $salle[1] }}</td>
+                                            <td>{{ $salle[0] }}</td>
+                                            {{-- <td>{{ $salle[1] }}</td> --}}
                                             <td>{{ $d->date_detail }}</td>
                                             <td>{{ $d->h_debut }} h</td>
                                             <td>{{ $d->h_fin }} h</td>
@@ -405,7 +406,7 @@
                                                 @if ($d->photos == null)
                                                     <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @else
-                                                    <img src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                    <img onclick="afficherInfos();" src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif
                                             </td>
                                             @canany(['isCFP'])
@@ -658,178 +659,82 @@
         </div>
     </div>
 
-    {{--Drawer--}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width: 350px">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasRightLabel" class="text-center">DETAILS</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+{{--infos--}}
+<div class="infos mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0 text-center">INFORMATION</p>
         </div>
-        <div class="offcanvas-body">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Nom</th>
-                    </tr>
-                </thead>
-                <tbody id="dynamic">
-
-                </tbody>
-            </table>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
         </div>
-    </div>
-{{--endDrawer--}}
+        <hr class="mt-2">
+        <div class="mt-2" style="font-size:14px">
 
-    {{--test drawer--}}
-        <div class="drawer mt-3">
+        <div class="mt-1 text-center mb-3">
+            <span id="logo"></span>
+        </div>
+
+        {{-- <div class="mt-1 text-center">
+            <span id="nom1" style="color: #64b5f6; font-size: 16px; text-transform: uppercase; font-weight: bold"></span>
+            <span id="prenom1" style="color: #64b5f6; font-size: 12px; text-transform: capitalize; font-weight: bold"></span>
+        </div> --}}
+        <div class="mt-1">
             <div class="row">
-                <div class="col">
-                    <p class="m-0 text-center">INFORMATION</p>
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-user-check'></i></div>
+                <div class="col-md-4">Formateur</div>
+                <div class="col-md">
+                    <span id="nom" style="color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                    <span id="prenom" style="color: #64b5f6; font-size: 12px; text-transform: capitalize; font-weight: bold"></span>
                 </div>
-                <div class="col text-end">
-                    <i class="bx bx-x " role="button" onclick="afficherDrawer();"></i>
-                </div>
-                <hr class="mt-2">
-
-                @if ($type_formation_id == 1)
-                    <div class="mt-1 text-center mb-3">
-                        <img src="{{ asset('images/formateurs/'.$d->photos) }}" class="img-fluid text-center"
-                            style="width:120px;height: auto;" role="button" onclick="afficherDrawer();">
-                        <div>
-                    </div>
-            
-                    <div class="mt-1 text-center">
-                        <strong style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: 700">{{ $d->nom_formateur }}{{ $d->prenom_formateur }}</strong>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
-                            <div class="col-md-3" style="text-align: left">Organisme de formation</div>
-                            <div class="col-md" style="text-align: left">: {{ $d->nom_cfp }}</div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
-                            <div class="col-md-3" style="text-align: left">Module</div>
-                            <div class="col-md" style="text-align: left">
-                                <div>: {{ $d->nom_module }}</div>
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="col-md-3" style="text-align: left">Date</div>
-                            <div class="col-md" style="text-align: left">
-                                : {{ $d->date_detail }}
-                        </div>
-                        
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
-                            <div class="col-md-3" style="text-align: left">Début</div>
-                            <div class="col-md" style="text-align: left">
-                                : {{ $d->h_debut }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
-                            <div class="col-md-3" style="text-align: left">Fin</div>
-                            <div class="col-md" style="text-align: left">
-                                : {{ $d->h_fin }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="col-md-3" style="text-align: left">Lieu de formation</div>
-                            <div class="col-md" style="text-align: left">
-                                : {{ $d->lieu }}
-                        </div>
-                        
-                    </div>
-                @endif
-
-                @if ($type_formation_id == 2)
-                    <div class="mt-1 text-center mb-3">
-                        <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" class="img-fluid text-center"
-                            style="width:120px;height: auto;" role="button" onclick="afficherInfos();">
-                        <div>
-                    </div>
-            
-                    <div class="mt-1 text-center">
-                        <strong style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: 700">{{ $projet[0]->nom_cfp }}</strong>
-                    </div>
-                    {{-- <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
-                            <div class="col-md-3" style="text-align: left">Responsable</div>
-                            <div class="col-md">
-                                <div style="font-size: 14px; text-transform: uppercase; font-weight: bold; text-align: left">
-                                    <span style="font-size: 12px; text-transform: Capitalize; font-weight: bold ">
-
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
-                            <div class="col-md-3" style="text-align: left">Tel</div>
-                            <div class="col-md" style="text-align: left">: {{ $projet[0]->tel_cfp }}</div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
-                            <div class="col-md-3" style="text-align: left">Adresse</div>
-                            <div class="col-md" style="text-align: left">
-                                <div>: {{ $projet[0]->adresse_lot_cfp }}</div>
-                                <div>: {{ $projet[0]->adresse_ville_cfp }}</div>
-                                <div>: {{ $projet[0]->adresse_region_cfp }}</div>
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
-                            <div class="col-md-3" style="text-align: left">E-mail</div>
-                            <div class="col-md" style="text-align: left">
-                                : {{ $projet[0]->mail_cfp }}
-                        </div>
-                        
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
-                            <div class="col-md-3" style="text-align: left">Site web</div>
-                            <div class="col-md" style="text-align: left">
-                                : {{ $projet[0]->site_web }}
-                            </div>
-                        </div>
-                    </div>
-                @endif
             </div>
         </div>
-
-    {{--endTestDrawer--}}
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-package'></i></div>
+                <div class="col-md-4">Module</div>
+                <div class="col-md"><span id="genre"></span></div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
+                <div class="col-md-4">Lieu de formation</div>
+                <div class="col-md">
+                    <span id="email"></span>
+                </div>
+            </div> 
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-calendar'></i></div>
+                <div class="col-md-4">Date de formation</div>
+                <div class="col-md"><span id="telephone"></span></div>
+            </div>
+            
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-time-five'></i></div>
+                <div class="col-md-4">Début</div>
+                <div class="col-md"><span id="specialite"></span></div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-time-five'></i></div>
+                <div class="col-md-4">Fin</div>
+                <div class="col-md"><span id="adresse_formateur"></span></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endif
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -1121,60 +1026,96 @@
 </script>
 
 {{--myDraw--}}
-
 <script>
-    $(".myDraw").on('click', function(e) {
-        let id = $(this).data("id");
-        console.log(id);
-        if(id){
-            $.ajax({
-                type: "get",
-                url: "/my_detail_session/myDetail/"+id,
-                success: function (data) {
-                    if(data){
-                        // console.log(data);
-                        var content = "";
-                        for(var i = 0; i < data.length; i++){
-                            content +=
-                            "<tr><td>"+ 
-                                 data[i].nom_module+
-                             "<td>"+
-                                 data[i].lieu+
-                             "</td><td>"+
-                                 data[i].date_detail+
-                             "</td><td>"+
-                                 data[i].h_debut+
-                             "</td><td>"+
-                                 data[i].h_fin+
-                             "</td><td>"+
-                                 data[i].nom_formateur+
-                             "</td><td>"+
-                                 data[i].prenom_formateur+
-                             "</td></tr>"
-                        }
-                        console.log(data[0].nom_module);
-                        $('#dynamic').html(content);
-                    }
-                }
-            });
+    $(".information").on('click', function(e) {
+        
+    let id = $(this).data("id");
+    var url = "{{ route('mySessionFilter') }}";
+
+    $.ajax({
+        method: "GET"
+        , url: url
+        , data: {
+            Id: id
+        }
+        , dataType: "html"
+        , success: function(response) {
+            let userData= JSON.parse(response);
+            console.log(userData);
+            //parcourir le premier tableau contenant les info sur les programmes
+            for (let $i = 0; $i< userData.length; $i++ ) {
+
+                let url_photo = '<img src="{{asset("images/formateurs/:url_img")}}" style="width:80px;height:80px;border-radius:100%">';
+                url_photo = url_photo.replace(":url_img", userData[$i].photos);
+                $("#logo").html(" ");
+                $("#logo").append(url_photo);
+                $("#nom").text(": "+userData[$i].nom_formateur); 
+                $("#prenom").text(userData[$i].prenom_formateur);
+                $("#genre").text(": "+userData[$i].nom_module);
+                $("#email").text(": "+userData[$i].lieu);
+                $("#telephone").text(": "+userData[$i].date_detail);
+                $("#specialite").text(": "+userData[$i].h_debut);
+                $("#adresse_formateur").text(": "+userData[$i].h_fin);
+            }
         }
     });
+});
 </script>
 
-tableRow += '<tr class="text-center content_table">';
-    tableRow +='<td><img src="{{asset("images/stagiaires/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
-    tableRow = tableRow.replace(":?",value.photos);
-    tableRow +=     
-        '</td><td>'+value.matricule+
-        '</td><td>'+value.nom_stagiaire+
-        '</td><td>'+value.prenom_stagiaire+
-        '</td><td>'+value.fonction_stagiaire+
-        '</td><td>'+value.mail_stagiaire+
-        '</td><td>'+value.telephone_stagiaire+
-        '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
-        '</td><tr>';
-    
-   
-    console.log(tableRow);
+{{--testEtp--}}
+<script>
+    $(".infoEtp").on('click', function(e) {
+        
+    let id = $(this).data("id");
+    console.log(id);
+    var url = "{{ route('mySessionFilter.etp') }}";
+
+    $.ajax({
+        method: "GET"
+        , url: url
+        , data: {
+            Id: id
+        }
+        , dataType: "html"
+        , success: function(response) {
+            let userData= JSON.parse(response);
+            console.log(userData);
+            //parcourir le premier tableau contenant les info sur les programmes
+            for (let $i = 0; $i< userData.length; $i++ ) {
+
+                let url_photo = '<img src="{{asset("images/formateurs/:url_img")}}" style="width:80px;height:80px;border-radius:100%">';
+                url_photo = url_photo.replace(":url_img", userData[$i].photos);
+                $("#logo").html(" ");
+                $("#logo").append(url_photo);
+                $("#nom").text(": "+userData[$i].nom_formateur); 
+                $("#prenom").text(userData[$i].prenom_formateur);
+                $("#genre").text(": "+userData[$i].nom_module);
+                $("#email").text(": "+userData[$i].lieu);
+                $("#telephone").text(": "+userData[$i].date_detail);
+                $("#specialite").text(": "+userData[$i].h_debut);
+                $("#adresse_formateur").text(": "+userData[$i].h_fin);
+            }
+        }
+    });
 });
-$('#dynamic_row').append(tableRow);
+</script>
+
+<script>
+    tableRow += '<tr class="text-center content_table">';
+        tableRow +='<td><img src="{{asset("images/stagiaires/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+        tableRow = tableRow.replace(":?",value.photos);
+        tableRow +=     
+            '</td><td>'+value.matricule+
+            '</td><td>'+value.nom_stagiaire+
+            '</td><td>'+value.prenom_stagiaire+
+            '</td><td>'+value.fonction_stagiaire+
+            '</td><td>'+value.mail_stagiaire+
+            '</td><td>'+value.telephone_stagiaire+
+            '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
+            '</td><tr>';
+        
+    
+        console.log(tableRow);
+    });
+    $('#dynamic_row').append(tableRow);
+</script>

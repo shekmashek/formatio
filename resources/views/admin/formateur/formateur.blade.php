@@ -183,43 +183,72 @@
                 </div>
             </form>
 
-            
+        {{--infos--}}
         <div class="infos mt-3">
             <div class="row">
                 <div class="col">
-                    <p class="m-0">infos</p>
+                    <p class="m-0 text-center">INFORMATION</p>
                 </div>
                 <div class="col text-end">
                     <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
                 </div>
                 <hr class="mt-2">
-              
-                <span class="text-center" id="logo"> </span>
-                <div style="font-size: 13px" >
-                <div class="text-center mt-2" >
-                <span id="nom"> </span>
+                <div class="mt-2" style="font-size:14px">
+
+                <div class="mt-1 text-center mb-3">
+                    <span id="logo"></span>
                 </div>
-                <div class="text-center mt-1">
-                  <span id="prenom" > <span>
+        
+                <div class="mt-1 text-center">
+                    <span id="nom" style="color: #64b5f6; font-size: 16px; text-transform: uppercase; font-weight: bold"></span>
+                    <span id="prenom" style="color: #64b5f6; font-size: 12px; text-transform: capitalize; font-weight: bold"></span>
                 </div>
-                <div class="text-center mt-1">
-                    <span id="genre"> <span>
-                </div>
-                    <div class="text-center mt-1">
-                        <span id="email">  </span>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-user-pin'></i></div>
+                        <div class="col-md-3">Sexe</div>
+                        <div class="col-md"><span id="genre"></span></div>
                     </div>
-                    <div class="text-center mt-1">
-                        <span id="telephone">  </span>
-                    </div>
-                <div class="text-center mt-1">
-                        <span id="specialite" > <span>
                 </div>
-                <div class="text-center mt-1">
-                    <span id="adresse_formateur" > <span>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-envelope'></i></div>
+                        <div class="col-md-3">E-mail</div>
+                        <div class="col-md">
+                            <span id="email"></span>
+                        </div>
+                    </div> 
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                        <div class="col-md-3">Tel</div>
+                        <div class="col-md"><span id="telephone"></span></div>
+                    </div>
+                    
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-briefcase-alt'></i></div>
+                        <div class="col-md-3">Spécialité</div>
+                        <div class="col-md"><span id="specialite"></span></div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                        <div class="col-md-3">Adresse</div>
+                        <div class="col-md"><span id="adresse_formateur"></span></div>
+                    </div>
+                </div>
             </div>
-            </div>
-                  
-            </div>
+        </div>
+
         </div>
             @if(Session::has('success'))
             <div class="alert alert-success">
@@ -262,11 +291,11 @@
                 $("#logo").append(url_photo);
                 $("#nom").text(userData[$i].nom_formateur); 
                 $("#prenom").text(userData[$i].prenom_formateur);
-                $("#genre").text(userData[$i].genre);
-                 $("#email").text(userData[$i].mail_formateur);
-                 $("#telephone").text(userData[$i].numero_formateur);
-                 $("#specialite").text(userData[$i].specialite);
-                $("#adresse_formateur").text(userData[$i].adresse);
+                $("#genre").text(": "+userData[$i].genre);
+                 $("#email").text(": "+userData[$i].mail_formateur);
+                 $("#telephone").text(": "+userData[$i].numero_formateur);
+                 $("#specialite").text(": "+userData[$i].specialite);
+                $("#adresse_formateur").text(": "+userData[$i].adresse);
             }
         }
     });

@@ -299,13 +299,13 @@
                         <span id="logo"></span>
                     </div>
                     <div class="mt-1 text-center">
-                        <span id="nom_entreprise" style="color: #64b5f6; font-size: 22px; text-transform: uppercase; "></span>
+                        <span id="nom_entreprise" style="color: #64b5f6; font-size: 20px; text-transform: uppercase; "></span>
                     </div>
 
                     <div class="mt-1">
                         <div class="row">
                             <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                            <div class="col-md-1"><i class='bx bx-user'></i></div>
                             <div class="col-md-3">Responsable</div>
                             <div class="col-md">
                                 <span id="nom_reponsable" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
@@ -316,7 +316,7 @@
                     <div class="mt-1">
                         <div class="row">
                             <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
                             <div class="col-md-3">Adresse</div>
                             <div class="col-md">
                                 <div class="row">
@@ -339,7 +339,7 @@
                     <div class="mt-2">
                         <div class="row">
                             <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
                             <div class="col-md-3">E-mail</div>
                             <div class="col-md">
                                 <span id="email_etp"><span>
@@ -349,7 +349,7 @@
                     <div class="mt-1">
                         <div class="row">
                             <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                            <div class="col-md-1"><i class='bx bx-phone'></i></div>
                             <div class="col-md-3">Tel</div>
                             <div class="col-md">
                                 <span id="telephone_etp"><span>
@@ -359,7 +359,7 @@
                     <div class="mt-1">
                         <div class="row">
                             <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                            <div class="col-md-1"><i class='bx bx-globe'></i></div>
                             <div class="col-md-3">Site web</div>
                             <div class="col-md"><span id="site_etp"></span></div>
                         </div>

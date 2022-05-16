@@ -1233,5 +1233,8 @@ Route::get('get_devise','SessionController@get_devise')->name('get_devise');
 Route::post('modifier_frais_annexe_formation','SessionController@modifier_frais_annexe_formation')->name('modifier_frais_annexe_formation');
 
 //test
-Route::get('/my_detail_session/myDetail/{id}', 'SessionController@my_detail_session');
+Route::get('/my_detail_session/myDetail', 'SessionController@my_detail_session')->name('mySessionFilter');
+// Route::get('/my_detail_session/myDetail/{id}', 'SessionController@my_detail_session')->name('mySessionFilter');
+Route::get('/my_detail_session/myDetailEtp', 'SessionController@my_detail_session_etp')->name('mySessionFilter.etp');
+
 
