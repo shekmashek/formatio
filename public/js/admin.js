@@ -136,33 +136,26 @@ $(document).ready(function() {
 
 
 let sidebar = document.querySelector(".sidebar");
-let affichertuto = document.querySelector(".apprendre");
+//let affichertuto = document.querySelector(".apprendre");
 let afficherinfos = document.querySelector(".infos");
 let afficherfiltre = document.querySelector(".filtrer");
 let menu = document.querySelector(".bx-menu");
 
-
-
-
-    function afficherTuto() {
+  /* function afficherTuto() {
         affichertuto.classList.toggle("afficher");
-    }
-
+    }*/
 
     function afficherInfos() {
         afficherinfos.classList.toggle("afficher");
     }
 
-
-
 function clickSidebar() {
     sidebar.classList.toggle("active");
     // menu.classList.toggle("bx-menu-alt-right");
 }
-
-function afficherTuto() {
+/*function afficherTuto() {
     affichertuto.classList.toggle("afficher");
-}
+}*/
 
 function afficherFiltre() {
     afficherfiltre.classList.toggle("afficher");

@@ -1,2 +1,17 @@
 {
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "askForPassword": true,
+            "driver": "MySQL",
+            "name": "Suivi_formation",
+            "database": "bdd_suivi_formation_version_1",
+            "username": "root"
+        }
+    ]
 }

@@ -3,7 +3,7 @@
 <h3 class="text_header m-0 mt-1">Détail facture</h3>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+{{-- <link rel="stylesheet" href="{{asset('css/facture.css')}}"> --}}
 
 
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
@@ -136,7 +136,7 @@
                                     <tr>
                                         <td>{{$montant_facture->reference}}</td>
                                         <td>{{$montant_facture->nom_module}}</td>
-                                        <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe." du ".$montant_facture->date_debut_session}}</td>
+                                        <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe.",avec ".$montant_facture->nbre_participant." participant(s) du ".$montant_facture->date_debut_session}}</td>
                                         <td>{{$montant_facture->nom_groupe}}</td>
                                         <td>{{$montant_facture->qte}}</td>
                                         <td>
@@ -186,6 +186,7 @@
                                         <td>{{$frais_annexe->description}}</td>
                                         <td></td>
                                         <td>{{$frais_annexe->qte}}</td>
+                                        <td></td>
                                         <td>
                                             <div align="left">
                                                 {{$devise->devise." ".number_format($frais_annexe->pu,0,","," ")}}

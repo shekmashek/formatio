@@ -1,8 +1,8 @@
 <style>
-    .icon_plus {
+    /* .icon_plus {
         border: 2px solid whitesmoke;
         font-size: 0.5rem;
-    }
+    } */
 
     .nouveau_detail {
         background-color: #822164;
@@ -42,7 +42,7 @@
         text-align: center;
     }
 
-    .icon_plus {
+    /* .icon_plus {
         color: #b8368f;
         margin-top: -1rem;
         font-size: 3rem;
@@ -52,7 +52,7 @@
 
     .icon_plus:hover {
         cursor: pointer;
-    }
+    } */
 
     p {
         text-align: center !important;
@@ -116,7 +116,18 @@
     </div>
 @endif
 <nav class="d-flex justify-content-between mb-1 ">
-    <span class="titre_detail_session"><strong style="font-size: 14px">Séance(s) de la session</strong></span>
+    <span class="titre_detail_session">
+    @php
+        $info = $groupe->infos_session($projet[0]->groupe_id);
+        if ($info->difference == null && $info->nb_detail == 0) {
+            echo $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }elseif ($info->difference != null && $info->nb_detail == 1) {
+            echo $info->nb_detail. ' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }elseif ($info->difference != null && $info->nb_detail > 1) {
+            echo $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }
+    @endphp
+    </span>
     @canany(['isCFP'])
     <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
         data-bs-target="#modal_nouveau_detail">
@@ -250,9 +261,9 @@
                                             <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
                                                 <option>Choississez votre salle de formation&hellip;</option>
                                                 @foreach ($salle_formation as $salle)
-                                                    <option value="{{ $salle->salle_formation }}">{{ $salle->salle_formation }}</option>
+                                                    <option value="{{ $salle->ville.',  '.$salle->salle_formation }}">{{ $salle->ville.', '.$salle->salle_formation }}</option>
                                                 @endforeach
-                                                <option class="ajout_salle" value="ajout">Ajouter une autre salle</option>
+                                                {{-- <option class="ajout_salle" value="ajout">Ajouter une autre salle</option> --}}
                                             </select>
                                         <button id="removeRow" type="button"><i
                                                 class="bx bx-minus-circle mx-1 my-3" style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button>
@@ -360,6 +371,7 @@
                                         <th>CFP</th>
                                     @endcanany
                                     <th>Module</th>
+                                    <th>Ville</th>
                                     <th width="30%">Salle de formation</th>
                                     <th>Date</th>
                                     <th>Début</th>
@@ -380,14 +392,18 @@
                                                 <td>{{ $d->nom_cfp }}</td>
                                             @endcanany
                                             <td>{{ $d->nom_module }}</td>
-                                            <td>{{ $d->lieu }}</td>
+                                            @php
+                                                $salle = explode(",  ",$d->lieu);
+                                            @endphp
+                                            <td>{{ $salle[0] }}</td>
+                                            <td>{{ $salle[1] }}</td>
                                             <td>{{ $d->date_detail }}</td>
                                             <td>{{ $d->h_debut }} h</td>
                                             <td>{{ $d->h_fin }} h</td>
                                             {{-- test commit --}}
                                             <td>
                                                 @if ($d->photos == null)
-                                                    <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photo }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                    <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @else
                                                     <img src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif
@@ -557,7 +573,7 @@
                                                 <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
                                                     <option>Choississez votre salle de formation&hellip;</option>
                                                     @foreach ($salle_formation as $salle)
-                                                        <option value="{{ $salle->salle_formation }}">{{ $salle->salle_formation }}</option>
+                                                        <option value="{{ $salle->ville.',  '.$salle->salle_formation }}">{{ $salle->ville.', '.$salle->salle_formation }}</option>
                                                     @endforeach
                                                 </select>
 

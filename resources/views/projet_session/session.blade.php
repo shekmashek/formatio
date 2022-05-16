@@ -1,4 +1,5 @@
 @extends('./layouts/admin')
+@inject('groupe', 'App\groupe')
 @section('content')
 <style>
     .corps_planning .nav-link {
@@ -9,13 +10,13 @@
         transition: all 200ms;
         text-transform: uppercase;
         padding-top: 10px;
-        border: none;
     }
+
 
     .nav-item .nav-link button.active {
         /* border-bottom: 3px solid #7635dc !important; */
         color: #7635dc;
-        border: none;
+        border-right:.2rem solid  #7635dc;
     }
 
     .nav-tabs .nav-link:hover {
@@ -29,6 +30,10 @@
         text-decoration-line: none;
     }
 
+    .corps_planning .nav-item .planning{
+        border-right:.2rem solid  #c5c4c49b;
+    }
+
 </style>
 <style>
     .shadow {
@@ -36,7 +41,6 @@
     }
 
     * {
-        font-family: 'Open Sans';
         font-size: .9rem;
     }
 
@@ -47,17 +51,16 @@
     .chiffre_d_affaire p {
         font-size: 0.9rem;
     }
-
+/*
     .corps_planning {
-        font-size: 0.9rem;
-    }
+        font-size: 1.5rem;
+    } */
 
     .body_nav {
         /* background-color: #e8e8e9;
     color: rgb(3, 0, 0); */
         padding: 6px 8px;
         border-radius: 4px 4px 0 0;
-        font-family: 'Open Sans';
     }
 
     .numero_session {
@@ -171,7 +174,7 @@
 
     .status_termine {
         border-radius: 1rem;
-        background-color: #1E9600;
+        background-color: #2ebf91;
         color: white;
         /* width: 60%; */
         align-items: center margin: 0 auto;
@@ -198,25 +201,22 @@
 
     .modalite {
         border-radius: 1rem;
-        /* background-color: rgb(213, 146, 217); */
-        /* color: whitesmoke; */
+        background-color: #26a0da;
+        color: rgb(255, 255, 255);
         /* width: 60%; */
         align-items: center margin: 0 auto;
 
         padding: 0.1rem 0.5rem !important;
     }
 
-    .planning {
-        text-align: left;
-        padding-left: 6px;
-        height: 100%;
-        font-size: 12px;
-        /* background-color: rgba(230, 228, 228, 0.39);
-    border-bottom: 1px solid rgb(187, 183, 183); */
-    }
+    .type_formation{
+        border-radius: 1rem;
+        background-color: #826bf3;
+        color: rgb(255, 255, 255);
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
 
-    .planning:hover {
-        background-color: #eeeeee;
+        padding: 0.1rem 0.5rem !important;
     }
 
     .dernier_planning {
@@ -233,15 +233,7 @@
         font-weight: bold;
     }
 
-    /* .active{
-    color: rgb(130,33,100);
-    background-color: white;
-    font-weight: bold;
-} */
-    .corps_planning {
-        /* border: 1px solid grey; */
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 3px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    }
+
 
     button {
         background-color: white;
@@ -269,9 +261,10 @@
 
     .btn_modifier_statut {
         /* background-color: white; */
-        /* border: none; */
+        /* border: 1px; */
         border-radius: 30px;
-        padding: .2rem 1rem;
+        /* border-color: #7635dc; */
+        padding: 1rem 1rem;
         color: black;
         /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
     }
@@ -283,8 +276,51 @@
     }
 
     .btn_modifier_statut:hover {
-        background: #eeeeee;
-        color: rgb(0, 0, 0);
+        background-color: white;
+        color: black;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .planning {
+        text-align: left;
+        padding-left: 6px;
+        height: 100%;
+        font-size: 12px;
+        margin:0;
+    }
+
+    .planning:hover {
+        background-color: #eeeeee;
+    }
+
+    .planning p{
+        font-size: .8rem;
+    }
+
+    @keyframes action{
+        0%{
+            filter: brightness(0.99);
+        }
+        25%{
+            filter: brightness(0.94);
+        }
+        50%{
+            filter: brightness(0.96);
+        }
+        75%{
+            filter: brightness(0.98);
+        }
+        100%{
+            filter: brightness(1);
+        }
+    }
+
+
+    .action_animation{
+        animation-name: action;
+        animation-duration: 3s;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
     }
 
     /* .btn_modifier_statut:focus{
@@ -303,6 +339,29 @@
         margin-right: .3rem;
     }
 
+    .liste_projet{
+        background-color: #637381;
+        margin: 0;
+        padding: 1;
+        color: #ffffff;
+    }
+
+    .liste_projet:hover{
+        background-color: #cfccccc5;
+        color: #191818;
+    }
+
+    .pdf_download{
+            background-color: #e73827 !important;
+            border-radius: 5px;
+    }
+    .pdf_download:hover{
+        background-color: #af3906 !important;
+    }
+    .pdf_download button{
+        color: #ffffff !important;
+    }
+
 </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
         integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
@@ -312,65 +371,81 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <div class="p-3 bg-body rounded ">
-        <nav class="body_nav m-0 d-flex justify-content-between">
-            <div>
-                <div class="d-flex m-0 p-0 height_default">
-                    <h5>{{ $module_session->reference . ' - ' . $module_session->nom_module }}</h5>&nbsp;&nbsp;&nbsp;
-                    <div class="{{ $projet[0]->class_status_groupe }} mb-2">{{ $projet[0]->item_status_groupe }}</div>
-                    <span class="modalite ms-3 mb-2 p-1 ps-2 pe-2">{{ $modalite }}</span>
-                </div>
-                <div class="d-flex m-0 p-0 height_default">
-                    <p class=" text-dark mt-3"> <strong>N°: {{ $projet[0]->nom_groupe }}</strong> </p>
-                    <p class="m-0">&nbsp; du {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} </p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    @canany(['isCFP', 'isReferent'])
-                        <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
-                        <p class="text-dark mt-3"> <strong>@php
-                            echo number_format($prix->montant_session, 2, '.', ' ');
-                        @endphp Ar</strong> </p>
-                    @endcanany
-
-                    <p class="m-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apprenants inscrits : &nbsp;</p>
-                    <p class="text-dark mt-3"> <strong>{{ $nombre_stg }}</strong> </p>
-                </div>
-            </div>
-            @canany(['isReferent','isCFP'])
-                <div>
-                    <div class="btn_modifier_statut dropdown">
-
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
-                            aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
-                            <i class='bx bx-slider icon_creer'></i>Modifier statut
-
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="ya">
-                            <li class="mt-1">
-                                <a class="dropdown-item"
-                                    href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 5]) }}">
-                                    <i class='bx bx-check'></i>&nbsp;Cloturé
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 6]) }}">
-                                    <i class='bx bxs-report'></i>&nbsp;Reporté
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('annuler_session', [$projet[0]->groupe_id]) }}">
-                                    <i class='bx bx-x'></i>&nbsp;Annulée
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item"
-                                    href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 8]) }}">
-                                    <i class='bx bx-refresh'></i>&nbsp;Repprogrammer
-                                </a>
-                            </li>
-                        </ul>
+        <nav class="body_nav m-0">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="d-flex m-0 p-0 height_default">
+                        <a href="{{ route('liste_projet') }}" class="retour_projet mt-4"><i class='bx bxs-chevron-left p-0' style="font-size: 2rem;"></i></a>
+                        <i class='bx bxs-book-open me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i>
+                        <span class="type_formation m-2 p-1 ps-2 pe-2">{{ $projet[0]->type_formation }}</span>
+                        <span class="modalite m-2 p-1 ps-2 pe-2"><i class='bx bxs-group mt-1 me-1' ></i>{{ $modalite }}</span>
+                        <div class="{{ $projet[0]->class_status_groupe }} m-2 mb-2 me-3">{{ $projet[0]->item_status_groupe }}</div>
+                        {{-- <span class="mb-2 pt-2 me-3" style="font-weight: bold;">{{ $projet[0]->slogan }}</span> --}}
+                        <span class="mb-2 pt-2" style="font-weight: bold;">{{ $module_session->reference . ' - ' . $module_session->nom_module }}</span>
+                    </div>
+                    <div class="d-flex m-0 p-0 height_default">
+                        <span class="text-dark ms-5" style="font-weight: bold;"> {{ $projet[0]->nom_groupe }} </span>
+                        <i class='bx bx-time-five ms-3 me-1' style="font-size: 1rem;"></i>
+                        <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>
+                        {{-- @canany(['isCFP', 'isReferent'])
+                            <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
+                            <p class="text-dark mt-3"> <strong>@php
+                                echo number_format($prix->montant_session, 2, '.', ' ');
+                            @endphp Ar</strong> </p>
+                        @endcanany --}}
+                        <i class='bx bx-group ms-3' style="font-size: 1rem;"></i>
+                        <span class="m-0 ms-1"> apprenant inscrit : </span>
+                        <span class="text-dark ms-1"> {{ $nombre_stg }} </span>
+                        <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
+                        <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
+                        <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i>
+                        <span class="m-0 ms-1">{{ $lieu_formation[1] }}</span>
                     </div>
                 </div>
-            @endcanany
+                <div class="col-lg-4 d-flex justify-content-end">
+                    @canany(['isReferent','isCFP'])
+                        <div class="dropdown">
+
+                            <a class="dropdown-toggle btn_modifier_statut" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                                aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                                <i class='bx bx-slider icon_creer'></i>Modifier statut
+
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="ya">
+                                <li class="mt-1">
+                                    <a class="dropdown-item"
+                                        href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 5]) }}">
+                                        <i class='bx bx-check'></i>&nbsp;Cloturé
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 6]) }}">
+                                        <i class='bx bxs-report'></i>&nbsp;Reporté
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('annuler_session', [$projet[0]->groupe_id]) }}">
+                                        <i class='bx bx-x'></i>&nbsp;Annulée
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('modifier_statut_session', [$projet[0]->groupe_id, 8]) }}">
+                                        <i class='bx bx-refresh'></i>&nbsp;Repprogrammer
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endcanany
+                    <div>
+                        <p><a href="{{ route('fiche_technique_pdf', [$projet[0]->groupe_id]) }}" class="pdf_download py-2" ><button class="btn"><i class='bx bxs-file-pdf'></i>&nbsp;&nbsp;&nbsp;PDF</button></a></p>
+                    </div>
+                    {{-- <div>
+                        <p class="text-end"><a href="{{ route('liste_projet') }}" ><button class="btn liste_projet ms-1"> <span>Retour sur les projets</span></button></a></p>
+                    </div> --}}
+                </div>
+            </div>
         </nav>
         <section class="bg-light py-1">
             <div class="m-0 p-0">
@@ -413,19 +488,22 @@
         </section>
         <section>
             <div class="row p-0 d-flex flex-row" role="tabpanel">
-                <div class="col-md-2">
+                <div class="col-md-2 nav_session">
                     <div class="corps_planning m-0 bg-light" id="myTab" data-id="refresh" role="tablist">
                         <div class="nav-item active" role="presentation">
                             <a href="#detail" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between py-1 active"
+                                <button class="planning d-flex justify-content-between active detail-tab
+                                @can('isCFP')
+                                    {{ 'action_animation' }}
+                                @endcan"
                                     onclick="openCity(event, 'detail')" style="width: 100%">
-                                    <p class="m-0 p-0">PLANNING</p>
+                                    <p class="m-0 pt-2 pb-2">PLANNING</p>
                                     @if ($test == 0)
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                     @endif
                                     @if ($test != 0)
-                                        <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                        <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                     @endif
                                 </button>
                             </a>
@@ -434,14 +512,25 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between apprenant-tab
+                                    @if ($type_formation_id == 1)
+                                        @can('isCFP')
+                                            {{ 'action_animation' }}
+                                        @endcan
+                                    @endif
+                                    @if ($type_formation_id == 2)
+                                        @can('isReferent')
+                                            {{ 'action_animation' }}
+                                        @endcan
+                                    @endif
+                                     "
                                         onclick="openCity(event, 'apprenant')" style="width: 100%">
-                                        <p class="m-0 p-0">APPRENANTS</p>
+                                        <p class="m-0 pt-2 pb-2">APPRENANTS</p>
                                         @if (count($stagiaire) == 0)
-                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                         @endif
                                         @if (count($stagiaire) != 0)
-                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                                 </a>
@@ -451,13 +540,13 @@
                         <div class="nav-item" role="presentation">
                             <a href="#ressource" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between py-1"
+                                <button class="planning d-flex justify-content-between action_animation ressource-tab"
                                     onclick="openCity(event, 'ressource')" style="width: 100%">
-                                    <p class="m-0 p-0">RESSOURCES</p>
+                                    <p class="m-0 pt-2 pb-2">RESSOURCES</p>
                                     @if (count($ressource) == 0)
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                     @else
-                                        <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                        <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                     @endif
                                 </button>
                             </a>
@@ -467,13 +556,13 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#frais" class="nav-link p-0" id="frais-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between action_animation frais-tab"
                                         onclick="openCity(event, 'frais')" style="width: 100%">
-                                        <p class="m-0 p-0">FRAIS ANNEXES</p>
+                                        <p class="m-0 pt-2 pb-2">FRAIS ANNEXES</p>
                                         @if (count($all_frais_annexe) <= 0)
-                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                         @else
-                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                             </div>
@@ -482,11 +571,14 @@
                         <div class="nav-item" role="presentation">
                             <a href="#document" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between py-1"
+                                <button class="planning d-flex justify-content-between document-tab
+                                    @canany(['isCFP','isFormateur'])
+                                        {{ 'action_animation' }}
+                                    @endcan"
                                     onclick="openCity(event, 'document')" style="width: 100%">
-                                    <p class="m-0 p-0">DOCUMENTS</p>
-                                    {{-- <i class="fa fa-dot-circle me-2" style="color: grey"></i> --}}
-                                    {{-- <i class="fa fa-check-circle me-2" style="color: chartreuse"></i> --}}
+                                    <p class="m-0 pt-2 pb-2">DOCUMENTS</p>
+                                    {{-- <i class="fa fa-dot-circle me-2 mt-2" style="color: grey"></i> --}}
+                                    {{-- <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i> --}}
                                 </button>
                             </a>
                         </div>
@@ -495,10 +587,10 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#chaud" class="nav-link p-0" id="chaud-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between chaud-tab"
                                         onclick="openCity(event, 'chaud')" style="width: 100%">
-                                        <p class="m-0 p-0">EVALUATION</p>
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        <p class="m-0 pt-2 pb-2">EVALUATION</p>
+                                        <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                     </button>
                                 </a>
                             </div>
@@ -507,23 +599,30 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#emargement" class="nav-link p-0" id="emargement-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between action_animation emargement-tab"
                                         onclick="openCity(event, 'emargement')" style="width: 100%">
-                                        <p class="m-0 p-0">EMARGEMENT</p>
-                                        <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                        <p class="m-0 pt-2 pb-2">EMARGEMENT</p>
+                                        @php
+                                            $pres = $groupe->statut_presences($projet[0]->groupe_id);
+                                            if ($pres == '#00ff00') {
+                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                            }elseif ($pres == '#bdbebd') {
+                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                            }
+                                        @endphp
                                     </button>
                                 </a>
                             </div>
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation" class="nav-link p-0" id="evaluation-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between  action_animation evaluation-tab"
                                         onclick="openCity(event, 'evaluation')" style="width: 100%">
-                                        <p class="m-0 p-0">PRE EVALUATION</p>
+                                        <p class="m-0 pt-2 pb-2">PRE EVALUATION</p>
                                         @if ($evaluation_avant <= 0)
-                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                         @else
-                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                                 </a>
@@ -531,13 +630,13 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between action_animation evaluation_pre_formation-tab"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
-                                        <p class="m-0 p-0">EVALUATION APRES FORMATION</p>
+                                        <p class="m-0 pt-2 pb-2">EVALUATION</p>
                                         @if ($evaluation_apres <= 0)
-                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                         @else
-                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                                 </a>
@@ -547,13 +646,13 @@
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between py-1"
+                                    <button class="planning d-flex justify-content-between evaluation_pre_formation-tab"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
-                                        <p class="m-0 p-0">EVALUATION DES STAGIAIRES</p>
+                                        <p class="m-0 pt-2 pb-2">EVALUATION</p>
                                         @if ($evaluation_apres <= 0)
-                                            <i class="fal fa-dot-circle me-2" style="color: grey"></i>
+                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                         @else
-                                            <i class="fa fa-check-circle me-2" style="color: chartreuse"></i>
+                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
                                         @endif
                                     </button>
                                 </a>
@@ -592,22 +691,21 @@
                         <div id="chaud" class="tab-pane fade show tabcontent" role="tabpanel" aria-labelledby="document-tab"
                             style="display: none">
                             {{-- @include('projet_session.index_evaluation') --}}
-                            @include(
-                                'admin.evaluation.evaluationChaud.evaluationChaud'
-                            )
+                            @include('admin.evaluation.evaluationChaud.evaluationChaud')
                         </div>
                     @endcanany
                     <div id="emargement" class=" tab-pane fade show tabcontent" role="tabpanel"
                         aria-labelledby="emargement-tab" style="display: none">
                         @include('projet_session.emargement')
                     </div>
-                    <div id="evaluation_pre_formation" class=" tab-pane fade show tabcontent" role="tabpanel"
-                        aria-labelledby="evaluation_pre_formation-tab" style="display: none">
-                        @include('projet_session.evaluation_stagiaires_pre')
-                    </div>
                     <div id="evaluation" class=" tab-pane fade show tabcontent" role="tabpanel"
                         aria-labelledby="evaluation-tab" style="display: none">
                         @include('projet_session.evaluation_stagiaires')
+                    </div>
+                    <div id="evaluation_pre_formation" class="tab-pane fade show tabcontent" role="tabpanel"
+                        aria-labelledby="evaluation_pre_formation-tab" style="display: none">
+                        {{-- @include('projet_session.evaluation_stagiaires_pre') --}}
+                        @include('projet_session.evaluation_chaud')
                     </div>
                 </div>
             </div>
@@ -663,16 +761,50 @@
     </div>
     </div>
 
+    {{-- keep nav in refresh --}}
     <script>
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            let lien = ($(e.target).attr('href'));
-            localStorage.setItem('activeTab', lien);
+        $('.evaluation_pre_formation-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'evaluation_pre_formation');
         });
+        $('.evaluation-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'evaluation');
+        });
+        $('.emargement-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'emargement');
+        });
+        $('.chaud-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'chaud');
+        });
+        $('.document-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'document');
+        });
+        $('.frais-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'frais');
+        });
+        $('.ressource-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'ressource');
+        });
+        $('.apprenant-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'apprenant');
+        });
+        $('.detail-tab').on('click',function(e){
+            localStorage.setItem('activeTab', 'detail');
+        });
+
         let activeTab = localStorage.getItem('activeTab');
+
         if(activeTab){
-            $('#myTab a[href="' + activeTab + '"]').tab('show');
+            $('.tabcontent').css('display','none');
+            $('#' + activeTab).show();
+            tablinks = document.getElementsByClassName("planning");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            $('.'+activeTab+'-tab').addClass("active");
         }
     </script>
+    {{-- keep nav in refresh --}}
+
     <script type="text/javascript">
         function openCity(evt, cityName) {
             // Declare all variables
@@ -703,5 +835,7 @@
                 x.style.display = "none";
             }
         }
+
+
     </script>
 @endsection

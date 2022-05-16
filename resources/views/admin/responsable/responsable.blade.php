@@ -16,7 +16,7 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
 
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('liste_responsable') || Route::currentRouteNamed('liste_responsable') ? 'active' : '' }}" aria-current="page" href="{{route('liste_responsable')}}">
                                     Liste des Responsables</a>
@@ -27,7 +27,7 @@
                                 <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('nouveau_responsable') ? 'active' : '' }}" href="{{route('nouveau_responsable')}}">
                                     Nouveau Responsable</a>
                             </li>
-                            @endcanany
+                            @endcanany --}}
                             <li class="nav-item dropdown">
                                 <form class="navbar-form navbar-left " role="search">
                                     <div class="btn-group">
@@ -102,7 +102,7 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>Nom</th>
+                                        <th>Photos</th>
                                         <th>Nom</th>
                                         <th>Prénom</th>
                                         <th>CIN</th>
@@ -120,7 +120,7 @@
                                     <tr>
                                         <td>
                                             {{-- <img src="/responsable-image/{{$d->photos}}" width="100" height="100"> --}}
-                                            <img src="{{asset('images/responsables/'.$d->photos)}}" width="30" height="30">
+                                            <img src="{{asset('images/responsables/'.$d->photos)}}"  style="width:50px;height:50px;border-radius:100%">
                                         </td>
                                         <td>{{$d->nom_resp}}</td>
                                         <td>{{$d->prenom_resp}}</td>
@@ -139,11 +139,11 @@
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         @can('isSuperAdmin')
-                                                        <li type="button" style="font-size:15px;"> <a class="modifier" title="Modifier le profil" id="{{$d->id}}" data-bs-toggle="modal" data-target="#myModal"><i style="font-size:18px;" class="fa fa-edit"></i>&nbsp;Modifier </a></li>
-                                                        <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_{{$d->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li>
+                                                        {{-- <li type="button" style="font-size:15px;"> <a class="modifier" title="Modifier le profil" id="{{$d->id}}" data-bs-toggle="modal" data-target="#myModal"><i style="font-size:18px;" class="fa fa-edit"></i>&nbsp;Modifier </a></li>
+                                                        <li style="font-size:15px;"><a href="" data-toggle="modal" data-target="#exampleModal_{{$d->id}}"><i style="font-size:18px;" class="fa fa-trash"></i> &nbsp;Supprimer</a> </li> --}}
 
                                                         @endcan
-                                                        <li type="button" style="font-size:15px;"><a href="{{route('profil_referent', $d)}}" class="afficher" title="Afficher le profil" id="{{$d->id}}"><i style="font-size:18px;" class="fa fa-user"></i>&nbsp; Profil </a></li>
+                                                        <li type="button" style="font-size:15px;"><a href="{{route('profil_referent', $d)}}" class="afficher" title="Afficher le profil" id="{{$d->id}}"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>&nbsp; Afficher </a></li>
                                                     </div>
                                                 </div>
                                             </center>

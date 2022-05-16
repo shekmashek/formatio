@@ -1,3 +1,4 @@
+
 .carHead{
     width:auto;
     background-image: linear-gradient(to right, rgb(251,206,51) , rgb(244,64,57));
@@ -47,6 +48,7 @@
     width: 320px;
     border-radius: 1rem;
     margin: 10px 10px;
+
 }
 ul p{
     color: rgb(142,155,178);
@@ -180,15 +182,61 @@ ul p{
 
 
 /* ---------------- */
-
+.ab_0{
+    border: 4px solid #1fa2ff !important;
+    background-color: #1fa2ff1e;
+}
+.ab_1{
+    border: 4px solid #00cdac !important;
+    background-color: #00cdab18;
+}
+.ab_2{
+    border: 4px solid #ff512f !important;
+    background-color: #ff522f28;
+}
+.ab_3{
+    border: 4px solid gold !important;
+    background-color: rgba(255, 217, 0, 0.136);
+}
+.ab_6{
+    border: 4px solid gold !important;
+    background-color: rgba(255, 217, 0, 0.136);
+}
 .card {
-    max-width: 250px;
-    height: 380px;
+    width: 250px;
+    min-height: 400px;
     position: relative;
     padding: 20px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
     margin: 0 auto;
     transition: all .5s ease;
+    border-radius: 7px;
+}
+.card_equipe {
+    width: 250px;
+    min-height: 380px;
+    position: relative;
+    padding: 20px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    margin: 0 auto;
+    transition: all .5s ease;
+    border-color: #f3d9ef!important;
+    border: 5px solid #f3d9ef!important;
+    border-radius: 7px;
+    background: #fff9fe!important;
+}
+.card_orga {
+    width: 250px;
+    min-height: 380px;
+    position: relative;
+    padding: 20px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    margin: 0 auto;
+    transition: all .5s ease;
+    border-color: #f3d9ef!important;
+    border: 5px solid #f3d9ef!important;
+    border-radius: 7px;
+    background: #fff9fe!important;
 }
 
 .h-1 {
@@ -256,9 +304,9 @@ ul p{
 }
 
 .card:hover {
-    background-color: gold;
-    background-color: rgba(238, 237, 237, 0.624);
-    transform: scale(1.1);
+    /* background-color: gold; */
+    /* background-color: rgba(238, 237, 237, 0.624); */
+    /* transform: scale(1.1); */
 }
 
 .card:hover .bx.bx-check {
@@ -318,6 +366,7 @@ ul p{
 .nav-item.active .nav-link {
     border-bottom: 3px solid #7635dc !important;
     border: none;
+    color: #7635dc;
 }
 
 .nav-tabs .nav-link:hover {
@@ -328,4 +377,46 @@ ul p{
 .nav-tabs .nav-item a{
     text-decoration: none;
     text-decoration-line: none;
+}
+
+.deconnexion_text {
+    color: #333 !important;
+    background-color: white !important;
+    border: 1px solid rgba(202, 202, 202, 0.618) !important;
+    margin-top: 15px !important;
+    border-radius: 5px !important;
+    margin: 0 auto;
+    height: 38px !important;
+}
+
+.deconnexion_text:hover{
+    border-color: red !important;
+    color: red !important;
+}
+
+.profil_btn{
+    margin: 0 auto;
+}
+
+.btn-primary:hover{
+    border-radius: 5px;
+}
+
+.btn-primary a:hover{
+    color: white;
+}
+.nom_type{
+   font-size: 22pt;
+   margin-bottom:0px;
+   color:#37097B;
+}
+.description{
+    font-size: 12pt;
+}
+.tarif{
+    font-size: 15pt;
+    color:  #4EBCF5;
+    font-weight: bold;
+    padding-top: 20px;
+    margin-bottom: 20px;
 }

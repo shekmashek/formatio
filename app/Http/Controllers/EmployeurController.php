@@ -46,7 +46,6 @@ class EmployeurController extends Controller
      */
     public function store(Request $request)
     {
-
         $rules = [
             'nom.required' => 'le Nom ne doit pas être null',
             'matricule.required' => 'invalid',
@@ -81,7 +80,7 @@ class EmployeurController extends Controller
             $user->name = $request->nom . " " . $request->prenom;
             $user->email = $request->mail;
             $user->cin = $cin;
-            $user->telephone =  $request->phone;
+            // $user->telephone =  $request->phone;
             $ch1 = "0000";
             $user->password = Hash::make($ch1);
             $user->save();
@@ -188,6 +187,9 @@ class EmployeurController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::delete('delete from users where id = ?', [$id]);
+        DB::delete("delete from role_users where user_id=?",[$id]);
+        DB::delete("delete from stagiaires where user_id=?",[$id]);
+        return back();
     }
 }

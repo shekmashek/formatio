@@ -102,7 +102,7 @@ class Projet extends Model
             dom.nom_domaine,
             mf.nom_formation,
             f.photos,
-            concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo,
+            concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photos,
             f.nom_formateur,
             f.prenom_formateur,
             f.mail_formateur,

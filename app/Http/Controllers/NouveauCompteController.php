@@ -1,4 +1,4 @@
-<?php
+s<?php
 
 namespace App\Http\Controllers;
 
@@ -16,7 +16,7 @@ use App\NouveauCompte;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
-
+use Image;
 class NouveauCompteController extends Controller
 {
     public function __construct()
@@ -83,7 +83,6 @@ class NouveauCompteController extends Controller
     public function create_compte_cfp(Request $req)
     {
         // dd($req->input());
-
         $this->new_compte->validation_form_cfp($req);
         $qst_IA_robot = 27 - 16;
         $value_confident = $req->value_confident;
@@ -96,16 +95,12 @@ class NouveauCompteController extends Controller
                 $data["logo_cfp"]  = str_replace(' ', '_', $req->name_cfp .  '' . $req->tel_cfp . '' . $date . '.' . $req->file('logo_cfp')->extension());
 
                 $url_logo = URL::to('/')."/images/CFP/".$data["logo_cfp"];
-
-
                 $data["nom_cfp"] = $req->name_cfp;
                 $data["email_cfp"] = $req->email_resp_cfp;
                 // $data["tel_cfp"] = $req->tel_resp_cfp;
                 // $data["web_cfp"] = $req->web_cfp;
                 $data["nif"] = $req->nif;
-
                 // ======= responsable
-
                 $resp["nom_resp"] = $req->nom_resp_cfp;
                 $resp["prenom_resp"] = $req->prenom_resp_cfp;
                 $resp["cin_resp"] = $req->cin_resp_cfp;
@@ -147,13 +142,31 @@ class NouveauCompteController extends Controller
                                         echo $e->getMessage();
                                     }
                                     //============= save image
-
                                     // $this->img->store_image("entreprise", $data["logo_cfp"], $req->file('logo_cfp')->getContent());
                                     $fonct = new FonctionGenerique();
                                     $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp]);
 
                            //         Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
                                     $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
+                                    //imager  resize
+                                     $image = $req->file('logo_cfp');
+    
+                                    $image_name = $data["logo_cfp"];
+                                
+                                    $destinationPath = public_path('/images/CFP');
+                                
+                                    $resize_image = Image::make($image->getRealPath());
+                                
+                                    $resize_image->resize(256, 128, function($constraint){
+                                        $constraint->aspectRatio();
+                                    })->save($destinationPath . '/' .  $image_name);
+   /*                             
+                                    $destinationPath = public_path('/images');
+                                
+                                 $req->logo_cfp->move($destinationPath,$image_name);
+ */
+                                    Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
+                                    // $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
                                         return back();
@@ -260,6 +273,21 @@ class NouveauCompteController extends Controller
                                     $name = $req->nom_resp_etp . ' ' . $req->prenom_resp_etp;
                             //        Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
                                     $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
+
+                                        //imager  resize
+                                        $image = $req->file('logo_etp');
+    
+                                        $image_name = $data["logo_etp"];
+                                    
+                                        $destinationPath = public_path('images/entreprises');
+                                    
+                                        $resize_image = Image::make($image->getRealPath());
+                                    
+                                        $resize_image->resize(256, 128, function($constraint){
+                                            $constraint->aspectRatio();
+                                        })->save($destinationPath . '/' .  $image_name);
+                                    Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
+                                    // $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
                                         return back();

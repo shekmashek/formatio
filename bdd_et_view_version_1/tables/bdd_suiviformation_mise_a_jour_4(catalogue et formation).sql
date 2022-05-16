@@ -62,11 +62,13 @@ CREATE TABLE modules (
   prix_groupe int(11) NULL,
   status int(11) default 0,
   bon_a_savoir TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL
+  prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 alter table modules add status int(11) default 0;
 alter table modules add prix_groupe int(11) NULL;
+alter table modules add etat_id bigint(20) NOT NULL REFERENCES etats(id) ON DELETE CASCADE;
 
 INSERT INTO modules (id, reference, nom_module, formation_id, created_at, updated_at, prix, duree,duree_jour,prerequis, objectif, modalite_formation, description ,niveau_id,materiel_necessaire,cible,min,max,bon_a_savoir,prestation,cfp_id) VALUES
 (2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1),
@@ -311,4 +313,13 @@ CREATE TABLE `competence_a_evaluers` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `etats` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `etat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO etats (id, etat, created_at, updated_at) VALUES
+(1, 'En ligne', NULL, NULL),
+(2, 'Hors ligne', NULL, NULL);

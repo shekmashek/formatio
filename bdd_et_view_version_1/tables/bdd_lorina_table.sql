@@ -74,4 +74,12 @@ GROUP BY
     valeur_ariary,
     updated_at;
 
+    //table chef departement
+
+ALTER TABLE chef_departements
+  add column `updated_at` timestamp NULL DEFAULT current_timestamp();
+  ALTER TABLE chef_departements
+ add column  genre_id bigint(20) unsigned
+    
+
 

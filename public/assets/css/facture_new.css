@@ -52,11 +52,11 @@
 
 .titre_facture{
     height: 50px;
-    width: 60%;
+    width: 30%;
     border-radius: 5px;
     border: 1px solid rgba(196, 196, 196, 0.946);
     padding-right: 10px;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     text-transform: capitalize;
     margin-bottom: 5px;
 }
@@ -107,7 +107,7 @@
 
 .input_tax{
     height: 50px;
-    width: 20.3%;
+    width: 17%;
 }
 
 .input_select{
@@ -138,7 +138,8 @@
 
 .nouveau_service{
     border: none;
-    border-top: 1px solid rgba(196, 196, 196, 0.946);
+    /* border-top: 1px solid rgba(196, 196, 196, 0.946);
+    */
     border-bottom: 1px solid rgba(196, 196, 196, 0.946);
 }
 
@@ -182,4 +183,54 @@
     height: 150px;
     max-height: 150px;
     min-height: 150px;
+}
+
+.navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+    transform: scale(1.1);
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+.icon_suppre_frais{
+    color: black;
+}
+
+.icon_suppre_frais:hover{
+    color: red;
+}
+
+.icon_suppre_frais:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.text_prix{
+    position: relative;
+    top: 15px;
+}
+
+.suppre_frais{
+    position: relative;
 }

@@ -83,3 +83,5 @@ create table salle_formation_of(
   cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   salle_formation text not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+alter table salle_formation_of add column ville VARCHAR(200);

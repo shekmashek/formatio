@@ -1,72 +1,245 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Affichage paramètre résponsable</h3>
+    <h3 class="text_header m-0 mt-1">Parametres</h3>
 @endsection
 @section('content')
-{{-- <div class="page-content page-container" id="page-content">
-        <div class="padding">
-            <div class="row container d-flex justify-content-center">
-                <div class="col-xl-12 col-md-12">
-                    <div class="card user-card-full">
-                        <div class="row m-l-2 m-r-2">
-                            <div class="col-sm-4 bg-c-lite-green user-profile">
-                                <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="/responsable-image/{{$refs->photos}}" width="30%" height="30%" class="rounded-circle">
-
-</div>
-<h6 class="f-w-600">{{$refs->nom_resp}} {{$refs->prenom_resp}} </h6>
-<h6 class="text-muted f-w-400">{{$refs->fonction_resp}}</h6>
-@can('isrefserent')
-<a hrefs="{{route('edit_responsable',$refs->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
-@endcan
-</div>
-</div>
-<div class="col-sm-8">
-    <div class="card-block">
-
-        <div class="row">
-            <div class="col-lg-6">
-                <h6 class="m-b-20 p-b-5  f-w-600">Informations personnelles</h6>
-                <hr>
-                <p class="m-b-10 f-w-600"><i class="bx bx-id-card"></i>&nbsp;CIN</p>
-                <h6 class="text-muted f-w-400">{{$refs->cin_resp}}</h6>
-
-
-                <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
-                <h6 class="text-muted f-w-400">{{$refs->telephone_resp}}</h6>
-
-
-
-                <p class="m-b-10 f-w-600"><i class="bx bx-envelope"></i>&nbsp;E-mail </p>
-                <h6 class="text-muted f-w-400">{{$refs->email_resp}}</h6>
-
+<link rel="stylesheet" href="{{asset('assets/css/parametres.css')}}">
+<div class="container mt-5">
+    <div class="row head_content mb-5">
+        <div class="col-3 first_col">
+            <div class="row">
+                <div class="col-4 logo">
+                    <a href="{{route('modification_logo',$entreprise->id)}}">
+                        @if($entreprise->logo == NULL )
+                            <span class="text-end">
+                                <img src="" alt="Logo centre de formation professionnel" >
+                            </span>
+                        @else
+                            <span class="text-end">
+                                <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" alt="Logo de l'entreprise" class="img-fluid">
+                            </span>
+                        @endif
+                    </a>
+                </div>
+                <div class="col-8">
+                    <div>
+                        @if($entreprise->nom_etp == NULL )
+                            <a href="{{route('modification_nom_entreprise',$entreprise->id)}}" class="action_name">Ajouter Nom</a>
+                        @else
+                            <p class="nom_org">{{$entreprise->nom_etp}}</p>
+                        @endif
+                        <a href="{{route('modification_nom_entreprise',$entreprise->id)}}" class="action_name">Modifier</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-6">
-                <h6 class="m-b-20 p-b-5  f-w-600">Informations professionnelles</h6>
-                <hr>
 
-                <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Entreprise</p>
-                <h6 class="text-muted f-w-400">{{$refs->entreprise->nom_etp}}</h6>
+        </div>
+        <div class="col-3 second_col">
+            <a href="{{route('liste_projet')}}">
+                <div class="row text-end p-0">
+                    <i class='bx bxs-component icon_infos p-0'></i>
+                </div>
+                <div class="row ps-2 ">
+                    <p class="nb_modules m-0 p-0">{{count($projets_counts)}}</p>
+                    <p class="text-muted borderBotom_color p-0 pb-2 text-uppercase">Projets</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-3 second_col">
+            <a href="{{route('liste_participant')}}">
+                <div class="row text-end p-0">
+                    <i class='bx bxs-user-detail icon_infos2 p-0'></i>
+                </div>
+                <div class="row ps-2 ">
+                    <p class="nb_modules m-0 p-0">{{count($stagiaires_counts)}}</p>
+                    <p class="text-muted borderBotom_color2 p-0 pb-2 text-uppercase">Stagiaires</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-3 second_col">
+            <div class="row text-end p-0">
+                <i class='bx bxs-user-pin icon_infos3 p-0'></i>
+            </div>
+            <div class="row ps-2 ">
+                <p class="nb_modules m-0 p-0">{{count($chef_departements_counts)}}</p>
+                <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Managers</p>
+            </div>
+        </div>
+        <div class="row row_bas g-0">
+            <div class="col third_col py-2">
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Sessions</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projets_counts)}}</p>
+                </a>
+            </div>
+            <div class="col third_col py-2">
+                <p class="text-muted text-center m-1 txt_row_bas">Modules Internes</p>
+                <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($modulesInternes_counts)}}</p>
+            </div>
+            <div class="col third_col py-2">
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Projets inter</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projetInter_counts)}}</p>
+                </a>
+            </div>
+            <div class="col third_col py-2">
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Projet Intra</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projetIntra_counts)}}</p>
+                </a>
+            </div>
+            <div class="col third_col py-2">
+                <a href="{{route('list_cfp')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Organisme Collaborés</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($cfp_counts)}}</p>
+                </a>
             </div>
         </div>
     </div>
-</div>
-</div> --}}
-<style>
-    .image-ronde {
-        width: 30px;
-        height: 30px;
-        border: none;
-        -moz-border-radius: 75px;
-        -webkit-border-radius: 75px;
-        border-radius: 75px;
-    }
 
-    .none:hover{
-        cursor:default;
-    }
-</style>
-<div class="row">
+    <div class="row justify-content-between">
+        <div class="col-5 info_plus2 p-5 pt-4">
+            <h5 class="text-center mb-5">Information Professionnelles</h5>
+            <div class="row border_bas">
+                <div class="col">
+                    @if($entreprise->email_etp == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-gmail icon_sociaux'></i>&nbsp;E-mail Incomplète</p><p class="text-end"><a href="{{route('modification_email_entreprise',$entreprise->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-gmail icon_sociaux'></i>&nbsp;{{$entreprise->email_etp}}</p><p class="text-end"><a href="{{route('modification_email_entreprise',$entreprise->id)}}" class="action_other">Modifier e-mail</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row border_bas mt-3">
+                <div class="col">
+                    @if($entreprise->telephone_etp == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux'></i>&nbsp;Téléphone Incomplète</p><p class="text-end"><a href="{{route('modification_telephone_entreprise',$entreprise->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux'></i>&nbsp;{{$entreprise->telephone_etp}}</p><p class="text-end"><a href="{{route('modification_telephone_entreprise',$entreprise->id)}}" class="action_other">Modifier Numéro</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row border_bas mt-3">
+                <div class="col">
+                    @if($secteur->nom_secteur == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux'></i>&nbsp;Secteur d'activiter Incomplète</p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux'></i>&nbsp;{{$secteur->nom_secteur}}</p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    @if($branche == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux'></i>&nbsp;Branche Incomplète</p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux'></i>&nbsp;{{$branche->nom_branche}}</p></div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-4 info_plus p-5 pt-4">
+            <h5 class="text-center mb-5">Facturations</h5>
+            <div class="row border_bas">
+                <div class="col">
+                    @if($entreprise->adresse_quartier == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map icon_sociaux'></i>&nbsp;Adresse Quartier Incomplète</p><p class="text-end"><a href="{{route('modification_adresse_entreprise',$entreprise->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map icon_sociaux'></i>&nbsp;{{$entreprise->adresse_rue}}&nbsp;{{$entreprise->adresse_quartier}}</p><p class="text-end"><a href="{{route('modification_adresse_entreprise',$entreprise->id)}}" class="action_other">Modifier</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row border_bas mt-3">
+                <div class="col">
+                    @if($entreprise->adresse_ville == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map-pin icon_sociaux'></i>&nbsp;Adresse Ville Incomplète</p><p class="text-end"><a href="{{route('modification_adresse_entreprise',$entreprise->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map-pin icon_sociaux'></i>&nbsp;{{$entreprise->adresse_ville}}&nbsp;{{$entreprise->adresse_code_postal}}</p><p class="text-end"><a href="{{route('modification_adresse_entreprise',$entreprise->id)}}" class="action_other">Modifier Ville</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row border_bas mt-3">
+                <div class="col">
+                    @if($entreprise->adresse_region == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-map-alt icon_sociaux'></i>&nbsp;Adresse Region Incomplète</p><p class="text-end"><a href="{{route('modification_adresse_entreprise',$entreprise->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-map-alt icon_sociaux'></i>&nbsp;{{$entreprise->adresse_region}}</p><p class="text-end"><a href="{{route('modification_adresse_entreprise',$entreprise->id)}}" class="action_other">Modifier Region</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    @if($entreprise->site_etp == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-globe icon_sociaux'></i>&nbsp;Site Web Incomplète</p><p class="text-end"><a href="{{route('modification_site_etp_entreprise',$entreprise->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-globe icon_sociaux'></i>&nbsp;{{$entreprise->site_etp}}</p><p class="text-end"><a href="{{route('modification_site_etp_entreprise',$entreprise->id)}}" class="action_other">Modifier Site Web</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    @if($entreprise->nif == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-sitemap icon_sociaux'></i>&nbsp;NIF Incomplète</p><p class="text-end"><a href="{{route('modification_nif_entreprise',$entreprise->id)}}" class="action_other_not">Compléter NIF</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-sitemap icon_sociaux'></i>&nbsp;{{$entreprise->nif}}</p><p class="text-end"><a href="{{route('modification_nif_entreprise',$entreprise->id)}}" class="action_other">Modifier NIF</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    @if($entreprise->stat == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-align-justify icon_sociaux'></i>&nbsp;STAT Incomplète</p><p class="text-end"><a href="{{route('modification_stat_entreprise',$entreprise->id)}}" class="action_other_not">Compléter STAT</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-align-justify icon_sociaux'></i>&nbsp;{{$entreprise->stat}}</p><p class="text-end"><a href="{{route('modification_stat_entreprise',$entreprise->id)}}" class="action_other">Modifier STAT</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    @if($entreprise->rcs == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-check-shield icon_sociaux'></i>&nbsp;RCS Incomplète</p><p class="text-end"><a href="{{route('modification_rcs_entreprise',$entreprise->id)}}" class="action_other_not">Compléter RCS</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-check-shield icon_sociaux'></i>&nbsp;{{$entreprise->rcs}}</p><p class="text-end"><a href="{{route('modification_rcs_entreprise',$entreprise->id)}}" class="action_other">Modifier RCS</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    @if($entreprise->cif == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-check-shield icon_sociaux'></i>&nbsp;CIF Incomplète</p><p class="text-end"><a href="{{route('modification_cif_entreprise',$entreprise->id)}}" class="action_other_not">Compléter CIF</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-check-shield icon_sociaux'></i>&nbsp;{{$entreprise->cif}}</p><p class="text-end"><a href="{{route('modification_cif_entreprise',$entreprise->id)}}" class="action_other">Modifier CIF</a></p></div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-2 info_plus4  pt-4">
+            <h5 class="text-center mb-4">Taxation</h5>
+            <div class="row border_bas">
+                <div class="col text-center">
+                    @if($entreprise->assujetti_id == NULL)
+                        <div class="p-1 m-0"><p>Assujetti Incomplète</p></div>
+                        <div><p class="text-end"><a href="{{route('modification_assujetti_entreprise',$entreprise->id)}}" class="action_other_not">Compléter Assujetti</a></p></div>
+                    @elseif($entreprise->assujetti_id == 1)
+                        <div class="p-1 m-0"><p>Assujetti</p></div>
+                        <div><p class=""><a href="{{route('modification_assujetti_entreprise',$entreprise->id)}}" class="action_other">Modifier Assujetti</a></p></div>
+                    @else
+                        <div class="p-1 m-0"><p>Non Assujetti</p></div>
+                        <div><p class="text-center"><a href="{{route('modification_assujetti_entreprise',$entreprise->id)}}" class="action_other">Modifier Assujetti</a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col text-center">
+                    <div class="p-1 m-0 mt-2"><p class="mb-2">TVA : @foreach($tva as $tva_cfp) {{$tva_cfp->pourcent}} @endforeach %</p></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@endsection
+
+{{-- <div class="row">
     <div class="row mt-2">
 
         <div class="col-lg-4">
@@ -84,7 +257,7 @@
                             </span>
                         @else
                             <span class="text-end">
-                                <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" width="50%" height="50%" class="">
+                                <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" width="120px" height="60px" class="">
                             </span>
                             @endif
                         </a>
@@ -92,8 +265,8 @@
                 </div>
 
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    <a href="{{route('modification_nom_entreprise',$entreprise->id)}}">
-                        <p class="p-1 m-0" style="font-size: 12px;">Nom entreprise<span style="float: right;">{{$nom_entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                    <a href="{{route('modification_$entreprise',$entreprise->id)}}">
+                        <p class="p-1 m-0" style="font-size: 12px;">Nom entreprise<span style="float: right;">{{$entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                     </a>
                 </div>
 
@@ -102,16 +275,16 @@
                         @if($entreprise->email_etp==NULL)
                             <p class="p-1 m-0" style="font-size: 12px;">E-mail entreprise<span style="float: right; color:red">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @else
-                            <p class="p-1 m-0" style="font-size: 12px;">E-mail entreprise<span style="float: right;">{{$nom_entreprise->email_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">E-mail entreprise<span style="float: right;">{{$entreprise->email_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @endif
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    <a href="{{route('modification_email_entreprise',$entreprise->id)}}">
+                    <a href="{{route('modification_telephone_entreprise',$entreprise->id)}}">
                         @if($entreprise->telephone_etp==NULL)
                             <p class="p-1 m-0" style="font-size: 12px;">Télephone entreprise<span style="float: right; color:red">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @else
-                            <p class="p-1 m-0" style="font-size: 12px;">Télephone entreprise<span style="float: right;">{{$nom_entreprise->telephone_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">Télephone entreprise<span style="float: right;">{{$entreprise->telephone_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @endif
                     </a>
                 </div>
@@ -120,7 +293,7 @@
                         @if($entreprise->nif==NULL)
                             <p class="p-1 m-0" style="font-size: 12px;">NIF<span style="float: right; color:red">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @else
-                            <p class="p-1 m-0" style="font-size: 12px;">NIF<span style="float: right;">{{$nom_entreprise->nif}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">NIF<span style="float: right;">{{$entreprise->nif}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @endif
                     </a>
                 </div>
@@ -129,7 +302,7 @@
                         @if($entreprise->stat==NULL)
                             <p class="p-1 m-0" style="font-size: 12px;">STAT<span style="float: right; color:red">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @else
-                            <p class="p-1 m-0" style="font-size: 12px;">STAT<span style="float: right;">{{$nom_entreprise->stat}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">STAT<span style="float: right;">{{$entreprise->stat}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @endif
                     </a>
                 </div>
@@ -138,7 +311,7 @@
                         @if($entreprise->rcs==NULL)
                             <p class="p-1 m-0" style="font-size: 12px;">RCS<span style="float: right; color:red">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @else
-                            <p class="p-1 m-0" style="font-size: 12px;">RCS<span style="float: right;">{{$nom_entreprise->rcs}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">RCS<span style="float: right;">{{$entreprise->rcs}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @endif
                     </a>
                 </div>
@@ -147,7 +320,7 @@
                         @if($entreprise->cif==NULL)
                             <p class="p-1 m-0" style="font-size: 12px;">CIF<span style="float: right; color:red">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @else
-                            <p class="p-1 m-0" style="font-size: 12px;">CIF<span style="float: right;">{{$nom_entreprise->cif}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                            <p class="p-1 m-0" style="font-size: 12px;">CIF<span style="float: right;">{{$entreprise->cif}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                         @endif
                     </a>
                 </div>
@@ -161,16 +334,12 @@
                     </a>
                 </div>
 
-
-                {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    <a href="{{route('profile_entreprise',$refs->entreprise_id)}}">
-                        <p class="p-1 m-0" style="font-size: 12px;">ENTREPRISE<span style="float: right;">{{$nom_entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
-                    </a>
-                </div> --}}
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    <a href="" class="none">
+                    @if($branche == null )
+                        <p class="p-1 m-0" style="font-size: 12px;">Branche<span style="float: right;">aucun<i class="fas fa-angle-right"></i></span></p>
+                    @else
                         <p class="p-1 m-0" style="font-size: 12px;">Branche<span style="float: right;">{{$branche->nom_branche}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
-                    </a>
+                    @endif
                 </div>
                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
             </div>
@@ -178,7 +347,7 @@
 
 
         <div class="col-lg-4">
-            <div class="form-control" style="height: 418px;">
+            <div class="form-control" style="height: 389px;">
                 <p class="text-center">Information de facturation</p>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="mt-5">
                     <a href="{{route('modification_adresse_entreprise',$entreprise->id)}}" class="">
@@ -201,7 +370,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="form-control" style="height: 418px; ">
+            <div class="form-control" style="height: 389px; ">
                 <p class="text-center">Information de taxation</p>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="mt-5">
                     @if($referent->assujetti_id == null )
@@ -219,22 +388,12 @@
                     @endif
                 </div>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    {{-- @if($referent->assujetti_id == null ) --}}
-                        <a href="" class="none_">
-                            <p class="p-1 m-0" style="font-size: 12px;">TVA en pourcentage (%)<span style="float: right;">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
-                        </a>
-                    {{-- @elseif($referent->assujetti_id == 1)
-                        <a href="{{route('modification_assujetti_entreprise',$refs->entreprise_id)}}" class="none_">
-                            <p class="p-1 m-0" style="font-size: 12px;">Taxation<span style="float: right;">Assujetti &nbsp;<i class="fas fa-angle-right"></i></span></p>
-                        </a>
-                    @else
-                        <a href="{{route('modification_assujetti_entreprise',$refs->entreprise_id)}}" class="none_">
-                            <p class="p-1 m-0" style="font-size: 12px;">Taxation<span style="float: right;">Non assujetti &nbsp;<i class="fas fa-angle-right"></i></span></p>
-                        </a>
-                    @endif --}}
+                    <a href="" class="none_">
+                        <p class="p-1 m-0" style="font-size: 12px;">TVA<span style="float: right;">Incomplète &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    @endsection
+    @endsection --}}

@@ -185,6 +185,36 @@
              background: #7535dc3f;
         }
 
+        .fc-h-event{
+            border: none !important;
+            margin-bottom: 3px;
+        }
+
+        .fc-h-event .fc-event-title-container:hover{
+            color: #7635dc;
+            background-color: white;
+            border: 1px solid #7635dc;
+        }
+        .type_formation_cal{
+            border-radius: 1rem;
+            background-color: #826bf3;
+            color: rgb(255, 255, 255);
+        }
+        .status_grise {
+            border-radius: 1rem;
+            background-color: #637381;
+            color: white;
+            /* width: 60%; */
+            align-items: center margin: 0 auto;
+            padding: .1rem .5rem;
+         }
+         .liste_projet{
+            background-color: #637381;
+            margin: 0;
+            padding: 1;
+            color: #ffffff;
+         }
+
     </style>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
@@ -201,11 +231,11 @@
                 <div id='calendar' style="width:100%;"></div>
             </div>
             <div class="col-sm-6" id="detail" style="display: none">
-                <div class="card" style="width: auto;">
+                {{-- <div class="card" style="width: auto;">
                     <div id="editor"></div>
-                    <div class="card-body" id="test">
+                    <div class="card-body" id="test"> --}}
                         <h2 class="card-title" style="text-align: center;">
-                            Projet de formation: <label id="types"></label><br>
+                            {{-- Projet de formation: <label id="types"></label><br> --}}
                             <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label>
                         </h2>
 
@@ -214,17 +244,27 @@
                             <h5 class="card-title" style="text-align: center;">
                                 <span id="etp" class="contenu"></span> <label for="logo" id="logo_etp"></label>  <button class="btn" id="fermer"  style="float: right"><i class="fa fa-times" aria-hidden="true"></i></button><label id="printpdf" style="float: right"></label></h5>
                         @endcanany --}}
+                        <div class="p-0 m-0 d-flex justify-content-start">
+                            <i class='bx bxs-book-open mt-2 me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i> <span class="type_formation_cal pt-1 mt-2 ps-2 pe-2" id="types"> </span>
+                            <label class="status_grise pt-1 mt-2 ps-2 pe-2 ms-2" id="statut"></label>
+                            <label class="contenu mt-3 ps-2 pe-2 ms-2" id="formation"> </label><label class="mt-3 ps-2 pe-2">-</label> <label class="contenu mt-3 ps-2 pe-2 ms-2" id="module"></label>
+                        </div>
+                        <div>
+                            <label  class="contenu ps-3 pt-2" id="projet"> </label>
+                            <label class="contenu ps-3 pt-2" id="session"></label>
+                            <i class = "bx bxs-time icones"></i> Du <label class="" id="debut"></label> au <label class="" id="fin"></label>
+                            <i class='bx bx-group ms-3' style="font-size: 1rem;"></i> apprenants inscrits: <label id="nb_apprenant"></label>
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i> <label id="lieu"></label>
+                            <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i><label id="salle"></label>
+                        </div>
+                        <div>
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i> </label> &nbsp;<label id="etp" class="contenu"> </label> <label for="logo" id="logo_etp"></label>
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i><label id="cfp" class="contenu"> </label><label for="logo" id="logo_cfp"></label><br>
+                            <label class="ps-3 pt-2"">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
 
-                        <label class="gauche" for="">Entreprise client: </label>&nbsp;<label for="logo" id="logo_etp"></label> &nbsp;<label id="etp" class="contenu"> </label><br>
-                        <label class="gauche" for="">Organisme de formation: </label>&nbsp;<label for="logo" id="logo_cfp"></label>&nbsp;<label id="cfp" class="contenu"> </label><br>
-                        <label class="gauche" for="">Nom du projet: </label>&nbsp;<label id="projet"> </label><br>
-                        <label class="gauche" for="">Session: </label>&nbsp;<label class="contenu" id="session"></label><br>
-                        <label class="gauche" for="">Statut:</label>&nbsp;<label id="statut"></label><br>
-                        <label class="gauche">Formation:</label>&nbsp;<label class="contenu" id="formation"> </label><br>
-                        <label class="gauche">Module:</label>&nbsp;<label class="contenu" id="module"></label><br>
-                        <label class="gauche">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
-                        <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br>
-                        <label class="gauche" for="">Date - Heure:</label><br>
+                        </div>
+
+                        <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
                          <hr>
                         @canany(['isReferent','isCFP','isFormateur'])
@@ -245,9 +285,9 @@
                                 </tbody>
                             </table>
                         @endcanany
-                    </div>
+                    {{-- </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="filtrer mt-3">
             <div class="row">
@@ -331,24 +371,30 @@
                     var event = Array();
                     var userDataDetail = JSON.parse(data);
                     var details = userDataDetail['details'];
+
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
-                    console.log(details);
+
                     var detail_id = userDataDetail['detail_id'];
 
 
                     for (var $i = 0; $i < details.length; $i++) {
 
                         event.push({
-                            title: groupe_entreprises[0].nom_formation
-                            , start: details[$i][0].date_detail
+                            @can('isStagiaire')
+                                title: details[$i].nom_formation
+                            @endcan
+                            @can('isReferent')
+                            title: details[$i].nom_formation
+                            @endcan
+                            , start: details[$i].date_detail
                             ,backgroundColor:getRandomColor()
-                            , nom_projet: details[$i][0].nom_projet
-                            , h_debut: details[$i][0].h_debut
-                            , h_fin: details[$i][0].h_fin
-                            , lieu: details[$i][0].lieu
-                            , formateur: details[$i][0].nom_formateur + ' ' + details[$i][0].prenom_formateur
-                            , detail_id: detail_id[$i][0].details_id
-                            , nom_cfp: details[$i][0].nom_cfp
+                            , nom_projet: details[$i].nom_projet
+                            , h_debut: details[$i].h_debut
+                            , h_fin: details[$i].h_fin
+                            , lieu: details[$i].lieu
+                            , formateur: details[$i].nom_formateur + ' ' + details[$i].prenom_formateur
+                            , detail_id: details[$i].details_id
+                            , nom_cfp: details[$i].nom_cfp
                             , customRender: true
 
                         });
@@ -363,7 +409,7 @@
                         , headerToolbar: {
                             left: 'prev,next'
                             , center: 'title'
-                            , right: 'dayGridMonth,timeGridWeek'
+                            , right: 'dayGridMonth'
 
                         }
                         , editable: true
@@ -385,12 +431,18 @@
                                         session.innerHTML = '';
                                         var date_formation = document.getElementById('date_formation');
                                         date_formation.innerHTML = '';
+                                        var nb_seance = document.getElementById('nb_seance');
+                                        nb_seance.innerHTML = '';
                                         var types = document.getElementById('types');
                                         types.innerHTML = '';
                                         var statut = document.getElementById('statut');
                                         statut.innerHTML = '';
                                         var printpdf = document.getElementById('printpdf');
                                         printpdf.innerHTML = '';
+                                        var debut = document.getElementById('debut');
+                                        debut.innerHTML = '';
+                                        var fin = document.getElementById('fin');
+                                        fin.innerHTML = '';
 
                                         var nom_cfp = document.getElementById('cfp');
                                         var etp = document.getElementById('etp');
@@ -436,24 +488,30 @@
                                         formateur.innerHTML = '';
                                         var lieu = document.getElementById('lieu');
                                         lieu.innerHTML = '';
+                                        var salle = document.getElementById('salle');
+                                        salle.innerHTML = '';
                                         @canany(['isReferent','isCFP','isFormateur'])
                                         var liste_app = document.getElementById('liste_app');
                                         liste_app.innerHTML = '';
+                                        var nb_apprenant = document.getElementById('nb_apprenant');
+                                        nb_apprenant.innerHTML = '';
                                         @endcanany
                                         // alert(JSON.stringify(response));
 
                                         var userDataDetail = JSON.parse(response);
                                         // alert(userData.length);
                                         var userData = userDataDetail['detail'];
+
                                         var statut_pj = userDataDetail['status'];
                                         var stg = userDataDetail['stagiaire'];
                                         var date_groupe = userDataDetail['date_groupe'];
+                                        var nb_seance = userDataDetail['nb_seance'];
                                         var test_photo = userDataDetail['photo_form'];
                                         var photo_formateur = userDataDetail['initial'];
                                         var initial_stg = userDataDetail['initial_stg'];
                                         var entreprises = userDataDetail['entreprises'];
                                         var formations = userDataDetail['formations'];
-
+                                        var nombre_stg = userDataDetail['nombre_stg'];
                                         var id_detail = userDataDetail['id_detail'];
                                         var images = '';
                                         var html = '';
@@ -466,17 +524,35 @@
                                         var cfp = '';
                                         var etp = '';
                                         var printpdf = '';
+                                        var date_debut;
+                                        var date_fin;
                                         for (var $i = 0; $i < userData.length; $i++) {
 
-                                            printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><i class="bx bx-printer" aria-hidden="true"></i></a>';
+
+                                            printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><button class="btn liste_projet ms-3 me-1"><i class="bx bxs-cloud-download"></i>&nbsp;&nbsp;&nbsp;PDF</button></a>';
                                             printpdf = printpdf.replace(":?",id_detail);
                                             $('#printpdf').append(printpdf);
 
+                                            date_debut = new Date(userData[$i].date_debut);
+                                            date_fin= new Date(userData[$i].date_fin);
+
+                                            const event1 = new Date(date_debut);
+                                            const event2 = new Date(date_fin);
+
+                                            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+                                            $('#debut').append(event1.toLocaleDateString('fr-FR',options));
+                                            $('#fin').append(event2.toLocaleDateString('fr-FR',options));
+
+                                            $('#nb_apprenant').append(nombre_stg);
 
                                             $("#projet").append(userData[$i].nom_projet);
                                             $('#statut').append(statut_pj);
                                             $('#types').append(userData[$i].type_formation);
-                                            $('#lieu').append(userData[$i].lieu);
+
+                                            const lieu_array = userData[$i].lieu.split(",  ",2);
+                                            $('#lieu').append(lieu_array[0]);
+                                            $('#salle').append(lieu_array[1]);
 
                                             session+='<a href = "{{url("detail_session/:?/:!")}}" target = "_blank">'+userData[$i].nom_groupe+'</a>'
                                             session = session.replace(":?",userData[$i].groupe_id);
@@ -496,10 +572,10 @@
                                                 logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
                                                 $('#logo_formateur').removeClass('randomColor photo_users');
                                             }
-                                            else if(test_photo=='non'){
+                                            else {
                                                 // console.log(photo_formateur[0]);
                                                 // alert(JSON.stringify(photo_formateur));
-                                                // logo_formateur = photo_formateur[0]['nm']+''+photo_formateur[0]['pr'];
+                                                logo_formateur = photo_formateur[0]['nm']+''+photo_formateur[0]['pr'];
                                                 // $('.photo_users').append(html);
                                             }
 
@@ -535,7 +611,7 @@
                                             html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i>'+date_groupe[$j].date_detail+'<i class = "bx bxs-time icones"></i>'+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>';
                                         }
                                         $('#date_formation').append(html);
-
+                                        $('#nb_seance').append(nb_seance);
                                         var html = '';
 
                                         for (var $a = 0; $a < stg.length; $a++) {
@@ -548,11 +624,12 @@
                                                 html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html = html.replace(":!",stg[$a].photos);
-
                                             }
-
+                                            $('#liste_app').append(html);
+                                            html = '';
                                         }
-                                        $('#liste_app').append(html);
+
+
                                     }
                                     , error: function(error) {
                                         console.log(error)

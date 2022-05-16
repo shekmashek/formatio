@@ -30,24 +30,22 @@
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
                                         Organisme de Formation</a>
                                 </li>
-                                <li class="nav-item mx-1">
+                                {{-- <li class="nav-item mx-1">
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_admin') ? 'active' : '' }}" href="{{route('utilisateur_admin')}}">
                                         Admin</a>
-                                </li>
-                                <li class="nav-item mx-1">
+                                </li> --}}
+                                {{-- <li class="nav-item mx-1">
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_superAdmin') ? 'active' : '' }}" href="{{route('utilisateur_superAdmin')}}">
                                         Super Admin</a>
-                                </li>
+                                </li> --}}
                             </ul>
-
-
                     </div>
                 </div>
             </nav>
 
             <div class="col-lg-12">
                 <br>
-                <h4>Entreprises professionnelles / Responsables des ETP</h4>
+                <h4>Entreprises professionnelles / Responsables des Entreprises</h4>
             </div>
 
         </div>
@@ -135,7 +133,7 @@
                                                         <i class="fa fa-ellipsis-v"></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <a class="dropdown-item" href="{{route('profil_referent')}}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
+                                                        <a class="dropdown-item" href="{{route('profil_referent',$resp)}}" ><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
                                                         {{-- <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
                                                         <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$resp->id}}" style="color: red">Supprimer</button></a> --}}
                                                     </ul>

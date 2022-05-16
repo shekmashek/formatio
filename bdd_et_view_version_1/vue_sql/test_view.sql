@@ -21,10 +21,7 @@
             when g.status = 1 then 'status_grise'
             when g.status = 0 then 'Créer'end class_status_groupe
     from groupes g
-
 select * from v_projet_session  order by date_projet desc limit 0,3
-
-
 
 CREATE OR REPLACE VIEW v_detailmodule AS
     SELECT
@@ -132,3 +129,5 @@ join responsables r on
     r.entreprise_id = e.id
 WHERE
     d.activiter = 1;
+
+select count(id) as nb_detail,sum(TIME_TO_SEC(h_fin) - TIME_TO_SEC(h_debut)) as difference from details where groupe_id = 27;

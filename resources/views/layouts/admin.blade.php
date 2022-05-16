@@ -122,7 +122,44 @@
                 <a href="{{route('departement.index')}}">Département</a>
             </li>
             </li> --}}
-            @endcanany
+            {{-- @endcanany --}}
+            @canany(['isSuperAdmin'])
+
+                                    {{-- <a href="{{route('liste_utilisateur')}}" class="btn_racourcis me-4 mt-3"  >
+                                        <span class="d-flex flex-column">  <i class='bx bxs-user'></i><span class="text_racourcis">Utilisateurs</span></span>
+
+
+                                    </a> --}}
+                                    <li>
+                                        <a href="{{route('categorie')}}" class="d-flex nav_linke">
+                                            <i class='bx bxs-doughnut-chart'></i>
+                                            <span class="links_name">Categories de formation</span>
+                                        </a>
+
+                                    </li>
+                                    <li>
+                                        <a href="{{route('module')}}"  class="d-flex nav_linke">
+                                            <i class='bx bx-book'></i>
+                                            <span class="links_name">Formations</span>
+                                        </a>
+
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('taxes') }}"   class="d-flex nav_linke">
+                                            <i class='bx bx-spreadsheet'></i>
+                                            <span class="links_name">Taxe</span>
+                                        </a>
+
+                                    </li>
+                                    <li>
+                                        <a  href="{{ route('devise') }}"   class="d-flex nav_linke">
+                                            <i class='bx bx-receipt'></i>
+                                            <span class="links_name">Devise</span>
+                                        </a>
+
+                                    </li>
+
+                     @endcanany
             @canany(['isReferent'])
                 <li>
                     <a href="{{ route('liste_departement') }}" class="d-flex nav_linke">
@@ -271,7 +308,7 @@
                 </a>
 
             </li> --}}
-            @endcanany
+            {{-- @endcanany --}}
             @canany(['isReferent'])
                 <li>
                     <a href="{{ route('employes') }}" class="d-flex nav_linke">
@@ -424,7 +461,7 @@
                     <span class="links_name">Liste Plan</span>
                 </a>
             </li> --}}
-            @endcanany
+            {{-- @endcanany --}}
             {{-- abonemment --}}
             @canany(['isSuperAdmin', 'isAdmin'])
                 <li>
@@ -509,8 +546,7 @@
                     <span><img src="{{ asset('img/logo_formation/logo_fmg7635dc.png') }}" alt=""
                             class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
-                <div class="col-5 align-items-center justify-content-start d-flex flex-row ">
-                    @canany(['isSuperAdmin'])
+                <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
 
                         <a href="{{ route('liste_utilisateur') }}" class="btn_racourcis me-4 mt-3">
                             <span class="d-flex flex-column"> <i class='bx bxs-user'></i><span
@@ -626,12 +662,56 @@
                         </div>
                     @endcanany
                 </div>
+                <div class="col-5 header-right align-items-center d-flex flex-row">
+                    <div class="col-10 d-flex flex-row justify-content-center apprendCreer pb-3">
+                        @can('isStagiaire')
 
-                <div class="col-4 header-right align-items-center d-flex flex-row">
-                    <div class="col-10 d-flex flex-row justify-content-center apprendCreer">
-                        <div class="btn_creer me-2">
-                            <span class="text_apprendre" role="button" onclick="afficherTuto();">Apprendre</span>
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
+                                </div>
+                            </div>
+
                         </div>
+
+                        @endcan
+                        @can('isManager')
+
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @endcan
+                        @can('isReferent')
+
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        @endcan
+                        @can('isCFP')
+                        <div class="col-5 header-right">
+                            <div class="col-11 d-flex flex-row justify-content-end apprendCreer">
+                                <div class="btn_creer">
+                                    <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @endcan
 
                         <div class="">
                             @can('isManager')
@@ -874,7 +954,7 @@
                                                 </div>
                                                 <hr>
                                                 <div class="text-center">
-                                                    <div>
+                                                    <div class="">
                                                         <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
                                                             </a></p>
@@ -981,15 +1061,118 @@
             <div class="apprendre mt-3">
                 <div class="row">
                     <div class="col">
-                        <p class="m-0">Apprendre</p>
+                    <p class="m-0 titre_apprendre"> Apprendre</p>
                     </div>
-                    <div class="col text-end">
-                        <i class="bx bx-x " role="button" onclick="afficherTuto();"></i>
+                    <div class="col text-end close">
+                        <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
+                        <i class="bx bx-x" role="button"></i>
                     </div>
                     <hr class="mt-2">
-                    apprendre
+                    @can('isAdmin')
+                    <div class="tutorielApprendreAdmin">Admin</div>
+                    @endcan
+                    @can('isCFP')
+                    <div class="tutorielApprendreCfp">
+                        <h5>Créer un nouveau projet de formation</h5>
+                        <p class="m-0 p-1">
+                            <span>Pour créer un nouveau de formation, il faut au préalable compléter les prérequis suivant :</span>
+                        </p>
+                        <div class="list-group list-group-flush" id="accordion">
+                            <li class="list-group-item align-items-start ">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprCat" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprCat">
+                                    <div class="ms-2 me-auto">
+                                        <div class="text-sm">1. Avoir un catalogue de formation</div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprCat" class="collapse p-1">
+                                    <hr>
+                                    <a href="/nouveau_module"><span>Cliquer ici pour ajouter un module à votre catalogue de formation</span></a>
+                                </div>
+                            </li>
+                            <li class="list-group-item  align-items-start">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprForm" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprFormateur">
+                                    <div class="ms-2 me-auto">
+                                        <div class="text-sm">2. Ajouter des formateurs</div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprFormateur" class="collapse  p-1">
+                                    <hr>
+                                    <a href="nouveau_formateur"><span>Cliquer ici pour ajouter un formateur</span></a>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item align-items-start listeApprendre">
+                                <a class="accordion-toggle d-flex justify-content-between listeApprendre" id="accApprInter" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#apprInter">
+                                    <div class="ms-2 me-auto">
+                                        <div class=" text-sm">3. Collaborer avec les entreprises qui ont des projets en commun avec vous </div>
+                                    </div>
+                                    <span class="fas fa-angle-down"></span>
+                                </a>
+                                <div id="apprInter" class="collapse">
+                                    <hr>
+                                    <a href="/liste_entreprise"><span>Cliquer ici pour collaborer avec une entreprise</span></a>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="tutorielApprendre"></div>
+                    @endcan
+                    @can('isStagiaire')
+                    <div class="tutorielApprendreStagiaire">Stagiaire</div>
+                    @endcan
+
+                    @can('isReferent')
+                    <div class="tutorielApprendreReferent">Referent</div>
+                    @endcan
+
+                    @can('isManager')
+                    <div class="tutorielApprendreManager">Manager</div>
+                    @endcan
+
+                    @can('isFormateur')
+                    <div class="tutorielApprendreFormateur">Formateur</div>
+                    @endcan
+                        <!-- <h6 class="title_apprendre"><u>Annuaire</u></h6>
+                        <h6 class="title_apprendre"><u>Agenda</u></h6> -->
+
                 </div>
             </div>
+            {{-- <div class="apprendre mt-3">
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0 titre_apprendre">Apprendre</p>
+                    </div>
+                    <div class="col text-end close">
+                        <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
+                        <i class="bx bx-x" role="button"></i>
+                    </div>
+                    <hr class="mt-2">
+                    @can('isAdmin')
+                    <div class="tutorielApprendreAdmin">Admin</div>
+                    @endcan
+                    @can('isCFP')
+                    <div class="tutorielApprendreCfp">
+                        <h5>Créer un nouveau projet de formation</h5>
+                        <p class="m-0 p-1">
+                            <span>Pour créer un nouveau de formation, il faut au préalable compléter les prérequis suivant :</span>
+                        </p>
+                        <ol class="list-group list-group-numbered list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
+                                <div class="ms-2 me-auto">
+                                    <div class="text-sm">Avoir un catalogue de formation</div>
+                                </div>
+                                <button class="btn btn-light btn-sm apprCat" type="button" data-bs-toggle="collapse" data-bs-target="#apprCat" aria-expanded="false" aria-controls="apprCat"><i class="fas fa-angle-down"></i></button>
+                            </li>
+                            <div id="apprCat" class="collapse p-2"><a href="/nouveau_module"><span>Cliquer ici pour ajouter un module à votre catalogue de formation</span></a></div>
+                            <li class="list-group-item d-flex justify-content-between align-items-start listeApprendre">
+                                <div class="ms-2 me-auto">
+                                    <div class="text-sm">Ajouter des formateurs</div>
+                                </div>
+                                <button class="btn btn-light btn-sm apprCat" type="button" data-bs-toggle="collapse" data-bs-target="#apprFormateur" aria-expanded="false" aria-controls=""><i class="fas fa-angle-down"></i></button>
+                            </li>
+                            <div id="apprFormateur" class="collapse p-2"><a href="nouveau_formateur"><span>Cliquer ici pour ajouter un formateur</span></a></div>
 
         </div>
         {{-- footer --}}

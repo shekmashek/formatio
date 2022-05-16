@@ -276,6 +276,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             DB::delete('delete from factures where num_facture = ? and cfp_id=?', [$num_facture, $cfp_id]);
             DB::delete('delete from montant_frais_annexes where num_facture = ? and cfp_id=?', [$num_facture, $cfp_id]);
             DB::delete('delete from encaissements where num_facture = ? and cfp_id=?', [$num_facture, $cfp_id]);
+            DB::commit();
         } catch (Exception $e) {
             DB::rollback();
             echo $e->getMessage();
@@ -467,7 +468,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $fonction = new FonctionGenerique();
         $info = $fonction->findWhereMulitOne("factures", ["num_facture", "cfp_id"], [$num_facture, $cfp_id]);
         $this->suprime($info->num_facture, $cfp_id);
-        $this->suprime_frais_annexe($info->num_facture, $cfp_id);
+        // $this->suprime_frais_annexe($info->num_facture, $cfp_id);
         File::delete($info->bon_de_commande);
         File::delete($info->devise);
 

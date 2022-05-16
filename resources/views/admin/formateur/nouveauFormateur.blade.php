@@ -67,23 +67,157 @@
 
                                         <p class="h3">Photo de profil</p>
 
-                                        <div class="form-control-file mt-2">
-                                            <input type="file" class="form-control m-2" name="image" id="image"
-                                                placeholder="fichier" title="veuillez choisir une image"
-                                                required><strong>Taille du fichier: 60Ko max</strong>
-                                        </div><br>
-                                        @error('image')
+                                    <div class="form-control-file mt-2">
+                                        <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required>
+                                         <strong>Taille du fichier: (1.7 MB max)</strong> 
+                                    </div><br>
+                                    @error('image')
+                                    <div class="col-sm-6">
+                                        <span style="color:#ff0000;"> {{$message}} </span>
+                                    </div>
+                                    @enderror
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <input type="text" name="nom" id="nom" placeholder="Nom*" class="form-control" pattern="[A-Za-z' -]{1,100}" title="5 à 100 caractères" required>
+                                            </div>
+                                            @error('nom')
                                             <div class="col-sm-6">
                                                 <span style="color:#ff0000;"> {{ $message }} </span>
                                             </div>
                                         @enderror
 
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <input type="text" name="nom" id="nom" placeholder="Nom*"
-                                                        class="form-control m-2" pattern="[A-Za-z' -]{1,100}"
-                                                        title="5 à 100 caractères" required>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="select-group">
+                                                <select name="sexe" id="sexe" class="form-control">
+                                                    <option value="null" disabled selected hidden>Sexe</option>
+                                                    <option value="homme">Homme</option>
+                                                    <option value="femme">Femme</option>
+                                                </select>
+                                            </div>
+                                            @error('sexe')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="date_naissance" id="date" placeholder="Date de naissance*" onfocus="(this.type='date')" required>
+                                            </div>
+                                            @error('date_naissance')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="adresse" id="adresse" pattern="[A-Za-z0-9.&' -/]{1,255}" title="5 à 255 caractères" placeholder="Adresse Lot ou Rue*" required>
+                                            </div>
+                                            @error('adresse')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col">
+
+                                            <div class="form-group">
+                                                <input type="mail" class="form-control" name="mail" id="mail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]" title="entre votre adresse mail" placeholder="adresse e-mail*" required>
+                                                <span style="color:#ff0000;" id="mail_err"></span>
+                                            </div>
+                                            @error('mail')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="tel" class="form-control" name="phone" id="phone" minlength="10" maxlength="10" placeholder="Téléphone*" pattern="[0-9]{10}" title="entrer une numero de 10 chiffres sans lettre ni caractères spéciaux" required>
+                                                <span style="color:#ff0000;" id="phone_err"></span>
+                                            </div>
+                                            @error('phone')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="tel" class="form-control" name="cin" id="cin" minlength="12" maxlength="12" placeholder="Numero de CIN*" pattern="[0-9]{12}" title="entre un numero de 12 chiffres sans lettres ni caractères spéciaux" required>
+                                                <span style="color:#ff0000;" id="cin_err"></span>
+                                            </div>
+                                            @error('cin')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="specialite" id="specialite" pattern="[A-Za-z' -]{1,50}" title="5 à 50 caractères" placeholder="Spécialité*" required>
+                                            </div>
+                                            @error('niveau')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="niveau" id="niveau" pattern="[A-Za-z0-9+' -]{1,50}" title="5 à 50 caractères" placeholder="Niveau d'étude*" required>
+                                            </div>
+                                        </div>
+                                        @error('specialite')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{$message}} </span>
+                                            </div>
+                                            @enderror
+                                    </div>
+
+
+                                    <h1>Domaine et Competence</h1>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-5">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="domaine[]" id="domaine" pattern="[A-Za-z' -]{1,50}" title="5 à 50 caractères" placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="competences[]" id="competences" pattern="[A-Za-z0-9&@+' ,-]{1,255}" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 mt-3" align="center">
+                                            <button id="addRow1" class="form-control btn btn-warning envoyer" type="button"><i class="fa fa-plus" style="font-size: 15px"></i></button>
+                                        </div>
+                                        <div id="newRow1"></div>
+                                    </div>
+
+
+                                    <div class="row mt-4">
+                                        <h1 class="text-center">Expériences Professionnelles</h1>
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="entreprise[]" pattern="[A-Za-z0-9.@&' -/]{1,50}" title="5 à 50 caractères" id="entreprise" placeholder="Nom entreprise" class="domaine" required>
+                                                    </div>
                                                 </div>
                                                 @error('nom')
                                                     <div class="col-sm-6">

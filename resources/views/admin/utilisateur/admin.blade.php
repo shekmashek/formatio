@@ -26,10 +26,10 @@
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
                                         Organisme de Formation</a>
                                 </li>
-                                <li class="nav-item mx-1">
+                                {{-- <li class="nav-item mx-1">
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_admin') ? 'active' : '' }}" href="{{route('utilisateur_admin')}}">
                                         Admin</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item mx-1">
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_superAdmin') ? 'active' : '' }}" href="{{route('utilisateur_superAdmin')}}">
                                         Super Admin</a>
@@ -74,6 +74,8 @@
                     <input type="text" class="form-control" required name="nom_new_user"><br><br>
                     <label for=""> Email </label>
                     <input type="text" class="form-control" required name="email_new_user"><br><br>
+                    <label for=""> CIN</label>
+                    <input type="text" class="form-control" required name="cin"><br><br>
                     <label for=""> Mot de passe </label>
                     <input type="password" class="form-control" name="password_new_user"><br><br>
                     <input type="password" class="form-control" value="1" name="role_id" style="display:none"><br><br>

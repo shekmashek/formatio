@@ -2,72 +2,100 @@
 @section('title')
     <p class="text_header m-0 mt-1">Projets</p>
 @endsection
+
+@inject('groupe', 'App\groupe')
+
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
 
     <style>
         .status_grise {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #637381;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px;
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_reprogrammer {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #00CDAC;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px;
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_cloturer {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #314755;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px;
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_reporter {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #26a0da;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px;
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_annulee {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #b31217;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px;
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_termine {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #1E9600;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px;
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .status_confirme {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: #2B32B2;
             color: white;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-end:1rem;
+            padding-top: 2.5px;
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         .statut_active {
-            border-radius: 1rem;
+            border-radius: 5px;
             background-color: rgb(15, 126, 145);
             color: whitesmoke;
-            width: 60%;
             align-items: center margin: 0 auto;
+            padding-top: 2.5px;
+            padding-bottom: 2.5px;
+            position:relative;
+            bottom: 1px;
         }
 
         /* .filter{
@@ -130,6 +158,29 @@
 
         }
 
+        .rapport_finale{
+            background-color: #F16529 !important;
+        }
+        .rapport_finale button{
+            color: #ffffff !important;
+        }
+        .rapport_finale:hover{
+            background-color: #af3906 !important;
+        }
+        .pdf_download{
+            background-color: #e73827 !important;
+        }
+        .pdf_download:hover{
+            background-color: #af3906 !important;
+        }
+        .pdf_download button{
+            color: #ffffff !important;
+        }
+
+        tbody tr{
+            vertical-align: middle;
+        }
+
     </style>
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
@@ -161,7 +212,13 @@
                     class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
 
         </div>
-
+        @if (Session::has('pdf_error'))
+            <div class="alert alert-danger ms-4 me-4">
+                <ul>
+                    <li>{!! \Session::get('pdf_error') !!}</li>
+                </ul>
+            </div>
+        @endif
         <div class="row w-100">
 
             <div class="col-12 ps-5">
@@ -230,8 +287,7 @@
                                             @if ($prj->type_formation_id == 1)
                                                 <span role="button" class=" m-0 nouvelle_session " data-bs-toggle="modal"
                                                     data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static'
-                                                    title="Nouvelle session"><i class="bx bx-plus-medical me-3"></i>Ajouter une
-                                                    session</span>
+                                                    title="Nouvelle session"><i class="bx bx-plus-medical icon_creer me-3"></i>Session</span>
                                             @endif
                                         @endcan
                                     </div>
@@ -248,11 +304,11 @@
                                         <th> Date du projet</th>
 
                                         <th> Statut </th>
-                                            <th></th>
+                                        <th rowspan="2"></th>
                                         @if ($prj->type_formation_id == 1)
                                             <th></th>
                                         @endif
-                                        <th></th>
+                                        {{-- <th></th> --}}
                                     </thead>
                                     <tbody class="tbody_projet">
 
@@ -272,7 +328,7 @@
                                                         <td>
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    {{ $etp->nom_etp }}
+                                                                    {{ $etp->nom_etp}}
                                                                 @endif
                                                             @endforeach
                                                         </td>
@@ -281,12 +337,13 @@
                                                         <td align="center" style="min-width: 6rem;">
                                                             <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1">
                                                                 {{ $pj->item_status_groupe }}</p>
+
                                                         </td>
+                                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                                         @if ($prj->type_formation_id == 1)
-                                                            <td>
-                                                                <a style="background: none"
-                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}"><button
-                                                                        class="btn rapport_finale">Rapport</button></a>
+                                                            <td class="p-0">
+                                                                <a class="mt-2 rapport_finale"
+                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank"><button class="btn"><i class='bx bxs-report'></i>Rapport</button></a>
                                                             </td>
                                                         @endif
                                                         @can('isCFP')
@@ -296,7 +353,7 @@
                                                                     </a></td>
                                                         @endcan
 
-                                                        <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td>
+                                                        {{-- <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td> --}}
 
                                                         {{-- debut supprimer session --}}
                                                             <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
@@ -865,11 +922,13 @@
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
+                                <th> Module </th>
                                 <th>Date session</th>
                                 <th> Entreprise </th>
                                 <th> Date du projet</th>
                                 <th> Modalité</th>
                                 <th> Statut </th>
+                                <th rowspan="2"></th>
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
@@ -877,18 +936,21 @@
                                         <td>{{ $pj->nom_projet }}</td>
                                         <td>
                                             @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0"><button
-                                                        class="type_intra m-0 filtre_projet">{{ $pj->type_formation }}</button>
+                                                <h6 class="m-0"><button class="type_intra ">{{ $pj->type_formation }}</button>
                                                 </h6>
                                                 &nbsp;&nbsp;
                                             @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button
-                                                        class="type_inter m-0">{{ $pj->type_formation }}</button></h6>
+                                                <h6 class="m-0"><button class="type_inter ">{{ $pj->type_formation }}</button></h6>
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
                                         <td> <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
+                                        </td>
+                                        <td>
+                                            @php
+                                                echo $groupe->module_session($pj->module_id)
+                                            @endphp
                                         </td>
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td>
@@ -900,9 +962,22 @@
                                         </td>
                                         <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
                                         <td>{{ $pj->modalite }}</td>
-                                        <td class="text-center m-0">
+                                        <td>
                                             <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
                                                 {{ $pj->item_status_groupe }}</p>
+                                        </td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                        <td align="left">
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
+                                            @php
+                                                echo $groupe->statut_presences($pj->groupe_id);
+                                            @endphp
+                                            "></i>&nbsp;Emargement</p>
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
+                                            @php
+                                                echo $groupe->statut_evaluation($pj->groupe_id);
+                                            @endphp
+                                            "></i>&nbsp;Evaluation</p>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -921,39 +996,45 @@
                                 <th>Projet</th>
                                 <th>Type de formation</th>
                                 <th> Session </th>
+                                <th> Module </th>
                                 <th>Date session</th>
                                 <th> Centre de formation </th>
                                 {{-- <th> Date du projet</th> --}}
                                 <th>Modalité</th>
                                 <th> Statut </th>
+                                <th></th>
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)
-                                    <tr class="m-0">
+                                    <tr>
                                         <td>{{ $pj->nom_projet }}</td>
-                                        <td>
+                                        <td style="vertical-align: middle">
                                             @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0"><button
-                                                        class="type_intra m-0 filtre_projet">{{ $pj->type_formation }}</button>
+                                                <h6 class="m-0 "><button class="type_intra ">{{ $pj->type_formation }}</button>
                                                 </h6>
                                                 &nbsp;&nbsp;
                                             @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button
-                                                        class="type_inter m-0">{{ $pj->type_formation }}</button></h6>
+                                                <h6 class="m-0"><button class="type_inter ">{{ $pj->type_formation }}</button></h6>
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
                                         <td> <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
+                                        <td>
+                                            @php
+                                                echo $groupe->module_session($pj->module_id)
+                                            @endphp
+                                        </td>
                                         <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
-                                        <td>{{ $pj->modalite }}</td>
+                                        {{-- <td>{{ $pj->modalite }}</td> --}}
                                         <td>
-                                            <p class="{{ $pj->class_status_groupe }}">{{ $pj->item_status_groupe }}
+                                            <p class="{{ $pj->class_status_groupe }} m-0">{{ $pj->item_status_groupe }}
                                             </p>
                                         </td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -970,10 +1051,12 @@
                             <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                 {{-- <th>Projet</th> --}}
                                 <th> Session </th>
+                                <th> Module </th>
                                 <th> Date du session</th>
                                 <th> Centre de formation </th>
                                 <th> Formation </th>
                                 <th> Module</th>
+                                <th></th>
                                 <th>Evaluation </th>
                             </thead>
                             <tbody class="tbody_projet">
@@ -981,11 +1064,17 @@
                                     <tr>
                                         {{-- <td>{{ $pj->nom_projet }}</td> --}}
                                         <td> {{ $pj->nom_groupe }}</td>
+                                        <td>
+                                            @php
+                                                echo $groupe->module_session($pj->module_id)
+                                            @endphp
+                                        </td>
                                         <td> {{ date('d-m-Y', strtotime($pj->date_debut)) }}-{{ date('d-m-Y', strtotime($pj->date_fin)) }}
                                         </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ $pj->nom_formation }} </td>
                                         <td> {{ $pj->nom_module }} </td>
+                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td>
                                             @if ($pj->statut_eval == 0)
                                                 <a class="btn btn_filtre filtre_appliquer"
@@ -1148,5 +1237,7 @@
                     //         $('.collapse').remove('show');
                     //     } ;
                     // });
+
+                    localStorage.setItem('activeTab', 'detail');
                 </script>
             @endsection

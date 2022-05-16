@@ -11,3 +11,18 @@ CREATE TABLE devise
 
 insert into devise values
 (1,"Ariary","AR");
+
+
+-Branch: debug_collaboration:
+
+- alter table factures add column nbre_participant int(11) DEFAULT 0;
+
+recopier view :dans facture bdd_suiviformation_mise_a_jour_4.sql(facturation)
+-v_totale_participant_session
+-v_liste_facture
+-v_full_facture
+
+
+Vendredi 13 mai 2022
+
+-recopier view v_full_facture,v_facture_actif,v_facture_inactif

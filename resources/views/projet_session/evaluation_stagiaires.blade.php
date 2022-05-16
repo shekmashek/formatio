@@ -35,9 +35,15 @@
                 </tbody>
             </table>
         </div>
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn inserer_emargement" type="submit">Sauvegarder</button>
+        @if (count($stagiaire) > 0)
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn inserer_emargement" type="submit">Sauvegarder</button>
+            </div>
+        @else
+        <div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide">
+            <span class="text-center">Aucun apprenant inscrit</span>
         </div>
+        @endif
     </form>
     @else
         <form action="{{ route('modifier_evaluation_stagiaire') }}" method="POST">

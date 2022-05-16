@@ -24,9 +24,10 @@
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                    <input type="text" value="   {{ $cfp->nom}}" class="form-control test input"  name="nom">
-                    <label class="form-control-placeholder ">Nom de l'organisme</label>
-
+                        <input type="text" value="{{ $cfp->nom}}" class="form-control test input"  name="nom">
+                        <label class="form-control-placeholder ">Nom de l'organisme</label>
+                        <input type="text" value="{{ $cfp->slogan}}" class="form-control test input"  name="slogan">
+                        <label class="form-control-placeholder ">Slogan de l'organisme</label>
                     </div>
                 </div>
 
