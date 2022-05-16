@@ -17,6 +17,7 @@ use App\Mail\entrepriseMail;
 use App\Models\getImageModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FonctionGenerique;
+use Image;
 
 class EntrepriseController extends Controller
 {
@@ -90,7 +91,12 @@ class EntrepriseController extends Controller
 
         $fonct = new FonctionGenerique();
         $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-        $entreprises=DB::select('select * from  v_demmande_cfp_etp where entreprise_id= ?',[$id]);
+      //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where entreprise_id= ?',[$id]);
+
+        $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$id]);
+        $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$id]);
+        $entreprises=$fonct->concatTwoList($etp1,$etp2);
+
       return response()->json($entreprises);
 
 
@@ -269,7 +275,10 @@ class EntrepriseController extends Controller
         else{
             return view('admin.entreprise.profile_entreprises', compact('entreprise', 'departement'));
         }
-        
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/fixAllDS
     }
 
     public function getImage($path)
@@ -294,11 +303,11 @@ class EntrepriseController extends Controller
     public function enregistrer_email_entreprise(Request $request,$id){
         if($request->email == null){
             return redirect()->back()->with('error_email', 'Entrez l\'e-mail de votre entreprise avant de cliquer sur enregistrer');
-           }
-           else{
-            DB::update('update entreprises set email_etp = ? where id = ?', [$request->email,$id]);
-            return redirect()->route('aff_parametre_referent',[$id]);
-           }
+        }
+        else{
+        DB::update('update entreprises set email_etp = ? where id = ?', [$request->email,$id]);
+        return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
     public function modification_nif_entreprise($id){
         $fonct = new FonctionGenerique();
@@ -357,15 +366,16 @@ class EntrepriseController extends Controller
            }
     }
 
+<<<<<<< HEAD
+=======
 
-    
+
+>>>>>>> origin/fixAllDS
     public function modification_assujetti_entreprise($id){
         $fonct = new FonctionGenerique();
         $assujetti = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
         return view('admin.entreprise.modification_profil.modification_assujetti_entreprise', compact('assujetti'));
     }
-
-
 
     public function enregistrer_assujetti_entreprise(Request $request,$id){
         $id_assujeti = $request->assujetti;
@@ -403,10 +413,7 @@ class EntrepriseController extends Controller
 
             DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ?
                where id = ?', [$request->rue,$request->quartier,$request->code_postal,$request->ville,$request->region,$id]);
-
             return redirect()->route('aff_parametre_referent',[$id]);
-
-
     }
     public function modification_site_etp_entreprise($id){
         $fonct = new FonctionGenerique();
@@ -444,13 +451,25 @@ class EntrepriseController extends Controller
     public function enregistrer_logo(Request $request,$id){
         $input = $request->image;
         if ($image = $request->file('image')) {
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
+            }
+            else{
             $destinationPath = 'images/entreprises';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
+                     //imager  resize
+                     $image_name = $profileImage ;
+                     $destinationPath = public_path('images/entreprises');
+                     $resize_image = Image::make($image->getRealPath());
+                     $resize_image->resize(256, 128, function($constraint){
+                         $constraint->aspectRatio();
+                     })->save($destinationPath . '/' .  $image_name);
+            // $image->move($destinationPath, $profileImage);
             $input = "$profileImage";
+            }
         }
         if($input== null){
-            return redirect()->back()->with('erreur_logo', 'Entrez le site web de votre entreprise avant de cliquer sur enregistrer');
+            return redirect()->back()->with('erreur_logo', 'Entrez le logo de votre entreprise avant de cliquer sur enregistrer');
            }
            else{
             DB::update('update entreprises set logo  = ? where id = ?', [$input,$id]);

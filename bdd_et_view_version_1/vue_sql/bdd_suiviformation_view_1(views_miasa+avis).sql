@@ -5,6 +5,7 @@ CREATE OR REPLACE VIEW v_moduleformation AS SELECT
     m.prix,
     m.prix_groupe,
     m.duree,
+    m.etat_id,
     f.id AS formation_id,
     f.nom_formation,
     m.cfp_id
@@ -170,7 +171,8 @@ CREATE OR REPLACE VIEW v_cours_programme AS SELECT
     m.duree,
     m.prerequis,
     m.objectif,
-    m.modalite_formation
+    m.modalite_formation,
+    m.etat_id
 FROM
     cours c
 LEFT JOIN programmes p ON
@@ -319,6 +321,7 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.bon_a_savoir,
     m.status,
     m.cfp_id,
+    m.etat_id,
     IFNULL(m.max, 0) AS max_pers,
     IFNULL(m.min, 0) AS min_pers,
     n.niveau,
@@ -356,6 +359,7 @@ CREATE OR REPLACE VIEW cfpcours AS SELECT
     m.materiel_necessaire,
     m.cible,
     m.niveau_id,
+    m.etat_id,
     n.niveau,
     f.id AS formation_id,
     f.nom_formation,

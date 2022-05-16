@@ -10,6 +10,11 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid">
+    {{-- <div class="col-md">
+        <div class="">
+            <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+        </div>
+    </div> --}}
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item active">
@@ -22,7 +27,7 @@
                 <a href="#facture" class="nav-link" data-toggle="tab">Factures</a>
             </li>
         </ul>
-
+        
         <div class="tab-content">
             <div class="tab-pane fade show" id="abonnement">
                 @if (\Session::has('erreur'))
@@ -45,54 +50,83 @@
                 @endif
 
                 <div>
-                    <p class="h2 text-center mt-3 mb-5">Choisissez Votre Abonnement</p>
+                    <p class="h2 text-center mt-3 mb-5">Choisissez votre abonnement</p>
                 </div>
 
-               <div class="row mt-3">
-                    <div class="col-lg-12 d-flex">
-                        @foreach ($typeAbonnement as $types)
-                            @foreach ($tarif as $tf)
-                                @if($tf->type_abonnement_role_id == $types->types_id)
-                                    <div class="col mt-5 justify-content-between">
-                                        <div class="card d-flex align-items-center justify-content-center">
-                                            <div class="ribon"> <span class="bx bxs-star-half"></span> </div>
-                                            <p class="h-1 pt-5">{{ $types->nom_type }}</p> <span class="price"> <span class="number"> {{number_format($tf->tarif,0, ',', '.')}}</span> <sup
-                                                    class="sup">AR</sup>/ mois</span>
-                                            <ul class="mb-5 list-unstyled text-muted">
-                                                @if( $types->nom_type == 'Gratuit')
-                                                    <li><span class="bx bx-check me-2"></span>Essai gratuit pendant 60jours</li>
-                                                @endif
-                                                @if( $types->nom_type == 'TPE')
-                                                    <li><span class="bx bx-check me-2"></span>0 - 9 employés</li>
-                                                @endif
-                                                @if( $types->nom_type == 'PME')
-                                                    <li><span class="bx bx-check me-2"></span>10 - 49 employés</li>
-                                                @endif
-                                                @if( $types->nom_type == 'EI')
-                                                    <li><span class="bx bx-check me-2"></span>50 - 249 employés</li>
-                                                @endif
-                                                @if( $types->nom_type == 'GE')
-                                                    <li><span class="bx bx-check me-2"></span>250 employés</li>
-                                                @endif
+                <div class="col-lg-12 d-flex">
+                    @can('isReferent')
+                        <?php $i = 0; ?>
+                        @foreach ($typeAbonnement as $types_etp)
 
-                                            </ul>
-                                            @if($abonnement_actuel != null)
-                                                @if($types->types_abonnement_id == $abonnement_actuel[0]->type_abonnement_id and $abonnement_actuel[0]->activite == 1)
-                                                <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types->types_abonnement_id])}}">Désactivation immédiat de mon offre</a></div>
-                                                @else
-                                                    <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}">S'abonner</a></div>
-                                                @endif
-                                            @else
-                                            <div class="btn btn-primary"><a href="{{route('abonnement-page',['id'=>$tf->id])}}">S'abonner</a></div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
+                            <div class="col mt-5 justify-content-between">
+                                <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
+                                    <p class="h-1 pt-5 nom_type mt-5">{{ $types_etp->nom_type }}</p>
+                                    <span class="description mt-5">{{ $types_etp->description }}</span>
+                                    <span class="tarif"> <span class="number"> {{number_format($types_etp->tarif,0, ',', '.')}}</span> <sup
+                                            class="sup">AR</sup>/ mois</span>
+
+                                    <ul class="mb-5 list-unstyled text-muted">
+                                        @if($types_etp->illimite == 1)
+                                            <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Employés illimités</li>
+                                        @else
+                                            <li><span class="bx bx-check me-2"></span>{{$types_etp->nb_utilisateur}} utilisateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_etp->nb_formateur}} formateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_etp->min_emp}} - {{$types_etp->max_emp}}  employés</li>
+                                        @endif
+                                    </ul>
+                                    @if($abonnement_actuel != null)
+                                        @if($types_etp->id == $abonnement_actuel[0]->type_abonnements_etp_id and $abonnement_actuel[0]->activite == 1)
+                                            <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types_etp->id])}}">Désactivation immédiat de mon offre</a></div>
+                                        @else
+                                            <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_etp->id)}}">S'abonner</a></button>
+                                        @endif
+                                    @else
+                                        <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_etp->id)}}">S'abonner</a></button>
+                                    @endif
+                                </div>
+                            </div>
+                            <?php $i+=1; ?>
                         @endforeach
-                    </div>
+                    @endcan
+                    @can('isCFP')
+                        <?php $i = 0; ?>
+                        @foreach ($typeAbonnement as $types_of)
+                            <div class="col mt-5 justify-content-between">
+                                <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
+                                    <p class="h-1 pt-5 nom_type mt-5">{{ $types_of->nom_type }}</p>
+                                    <span class="description mt-5">{{ $types_of->description }}</span>
+                                    <span class="tarif"> <span class="number"> {{number_format($types_of->tarif,0, ',', '.')}}</span> <sup
+                                            class="sup">AR</sup>/ mois</span>
 
-                </div><br><br>
+                                    <ul class="mb-5 list-unstyled text-muted">
+                                        @if($types_of->illimite == 1)
+                                            <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Projets illimités</li>
+                                        @else
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_utilisateur}} utilisateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_formateur}} formateurs</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_projet}} projets</li>
+                                        @endif
+                                    </ul>
+                                    @if($abonnement_actuel != null)
+                                        @if($types_of->id == $abonnement_actuel[0]->type_abonnements_cfp_id and $abonnement_actuel[0]->activite == 1)
+                                            <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types_of->id])}}">Désactivation immédiat de mon offre</a></div>
+                                        @else
+                                            <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_of->id)}}">S'abonner</a></button>
+                                        @endif
+                                    @else
+                                        <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_of->id)}}">S'abonner</a></button>
+                                    @endif
+                                </div>
+                            </div>
+                            <?php $i+=1; ?>
+                        @endforeach
+                    @endcan
+
+                </div>
             </div><br>
             <div class="tab-pane fade show" id="facture">
                 <table class="table">
@@ -174,7 +208,7 @@
                             <tr>
                                 <td>{{$fact->invoice_date}}</td>
 
-                                <td>{{$fact->nom_type}}&nbsp;,&nbsp;{{$fact->categorie}}&nbsp;,&nbsp; {{number_format($fact->montant_facture, 0, ',', '.')}}Ar</td>
+                                <td>{{$fact->nom_type}}&nbsp;, Mensuel, &nbsp; {{number_format($fact->montant_facture, 0, ',', '.')}}Ar</td>
                                 <td>{{$facture_suivant[$i]}}</td>
                                 @if($fact->activite == 1)
                                     <td><span style="background-color: green;padding:10px;color:white;border-radius:10px"> En cours </span></td>
@@ -226,6 +260,116 @@
         </div>
     </div>
 </div>
+
+
+{{-- filter abonnement --}}
+{{-- <div class="filtrer mt-3 testFilter">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-11">
+                <p class="m-0" style="color: #0052D4; text-transform: uppercase">Filter vos Abonnements</p>
+            </div>
+            <div class="col-md-1 text-end">
+                <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+            </div>
+        </div>
+        <hr class="mt-2">
+        <div class="col-12 pe-3">
+            <div class="row mb-3 p-2 pt-0">
+                      <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                              Historique des services
+                            </button>
+                          </h2>
+                          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <form action="/referents/filtre/query/fonction" method="post" >
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="fonctionReferent" id="fonctionReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
+                                </form>
+                                <hr>
+                                <form action="/referents/filtre/query/name" method="post" >
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="nameReferent" id="nameReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                </form>
+                                <form action="/referents/filtre/query/matricule" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="matriculeReferent" id="matriculeReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                </form>
+                                <form action="/referents/filtre/query/role" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="roleReferent" id="roleReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                              Abonnements
+                            </button>
+                          </h2>
+                          <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <form action="/employes/filtre/query/fonction" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="test" id="test" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
+                                </form>
+                                <hr>
+                                <form action="/employes/filtre/query/name" method="post" >
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="name" id="name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                </form>
+                                <form action="/employes/filtre/query/matricule" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                </form>
+                                <form action="/employes/filtre/query/role" method="post">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="role_name" id="role_name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingFour">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Factures
+                              </button>
+                            </h2>
+                            <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <form action="/chefs/filtre/query" method="post">
+                                        @csrf
+                                        <form action="/chefs/filtre/query/fonction" method="post" >
+                                            @csrf
+                                            <input style="width: 265px" type="text" name="fonctionChef" id="fonctionChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
+                                        </form>
+                                    </form>
+                                    <hr>
+                                    <form action="/chefs/filtre/query/name" method="post" >
+                                        @csrf
+                                        <input style="width: 265px" type="text" name="nameChef" id="nameChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                                    </form>
+                                    <form action="/chefs/filtre/query/matricule" method="post">
+                                        @csrf
+                                        <input style="width: 265px" type="text" name="matriculeChef" id="matriculeChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
+                                    </form>
+                                    <form action="/chefs/filtre/query/role" method="post">
+                                        @csrf
+                                        <input style="width: 265px" type="text" name="roleChef" id="roleChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
+                                    </form>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
 <script>
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             let lien = ($(e.target).attr('href'));

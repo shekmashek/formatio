@@ -313,6 +313,11 @@ FROM
     v_dernier_encaissement;
 
 
+
+CREATE OR REPLACE VIEW v_totale_participant_session AS SELECT
+(groupes.id) groupe_id,(COUNT(stagiaire_id)) nbre_participant
+FROM groupes LEFT JOIN  participant_groupe ON groupes.id = groupe_id GROUP BY groupes.id;
+
 CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     factures.cfp_id,
     (factures.projet_id) as projet_id,
@@ -328,6 +333,7 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     (v_groupe_projet_module.date_debut) date_debut_session,
     v_groupe_projet_module.reference,
     v_groupe_projet_module.nom_module,
+    v_totale_participant_session.nbre_participant,
     invoice_date,
     due_date,
     tax_id,
@@ -345,12 +351,13 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     (mode_financements.description) description_financement
 FROM
     factures,
-    v_groupe_projet_module,type_facture,
+    v_groupe_projet_module,type_facture,v_totale_participant_session,
     taxes,mode_financements
 WHERE
-     factures.tax_id = taxes.id AND
-    factures.groupe_entreprise_id = v_groupe_projet_module.groupe_entreprise_id
-    AND type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
+    factures.tax_id = taxes.id AND
+    factures.groupe_entreprise_id = v_groupe_projet_module.groupe_entreprise_id AND
+    v_groupe_projet_module.groupe_id = v_totale_participant_session.groupe_id AND
+    type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
 
 
 CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
@@ -406,18 +413,26 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
                 0
             )
         ) jour_restant,
-        v_facture_existant.facture_encour,
+          facture_encour,
         v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
-        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,
-        v_facture_existant.remise,
-        v_facture_existant.valeur_remise,
+        v_facture_existant.projet_id,
+        (ROUND(v_facture_existant.montant_brut_ht)) montant_brut_ht,
+        (ROUND(v_facture_existant.remise)) remise,
+        (ROUND(v_facture_existant.valeur_remise)) valeur_remise,
         v_facture_existant.description_remise,
         v_facture_existant.remise_id,
         v_facture_existant.reference_remise,
-        v_facture_existant.net_commercial,v_facture_existant.net_ht,
-        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
-        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
+        (ROUND(v_facture_existant.net_commercial)) net_commercial,
+        (ROUND(v_facture_existant.net_ht)) net_ht,
+        (ROUND(v_facture_existant.tva)) tva,
+        (ROUND(v_facture_existant.net_ttc)) net_ttc,
+        v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,
+        (ROUND(v_facture_existant.rest_payer)) rest_payer,
+        (ROUND(v_facture_existant.montant_total)) montant_total,
+        (ROUND(v_facture_existant.payement_totale)) payement_totale,
+        (ROUND(v_facture_existant.dernier_montant_ouvert)) dernier_montant_ouvert,
+        v_facture_existant.date_facture
     FROM
         v_facture_existant,cfps,entreprises,projets
     WHERE
@@ -448,22 +463,80 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
                 0
             )
         ) jour_restant,
-        facture_encour,
+          facture_encour,
         v_facture_existant.description_type_facture,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
-        v_facture_existant.projet_id,v_facture_existant.montant_brut_ht,
-        v_facture_existant.remise,
-        v_facture_existant.valeur_remise,
+        v_facture_existant.projet_id,
+        (ROUND(v_facture_existant.montant_brut_ht)) montant_brut_ht,
+        (ROUND(v_facture_existant.remise)) remise,
+        (ROUND(v_facture_existant.valeur_remise)) valeur_remise,
         v_facture_existant.description_remise,
         v_facture_existant.remise_id,
         v_facture_existant.reference_remise,
-        v_facture_existant.net_commercial,v_facture_existant.net_ht,
-        v_facture_existant.tva,v_facture_existant.net_ttc,v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,v_facture_existant.rest_payer,v_facture_existant.montant_total,
-        v_facture_existant.payement_totale,v_facture_existant.dernier_montant_ouvert,v_facture_existant.date_facture
+        (ROUND(v_facture_existant.net_commercial)) net_commercial,
+        (ROUND(v_facture_existant.net_ht)) net_ht,
+        (ROUND(v_facture_existant.tva)) tva,
+        (ROUND(v_facture_existant.net_ttc)) net_ttc,
+        v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,
+        (ROUND(v_facture_existant.rest_payer)) rest_payer,
+        (ROUND(v_facture_existant.montant_total)) montant_total,
+        (ROUND(v_facture_existant.payement_totale)) payement_totale,
+        (ROUND(v_facture_existant.dernier_montant_ouvert)) dernier_montant_ouvert,
+        v_facture_existant.date_facture
     FROM
         v_facture_existant,cfps,entreprises,projets
     WHERE
         v_facture_existant.activiter = FALSE  AND  v_facture_existant.cfp_id = cfps.id AND v_facture_existant.entreprise_id = entreprises.id AND v_facture_existant.projet_id = projets.id;
+
+
+CREATE OR REPLACE VIEW v_full_facture AS SELECT
+    v_facture_existant.cfp_id,
+    v_facture_existant.activiter,
+    (cfps.nom) nom_cfp,
+    entreprises.nom_etp,
+    projets.nom_projet,
+    v_facture_existant.entreprise_id,
+    v_facture_existant.num_facture,
+    v_facture_existant.other_message,
+    v_facture_existant.mode_financement_id,
+    v_facture_existant.description_financement,
+    (
+        DATEDIFF(
+            v_facture_existant.due_date,
+            v_facture_existant.invoice_date
+        )
+    ) totale_jour,
+    (
+        IFNULL(
+            (
+                DATEDIFF(v_facture_existant.due_date, NOW())),
+                0
+            )
+        ) jour_restant,
+        facture_encour,
+        v_facture_existant.description_type_facture,
+        v_facture_existant.due_date,v_facture_existant.invoice_date,
+        v_facture_existant.projet_id,
+        (ROUND(v_facture_existant.montant_brut_ht)) montant_brut_ht,
+        (ROUND(v_facture_existant.remise)) remise,
+        (ROUND(v_facture_existant.valeur_remise)) valeur_remise,
+        v_facture_existant.description_remise,
+        v_facture_existant.remise_id,
+        v_facture_existant.reference_remise,
+        (ROUND(v_facture_existant.net_commercial)) net_commercial,
+        (ROUND(v_facture_existant.net_ht)) net_ht,
+        (ROUND(v_facture_existant.tva)) tva,
+        (ROUND(v_facture_existant.net_ttc)) net_ttc,
+        v_facture_existant.type_facture_id,v_facture_existant.reference_type_facture,
+        (ROUND(v_facture_existant.rest_payer)) rest_payer,
+        (ROUND(v_facture_existant.montant_total)) montant_total,
+        (ROUND(v_facture_existant.payement_totale)) payement_totale,
+        (ROUND(v_facture_existant.dernier_montant_ouvert)) dernier_montant_ouvert,
+        v_facture_existant.date_facture
+    FROM
+        v_facture_existant,cfps,entreprises,projets
+    WHERE
+       v_facture_existant.cfp_id = cfps.id AND v_facture_existant.entreprise_id = entreprises.id AND v_facture_existant.projet_id = projets.id;
 
 
 CREATE OR REPLACE VIEW v_encaissement AS SELECT

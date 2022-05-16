@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\FonctionGenerique;
 use App\Domaine;
 use Illuminate\Support\Facades\URL;
-
+use Image;
 class ProfController extends Controller
 {
 
@@ -154,14 +154,14 @@ class ProfController extends Controller
 
         $image = $request->file('image');
         if($image != null){
-            if($image->getSize() > 60000){
-                return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 60Ko');
+
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 1.7 MB');
             }
             else{
                 if($request->sexe == "homme") $genre = 2;
                 if($request->sexe == "femme") $genre = 1;
                 if($request->sexe == "null") $genre = null;
-
 
                 $frm = new formateur();
                 $frm->nom_formateur = $request->nom;
@@ -179,13 +179,23 @@ class ProfController extends Controller
                 $date = date('d-m-Y');
                 $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
                 $str = 'images/formateurs';
-
                 $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
 
-                $request->image->move(public_path($str), $nom_image);
+                //imager  resize
+
+                $image_name = $nom_image;
+
+                $destinationPath = public_path('images/formateurs');
+
+                $resize_image = Image::make($image->getRealPath());
+
+                $resize_image->resize(228, 128, function($constraint){
+                    $constraint->aspectRatio();
+                })->save($destinationPath . '/' .  $image_name);
+                // $request->image->move(public_path($str), $nom_image);
 
                 $frm->photos = $nom_image;
-                $frm->url_photo = $url_photo;
+                // $frm->url_photo = $url_photo;
 
                 $user = new User();
                 $user->name = $request->nom . " " . $request->prenom;
@@ -558,6 +568,7 @@ class ProfController extends Controller
 
         // $resp_etp = $fonct->findWhereMulitOne("formateurs",["user_id"],[ Auth::user()->id]);
         // dd( $resp_etp );
+
         $nom = $request->nom;
 
         $phone =  $request->phone;
@@ -568,12 +579,30 @@ class ProfController extends Controller
         $splt = $request->specialite;
         $nv = $request->niveau;
         if ($image = $request->file('image')) {
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
+            }
+            else{
             $destinationPath = 'images/formateurs';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
+            // $image->move($destinationPath, $profileImage);
+             //imager  resize
+
+             $image_name = $profileImage ;
+
+             $destinationPath = public_path('images/formateurs');
+
+             $resize_image = Image::make($image->getRealPath());
+
+             $resize_image->resize(228,128, function($constraint){
+                 $constraint->aspectRatio();
+             })->save($destinationPath . '/' .  $image_name);
             $input = "$profileImage";
         }
+    }
         if ($input != null) {
+
+
             formateur::where('id',  $id)
                 ->update([
                     'nom_formateur' => $nom,
@@ -588,7 +617,8 @@ class ProfController extends Controller
                     'niveau' => $nv,
                     'photos' => $input,
                 ]);
-        } else {
+            }
+         else {
             formateur::where('id',  $id)
                 ->update([
                     'nom_formateur' => $nom,
@@ -604,11 +634,11 @@ class ProfController extends Controller
 
                 ]);
         }
-        $password = $request->password;
-        $hashedPwd = Hash::make($password);
-        $user = User::where('id', Auth::user()->id)->update([
-            'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
-        ]);
+        // $password = $request->password;
+        // $hashedPwd = Hash::make($password);
+        // $user = User::where('id', Auth::user()->id)->update([
+        //     'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
+        // ]);
         return redirect()->route('profile_formateur', $id);
     }
 

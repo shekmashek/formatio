@@ -24,6 +24,7 @@ use App\Exports\ResponsableExport;
 use Excel;
 use Illuminate\Support\Facades\URL;
 use Exception;
+use Image;
 
 class ResponsableController extends Controller
 {
@@ -298,7 +299,7 @@ class ResponsableController extends Controller
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-           
+
             return view('admin.responsable.profilResponsable', compact('refs'));
         }
     }
@@ -316,27 +317,35 @@ class ResponsableController extends Controller
             // } else {
                 $id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
                 $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
-                // dd($branche);
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-                $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
-                $referent = entreprise::findOrFail($id);
-                $entreprise = entreprise::with('Secteur')->findOrFail($id);
-            // }
+                $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
+                $secteur = entreprise::with('Secteur')->findOrFail($id);
+                $projets_counts = $fonct->findWhere("groupe_entreprises",["entreprise_id"],[$refs->entreprise_id]);
+                $cfp_counts = $fonct->findWhere("demmande_etp_cfp",["demmandeur_etp_id","activiter"],[$refs->entreprise_id,1]);
+                $modulesInternes_counts = $fonct->findWhere("modules_interne",["etp_id"],[$refs->entreprise_id]);
+                $projetIntra_counts = DB::select('select grp.id from groupes as grp join groupe_entreprises as grp_etp on grp.id = grp_etp.groupe_id join projets as prj on prj.id = grp.projet_id where grp_etp.entreprise_id = ? and prj.type_formation_id = ?',[$refs->entreprise_id, 1]);
+                $projetInter_counts = DB::select('select grp.id from groupes as grp join groupe_entreprises as grp_etp on grp.id = grp_etp.groupe_id join projets as prj on prj.id = grp.projet_id where grp_etp.entreprise_id = ? and prj.type_formation_id = ?',[$refs->entreprise_id, 2]);
+                $stagiaires_counts = $fonct->findWhere("stagiaires",["entreprise_id"],[$refs->entreprise_id]);
+                $chef_departements_counts = $fonct->findWhere("chef_departements",["entreprise_id"],[$refs->entreprise_id]);
+                $tva = DB::select('select * from taxes where id = ?', [1]);
+                // }
 
-            return view('admin.responsable.affichage_parametreReferent', compact('refs','nom_entreprise','branche','referent','entreprise'));
+            return view('admin.responsable.affichage_parametreReferent', compact('refs','entreprise','branche','secteur','tva','projets_counts','cfp_counts','modulesInternes_counts','projetInter_counts','projetIntra_counts','stagiaires_counts','chef_departements_counts'));
         }
          if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
-            $refs = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
-            $entreprise = entreprise::with('Secteur')->findOrFail($id);
-            $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
-            $referent = entreprise::findOrFail($id);
-             $entreprise_id=entreprise::where('id',$id)->value('id');
-            
-             $abonnement = $fonct->findWhere("v_abonnement_facture_entreprise",["entreprise_id"],[$entreprise_id]);
-             
-            $responsables=responsable::where('entreprise_id',$entreprise_id)->where('prioriter',0)->get();
-         
-           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','referent','responsables','abonnement'));
+            $refs = $fonct->findWhereMulitOne("responsables",["id"],[$id]);
+
+            $entreprise = entreprise::with('Secteur')->findOrFail($refs->entreprise_id);
+
+            $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$refs->entreprise_id]);
+            // $referent = entreprise::findOrFail($id);
+            //  $entreprise_id=entreprise::where('id',$id)->value('id');
+
+             $abonnement = $fonct->findWhere("v_abonnement_facture_entreprise",["entreprise_id"],[$refs->entreprise_id]);
+
+            $responsables=responsable::where('entreprise_id',$refs->entreprise_id)->where('prioriter',0)->get();
+
+           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','responsables','abonnement'));
         }
     }
     public function show($id)
@@ -544,8 +553,8 @@ class ResponsableController extends Controller
         //tableau contenant les types d'extension d'images
         $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
         if($image != null){
-            if($image->getSize() > 60000){
-                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
             }
             elseif(in_array($request->image->extension(),$extension_type)){
                 $user_id =  $users = Auth::user()->id;
@@ -556,7 +565,18 @@ class ResponsableController extends Controller
                 //enregiistrer la nouvelle photo
                 $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
                 $destinationPath = 'images/responsables';
-                $image->move($destinationPath, $nom_image);
+                 //imager  resize
+
+                 $image_name = $nom_image;
+
+                 $destinationPath = public_path('images/responsables');
+
+                 $resize_image = Image::make($image->getRealPath());
+
+                 $resize_image->resize(228,128, function($constraint){
+                     $constraint->aspectRatio();
+                 })->save($destinationPath . '/' .  $image_name);
+                // $image->move($destinationPath, $nom_image);
                 $url_photo = URL::to('/')."/images/responsables/".$nom_image;
                 DB::update('update responsables set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
                 return redirect()->route('profil_referent');

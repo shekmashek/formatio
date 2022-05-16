@@ -46,13 +46,16 @@ class SalleFormationController extends Controller
     {
         $user_id = Auth::user()->id;
         try{
+            if($request->ville == null){
+                throw new Exception('Vous devez completer le champ ville.');
+            }
             if($request->salle == null){
-                throw new Exception('Vous devez completer le champ.');
+                throw new Exception('Vous devez completer le champ salle de formation.');
             }
             $fonct = new FonctionGenerique();
             $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
             $cfp_id = $resp->cfp_id;
-            DB::insert('insert into salle_formation_of(cfp_id,salle_formation) values(?,?)',[$cfp_id,$request->salle]);
+            DB::insert('insert into salle_formation_of(cfp_id,salle_formation,ville) values(?,?,?)',[$cfp_id,$request->salle,$request->ville]);
             return back();
                 // return redirect()->back()->withInput(['tabName'=>'insertion_salle']);
         }catch(Exception $e){
@@ -77,9 +80,12 @@ class SalleFormationController extends Controller
     {
         try{
             if($request->salle == null){
-                throw new Exception('Vous devez completer le champ.');
+                throw new Exception('Vous devez completer le champ salle de formation.');
             }
-            DB::update('update salle_formation_of set salle_formation = ? where id  = ?',[$request->salle,$id]);
+            if($request->ville == null){
+                throw new Exception('Vous devez completer le champ ville.');
+            }
+            DB::update('update salle_formation_of set salle_formation = ? ,ville = ? where id  = ?',[$request->salle,$request->ville,$id]);
             return back();
         }catch(Exception $e){
             return back()->with('salle_error', $e->getMessage());

@@ -1,5 +1,5 @@
 @extends('./layouts/admin')
-@inject('groupe', 'App\Groupe')
+@inject('groupe', 'App\groupe')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 @if (Session::has('error'))
@@ -9,8 +9,52 @@
         </ul>
     </div>
 @endif
+<div class="row navigation_detail ">
+    <div class="ps-5">
+        <ul class="">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <li>
+                        <h3 class="text-center">Que voulez-vous apprendre?</h3>
+                    </li>
+                </div>
+                <div class="col-6">
+                    <li class="me-5">
+                        <div class="row content_search text-center">
+                            <form method="GET" action="{{route('result_formation')}}">
+                                @csrf
+                                <div class="form-row">
+                                    <div class="d-flex flex-row">
+                                        @foreach ($categorie as $categ)
+                                            <input type="hidden" name="id_formation" value="{{$categ->id}}">
+                                        @endforeach
+                                        <input class="form-control me-2" type="text" name="nom_formation" placeholder="Rechercher par formations ex. Excel">
+                                        <button type="submit" class="btn"><i class="bx bx-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                </div>
+                <div class="col-3">
+                    <div class="dropdown">
+                        <button class="dropbtn"><i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines des formations<i class="fa fa-caret-down ms-2"></i></button>
+                        <div class="dropdown-content">
+                            <div class="row flex-wrap">
+                                @foreach ($domaines as $dom)
+                                    <a href="#">{{$dom->nom_domaine}}</a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" type="btn"></button>
+                </div>
+            </div>
+        </ul>
+    </div>
+</div>
 <section class="detail__formation mb-5">
-    <nav class="navigation_detail d-flex flex-row justify-content-between">
+    <nav class="navigation_details d-flex flex-row justify-content-between">
         <div>
             <ul class="d-flex flex-row">
                 <li class="me-5"><a href="#objectif">objectif</a></li>
@@ -78,7 +122,7 @@
                 <h3 class="pb-3">Objectifs de la formation</h3>
                 <div class="row module_detail_content p-5">
                     <div class="col-lg-12">
-                        <p>{{$res->objectif}}</p>
+                        <p>@php echo html_entity_decode($res->objectif) @endphp</p>
                         <div id="pour_qui"></div>
                     </div>
                 </div>
@@ -91,7 +135,7 @@
                             <span class="adresse__text"><i class="bx bx-user adresse__icon"></i>&nbsp;Pour qui
                                 ?</span>
                             <div class="col-12 ps-4">
-                                <p>{{$res->cible}}</p>
+                                <p>@php echo html_entity_decode($res->cible) @endphp</p>
                             </div>
                         </div>
                     </div>
@@ -101,7 +145,7 @@
                             <span class="adresse__text"><i
                                     class="bx bx-list-plus adresse__icon"></i>&nbsp;Prérequis</span>
                             <div class="col-12 ps-4">
-                                <p>{{$res->prerequis}}</p>
+                                <p>@php echo html_entity_decode($res->prerequis) @endphp</p>
                             </div>
                         </div>
                         <div class="row d-flex flex-row">
@@ -119,7 +163,7 @@
                                     class="bx bxs-cog adresse__icon"></i>&nbsp;Equipement
                                 necessaire</span>
                             <div class="col-12 ps-4">
-                                <p>{{$res->materiel_necessaire}}</p>
+                                <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p>
                             </div>
                         </div>
                     </div>
@@ -130,12 +174,7 @@
                                     class="bx bxs-message-check adresse__icon"></i>&nbsp;Bon
                                 a savoir</span>
                             <div class="col-12 ps-4">
-                                <p>{{$res->bon_a_savoir}}</p>
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-row">
-                            <div class="col-12 ps-4">
-                                <p>Évaluez votre niveau en <a href="#">cliquant ici.</a> </p>
+                                <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p>
                             </div>
                         </div>
                     </div>
@@ -148,7 +187,7 @@
                                     class="bx bx-hive adresse__icon"></i>&nbsp;Prestations
                                 pedagogiques</span>
                             <div class="col-12 ps-4">
-                                <p>{{$res->prestation}}</p>
+                                <p>@php echo html_entity_decode($res->prestation) @endphp</p>
                             </div>
                         </div>
                         <div id="programme"></div>
@@ -340,7 +379,11 @@
                                             echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</span>
                                     </div>
                                     <div class="col-3 text-center">
-                                        <span>{{ $data->adresse_ville.', '.$data->adresse_lot }}</span>
+                                        <span>
+                                            @php
+                                                echo $groupe->get_lieu_fromation($data->groupe_id);
+                                            @endphp
+                                        </span>
                                     </div>
                                     <div class="col-3 text-center">
                                         <span>{{ number_format($infos[0]->prix, 0, ' ', ' ') }} AR HT</span>

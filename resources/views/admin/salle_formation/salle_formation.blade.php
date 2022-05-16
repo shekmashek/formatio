@@ -27,6 +27,7 @@
             <table class="table table-hover table-borderless">
                 <thead style="border-bottom: 1px solid black; line-height: 20px">
                   <tr>
+                    <th>Ville</th>
                     <th>Salle de formation</th>
                     <th rowspan="2"></th>
                   </tr>
@@ -34,6 +35,7 @@
                 <tbody>
                     @foreach ($salles as $salle)
                         <tr>
+                            <td>{{ $salle->ville }}</td>
                             <td>{{ $salle->salle_formation }}</td>
                             <td><a href="" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_modifier_salle_{{ $salle->id }}"><i class="bx bx-edit"></i></a></td>
                             <td><a href="{{ route('supprimer_salle',[$salle->id]) }}"><i class="bx bx-trash"></i></a></td>
@@ -49,7 +51,8 @@
                                     <form action="{{ route('modifier_salle',[$salle->id]) }}" method="POST">
                                         @csrf
                                         <label for="exampleDataList" class="form-label">Salle de formation</label>
-                                        <input class="form-control" name="salle" id="exampleDataList" value="{{ $salle->salle_formation }}">
+                                        <input class="form-control" name="ville" id="exampleDataList" value="{{ $salle->ville }}">
+                                        <input class="form-control mt-3" name="salle" id="exampleDataList" value="{{ $salle->salle_formation }}">
                                         <button type="submit" class="btn btn_enregistrer mt-2">Modifier</button>
                                     </form>
                                 </div>
@@ -73,8 +76,9 @@
                         <form action="{{ route('enregistrer_salle_of') }}" method="POST">
                             @csrf
                             <label for="exampleDataList" class="form-label">Salle de formation</label>
+                            <input class="form-control mb-3" name="ville" id="exampleDataList" placeholder="Ville...">
                             <input class="form-control" name="salle" id="exampleDataList" placeholder="Salle de formation...">
-                            <button type="submit" class="btn btn_enregistrer mt-2">Enregistrer</button>
+                            <button type="submit" class="btn btn_enregistrer mt-3">Enregistrer</button>
                         </form>
                     </div>
                 </div>
@@ -108,6 +112,7 @@
 .nav-item.active .nav-link {
     border-bottom: 3px solid #7635dc !important;
     border: none;
+    color: #7635dc
 }
 
 .nav-tabs .nav-link:hover {

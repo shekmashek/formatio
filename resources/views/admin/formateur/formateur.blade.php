@@ -71,7 +71,16 @@
         <div class="col-md-7">
             {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
 
-                <h4>Formateurs déjà collaborer</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Formateurs déjà collaborer</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="">
+                            <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+                        </div>
+                    </div>
+                </div>
 
                 {{-- <div class="table-responsive text-center"> --}}
 
@@ -235,6 +244,43 @@
 
     </div>
 </div>
+
+{{--filter formteur--}}
+<div class="filtrer mt-3 testFilter">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-11">
+                <p class="m-0" style="color: #0052D4; text-transform: uppercase">Filter vos formateurs</p>
+            </div>
+            <div class="col-md-1 text-end">
+                <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+            </div>
+        </div>
+        <hr class="mt-2">
+
+        <div class="col-12 pe-3">
+            <div class="row mb-3 p-2 pt-0">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Formateurs
+                    </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form action="formateurs/filtre/query/name" method="post" >
+                            @csrf
+                            <input style="width: 265px" type="text" name="nameFormateur" id="nameFormateur" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script>
@@ -270,5 +316,44 @@
     });
 });
 
+</script>
+
+{{--filtre prof name--}}
+<script type="text/javascript">
+    $('body').on('keyup','#nameFormateur',function(){
+
+        var nameFormateur = $(this).val();
+        console.log(nameFormateur)
+
+        $.ajax({
+            method: 'GET',
+            url: '{{ route("prof.filter.name") }}',
+            dataType: 'json',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                nameFormateur: nameFormateur,
+            },
+            success: function (res) { 
+                var tableRow ='';
+                        
+                $('#data_collaboration').html('');
+
+                $.each(res, function (index, value) { 
+
+                    tableRow += '<tr class="text-center content_table">';
+                    tableRow +='<td><img src="{{asset("images/formateurs/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow = tableRow.replace(":?",value.photos);
+                    tableRow +=     
+                        '</td><td>'+value.nom_formateur+
+                        '</td><td>'+value.prenom_formateur+
+                        '</td><td>'+value.mail_formateur+
+                        '</td><tr>';
+                    console.log(tableRow);
+                });
+                $('#data_collaboration').append(tableRow); 
+                // location.reload();
+            }   
+        });
+    });
 </script>
 @endsection

@@ -109,13 +109,13 @@
                         </a>
                         @endif
                         {{-- <p class="m-1 system_ pb-1">Information légale<span class="system_numeroSuccess">complet</span></p> --}}
-                        <a class="overr" href="">
+                        {{-- <a class="overr" href="">
                             <p class="m-1 system_ pb-1">Type d'abonnement<span class="system_numero">
                                     @foreach($name as $ab)
                                     {{ $ab->nom_type }}
                                     @endforeach
                                 </span></p>
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>

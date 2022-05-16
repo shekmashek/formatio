@@ -7,9 +7,7 @@
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-
             {{-- <h3>Utilisateurs /</h3> --}}
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
@@ -18,9 +16,7 @@
                             <li class="nav-item mx-1">
                                 {{-- <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_entreprise') ? 'active' : '' }}" href="{{route('utilisateur_entreprise')}}"> --}}
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
-                                    
                                         Entreprises</a>
-                    
                             </li>
                             <li class="nav-item mx-1">
                                 {{-- <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_resp_cfp') ? 'active' : '' }}" href="{{route('utilisateur_resp_cfp')}}"> --}}
@@ -63,6 +59,27 @@
         </div>
     </div>
 </nav>
+<style>
+    .pagination {
+           background-clip: text;
+           margin-right: .3rem;
+           font-size: 2rem;
+           position: relative;
+           top: .7rem;
+       }
+
+       .pagination:hover {
+           color: #000000;
+           background-color: rgb(239, 239, 239);
+           border-radius: 1.3rem;
+       }
+
+       .nombre_pagination {
+           color: #626262;
+
+       }
+
+   </style>
             {{-- <form class="navbar-form navbar-left" role="search">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown">
@@ -100,6 +117,33 @@
     </p>
 </form> --}}
 <div class="container-fluid">
+    
+    <div class="d-flex flex-row justify-content-end mt-3">
+        <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
+                {{ $nb_resp }}</span>
+            @if ($nb_par_page >= $nb_resp)
+                <a href="{{ route('utilisateur_cfp', [1, $page - 1]) }}" role="button"
+                    style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('utilisateur_cfp', [1, $page + 1]) }}" role="button"
+                    style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            @elseif ($page == 1)
+                <a href="{{ route('utilisateur_cfp', [1, $page - 1]) }}" role="button"
+                    style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('utilisateur_cfp', [1, $page + 1]) }}" role="button"><i
+                        class='bx bx-chevron-right pagination'></i></a>
+            @elseif ($page == $fin_page || $page > $fin_page)
+                <a href="{{ route('utilisateur_cfp', [1, $page - 1]) }}" role="button"><i
+                        class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('utilisateur_cfp', [1, $page + 1]) }}" role="button"
+                    style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+            @else
+                <a href="{{ route('utilisateur_cfp', [1, $page - 1]) }}" role="button"><i
+                        class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('utilisateur_cfp', [1, $page + 1]) }}" role="button"><i
+                        class='bx bx-chevron-right pagination'></i></a>
+            @endif
+        </span>
+    </div>
     <table class="table">
         <thead>
             <th> Logo </th>
@@ -119,12 +163,12 @@
             <tr>
                 {{-- <td colspan="3" style="width: 40px;"><a class="dropdown-item" href="{{ route('profil_du_responsable',$resp->id) }}"> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$resp->logo)}}" style="width:120px;hei" cellspacing="0"> </a></td> --}}
 
-                <td colspan="3" style="width: 40px;"><a class="dropdown-item" href=""> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.$resp->cfp->logo)}}" style="width:120px;hei" cellspacing="0"> </a></td>
-                <td>{{ $resp->cfp->nom}}</td>
+                <td colspan="3" ><a class="dropdown-item" href=""> <img class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/CFP/'.optional(optional($resp)->cfp)->logo)}}" style="width:120px;height:60px"cellspacing="0" width="80" height="50"> </a></td>
+                <td>{{optional(optional($resp)->cfp)->nom}}
+               </td>
                 <td> <a class="dropdown-item" href=""><span>{{ $resp->nom_resp_cfp}}</span><span class="ms-1">{{ $resp->prenom_resp_cfp}}</span>  </a></td>
                 <td>{{ $resp->email_resp_cfp}}</td>
                 <td>{{ $resp->telephone_resp_cfp}}</td>
-              
                 <td>{{ $resp->created_at}}</td>
                 <td>
 

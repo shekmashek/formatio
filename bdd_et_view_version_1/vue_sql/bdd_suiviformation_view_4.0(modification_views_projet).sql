@@ -641,6 +641,7 @@ create or replace view v_projet_session_inter as
         p.nom_projet,
         p.cfp_id,
         p.type_formation_id,
+        tf.type_formation,
         p.status as status_projet,
         p.activiter as activiter_projet,
         p.created_at as date_projet,
@@ -693,6 +694,7 @@ create or replace view v_projet_session_inter as
         (cfps.logo) logo_cfp,
         (cfps.specialisation) specialisation
     from groupes g join projets p on g.projet_id = p.id
+    join type_formations tf on tf.id = p.type_formation_id
     join cfps on cfps.id = p.cfp_id;
 
 
@@ -848,3 +850,4 @@ create or replace view v_presence_groupe as
         d.groupe_id
     from presences p
     join details d on d.id = p.detail_id;
+

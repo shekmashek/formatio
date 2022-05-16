@@ -16,6 +16,7 @@ use App\ResponsableCfpModel;
 use App\responsable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
+use Image;
 
 class ResponsableCfpController extends Controller
 {
@@ -48,7 +49,7 @@ class ResponsableCfpController extends Controller
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
             $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
             return view('cfp.responsable_cfp.profiles', compact('refs'));
-            
+
         }
 
     }
@@ -77,19 +78,17 @@ class ResponsableCfpController extends Controller
                 $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
                 $tva = DB::select('select * from taxes where id = ?', [1]);
-               
-
             }
             return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts','tva'));
 
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
-           
+
             $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
             $cfp_id=cfp::where('id',$id)->value('id');
             // dd($cfp_id);
             $abonnement = $fonct->findWhere("v_abonnement_facture",["cfp_id"],[$cfp_id]);
-           
+
             // dd($cfp_id);
             // $responsables_cfp = $this->fonct->findWhere("v_responsable_cfp ", ["prioriter"], ["0"], ["cfp_id"], [$cfp_id]);
             $responsables=responsable_cfp::where('cfp_id',$cfp_id)->where('prioriter',0)->get();
@@ -107,7 +106,9 @@ class ResponsableCfpController extends Controller
         $fonct = new FonctionGenerique();
         if (Gate::allows('isCFP')) {
             $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
-            $responsable = DB::select("select * from responsables_cfp where cfp_id=? and id!=?", [$resp_cfp_connecter->cfp_id, $resp_cfp_connecter->id]);
+            // $responsable = DB::select("select * from responsables_cfp where cfp_id=? and id!=?", [$resp_cfp_connecter->cfp_id, $resp_cfp_connecter->id]);
+            $responsable = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where cfp_id=? and id=?', [$resp_cfp_connecter->cfp_id, $resp_cfp_connecter->id]);
+            // dd($responsable);
             return view('cfp.responsable_cfp.nouveau_responsable', compact('resp_cfp_connecter', 'responsable'));
         }
     }
@@ -124,11 +125,22 @@ class ResponsableCfpController extends Controller
         $user_id = Auth::id();
         if (Gate::allows('isCFP')){
             $resp_connecte = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[Auth::user()->id]);
+
             $cfp_id = $resp_connecte->cfp_id;
-            $cfp = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where user_id = ? and activiter = 1 and cfp_id = ?' , [$user_id , $cfp_id]);
-            // dd($cfp_id , $cfp);
-        return view('cfp.responsable_cfp.liste_equipe_admin_cfp', compact('cfp'));
+            $cfp = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where cfp_id = ?' , [$cfp_id]);
+            $cfpPrincipale = DB::select('select * from responsables_cfp where prioriter = 1');
+            $cfpPrincipal = DB::select('select * from responsables_cfp where activiter = 0');
+            return view('cfp.responsable_cfp.liste_equipe_admin_cfp', compact('cfp','resp_connecte','cfpPrincipale','cfpPrincipal'));
         }
+    }
+
+    public function modifReferent(Request $request){
+        // dd($request->all());
+        $fonct = new FonctionGenerique();
+        $cfp_id = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [Auth::id()])->cfp_id;
+        DB::update('update responsables_cfp set prioriter = 0 where cfp_id = ?',[$cfp_id]);
+        DB::update('update responsables_cfp set prioriter = 1 where cfp_id = ? and id = ?', [$cfp_id,$request->id_resp]);
+        return back();
     }
 
     public function store(Request $request)
@@ -140,15 +152,17 @@ class ResponsableCfpController extends Controller
 
         $user_id = Auth::id();
         if (Gate::allows('isCFP')) {
+
             $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
             if ($resp_cfp_connecter->prioriter == 1) {
                 $resp->verify_form($request);
 
-                $verify_cin = $resp->verify_cin($request->input());
+                $verify_cin = $resp->verify_cin($request->cin);
                 $verify_email = $fonct->findWhere("users", ["email"], [$request->email]);
                 $verify_phone = $fonct->findWhere("users", ["telephone"], [$request->phone]);
 
-                $doner["cin"] = $resp->concat_nb_cin($request->input());
+                // $doner["cin"] = $resp->concat_nb_cin($request->input());
+                $doner["cin"] = $request->cin;
                 $doner["nom"] = $request->nom;
                 $doner["prenom"] = $request->prenom;
               //  $doner["sexe"] = $request->sexe;
@@ -168,7 +182,7 @@ class ResponsableCfpController extends Controller
                         } else {
                             $user->name = $request->nom . " " . $request->prenom;
                             $user->email = $request->email;
-                            $user->cin = $resp->concat_nb_cin($request->input());
+                            $user->cin = $request->cin;
                             $user->telephone =  $request->phone;
                             $ch1 = "0000";
                             $user->password = Hash::make($ch1);
@@ -184,8 +198,6 @@ class ResponsableCfpController extends Controller
                                 DB::rollback();
                                 echo $e->getMessage();
                             }
-
-
                             if (Gate::allows('isCFP')) {
                                 $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
                                 $result = $resp->insert_resp_CFP($doner, $resp_cfp_connecter->cfp_id, $user->id);
@@ -197,7 +209,7 @@ class ResponsableCfpController extends Controller
                             }
                             if (Gate::allows('isAdmin')) {
                                 $result = $resp->insert_resp_CFP($doner, $request->cfp_id, $user->id);
-                                return $result;
+                               return $result;
                             }
                         }
                     }
@@ -232,7 +244,7 @@ class ResponsableCfpController extends Controller
         return $result;
     }
     //modification
-    public function edit_photo($id, Request $request)
+    public function edit_photo ($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
@@ -346,9 +358,9 @@ class ResponsableCfpController extends Controller
         //tableau contenant les types d'extension d'images
         $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
 		 if($image != null){
-			if($image->getSize() > 60000){
-				return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
-			}
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
+            }
             elseif(in_array($request->image->extension(),$extension_type)){
 
 					$user_id =  $users = Auth::user()->id;
@@ -360,7 +372,17 @@ class ResponsableCfpController extends Controller
 
 					$nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
 					$destinationPath = 'images/responsables';
-					$image->move($destinationPath, $nom_image);
+                    //imager  resize
+                   $image_name = $nom_image;
+
+                 $destinationPath = public_path('images/responsables');
+
+                 $resize_image = Image::make($image->getRealPath());
+
+                $resize_image->resize(228, 128, function($constraint){
+                    $constraint->aspectRatio();
+                })->save($destinationPath . '/' .  $image_name);
+					// $image->move($destinationPath, $nom_image);
 					$url_photo = URL::to('/')."/images/responsables/".$nom_image;
 
 					DB::update('update responsables_cfp set photos_resp_cfp = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
@@ -407,5 +429,17 @@ class ResponsableCfpController extends Controller
     {
         DB::update('update responsables_cfp set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where user_id = ?', [$request->lot,$request->quartier,$request->cp,$request->ville,$request->region, Auth::id()]);
         return redirect()->route('profil_du_responsable');
+    public function desactiver_personne(Request $request){
+        $id  = $request->Id;
+        $activiter = 0;
+        DB::update('update responsables_cfp set activiter = ? where id = ?', [$activiter, $id]);
+        return response()->json(['success' => 'ok']);
+    }
+
+    public function activer_personne(Request $request){
+        $id  = $request->Id;
+        $activiter = 1;
+        DB::update('update responsables_cfp set activiter = ? where id = ?', [$activiter, $id]);
+        return response()->json(['success' => 'ok']);
     }
 }

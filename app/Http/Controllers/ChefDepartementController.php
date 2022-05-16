@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FonctionGenerique;
+use Image;
+
 class ChefDepartementController extends Controller
 {
     public function __construct()
@@ -252,26 +254,43 @@ class ChefDepartementController extends Controller
     public function update_photos_chef(Request $request)
     {
         $image = $request->file('image');
+      
         $fonct = new FonctionGenerique();
         if($image != null){
-            if($image->getSize() > 60000){
-                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
+            //dd( $image->getSize());
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
             }
             else{
+           
                 $user_id =  $users = Auth::user()->id;
 
                    $chef = $fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id]);
                     $image_ancien =$chef->photos;
+                  
+                    
                     //supprimer l'ancienne image
                     File::delete(public_path("images/chefDepartement/".$image_ancien));
+                   
                     //enregiistrer la nouvelle photo
-                    $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                    $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->file('image')->getClientOriginalExtension());
                     $destinationPath = 'images/chefDepartement';
-                    $image->move($destinationPath, $nom_image);
+                      //imager  resize
+                    $image_name = $nom_image;
+
+                    $destinationPath = public_path('images/chefDepartement');
+                   
+                    $resize_image = Image::make($image->getRealPath());
+                    
+                    $resize_image->resize(228,128, function($constraint){
+                        $constraint->aspectRatio();
+                    })->save($destinationPath . '/' .  $image_name);
+
+                    // $image->move($destinationPath, $nom_image);
                     $url_photo = URL::to('/')."/images/chefDepartement/".$nom_image;
                     DB::update('update chef_departements set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
                     return redirect()->route('affProfilChefDepartement');
-            }
+             }
         }
         else{
             return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
