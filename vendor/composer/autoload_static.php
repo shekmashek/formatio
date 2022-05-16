@@ -18,10 +18,6 @@ class ComposerStaticInita81baad5868038acf1fdb1c7166dfd6c
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-<<<<<<< HEAD
-=======
-        '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
->>>>>>> origin/debug_version_1
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
@@ -796,15 +792,8 @@ class ComposerStaticInita81baad5868038acf1fdb1c7166dfd6c
         'App\\branche' => __DIR__ . '/../..' . '/app/branche.php',
         'App\\entreprise' => __DIR__ . '/../..' . '/app/entreprise.php',
         'App\\genre' => __DIR__ . '/../..' . '/app/genre.php',
-<<<<<<< HEAD
         'App\\role_user' => __DIR__ . '/../..' . '/app/role_user.php',
         'App\\taux_devises' => __DIR__ . '/../..' . '/app/taux_devises.php',
-=======
-        'App\\responsable_cfp' => __DIR__ . '/../..' . '/app/responsable_cfp.php',
-        'App\\role_user' => __DIR__ . '/../..' . '/app/role_user.php',
-        'App\\taux_devises' => __DIR__ . '/../..' . '/app/taux_devises.php',
-        'App\\tva' => __DIR__ . '/../..' . '/app/tva.php',
->>>>>>> origin/debug_version_1
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
