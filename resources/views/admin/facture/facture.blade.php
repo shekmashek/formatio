@@ -258,7 +258,11 @@
 
     <div class="m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            {{-- <li></li> --}}
+            <li>
+                <a href="{{route('facture')}}" class="nav-link">
+                    Nouveau
+                </a>
+            </li>
             <li class="nav-item">
 
                 @if (isset($pour_list))
@@ -344,7 +348,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Type</th>
-                                            <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                             </th>
                                             <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                             </th>
@@ -355,7 +359,7 @@
                                             </th>
                                             <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                             </th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Statut</th>
                                             @canany(['isCFP'])
                                             <th scope="col" colspan="2">Action</th>
                                             @endcanany
@@ -458,14 +462,14 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li class="dropdown-item">
-                                                <a href="{{route('edit_facture',$actif->num_facture)}}"> <button type="button" class="btn"><i class="fa fa-edit"></i> Modifier facture</button>
+                                                <a href="{{route('edit_facture',$actif->num_facture)}}"> <button type="button" class="btn"><i class="fa fa-edit"></i> Modifier</button>
                                                 </a>
                                             </li>
                                             <li class="dropdown-item">
                                                 <form action="{{route('valid_facture')}}" method="POST">
                                                     @csrf
                                                     <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                    <button type="submit" class="btn ">Valider facture</button>
+                                                    <button type="submit" class="btn "><i class='bx bx-file'></i> Valider</button>
                                                 </form>
                                             </li>
                                             <li>
@@ -534,7 +538,7 @@
                             <div id="modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
                                 <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-content px-3 py-3">
                                         <div class="modal-header">
                                             <div class="modal-title text-md">
                                                 <h6>Encaisser la facture N°: <span class="text-mued" id="num_fact_encaissement">{{ $actif->num_facture }}</span></h6>
@@ -546,41 +550,65 @@
                                                 @csrf
                                                 <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>
                                         </div>
+                                        <div class="inputbox inputboxP mt-3  mx-1">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span>Date de paiement<strong style="color:#ff0000;">*</strong></span>
 
-                                        <div class="inputbox inputboxP mt-2  mx-1">
-                                            <span>Description</span>
-                                            <textarea autocomplete="off" name="libelle" class="text_description form-control" placeholder="description d'encaissement" rows="5"></textarea>
+                                                </div>
+                                                <div class="col">
+                                                    <input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;">
+                                                    <div class="invalid-feedback">
+                                                        votre Date de paiement
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <div class="inputbox inputboxP mt-3   mx-1">
-                                            <span>Montant à facturer<strong style="color:#ff0000;">*</strong></span>
-                                            <input autocomplete="off" type="number" min="1" name="montant" class="form-control formPayement" required="required" style="height: 50px;">
-                                            <div class="invalid-feedback">
-                                                votre montant à encaisser
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span>Montant à facturer<strong style="color:#ff0000;">*</strong></span>
+
+                                                </div>
+                                                <div class="col">
+                                                    <input autocomplete="off" type="number" min="1" name="montant" class="form-control formPayement" required="required" style="height: 50px;">
+                                                    <div class="invalid-feedback">
+                                                        votre montant à encaisser
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         </div>
 
                                         <div class="form-group  mt-3  mx-1">
-                                            <span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>
-                                            <select class="form-select selectP" name="mode_payement" aria-label="Default select example" style="height: 50px;">
-                                                @foreach ($mode_payement as $mp)
-                                                <option value="{{ $mp->id }}">{{ $mp->description }}</option>
-                                                @endforeach
-                                            </select>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>
+
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-select selectP" name="mode_payement" aria-label="Default select example" style="height: 50px;">
+                                                        @foreach ($mode_payement as $mp)
+                                                        <option value="{{ $mp->id }}">{{ $mp->description }}</option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </div>
+                                            </div>
                                             <div class="invalid-feedback">
                                                 votre mode de paiement
                                             </div>
                                         </div>
-                                        <div class="inputbox inputboxP mt-3  mx-1">
-                                            <span>Date de paiement<strong style="color:#ff0000;">*</strong></span>
-                                            <input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;">
-                                            <div class="invalid-feedback">
-                                                votre Date de paiement
-                                            </div>
-                                        </div>
-                                        <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
 
-                                        <div class="mt-4 mb-4">
+                                        <div class="inputbox inputboxP mt-2  mx-1">
+                                            <span>Memo/Notes</span>
+                                            <textarea autocomplete="off" name="libelle" class="text_description form-control" placeholder="description d'encaissement" rows="5"></textarea>
+
+                                        </div>
+
+                                        <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
+                                        <div class="">
                                             <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div>
                                         </div>
 
@@ -640,7 +668,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Type</th>
-                                                <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                 </th>
                                                 <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                 </th>
@@ -651,7 +679,7 @@
                                                 </th>
                                                 <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                 </th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Statut</th>
                                                 @canany(['isCFP'])
                                                 <th scope="col" colspan="2">Action</th>
                                                 @endcanany
@@ -735,19 +763,19 @@
                                                             </button>
                                                             <ul class="dropdown-menu">
                                                                 <li class="dropdown-item">
-                                                                    <a href="{{route('edit_facture',$actif->num_facture)}}"> <button type="button" class="btn"><i class="fa fa-edit"></i> Modifier facture</button>
+                                                                    <a href="{{route('edit_facture',$actif->num_facture)}}"> <button type="button" class="btn"><i class="fa fa-edit"></i> Modifier</button>
                                                                     </a>
                                                                 </li>
                                                                 <li class="dropdown-item">
                                                                     <form action="{{route('valid_facture')}}" method="POST">
                                                                         @csrf
                                                                         <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                                        <button type="submit" class="btn ">Valider facture</button>
+                                                                        <button type="submit" class="btn "><i class='bx bx-file'></i> Valider</button>
                                                                     </form>
                                                                 </li>
                                                                 <li>
                                                                     {{-- <a class="dropdown-item" href="{{route('delete_facture',$actif->num_facture)}}">
-                                                                        <button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>
+                                                                    <button type="submit" class="btn "><span class="fa fa-trash"></span> Supprimer</button>
                                                                     </a> --}}
                                                                     <a class="dropdown-item" href="#">
                                                                         <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_fature_inactif_{{$actif->num_facture}}"><span class="fa fa-trash"></span> Supprimer</button>
@@ -807,7 +835,7 @@
                                             <table class="table table-hover">
                                                 <tr>
                                                     <th scope="col">Type</th>
-                                                    <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                    <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                     </th>
                                                     <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                     </th>
@@ -818,7 +846,7 @@
                                                     </th>
                                                     <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                     </th>
-                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Statut</th>
                                                     @canany(['isCFP'])
                                                     <th scope="col" colspan="2">Action</th>
                                                     @endcanany
@@ -909,7 +937,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu">
                                                                         <a href="#" class="dropdown-item">
-                                                                            <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
+                                                                            <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal_valide_{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
                                                                         </a>
                                                                         <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
                                                                     </ul>
@@ -925,7 +953,7 @@
                                                                     </button>
                                                                     <ul class="dropdown-menu">
                                                                         <a href="#" class="dropdown-item">
-                                                                            <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
+                                                                            <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal_valide_{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
                                                                         </a>
                                                                         <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
                                                                         <hr class="dropdown-divider">
@@ -942,10 +970,10 @@
 
                                                     </tr>
 
-                                                    <div id="modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div id="modal_valide_{{ $actif->cfp_id }}_{{ $actif->num_facture }}" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
                                                         <div class="modal-dialog">
-                                                            <div class="modal-content">
+                                                            <div class="modal-content px-3 py-3">
                                                                 <div class="modal-header">
                                                                     <div class="modal-title text-md">
                                                                         <h6>Encaisser la facture N°: <span class="text-mued" id="num_fact_encaissement">{{ $actif->num_facture }}</span></h6>
@@ -957,44 +985,59 @@
                                                                         @csrf
                                                                         <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>
                                                                 </div>
-
-                                                                <div class="inputbox inputboxP mt-2  mx-1">
-                                                                    <span>Description</span>
-                                                                    <textarea autocomplete="off" name="libelle" class="text_description form-control" placeholder="description d'encaissement" rows="5"></textarea>
+                                                                <div class="inputbox inputboxP mt-3  mx-1">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <span>Date de paiement<strong style="color:#ff0000;">*</strong></span>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;">
+                                                                            <div class="invalid-feedback">
+                                                                                votre Date de paiement
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
                                                                 </div>
                                                                 <div class="inputbox inputboxP mt-3   mx-1">
-                                                                    <span>Montant à facturer<strong style="color:#ff0000;">*</strong></span>
-                                                                    <input autocomplete="off" type="number" min="1" name="montant" class="form-control formPayement" required="required" style="height: 50px;">
-                                                                    <div class="invalid-feedback">
-                                                                        votre montant à encaisser
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <span>Montant à facturer<strong style="color:#ff0000;">*</strong></span>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input autocomplete="off" type="number" min="1" name="montant" class="form-control formPayement" required="required" style="height: 50px;">
+                                                                            <div class="invalid-feedback">
+                                                                                votre montant à encaisser
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group  mt-3  mx-1">
-                                                                    <span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>
-                                                                    <select class="form-select selectP" name="mode_payement" aria-label="Default select example" style="height: 50px;">
-                                                                        @foreach ($mode_payement as $mp)
-                                                                        <option value="{{ $mp->id }}">{{ $mp->description }}</option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <select class="form-select selectP" name="mode_payement" aria-label="Default select example" style="height: 50px;">
+                                                                                @foreach ($mode_payement as $mp)
+                                                                                <option value="{{ $mp->id }}">{{ $mp->description }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="invalid-feedback">
                                                                         votre mode de paiement
                                                                     </div>
                                                                 </div>
-                                                                <div class="inputbox inputboxP mt-3  mx-1">
-                                                                    <span>Date de paiement<strong style="color:#ff0000;">*</strong></span>
-                                                                    <input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;">
-                                                                    <div class="invalid-feedback">
-                                                                        votre Date de paiement
-                                                                    </div>
+                                                                <div class="inputbox inputboxP mt-2  mx-1">
+                                                                    <span>Memo/Notes</span>
+                                                                    <textarea autocomplete="off" name="libelle" class="text_description form-control" placeholder="description d'encaissement" rows="5"></textarea>
                                                                 </div>
                                                                 <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
-
-                                                                <div class="mt-4 mb-4">
+                                                                <div class="">
                                                                     <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div>
                                                                 </div>
-
                                                                 </form>
 
                                                             </div>
@@ -1032,7 +1075,7 @@
                                                     <table class="table table-hover">
                                                         <tr>
                                                             <th scope="col">Type</th>
-                                                            <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                            <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                             </th>
                                                             <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                             </th>
@@ -1043,7 +1086,7 @@
                                                             </th>
                                                             <th scope="col">Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                             </th>
-                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Statut</th>
                                                             @canany(['isCFP'])
                                                             <th scope="col" colspan="2">Action</th>
                                                             @endcanany

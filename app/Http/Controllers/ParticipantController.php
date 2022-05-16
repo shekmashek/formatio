@@ -51,83 +51,84 @@ class ParticipantController extends Controller
 
 
 
-public function desactiver_stagiaire(Request $req){
+    public function desactiver_stagiaire(Request $req)
+    {
 
-    $stg = new stagiaire();
-    $user_id = $req->user_id;
-    $emp_id = $req->emp_id;
-    $entreprise_id = 0;
-    if (Gate::allows('isReferent')) {
-        $entreprise_id = $this->fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id])->entreprise_id;
+        $stg = new stagiaire();
+        $user_id = $req->user_id;
+        $emp_id = $req->emp_id;
+        $entreprise_id = 0;
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+        }
+        $status = $stg->desactiver($user_id, $emp_id, $entreprise_id);
+
+        return response()->json($status);
     }
-    if (Gate::allows('isManager')) {
-        $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
+
+    public function activer_stagiaire(Request $req)
+    {
+
+        $stg = new stagiaire();
+        $user_id = $req->user_id;
+        $emp_id = $req->emp_id;
+        $entreprise_id = 0;
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+        }
+        $status = $stg->activer($user_id, $emp_id, $entreprise_id);
+
+        return response()->json($status);
     }
-    $status = $stg->desactiver($user_id,$emp_id,$entreprise_id);
 
-    return response()->json($status);
-}
+    public function new_emp()
+    {
+        // $fonct = new FonctionGenerique();
 
-public function activer_stagiaire(Request $req){
 
-    $stg = new stagiaire();
-    $user_id = $req->user_id;
-    $emp_id = $req->emp_id;
-    $entreprise_id = 0;
-    if (Gate::allows('isReferent')) {
-        $entreprise_id = $this->fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id])->entreprise_id;
+        // if (Gate::allows('isReferent')) {
+        //     $entreprise_id = responsable::where('user_id', Auth()->user()->id)->value('entreprise_id');
+        //     $liste_departement = db::select('select * from departement_entreprises where entreprise_id = ?', [$entreprise_id]);
+        //     return view('admin.chefDepartement.chef', compact('liste_departement'));
+        // }
+        return view('admin.entreprise.employer.nouveau_employer');
     }
-    if (Gate::allows('isManager')) {
-        $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
-    }
-    $status = $stg->activer($user_id,$emp_id,$entreprise_id);
 
-    return response()->json($status);
-}
-
-public function new_emp(){
-    // $fonct = new FonctionGenerique();
-
-
-    // if (Gate::allows('isReferent')) {
-    //     $entreprise_id = responsable::where('user_id', Auth()->user()->id)->value('entreprise_id');
-    //     $liste_departement = db::select('select * from departement_entreprises where entreprise_id = ?', [$entreprise_id]);
-    //     return view('admin.chefDepartement.chef', compact('liste_departement'));
-    // }
-    return view('admin.entreprise.employer.nouveau_employer');
-}
-
-    public function liste_employer($paginations=null)
+    public function liste_employer($paginations = null)
     {
         $entreprise_id = 0;
-        $nb_limit=10;
+        $nb_limit = 10;
         $user_id = Auth::user()->id;
 
         if (Gate::allows('isReferent')) {
-            $entreprise_id = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id])->entreprise_id;
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
         }
         if (Gate::allows('isManager')) {
-            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
         }
-        $totale_pag = $this->fonct->getNbrePagination("stagiaires", "id",["entreprise_id"],["="], [$entreprise_id],"AND");
+        $totale_pag = $this->fonct->getNbrePagination("stagiaires", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
 
-        if($paginations!=null){
+        if ($paginations != null) {
 
-            if($paginations<=0){
-                $paginations=1;
+            if ($paginations <= 0) {
+                $paginations = 1;
             }
-            $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations,$nb_limit);
-            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET ".($paginations-1),[$entreprise_id]);
-
+            $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
+            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
         } else {
-            if($paginations<=0){
-                $paginations=1;
+            if ($paginations <= 0) {
+                $paginations = 1;
             }
-            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET 0",[$entreprise_id]);
-            $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0,$nb_limit);
-
+            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
         }
-        return view("admin.entreprise.employer.liste_employer",compact('employers','pagination'));
+        return view("admin.entreprise.employer.liste_employer", compact('employers', 'pagination'));
     }
 
     public function index()
@@ -232,7 +233,7 @@ public function new_emp(){
         //condition de validation de formulaire
 
 
-       /*      $request->validate(
+        /*      $request->validate(
             [
                 'matricule' => ["required"],
                 'nom' => ["required"],
@@ -1085,12 +1086,12 @@ public function new_emp(){
 
     // ============== export excel new participant
 
-    public function teste(){
+    public function teste()
+    {
         $fonct = new FonctionGenerique();
         $liste_dep = $fonct->findAll("departement_entreprises");
-            // return view("admin.entreprise.employer.export_nouveau_employer", compact('liste_dep'));
-            return view("admin.participant.export_excel_nouveau_participant", compact('liste_dep'));
-
+        // return view("admin.entreprise.employer.export_nouveau_employer", compact('liste_dep'));
+        return view("admin.participant.export_excel_nouveau_participant", compact('liste_dep'));
     }
 
     public function export_excel_new_participant()
@@ -1112,10 +1113,9 @@ public function new_emp(){
             $liste_dep = $fonct->findWhere("v_departement", ["departement_id"], [$dep_etp_id]);
             // return view("admin.participant.export_excel_nouveau_participant", compact('liste_dep'));
 
-              return view('admin.entreprise.employer.export_nouveau_employer', compact('liste_dep'));
+            return view('admin.entreprise.employer.export_nouveau_employer', compact('liste_dep'));
         }
         return view("admin.participant.export_excel_nouveau_participant", compact('liste_dep'));
-
     }
 
     public function save_multi_stagiaire(Request $req)
@@ -1123,7 +1123,7 @@ public function new_emp(){
         $user_id = Auth::user()->id;
         $stg = new stagiaire();
         $fonct = new FonctionGenerique();
-
+        $totale_valide = 0;
         for ($i = 1; $i <= 30; $i += 1) {
 
             $doner["matricule"] = $req["matricule_" . $i];
@@ -1137,7 +1137,7 @@ public function new_emp(){
                     $req["cin_" . $i] != null
                     && $req["email_" . $i] != null
                 ) {
-
+                    $totale_valide += 1;
                     $verify = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req["email_" . $i]]);
 
                     if (count($verify) <= 0) {
@@ -1163,14 +1163,14 @@ public function new_emp(){
                         return back()->with('error', "erreur,l'une des données existes déjà!");
                     }
                 } else {
-                    return back()->with('error', "l'une des champs sont invalid!");
+                    return back()->with('error', "l'une des champs sont est invalid!");
                 }
             } else {
-                return back()->with('error', "champs vide");
+                return back()->with('error', "matricule ou autre champs vide");
             }
         }
 
-        return back()->with('success', "terminé!");
+        return back()->with('success', "" + $totale_valide + " desc nouveaux employés sont terminés avec succès!");
     }
 
     public function verify_matricule_stg(Request $req)
@@ -1193,5 +1193,4 @@ public function new_emp(){
         $data = $fonct->findWhere("stagiaires", ["cin"], [$req->valiny]);
         return response()->json($data);
     }
-
 }

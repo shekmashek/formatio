@@ -304,7 +304,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Type</th>
-                                            <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                             </th>
                                             <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                             </th>
@@ -315,7 +315,7 @@
                                             </th>
                                             <th scope="col">Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                             </th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Statut</th>
                                         </tr>
                                     </thead>
                                     <tbody id="list_data_trie_tous">
@@ -441,7 +441,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Type</th>
-                                                <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                 </th>
                                                 <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                 </th>
@@ -562,7 +562,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Type</th>
-                                                        <th scope="col">N° facture &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        <th scope="col">F# &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                         </th>
                                                         <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                         </th>
