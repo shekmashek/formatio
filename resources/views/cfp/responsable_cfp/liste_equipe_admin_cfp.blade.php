@@ -128,64 +128,54 @@
                     @foreach($cfp as $responsables_cfp)
                         <tr class="information" data-id="" >
                             @if($responsables_cfp->photos_resp_cfp == NULL or $responsables_cfp->photos_resp_cfp == '' or $responsables_cfp->photos_resp_cfp == 'XXXXXXX')
-                                <td role="button" class="randomColor m-auto mt-2 text-uppercase" style="width:40px;height:40px; border-radius:100%; color:white; display: grid; place-content: center" onclick="afficherInfos();"><span class=""> {{$responsables_cfp->nom}} {{$responsables_cfp->pr}} </span></td>
+                                <td role="button" class="randomColor m-auto mt-2 text-uppercase" style="width:40px;height:40px; border-radius:100%; color:white; display: grid; place-content: center"><span class=""> {{$responsables_cfp->nom}} {{$responsables_cfp->pr}} </span></td>
                             @else
-                                <td class="td_hover" role="button" style="display: grid; place-content: center" onclick="afficherInfos();"><img src="{{asset("images/responsables/".$responsables_cfp->photos_resp_cfp)}}" style="width:40px;height:40px; border-radius:100%"></td>
+                                <td class="td_hover" role="button" style="display: grid; place-content: center"><img src="{{asset("images/responsables/".$responsables_cfp->photos_resp_cfp)}}" style="width:40px;height:40px; border-radius:100%"></td>
                             @endif
-                            <td class="td_hover" role="button"  onclick="afficherInfos();" style="vertical-align: middle">{{$responsables_cfp->nom_resp_cfp}}{{$responsables_cfp->id}}</td>
-                            <td class="td_hover" role="button"  onclick="afficherInfos();" style="vertical-align: middle">{{$responsables_cfp->prenom_resp_cfp}}</td>
-                            <td class="td_hover" role="button"  onclick="afficherInfos();" style="vertical-align: middle">{{$responsables_cfp->email_resp_cfp}}</td>
-                            <td class="td_hover" role="button"  onclick="afficherInfos();" style="vertical-align: middle">{{$responsables_cfp->telephone_resp_cfp}}</td>
-                            <td class="td_hover" role="button"  onclick="afficherInfos();" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
+                            <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->nom_resp_cfp}}{{$responsables_cfp->id}}</td>
+                            <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->prenom_resp_cfp}}</td>
+                            <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->email_resp_cfp}}</td>
+                            <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->telephone_resp_cfp}}</td>
+                            <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
                             @if($resp_connecte->prioriter == 1)
                                     @if($responsables_cfp->prioriter == 1)
-                                        <td data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="myFunction()" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class='bx bxs-star'></i></td>
+                                        <td data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class='bx bxs-star'></i></td>
                                     @elseif($responsables_cfp->prioriter == 0)
                                         @if($responsables_cfp->activiter == 0)
-                                            <td desabled title="Résponsable" role="button" onclick="afficherInfos()" class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
+                                            <td desabled title="Résponsable" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
                                                 <i desabled data-bs-toggle="modal" data-bs-target="" class='bx bxs-star'></i>
                                             </td>
                                         @elseif($responsables_cfp->activiter == 1)
-                                            <td title="Résponsable" role="button" onclick="afficherInfos()" class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
+                                            <td title="Résponsable" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
                                                 <i data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{ $responsables_cfp->id }}" class='bx bxs-star'></i>
                                             </td>
                                         @endif
                                     @endif
                             @elseif($resp_connecte->prioriter == 0)
                                 @if($responsables_cfp->prioriter == 1)
-                                    <td onclick="myFunction()" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i class='bx bxs-star'></i></td>
+                                    <td title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i class='bx bxs-star'></i></td>
                                 @elseif($responsables_cfp->prioriter == 0)
-                                        <td title="Résponsable" role="button" onclick="afficherInfos()" class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
+                                        <td title="Résponsable" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
                                             <i class='bx bxs-star'></i>
                                         </td>
                                 @endif
                             @endif
 
 
-                            <td class="td_hover" role="button"  onclick="afficherInfos();" style="vertical-align: middle">
-                                @if($resp_connecte->prioriter == 1 && $resp_connecte->activiter == 1)
-                                    {{-- <div style="display: grid; place-content: center" class="form-check form-switch">
-                                        <input  class="form-check-input activer" data-id="" type="checkbox" role="switch" checked disabled/>
-                                    </div> --}}
-                                        @if($responsables_cfp->id == $resp_connecte->id )
-                                            <div style="display: grid; place-content: center" class="form-check form-switch">
-                                                <input  class="form-check-input activer" data-id="" type="checkbox" role="switch" checked disabled/>
-                                            </div>
-                                        @else
-                                            <div style="display: grid; place-content: center" class="form-check form-switch">
-                                                <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked/>
-                                            </div> 
-                                        @endif
-                                @endif
-                                {{-- @elseif($resp_connecte->prioriter == 0 && $resp_connecte->activiter == 1)
+                            <td class="td_hover" role="button" style="vertical-align: middle">
+                                @if($responsables_cfp->prioriter == 1 && $responsables_cfp->activiter == 1)
                                     <div style="display: grid; place-content: center" class="form-check form-switch">
-                                        <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked>
+                                        <input  class="form-check-input activer" data-id="" type="checkbox" role="switch" checked disabled/>
+                                    </div>
+                                @elseif($responsables_cfp->prioriter == 0 && $responsables_cfp->activiter == 1)
+                                    <div style="display: grid; place-content: center" class="form-check form-switch">
+                                        <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked>
                                     </div>
                                 @else
                                     <div style="display: grid; place-content: center" class="form-check form-switch">
-                                        <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="activer la personne selectionner"  type="checkbox" />
-                                    </div> 
-                                @endif --}}
+                                        <input class="form-check-input {{$responsables_cfp->id}}" data-bs-toggle="modal" id="switch_{{$responsables_cfp->id}}" name="switch" data-bs-target="#test2_{{$responsables_cfp->id}}" title="activer la personne selectionner" type="checkbox"/>
+                                    </div>
+                                @endif
                             </td>
 
                         </tr>
@@ -333,6 +323,7 @@
 
      $('.desactiver_personne').on('click',function(e){
         let id = e.target.id;
+        console.log("eto");
         $.ajax({
             method: "GET"
             , url: "{{route('desactiver_personne')}}"
@@ -348,17 +339,18 @@
 
      $('.activer_personne').on('click',function(e){
         let id = e.target.id;
-        // $.ajax({
-        //     method: "GET"
-        //     , url: "{{route('activer_personne')}}"
-        //     , data: {Id : id}
-        //     , success: function(response) {
-        //         window.location.reload();
-        //     }
-        //     , error: function(error) {
-        //         console.log(error)
-        //     }
-        // });
+        console.log("eto1");
+        $.ajax({
+            method: "GET"
+            , url: "{{route('activer_personne')}}"
+            , data: {Id : id}
+            , success: function(response) {
+                window.location.reload();
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
      });
 
 </script>
