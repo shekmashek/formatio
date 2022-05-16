@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<p class="text_header m-0 mt-1">Liste employer</p>
+<p class="text_header m-0 mt-1">employés</p>
 @endsection
 @section('content')
 {{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
@@ -277,20 +277,21 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="{{route('employes.liste')}}" class="nav-link active">
-                    liste des employers
+                    employés
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{route('employes.new')}}" class="nav-link">
-                    nouveau
+                    nouveau employé
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{route('employes.export.nouveau')}}" class="nav-link">
-                    export EXCEL employer
+                    import EXCEL employé
                 </a>
             </li>
         </ul>
+
         <div class="row">
             <div class="col-12">
 
