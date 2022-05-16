@@ -330,29 +330,40 @@ class ProfController extends Controller
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'mail' => 'required|string|email|max:255|unique:formateurs,mail_formateur,'.$id,
-            // the image must be less than 60Ko
+            
+            // the image size must be 
+
+
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
-        if ($request->hasFile('image')) {
-            $date = date('d-m-Y');
-            $new_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
-            $str = 'images/formateurs';
 
-            $url_photo = URL::to('/')."/images/formateurs/".$new_image;
-
-            $request->image->move(public_path($str), $new_image);
-
-            // validate the image with rules and update the image
-          
-
-        }
         $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
+        if ($validator->fails()) { 
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
-            formateur::where('id', $id)->update(['photos' => $new_image, 'url_photo' => $url_photo]);
+
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                if($image->getSize() > 60000){
+                    return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 60Ko');
+                } else {
+                $date = date('d-m-Y');
+                $new_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
+                $str = 'images/formateurs';
+    
+                $url_photo = URL::to('/')."/images/formateurs/".$new_image;
+    
+                $request->image->move(public_path($str), $new_image);
+
+                formateur::where('id', $id)->update(['photos' => $new_image, 'url_photo' => $url_photo]);
+                }                
+              
+            }
+
+            
             $formateur->update([
                 'nom_formateur' => $request->nom,
                 'prenom_formateur' => $request->prenom,
