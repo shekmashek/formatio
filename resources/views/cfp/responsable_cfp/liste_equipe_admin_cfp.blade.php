@@ -3,6 +3,7 @@
     <h3 class="text_header m-0 mt-1">Liste des équipes administratives</h3>
 @endsection
 @section('content')
+{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 <style>
     .td_hover:hover{
         background: #f0f0f0;
@@ -48,6 +49,63 @@
     }
 </style>
 
+
+
+{{--  --}}
+
+
+{{-- <div class="container-fluid pb-1">
+
+    <div class="m-4" role="tabpanel">
+        <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+            <li class="nav-item ">
+                <a href="#vosReferent" class="nav-link active" data-bs-toggle="tab">Vos réferents&nbsp;&nbsp;&nbsp;</a>
+            </li>
+            <li class="nav-item">
+                <a href="#nouveauReferent" class="nav-link" data-bs-toggle="tab">Nouveau réferent&nbsp;&nbsp;&nbsp;</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="vosReferent">
+                <div class="container-fluid p-0 mt-3 me-3">
+                    <div class="d-flex">
+                        <div class="col-12 ps-3">
+                            <div class="row pading_bas">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade" id="nouveauReferent">
+                <div class="container-fluid p-0 mt-3 me-3">
+                    <div class="d-flex">
+                        <div class="col-12 ps-3">
+                            <div class="row pading_bas d-flex flex-wrap">
+                                <div class="si_vide row mt-4">
+                                    <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
+                                    <a class="text-center mt-5" href="" role="button"><i
+                                            class='bx bx-layer-plus icon_vide'></i></a>
+                                </div>
+                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+
+
+
+
+{{--  --}}
 <div class="container-fluid ">
     <div class="row">
         <div class="col-lg-12">
@@ -106,21 +164,28 @@
 
                             <td class="td_hover" role="button"  onclick="afficherInfos();" style="vertical-align: middle">
                                 @if($resp_connecte->prioriter == 1 && $resp_connecte->activiter == 1)
-                                    @if($responsables_cfp->id == $resp_connecte->id)
-                                        <div style="display: grid; place-content: center" class="form-check form-switch">
-                                            <input  class="form-check-input activer" data-id="" type="checkbox" role="switch" checked disabled/>
-                                        </div>
-                                    @else
-                                        <div style="display: grid; place-content: center" class="form-check form-switch">
-                                            <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked/>
-                                        </div>
-                                    @endif
+                                    {{-- <div style="display: grid; place-content: center" class="form-check form-switch">
+                                        <input  class="form-check-input activer" data-id="" type="checkbox" role="switch" checked disabled/>
+                                    </div> --}}
+                                        @if($responsables_cfp->id == $resp_connecte->id )
+                                            <div style="display: grid; place-content: center" class="form-check form-switch">
+                                                <input  class="form-check-input activer" data-id="" type="checkbox" role="switch" checked disabled/>
+                                            </div>
+                                        @else
+                                            <div style="display: grid; place-content: center" class="form-check form-switch">
+                                                <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked/>
+                                            </div> 
+                                        @endif
                                 @endif
-                                @if($resp_connecte->prioriter == 0 && $resp_connecte->activiter == 1)
+                                {{-- @elseif($resp_connecte->prioriter == 0 && $resp_connecte->activiter == 1)
                                     <div style="display: grid; place-content: center" class="form-check form-switch">
-                                        <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked disabled>
+                                        <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch_{{$responsables_cfp->id}}" title="désactiver la personne selectionner"  type="checkbox" checked>
                                     </div>
-                                @endif
+                                @else
+                                    <div style="display: grid; place-content: center" class="form-check form-switch">
+                                        <input class="form-check-input " data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="activer la personne selectionner"  type="checkbox" />
+                                    </div> 
+                                @endif --}}
                             </td>
 
                         </tr>
@@ -283,17 +348,17 @@
 
      $('.activer_personne').on('click',function(e){
         let id = e.target.id;
-        $.ajax({
-            method: "GET"
-            , url: "{{route('activer_personne')}}"
-            , data: {Id : id}
-            , success: function(response) {
-                window.location.reload();
-            }
-            , error: function(error) {
-                console.log(error)
-            }
-        });
+        // $.ajax({
+        //     method: "GET"
+        //     , url: "{{route('activer_personne')}}"
+        //     , data: {Id : id}
+        //     , success: function(response) {
+        //         window.location.reload();
+        //     }
+        //     , error: function(error) {
+        //         console.log(error)
+        //     }
+        // });
      });
 
 </script>
