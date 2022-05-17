@@ -49,8 +49,11 @@
             border-bottom: 2px solid black;
         }
 
-    </style>
+        tbody tr{
+            vertical-align: middle;
+        }
 
+    </style>
 
     <div class="row w-100 bg-none mt-3 font_text">
 
@@ -69,21 +72,27 @@
                 </thead>
                 <tbody id="data_collaboration" style="font-size: 11.5px;">
 
-                    @if (count($entreprise)<=0) <tr>
-                        <td colspan="3" class="text-center"> Aucun Entreprise collaboré</td>
-                        </tr>
+                        @if (count($entreprise)<=0) <tr>
+                            <td> Aucun entreprise collaborer</td>
+                            </tr>
                         @else
+                            @foreach($entreprise as $etp)
+                            <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
 
+                                <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px"><span class="ms-3">{{$etp->nom_etp}}</span></td>
+                                <td role="button"  onclick="afficherInfos();">
+                                    {{-- @if($etp->photos_resp==null)
+                                        <span class="d-flex flex-row">
+                                            <div class='randomColor photo_users' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:60px; width:60px; display: grid; place-content: center"></div>
+                                            <span class="d-flex flex-end ms-3 align-items-center">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                        </span>
+                                    @else --}}
+                                        <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                    {{-- @endif --}}
+                                </td>
 
-                        @foreach($entreprise as $etp)
-                        <tr class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
-
-                            <td role="button" onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px"><span class="ms-3">{{$etp->nom_etp}}</span></td>
-
-                            <td role="button" onclick="afficherInfos();"><img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span></td>
-
-                            <td>
-                                <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
+                                {{-- <td>
+                                    <div align="left">
 
                             </td>
                             <td>
@@ -111,28 +120,37 @@
                                             <h4 class="modal-title text-white">Avertissement !</h4>
 
                                         </div>
-                                        <div class="modal-body">
-                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                        </div>
-                                        <div class="modal-footer justify-content-center">
-                                            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
-                                            <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
-                                            <form action="{{ route('mettre_fin_cfp_etp') }}"  method="POST">
-                                                @csrf
-                                                <input name="etp_id" type="text" value="{{$etp->entreprise_id}}" hidden>
-                                                <div class="mt-4 mb-4">
-                                                    <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                                                </div>
-                                            </form>
+                                    </div> --}}
+                                </td>
+                                {{-- modal delete  --}}
+                                <div>
+                                    <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
+                                                <h6 class="modal-title text-white">Avertissement !</h6>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
+                                                <form action="{{ route('mettre_fin_cfp_etp') }}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-secondary"> Oui </button>
+                                                    <input name="etp_id" type="text" value="{{$etp->entreprise_id}}" hidden>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{-- fin modal delete --}}
+                                </div>
 
-                        </tr>
+                                {{-- fin modal delete --}}
 
-                        @endforeach
+                            </tr>
+                            @endforeach
                         @endif
 
                 </tbody>
@@ -179,7 +197,6 @@
                 <strong> {{Session::get('error')}}</strong>
             </div>
             @endif
-
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-md-12">
@@ -199,7 +216,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="tab-content" id="myTabContent">
 
                 <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
@@ -279,11 +295,8 @@
                 </div>
 
             </div>
-
-
             {{-- </div> --}}
         </div>
-
         <div class="infos mt-3">
             <div class="row">
                 <div class="col">

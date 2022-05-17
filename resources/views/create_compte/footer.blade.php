@@ -48,8 +48,6 @@
             }
 
         });
-
-
         $('.field2-etp input').change(function() {
             if ($('#nom_resp_etp').val().length > 1 &&
                 $('#cin_resp_etp').val().length > 4 &&
@@ -159,13 +157,14 @@
 
     /*-----------------------------------------------*/
 
-  /*  $(document).on('keyup change', '#logo_cfp', function() {
+   $(document).on('keyup change', '#logo_cfp', function() {
         var test = $(this).val().split('.').pop();
         document.getElementById("error_logo_cfp").innerHTML = '';
 
         if ("" + test == "jpg" || "" + test == "jpeg" || "" + test == "png") {
-            if (this.files[0].size > 60000) {
-                document.getElementById("error_logo_cfp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
+            /**60 000*/
+            if (this.files[0].size > 1692728) {
+                document.getElementById("error_logo_cfp").innerHTML = "la taille de votre logo ne doit pas dépassé 1.7 MB";
 
                 if ($("#name_cfp_err").html() == '' &&
                     $("#nif_cfp_err").html() == '') {
@@ -194,7 +193,7 @@
             }
         }
     });
-*/
+
     /*-----------------------------------------------*/
 
     $(document).on('keyup change', '#nif_cfp', function() {
@@ -401,13 +400,13 @@
     });
 
     /*-------------------------------------------------------------------*/
-  /*  $(document).on('keyup change', '#logo_etp', function() {
+   $(document).on('keyup change', '#logo_etp', function() {
         var test = $(this).val().split('.').pop();
         document.getElementById("error_logo_etp").innerHTML = '';
 
         if ("" + test == "jpg" || "" + test == "jpeg" || "" + test == "png") {
-            if (this.files[0].size > 60000) {
-                document.getElementById("error_logo_etp").innerHTML = "la taille de votre logo ne doit pas dépassé 60 Ko";
+            if (this.files[0].size > 1692728) {
+                document.getElementById("error_logo_etp").innerHTML = "la taille de votre logo ne doit pas dépassé 1.7 MB";
 
                 if (document.getElementById("name_etp_err").innerHTML == '' &&
                     document.getElementById("nif_etp_err").innerHTML == '') {
@@ -438,7 +437,7 @@
         }
     });
 
-*/
+
     /*-----------------------------------------------------------------------*/
     $(document).on('keyup change', '#nif_etp', function() {
         var nif = $(this).val();

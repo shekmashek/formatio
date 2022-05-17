@@ -27,7 +27,7 @@
                 <a href="#facture" class="nav-link" data-toggle="tab">Factures</a>
             </li>
         </ul>
-        
+
         <div class="tab-content">
             <div class="tab-pane fade show" id="abonnement">
                 @if (\Session::has('erreur'))
@@ -49,9 +49,9 @@
                     </div>
                 @endif
 
-                <div>
+                {{-- <div>
                     <p class="h2 text-center mt-3 mb-5">Choisissez votre abonnement</p>
-                </div>
+                </div> --}}
 
                 <div class="col-lg-12 d-flex">
                     @can('isReferent')
@@ -132,10 +132,10 @@
                 <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">Numéro de facture</th>
-                        <th scope="col">Type d'abonnement</th>
+                        <th scope="col">Facture #</th>
+                        <th scope="col">Abonnement</th>
                         <th scope="col">Montant HT</th>
-                        <th scope="col">TVA (20%)</th>
+                        <th scope="col">TVA </th>
                         <th scope="col">Net à payer TTC</th>
                         <th scope="col">Invoice date</th>
                         <th scope="col">Due date</th>

@@ -412,13 +412,13 @@
                                                 <td>
                                                     <a href="" aria-current="page" data-bs-toggle="modal"
                                                         data-bs-target="#modal_modifier_detail_{{ $d->detail_id }}"><i
-                                                            class="fa fa-edit ms-2" style="color:rgb(130,33,100);"></i></a>
+                                                            class="bx bx-edit bx_modifier ms-2" ></i></a>
                                                     {{-- <a href="{{ route('destroy_detail',[$d->detail_id]) }}"><i
                                                     class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></a> --}}
                                                     <button type="button" style="background: none" data-bs-toggle="modal"
                                                         data-bs-target="#delete_detail_{{ $d->detail_id }}"><i
-                                                            class="fa fa-trash-alt ms-4"
-                                                            style="color:rgb(130,33,100);"></i></button>
+                                                            class="bx bx-trash bx_supprimer ms-4"
+                                                            ></i></button>
                                                 </td>
                                             @endcanany
                                             {{-- @canany(['isFormateur'])

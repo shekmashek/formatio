@@ -1,35 +1,62 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Catégorie</p>
+<p class="text_header m-0 mt-1">Catégorie</p>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
-<section class="formation mb-5">
-    <div class="container-fluid g-0 m-0 p-0 justify-content-center ">
-        <div class="row g-0 m-0 content_formation p-5">
-            <div class="col-6 ">
-                <h3 class="text-center mb-4">Que voulez-vous apprendre?</h3>
-                <div class="row content_search text-center mb-5">
-                    <form method="GET" action="{{route('result_formation')}}">
-                        @csrf
-                        <div class="form-row">
-                            <div class="">
-                                <input class="me-3" type="text" name=""
-                                    placeholder="Rechercher par formations ex. Excel">
-                                <button class="btn_search_formation" href="#">
-                                    <i class="bx bx-search">
-                                    </i>
-                                </button>
+<div class="row navigation_detail ">
+    <div class="ps-5">
+        <ul class="">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <li>
+                        <h3 class="text-center">Que voulez-vous apprendre?</h3>
+                    </li>
+                </div>
+                <div class="col-6">
+                    <li class="me-5">
+                        <div class="row content_search text-center">
+                            <form method="GET" action="{{route('result_formation')}}">
+                                @csrf
+                                <div class="form-row">
+                                    <div class="d-flex flex-row">
+                                        @foreach ($categorie as $categ)
+                                            <input type="hidden" name="id_formation" value="{{$categ->id}}">
+                                        @endforeach
+                                        <input class="form-control me-2" type="text" name="nom_formation" placeholder="Rechercher par formations ex. Excel">
+                                        <button type="submit" class="btn"><i class="bx bx-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                </div>
+                <div class="col-3">
+                    <div class="dropdown">
+                        <button class="dropbtn"><i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines des formations<i class="fa fa-caret-down ms-2"></i></button>
+                        <div class="dropdown-content">
+                            <div class="row flex-wrap">
+                                @foreach ($domaines as $dom)
+                                    <a href="#">{{$dom->nom_domaine}}</a>
+                                @endforeach
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <button class="btn" type="btn"></button>
                 </div>
+            </div>
+        </ul>
+    </div>
+</div>
+<section class="formation mb-5">
+    <div class="container-fluid g-0 m-0 p-0 justify-content-center ">
+        {{--<div class="row g-0 m-0 content_formation p-5">
+            <div class="col-6 ">
                 <div class="d-flex flex-row flex-wrap" style="padding-left: 4rem">
                     @foreach ($categorie as $ctg )
                     <div class="content_domaines my-4">
                         <a href="{{route('select_par_formation',$ctg->id)}}">
-                                {{$ctg->nom_formation}}</a>
-
+                            {{$ctg->nom_formation}}</a>
                     </div>
                     @endforeach
                     <a href="{{route('select_tous')}}">
@@ -37,8 +64,8 @@
                             les Thématiques</button>
                     </a>
                 </div>
-            </div>
-            <div class="col-6 align-items-center justify-content-center">
+            </div> --}}
+            {{-- <div class="col-6 align-items-center justify-content-center">
                 <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -56,16 +83,17 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
     </div>
     <div class="container mt-5">
         <h3 class="mb-5">Les formations les plus recherchées </h3>
         <div class="row">
-            <div class= "col-12 d-flex flex-wrap justify-content-cente">
+            <div class="col-12 d-flex flex-wrap justify-content-cente">
                 @foreach ($module as $mod)
                 <div class="card_formation">
                     <div class="imageLogo text-center mb-2 mt-3">
-                         <img src="{{asset('images/CFP/'.$mod->logo)}}" alt="logo" class="img-fluid"title="organisme de formation">
+                        <img src="{{asset('images/CFP/'.$mod->logo)}}" alt="logo" class="img-fluid"
+                            title="organisme de formation">
                     </div>
                     <div class="titre_module">
                         <p class="text-capitalize text-">{{$mod->nom_module}}</p>
@@ -73,19 +101,22 @@
                     <div class="details_module">
                         <div class="row">
                             <div class="col-6">
-                                <p class="text-capitalize text-dark"><i class='bx bx-detail me-2'></i>{{$mod->nom_formation}}</p>
+                                <p class="text-capitalize text-dark"><i
+                                        class='bx bx-detail me-2'></i>{{$mod->nom_formation}}</p>
                                 <p class="text-capitalize"><i class='bx bx-alarm me-2'></i>{{$mod->duree_jour}}
                                     jours/{{$mod->duree}}heures</p>
                                 <p class="text-capitalize"><i
                                         class='bx bxs-notification me-2'></i>{{$mod->modalite_formation}}</p>
                             </div>
                             <div class="col-6 text-center">
-                                <p class="text-capitalize"><strong>{{$mod->prix}}&nbsp;{{$devise->devise}}&nbsp;<span class="text-muted">HT</span></strong> </p>
+                                <p class="text-capitalize"><strong>{{$mod->prix}}&nbsp;{{$devise->devise}}&nbsp;<span
+                                            class="text-muted">HT</span></strong> </p>
                             </div>
                         </div>
                     </div>
                     <div class="text-center">
-                        <a href="{{route('select_par_module',$mod->module_id)}}" role="button" class="btn_enregistrer">Voir la formation</a>
+                        <a href="{{route('select_par_module',$mod->module_id)}}" role="button"
+                            class="btn_enregistrer">Voir la formation</a>
                     </div>
 
                 </div>

@@ -143,10 +143,10 @@ class CfpController extends Controller
     {
         $image = $request->file('image');
         if($image != null){
-            // if($image->getSize() > 60000){
-            //     return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
-            // }
-            // else{
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
+            }
+            else{
 
                     $cfp = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
                     $image_ancien = $cfp->logo;
@@ -173,7 +173,7 @@ class CfpController extends Controller
                     DB::update('update cfps set logo = ?,url_logo = ? where id = ?', [$nom_image,$url_logo,$id]);
                     return redirect()->route('affichage_parametre_cfp',[$id]);
 
-                // }
+                 }
             }
             else{
                 return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');

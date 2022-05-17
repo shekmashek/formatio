@@ -47,13 +47,12 @@ class FormationController extends Controller
         }
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             //liste formation
-            // $categorie = formation::orderBy('nom_formation')->get();
-            // $domaines = Domaine::all();
+            $categorie = formation::orderBy('nom_formation')->get();
+            $domaines = Domaine::all();
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
-
             $categorie = DB::select('select * from formations where status = 1 limit 5');
-            $module = DB::select('select * from moduleformation where  status = 2 limit 6');
-            return view('referent.catalogue.formation', compact('devise', 'categorie', 'module'));
+            $module = DB::select('select * from moduleformation where  status = 2 and etat_id = 1 limit 6 ');
+            return view('referent.catalogue.formation', compact('devise','categorie', 'module','domaines'));
         }
     }
 
@@ -104,13 +103,9 @@ class FormationController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $maj = formation::where('id', $id)->update([
-            'nom_formation' => $request->nom_formation
-        ]);
+        $maj = formation::where('id', $id)->update(['nom_formation' => $request->nom_formation]);
         $id_module = formation::where('id', $id)->value('domaine_id');
-        $maj_domaine = Domaine::where('id', $id_module)->update([
-            'nom_domaine' => $request->domaine
-        ]);
+        $maj_domaine = Domaine::where('id', $id_module)->update(['nom_domaine' => $request->domaine]);
         return back();
     }
 
@@ -133,21 +128,26 @@ class FormationController extends Controller
     ///--------------CATALOGUE DE FORMATION ------------------------ //////////////
     public function rechercheParModule(Request $request)
     {
+
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $categorie = DB::select('select * from formations where status = 1');
         $nom_formation = $request->nom_formation;
-        // $nom_formation = $request->input('nom_formation');
+        $domaines = Domaine::all();
+        // $infos = DB::select('select * from moduleFormation where nom_formation like ("%' . $nom_formation .'%") and status = 2 and etat_id = 1 order by nom_formation desc');
+        // dd($infos);
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where type_formation_id = 2');
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         if ($nom_formation == null) {
             // $infos = DB::select('select * from moduleFormation');
             $infos = DB::select('select * from moduleformation where status = 2');
             $liste_avis = DB::select('select * from v_liste_avis limit 5');
-            return view('referent.catalogue.liste_formation', compact('devise','infos', 'datas', 'liste_avis', 'categorie'));
+            return view('referent.catalogue.liste_formation', compact('infos', 'datas', 'liste_avis', 'categorie','devise','nom_formation','domaines'));
         } else {
-            // $id_formation = formation::where('nom_formation',$nom_formation)->value('id');
-            $infos = DB::select('select * from moduleFormation where UPPER(nom_formation) like UPPER("%' . $nom_formation . '%") and status = 2');
+            $id_formation = formation::where('nom_formation',$nom_formation)->value('id');
+            $infos = DB::select('select * from moduleformation where nom_formation like ("%' . $nom_formation .'%") and status = 2 and etat_id = 1 order by nom_formation desc');
             $liste_avis = DB::select('select * from v_liste_avis limit 5');
-            return view('referent.catalogue.liste_formation', compact('devise','infos', 'datas', 'liste_avis', 'categorie'));
+            return view('referent.catalogue.liste_formation', compact('infos', 'datas', 'liste_avis', 'categorie','devise','nom_formation','domaines'));
         }
     }
     //recheche formation
@@ -207,7 +207,8 @@ class FormationController extends Controller
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
         $id = request('id');
-        $categories = DB::select('select * from formations where status = 1');
+        $domaines = Domaine::all();
+        $categorie = DB::select('select * from formations where status = 1');
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id . ' and status = 2) as moduleExiste');
         //on verifie si moduleformation contient le module_id
         if ($test[0]->moduleExiste == 1) {
@@ -224,8 +225,8 @@ class FormationController extends Controller
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
             $competences = DB::select('select titre_competence from competence_a_evaluers where module_id = ?',[$id]);
-            $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id,adresse_ville,adresse_lot from v_session_projet where module_id = ? and type_formation_id = 2', [$id]);
-            return view('referent.catalogue.detail_formation', compact('devise','infos', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categories', 'id','competences'));
+            $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_session_projet where module_id = ? and type_formation_id = 2', [$id]);
+            return view('referent.catalogue.detail_formation', compact('devise','infos', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id','competences','domaines'));
         } else return redirect()->route('liste_formation');
     }
     public function categorie_formations()

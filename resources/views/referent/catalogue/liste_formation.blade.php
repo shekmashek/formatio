@@ -4,13 +4,60 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
-<section class="">
+<div class="row navigation_detail ">
+    <div class="ps-5">
+        <ul class="">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <li>
+                        <h3 class="text-center">Que voulez-vous apprendre?</h3>
+                    </li>
+                </div>
+                <div class="col-6">
+                    <li class="me-5">
+                        <div class="row content_search text-center">
+                            <form method="GET" action="{{route('result_formation')}}">
+                                @csrf
+                                <div class="form-row">
+                                    <div class="d-flex flex-row">
+                                        @foreach ($categorie as $categ)
+                                            <input type="hidden" name="id_formation" value="{{$categ->id}}">
+                                        @endforeach
+                                        <input class="form-control me-2" type="text" name="nom_formation" placeholder="Rechercher par formations ex. Excel">
+                                        <button type="submit" class="btn"><i class="bx bx-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                </div>
+                <div class="col-3">
+                    <div class="dropdown">
+                        <button class="dropbtn"><i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines des formations<i class="fa fa-caret-down ms-2"></i></button>
+                        <div class="dropdown-content">
+                            <div class="row flex-wrap">
+                                @foreach ($domaines as $dom)
+                                    <a href="#">{{$dom->nom_domaine}}</a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" type="btn"></button>
+                </div>
+            </div>
+        </ul>
+    </div>
+</div>
+<section class="mt-5">
     <div class="container">
         <div class="row">
 
             @if (count($infos)>0)
-            <h2 class="">Tous les formations en :&nbsp;{{ $infos[0]->nom_formation }}</h2><br>
-            <p></p>
+                @if($nom_formation == null)
+                    <h2 class="">Tous les formations en : tous</h2><br>
+                @else
+                    <h2 class="">Tous les formations en :&nbsp;{{ $nom_formation }}</h2><br>
+                @endif
             @endif
             @if(Session::has('success'))
             <div class="alert alert-success">
@@ -46,6 +93,7 @@
                         <a href="{{route('select_par_module',$info->module_id)}}">
                             <div class="liste__formation__item">
                                 <h4>{{$info->nom_module}}</h4>
+                                <p>{{$info->nom_formation}}</p>
                                 <p class="description">{{$info->description}}</p>
                                 <div class="liste__formation__avis">
                                     <div class="Stars" style="--note: {{ $info->pourcentage }};">

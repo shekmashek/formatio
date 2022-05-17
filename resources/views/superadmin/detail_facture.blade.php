@@ -46,7 +46,15 @@
             border-radius: 10px;
         }
 
-
+        .pdf_download{
+            background-color: #e73827 !important;
+        }
+        .pdf_download:hover{
+            background-color: #af3906 !important;
+        }
+        .pdf_download button{
+            color: #ffffff !important;
+        }
 </style>
 
 <div id="page-wrapper">
@@ -58,7 +66,7 @@
                         <div class="row g-0 m-0" style="align-items: center">
                             <div class="col-12 d-flex justify-content-between" style="align-items: center">
                                 <div class="col" align="right">
-                                    <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i><a href="{{route('impression_facture',$facture[0]->facture_id)}}"> PDF</a></button>
+                                    <a href="{{route('impression_facture',$facture[0]->facture_id)}}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a>
                                     <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('ListeAbonnement') ? 'active' : '' }}"   href="{{route('ListeAbonnement')}}">
                                         <span class="btn_pdf text-center px-4 py-1" type="button">Retour à la liste des factures</span>
                                     </a>

@@ -9,10 +9,10 @@
 <div class="container" role="tabpanel">
     <ul class="nav nav-tabs navigation_salle mt-4" id="myTab" role="tablist">
         <li class="nav-item active" role="presentation">
-        <a href="#liste_salle" class="nav-link active" id="home-tab" data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="color: black">Liste des salles</a>
+        <a href="#liste_salle" class="nav-link active" id="home-tab" data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="color: black">Vos salles&nbsp;&nbsp;{{ count($salles) }}</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a href="#ajout_salle" class="nav-link" id="profile-tab" data-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" style="color: black">Ajout d' une salle</a>
+            <a href="#ajout_salle" class="nav-link" id="profile-tab" data-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" style="color: black">Ajouter une salle</a>
         </li>
     </ul>
     <div class="tab-content"  id="myTabContent">
@@ -28,7 +28,7 @@
                 <thead style="border-bottom: 1px solid black; line-height: 20px">
                   <tr>
                     <th>Ville</th>
-                    <th>Salle de formation</th>
+                    <th>Salle</th>
                     <th rowspan="2"></th>
                   </tr>
                 </thead>
@@ -44,16 +44,25 @@
                             id="modal_modifier_salle_{{ $salle->id }}">
                             <div class="modal-dialog">
                                 <div class="modal-content p-3">
-                                    <div class="modal-title pt-3"
+                                    <div class="modal-title pt-3 mb-2 d-flex justify-content-between"
                                         style="height: 50px; align-items: center;">
-                                        <h5 class="text-center my-auto">Modifier la salle de formation</h5>
+                                        <h5 class="modal-title">Modification</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form action="{{ route('modifier_salle',[$salle->id]) }}" method="POST">
                                         @csrf
-                                        <label for="exampleDataList" class="form-label">Salle de formation</label>
-                                        <input class="form-control" name="ville" id="exampleDataList" value="{{ $salle->ville }}">
-                                        <input class="form-control mt-3" name="salle" id="exampleDataList" value="{{ $salle->salle_formation }}">
-                                        <button type="submit" class="btn btn_enregistrer mt-2">Modifier</button>
+                                        <div class="d-flex justify-content-around">
+                                            <span class="me-3 mt-1">Ville</span>
+                                            <input class="form-control" name="ville" id="exampleDataList" value="{{ $salle->ville }}">
+                                        </div>
+                                        <div class="d-flex justify-content-around">
+                                            <span class="me-2 mt-4">Salle</span>
+                                            <input class="form-control mt-3 ms-1" name="salle" id="exampleDataList" value="{{ $salle->salle_formation }}">
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" class="btn btn_enregistrer mt-2">Modifier</button>
+                                        </div>
+                                        
                                     </form>
                                 </div>
                             </div>
@@ -104,7 +113,6 @@
     font-size: 0.900rem;
     transition: all 200ms;
     margin-right: 1rem;
-    text-transform: uppercase;
     padding-top: 10px;
     border: none;
 }
@@ -112,6 +120,7 @@
 .nav-item.active .nav-link {
     border-bottom: 3px solid #7635dc !important;
     border: none;
+    color: #7635dc
 }
 
 .nav-tabs .nav-link:hover {

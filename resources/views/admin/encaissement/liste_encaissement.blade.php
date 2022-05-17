@@ -210,99 +210,101 @@
 </style>
 <div class="container-fluid">
 
-<div class="m-4">
-    <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-        <li class="nav-item">
-            <a href="{{route('liste_facture')}}" class="nav-link">
-                Retour à la liste des factures
-            </a>
-        </li>
-        @canany(['isCFP'])
-        <li class="nav-item ">
-            <a class="nav-link {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
-                <i class="fa fa-download"></i> PDF</a>
-        </li>
-        @endcanany
-    </ul>
+    <div class="m-4">
+        <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+            <li class="nav-item">
+                <a href="{{route('liste_facture')}}" class="nav-link">
+                    Retour à la liste des factures
+                </a>
+            </li>
+            @canany(['isCFP'])
+            <li class="nav-item ">
+                <a class="nav-link {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
+                    <i class="fa fa-download"></i> PDF</a>
+            </li>
+            @endcanany
+        </ul>
 
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
 
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {{-- <a href="{{route('liste_facture',2)}}"><button class="btn btn-success">retour</button></a> --}}
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Date de paiement</th>
-                                        <th scope="col">Libellé</th>
-                                        <th scope="col">N° facture</th>
-                                        <th scope="col">Montant facturer</th>
-                                        <th scope="col">Paiement</th>
-                                        <th scope="col">Montant ouvert</th>
-                                        <th scope="col">Mode de paiement</th>
-                                        <th  scope="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($encaissement as $info)
-                                    <tr>
-                                        <td>{{ $info->date_encaissement }}</td>
-                                        <td>{{ $info->libelle }}</td>
-                                        <td> <a href="{{route('detail_facture',$info->num_facture)}}">
-                                            {{ $info->num_facture }}</a>
-                                        </td>
-                                        <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
-                                        <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
-                                        <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
-                                        <td>{{ $info->description }}</td>
-                                        <td><button class="button_tail btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button>&nbsp;
-                                            <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_creer btn-block mb-2 supprimer" style="color: red"><span class="fa fa-trash"></span></button></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                {{-- <a href="{{route('liste_facture',2)}}"><button class="btn btn-success">retour</button></a> --}}
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Date de paiement</th>
+                                            <th scope="col">Libellé</th>
+                                            <th scope="col">N° facture</th>
+                                            <th scope="col">Montant facturer</th>
+                                            <th scope="col">Paiement</th>
+                                            <th scope="col">Montant ouvert</th>
+                                            <th scope="col">Mode de paiement</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($encaissement as $info)
+                                        <tr>
+                                            <td>{{ $info->date_encaissement }}</td>
+                                            <td>{{ $info->libelle }}</td>
+                                            <td> <a href="{{route('detail_facture',$info->num_facture)}}">
+                                                    {{ $info->num_facture }}</a>
+                                            </td>
+                                            <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                                            <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                                            <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                                            <td>{{ $info->description }}</td>
+                                            <td><button class="button_tail btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button>&nbsp;
+                                                <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_creer btn-block mb-2 supprimer" style="color: red"><span class="fa fa-trash"></span></button></a>
+                                            </td>
+                                        </tr>
+
+
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
-                @error('montant')
-                <span style="color: red">{{ $message }}</span>
-                @enderror
-                @error('libelle')
-                <span style="color: red">{{ $message }}</span>
-                @enderror
-
-            </div>
-        </div>
-
-        {{-- debut modal encaissement --}}
-        <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="modal-title text-md">
-                            <h5>Modification</h5>
-                        </div>
                     </div>
-                    <div class="modal-body">
-                        <form action="{{ route('modifier_encaissement') }}" method="POST">
-                            @csrf
-                            <div id="modification"></div>
-                        </form>
-                    </div>
+                    @error('montant')
+                    <span style="color: red">{{ $message }}</span>
+                    @enderror
+                    @error('libelle')
+                    <span style="color: red">{{ $message }}</span>
+                    @enderror
 
                 </div>
             </div>
-        </div>
-        {{-- fin --}}
 
+            {{-- debut modal encaissement --}}
+            <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content  px-3 py-3">
+                        <div class="modal-header">
+                            <div class="modal-title text-md">
+                                <h5>Modification</h5>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('modifier_encaissement') }}" method="POST">
+                                @csrf
+                                <div id="modification"></div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {{-- fin --}}
+
+        </div>
     </div>
-</div>
 
 </div>
 {{-- </div> --}}
@@ -324,29 +326,61 @@
             , success: function(response) {
                 var valiny = JSON.parse(response)[0];
                 var html = '';
-                html += '<textarea  autocomplete="off" name="libelle" id="libelle" class="text_description form-control"  rows="5">' + valiny.userData[1] + '</textarea>';
-                html += '<div class="inputbox inputboxP mt-3">';
-                html += '<span>Montant à enaisser</span>';
-                html += '<input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" value="' + valiny.userData[0] + '" required style="height: 50px;"><br>';
-                html += '<input type="hidden" name="encaissement_id" value="' + id + '">';
-                html += '<input type="hidden" name="num_facture" value="' + valiny.userData[2] + '">';
+                html += '<div class="inputbox inputboxP mt-3  mx-1">';
+                html += '<div class="row">';
+                html += '<div class="col"><span>Date de paiement<strong style="color:#ff0000;">*</strong></span></div>';
+                html += '<div class="col">';
+                html += '<input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;" value=' + valiny.userData[3] + '>';
+                html += '  </div></div>';
                 html += '</div>';
-                html += '<div class="form-group  mt-3">';
-                html += '<span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>';
-                html += '<select class="form-select selectP" name="mode_payement" id="mode_payement" aria-label="Default select example" style="height: 50px;">';
-                html += '<option value="' + valiny.mode_finance_edit.id + '" selected>' + valiny.mode_finance_edit.description + '</option>';
-                var tab = valiny.mode_finance_list;
+                html += '<div class="inputbox inputboxP mt-3   mx-1">';
+                html += '<div class="row">';
+                html += '<div class="col"><span>Montant à facturer<strong style="color:#ff0000;">*</strong></span></div>';
+                html += ' <div class="col">';
+                html += '<input autocomplete="off" type="number" min="1" name="montant" value="' + valiny.userData[0] + '" class="form-control formPayement" required="required" style="height: 50px;">';
+                html += '  </div></div></div>';
+                html += '<input type="hidden" name="encaissement_id" value="' + id + '">';
+                        html += '<input type="hidden" name="num_facture" value="' + valiny.userData[2] + '">';
+
+                html += '<div class="form-group  mt-3  mx-1">';
+                html += '<div class="row">';
+                html += '   <div class="col"><span>Mode de paiement<strong style="color:#ff0000;">*</strong></span> </div>';
+                html += '<div class="col">';
+                html += '<select class="form-select selectP" name="mode_payement" aria-label="Default select example" style="height: 50px;">';
+                    html += '<option value="' + valiny.mode_finance_edit.id + '" selected>' + valiny.mode_finance_edit.description + '</option>';
+
+                    var tab = valiny.mode_finance_list;
                 for (var i = 0; i < tab.length; i += 1) {
                     html += '<option value="' + tab[i].id + '">' + tab[i].description + '</option>';
                 }
-                html += '</select>';
-                html += '</div>';
-                html += '<div class="inputbox inputboxP mt-3">';
-                html += '<span>Date de paiement<strong style="color:#ff0000;">*</strong></span>';
-                html += '<input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;" value=' + valiny.userData[3] + '>';
-                html += '</div>';
+                html += ' </select> </div></div></div>';
+                html += '<div class="inputbox inputboxP mt-2  mx-1"><span>Memo/Notes</span>';
+                html += '<textarea autocomplete="off" name="libelle" class="text_description form-control"  rows="5">' + valiny.userData[1] + '</textarea> </div>';
                 html += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>';
                 html += '<button type="submit" class="btn btn_creer px-3">Modifier</button>';
+                /*        html += '<textarea  autocomplete="off" name="libelle" id="libelle" class="text_description form-control"  rows="5">' + valiny.userData[1] + '</textarea>';
+                        html += '<div class="inputbox inputboxP mt-3">';
+                        html += '<span>Montant à enaisser</span>';
+                        html += '<input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" value="' + valiny.userData[0] + '" required style="height: 50px;"><br>';
+                        html += '<input type="hidden" name="encaissement_id" value="' + id + '">';
+                        html += '<input type="hidden" name="num_facture" value="' + valiny.userData[2] + '">';
+                        html += '</div>';
+                        html += '<div class="form-group  mt-3">';
+                        html += '<span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>';
+                        html += '<select class="form-select selectP" name="mode_payement" id="mode_payement" aria-label="Default select example" style="height: 50px;">';
+                        html += '<option value="' + valiny.mode_finance_edit.id + '" selected>' + valiny.mode_finance_edit.description + '</option>';
+                        var tab = valiny.mode_finance_list;
+                        for (var i = 0; i < tab.length; i += 1) {
+                            html += '<option value="' + tab[i].id + '">' + tab[i].description + '</option>';
+                        }
+                        html += '</select>';
+                        html += '</div>';
+                        html += '<div class="inputbox inputboxP mt-3">';
+                        html += '<span>Date de paiement<strong style="color:#ff0000;">*</strong></span>';
+                        html += '<input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;" value=' + valiny.userData[3] + '>';
+                        html += '</div>';
+                        html += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>';
+                        html += '<button type="submit" class="btn btn_creer px-3">Modifier</button>'; */
                 $("#modification").append(html);
             }
             , error: function(error) {
