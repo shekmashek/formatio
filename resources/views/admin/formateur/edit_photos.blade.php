@@ -26,7 +26,9 @@
   @endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Photos de profile <strong>(60Ko max)</strong></p>
+        <p style="text-align: left">Photos de profile 
+          <strong>Taille du fichier: (1.7 MB max)</strong> 
+        </p>
         <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 

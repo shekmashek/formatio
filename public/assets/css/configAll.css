@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300&display=swap");
+
+:root {
+    --padding: 5px;
+    --font_size: 1.3rem;
+    --bgd_all: rgba(197, 197, 197, 0.232);
+    --bgd_modifier_hover: #4A00E727;
+    --bgd_supprimer_hover: #ee070727;
+    --bgd_ajouter_hover: #07cd1727;
+    --brd_radius: 0.313rem;
+    --display: inline-block;
+    --transition: all 200ms;
+    --transform: scale(1.05);
+    --color_modifier: #4A00E0;
+    --color_supprimer: #ee0707;
+    --color_ajouter: #07cd19;
+}
+
+/* components */
+
+/* icon à utiliser pour modifier <i class='bx bx-edit'></i> */
+.bx_modifier{
+    padding: var(--padding);
+    background-color: var(--bgd_all);
+    border-radius: var(--brd_radius);
+    cursor: pointer;
+    display: var(--display);
+    transition: var(--transition);
+    color: var(--color_modifier);
+    font-size: var(--font_size) !important;
+}
+
+.bx_modifier:hover {
+    background-color: var(--bgd_modifier_hover);
+    transform: var(--transform);
+}
+
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* icon à utiliser pour supprimer <i class='bx bx-trash'></i> */
+.bx_supprimer{
+    padding: var(--padding);
+    background-color: var(--bgd_all);
+    border-radius: var(--brd_radius);
+    cursor: pointer;
+    display: var(--display);
+    transition: var(--transition);
+    color: var(--color_supprimer);
+    font-size: var(--font_size) !important;
+}
+
+.bx_supprimer:hover {
+    background-color: var(--bgd_supprimer_hover);
+    transform: var(--transform);
+}
+
+/* icon à utiliser pour ajouter <i class='bx bx-plus-medical'></i> */
+.bx_ajouter{
+    padding: var(--padding);
+    background-color: var(--bgd_all);
+    border-radius: var(--brd_radius);
+    cursor: pointer;
+    display: var(--display);
+    transition: var(--transition);
+    color: var(--color_ajouter);
+    font-size: var(--font_size) !important;
+}
+
+.bx_ajouter:hover {
+    background-color: var(--bgd_ajouter_hover);
+    transform: var(--transform);
+}
+
+/* utilities */

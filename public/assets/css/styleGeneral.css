@@ -250,19 +250,6 @@ ul li a {
     place-content: center;
 }
 
-.nouvelle_session{
-    transition: all .5s ease;
-}
-
-.nouvelle_session:hover{
-    background-color: #63738156;
-    color: white;
-    padding: .5rem;
-    border: none;
-    border-radius: 15px;
-    transform: scale(1);
-}
-
 .home_content {
     position: absolute;
     height: 100%;
@@ -306,6 +293,16 @@ ul li a {
 } */
 
 /* apprendre */
+
+.icons_creer{
+    background-color: #637381;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 1.2rem;
+    margin-right: .4rem;
+    position: fixed;
+}
 .apprendre{
     position: fixed;
     top: 3rem;
@@ -338,6 +335,9 @@ ul li a {
 
 .apprendre_btn button{
     display: grid;
+}
+.apprendre span{
+    font-size: 0.8rem;
 }
 /* infos */
 .infos{
@@ -425,7 +425,7 @@ ul li a {
 }
 
 .filtrer.afficher {
-    width: 500px;
+    width: 400px;
     overflow-y: auto;
     right: 0px;
 }
@@ -462,7 +462,7 @@ ul li a {
     transition: 0.5s;
     padding: 0.5rem;
     margin-left: 0.1rem;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 1px 1px 0px;
 }
 
 .header_toggle {
@@ -547,29 +547,15 @@ ul li a {
 /* icon notifications */
 
 /* bulle  profile */
+
 .header-right .header_img {
-    width: 25%;
-    overflow: hidden;
     cursor: pointer;
     height: auto;
-    text-align: center;
-    position: relative;
-    bottom: .5rem;
-    margin: 0 auto;
+    padding: .35rem .5rem;
 }
 
 .header-right .header_img .bx {
     color: #637381 !important;
-}
-
-
-.header-right .header_img p {
-    margin-top: 20px;
-    color: #542356;
-}
-
-.header-right .header_img p:hover {
-    color: red;
 }
 
 .header-right .pdp_profil {
@@ -588,7 +574,6 @@ ul li a {
 
 .header-right .pdp_profil_card .card {
     width: 400px !important;
-    width: inherit;
     border: none;
     border-radius: 8px;
     padding: 8px;
@@ -598,11 +583,11 @@ ul li a {
     right: 1%;
     height: auto;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-
 }
 
-.header-right .pdp_profil_card .card .user {
-    position: relative;
+.gerer_compte{
+    display: grid;
+    place-content: center;
 }
 
 #nom_etp{
@@ -658,35 +643,6 @@ ul li a {
 .header-right .pdp_profil_card .card .profil_btn:hover {
     background-color: rgba(202, 202, 202, 0.371);
 }
-
-
-.header-right .header_img {
-    width: auto;
-    overflow: hidden;
-    cursor: pointer;
-    height: auto;
-    position: relative;
-    bottom: 0.5rem;
-    right: 2rem;
-}
-
-.header-right .header_img .bx {
-    color: #637381 !important;
-}
-
-.header-right .header_img .header_img_name {
-    color: #542356;
-    font-size: 0.85rem;
-    margin-top: 0;
-    position: relative;
-    top: 1.3rem;
-}
-
-.header-right .header_img p:hover {
-    color: red;
-}
-
-
 
 /* entreprise cfp */
 
@@ -814,6 +770,21 @@ input:-webkit-autofill:active {
     text-decoration: none;
 }
 
+.btn_vous{
+    background-color: white;
+    border: none;
+    border-radius: 30px;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    text-decoration: none;
+    padding: .5rem auto;
+}
+
+.btn_vous:hover{
+    background: #6373812a;
+    color: inherit !important;
+}
+
 .btn_creer_trie{
     background-color: white;
     border: none;
@@ -831,6 +802,10 @@ input:-webkit-autofill:active {
     bottom: .2rem;
 }
 
+.btn_creer a:hover{
+    color: inherit;
+}
+
 .btn_creer_trie:hover{
     background: #6373812a;
     color: blue;
@@ -838,7 +813,7 @@ input:-webkit-autofill:active {
 
 .btn_creer:hover{
     background: #6373812a;
-    color: blue;
+    color: inherit !important;
 }
 
 /* .btn_creer:focus{
@@ -857,32 +832,31 @@ input:-webkit-autofill:active {
     margin-right: .3rem;
 }
 
-.icones_creer{
-    /* background-image: linear-gradient(140deg, #cbcbcb, #474747); */
-    background-color: #637381;
+.icon_creer_admin{
+    /* background-image: linear-gradient(140deg, #cbcbcb, #474747);
     background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;
+    color: transparent; */
+    color: #637381;
     font-size: 1.5rem;
     position: relative;
     top: .4rem;
     margin-right: .3rem;
 }
 
-
-.apprendCreer{
+/* .apprendCreer{
     position: relative;
     bottom: .5rem;
-}
+} */
 
 .icon_plus{
-    color: #7635dc;
+    color: #637381;
 }
 
 .text_apprendre{
     position: relative;
-    top: .2rem;
-    font-size: .8rem;
+    padding: 3rem .2rem ;
+    font-size: .9rem;
     animation-name: completer_programme;
     animation-duration: 4s;
     animation-delay: 2s;

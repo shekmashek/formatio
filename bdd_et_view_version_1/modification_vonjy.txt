@@ -106,3 +106,26 @@ recréer vu v_projet_formateur  => bdd_suiviformation_view_4.0(modification_view
 
 -------avril 20
 creation table salle_formation_of => Modification_bdd(projet)
+
+
+--------mai 4
+creation vu v_presence_groupe => bdd_suiviformation_view_4.0(modification_views_projet)
+--------mai 5
+creation vu v_session_projet => bdd_suiviformation_view_4.0(modification_views_projet)
+
+--------mai 6
+alter table ressources add column pris_en_charge VARCHAR(200);
+alter table ressources add column note text;
+
+--------mai 10
+alter table salle_formation_of add column ville VARCHAR(200);
+
+update details set lieu = 'Antananarivo,  Analamihitsy Numerika DSI';
+
+
+alter table participant_groupe add column status int(10) default 0;
+
+
+-------mai 13
+creation view v_evaluation_stagiaire_competence =>creation vu v_session_projet => bdd_suiviformation_view_19.1(competences_evaluation)
+creation view v_evaluation_globale =>creation vu v_session_projet => bdd_suiviformation_view_19.1(competences_evaluation)

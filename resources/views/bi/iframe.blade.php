@@ -1,4 +1,5 @@
 @extends('./layouts.admin')
+
 @section('title')
 <h3 class="text_header m-0 mt-1">Bussness intelligent</h3>
 @endsection
@@ -71,7 +72,6 @@
                                     {{-- <a class="nav-link" id="tab_of" data-bs-toggle="tab" href="#of" type="button" role="tab" aria-controls="of" aria-selected="true"> --}}
                                     Organisme de Formation</a>
                     </li>
-
                 </ul>
                 <div class="tab-content mt-2" id="myTabContent">
                     {{-- entreprises --}}
@@ -175,7 +175,7 @@
                                                                         <form action="enregistrer_iframe_etp" method="post" class="d-flex flex-row">
                                                                             @csrf
                                                                             <input type="hidden" name="entreprise_id" value={{$f_etp->entreprise_id}}>
-                                                                            <input type="text" name="iframe_url" class="form-control"><button class="btn btn_next" type="submit">Ajouter </button>
+                                                                            <input type="text" name="iframe_url" class="form-control "><button class="btn btn_next ms-2" type="submit">Ajouter </button>
                                                                         </form>
                                                                         @else
                                                                         {{$f_etp->iframe}}

@@ -102,7 +102,7 @@ class Projet extends Model
             dom.nom_domaine,
             mf.nom_formation,
             f.photos,
-            concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo,
+            concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photos,
             f.nom_formateur,
             f.prenom_formateur,
             f.mail_formateur,
@@ -129,4 +129,7 @@ class Projet extends Model
             on tf.id = p.type_formation_id
         where d.cfp_id = '.$cfp_id.' and d.groupe_id = '.$groupe_id.' order by d.date_detail';
     }
+
+
+    
 }

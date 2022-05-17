@@ -266,7 +266,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @endfor
+                                        @endfor
                                     </tbody>
                                 </table>
                             </div>

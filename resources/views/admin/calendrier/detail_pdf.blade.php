@@ -40,7 +40,7 @@
                     <label for=""><strong>Organisme de formation:</strong>&nbsp;<img src = "{{ public_path('images/CFP/'.$detail[$i]->logo_cfp)}}" width="50px">&nbsp; {{$detail[$i]->nom_cfp}}</label><br><br>
                     <label for=""><strong>Nom du projet:</strong>&nbsp; {{$detail[$i]->nom_projet}}</label><br><br>
                     <label for=""><strong>Session:</strong>&nbsp; {{$detail[$i]->nom_groupe}}</label><br><br>
-                    <label for=""><strong>Statut:</strong>&nbsp; {{$detail[$i]->status_groupe}}</label><br><br>
+                    <label for=""><strong>Statut:</strong>&nbsp; {{$status[0]->item_status_groupe}}</label><br><br>
                     <label for=""><strong>Formation:</strong>&nbsp; {{$detail[$i]->nom_formation}}</label><br><br>
                     <label for=""><strong>Module:</strong>&nbsp; {{$detail[$i]->nom_module}}</label><br><br>
                     <label for=""><strong>Formateur:</strong><br>

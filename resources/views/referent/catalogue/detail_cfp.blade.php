@@ -1,13 +1,13 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Détails centre de formation </h3>
+    <h3 class="text_header m-0 mt-1">Détails centre de formation </h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/annuaire.css')}}">
 <section class="container-fluid">
     <div class="container pb-5">
         <div class="row details g-0">
-            <div class="col-8 justify-content-center">
+            <div class="col-12 justify-content-center">
                 <div id="result">
                     <div class="row details_content g-0">
                         <div class="col-3 logo_content">
@@ -56,10 +56,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4 location">
-                {{-- <a href="#"><img src="{{asset('images/CFP/Capture d’écran 2022-03-14 à 15.44.30.png')}}"
-                        alt="location" class="img-fluid"></a> --}}
-            </div>
+            {{--<div class="col-4 location">
+                 <a href="#"><img src="{{asset('images/CFP/Capture d’écran 2022-03-14 à 15.44.30.png')}}"
+                        alt="location" class="img-fluid"></a>
+            </div>--}}
         </div>
         <div class="row">
             <div class="col-12 mt-3 services">
@@ -226,13 +226,13 @@
                 <div class="row mt-5">
                     <hr>
                     <h5>Domaines de formations</h5>
-                    @foreach ($formation as $frm)
                     <div class="row">
-                        <div class="col-4 p-2">
-                            <p class="text-capitalize my-2"><a href="{{route("select_par_formation_par_cfp",[$frm->id,$cfp->id])}}" class="formations">{{$frm->nom_formation}}</a></p>
+                        <div class="col-12 p-2 flex-wrap d-flex">
+                    @foreach ($formation as $frm)
+                            <p class="text-capitalize my-4 mx-2"><a href="{{route("select_par_formation_par_cfp",[$frm->id,$cfp->id])}}" class="formations">{{$frm->nom_formation}}</a></p>
+                    @endforeach
                         </div>
                     </div>
-                    @endforeach
                 </div>
                 <div id="avis"></div>
                 <div class="detail__formation__programme__avis__donnes mt-3">

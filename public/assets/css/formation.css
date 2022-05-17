@@ -15,22 +15,25 @@ a:focus {
 }
 .content_formation {
     background: linear-gradient(60deg, #4222c3, #7635dc);
-    height: 75vh;
+    height: 40vh;
     width: 100%;
     color: white;
     border-bottom-left-radius: 20%;
     border-bottom-right-radius: 50%;
 }
 
-.content_formation h3 {
-    color: aqua;
-    font-size: 2.5rem;
-    margin-top: 2rem;
+.navigation_detail h3 {
+    font-size: 1.3rem;
+    text-transform: capitalize;
+}
+
+.navigation_details h3 {
+    font-size: 1.3rem;
+    text-transform: capitalize;
 }
 
 .content_search input {
-    width: 50%;
-    border: none;
+    border: 1px solid #7635dc;
     border-radius: 5px;
     height: 50px;
     padding-left: 10px;
@@ -40,36 +43,51 @@ a:focus {
     transition: all 0.5s ease;
 }
 
-.content_search input:hover {
+.content_search input:focus{
+    outline: none;
+    box-shadow: none;
+    border-color: #4222c3;
+}
+
+/* .content_search input:hover {
     transform: scale(1.05);
     color: black;
 }
 
 .content_search input:focus {
     transform: scale(1.02);
-}
+} */
 
 .content_search input::placeholder {
     color: #7635dc;
 }
 
-.content_search button {
-    width: 50px;
-    height: 50px;
+.content_search button:focus{
     border: none;
-    border-radius: 50%;
-    color: #7635dc;
-    transition: all 0.5s ease;
+    outline: none;
+    box-shadow: none;
 }
 
-.content_search button .bx {
+.content_search .bx{
+    background-color: #4222c3;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 100px;
+    color: white;
+    transition: all 0.5s ease;
+    display: grid;
+    place-content: center;
     position: relative;
-    top: 3px;
+    bottom: 5px;
+    font-size: 1.5rem;
 }
-.content_search button:hover {
-    transform: scale(0.9);
-    color: #4222c3;
-    background-color: aqua;
+
+.content_search .bx:hover {
+    transform: scale(1.01);
+    color: white;
+    background-color: #5433FF;
+    cursor: pointer;
 }
 
 #myCarousel img {
@@ -151,8 +169,8 @@ a:focus {
 }
 
 .titre_module p {
-    color: #7635dc;
-    font-size: 1.5rem;
+    color: black;
+    font-size: 1.3rem;
     font-weight: 500;
 }
 
@@ -209,7 +227,7 @@ a:focus {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     padding: 1rem;
     transition: all 0.5s ease;
-    border-radius: 15px;
+    border-radius: 5px;
 }
 .liste__formation__item:hover .liste__formation {
     transform: scale(1.5s);
@@ -240,7 +258,7 @@ a:focus {
 #border_premier {
     border: none;
     background: white;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
     border-radius: 5px;
 }
 .module_detail {
@@ -291,9 +309,9 @@ a:focus {
 
 .detail__intra {
     position: sticky;
-    top: 8.5rem;
+    top: 13rem;
     background-color: white;
-    border: 1px solid grey;
+    border: 1px solid rgb(219, 217, 217);
     /* border-radius: 25px; */
 }
 .detail__prix {
@@ -377,10 +395,21 @@ a:focus {
     position: sticky;
     top: 4rem;
     background-color: white;
-    z-index: 1;
-    padding: 1rem;
+    z-index: 5;
+    padding: 0rem 1rem 1rem 1rem;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     text-transform: uppercase;
+}
+
+.navigation_details{
+    position: sticky;
+    top: 9.5rem;
+    background-color: white;
+    z-index: 1;
+    padding: 0rem 1rem 1rem 1rem;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    text-transform: uppercase;
+    padding-top: 10px;
 }
 
 .navigation_detail ul li a{
@@ -388,6 +417,14 @@ a:focus {
 }
 
 .navigation_detail ul li a:hover{
+    color: black;
+}
+
+.navigation_details ul li a{
+    color: #637381;
+}
+
+.navigation_details ul li a:hover{
     color: black;
 }
 
@@ -413,3 +450,43 @@ a:focus {
 }
 
 /* detail module */
+
+/* Dropdown button */
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 10px 12px;
+    background: linear-gradient(60deg, #7635dc, #4222c3);
+    position: relative;
+    top: 10px;
+    font: inherit;
+    margin: 0;
+    border-radius: 50px;
+  }
+
+  .navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: ;
+    left: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 999;
+  }
+
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+
+.icon_dom{
+    position: relative;
+    top: 5px;
+}

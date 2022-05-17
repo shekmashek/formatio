@@ -177,8 +177,9 @@ class ProgrammeController extends Controller
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $competences = DB::select('select * from competence_a_evaluers where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
+            $niveau = DB::select('select * from niveaux');
             // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
-            return view('admin.module.modif_programme', compact('devise','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id', 'competences'));
+            return view('admin.module.modif_programme', compact('devise','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id', 'competences','niveau'));
         } else return redirect()->route('liste_module');
     }
 

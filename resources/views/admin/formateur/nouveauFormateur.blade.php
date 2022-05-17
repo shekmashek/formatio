@@ -66,7 +66,8 @@
                                     <p style="font-size: 15px;">Profil Formateur</p>
 
                                     <div class="form-control-file mt-2">
-                                        <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required><strong>Taille du fichier: 60Ko max</strong>
+                                        <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required>
+                                         <strong>Taille du fichier: (1.7 MB max)</strong> 
                                     </div><br>
                                     @error('image')
                                     <div class="col-sm-6">

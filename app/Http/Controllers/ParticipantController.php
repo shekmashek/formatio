@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
+use Image;
 
 /* ====================== Exportation Excel ============= */
 use App\Exports\ParticipantExport;
@@ -918,11 +919,17 @@ class ParticipantController extends Controller
             $stagiaires_tmp = DB::select('SELECT * FROM stagiaires where id = ?', [$id]);
 
             $stagiaire = $stagiaires_tmp[0];
+            $initial_stagiaire = DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from stagiaires where id =  ?', [$id ]);
 
-            $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
+            if($stagiaire->service_id == null){
+                $service = "---------------";
+                $departement = "---------------";
+            }
+            else{
+                $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
+                $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
+            }
             $entreprise = $fonct->findWhereMulitOne("entreprises", ["id"], [$stagiaire->entreprise_id]);
-
-            $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
             $branche = $fonct->findWhereMulitOne("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
             if ($stagiaire->genre_stagiaire == 1) {
                 $genre = 'Femme';
@@ -930,7 +937,7 @@ class ParticipantController extends Controller
             if ($stagiaire->genre_stagiaire == 2) {
                 $genre = 'Homme';
             }
-            return view('admin.participant.profile', compact('entreprise', 'stagiaire', 'service', 'departement', 'branche', 'genre'));
+            return view('profil_public.stagiaire', compact('initial_stagiaire','entreprise', 'stagiaire', 'service', 'departement', 'branche','genre'));
         }
         // $stagiaire=stagiaire::findOrFail($id);
         // if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
@@ -1037,11 +1044,12 @@ class ParticipantController extends Controller
     {
         $image = $request->file('image');
         //tableau contenant les types d'extension d'images
-        $extension_type = array('jpeg', 'jpg', 'png', 'gif', 'psd', 'ai', 'svg');
-        if ($image != null) {
-            if ($image->getSize() > 60000) {
-                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 60Ko');
-            } elseif (in_array($request->image->extension(), $extension_type)) {
+        $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
+        if($image != null){
+            if($image->getSize() > 1692728 or $image->getSize() == false){
+                return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
+            }
+            elseif(in_array($request->image->extension(),$extension_type)){
 
                 $stagiaire = $this->fonct->findWhereMulitOne("stagiaires", ["id"], [$id]);
                 $image_ancien = $stagiaire->photos;
@@ -1049,10 +1057,17 @@ class ParticipantController extends Controller
                 File::delete(public_path("images/stagiaires/" . $image_ancien));
                 //enregiistrer la nouvelle photo
 
-                $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-                $destinationPath = 'images/stagiaires';
-                $image->move($destinationPath, $nom_image);
-                $url_photo = URL::to('/') . "/images/stagiaires/" . $nom_image;
+                    $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                    $destinationPath = 'images/stagiaires';
+                      //imager  resize
+                    $image_name = $nom_image ;
+                    $destinationPath = public_path('images/stagiaires');
+                    $resize_image = Image::make($image->getRealPath());
+                    $resize_image->resize(228,128, function($constraint){
+                        $constraint->aspectRatio();
+                    })->save($destinationPath . '/' .  $image_name);
+                    // $image->move($destinationPath, $nom_image);
+                    $url_photo = URL::to('/')."/images/stagiaires/".$nom_image;
 
                 DB::update('update stagiaires set photos= ?,url_photo = ? where id = ?', [$nom_image, $url_photo, $id]);
                 return redirect()->route('profile_stagiaire');

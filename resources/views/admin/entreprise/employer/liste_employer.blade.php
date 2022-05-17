@@ -309,6 +309,7 @@
                             <th scope="col">Télephone
                             </th>
                             <th scope="col">Action</th>
+                            <th scope="col">Voir profil</th>
                             <th style="width: 10px;">Rétirer</th>
                         </tr>
                     </thead>
@@ -364,6 +365,9 @@
                                     <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
                                 </div>
                                 @endif
+                            </td>
+                            <td>
+                                <a href="{{route('profile_stagiaire',$emp->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
                             </td>
                             <td>
                                     <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>

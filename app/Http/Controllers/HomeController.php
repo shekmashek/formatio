@@ -27,11 +27,13 @@ use App\taux_devises;
 use Illuminate\Support\Facades\Gate;
 use App\Models\FonctionGenerique;
 use App\cfp;
+use App\tva;
 use App\Devise;
 use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
 use App\EvaluationChaud;
+use App\Groupe;
 use App\Models\getImageModel;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
@@ -463,8 +465,8 @@ class HomeController extends Controller
                 // $abn =type_abonnement::all();
 
                 $typeAbonne_id = 1;
-                $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->value('id');
-                $name = DB::select('select nom_type from type_abonnements where id = ?', [$typeAbonnement]);
+                // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->value('id');
+                $name = DB::select('select nom_type from v_type_abonnement_etp where entreprise_id = ? order by abonnement_id desc limit 1', [$entreprise_id]);
 
 
                 if ($id != null) {
@@ -473,7 +475,7 @@ class HomeController extends Controller
                     $referent = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
                 }
 
-                return view('referent.dashboard_referent.dashboard_referent', compact('test', 'message', 'etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler'));
+                return view('referent.dashboard_referent.dashboard_referent', compact('test','message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
             }
         }
 
@@ -746,13 +748,12 @@ class HomeController extends Controller
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
             $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-
             $data = $fonct->findWhere("v_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
-            dd($data);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
@@ -774,11 +775,16 @@ class HomeController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
+
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request, $nb_par_page, $offset);
+
             $projet = DB::select($sql);
 
-            $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
+            // dd( $projet);
+            // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
+
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
+
             // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
@@ -789,10 +795,11 @@ class HomeController extends Controller
             $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
             $module = $fonct->findWhere("v_module", ['cfp_id', 'status'], [$cfp_id, 2]);
             $payement = $fonct->findAll("type_payement");
+
             // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
             // dd($data);
-            return view('projet_session.index2', compact('projet', 'data', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'projet_formation', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            return view('projet_session.index2', compact('projet', 'data', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
@@ -821,12 +828,7 @@ class HomeController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-
-            $data = DB::select('select * from v_projet_formateur where cfp_id = ? and formateur_id = ? order by date_projet desc limit ? offset ?', [$cfp_id, $formateur_id, $nb_par_page, $offset]);
-            // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-
-            // $entreprise = $entp->getEntreprise($etp2, $etp1);
+            $data = DB::select('select * from v_projet_formateur where cfp_id = ? and formateur_id = ? order by date_projet desc limit ? offset ?',[$cfp_id,$formateur_id,$nb_par_page,$offset]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
             $formation = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
@@ -867,6 +869,14 @@ class HomeController extends Controller
 
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
+    }
+
+    public function statut_presence_emargement(Request $req){
+        $groupe_id = $req->groupe;
+        $groupe = new Groupe();
+        $statut_presence = $groupe->statut_presences($groupe_id);
+        $statut_evaluation = $groupe->statut_evaluation($groupe_id);
+        return response()->json(['presence'=>$statut_presence,'evaluation'=>$statut_evaluation]);
     }
 
     public function compte(Request $request)
@@ -1040,7 +1050,6 @@ class HomeController extends Controller
     {
         $current_year = Carbon::now()->format('Y');
         $entreprise_id = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-
         //get total budget de l'année courant de l'entreprise
         $total_budget = DB::select('select ifnull(sum(budget_total),0) as total from v_budgetisation where entreprise_id = ? and annee =  ?', [$entreprise_id[0]->entreprise_id, $current_year]);
         //get total budget réalisé de l'entreprise
@@ -1048,10 +1057,8 @@ class HomeController extends Controller
         //get total budget engagé de l'entreprise
         $total_engage = DB::select('select ifnull(sum(montant_total),0) as engage from v_facture_actif where entreprise_id = ? and facture_encour =  ? and year(due_date) = ?', [$entreprise_id[0]->entreprise_id, "en_cour", $current_year]);
         //get total budget restant
-
         $total_restant = $total_budget[0]->total - ($total_realise[0]->realise + $total_engage[0]->engage);
-
-        return view('referent.dashboard_referent.dashboard_referent_budget_prev', compact('total_budget', 'total_realise', 'total_engage', 'total_restant'));
+        return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
     }
 
     //creation iframe
@@ -1178,17 +1185,34 @@ class HomeController extends Controller
 
 
     //taxe
-    public function taxe()
+    public function taxe(){
+        // $tva=DB::select('select * from valeur_TVA ORDER BY id DESC LIMIT 1');
+        // $id=tva::value('id');
+        $tva=DB::select('select * from taxes where id =?',[1]);
+        // $tva=DB::select('select * from valeur_TVA  ');
+        // $taux=tva::findOrFail($request->id);
+    //     dd($taux);
+    //    dd($taux);
+        return view('layouts.taxe',compact('tva'));
+    }
+    public function update_tva(Request $request)
     {
+        // $tva=tva::where('id',$request->id)->update(['tva'=>$request->tva]);
+    DB::update('update taxes set pourcent=? where id=?',[$request->tva,$request->id]);
+    return back();
+    }
+    // public function delete_tva($id)
+    // {
+    //     DB::delete('delete from valeur_TVA where id = ?', [$id]);
+    //     return back();
 
-        return view('layouts.taxe');
-    }
     //enregistrer taxe
-    public function taxe_enregistrer(Request $request)
-    {
-        $inserer = DB::insert('insert into valeur_TVA (tva) value (?)', [$request->tva]);
-        return back();
-    }
+    // public function taxe_enregistrer(Request $request)
+    // {
+    //     $inserer = DB::update('update taxes set pourcent=? where id=?', [$request->tva,1]);
+    //     return back();
+    // }
+
     //devise
     public function getDevise()
     {
@@ -1197,17 +1221,28 @@ class HomeController extends Controller
         return response()->json($data);
     }
 
-    public function devise()
-    {
-
+    public function devise(){
 
         // $liste=DB::select('select * from devises ');
         // $devises=DB::select('select * from v_devise order by created_at Desc ');
         // $taux=DB::select('select * from taux_devises ');
         //       $dev = new Devise();
         // $devis_actuel =  $dev->getListDevise();
+        // $devise=DB::select('select * from devise ORDER BY id DESC LIMIT 1');
+        $devise=DB::select('select * from devise');
 
-        return view('layouts.devis');
+        // $devise=DB::select('select * from devise  ');
+        return view('layouts.devis',compact('devise'));
+    }
+    public function update_devise(Request $request)
+    {
+        DB::update('update devise set devise=? where id=?',[$request->devise,$request->id]);
+        return back();
+    }
+    public function delete_devise($id)
+    {
+        DB::delete('delete devise from devise where id=?',[$id]);
+        return back();
     }
     // public function edit($id)
     // {
@@ -1265,7 +1300,7 @@ class HomeController extends Controller
 
         //     }
         // }
-        $inserer = DB::insert('insert into devise (devise) value (?)', [$request->devis]);
+        $inserer = DB::update('update  devise set devise=? where  id=?', [$request->devis,8]);
 
         return back();
     }
@@ -1289,8 +1324,7 @@ class HomeController extends Controller
     //     return back();
     // }
 
-    public function enregistrer_iframe_etp(Request $request)
-    {
+    public function enregistrer_iframe_etp(Request $request){
         $url_iframe = $request->iframe_url;
         $etp_id = $request->entreprise_id;
         $fonct = new FonctionGenerique();

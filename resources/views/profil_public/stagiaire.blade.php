@@ -1,13 +1,13 @@
 @extends('./layouts.admin')
 @section('content')
 <style>
-    .gradient-custom {
+    /* .gradient-custom {
         background: #f4f5f7;
         background: -webkit-linear-gradient(to right bottom, rgba(232, 42, 148 , 1), rgba(42, 117, 232 ,1));
         background: linear-gradient(to right bottom, rgba(232, 42, 148 , 1), rgba(42, 117, 232 , 1));
         border-top-left-radius: .5rem; 
         border-bottom-left-radius: .5rem;
-    }
+    } */
     .boutonretour{
         background: #f4f5f7;
         background: -webkit-linear-gradient(to right bottom, rgba(232, 42, 148 , 1), rgba(42, 117, 232  ,1));
@@ -23,7 +23,7 @@
             <div class="col col-lg-10 my-2 mb-4 mb-lg-0">
                 <div class="card mb-3 shadow" style="border-radius: .5rem;">
                     <div class="row g-0">
-                        <div class="col-md-4 gradient-custom text-center text-white little-profile">
+                        <div class="col-md-4  text-center  little-profile" style="background-color: #f4f5f7;">
                             @if($stagiaire->photos==null)
                                 <span>
                                     <div style="display: grid; place-content: center" class="form_photo my-5 p-2">
@@ -77,10 +77,9 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="text-end " tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <div class="text-end ">
                                 <a href="{{route('employes.liste')}}" class="btn boutonretour text-white"><i class="fa-solid fa-circle-left fa-2xl"></i></a>
                             </div>
-                              
                         </div>
                     </div>
                 </div>
@@ -88,5 +87,4 @@
         </div>
     </div>
 </section>
-
-@endsection
+@endsection    

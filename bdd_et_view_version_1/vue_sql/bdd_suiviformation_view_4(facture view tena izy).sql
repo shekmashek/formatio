@@ -313,6 +313,11 @@ FROM
     v_dernier_encaissement;
 
 
+
+CREATE OR REPLACE VIEW v_totale_participant_session AS SELECT
+(groupes.id) groupe_id,(COUNT(stagiaire_id)) nbre_participant
+FROM groupes LEFT JOIN  participant_groupe ON groupes.id = groupe_id GROUP BY groupes.id;
+
 CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     factures.cfp_id,
     (factures.projet_id) as projet_id,
@@ -328,6 +333,7 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     (v_groupe_projet_module.date_debut) date_debut_session,
     v_groupe_projet_module.reference,
     v_groupe_projet_module.nom_module,
+    v_totale_participant_session.nbre_participant,
     invoice_date,
     due_date,
     tax_id,
@@ -345,12 +351,13 @@ CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     (mode_financements.description) description_financement
 FROM
     factures,
-    v_groupe_projet_module,type_facture,
+    v_groupe_projet_module,type_facture,v_totale_participant_session,
     taxes,mode_financements
 WHERE
-     factures.tax_id = taxes.id AND
-    factures.groupe_entreprise_id = v_groupe_projet_module.groupe_entreprise_id
-    AND type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
+    factures.tax_id = taxes.id AND
+    factures.groupe_entreprise_id = v_groupe_projet_module.groupe_entreprise_id AND
+    v_groupe_projet_module.groupe_id = v_totale_participant_session.groupe_id AND
+    type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
 
 
 CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT

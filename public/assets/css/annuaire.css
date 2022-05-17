@@ -174,11 +174,11 @@ color: #7635dc;
     color: black;
     border: none;
     border-bottom: 1px solid grey;
-    border-top: 1px solid grey;
+    /* border-top: 1px solid grey; */
 }
 
 .location{
-    background: url("../../images/CFP/Capture\ d’écran\ 2022-03-14\ à\ 15.44.30.png");
+    /* background: url("../../images/CFP/Capture\ d’écran\ 2022-03-14\ à\ 15.44.30.png"); */
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -236,6 +236,7 @@ color: #7635dc;
     border-radius: 30px;
     padding: 1rem 1rem;
     margin: 1rem 0;
+    margin-bottom: 4rem;
     transition: all .5s ease;
 }
 

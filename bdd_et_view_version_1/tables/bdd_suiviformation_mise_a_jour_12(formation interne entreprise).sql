@@ -80,7 +80,6 @@ CREATE TABLE presences_interne (
 CREATE TABLE `domaines_interne` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `nom_domaine` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sous_titre` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -233,12 +232,6 @@ INSERT INTO `formations_interne` ( `nom_formation`, `domaine_id`, `created_at`, 
 ( 'Chauffeur de Bus', 34, '2021-11-17 04:06:54', '2021-11-17 04:06:54', 1),
 ( 'VTC', 34, '2021-11-17 04:06:54', '2021-11-17 04:06:54', 1);
 
-ALTER TABLE `formations_interne`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `formations_interne`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-COMMIT;
 
 CREATE TABLE modules_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

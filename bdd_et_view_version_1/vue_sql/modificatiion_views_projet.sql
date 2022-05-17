@@ -165,6 +165,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         mf.nom_module,
         mf.formation_id,
         mf.nom_formation,
+        mf.etat_id,
         dom.id as domaines_id,
         dom.nom_domaine,
         f.nom_formateur,
@@ -219,6 +220,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     mf.nom_module,
     mf.formation_id,
     mf.nom_formation,
+    mf.etat_id,
     dom.id,
     dom.nom_domaine,
     f.nom_formateur,
@@ -262,8 +264,6 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         pg.groupe_id = dm.groupe_id
     JOIN stagiaires s ON
         s.id = pg.stagiaire_id;
-
-
 
 create or replace view v_projet_cfp as
     select
