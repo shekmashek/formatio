@@ -21,3 +21,8 @@ recopier view :dans facture bdd_suiviformation_mise_a_jour_4.sql(facturation)
 -v_totale_participant_session
 -v_liste_facture
 -v_full_facture
+
+
+Vendredi 13 mai 2022
+
+-recopier view v_full_facture,v_facture_actif,v_facture_inactif

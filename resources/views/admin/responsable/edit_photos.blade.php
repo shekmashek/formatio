@@ -35,7 +35,7 @@
     <div class="col-lg-4">
         <div class="p-3 form-control">
             <p style="text-align: left">Photo de profil 
-                {{-- <strong>(60Ko max)</strong> --}}
+                <strong>Taille du fichier: (1.7 MB max)</strong>
             </p><br>
             <form class="btn-submit" action="{{route('update_photos_resp')}}" method="post" enctype="multipart/form-data">
                 @csrf

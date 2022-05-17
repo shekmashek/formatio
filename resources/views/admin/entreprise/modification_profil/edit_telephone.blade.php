@@ -3,51 +3,7 @@
     <h3 class="text_header m-0 mt-1">Modification téléphone</h3>
 @endsection
 @section('content')
-<style>
-
-.test {
-    padding: 2px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    color: #9E9E9E;
-    border: 1px solid #BDBDBD;
-    font-size: 16px;
-    letter-spacing: 1px;
-    height: 50px !important
-}
-
-.test:focus{
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 2px solid #E53935 !important;
-    outline-width: 0 !important;
-}
-
-.form-control-placeholder {
-  position: absolute;
-  top: 1rem;
-  padding: 12px 2px 0 2px;
-  padding: 0;
-  padding-top: 2px;
-  padding-bottom: 5px;
-  transition: all 300ms;
-  opacity: 0.5;
-  left: 2rem;
-}
-
-.test:focus+.form-control-placeholder,
-.test:valid+.form-control-placeholder {
-  font-size: 95%;
-  font-weight: bolder;
-  top: 1.5rem;
-  transform: translate3d(0, -100%, 0);
-  opacity: 1;
-  background-color: white;
-  margin-left: 105px;
-
-}
-</style>
+<link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
     <a href="{{route('aff_parametre_referent',$etp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
 </div>
@@ -66,14 +22,14 @@
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                    <input type="text" value="   {{ $etp->telephone_etp}}" class="form-control test input"  name="telephone">
+                    <input type="text" value="{{ $etp->telephone_etp}}" class="form-control input"  name="telephone" required>
+                    <label for="telephone" class="form-control-placeholder">Téléphone</label>
                     </div>
                 </div>
 
 
-                <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
+                <button type="submit" class=" mt-1 btn_enregistrer"> Enregister</button>
             </form>
-            <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>
         </div>
     </div>

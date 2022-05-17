@@ -266,6 +266,7 @@
                                 <td>{{$frais_annexe->description}}</td>
                                 <td></td>
                                 <td> {{$frais_annexe->qte}}</td>
+                                <td></td>
                                 <td>
                                     <div align="left">
                                         {{$devise->devise." ".number_format($frais_annexe->pu,0,","," ")}}

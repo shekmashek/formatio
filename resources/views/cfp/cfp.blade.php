@@ -48,39 +48,67 @@
         .nav_bar_list .nav-item:hover {
             border-bottom: 2px solid black;
         }
-
+        tbody tr{
+            vertical-align: middle;
+        }
     </style>
 
     <div class="row w-100 bg-none mt-5 font_text">
 
         <div class="col-md-7">
+            {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
 
-            <h4>Organimse de formation déjà collaboré</h4>
+                <h4>Centre de Formation Professionel déjà collaborer</h4>
 
-            <table class="table  table-borderless table-lg table-hover">
-                <thead style="font-size:12.5px; color:#676767; border-bottom: 0.5px solid rgb(103, 103, 103); line-hight:20px">
-                    <th>Organisme de formation</th>
-                    <th>Réferent principal</th>
-                    <th>Action</th>
-                </thead>
-                <tbody id="data_collaboration" style="font-size: 11.5px;">
+                {{-- <div class="table-responsive text-center"> --}}
 
-                    @if (count($cfp)<=0) <tr>
-                        <td colspan="3" class="text-center"> Aucun Organisme de formation collaboré</td>
-                        </tr>
-                    @else
-                        @foreach($cfp as $centre)
-                            <tr>
-                                <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:70px; width:70px;"><span class="ms-3">{{$centre->nom}} </span></td>
-                                <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span></td>
+                    <table class="table  table-borderless table-lg table-hover">
+                        <thead style="font-size:12.5px; color:#676767; border-bottom: 0.5px solid rgb(103, 103, 103); line-hight:20px">
+                            <th>Organisme de Formation</th>
+                            {{-- <th>Téléphone</th> --}}
+                            <th>Réferent Principal</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody id="data_collaboration" style="font-size: 11.5px;">
 
-                                <td>
-                                    <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
-                                </td>
-                                <td>
-                                    <div class="dropdown mt-3">
-                                        <div class="btn-group dropstart">
-                                            <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @if (count($cfp)<=0) <tr>
+                                <td> Aucun centre de formation collaborer</td>
+                                </tr>
+                                @else
+                                @foreach($cfp as $centre)
+                                <tr>
+
+                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:60px; width:120px;"><span class="ms-3">{{$centre->nom}} </span></td>
+                                    {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->telephone}}</td> --}}
+                                    <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>
+
+                                   {{-- @if($centre->photos_resp_cfp)
+                                        <span class="d-flex flex-row">
+                                            <div class='randomColor photo_users' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center"></div>
+                                            <span class="d-flex flex-end ms-3 align-items-center">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
+                                        </span>
+                                      @else --}}
+                                        <img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
+                                        </td>
+                                     {{-- @endif --}}
+                                    {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->email}}</td> --}}
+
+                                    {{-- <td>
+                                        <div align="left">
+                                            <strong>{{$centre->nom}}</strong>
+                                            <p style="color: rgb(238, 150, 18)">{{$centre->email}}</p>
+                                            <h6>{{$centre->slogan}}</h6>
+                                        </div>
+                                    <td>
+                                        <div align="rigth">
+                                            <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
+                                        </div>
+                                    </td> --}}
+                                    <td>
+                                        <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
+                                        {{-- <div class="btn-group dropleft">
+                                            <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v"></i>
                                             </button>
                                             <ul class="dropdown-menu">
                                                 {{-- <li class="dropdown-item">
@@ -361,7 +389,7 @@
                     <span></span><span id="adrlot2"></span>
                     <span></span><span id="adrlot3"></span>
                 </div>
-            </div> 
+            </div>
         </div>
         <div class="mt-1">
             <div class="row">
@@ -370,7 +398,7 @@
                 <div class="col-md-3">E-mail</div>
                 <div class="col-md"><span id="mail"></span></div>
             </div>
-            
+
         </div>
         <div class="mt-1">
             <div class="row">

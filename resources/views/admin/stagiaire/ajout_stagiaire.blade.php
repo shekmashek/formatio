@@ -41,7 +41,7 @@
                     <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule :</p>&nbsp;
                     <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="matricule_search_input form-control">
                     <input type="hidden" id="id_entreprise" value="{{ $entreprise_id }}">
-                    <button type="submit" class="btn btn-outline-secondary mt-2 rechercher">
+                    <button type="submit" class="btn btn-outline-secondary m-0 rechercher">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
@@ -149,11 +149,11 @@
                     {{-- <td>{{ $stg->nom_departement }}</td>
                     <td>{{ $stg->nom_service }}</td> --}}
                     @can('isCFP')
-                        <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
+                        <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="bx bx-trash bx_supprimer"></i></button></td>
                     @endcan
                     @if ($type_formation_id == 2)
                         @can('isReferent')
-                            <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="fa fa-trash-alt supprimer"></i></button></td>
+                            <td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#delete_stg_{{$stg->stagiaire_id}}"><i class="bx bx-trash bx_supprimer"></i></button></td>
                         @endcan
                     @endif
                 </tr>
@@ -180,7 +180,7 @@
 </div>
 <style>
 .matricule_search_input{
-    width: 40%;
+    width: 20%;
 }
 
 .supprimer:hover{

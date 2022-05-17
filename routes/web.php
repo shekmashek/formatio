@@ -290,6 +290,11 @@ Route::get('/edit_photos_resp/{id}', 'ResponsableController@edit_photos')->name(
 Route::get('/edit_pwd_resp/{id}', 'ResponsableController@edit_pwd')->name('edit_pwd_resp');
 Route::get('/edit_poste_resp/{id}', 'ResponsableController@edit_poste')->name('edit_poste_resp');
 
+// ======================= desactiver personne =====================
+Route::get('desactiver_personne','ResponsableCfpController@desactiver_personne')->name('desactiver_personne');
+Route::get('activer_personne','ResponsableCfpController@activer_personne')->name('activer_personne');
+
+
 // update password
 Route::post('/update_responsable_mdp/{id}', 'ResponsableController@update_responsable_mdp')->name('update_responsable_mdp');
 //update image
@@ -373,7 +378,8 @@ Route::get('inscriptionInter/{type_formation_id}/{id_groupe}', 'SessionControlle
 Route::get('annuaire','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
 Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
-
+Route::get('annuaire+recherche+par+entiter/{page?}/{nom_entiter?}','FormationController@search_par_nom_entiter')->name('annuaire+recherche+par+entiter');
+Route::get('annuaire+recherche+par+adresse/{page?}/{qter?}/{vlle?}/{postal?}/{reg?}','FormationController@search_par_adresse')->name('annuaire+recherche+par+adresse');
 //route module
 Route::resource('module', 'ModuleController')->except([
     'index', 'edit', 'destroy', 'update', 'create'
@@ -393,6 +399,19 @@ Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('
 Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('ajout_competence');
 Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
 Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
+
+// ==================== modifications modules ========================//
+Route::post('modification_nom_module/{id}','ModuleController@edit_name_module')->name('modification_nom_module');
+Route::post('modification_description/{id}','ModuleController@edit_description')->name('modification_description');
+Route::post('modification_detail/{id}','ModuleController@edit_detail')->name('modification_detail');
+Route::post('modification_objectif/{id}','ModuleController@edit_objectif')->name('modification_objectif');
+Route::post('modification_pour_qui/{id}','ModuleController@edit_public_cible')->name('modification_pour_qui');
+Route::post('modification_prerequis/{id}','ModuleController@edit_prerequis')->name('modification_prerequis');
+Route::post('modification_equipement/{id}','ModuleController@edit_equipement')->name('modification_equipement');
+Route::post('modification_bon_a_savoir/{id}','ModuleController@edit_bon_a_savoir')->name('modification_bon_a_savoir');
+Route::post('modification_prestation/{id}','ModuleController@edit_prestation')->name('modification_prestation');
+Route::get('mettre_en_ligne','ModuleController@mettre_en_ligne')->name('mettre_en_ligne');
+Route::get('mettre_hors_ligne','ModuleController@mettre_hors_ligne')->name('mettre_hors_ligne');
 
 
 
@@ -489,6 +508,8 @@ Route::get('editer_programme', 'ProgrammeController@edit')->name('editer_program
 
 // route liste equipe adminb pour O.F
 Route::get('liste_equipe_admin','ResponsableCfpController@listeEquipeAdminCFP')->name('liste_equipe_admin');
+
+Route::post('update_roleReferent','ResponsableCfpController@modifReferent')->name('update_roleReferent');
 
 // cours
 Route::get('ajouter_cours/{id_prog?}', 'CoursControlleur@index')->name('ajouter_cours');
@@ -1233,6 +1254,8 @@ Route::get('modification_nom_entreprise/{id}','EntrepriseController@modification
 Route::post('enregistrer_nom_entreprise/{id}','EntrepriseController@enregistrer_nom_etp')->name('enregistrer_nom_entreprise');
 Route::get('modification_logo/{id}','EntrepriseController@modification_logo')->name('modification_logo');
 Route::post('enregistrer_logo/{id}','EntrepriseController@enregistrer_logo')->name('enregistrer_logo');
+Route::get('modification_assujetti_entreprise/{id}','EntrepriseController@modification_assujetti_entreprise')->name('modification_assujetti_entreprise');
+Route::post('enregistrer_assujetti_entreprise/{id}','EntrepriseController@enregistrer_assujetti_entreprise')->name('enregistrer_assujetti_entreprise');
 
 // modification session
 Route::post('modifier_session_intra', 'GroupeController@modifier_session_intra')->name('modifier_session_intra');
