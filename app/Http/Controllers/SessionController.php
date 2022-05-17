@@ -115,6 +115,9 @@ class SessionController extends Controller
         $id = $request->Id;
         $result = DB::table('v_detail_session')
                 // ->where('cfp_id', $cfp_id)
+                ->select('*',
+                    DB::raw('SUBSTRING(nom_formateur, 1, 1) as nom_frt'),
+                    DB::raw('SUBSTRING(prenom_formateur, 1, 1) as prenom_frt'))
                 ->where('detail_id', '=', $id)
                 ->get();
 
@@ -125,6 +128,9 @@ class SessionController extends Controller
     public function my_detail_session_etp(Request $request){
         $id = $request->Id;
         $result = DB::table('v_detail_session')
+                ->select('*',
+                    DB::raw('SUBSTRING(nom_formateur, 1, 1) as nom_frt'),
+                    DB::raw('SUBSTRING(prenom_formateur, 1, 1) as prenom_frt'))
                 ->where('detail_id', '=', $id)
                 ->get();
 

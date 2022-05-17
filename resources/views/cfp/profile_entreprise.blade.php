@@ -296,10 +296,10 @@
                 <div style="font-size: 13px">
 
                     <div class="mt-1 text-center mb-3">
-                        <span id="logo"></span>
+                        <span id="logoEtp"></span>
                     </div>
                     <div class="mt-1 text-center">
-                        <span id="nom_entreprise" style="color: #64b5f6; font-size: 20px; text-transform: uppercase; "></span>
+                        <span id="nom_entrepriseEtp" style="color: #64b5f6; font-size: 20px; text-transform: uppercase; "></span>
                     </div>
 
                     <div class="mt-1">
@@ -308,8 +308,8 @@
                             <div class="col-md-1"><i class='bx bx-user'></i></div>
                             <div class="col-md-3">Responsable</div>
                             <div class="col-md">
-                                <span id="nom_reponsable" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
-                                <span id="prenom_responsable" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                                <span id="nom_reponsableEtp" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                                <span id="prenom_responsableEtp" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
                             </div>
                         </div>
                     </div>
@@ -321,16 +321,16 @@
                             <div class="col-md">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <span id="adrlot"></span>
+                                        <span id="adrlotEtp"></span>
                                     </div>
                                     <div class="com-md-12">
-                                        <span id="adrlot2"></span>
+                                        <span id="adrlot2Etp"></span>
                                     </div>
                                     <div class="col-md-12">
-                                        <span id="adrlot3"></span>
+                                        <span id="adrlot3Etp"></span>
                                     </div>
                                     <div class="col-md-12">
-                                        <span id="adrlot4"></span>
+                                        <span id="adrlot4Etp"></span>
                                     </div>
                                 </div>
                             </div>
@@ -342,7 +342,7 @@
                             <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
                             <div class="col-md-3">E-mail</div>
                             <div class="col-md">
-                                <span id="email_etp"><span>
+                                <span id="email_etpEtp"><span>
                         </div>
 
                     </div>
@@ -352,7 +352,7 @@
                             <div class="col-md-1"><i class='bx bx-phone'></i></div>
                             <div class="col-md-3">Tel</div>
                             <div class="col-md">
-                                <span id="telephone_etp"><span>
+                                <span id="telephone_etpEtp"><span>
                             </div>
                         </div>
                     </div>
@@ -361,7 +361,7 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-1"><i class='bx bx-globe'></i></div>
                             <div class="col-md-3">Site web</div>
-                            <div class="col-md"><span id="site_etp"></span></div>
+                            <div class="col-md"><span id="site_etpEtp"></span></div>
                         </div>
                     </div>
                 </div>
@@ -509,20 +509,35 @@
                     console.log(userData);
                     //parcourir le premier tableau contenant les info sur les programmes
                     for (let $i = 0; $i < userData.length; $i++) {
+                        var photos = userData[$i].logo_etp;
+                        let randomInitial = '<center><p class="randomColor text-center" style="color: #fff; font-size: 30px; border: none; margin-top: 15px; border-radius: 100%; height:80px; width:80px ; background-color: #5c6bc0"><span style="position:relative; top: .9rem;"><b>'+userData[$i].nom_et+'</b></span></p></center>';
+                        // let myImg = '<img src="{{asset("images/entreprises/:img")}}" style="width:80px;height:80px;border-radius:100%">';
+                        // myImg = myImg.replace(":img", photos);
 
                         let url_photo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:60px">';
                         url_photo = url_photo.replace(":url_img", userData[$i].logo_etp);
-                        $("#logo").html(" ");
-                        $("#logo").append(url_photo);
-                        $("#nom_entreprise").text(userData[$i].nom_etp);
-                        $("#nom_reponsable").text(': '+userData[$i].nom_resp);
-                        $("#prenom_responsable").text(userData[$i].prenom_resp);
-                        $("#adrlot").text(': '+userData[$i].adresse_lot);
-                        $("#adrlot3").text(': '+userData[$i].adresse_ville);
-                        $("#adrlot4").text(': '+userData[$i].adresse_region);
-                        $("#email_etp").text(': '+userData[$i].email_responsable);
-                        $("#telephone_etp").text(': '+userData[$i].telephone_etp);
-                        $("#site_etp").text(': '+userData[$i].site_etp);
+
+                        if(photos.length <= 0){
+                            $("#logoEtp").html(" ");
+                            $("#logoEtp").append(randomInitial);
+                            console.log('eto');
+                        }else{
+                            $("#logoEtp").html(" ");
+                            $("#logoEtp").append(url_photo);
+                            console.log(url_photo);
+                        }
+
+                        // $("#logoEtp").html(" ");
+                        // $("#logoEtp").append(url_photo);
+                        $("#nom_entrepriseEtp").text(userData[$i].nom_etp);
+                        $("#nom_reponsableEtp").text(': '+userData[$i].nom_resp);
+                        $("#prenom_responsableEtp").text(userData[$i].prenom_resp);
+                        $("#adrlotEtp").text(': '+userData[$i].adresse_lot);
+                        $("#adrlot3Etp").text(': '+userData[$i].adresse_ville);
+                        $("#adrlot4Etp").text(': '+userData[$i].adresse_region);
+                        $("#email_etpEtp").text(': '+userData[$i].email_responsable);
+                        $("#telephone_etpEtp").text(': '+userData[$i].telephone_etp);
+                        $("#site_etpEtp").text(': '+userData[$i].site_etp);
                     }
                 }
             });

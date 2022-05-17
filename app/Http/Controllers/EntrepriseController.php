@@ -83,22 +83,34 @@ class EntrepriseController extends Controller
             return view('admin.entreprise.entreprise', compact('datas', 'entreprise'));
         }
     }
-    public function information_entreprise(Request $request)
-    {
-        $user_id = Auth::id();
+    // public function information_entreprise(Request $request)
+    // {
+    //     $user_id = Auth::id();
+    //     $id = $request->Id;
+
+    //     $fonct = new FonctionGenerique();
+    //     $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+    //   //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where entreprise_id= ?',[$id]);
+
+    //     $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$id]);
+    //     $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$id]);
+    //     $entreprises=$fonct->concatTwoList($etp1,$etp2);
+
+    //   return response()->json($entreprises);
+
+
+    // }
+
+    public function information_entreprise(Request $request){
         $id = $request->Id;
+        $result = DB::table('v_demmande_etp_cfp')
+                ->select('*',
+                    DB::raw('SUBSTRING(nom_etp, 1, 1) as nom_et'))
+                ->where('entreprise_id', '=', $id)
+                ->get();
 
-        $fonct = new FonctionGenerique();
-        $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-      //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where entreprise_id= ?',[$id]);
-
-        $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$id]);
-        $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$id]);
-        $entreprises=$fonct->concatTwoList($etp1,$etp2);
-
-      return response()->json($entreprises);
-
-
+        // dd($result);
+        return response()->json($result);
     }
 
 

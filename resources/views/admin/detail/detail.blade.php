@@ -1067,7 +1067,7 @@
     $(".infoEtp").on('click', function(e) {
         
     let id = $(this).data("id");
-    console.log(id);
+    // console.log(id);
     var url = "{{ route('mySessionFilter.etp') }}";
 
     $.ajax({
@@ -1078,15 +1078,32 @@
         }
         , dataType: "html"
         , success: function(response) {
-            let userData= JSON.parse(response);
-            console.log(userData);
+            var userData= JSON.parse(response);
+            // console.log(userData);
             //parcourir le premier tableau contenant les info sur les programmes
-            for (let $i = 0; $i< userData.length; $i++ ) {
+            for (var $i = 0; $i< userData.length; $i++ ) {
+                var photos = userData[$i].photos;
+                
+                // let prenom = userData[$i].prenom_frt;
+                console.log(userData[$i].nom_frt);
+                console.log(userData[$i].prenom_frt);
 
-                let url_photo = '<img src="{{asset("images/formateurs/:url_img")}}" style="width:80px;height:80px;border-radius:100%">';
-                url_photo = url_photo.replace(":url_img", userData[$i].photos);
-                $("#logo").html(" ");
-                $("#logo").append(url_photo);
+                let randomInitial = '<center><p class="randomColor text-center" style="color: #fff; font-size: 30px; border: none; margin-top: 15px; border-radius: 100%; height:80px; width:80px ; background-color: #5c6bc0"><span style="position:relative; top: .9rem;"><b>'+userData[$i].nom_frt+''+userData[$i].prenom_frt+'</b></span></p></center>';
+                let myImg = '<img src="{{asset("images/formateurs/:img")}}" style="width:80px;height:80px;border-radius:100%">';
+                myImg = myImg.replace(":img", photos);
+                // let url_photo = '<img src="{{asset("images/formateurs/:url_img")}}" style="width:80px;height:80px;border-radius:100%">';
+                // url_photo = url_photo.replace(":url_img", userData[$i].photos);
+
+                if(photos.length <= 0){
+                    $("#logo").html("");
+                    $("#logo").append(randomInitial);
+                }else{
+                    $("#logo").html("");
+                    $("#logo").append(myImg);
+                }
+    
+                // $("#logo").html(" ");
+                // $("#logo").append(url_photo);
                 $("#nom").text(": "+userData[$i].nom_formateur); 
                 $("#prenom").text(userData[$i].prenom_formateur);
                 $("#genre").text(": "+userData[$i].nom_module);
@@ -1113,9 +1130,7 @@
             '</td><td>'+value.telephone_stagiaire+
             '</td><td><i class="fa fa-check" style="color: green; margin-right: 5px"></i>'+value.role_name+
             '</td><tr>';
-        
-    
-        console.log(tableRow);
+        // console.log(tableRow);
     });
     $('#dynamic_row').append(tableRow);
 </script>
