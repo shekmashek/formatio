@@ -53,12 +53,12 @@
 
                 @endcanany
                 @canany(['isCFP'])
-                {{-- <li>
+                <li>
                     <a href="{{ route('afficher_iframe_cfp') }}" class="d-flex nav_linke">
                         <i class='bx bxs-pie-chart-alt-2'></i>
                         <span class="links_name">BI</span>
                     </a>
-                </li> --}}
+                </li>
                 @endcanany
                 @canany(['isSuperAdmin'])
                 <li>
@@ -91,307 +91,9 @@
 
             </li>
             @endcanany
-            @canany(['isReferent'])
-            <li>
-                <a href="{{route('liste_departement')}}" class="d-flex nav_linke">
-                    <i class='bx bx-home-alt'></i>
-                    <span class="links_name">Departements</span>
-                </a>
-
-            </li>
-            @endcanany
-            @can('isCFP')
-            {{-- <li>
-                <a href="{{route('liste_entreprise')}}" class="d-flex nav_linke">
-                    <i class='bx bx-building-house'></i>
-                    <span class="links_name">Entreprises</span>
-                </a>
-
-            </li> --}}
-            @endcan
-            @can('isReferent')
-            <li>
-                <a href="{{route('list_cfp')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-business'></i>
-                    <span class="links_name">Organisme (OF)</span>
-                </a>
-
-            </li>
-            @endcan
-            {{-- projet de formation --}}
-
-            @canany(['isCFP','isFormateur'])
-            {{-- <li>
-                <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
-                    <i class='bx bx-library'></i>
-                    <span class="links_name">Projets</span>
-                </a>
-
-            </li> --}}
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_projet')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Projet</span>
-                </a>
-                <span class="tooltip">Nouveau Projet</span>
-            <li class="sousMenu me-2 d-flex justify-content-between">
-                <a href="{{url('detail_session')}}">Sessions</a>
-                <p class="my-1" id="projets_etp" style="background-color: white; border-radius: 2rem; padding: 0 8px;">
-                </p>
-            </li>
-            </li> --}}
-            @endcanany
-            @canany(['isReferent'])
-            {{-- <li>
-                <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
-                    <i class='bx bx-library'></i>
-                    <span class="links_name">Projets</span>
-                </a>
-
-            </li> --}}
-            @endcanany
-            @canany(['isReferent'])
-            <li>
-                <a href="{{route('projet_interne')}}" class="d-flex nav_linke">
-                    <i class='bx bxl-netlify'></i>
-                    <span class="links_name">Formation Interne</span>
-                </a>
-
-            </li>
-            @endcanany
-            @canany(['isStagiaire'])
-            <li>
-                <a href="{{route('liste_projet',['id'=>1])}}" class="d-flex nav_linke">
-                    <i class='bx bx-library'></i>
-                    <span class="links_name">Projets</span>
-                </a>
-
-            </li>
-            @endcanany
-            @canany(['isCFP','isReferent','isManager'])
-            {{-- <li>
-                <a href="{{route('appel_offre.index')}}" class="d-flex nav_linke">
-                    <i class='bx bx-mail-send'></i>
-                    <span class="links_name">Appel d'Offre</span>
-                </a>
-
-            </li> --}}
-            @endcanany
-            {{-- utilisateurs --}}
-            @canany(['isSuperAdmin','isAdmin'])
-            <li>
-                <a href="{{route('liste_utilisateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Referent</span>
-                </a>
-
-            </li>
-            <li>
-                <a href="{{route('utilisateur_stagiaire')}}" class="d-flex nav_linke">
-                    <i class='bx bx-user-circle'></i>
-                    <span class="links_name">Stagiaires</span>
-                </a>
-
-            </li>
-            <li>
-                <a href="{{route('utilisateur_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Formateurs</span>
-                </a>
-
-            </li>
-            @endcanany
-            {{-- formateurs --}}
-
-            @canany(['isCFP'])
-            {{-- <li>
-                <a href="{{route('liste_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Formateurs</span>
-                </a>
-
-            </li> --}}
-            {{-- <li>
-                <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Formateur</span>
-                </a>
-
-            </li> --}}
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_formateur')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Formateur</span>
-                </a>
-
-            </li> --}}
-            @endcanany
-            {{-- manager --}}
-            @canany(['isSuperAdmin','isAdmin'])
-            <li>
-                <a href="{{route('employes')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Manager</span>
-                </a>
-
-            </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_manager')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Manager</span>
-                </a>
-
-            </li> --}}
-            @endcanany
-            @canany(['isReferent'])
-            <li>
-                <a href="{{route('employes')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Equipe admnistrative</span>
-                </a>
-
-            </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_manager')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Manager</span>
-                </a>
-
-            </li> --}}
-            @endcanany
-            {{-- Referent --}}
-            @canany(['isAdmin','isSuperAdmin'])
-            <li>
-                <a href="{{route('liste_responsable')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Réferents</span>
-                </a>
-
-            </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_responsable')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Réferents</span>
-                </a>
-
-            </li> --}}
-            @endcanany
-            {{-- stagiares --}}
-
-            {{-- @canany(['isReferent'])
-            <li>
-                <a href="{{route('liste_participant')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-rectangle'></i>
-                    <span class="links_name">Stagiaires</span>
-                </a>
-
-            </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('nouveau_participant')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Nouveau Stagiaire</span>
-                </a>
-
-            </li> --}}
-            {{-- @endcanany --}}
-            {{-- action de formations --}}
-
-            {{-- @canany(['isFormateur'])
-            <li>
-                <a href="{{route('presence.index')}}" class="d-flex nav_linke">
-                    <i class='bx bx-list-check'></i>
-                    <span class="links_name">Emargement</span>
-                </a>
-
-            </li>
-            @endcanany --}}
-
-            {{-- calendrire de formations --}}
-            <li>
-                @canany(['isReferent','isStagiaire','isManager'])
-                    {{-- <a href="{{route('calendrier_formation')}}" class="d-flex nav_linke">
-                        <i class='bx bxs-calendar'></i>
-                        <span class="links_name">Calendrier</span>
-                    </a> --}}
-                @endcan
-                @canany(['isCFP', 'isFormateur'])
-                {{-- <a href="{{route('calendrier')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-calendar'></i>
-                    <span class="links_name">Calendrier</span>
-                </a> --}}
-                @endcanany
 
 
-            </li>
 
-            {{-- commercial --}}
-            {{-- @canany(['isSuperAdmin','isCFP','isReferent'])
-            <li>
-                <a href="{{route('collaboration')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-account'></i>
-                    <span class="links_name">Coopération</span>
-                </a>
-
-            </li>
-            @endcanany --}}
-            @canany(['isCFP','isReferent'])
-            {{-- <li>
-                <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Factures</span>
-                </a>
-
-            </li> --}}
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Total facture</span>
-                </a>
-            </li> --}}
-
-            @endcanany
-            {{-- competence --}}
-            @canany(['isSuperAdmin','isReferent','isManager'])
-            @canany(['isReferent'])
-            <li>
-                <a href="{{route('demande_test_niveau')}}" class="d-flex nav_linke">
-                    <i class='bx bx-network-chart'></i>
-                    <span class="links_name">Aptitudes</span>
-                </a>
-            </li>
-            {{-- integrer dans la page
-            <li>
-                <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-bank'></i>
-                    <span class="links_name">Total facture</span>
-                </a>
-            </li> --}}
-            @endcanany
-            <li>
-                <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-doughnut-chart'></i>
-                    <span class="links_name">Compétence</span>
-                </a>
-            </li>
-            @endcanany
-
-            {{-- plan de formation --}}
-            @canany(['isSuperAdmin','isStagiaire','isManager','isReferent'])
-            <li>
-                <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
-                    href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
-                    <i class='bx bx-scatter-chart'></i>
-                    <span class="links_name">Plan</span>
-                </a>
-            </li>
-            @endcanany
 
             @canany(['isReferent','isCFP'])
             <li>
@@ -828,48 +530,48 @@
         $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
         })
 
-        $(document).ready(function() {
-            var pdp = "";
-            $.ajax({
-                url: '{{ route("profile_resp") }}'
-                , type: 'get'
-                , success: function(response) {
-                    var userData = response;
+        // $(document).ready(function() {
+        //     var pdp = "";
+        //     $.ajax({
+        //         url: '{{ route("profile_resp") }}'
+        //         , type: 'get'
+        //         , success: function(response) {
+        //             var userData = response;
 
-                    if(userData['photo'] == 'oui'){
-                        var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer; position:relative; bottom:3px;">';
-                        html = html.replace(":?", userData['user']);
-                        // alert(JSON.stringify(userData));
-                        $('.photo_users').append(html);
-                    }
-                    if(userData['photo'] == 'non'){
-                        var html = userData['user'][0]['nm']+''+userData['user'][0]['pr'];
-                        $('.photo_users').append(html);
-                    }
-                }
-                , error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
+        //             if(userData['photo'] == 'oui'){
+        //                 var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer; position:relative; bottom:3px;">';
+        //                 html = html.replace(":?", userData['user']);
+        //                 // alert(JSON.stringify(userData));
+        //                 $('.photo_users').append(html);
+        //             }
+        //             if(userData['photo'] == 'non'){
+        //                 var html = userData['user'][0]['nm']+''+userData['user'][0]['pr'];
+        //                 $('.photo_users').append(html);
+        //             }
+        //         }
+        //         , error: function(error) {
+        //             console.log(error);
+        //         }
+        //     });
+        // });
 
-        $(document).ready(function() {
-            var pdp = "";
-            $.ajax({
-                url: '{{ route("logos") }}'
-                , type: 'get'
-                , success: function(response) {
-                    var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
-                    html = html.replace(":?", userData);
+        // $(document).ready(function() {
+        //     var pdp = "";
+        //     $.ajax({
+        //         url: '{{ route("logos") }}'
+        //         , type: 'get'
+        //         , success: function(response) {
+        //             var userData = response;
+        //             var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
+        //             html = html.replace(":?", userData);
 
-                    $('.logo_etp_user').append(html);
-                }
-                , error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
+        //             $('.logo_etp_user').append(html);
+        //         }
+        //         , error: function(error) {
+        //             console.log(error);
+        //         }
+        //     });
+        // });
 
 
     </script>

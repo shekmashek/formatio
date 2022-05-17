@@ -231,6 +231,12 @@ class AbonnementController extends Controller
             $test_abonne =$this->fonct->findWhere('abonnements',['entreprise_id','status'],[$responsable[0]->entreprise_id,'En attente']);
 
 
+            $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$entreprise_id]);
+
+            if($entreprise->statut_compte_id == 1) $vue = 1;
+            else $vue = 2;
+
+
             /** on récupère l'abonnement actuel */
             $abonnement_actuel = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$responsable[0]->entreprise_id]);
 
@@ -324,11 +330,11 @@ class AbonnementController extends Controller
             if ($test_abonne) {
                 $payant = $this->fonct->findWhere("v_type_abonnement_etp",['entreprise_id'],[$entreprise_id]);
                 // $payant = abonnement::with('type_abonnement_role')->where('entreprise_id', $responsable[0]->entreprise_id)->get();
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('vue','facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('vue','facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
             }
         }
         // else {
@@ -339,6 +345,11 @@ class AbonnementController extends Controller
 
             $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
+
+            $cfps = $this->fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
+            if($cfps->statut_compte_id == 1) $vue = 1;
+            else $vue = 2;
+
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->where('status','!=','En attente')->exists();
 
             // $abn =type_abonnement::all();
@@ -439,11 +450,11 @@ class AbonnementController extends Controller
                 $payant = $this->fonct->findWhere("v_type_abonnement_cfp",['cfp_id'],[$cfp_id]);
 
                 // $payant = abonnement_cfp::with('type_abonnement_role')->where('cfp_id', $cfp_id)->get();
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('vue','facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('vue','facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
             }
         }
         // else {
@@ -548,11 +559,15 @@ class AbonnementController extends Controller
         }
 
         if(Gate::allows(('isCFP'))) {
+
             $typeAbonnement =$this->fonct->findWhereMulitOne('type_abonnements_of',['id'],[$id]);
 
             $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
             $cfps = cfp::where('id', $cfp_id)->get();
+
+            if($cfps[0]->statut_compte_id == 1) $vue = 1;
+            else $vue = 2;
               //on verifie l'abonnemennt de l'of
             $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
             $entreprise = null;
@@ -566,7 +581,7 @@ class AbonnementController extends Controller
                     // si l'utilisateur choisi une autre offre
                     else{
                         $type_abonnement = $cfp_ab[0]->nom_type;
-                        return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                        return view('superadmin.index_abonnement', compact('vue','type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
                     }
 
                 }
@@ -587,14 +602,14 @@ class AbonnementController extends Controller
                         else{
                             if($cfp_ab == null) $type_abonnement = "Gratuit";
                             else $type_abonnement = $cfp_ab[0]->nom_type;
-                            return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'tarif', 'typeAbonnement'));
+                            return view('superadmin.index_abonnement', compact('vue','type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'tarif', 'typeAbonnement'));
                         }
                     }
                     else{
 
                         if($cfp_ab == null) $type_abonnement = "Gratuit";
                         else $type_abonnement = $cfp_ab[0]->nom_type;
-                        return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab', 'entreprise', 'cfps', 'typeAbonnement'));
+                        return view('superadmin.index_abonnement', compact('vue','type_abonnement','cfp_ab', 'entreprise', 'cfps', 'typeAbonnement'));
                     }
                 }
                 // $dtNow = Carbon::today()->toDateString();
@@ -613,7 +628,7 @@ class AbonnementController extends Controller
             else{
                 $type_abonnement = "Gratuit";
                 $entreprise = null;
-                return view('superadmin.index_abonnement', compact('entreprise','type_abonnement', 'cfps', 'typeAbonnement'));
+                return view('superadmin.index_abonnement', compact('vue','entreprise','type_abonnement', 'cfps', 'typeAbonnement'));
             }
 
         }
@@ -630,9 +645,11 @@ class AbonnementController extends Controller
         $user_id = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
 
+
         $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
         if($resp!=null) $cfp_id = $resp[0]->cfp_id;
         else $cfp_id = null;
+
 
         if ($cfp_id == null) {
             $abonnement->date_demande = $dt;
@@ -650,10 +667,13 @@ class AbonnementController extends Controller
              // $montant =$this->fonct->findWhere('v_categorie_abonnement_etp',['type_abonnement_role_id'],[$abonnement_id[0]->type_abonnement_role_id]);
             $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_etp",['abonnement_id'],[$abonnement_id[0]->id]);
 
+            //on change le statut compte id de l'entreprise
+            DB::update('update entreprises set statut_compte_id = 2 where id = ?', [$entreprise_id]);
             $this->abonnement_model->insert_factures_abonnements_etp($abonnement_id[0]->id,$dt,$due_date,$tarif->tarif);
 
         }
         if ($entreprise_id == null) {
+
             $abonnement_cfp->date_demande = $dt;
             $abonnement_cfp->status = "En attente";
             $abonnement_cfp->type_abonnement_id = $request->type_abonnement_role_id;
@@ -669,7 +689,8 @@ class AbonnementController extends Controller
             // $montant =$this->fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
             $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_cfp",['abonnement_id'],[$abonnement_cfp_id[0]->id]);
 
-
+            //on change le statut compte id de l'organisme de formation
+            DB::update('update cfps set statut_compte_id = 2 where id = ?', [$cfp_id]);
             // $last_num_facture =$this->fonct->fin
             $this->abonnement_model->insert_factures_abonnements_cfp($abonnement_cfp_id[0]->id,$dt,$due_date,$tarif->tarif);
             // DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$due_date,1,$montant[0]->tarif]);

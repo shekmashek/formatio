@@ -1356,8 +1356,13 @@ class HomeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $id_cfp = DB::select('select * from responsables_cfp where user_id = ?', [Auth::user()->id]);
+
+        $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$id_cfp[0]->cfp_id]);
+        if($cfps->statut_compte_id == 1) $vue = 1;
+        else $vue = 2;
+
         $iframe_cfp = $fonct->findWhereMulitOne("v_cfp_iframe", ["cfp_id"], [$id_cfp[0]->cfp_id]);
-        return view('layouts.bi', compact('iframe_cfp'));
+        return view('layouts.bi', compact('vue','iframe_cfp'));
     }
     public function BI()
     {

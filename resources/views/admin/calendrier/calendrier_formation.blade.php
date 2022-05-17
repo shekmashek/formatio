@@ -280,7 +280,7 @@
 
                         <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
-                         <hr>
+
                         @canany(['isReferent','isCFP','isFormateur'])
                             <label class="gauche" for="">Liste des apprenants</label><br>
                             <table class="table">
