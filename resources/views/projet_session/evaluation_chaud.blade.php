@@ -112,9 +112,10 @@
     <nav class="d-flex justify-content-around">
         @canany(['isFormateur'])
             <button id="btn_note" class="btn btn_note_radar" style="background-color: #fff; border: 1px solid grey" onclick="modifier_note()">Notes des stagiaires</button>
-        @endcanany
+        
         <button id="btn_radar" class="btn btn_note_radar" onclick="voir_radar()">Résultats</button>
         {{-- <button id="btn_formateur" class="btn btn_note_radar" onclick="evaluation_formateur()">Evaluation des formateurs</button> --}}
+        @endcanany
     </nav>
     @canany(['isFormateur'])
     <div id="modifier_note" style="display: block">
@@ -204,16 +205,21 @@
         <div id="voir_radar">
     @endcanany
         <div class="row mt-2">
-            <div class="col-md-4">
-                Choisissez votre stagiaire pour voir le résultat<br>
-                <select class="form-select" id="stagiaire_radar"  aria-label="Default select example">
-                    <option hidden>Choisissez un stagiaire</option>
-                    @foreach ($stagiaire as $stg_r)
-                        <option  data-stg_id="{{ $stg_r->stagiaire_id }}" value="{{ $stg_r->stagiaire_id }}">{{ $stg_r->nom_stagiaire.' '.$stg_r->prenom_stagiaire }}</option>
-                    @endforeach
-                </select>
+            <div class="col-md-5">
+                <div class="row" id="choix_stagiaire">
+                    <div class="col-lg-12">
+                        Choisissez votre stagiaire pour voir le résultat<br>
+                        <select class="form-select" id="stagiaire_radar"  aria-label="Default select example">
+                            <option hidden>Choisissez un stagiaire</option>
+                            @foreach ($stagiaire as $stg_r)
+                                <option  data-stg_id="{{ $stg_r->stagiaire_id }}" value="{{ $stg_r->stagiaire_id }}">{{ $stg_r->nom_stagiaire.' '.$stg_r->prenom_stagiaire }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div id="resultat_eval" class="mt-2"></div>
             </div>
-            <div class="col-md-8"><canvas id="marksChart" width="500" height="300"></canvas></div>
+            <div class="col-md-7"><canvas id="marksChart" width="500" height="300"></canvas></div>
         </div>
     </div>
     {{-- <div id="evaluation_formateurs" style="display: none">
@@ -293,6 +299,83 @@
 
                     var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
                     $('#boutton_save_eval').hide();
+                    $('#validation_module').append(html); 
+                }
+                          
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+    $("#stagiaire_radar").on('change', function(e) {
+        var stg_id = $("#stagiaire_radar option:selected").val();
+        var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
+        $.ajax({
+            type: "GET",
+            url: "{{ route('competence_stagiaire') }}",
+            data: {
+                stg: stg_id,
+                groupe: groupe_id,
+            },
+            dataType: "html",
+            success: function(response) {
+                var data = JSON.parse(response);
+                var detail = data['detail'];
+                var globale = data['globale'];
+                var note_avant = data['note_avant'];
+                if(note_avant == 1){
+                    $('#resultat_eval').html('');     
+
+                    var html = '<div class="row p-2">';
+                    for(let i = 0 ; i < detail.length ; i++){
+                        html += '<div class="col-lg-5 text-start p-1"><span class="mt-2">'+detail[i].titre_competence+'</span></div>';
+                        // html += '<div class="col-lg-2"><input class="p-0 m-1 py-1" style="height: 1.98rem; width: 4rem; justify-content:center;text-align:center;" type="number" min="1" max="10" name="note['+detail[i].competence_id+']" value="'+detail[i].note_apres+'" required></div>';
+                        html += '<div class="col-lg-7 d-flex justify-content-arround " >';
+
+                            html += '<div class="mb_top">';
+                            html += '<input type="radio" class="btn-check" name="status['+detail[i].competence_id+']" id="danger-outlined_'+detail[i].competence_id+'" data-id="'+detail[i].competence_id+'" autocomplete="off" value="1" readonly '+detail[i].non_acquis+'>';
+                            html += '<label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_'+detail[i].competence_id+'">NON-ACQUIS</label>';
+                            html += '</div>';
+
+                            html += '<div class="mb_top">';
+                            html += '<input type="radio" class="btn-check" name="status['+detail[i].competence_id+']" id="warning-outlined_'+detail[i].competence_id+'" data-id="'+detail[i].competence_id+'" autocomplete="off" value="2" readonly '+detail[i].en_cours+'>';
+                            html += '<label class=" button_test mb-1 px-2 py-1 btn-outline-warning" role="button" for="warning-outlined_'+detail[i].competence_id+'">EN COURS</label>'
+                            html += '</div>';
+
+                            html += '<div class="mb_top">';
+                            html += '<input type="radio" class="btn-check" name="status['+detail[i].competence_id+']" id="success-outlined_'+detail[i].competence_id+'" data-id="'+detail[i].competence_id+'" autocomplete="off" value="3" readonly '+detail[i].acquis+'>';
+                            html += '<label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="success-outlined_'+detail[i].competence_id+'">ACQUIS</label>';
+                            html += '</div>';
+
+                        html += '</div>';
+                    }
+
+                    html += '</div>';
+
+                    html += '<div class="row mt-2 p-2">';
+                        html += '<div class="col-lg-6 py-1 text-center">';
+                            html += '<span class="me-1 mt-1">Module :</span>';
+                        html += '</div>';
+                        html += '<div class="col-lg-6 d-flex justify-content-arround">';
+                            html += '<div class="">';
+                                html += '<input type="radio" class="btn-check" name="note_globale" id="danger-outlined_nv" autocomplete="off" value="1" readonly '+globale[0].non_valide+'>';
+                                html += '<label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_nv">NON-VALIDÉ</label>';
+                            html += '</div>';
+                            html += '<div class="">';
+                                html += '<input type="radio" class="btn-check" name="note_globale" id="danger-outlined_v"  autocomplete="off" value="2" readonly '+globale[0].valide+'>';
+                                html += '<label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="danger-outlined_v">VALIDÉ</label>';
+                            html += '</div>';
+                        html += '</div>';
+                    html += '</div>';
+
+                    $('#resultat_eval').append(html); 
+                }else{
+                    $('#resultat_eval').html('');
+
+                    var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
+                    $('#choix_stagiaire').hide();
                     $('#validation_module').append(html); 
                 }
                           

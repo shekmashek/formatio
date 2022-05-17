@@ -143,7 +143,11 @@
                     <td>{{ $stg->matricule }}</td>
                     <td>{{ $stg->nom_stagiaire }}</td>
                     <td>{{ $stg->prenom_stagiaire }}</td>
-                    <td>{{ $stg->telephone_stagiaire }}</td>
+                    <td>
+                        @php
+                            echo $groupe->formatting_phone($stg->telephone_stagiaire);
+                        @endphp
+                    </td>
                     <td>{{ $stg->mail_stagiaire }}</td>
                     <td>{{ $stg->fonction_stagiaire }}</td>
                     {{-- <td>{{ $stg->nom_departement }}</td>

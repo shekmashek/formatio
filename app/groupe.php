@@ -92,4 +92,13 @@ class Groupe extends Model
     public function module_projet($projet_id){
         return DB::select('select groupe_id,nom_module from v_groupe_projet_module where projet_id = ? group by nom_module',[$projet_id]);
     }
+
+
+    function formatting_phone($phone){
+        $format = '';
+        if(preg_match('/([0-9]{3})([0-9]{2})([0-9]{3})([0-9]{2})$/', $phone, $value)) { 
+            $format = $value[1] . ' ' . $value[2] . ' ' . $value[3] .' '.$value[4];
+        }
+        return $format;
+    }
 }
