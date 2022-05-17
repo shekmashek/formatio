@@ -25,6 +25,20 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        /** role en fonction de statut des comptes */
+        Gate::define('isInvite',function($users_roles){
+            $rqt =  DB::select('select * from statut_compte  where id = 1');
+            return "isInvite";
+        });
+        Gate::define('isPremium',function($users_roles){
+            $rqt =  DB::select('select * from statut_compte  where id = 2');
+            return "isPremium";
+        });
+        Gate::define('isPending',function($users_roles){
+            $rqt =  DB::select('select * from statut_compte  where id = 3');
+            return "isPending";
+        });
+
         //access principal
         Gate::define('isAdminPrincipale',function($users_roles){
             $rqt =  DB::select('select * from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]);
