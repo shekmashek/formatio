@@ -718,6 +718,13 @@ font-size: 0.850rem;
 .icon_vide{
     font-size: 20rem;
     color: #637381;
+    transition: all .5s;
+}
+
+.icon_vide:hover{
+    background-color: #637381;
+    color: white;
+    border-radius: 10px;
 }
 
 .btn_enregistrer{
@@ -928,4 +935,8 @@ font-size: 0.850rem;
 .warning{
     color: #f64f59;
     font-size: 4rem;
+}
+
+.ql-clipboard{
+    display: none !important;
 }

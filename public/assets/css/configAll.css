@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300&display=swap");
 
 :root {
-    --padding: 5px;
+    --padding_icon: 5px;
+    --padding_button: 6px 5px 5px 3px;
     --font_size: 1.3rem;
     --bgd_all: rgba(197, 197, 197, 0.232);
     --bgd_modifier_hover: #4A00E727;
@@ -11,22 +12,26 @@
     --display: inline-block;
     --transition: all 200ms;
     --transform: scale(1.05);
-    --color_modifier: #4A00E0;
-    --color_supprimer: #ee0707;
-    --color_ajouter: #07cd19;
+    --bg_color_modifier: #4A00E0;
+    --bg_color_supprimer: #ee0707;
+    --bg_color_annuler: #ee0707;
+    --bg_annuler_bx: #b31217;
+    --bg_color_ajouter: #07cd19;
+    --bg_color_nouveau: #3CA55C;
+    --txt_color:#ffffff;
 }
 
 /* components */
-
+/* icon */
 /* icon à utiliser pour modifier <i class='bx bx-edit'></i> */
 .bx_modifier{
-    padding: var(--padding);
+    padding: var(--padding_icon);
     background-color: var(--bgd_all);
     border-radius: var(--brd_radius);
     cursor: pointer;
     display: var(--display);
     transition: var(--transition);
-    color: var(--color_modifier);
+    color: var(--bg_color_modifier);
     font-size: var(--font_size) !important;
 }
 
@@ -35,20 +40,16 @@
     transform: var(--transform);
 }
 
-button:focus {
-    outline: none !important;
-    box-shadow: none !important;
-}
 
 /* icon à utiliser pour supprimer <i class='bx bx-trash'></i> */
 .bx_supprimer{
-    padding: var(--padding);
+    padding: var(--padding_icon);
     background-color: var(--bgd_all);
     border-radius: var(--brd_radius);
     cursor: pointer;
     display: var(--display);
     transition: var(--transition);
-    color: var(--color_supprimer);
+    color: var(--bg_color_supprimer);
     font-size: var(--font_size) !important;
 }
 
@@ -59,13 +60,13 @@ button:focus {
 
 /* icon à utiliser pour ajouter <i class='bx bx-plus-medical'></i> */
 .bx_ajouter{
-    padding: var(--padding);
+    padding: var(--padding_icon);
     background-color: var(--bgd_all);
     border-radius: var(--brd_radius);
     cursor: pointer;
     display: var(--display);
     transition: var(--transition);
-    color: var(--color_ajouter);
+    color: var(--bg_color_ajouter);
     font-size: var(--font_size) !important;
 }
 
@@ -73,5 +74,75 @@ button:focus {
     background-color: var(--bgd_ajouter_hover);
     transform: var(--transform);
 }
+
+/* button nouveau */
+/* icon à utiliser pour nouveau <i class='bx bx-plus-medical'></i> */
+
+.btn_nouveau{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_nouveau);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+}
+
+.btn_nouveau:hover{
+    text-decoration: none;
+    color: var(--bg_color_ajouter);
+    border: 1px solid var(--bg_color_ajouter);
+    background-color: var(--txt_color);
+}
+
+.btn_nouveau .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_color_ajouter);
+    border-radius: var(--brd_radius);
+}
+
+.btn_nouveau:hover .bx{
+    color: var(--txt_color);
+}
+
+/* button annuler */
+/* icon à utiliser pour annuler <i class='bx bx-x'></i> */
+
+.btn_new_annuler{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_annuler);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+}
+
+.btn_new_annuler:hover{
+    text-decoration: none;
+    color: var(--bg_color_annuler);
+    border: 1px solid var(--bg_color_annuler);
+    background-color: var(--txt_color);
+}
+
+.btn_new_annuler .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_annuler_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    /* font-weight: 900; */
+}
+
+.btn_new_annuler:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_annuler);
+}
+
+
+/* button annuler */
 
 /* utilities */

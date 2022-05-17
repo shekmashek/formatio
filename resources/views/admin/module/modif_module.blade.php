@@ -28,11 +28,11 @@
         <div class="row justify-content-space-between py-3 px-5" id="border_premier">
             <div class="col-lg-6 col-md-6 ">
                 <div class="">
-                    <h5 class="text-success">Pour faire vos modifications cliquer sur l'icone modifier&nbsp;<i class='bx bxs-hand-right'></i>&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier titre module"></i></span></h5>
+                    {{-- <h5 class="text-success">Pour faire vos modifications cliquer sur l'icone modifier&nbsp;<i class='bx bxs-hand-right'></i>&nbsp;<i class='bx bx-edit bx_modifier'></i></h5> --}}
                     @foreach ($module_en_modif as $res)
-                    <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier titre module"></i></span></h4>
+                    <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bx-edit bx_modifier' title="modifier titre module"></i></span></h4>
                     <p class="text_black">{{$res->nom_formation}} </p>
-                    <p class="text_black">{{$res->description}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#description"><i class='bx bxs-message-square-edit icon_creer' title="modifier description module"></i></span></p>
+                    <p class="text_black">{{$res->description}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#description"><i class='bx bx-edit bx_modifier' title="modifier description module"></i></span></p>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 ">
@@ -76,7 +76,7 @@
                     {{$devise->devise}}<span class="text_black text_prix">&nbsp;{{number_format($res->prix_groupe, 0, ' ', ' ')}}&nbsp;</span>&nbsp;HT</span>
                 </div>
                 <div class="col">
-                    <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bxs-message-square-edit icon_creer' title="modifier details module"></i></span>
+                    <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pb-3">Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></h3>
+                <h3 class="pb-3">Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
                         <p>@php echo html_entity_decode($res->objectif) @endphp</p>
@@ -98,7 +98,7 @@
                 <div class="row detail__formation__item__left__adresse">
                     <div class="col-lg-5 d-flex flex-row">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></h3></span>
+                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3></span>
                             <div class="col-12">
                                 <p>@php echo html_entity_decode($res->cible) @endphp</p>
                             </div>
@@ -108,7 +108,7 @@
                     <div class="col-lg-5">
                         <div class="row d-flex flex-row w-100">
                             <span class="adresse__text"><i
-                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
+                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
                                 <p>@php echo html_entity_decode($res->prerequis) @endphp</p>
                             </div>
@@ -121,7 +121,7 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
-                                necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
+                                necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
                                 <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p>
                             </div>
@@ -132,7 +132,7 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
-                                a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
+                                a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
                                 <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p>
                             </div>
@@ -146,7 +146,7 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
+                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
                                 <p>@php echo html_entity_decode($res->prestation) @endphp</p>
                             </div>

@@ -27,6 +27,9 @@
             <li class="nav-item">
                 <a href="#publies" class="nav-link" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
             </li>
+            <li class="">
+                <a href="" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
+            </li>
         </ul>
 
         <div class="tab-content">
@@ -46,8 +49,8 @@
                                 @if($mod_en_cours == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
-                                            class='bx bx-layer-plus icon_vide'></i></a>
+                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button" ><i
+                                            class='bx bx-layer-plus icon_vide' title="ajouter un nouveau module"></i></a>
                                 </div>
                                 @else
                                 @foreach($mod_en_cours as $mod)
@@ -142,16 +145,6 @@
                                                         class="bx bx-trash background_grey2"
                                                         style="color: #ff0000 !important;font-size: 15px"
                                                         title="supprimer le module"></i></button>
-                                            </div>
-                                            <div class="" id="preview_niveau">
-                                                <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
-                                                    data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i
-                                                        class='bx bx-low-vision background_grey3'
-                                                        style="color: #3b9f0c !important;font-size: 15px"
-                                                        title="afficher les informations"></i></a>
-
-                                                </button>
                                             </div>
                                             <div class=" new_btn_programme text-center">
                                                 <a href="{{route('ajout_programme',$mod->module_id)}}"
@@ -309,27 +302,12 @@
                                                             style="color: #0052D4 !important;font-size: 15px"
                                                             title="modifier les informations"></i></a></button>
                                             </div>
-                                            {{-- <div class="" id="preview_niveau">
-                                                <button class="btn modifier_prog pt-0"><a
-                                                        href="{{route('modifier_module_prog',$mod->module_id)}}"><i
-                                                            class='bx bx-edit-alt background_grey4'
-                                                            style="color: #801d68 !important;font-size: 15px"
-                                                            title="modifier les programmes"></i></a></button>
-                                            </div> --}}
                                             <div class="" id="preview_niveau">
                                                 <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal_{{$mod->module_id}}"><i
                                                         class="bx bx-trash background_grey2"
                                                         style="color: #ff0000 !important;font-size: 15px"
                                                         title="supprimer le module"></i></button>
-                                            </div>
-                                            <div class="" id="preview_niveau">
-                                                <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
-                                                    data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i
-                                                        class='bx bx-low-vision background_grey3'
-                                                        style="color: #799F0C !important;font-size: 15px"
-                                                        title="afficher les informations"></i></button>
                                             </div>
                                             <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
                                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -541,27 +519,12 @@
                                                                 style="color: #0052D4 !important;font-size: 15px"
                                                                 title="modifier les informations"></i></a></button>
                                                 </div>
-                                                {{-- <div class="col-3" id="preview_niveau">
-                                                    <button class="btn modifier_prog pt-0"><a
-                                                            href="{{route('modifier_module_prog',$mod->module_id)}}"><i
-                                                                class='bx bx-edit-alt background_grey4'
-                                                                style="color: #801d68 !important;font-size: 15px"
-                                                                title="modifier les programmes"></i></a></button>
-                                                </div> --}}
                                                 <div class="col" id="preview_niveau">
                                                     <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal_{{$mod->module_id}}"><i
                                                             class="bx bx-trash background_grey2"
                                                             style="color: #ff0000 !important;font-size: 15px"
                                                             title="supprimer le module"></i></button>
-                                                </div>
-                                                <div class="col" id="preview_niveau">
-                                                    <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
-                                                        data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                        id="{{$mod->module_id}}"><i
-                                                            class='bx bx-low-vision background_grey3'
-                                                            style="color: #799F0C !important;font-size: 15px"
-                                                            title="afficher les informations"></i></button>
                                                 </div>
                                             </div>
                                             <div class="col-8">
@@ -759,14 +722,7 @@
                                                             style="color: #ff0000 !important;font-size: 15px"
                                                             title="supprimer le module"></i></button>
                                                 </div>
-                                                <div class="col" id="preview_niveau">
-                                                    <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
-                                                        data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                        id="{{$mod->module_id}}"><i
-                                                            class='bx bx-low-vision background_grey3'
-                                                            style="color: #799F0C !important;font-size: 15px"
-                                                            title="afficher les informations"></i></button>
-                                                </div>
+
                                             </div>
                                             <div class="col-8">
                                                 <div class="new_btn_programme text-center">
@@ -838,230 +794,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div>
-                {{-- <div class="modal" id="ModalAffichage">
-                    <div class="modal-dialog">
-                        <div class="modal-content modal_grand">
-                            <div class="container-fluid">
-                                <div class="col-lg-12" id="preview_haut">
-                                    <div class="container py-4 bg-light">
-                                        <div class="row  bg-light justify-content-space-between py-3 px-5"
-                                            id="border_premier">
-                                            <div class="col-lg-6 col-md-6 new_back">
-                                                <div class="detail__formation__result__item ">
-                                                    <h4>
-                                                        <span id="preview_module">
-                                                            <span class="acf-nom_module" id="nom_module"></span>
-                                                        </span><br>
-                                                        <span id="preview_categ">
-                                                            <span class="py-4 acf-categorie" id="nom_formation"></span>
-                                                            <span>
-                                                    </h4>
-                                                    <p id="preview_descript"><span class="acf-description"
-                                                            id="description"></span></p>
-                                                    <div class="detail__formation__result__avis"
-                                                        style="color: black !important;">
-                                                        <div class="Stars" style="--note: 4.5;">
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star-half'></i>
-                                                        </div>
-                                                        <span><strong>4.5</strong>/5 (250 avis)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 detail__formation__result__content">
-                                                <div class="detail__formation__result__item2">
-
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                                <div class="col" id="preview_haut2"><i class="bx bxs-alarm bx_icon"
-                                                        style="color: black !important;"></i>
-                                                    <span id="preview_jour"><span class="acf-jour"
-                                                            id="jour"></span>j</span>
-                                                    <span id="preview_heur">/<span class="acf-heur"
-                                                            id="heure"></span>h</span>
-                                                </div>
-                                                <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon"
-                                                        style="color: black !important;"></i>&nbsp;<span
-                                                        lass="acf-modalite" id="modalite"></span>
-                                                </div>
-                                                <div class="col" id="preview_niveau">
-                                                    <i class='bx bx-equalizer bx_icon'
-                                                        style="color: black !important;"></i>&nbsp;<span
-                                                        class="acf-niveau" id="niveau"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="row detail__formation__detail justify-content-space-between py-5 px-5">
-                                            <div class="col-lg-8 detail__formation__content">
-
-                                                <div class="row detail__formation__item__left__objectif"
-                                                    id="border_objectif">
-                                                    <div class="col-lg-12" id="preview_objectif">
-                                                        <span class="adresse__text">
-                                                            <i
-                                                                class="bx bx-radio-circle-marked py-2 pb-3 adresse__icon"></i>&nbsp;Objectifs</span>
-                                                        <p><span>>&nbsp;</span><span class="acf-objectif"
-                                                                id="objectif"></span></p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row detail__formation__item__left__adresse"
-                                                    id="border_cible">
-                                                    <div class="col-lg-6 d-flex flex-row">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour
-                                                                qui ?</span>
-                                                            <div class="col-12 px-2" id="preview_cible">
-                                                                <p><span>>&nbsp;</span><span class="acf-cible"
-                                                                        id="cible"></span></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-6">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
-                                                            <div class="col-12" id="preview_prerequis">
-                                                                <p><span>>&nbsp;</span><span class="acf-prerequis"
-                                                                        id="prerequis"></span></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row detail__formation__item__left__adresse"
-                                                    id="border_equipement">
-                                                    <div class="col-lg-6 d-flex flex-row">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
-                                                                necessaire</span>
-                                                            <div class="col-12" id="preview_materiel">
-                                                                <p><span>>&nbsp;</span><span class="acf-materiel"
-                                                                        id="materiel"></span></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-6">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
-                                                                a savoir</span>
-                                                            <div class="col-12" id="preview_bon_a_savoir">
-                                                                <p><span>>&nbsp;</span><span class="acf-bon_a_savoir"
-                                                                        id="bon_a_savoir"></span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row detail__formation__item__left__adresse"
-                                                    id="border_prestation">
-                                                    <div class="col-lg-12 d-flex flex-row">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                                                pedagogiques</span>
-                                                            <div class="col-12" id="preview_prestation">
-                                                                <p><span>>&nbsp;</span><span class="acf-prestation"
-                                                                        id="prestation"></span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 detail__formation__item__right" id="border_reference">
-                                                <div class="row detail__formation__item__main__head align-items-center">
-                                                    <div class="detail__prix__head">
-                                                        <div class="detail__prix__text">
-                                                            <p class="pt-2"><b>INTRA</b></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="detail__prix__main__presentiel pt-3">
-                                                        <div>
-                                                            <p class="text-uppercase text-center" id="preview_modalite">
-                                                                <span class="acf-modalite" id="modalite2"></span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="col-lg-5 detail__prix__main__ref pt-2">
-                                                        <div>
-                                                            <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-7 detail__prix__main__ref2 pt-2">
-                                                        <div id="preview_reference">
-                                                            <p class="acf-reference text-center" id="reference"></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr">
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="col-lg-5 detail__prix__main__dure">
-                                                        <div>
-                                                            <p><i
-                                                                    class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-7 detail__prix__main__dure2">
-                                                        <div>
-                                                            <p class="text-center">
-                                                                <span id="preview_jour"><span class="acf-jour"
-                                                                        id="jour2"></span>j</span>
-                                                                <span id="preview_heur">/<span class="acf-heur"
-                                                                        id="heure2"></span>h</span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr">
-                                                <div class="row detail__formation__item__rmain">
-                                                    <div class="col-lg-5 detail__prix__main__prix">
-                                                        <div>
-                                                            <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-7 detail__prix__main__prix2">
-                                                        <div>
-                                                            <p id="preview_prix" class="text-center"><span
-                                                                    class="acf-prix" id="prix"></span>&nbsp;{{$devise->devise}}&nbsp;HT
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn_next " id="fermer" data-bs-dismiss="modal">
-                                        Fermer </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
         <div class="filtrer mt-3">
