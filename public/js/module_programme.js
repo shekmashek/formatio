@@ -1,4 +1,3 @@
-var CSRF_TOKEN = $('meta[name="csrf-token"]').attr("content");
 $(document).ready(function() {
   $("#reference_search").autocomplete({
     source: function(request, response) {
@@ -29,8 +28,26 @@ $(document).ready(function() {
   });
 });
 
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-center",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
 $(".suppression").on("click", function(e) {
-  let id = e.target.id;
+  let id = $(e.target).closest('.suppression').attr("id");
   $.ajax({
     type: "GET",
     url: "/suppression_cours",
@@ -40,7 +57,10 @@ $(".suppression").on("click", function(e) {
     success: function(response) {
       if (response.success) {
         $("#cours" + id).remove();
-        windows.location.reload();
+        // Display a success toast, with a title
+        toastr.success('Une cours à été supprimer 💪');
+
+        // window.location.reload();
       } else {
         alert("Error");
       }
@@ -50,8 +70,9 @@ $(".suppression").on("click", function(e) {
     },
   });
 });
+
 $(".suppression_programme").on("click", function(e) {
-  let id = e.target.id;
+  let id = $(e.target).closest('.suppression_programme').attr("id");
   $.ajax({
     type: "GET",
     url: "/suppression_programme",
@@ -61,6 +82,8 @@ $(".suppression_programme").on("click", function(e) {
     success: function(response) {
       if (response.success) {
         $("#programme" + id).remove();
+        toastr.success('Un programme à été supprimer 💪');
+
       } else {
         alert("Error");
       }
@@ -71,50 +94,26 @@ $(".suppression_programme").on("click", function(e) {
   });
 });
 
-// $(".modifier").on("click", function(e) {
-//     let id = e.target.id;
-//     $.ajax({
-//         method: "GET",
-//         url: "{{route('editer_programme')}}",
-//         data: {
-//             Id: id,
-//         },
-//         dataType: "html",
-//         success: function(response) {
-//             let progData = JSON.parse(response);
-//             for (let $i = 0; $i < progData.length; $i++) {
-//                 $(".titre_" + $i).val(progData[$i].titre);
-
-//                 for (let $j = 0; $j < progData.length; $j++) {
-//                     $(".cours_" + $j).val(progData[$j].titre_cours);
-//                 }
-//             }
-//         },
-//         error: function(error) {
-//             console.log(error);
-//         },
-//     });
-// });
-
-$(".suppression_competence").on('click', function(e) {
+$(".suppression_competence").on("click", function(e) {
+  // let id = $(e.target).closest('.suppression_programme').attr("id");
   let id = $(this).data("id");
   $.ajax({
-      type: "GET",
-      url: "/suppression_competence",
-      data: {
-          Id: id,
-      },
-      success: function(response) {
-          if (response.success) {
-          $("#competence_" + id).remove();
-          $(".suppre_" + id).remove();
-          } else {
-          alert("Error");
-          }
-      },
-      error: function(error) {
-          console.log(error);
-      },
+    type: "GET",
+    url: "/suppression_competence",
+    data: {
+      Id: id,
+    },
+    success: function(response) {
+      if (response.success) {
+        $("#competence_" + id).remove();
+        $(".suppre_" + id).remove();
+      } else {
+        alert("Error");
+      }
+    },
+    error: function(error) {
+      console.log(error);
+    },
   });
 });
 
@@ -144,7 +143,12 @@ $(".domaine").on("mouseover", function(e) {
         var url_formation = '{{ route("select_par_formation", ":id") }}';
         url_formation = url_formation.replace(":id", formations[i].id);
         html += '<dl class="sous-formation-items" data-role="two-menu">';
-        html += '<dt><a href="' + url_formation +'">' + formations[i].nom_formation + "</a></dt>";
+        html +=
+          '<dt><a href="' +
+          url_formation +
+          '">' +
+          formations[i].nom_formation +
+          "</a></dt>";
         html += '<dd class="d-flex flex-column">';
         for (let j = 0; j < modules.length; j++) {
           if (formations[i].id == modules[j].formation_id) {
@@ -184,7 +188,7 @@ $(document).on("click", "#add_Cours1", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="remove_Cours" class="bx bx-x mt-3 " style="font-si2e: 14px; color: ; position:relative; left: 1remred" role="button" title="ajouter un nouveau cours">';
+    '<i id="remove_Cours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -205,7 +209,7 @@ $(document).on("click", "#add_Cours", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -220,7 +224,7 @@ $(document).on("click", "#add_Cours3", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -235,7 +239,7 @@ $(document).on("click", "#add_Cours4", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -250,7 +254,7 @@ $(document).on("click", "#add_Cours5", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -265,7 +269,7 @@ $(document).on("click", "#add_Cours6", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -280,7 +284,7 @@ $(document).on("click", "#add_Cours7", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -295,7 +299,7 @@ $(document).on("click", "#add_Cours8", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -310,7 +314,7 @@ $(document).on("click", "#add_Cours9", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -325,7 +329,7 @@ $(document).on("click", "#add_Cours10", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -340,7 +344,7 @@ $(document).on("click", "#add_Cours11", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -355,7 +359,7 @@ $(document).on("click", "#add_Cours12", function() {
   html +=
     '<input type="text" class="form-control" name="cours[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-siz2: 14px; color: r; position:relative; left: 1remed" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -370,7 +374,7 @@ $(document).on("click", "#addCours0", function() {
   html +=
     '<input type="text" class="form-control" name="cours_0[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -385,7 +389,7 @@ $(document).on("click", "#addCours1", function() {
   html +=
     '<input type="text" class="form-control" name="cours_1[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -400,7 +404,7 @@ $(document).on("click", "#addCours2", function() {
   html +=
     '<input type="text" class="form-control" name="cours_2[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -415,7 +419,7 @@ $(document).on("click", "#addCours3", function() {
   html +=
     '<input type="text" class="form-control" name="cours_3[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -430,7 +434,7 @@ $(document).on("click", "#addCours4", function() {
   html +=
     '<input type="text" class="form-control" name="cours_4[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -445,7 +449,7 @@ $(document).on("click", "#addCours5", function() {
   html +=
     '<input type="text" class="form-control" name="cours_5[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -460,7 +464,7 @@ $(document).on("click", "#addCours6", function() {
   html +=
     '<input type="text" class="form-control" name="cours_6[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -475,7 +479,7 @@ $(document).on("click", "#addCours7", function() {
   html +=
     '<input type="text" class="form-control" name="cours_7[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -490,7 +494,7 @@ $(document).on("click", "#addCours8", function() {
   html +=
     '<input type="text" class="form-control" name="cours_8[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -505,7 +509,7 @@ $(document).on("click", "#addCours9", function() {
   html +=
     '<input type="text" class="form-control" name="cours_9[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size:24px; color: red; position:relative; left: 1rem" role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -520,7 +524,7 @@ $(document).on("click", "#addCours10", function() {
   html +=
     '<input type="text" class="form-control" name="cours_10[]" placeholder="Points en cours">';
   html +=
-    '<i id="removeCours" class="bx bx-x mt-3 " style="font-size: 24px; color: red"; position:relative; left: 1rem role="button" title="ajouter un nouveau cours">';
+    '<i id="removeCours" class="bx bx-trash bx_supprimer ms-1 mt-1" style="font-size: 24px; color: red"; position:relative; left: 1rem role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
 
@@ -540,11 +544,11 @@ $(document).on("click", "#addProg", function() {
   html +=
     '<div class="row detail__formation__item__left__accordion mb-3" id="heading1">';
 
-  html += '<span role="button" class="accordion accordion_prog active">';
+  html += '<span role="button" class="accordion accordion_prog active d-flex flex-row justify-content-around">';
   html +=
     '<input type="text" class="form-control" name="titre_prog[]" placeholder="Titre de section">';
   html +=
-    '<i id="removeProg" class="bx bx-x pt-3 plus_prog" style="font-size: 24px; color: red; position: relative; right: .5rem" role="button" title="ajouter un nouveau programme">';
+    '<i id="removeProg" class="bx bx-trash bx_supprimer mt-2 mb-2" role="button" title="ajouter un nouveau programme">';
   html += "</i>";
   html += "</span>";
   html += '<div class="panel">';
@@ -558,7 +562,7 @@ $(document).on("click", "#addProg", function() {
   html +=
     '<i id="addCours' +
     j +
-    '" class="bx bx-plus-medical mt-3 ms-2 icon_creer" style="font-size: 24px; position: relative; left: .5rem " role="button" title="ajouter un nouveau cours">';
+    '" class="bx bx-plus-medical bx_ajouter mt-2 ms-1" role="button" title="ajouter un nouveau cours">';
   html += "</i>";
   html += "</span>";
   html += '<span id="newCours' + j + '">';
@@ -623,7 +627,7 @@ function toggleItem() {
 
 function Cours() {
   var html = "";
-  html += '<div class="d-flex mt-3" id="row_new">';
+  html += '<div class="d-flex mt-3" id="row_newCours">';
   html += '<div class="col-11">';
   html += '<div class="form-group">';
   html += '<div class="form-row">';
@@ -638,8 +642,8 @@ function Cours() {
   html += '<div class="col-1">';
   html += '<div class="mt-2">';
   html += '<div class="form-row">';
-  html += '<span id="removeRow" class="effacer_cours" role="button">';
-  html += '<i class="bx bx-x">';
+  html += '<span id="removeRow1" role="button">';
+  html += '<i class="bx bx-trash bx_supprimer ms-1 mt-1">';
   html += "</i>";
   html += "</span>";
   html += "</div>";
@@ -647,53 +651,58 @@ function Cours() {
   html += "</div>";
   html += "</div>";
 
-  $(".newRow").append(html);
+  $(".newRowCours").append(html);
 }
 
 function competence() {
-  var html = '';
-  html += '<div class="d-flex mt-2" id="row_new">';
-  html +=     '<div class="col-7">';
-  html +=         '<div class="form-group">';
-  html +=             '<div class="form-row">';
-  html +=                 '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>';
-  html +=                 '<label for="titre_competence" class="form-control-placeholder">Compétences';
-  html +=                 '</label>';
-  html +=             '</div>';
-  html +=         '</div>';
-  html +=     '</div>';
+  var html = "";
+  html += '<div class="d-flex mt-2" id="row_newComp">';
+  html += '<div class="col-7">';
+  html += '<div class="form-group">';
+  html += '<div class="form-row">';
+  html +=
+    '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>';
+  html +=
+    '<label for="titre_competence" class="form-control-placeholder">Compétences';
+  html += "</label>";
+  html += "</div>";
+  html += "</div>";
+  html += "</div>";
 
-  html +=     '<div class="col-4">';
-  html +=         '<div class="form-group ms-1">';
-  html +=             '<div class="form-row">';
-  html +=                 '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
-  html +=                 '<label for="objectif" class="form-control-placeholder">Notes';
-  html +=                 '</label>';
-  html +=             '</div>';
-  html +=         '</div>';
-  html +=     '</div>';
+  html += '<div class="col-4">';
+  html += '<div class="form-group ms-1">';
+  html += '<div class="form-row">';
+  html +=
+    '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
+  html += '<label for="objectif" class="form-control-placeholder">Notes';
+  html += "</label>";
+  html += "</div>";
+  html += "</div>";
+  html += "</div>";
 
-  html +=     '<div class="col-1">';
-  html +=         '<div class="mt-2">';
-  html +=                '<span id="removeRow" class="effacer_cours" role="button">';
-  html +=                     '<i class="bx bx-x">';
-  html +=                     '</i>';
-  html +=                 '</span>';
-  html +=         '</div>';
-  html +=     '</div>';
-  html += '</div>';
+  html += '<div class="col-1">';
+  html += '<div class="mt-2">';
+  html += '<span id="removeRow" role="button">';
+  html += '<i class="bx bx-trash bx_supprimer ms-1 mt-1">';
+  html += "</i>";
+  html += "</span>";
+  html += "</div>";
+  html += "</div>";
+  html += "</div>";
 
-  $('.newRow').append(html);
+  $(".newRowComp").append(html);
 }
 
-// remove row
-$(document).on('click', '#removeRow', function() {
-  $(this).closest('#row_new').remove();
+// remove row cours
+$(document).on("click", "#removeRow1", function() {
+  $(this)
+    .closest("#row_newCours")
+    .remove();
 });
 
-// remove row
+// remove row competence
 $(document).on("click", "#removeRow", function() {
   $(this)
-    .closest("#row_new")
+    .closest("#row_newComp")
     .remove();
 });

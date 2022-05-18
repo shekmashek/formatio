@@ -3,7 +3,7 @@
     <h3 class="text_header m-0 mt-1">Modification programme</h3>
 @endsection
 @section('content')
-<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modif_programme.css')}}">
 <div class="row navigation_detail">
@@ -12,13 +12,12 @@
             <ul class="d-flex flex-row">
                 <li class="me-5"><a href="#objectif">objectif</a></li>
                 <li class="me-5"><a href="#pour_qui">pour qui ?</a></li>
-                <li class="me-5"><a href="#programme">programme</a></li>
             </ul>
         </div>
         <div>
             <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
             href="{{route('liste_module')}}">
-            <span class="btn_enregistrer text-center">Précedent</span>
+            <span class="btn_enregistrer text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
         </a>
         </div>
     </div>
@@ -88,7 +87,8 @@
                 <h3 class="pb-3">Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
-                        <p>@php echo html_entity_decode($res->objectif) @endphp</p>
+                        {{-- <p>@php echo html_entity_decode($res->objectif) @endphp</p> --}}
+                        <p id="content_objectif">{{$res->objectif}}</p>
                     </div>
                 </div>
 
@@ -98,9 +98,10 @@
                 <div class="row detail__formation__item__left__adresse">
                     <div class="col-lg-5 d-flex flex-row">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3></span>
+                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bx-edit bx_modifier' title="modifier public cible"></i></span></h3></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->cible) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->cible) @endphp</p> --}}
+                                <p id="content_cible">{{$res->cible}}</p>
                             </div>
                         </div>
                     </div>
@@ -108,9 +109,10 @@
                     <div class="col-lg-5">
                         <div class="row d-flex flex-row w-100">
                             <span class="adresse__text"><i
-                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bx-edit bx_modifier' title="modifier préréquis"></i></span></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->prerequis) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->prerequis) @endphp</p> --}}
+                                <p id="content_prerequis">{{$res->prerequis}}</p>
                             </div>
                         </div>
                     </div>
@@ -121,9 +123,11 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
-                                necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                                necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bx-edit bx_modifier' title="modifier équipement necessaire"></i></span></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p> --}}
+                                <p id="content_equipement">{{$res->materiel_necessaire}}</p>
+
                             </div>
                         </div>
                     </div>
@@ -132,9 +136,10 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
-                                a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                                a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bx-edit bx_modifier' title="modifier bon à savoir"></i></span></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p> --}}
+                                <p id="content_bon_a_savoir">{{$res->bon_a_savoir}}</p>
                             </div>
                         </div>
                     </div>
@@ -146,9 +151,10 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bx-edit bx_modifier' title="modifier prestation pédagogique"></i></span></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->prestation) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->prestation) @endphp</p> --}}
+                                <p id="content_prestation">{{$res->prestation}}</p>
                             </div>
                         </div>
                     </div>
@@ -167,16 +173,16 @@
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Nom module</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <input type="text" class="form-control module module input" name="nom_module" required value="{{$res->nom_module}}" placeholder="Nom module" >
                                             <label for="nom_module" class="form-control-placeholder">Nom module</label>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -193,16 +199,16 @@
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Déscription module</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <input type="text" class="form-control module module input" name="description" required value="{{$res->description}}" placeholder="Déscription module" >
                                             <label for="description" class="form-control-placeholder">Déscription</label>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -219,7 +225,6 @@
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Détail module</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
@@ -276,9 +281,9 @@
                                             <input type="text" class="form-control module module input" name="prix_groupe" required value="{{$res->prix_groupe}}" onfocus="(this.type='number')" placeholder="Prix en groupe module" >
                                             <label for="prix_groupe" class="form-control-placeholder">Prix groupe en {{$devise->devise}}</label>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -291,19 +296,22 @@
                     <div class="modal" id="objectif_module" aria-labelledby="objectif_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_objectif',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_objectif',$res->module_id)}}" method="POST" id="form_objectif">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Objectif de la formation</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="objectif_text" name="objectif" placeholder="Ajouter des textes">{{$res->objectif}}</textarea>
+                                            <textarea id="objectif_textarea" name="objectif" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="objectif_id">
+                                                <p>@php echo html_entity_decode($res->objectif) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -316,19 +324,22 @@
                     <div class="modal" id="cible" aria-labelledby="cible" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_pour_qui',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_pour_qui',$res->module_id)}}" method="POST" id="form_public">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Public cible</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="public_cible" name="public_cible" placeholder="Ajouter des textes">{{$res->cible}}</textarea>
+                                            <textarea id="public_textarea" name="public_cible" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="public_id">
+                                                <p>@php echo html_entity_decode($res->cible) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -341,19 +352,22 @@
                     <div class="modal" id="prerequis_module" aria-labelledby="prerequis_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_prerequis',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_prerequis',$res->module_id)}}" method="POST" id="form_prerequis">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Prérequis</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="prerequis" name="prerequis" placeholder="Ajouter des textes">{{$res->prerequis}}</textarea>
+                                            <textarea id="prerequis_textarea" name="prerequis" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="prerequis_id">
+                                                <p>@php echo html_entity_decode($res->prerequis) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -366,19 +380,22 @@
                     <div class="modal" id="equipement_module" aria-labelledby="equipement_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_equipement',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_equipement',$res->module_id)}}" method="POST" id="form_equipement">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Equipement necessaire</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="equipement" name="equipement" placeholder="Ajouter des textes">{{$res->materiel_necessaire}}</textarea>
+                                            <textarea id="equipement_textarea" name="equipement" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="equipement_id">
+                                                <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -391,19 +408,22 @@
                     <div class="modal" id="bon_a_savoir_module" aria-labelledby="bon_a_savoir_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_bon_a_savoir',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_bon_a_savoir',$res->module_id)}}" method="POST" id="form_bon_a_savoir">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Bon à savoir</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="bon_a_savoir" name="bon_a_savoir" placeholder="Ajouter des textes">{{$res->bon_a_savoir}}</textarea>
+                                            <textarea id="bon_a_savoir_textarea" name="bon_a_savoir" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="bon_a_savoir_id">
+                                                <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -416,19 +436,22 @@
                     <div class="modal" id="prestation_module" aria-labelledby="prestation_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_prestation',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_prestation',$res->module_id)}}" method="POST" id="form_prestation">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Préstation pédagogique</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="prestation" name="prestation" placeholder="Ajouter des textes">{{$res->prestation}}</textarea>
+                                            <textarea id="prestation_textarea" name="prestation" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="prestation_id">
+                                                <p>@php echo html_entity_decode($res->prestation) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -441,15 +464,97 @@
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
-    let editor = new FroalaEditor('#objectif_text');
-    let editor2 = new FroalaEditor('#public_cible');
-    let editor3 = new FroalaEditor('#prerequis');
-    let editor4 = new FroalaEditor('#equipement');
-    let editor5 = new FroalaEditor('#bon_a_savoir');
-    let editor6 = new FroalaEditor('#prestation');
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['code-block'],
+
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }]
+    ];
+
+    let objectif_editor = new Quill('#objectif_id', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow',
+    });
+
+    let public_editor = new Quill('#public_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let prerequis_editor = new Quill('#prerequis_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let equipement_editor = new Quill('#equipement_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let bon_a_savoir_editor = new Quill('#bon_a_savoir_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let prestation_editor = new Quill('#prestation_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let objectif = objectif_editor.root.innerHTML;
+    $('#content_objectif').html(objectif);
+    $("#form_objectif").on("submit",function() {
+        $("#objectif_textarea").val($("#objectif_id").html());
+    });
+
+
+    let cible = public_editor.root.innerHTML;
+    $('#content_cible').html(cible);
+    $("#form_public").on("submit",function() {
+        $("#public_textarea").val($("#public_id").html());
+    });
+
+    let prerequis = prerequis_editor.root.innerHTML;
+    $('#content_prerequis').html(prerequis);
+    $("#form_prerequis").on("submit",function() {
+        $("#prerequis_textarea").val($("#prerequis_id").html());
+    });
+
+    let equipement = equipement_editor.root.innerHTML;
+    $('#content_equipement').html(equipement);
+    $("#form_equipement").on("submit",function() {
+        $("#equipement_textarea").val($("#equipement_id").html());
+    });
+
+    let bon_a_savoir = bon_a_savoir_editor.root.innerHTML;
+    $('#content_bon_a_savoir').html(bon_a_savoir);
+    $("#form_bon_a_savoir").on("submit",function() {
+        $("#bon_a_savoir_textarea").val($("#bon_a_savoir_id").html());
+    });
+
+    let prestation = prestation_editor.root.innerHTML;
+    $('#content_prestation').html(prestation);
+    $("#form_prestation").on("submit",function() {
+        $("#prestation_textarea").val($("#prestation_id").html());
+    });
 </script>
 @endsection

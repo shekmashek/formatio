@@ -2,7 +2,7 @@
 
 :root {
     --padding_icon: 5px;
-    --padding_button: 6px 5px 5px 3px;
+    --padding_button: 6px 5px 5px 5px !important;
     --font_size: 1.3rem;
     --bgd_all: rgba(197, 197, 197, 0.232);
     --bgd_modifier_hover: #4A00E727;
@@ -16,6 +16,10 @@
     --bg_color_supprimer: #ee0707;
     --bg_color_annuler: #ee0707;
     --bg_annuler_bx: #b31217;
+    --bg_color_fermer: #1488CC;
+    --bg_fermer_bx: #26a0da;
+    --bg_color_enregistrer: #9733EE;
+    --bg_enregistrer_bx: #DA22FF;
     --bg_color_ajouter: #07cd19;
     --bg_color_nouveau: #3CA55C;
     --txt_color:#ffffff;
@@ -23,7 +27,7 @@
 
 /* components */
 /* icon */
-/* icon à utiliser pour modifier <i class='bx bx-edit'></i> */
+/* icon à utiliser pour modifier <i class='bx bx-edit me-1'></i> */
 .bx_modifier{
     padding: var(--padding_icon);
     background-color: var(--bgd_all);
@@ -41,7 +45,7 @@
 }
 
 
-/* icon à utiliser pour supprimer <i class='bx bx-trash'></i> */
+/* icon à utiliser pour supprimer <i class='bx bx-trash me-1'></i> */
 .bx_supprimer{
     padding: var(--padding_icon);
     background-color: var(--bgd_all);
@@ -58,7 +62,7 @@
     transform: var(--transform);
 }
 
-/* icon à utiliser pour ajouter <i class='bx bx-plus-medical'></i> */
+/* icon à utiliser pour ajouter <i class='bx bx-plus-medical me-1'></i> */
 .bx_ajouter{
     padding: var(--padding_icon);
     background-color: var(--bgd_all);
@@ -76,7 +80,7 @@
 }
 
 /* button nouveau */
-/* icon à utiliser pour nouveau <i class='bx bx-plus-medical'></i> */
+/* icon à utiliser pour nouveau <i class='bx bx-plus-medical me-1'></i> */
 
 .btn_nouveau{
     padding: var(--padding_button);
@@ -86,6 +90,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .btn_nouveau:hover{
@@ -108,9 +113,9 @@
 }
 
 /* button annuler */
-/* icon à utiliser pour annuler <i class='bx bx-x'></i> */
+/* icon à utiliser pour annuler <i class='bx bx-x me-1'></i> */
 
-.btn_new_annuler{
+.btn_annuler{
     padding: var(--padding_button);
     color: var(--txt_color);
     background: var(--bg_color_annuler);
@@ -118,31 +123,101 @@
     top: 5px;
     border-radius: var(--brd_radius);
     text-transform: uppercase;
+    cursor: pointer;
 }
 
-.btn_new_annuler:hover{
+.btn_annuler:hover{
     text-decoration: none;
     color: var(--bg_color_annuler);
     border: 1px solid var(--bg_color_annuler);
     background-color: var(--txt_color);
 }
 
-.btn_new_annuler .bx{
+.btn_annuler .bx{
     position: relative;
     top: 1px;
     padding: var(--padding_icon);
     background-color: var(--bg_annuler_bx);
     border-radius: var(--brd_radius);
     color: var(--txt_color);
-    /* font-weight: 900; */
+    font-weight: 900;
 }
 
-.btn_new_annuler:hover .bx{
+.btn_annuler:hover .bx{
     color: var(--txt_color);
     background-color: var(--bg_color_annuler);
 }
 
+/* button fermer */
+/* icon à utiliser pour fermer <i class='bx bx-block me-1'></i> */
 
-/* button annuler */
+.btn_fermer{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_fermer);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_fermer:hover{
+    text-decoration: none;
+    color: var(--bg_color_fermer);
+    border: 1px solid var(--bg_color_fermer);
+    background-color: var(--txt_color);
+}
+
+.btn_fermer .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_fermer_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    font-weight: 900;
+}
+
+.btn_fermer:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_fermer);
+}
+
+/* button enregistrer */
+/* icon à utiliser pour enregistrer <i class='bx bx-check me-1'></i> */
+
+.btn_enregistrer{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_enregistrer);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_enregistrer:hover{
+    text-decoration: none;
+    color: var(--bg_color_enregistrer);
+    border: 1px solid var(--bg_color_enregistrer);
+    background-color: var(--txt_color);
+}
+
+.btn_enregistrer .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_enregistrer_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    font-weight: 900;
+}
+
+.btn_enregistrer:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_enregistrer);
+}
 
 /* utilities */

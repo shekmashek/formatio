@@ -37,8 +37,7 @@
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
                         <div class="col-12">
-                            <p class="mb-0 ">L'onglet programme à completer regroupe tous les modules qui ne sont pas
-                                encore términés. <br>
+                            <p class="mb-0 ">La configuration de programme regroupe tous les modules qui viennent d'être crées.<br>
                                 La première étape pour pouvoir publier votre module consiste à compléter votre programme
                                 de formation et vos cours.</p>
                         </div>
@@ -130,53 +129,53 @@
                                             </div>
 
                                         </div>
-                                        <div class="d-flex flex-row">
+                                        <div class="d-flex flex-row justify-content-center">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="" id="preview_niveau">
                                                 <button class="btn modifier pt-0"><a
                                                         href="{{route('modifier_module',$mod->module_id)}}"><i
-                                                            class='bx bx-edit background_grey'
-                                                            style="color: #0052D4 !important;font-size: 15px"
+                                                            class='bx bx-edit bx_modifier'
                                                             title="modifier les informations"></i></a></button>
                                             </div>
                                             <div class="" id="preview_niveau">
                                                 <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash background_grey2"
-                                                        style="color: #ff0000 !important;font-size: 15px"
+                                                        class="bx bx-trash bx_supprimer"
                                                         title="supprimer le module"></i></button>
                                             </div>
-                                            <div class=" new_btn_programme text-center">
+                                            <div class="mt-1">
                                                 <a href="{{route('ajout_programme',$mod->module_id)}}"
                                                     class="btn_completer"
                                                     role="button">Completer&nbsp;votre&nbsp;programme</a>
                                             </div>
                                         </div>
 
-
-                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
-                                                        <h6 class="modal-title">Avertissement !</h6>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <small>Vous êtes sur le point d'effacer une donnée, cette
-                                                            action
-                                                            est irréversible. Continuer ?</small>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary suppression"
-                                                            id="{{$mod->module_id}}"> Oui</button>
+                                        <div>
+                                            <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
+                                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header  d-flex justify-content-center"
+                                                            style="background-color:#ee0707; color: white">
+                                                            <h6 class="modal-title">Avertissement !</h6>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="text-center my-2">
+                                                                <i class="fa-solid fa-circle-exclamation warning"></i>
+                                                            </div>
+                                                            <small>Vous êtes sur le point d'effacer une donnée, cette
+                                                                action
+                                                                est irréversible. Continuer ?</small>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-center">
+                                                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                                                            <button type="button" class="btn btn_enregistrer suppression_module" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                         @endcanany
                                     </div>
                                 </div>
@@ -193,7 +192,7 @@
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
                         <div class="col-12">
-                            <p class="mb-0 ">L'onglet Non Publiés regroupe tous les modules qui doivent êtres activés.
+                            <p class="mb-0 ">Le configuration de competence regroupe tous les modules qui doivent êtres activés.
                                 <br>
                                 La deuxième étape consiste à ajouter les compétences ou les cours qui seront évalués par
                                 le formateur, afin d'établir les évaluations des participants.</p>
@@ -261,14 +260,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class=" text-end">
-                                            <div>
-                                                @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                <span
-                                                    class="">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                @endif
-                                            </div>
-                                        </div> --}}
                                         <div
                                             class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
                                             <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
@@ -293,54 +284,55 @@
                                             </div>
 
                                         </div>
-                                        <div class="row row-cols-auto liste__formation__result__item3 justify-content-center text-center py-1">
+                                        <div class="d-flex flex-row justify-content-center">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="col-3" id="preview_niveau">
+                                            <div class="" id="preview_niveau">
                                                 <button class="btn modifier pt-0"><a
                                                         href="{{route('modif_programmes',$mod->module_id)}}"><i
-                                                            class='bx bx-edit background_grey'
-                                                            style="color: #0052D4 !important;font-size: 15px"
+                                                            class='bx bx-edit bx_modifier'
                                                             title="modifier les informations"></i></a></button>
                                             </div>
                                             <div class="" id="preview_niveau">
                                                 <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash background_grey2"
-                                                        style="color: #ff0000 !important;font-size: 15px"
+                                                        class="bx bx-trash bx_supprimer"
                                                         title="supprimer le module"></i></button>
                                             </div>
-                                            <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header  d-flex justify-content-center"
-                                                            style="background-color:rgb(224,182,187);">
-                                                            <h6 class="modal-title">Avertissement !</h6>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <small>Vous êtes sur le point d'effacer une donnée,
-                                                                cette
-                                                                action
-                                                                est irréversible. Continuer ?</small>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal"> Non
-                                                            </button>
-                                                            <button type="button" class="btn btn-secondary suppression"
-                                                                id="{{$mod->module_id}}"> Oui</button>
+                                            <div class="mt-2">
+                                                <button type="button" class="btn btn_competence mt-1"
+                                                    data-id="{{$mod->module_id}}" data-bs-toggle="modal"
+                                                    data-bs-target="#ModalCompetence"
+                                                    id="{{$mod->module_id}}">Compétences&nbsp;professionnelles</button>
+                                            </div>
+                                            <div>
+                                                <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header  d-flex justify-content-center"
+                                                                style="background-color:#ee0707; color: white">
+                                                                <h6 class="modal-title">Avertissement !</h6>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="text-center my-2">
+                                                                    <i class="fa-solid fa-circle-exclamation warning"></i>
+                                                                </div>
+                                                                <small>Vous êtes sur le point d'effacer une donnée,
+                                                                    cette
+                                                                    action
+                                                                    est irréversible. Continuer ?</small>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-center">
+                                                                <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                                                                <button type="button" class="btn btn_enregistrer suppression_module" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             @endcanany
                                         </div>
-                                        <div class="new_btn_programme text-center">
-                                            <button type="button" class="btn btn_competence non_pub"
-                                                data-id="{{$mod->module_id}}" data-bs-toggle="modal"
-                                                data-bs-target="#ModalCompetence"
-                                                id="{{$mod->module_id}}">Compétences&nbsp;professionnelles</button>
-                                        </div>
+
                                     </div>
                                 </div>
 
@@ -396,11 +388,9 @@
                                                         <div class="newRow"></div>
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer d-flex flex-row">
-                                                    <button type="button" class="btn btn_annuler " id="fermer"
-                                                        data-bs-dismiss="modal">Annuler</button>
-                                                    <button type="submit"
-                                                        class="btn btn_enregistrer non_pub">Enregistrer</button>
+                                                <div class="modal-footer justify-content-center">
+                                                    <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
+                                                    <button type="submit" class="btn btn_enregistrer" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Enregistrer</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -418,10 +408,10 @@
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
                         <div class="col-12">
-                            <p class="mb-0 ">L'onglet Publiés regroupe tous les modules qui sont déjá mises en ligne.
+                            <p class="mb-0 ">Le catalogue hors ligne regroupe tous les modules qui sont déjá términer et attendent d'être mises en ligne.
                                 <br>
                                 Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
-                                visibles publiquement.</p>
+                                visibles publiquement s'ils sont mises en lignes.</p>
                         </div>
                     </div>
                     <div class="d-flex">
@@ -515,15 +505,13 @@
                                                 <div class="col" id="preview_niveau">
                                                     <button class="btn modifier pt-0"><a
                                                             href="{{route('modif_programmes',$mod->module_id)}}"><i
-                                                                class='bx bx-edit background_grey'
-                                                                style="color: #0052D4 !important;font-size: 15px"
+                                                                class='bx bx-edit bx_modifier'
                                                                 title="modifier les informations"></i></a></button>
                                                 </div>
                                                 <div class="col" id="preview_niveau">
                                                     <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                            class="bx bx-trash background_grey2"
-                                                            style="color: #ff0000 !important;font-size: 15px"
+                                                            class="bx bx-trash bx_supprimer"
                                                             title="supprimer le module"></i></button>
                                                 </div>
                                             </div>
@@ -533,11 +521,9 @@
                                                         @if ($mod->etat_id == 2)
                                                         <div class="form-check form-switch d-flex flex-row">
                                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix_hors_ligne">Hors&nbsp;Ligne</span></label>
-                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" data-bs-target="#en_ligne_{{$mod->module_id}}" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne">
+                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch_{{$mod->module_id}}" data-bs-target="#en_ligne_{{$mod->module_id}}" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne">
                                                         </div>
                                                         @endif
-                                                        {{-- <a href="{{route('mettre_')}}" role="button"><span class="btn py-1 button_choix active_mod">Hors Ligne</span></a>
-                                                        <a href="" role="button"><span class="btn py-1 button_choix">En ligne</span></a> --}}
                                                     </div>
 
                                                 </div>
@@ -548,21 +534,21 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
+                                                        style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
                                                     <div class="modal-body">
+                                                        <div class="text-center my-2">
+                                                            <i class="fa-solid fa-circle-exclamation warning"></i>
+                                                        </div>
                                                         <small>Vous êtes sur le point d'effacer une donnée,
                                                             cette
                                                             action
                                                             est irréversible. Continuer ?</small>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary suppression"
-                                                            id="{{$mod->module_id}}"> Oui</button>
+                                                    <div class="modal-footer justify-content-center">
+                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
+                                                        <button type="button" class="btn btn_enregistrer suppression_module" ><i class='bx bx-check me-1'></i>Oui</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -572,7 +558,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
+                                                        style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
                                                     <div class="modal-body">
@@ -581,12 +567,9 @@
                                                         </div>
                                                         <p class="text-center">Vous allez mettre en ligne cette module. Êtes-vous sur?</p>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary non_en_ligne"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary mettre_en_ligne"
-                                                            id="{{$mod->module_id}}"> Oui</button>
+                                                    <div class="modal-footer justify-content-center">
+                                                        <button type="button" class="btn btn_annuler non_en_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
+                                                        <button type="submit" class="btn btn_enregistrer mettre_en_ligne" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -606,7 +589,7 @@
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
                         <div class="col-12">
-                            <p class="mb-0 ">L'onglet Publiés regroupe tous les modules qui sont déjá mises en ligne.
+                            <p class="mb-0 ">Le catalogue en ligne regroupe tous les modules qui sont déjá mises en ligne.
                                 <br>
                                 Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
                                 visibles publiquement.</p>
@@ -704,22 +687,13 @@
                                                 <div class="col" id="preview_niveau">
                                                     <button class="btn modifier pt-0"><a
                                                             href="{{route('modif_programmes',$mod->module_id)}}"><i
-                                                                class='bx bx-edit background_grey'
-                                                                style="color: #0052D4 !important;font-size: 15px"
+                                                                class='bx bx-edit bx_modifier'
                                                                 title="modifier les informations"></i></a></button>
                                                 </div>
-                                                {{-- <div class="col-3" id="preview_niveau">
-                                                    <button class="btn modifier_prog pt-0"><a
-                                                            href="{{route('modifier_module_prog',$mod->module_id)}}"><i
-                                                                class='bx bx-edit-alt background_grey4'
-                                                                style="color: #801d68 !important;font-size: 15px"
-                                                                title="modifier les programmes"></i></a></button>
-                                                </div> --}}
                                                 <div class="col" id="preview_niveau">
                                                     <button class="btn supprimer pt-0" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                            class="bx bx-trash background_grey2"
-                                                            style="color: #ff0000 !important;font-size: 15px"
+                                                            class="bx bx-trash bx_supprimer"
                                                             title="supprimer le module"></i></button>
                                                 </div>
 
@@ -730,7 +704,7 @@
                                                         @if ($mod->etat_id == 1)
                                                         <div class="form-check form-switch d-flex flex-row">
                                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;Ligne</span></label>
-                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" data-bs-target="#hors_ligne_{{$mod->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked>
+                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch2_{{$mod->module_id}}" data-bs-target="#hors_ligne_{{$mod->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked >
                                                         </div>
                                                         @endif
                                                     </div>
@@ -742,21 +716,21 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
+                                                        style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
                                                     <div class="modal-body">
+                                                        <div class="text-center my-2">
+                                                            <i class="fa-solid fa-circle-exclamation warning"></i>
+                                                        </div>
                                                         <small>Vous êtes sur le point d'effacer une donnée,
                                                             cette
                                                             action
                                                             est irréversible. Continuer ?</small>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary suppression"
-                                                            id="{{$mod->module_id}}">Oui</button>
+                                                    <div class="modal-footer justify-content-center">
+                                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                                                        <button type="button" class="btn btn_enregistrer suppression_module" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -766,7 +740,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
+                                                        style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
                                                     <div class="modal-body">
@@ -775,12 +749,9 @@
                                                         </div>
                                                         <p class="text-center">Vous allez mettre hors ligne cette module. Êtes-vous sur?</p>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary non_hors_ligne"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary mettre_hors_ligne"
-                                                            id="{{$mod->module_id}}"> Oui</button>
+                                                    <div class="modal-footer justify-content-center">
+                                                        <button type="button" class="btn btn_annuler non_hors_ligne" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
+                                                        <button type="submit" class="btn btn_enregistrer mettre_hors_ligne" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1198,13 +1169,29 @@
         });
      });
 
-     $(".non_hors_ligne").on('click', function(e) {
-        $(".form-check-input").prop('checked',true);
-     });
+    //  (".non_en_ligne").on('click', function(e) {
+    //     let id = $(e.target).closest('.non_en_ligne').attr("id");
+    //     alert(id);
+    //     // $("#switch_"+id).prop('checked',false);
+    //  });
 
      $(".non_en_ligne").on('click', function(e) {
-        $(".form-check-input").prop('checked',false);
+        let id = $(e.target).closest('.non_en_ligne').attr("id");
+        $("#switch_"+id).prop('checked',false);
      });
+
+     $(".non_hors_ligne").on('click', function(e) {
+        let id = $(e.target).closest('.non_hors_ligne').attr("id");
+        $("#switch2_"+id).prop('checked',true);
+     });
+
+    //  $(".non_hors_ligne").on('click', function(e) {
+    //     $(".form-check-input").prop('checked',true);
+    //  });
+
+    //  $(".non_en_ligne").on('click', function(e) {
+    //     $(".form-check-input").prop('checked',false);
+    //  });
 
      $(".mettre_hors_ligne").on('click', function(e) {
         let id = e.target.id;
