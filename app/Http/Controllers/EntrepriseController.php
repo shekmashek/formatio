@@ -59,8 +59,7 @@ class EntrepriseController extends Controller
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
 
             $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
-            if($cfps->statut_compte_id == 1) $vue = 1;
-            else $vue = 2;
+
 
 
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
@@ -79,7 +78,7 @@ class EntrepriseController extends Controller
             // $entreprises=entreprise::findOrFail($entp);
 
 
-            return view('cfp.profile_entreprise', compact('vue','entreprise', 'refuse_demmande_etp', 'invitation_etp'));
+            return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp'));
         }
         if (Gate::allows('isSuperAdmin')) {
             $entreprise = entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');

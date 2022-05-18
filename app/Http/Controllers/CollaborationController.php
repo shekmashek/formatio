@@ -37,11 +37,7 @@ class CollaborationController extends Controller
     public function create_cfp_etp(Request $req)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
-        $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
-        if($cfp->statut_compte_id == 1){
-            return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
-        }
+        if(Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
         else{
             $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["cfp_id", "user_id"], [$cfp_id, $user_id]);
 
@@ -65,6 +61,8 @@ class CollaborationController extends Controller
                 return back()->with('success', "une invitation a été envoyé sur l'adresse mail en démandant!");
             }
         }
+
+
     }
 
 
