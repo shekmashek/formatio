@@ -1,8 +1,4 @@
-@if($vue == 1)
-    @extends('layouts/admin_non_abonne')
-@else
-    @extends('layouts/admin')
-@endif
+@extends('layouts/admin')
 @section('title')
     <p class="text_header m-0 mt-1">Business intelligent</p>
 @endsection
@@ -31,5 +27,4 @@
         @endif
     @endcan
 </div>
-
 @endsection

@@ -72,6 +72,20 @@
                                     {{-- <a class="nav-link" id="tab_of" data-bs-toggle="tab" href="#of" type="button" role="tab" aria-controls="of" aria-selected="true"> --}}
                                     Organisme de Formation</a>
                     </li>
+                    <li>
+                        @if (isset($pour_list))
+                        @if ($pour_list != "OF" && $pour_list != "ETP")
+                        <a class="nav-link active" id="tab_invite" data-bs-toggle="tab" href="#invite" type="button" role="tab" aria-controls="invite" aria-selected="true">
+                            @else
+                            <a class="nav-link" id="tab_invite" data-bs-toggle="tab" href="#invite" type="button" role="tab" aria-controls="invite" aria-selected="false">
+                                @endif
+                                @else
+                                <a class="nav-link" id="tab_invite" data-bs-toggle="tab" href="#invite" type="button" role="tab" aria-controls="invite" aria-selected="false">
+                                    @endif
+
+                                    {{-- <a class="nav-link" id="tab_of" data-bs-toggle="tab" href="#of" type="button" role="tab" aria-controls="of" aria-selected="true"> --}}
+                                   Inviter</a>
+                    </li>
                 </ul>
                 <div class="tab-content mt-2" id="myTabContent">
                     {{-- entreprises --}}
@@ -259,6 +273,11 @@
                         </div>
                         {{-- organisme de formation --}}
 
+                        {{-- <div class="tab-pane fade" id="of" role="tabpanel" aria-labelledby="invite">
+                            <h1>Inviter</h1>
+                        </div> --}}
+
+
                         @if (isset($pour_list))
                         @if ($pour_list == "OF")
                         <div class="tab-pane fade show active" id="of" role="tabpanel" aria-labelledby="tab_of">
@@ -439,8 +458,110 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
+
+{{-- ---------------------INVITES---------------------}}
+                        @if (isset($pour_list))
+                        @if ($pour_list != "OF" && $pour_list != "ETP")
+                        <div class="tab-pane fade show active" id="invite" role="tabpanel" aria-labelledby="tab_invite">
+                            @else
+                            <div class="tab-pane fade" id="invite" role="tabpanel" aria-labelledby="tab_invite">
+                                @endif
+                                @else
+                                <div class="tab-pane fade" id="invite" role="tabpanel" aria-labelledby="tab_invite">
+                                    @endif
+                                    <h4>Lien pour les invités</h4>
+                                    <div class="table-responsive text-center">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Iframe</th>
+                                                    <th scope="col">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if($lien_invite== null)
+                                                    <td>
+                                                        <form action="enregistrer_iframe_inviter" method="post" class="d-flex flex-row">
+                                                            @csrf
+                                                            <input type="text" name="url_invite" class="form-control "><button class="btn btn_next ms-2" type="submit">Ajouter </button>
+                                                        </form>
+                                                    </td>
+                                                @else
+                                                    @foreach($lien_invite as $invite)
+                                                        <td> {{$invite->iframe}}</td>
+                                                        <td>
+                                                            <div class="dropdown">
+                                                                <div class="btn-group dropstart">
+                                                                    <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <i class="fa fa-ellipsis-v"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modalinviter{{$invite->id}}"> <i class="bx bx-edit"></i> Modifier</button></a>
+                                                                        <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 " data-id="" id="" data-bs-toggle="modal" data-bs-target="#deleteinviter{{$invite->id}}" style="color: red">Supprimer</button></a>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                         {{-- modal modifier  --}}
+                                                         <div class="modal fade" id="modalinviter{{$invite->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header d-flex justify-content-center" style="background-color:aquamarine;">
+                                                                        <h6 class="modal-title text-white">Modification </h6>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form class="btn-submit" action="{{route('modifier_iframe_inviter')}}" method="post" enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            <input id="id_value" name="id_inviter" value="{{$invite->id}}" style='display:none'>
+                                                                            <div class="form-group">
+                                                                                <label for="nom"><small><b>Iframe {{$invite->iframe}}</b></small></label>
+                                                                                <input type="text" class="form-control" id="nomModif" name="n_iframe_invite" placeholder="URL" value="{{$invite->iframe}}">
+                                                                            </div><br>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Non </button>
+                                                                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"> Oui </button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="modal-footer"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                         {{-- modal modifier  --}}
+                                                        {{-- modal supprimer  --}}
+                                                           <div class="modal fade" id="deleteinviter{{$invite->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
+                                                                        <h6 class="modal-title text-white">Avertissement !</h6>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Non </button>
+                                                                        <form action="{{ route('supprimer_iframe_inviter') }}" method="post">
+                                                                            @csrf
+                                                                            {{-- {{ method_field('DELETE') }} --}}
+                                                                            {{-- @method('delete') --}}
+                                                                            <button type="submit" class="btn btn-secondary"> Oui </button>
+                                                                            <input name="id_invite" type="text" value="{{$invite->id}}" hidden>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {{-- modal supprimer  --}}
+                                                    @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+{{-- --------------------- --}}
+
                     </div>
                 </div>
             </div>
