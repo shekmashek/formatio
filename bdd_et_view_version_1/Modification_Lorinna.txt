@@ -2,3 +2,23 @@
 recréer v_demmande_cfp_formateur
 
 creation vu v_projet_formateur
+v_demmande_cfp_etp
+Ajout colonne  v_demmande_cfp_etp
+nom_resp
+prenom_resp
+( r.id AS responsable_id,
+    r.nom_resp AS nom_resp,
+    r.prenom_resp AS prenom_resp
+JOIN responsables r ON
+    r.entreprise_id = r.id)
+
+-----------20Avril
+recréer vu v_demmande_cfp_etp =>bdd_suiviformation_view_5(collaboration)
+recréer vu v_demmande_etp_cfp =>bdd_suiviformation_view_5(collaboration)
+
+---------26 AVRIL
+ajout colone telephone_etp dans  bdd_suiviformation_mise_a_jour_15(v_apple_offre)
+
+
+-------12Mai
+ajout colonne updated_at et genre_id     dans bdd_lorina_table

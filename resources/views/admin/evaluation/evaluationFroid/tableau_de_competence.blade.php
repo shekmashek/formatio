@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Tableau de compétence</h3>
+@endsection
 @section('content')
 <link href="{{asset('css/tableau_competence.css')}}" rel="stylesheet">
 <div id="page-wrapper">
@@ -21,7 +24,7 @@
 
                       <div class="row">
                         <div class="col-md-12">
-                            <H3>Tableau de compétences</H3>
+                            {{-- <h5>Tableau de compétences</h5> --}}
                           <div class="table-responsive">
                             <table class="table">
                               <thead>

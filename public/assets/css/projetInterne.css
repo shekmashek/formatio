@@ -1,0 +1,104 @@
+.projet_interne{
+    display: grid;
+    place-content: center;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.projet_interne:hover{
+    background-color: rgba(197, 197, 197, 0.241);
+    color: #333;
+}
+
+.projet_interne:hover a{
+    color: #333;
+}
+
+h3{
+    color: #333;
+}
+
+/* navigation */
+
+.navigation_interne .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item.active .nav-link {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+    transform: scale(1.1);
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+/* navigation */
+
+.projet_interne a{
+    color: grey;
+}
+
+.projet_interne a:focus{
+    text-decoration: none;
+}
+
+.projet_interne span .bx{
+    display: grid;
+    place-content: center;
+    font-size: 5rem;
+    transition: all 1s;
+}
+
+.p1:hover span .bx{
+transform: rotate(45deg);
+}
+
+.p2:hover span .bx{
+    transform: translateY(20px);
+}
+
+.p3:hover span .bx{
+    transform: rotate(-45deg);
+}
+
+.projet_interne p{
+    text-transform: uppercase;
+    font-size: 1.8rem;
+}
+
+
+/* ----------------  formations  ---------------- */
+
+
+
+/* ----------------  formations  ---------------- */
+
+/* ----------------  formateurs  ---------------- */
+
+
+
+/* ----------------  formateurs  ---------------- */
+
+/* ----------------  projets  ---------------- */
+
+
+
+/* ----------------  projets  ---------------- */

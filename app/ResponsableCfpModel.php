@@ -8,40 +8,19 @@ use App\Models\FonctionGenerique;
 
 class ResponsableCfpModel extends Model
 {
+    protected $table="responsables_cfp";
     public function verify_form($input)
     {
         $rules = [
             'nom.required' => 'le Nom ne doit pas être null',
-            'cin_1.required' => 'invalid',
-            'cin_2.required' => 'invalid',
-            'cin_3.required' => 'invalid',
-            'cin_4.required' => 'invalid',
-            'cin_5.required' => 'invalid',
-            'cin_6.required' => 'invalid',
-            'cin_7.required' => 'invalid',
-            'cin_8.required' => 'invalid',
-            'cin_9.required' => 'invalid',
-            'cin_10.required' => 'invalid',
-            'cin_11.required' => 'invalid',
-            'cin_12.required' => 'invalid',
-            'phone.required' => 'le numero de télephone ne doit pas être null',
+            'cin.required' => 'invalid',
+             'phone.required' => 'le numero de télephone ne doit pas être null',
             'email.required' => 'le mail ne doit pas être null',
             'fonction.required' => 'le fonction ne doit pas être null'
         ];
         $critereForm = [
             'nom' => 'required',
-            'cin_1' => 'required',
-            'cin_2' => 'required',
-            'cin_3' => 'required',
-            'cin_4' => 'required',
-            'cin_5' => 'required',
-            'cin_6' => 'required',
-            'cin_7' => 'required',
-            'cin_8' => 'required',
-            'cin_9' => 'required',
-            'cin_10' => 'required',
-            'cin_11' => 'required',
-            'cin_12' => 'required',
+            'cin' => 'required',
             'fonction' => 'required',
             'email' => 'required|email',
             'phone' => 'required'
@@ -49,15 +28,15 @@ class ResponsableCfpModel extends Model
         $input->validate($critereForm, $rules);
     }
 
-    public function concat_nb_cin($input)
-    {
-        $cin = $input["cin_1"] . $input["cin_2"] . $input["cin_3"] . $input["cin_4"] . $input["cin_5"] . $input["cin_6"] . $input["cin_7"] . $input["cin_8"] . $input["cin_9"] . $input["cin_10"] . $input["cin_11"] . $input["cin_12"];
-        return $cin;
-    }
+    // public function concat_nb_cin($input)
+    // {
+    //     $cin = $input["cin_1"] . $input["cin_2"] . $input["cin_3"] . $input["cin_4"] . $input["cin_5"] . $input["cin_6"] . $input["cin_7"] . $input["cin_8"] . $input["cin_9"] . $input["cin_10"] . $input["cin_11"] . $input["cin_12"];
+    //     return $cin;
+    // }
 
-    public function verify_cin($input)
+    public function verify_cin($cin)
     {
-        $cin = $this->concat_nb_cin($input);
+        // $cin = $this->concat_nb_cin($input);
         $data = DB::select('select * from users WHERE cin =?', [$cin]);
         return $data;
     }

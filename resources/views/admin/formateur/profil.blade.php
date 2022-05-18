@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Profil</h3>
+@endsection
 @section('content')
 <div class="container">
     <!-- partie haut du cv -->
@@ -22,7 +25,7 @@
                     <p class="mt-4">Nom : {{$formateur[0]->nom_formateur}}</p>
                     <p class="mt-4 text-capitalize">Prenom : {{$formateur[0]->prenom_formateur}}</p>
                     <p class="mt-4">Date de naissance : </br>{{$formateur[0]->date_naissance}}</p>
-                    <p class="mt-4 text-capitalize">Sexe : {{$formateur[0]->genre}}</p>
+                    <p class="mt-4 text-capitalize">Sexe : {{$genre}}</p>
 
                 </div>
             </div>

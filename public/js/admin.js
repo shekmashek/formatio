@@ -98,7 +98,7 @@ $(document).ready(function() {
             for (var $i = 0; $i < userData.length; $i++) {
                 if(userData[$i].role_id == 3 || userData[$i].role_id == 2 || userData[$i].role_id == 5  || userData[$i].role_id == 4){
                     if(userData[$i].activiter == true){
-                        document.getElementById('liste_role').innerHTML += '<li> (<strong style="color: green">actif</strong>) '+ userData[$i].role_description+' </li>';
+                        document.getElementById('liste_role').innerHTML += '<li> <span class="active_role me-2"><i class="bx bxs-circle"></i></span>'+ userData[$i].role_description+' </li>';
                     } else {
                         document.getElementById('liste_role').innerHTML += '<li> <a href="/change_role_user/'+ userData[$i].user_id+'/'+userData[$i].role_id+'">'+ userData[$i].role_description+'</a> </li>';
                     }
@@ -134,28 +134,31 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
-    $(".ui-helper-hidden-accessible").hide();
-});
-
-var Tawk_API = Tawk_API || {},
-    Tawk_LoadStart = new Date();
-(function() {
-    var s1 = document.createElement("script"),
-        s0 = document.getElementsByTagName("script")[0];
-    s1.async = true;
-    s1.src = "https://embed.tawk.to/61e7c1aab84f7301d32bc41c/1fpokp17j";
-    s1.charset = "UTF-8";
-    s1.setAttribute("crossorigin", "*");
-    s0.parentNode.insertBefore(s1, s0);
-})();
 
 let sidebar = document.querySelector(".sidebar");
+//let affichertuto = document.querySelector(".apprendre");
+let afficherinfos = document.querySelector(".infos");
+let afficherfiltre = document.querySelector(".filtrer");
 let menu = document.querySelector(".bx-menu");
+
+  /* function afficherTuto() {
+        affichertuto.classList.toggle("afficher");
+    }*/
+
+    function afficherInfos() {
+        afficherinfos.classList.toggle("afficher");
+    }
 
 function clickSidebar() {
     sidebar.classList.toggle("active");
-    menu.classList.toggle("bx-menu-alt-right");
+    // menu.classList.toggle("bx-menu-alt-right");
+}
+/*function afficherTuto() {
+    affichertuto.classList.toggle("afficher");
+}*/
+
+function afficherFiltre() {
+    afficherfiltre.classList.toggle("afficher");
 }
 
 $(document).ready(function() {
@@ -164,6 +167,7 @@ $(document).ready(function() {
         $(this).addClass("active");
     });
 });
+
 $(document).ready(function() {
     var nom_entreprise="";
     $.ajax({

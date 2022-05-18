@@ -3,7 +3,7 @@
     padding: 2px 1rem;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #888787;
+    color: black;
     border: 1px solid #bdbdbd;
     font-size: 0.850rem;
     letter-spacing: 1px;
@@ -15,19 +15,25 @@
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: 2px solid #7635dc !important;
+    border: 2px solid #bdbdbd !important;
     outline-width: 0 !important;
+}
+
+input:focus::placeholder,
+textarea:focus::placeholder{
+    color: transparent;
 }
 
 .text_area {
     padding: 10px 1rem;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #888787;
+    color: black;
     border: 1px solid #bdbdbd;
     font-size: 0.850rem;
     letter-spacing: 1px;
     height: 200px;
+    max-height: 200px;
 }
 
 .text_area:focus,
@@ -35,10 +41,9 @@
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: 2px solid #7635dc !important;
+    border: 2px solid #bdbdbd !important;
     outline-width: 0 !important;
 }
-
 
 .form-control-placeholder {
     position: relative;
@@ -49,8 +54,10 @@
     padding-bottom: 5px;
     transition: all 300ms;
     opacity: 0.5;
-    left: 2rem;
+    left: .3rem;
     font-size: 0.850rem;
+    display: none;
+    transition: all .5s;
 }
 
 .form-control-placeholder-text_area{
@@ -64,6 +71,8 @@
     opacity: 0.5;
     left: 2rem;
     font-size: 0.850rem;
+    display: none;
+
 }
 
 .input:focus+.form-control-placeholder,
@@ -71,12 +80,15 @@
     font-size: 1rem;
     font-weight: 500;
     bottom: 2rem;
+    left: 2rem;
     transform: translate3d(0, -100%, 0);
     opacity: 1;
     background-color: white;
-    color: #7635dc;
+    color: #637381;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+    display: inline-block;
+    /* width: 100%; */
 }
 
 .text_area:focus+.form-control-placeholder-text_area,
@@ -87,9 +99,11 @@
     transform: translate3d(0, -100%, 0);
     opacity: 1;
     background-color: white;
-    color: #7635dc;
+    color: #637381;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+    display: inline-block;
+
 }
 
 .bg-light{

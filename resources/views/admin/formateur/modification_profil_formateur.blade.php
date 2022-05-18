@@ -1,9 +1,12 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Modification profil formateur</h3>
+@endsection
 @section('content')
 <div id="page-wrapper ">
     <div class="container-fluid ">
         <div class="shadow pt-3 mb-5 bg-body rounded ">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
             	<br>
                 <h3>MODIFICATION PROFIL FORMATEUR</h3>
@@ -13,7 +16,7 @@
 
                 </ul>
             </div><br>
-        </div>
+        </div> --}}
         </div>
     <div class="shadow p-3 mb-5 bg-body rounded">
         <div class="row">

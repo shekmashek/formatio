@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Appel d'offre</p>
+@endsection
 @section('content')
 
 <!-- include summernote css/js -->
@@ -24,7 +27,7 @@
     @endif
 
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12">
                 <h1>Appel d'offre</h1>
             </div>
@@ -47,7 +50,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
 
         <div class="row mt-2">
             <div class="col-md-12">

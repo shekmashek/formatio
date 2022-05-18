@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau appel d'offre</p>
+@endsection
 @section('content')
 
 <!-- include summernote css/js -->
@@ -9,7 +12,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
 
 
@@ -31,12 +34,12 @@
     @endif
 
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12">
                 <h1> Nouveau appel d'offre</h1>
             </div>
-        </div>
-        <div class="row mt-2">
+        </div> --}}
+        {{-- <div class="row mt-2">
             <div class="col-md-12">
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -57,14 +60,14 @@
                 </nav>
 
             </div>
-        </div>
+        </div> --}}
 
     </div>
 
     <div class="row mt-5">
         <div class="col-12">
             <div class="shadow p-3 mb-5 bg-body rounded">
-                <h4>Nouveau Appel d'Offre</h4>
+                {{-- <h4>Nouveau Appel d'Offre</h4> --}}
 
                 <form class="mt-5" action="{{route('appel_offre.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf

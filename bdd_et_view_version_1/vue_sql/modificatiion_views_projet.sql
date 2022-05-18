@@ -116,6 +116,7 @@ create or replace view v_groupe_projet_entreprise_module as
         mf.reference,
         mf.nom_module,
         mf.prix,
+        mf.prix_groupe,
         mf.duree,
         mf.modalite_formation,
         mf.duree_jour,
@@ -164,6 +165,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         mf.nom_module,
         mf.formation_id,
         mf.nom_formation,
+        mf.etat_id,
         dom.id as domaines_id,
         dom.nom_domaine,
         f.nom_formateur,
@@ -218,6 +220,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     mf.nom_module,
     mf.formation_id,
     mf.nom_formation,
+    mf.etat_id,
     dom.id,
     dom.nom_domaine,
     f.nom_formateur,
@@ -261,8 +264,6 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
     JOIN stagiaires s ON
         s.id = pg.stagiaire_id;
 
-
-
 create or replace view v_projet_cfp as
     select
         p.id as projet_id,
@@ -294,6 +295,7 @@ create or replace view v_projet_cfp as
 
     create or replace view v_projet_entreprise as
         select
+            gp.cfp_id,
             gp.projet_id,
             nom_projet,
             entreprise_id,
@@ -303,24 +305,15 @@ create or replace view v_projet_cfp as
         from v_groupe_projet_entreprise gp
         join v_totale_session ts on ts.projet_id = gp.projet_id
         group by
-            projet_id,
+            gp.cfp_id,
+            gp.projet_id,
             nom_projet,
             entreprise_id,
             type_formation_id,
-            date_projet;
+            date_projet,
+            totale_session;
 
-create or replace view v_projet_formation as
-    select
-        projet_id,
-        formation_id,
-        nom_formation,
-        cfp_id
-    from v_groupe_projet_entreprise_module
-    group by
-        projet_id,
-        formation_id,
-        nom_formation,
-        cfp_id;
+
 
 -- create or replace view v_horaire_cfp as
 --     select
@@ -387,4 +380,13 @@ create or replace view v_horaire_cfp as
         (cfps.site_web) site_web
     from cfps
     join reseaux_sociaux rs on rs.cfp_id = cfps.id;
+
+
+--script calendrier
+SELECT * FROM details
+INNER JOIN projets ON details.projet_id = projets.id
+INNER JOIN groupes ON details.groupe_id = groupes.id
+INNER JOIN formateurs ON details.formateur_id = formateurs.id
+INNER JOIN cfps ON details.cfp_id = cfps.id
+
 

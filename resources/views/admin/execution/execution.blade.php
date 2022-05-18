@@ -1,13 +1,16 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Action de formation</h3>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
                 <br>
 
                 <h3>ACTION DE FORMATION</h3>
-            </div>
+            </div> --}}
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">

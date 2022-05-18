@@ -1,14 +1,17 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Départements</h3>
+@endsection
 @section('content')
 
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
 
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
                 <br>
                 <h5>Entreprise</h5>
-            </div>
+            </div> --}}
 
             <nav class="navbar navbar-expand-lg navbar-light css-menuInter p-3 mb-2 rounded">
                 <div class="container-fluid">

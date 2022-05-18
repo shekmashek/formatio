@@ -1,54 +1,43 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Modification photo</h3>
+@endsection
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<style>
-.test {
-    padding: 2px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    color: #9E9E9E;
-    border: 1px solid #BDBDBD;
-    font-size: 16px;
-    letter-spacing: 1px;
-    height: 50px !important
-}
-
-.test:focus{
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 2px solid #E53935 !important;
-    outline-width: 0 !important;
-}
-
-.form-control-placeholder {
-  position: absolute;
-  top: 1rem;
-  padding: 12px 2px 0 2px;
-  padding: 0;
-  padding-top: 2px;
-  padding-bottom: 5px;
-  transition: all 300ms;
-  opacity: 0.5;
-  left: 2rem;
-}
-
-.test:focus+.form-control-placeholder,
-.test:valid+.form-control-placeholder {
-  font-size: 95%;
-  font-weight: bolder;
-  top: 1.5rem;
-  transform: translate3d(0, -100%, 0);
-  opacity: 1;
-  background-color: white;
-}
-</style>
+<div class="col" style="margin-left: 25px">
+    <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+  </div>
 <center>
-
+ {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
+ @if (\Session::has('error'))
+ <div class="alert alert-danger col-md-4">
+     <ul>
+         <li>{!! \Session::get('error') !!}</li>
+     </ul>
+ </div>
+ @endif
+ {{-- si l'utiliisateur a  choisir un fichier > 60Ko--}}
+ @if (\Session::has('error_logo'))
+ <div class="alert alert-danger col-md-4">
+     <ul>
+         <li>{!! \Session::get('error_logo') !!}</li>
+     </ul>
+ </div>
+ @endif
+  {{-- si l'utiliisateur a  choisir un  format incompatible --}}
+  @if (\Session::has('error_format'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_format') !!}</li>
+      </ul>
+  </div>
+  @endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Photos de profile</p>
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
+        <p style="text-align: left">Photos de profil
+             <strong>Taille du fichier: (1.7 MB max)</strong>
+            </p><br>
+        <form   class="btn-submit" action="{{route('update_photo_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -59,16 +48,28 @@
 
             <div class="row px-3 mt-4">
             <div class="form-group mt-1 mb-1">
-            <center>
+              <center>
                 <div class="image-upload">
                   <label for="file-input">
                     <div class="upload-icon">
-                        <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  class="image-ronde">
+                        @if($stagiaire->photos==null)
+                            <span>
+                                <div style="display: grid; place-content: center">
+                                    <div class='randomColor photo_users' style="color:white; font-size:30px; border: none; border-radius: 100%; height:80px; width:80px ; display: grid; place-content: center"  >
+                                        <img src="" alt="" id = "photo_stg" class="image-ronde" style="display: none">
+                                    </div>
+                                </div>
+                            </span>
+                        @else
+                            <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" id = "photo_stg"  class="image-ronde">
+                        @endif
                       {{-- <input type="text" id = 'vartemp'> --}}
-              </div>
-                  </label>
-                     <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
-                  </div>
+                    </div>
+                </div>
+                </label>
+                    <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
+                    <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                </div>
             </center>
         </div>
     </div>
@@ -77,7 +78,7 @@
                           <option value="Femme">Femme</option>
 
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label>
+
 
                         <select hidden value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
                             <option value="Mr">Mr</option>
@@ -88,7 +89,7 @@
                             <option value="Dir">Dir</option>
                             <option value="PDG">PDG</option>
                         </select>
-                        <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label>
+
 
 
                         <input type="hidden" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
@@ -132,7 +133,6 @@
               </div>
                     <input type="hidden" class="form-control test"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" >
 
-<button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>
@@ -176,6 +176,7 @@
 
                 reader.onload = function (e) {
                     //alert(e.target.result);
+                    $('#photo_stg').css('display','block');
                     $('#photo_stg').attr('src', e.target.result);
                 }
 

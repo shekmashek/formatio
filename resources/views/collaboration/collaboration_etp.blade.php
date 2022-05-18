@@ -1,28 +1,33 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Collaborations services</p>
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row align-items-center ligneServ">
             <div class="col-7">
                 <i class="bx bx-comment-dots icon_collab text-center">&nbsp;Collaborations Services</i>
             </div>
-            <div class="col-5">
-                <h5>SERVICES</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
-                    <label class="form-check-label" for="flexCheckChecked">Centre de Formation</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
-                    <label class="form-check-label" for="flexCheckChecked">Demande de collaboration</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
-                    <label class="form-check-label" for="flexCheckChecked">Invitations</label>
+            <div class="col-5 mt-4">
+                <p style="font-size: 14px">SERVICES</p>
+                <div style="font-size: 12px">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
+                        <label class="form-check-label" for="flexCheckChecked">Centre de Formation</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
+                        <label class="form-check-label" for="flexCheckChecked">Demande de collaboration</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
+                        <label class="form-check-label" for="flexCheckChecked">Invitations</label>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <p>
+            <p style="font-size: 12px">
                 Envoyer des demandes de collaborations aux Centres de Formations disponibles
             </p>
         </div>
@@ -30,7 +35,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Centre de Formations</h4>
+                        <p class="card-title" style="font-size: 14px">Centre de Formations</p>
                         {{-- <p class="card-description"> Listes des Centres de Formations </p> --}}
                             <br>
                             {{-- <h5> Entreprise</h5> --}}
@@ -50,8 +55,8 @@
                                             <img src="{{asset('images/CFP/'.$c->logo)}}" alt="photo" class="logo">
                                             <div id="cfp_pdp_{{$c->id}}" class="collapse">
                                                 <hr>
-                                                Domaine d'activiter: "{{$c->domaine_de_formation}}" <br>
-                                                Activités: {{$c->domaine_de_formation}} <br>
+                                                {{-- Domaine d'activiter: {{$c->domaine_de_formation}} <br> --}}
+                                                {{-- Activités: {{$c->domaine_de_formation}} <br> --}}
                                                 Téléphone: {{$c->telephone}} <br>
                                                 Email: {{$c->email}} <br>
                                                 <a href="#" type="button" data-toggle="collapse" data-target="#cfp_pdp_{{$c->id}}"><button type="submit" class="btn btn-primary" id="demande">fermer</button></a><br>
@@ -90,7 +95,7 @@
                                             <div class="modal-body">
                                                 <div>
                                                     <h5 class="text-uppercase">{{$c->nom}}</h5>
-                                                    <h4 class="mt-5 text-primary mb-5">{{$c->domaine_de_formation}}</h4> <span class="theme-color">Informations</span>
+                                                    {{-- <h4 class="mt-5 text-primary mb-5">{{$c->domaine_de_formation}}</h4> <span class="theme-color">Informations</span> --}}
                                                     <div class="mb-3">
                                                         <hr class="new1">
                                                     </div>
@@ -143,7 +148,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Mes Demandes</h4>
+                        <p class="card-title" style="font-size: 14px">Mes Demandes</p>
                         {{-- <p class="card-description"> Listes des Demandes aux Centres de Formations</p> --}}
                         <div class="table-responsive text-center">
                             <table class="table table-info table-borderless table-hover table-sm" id="table_dmd">
@@ -180,8 +185,8 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Invitations</h4>
-                        <p class="card-description"> Liste des Invitations des Centres de Formations</p>
+                        <p class="card-title" style="font-size: 14px">Invitations</p>
+                        <p class="card-description" style="font-size: 12px"> Liste des Invitations des Centres de Formations</p>
                         <div class="table-responsive text-center">
                             <table class="table table-danger table-borderless table-hover table-sm" id="table_invt">
                                 <tbody>

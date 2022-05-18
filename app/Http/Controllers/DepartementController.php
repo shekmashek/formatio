@@ -14,6 +14,7 @@ use App\chefDepartement;
 use App\chefDepartementEntreprise;
 use App\responsable;
 use App\Models\FonctionGenerique;
+use App\Role;
 use App\RoleUser;
 
 use Illuminate\Support\Facades\Gate;
@@ -54,6 +55,7 @@ class DepartementController extends Controller
         return back();
     }
 
+
     public function liste()
     {
         $fonct = new FonctionGenerique();
@@ -88,6 +90,127 @@ class DepartementController extends Controller
         return view('admin.chefDepartement.liste', compact('nom_chef','prenom_chef','roles_actif_stg', 'roles_not_actif_stg', 'roles_actif_referent', 'roles_not_actif_referent', 'roles_actif_manager', 'roles_not_actif_manager', 'chef', 'referent', 'stagiaires', 'user_role', 'roles'));
     }
 
+<<<<<<< HEAD
+=======
+//start filtre 
+ // filtre Employes fonction
+    public function filtreFonction(Request $request){
+        $function = new FonctionGenerique();
+        $emps = $function->filtreEmploye('fonction_stagiaire', $request->get('test'));   
+  
+        return json_encode($emps);      
+    }
+    
+    // filtre employes name
+    public function filtreName(Request $request){
+        $function = new FonctionGenerique();
+        $emps = $function->filtreEmploye('nom_stagiaire', $request->get('name'));   
+  
+        return json_encode($emps);   
+    }
+
+    // filtre employes matricule
+    public function filtreMatricule(Request $request){
+        $function = new FonctionGenerique();
+        $emps = $function->filtreEmploye('matricule', $request->get('matricule'));
+ 
+        return json_encode($emps);    
+    }
+
+    // filtre employes role
+    public function filtreRole(Request $request){
+        $function = new FonctionGenerique();
+        $emps = $function->filtreEmploye('role_name', $request->get('role_name'));
+ 
+        return json_encode($emps);   
+    }
+
+
+    //filtre referent fonction
+    public function filtreReferent(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreReferent('fonction_resp', $request->get('fonctionReferent'));
+
+        return json_encode($referents);
+    }
+
+    //filtre referent name
+    public function filtreReferentName(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreReferent('nom_resp', $request->get('nameReferent'));
+
+        return json_encode($referents);
+    }
+
+    //filtre referent matricule
+    public function filtreReferentMatricule(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreReferent('matricule', $request->get('matriculeReferent'));
+
+        return json_encode($referents);
+    }
+
+    //filtre referent role
+    public function filtreReferentRole(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreReferent('role_name', $request->get('roleReferent'));
+
+        return json_encode($referents);
+    }
+
+    //filtre chef fonction
+    public function filtreChef(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreChef('fonction_chef', $request->get('fonctionChef'));
+
+        return json_encode($referents);
+    }
+
+    //filtre chef name
+    public function filtreChefName(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreChef('nom_chef', $request->get('nameChef'));
+
+        return json_encode($referents);
+    }
+
+    //filtre chef matricule
+    public function filtreChefMatricule(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreChef('chef_departements.id', $request->get('matriculeChef'));
+
+        return json_encode($referents);
+    }
+
+    //filtre chef matricule
+    public function filtreChefRole(Request $request){
+        $function = new FonctionGenerique();
+        $referents = $function->filtreChef('role_name', $request->get('roleChef'));
+
+        return json_encode($referents);
+    }
+//end filtre
+
+    /*   public function liste()
+    {
+        $fonct = new FonctionGenerique();
+        $roles = $fonct->findWhereOr("roles",["role_name","role_name","role_name"],["referent","formateur","manager"]);
+
+        //on va récupérer la liste des employes
+        $user_id = Auth::user()->id;
+        $etp_id = responsable::where('user_id',[$user_id])->value('entreprise_id');
+
+        $referent = DB::select('select * from responsables where entreprise_id = ?', [$etp_id]);
+        $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
+        $stagiaires = DB::select('select * from stagiaires where entreprise_id = ?', [$etp_id]);
+
+        $user_role = DB::select('select * from v_user_role');
+        $roles = DB::select('select * from roles');
+        // dd($user_role);
+        return view('admin.chefDepartement.liste', compact('chef','referent','stagiaires','user_role','roles'));
+    }
+*/
+>>>>>>> debug_version_1
     public function create()
     {
         $fonct = new FonctionGenerique();
@@ -123,8 +246,10 @@ class DepartementController extends Controller
             $departement = DepartementEntreprise::with('departement', 'entreprise')->where('id', $depEtpId)->get();
             $vars = chefDepartement::with('entreprise')->where('id', $idChef)->get();
         }
-
-        return view('admin/chefDepartement/profilChefDepartement', compact('vars', 'departement'));
+        if($vars[0]->genre_id == 1) $genre = "Femme";
+        if($vars[0]->genre_id == 2) $genre = "Homme";
+        if($vars[0]->genre_id == null) $genre = '';
+        return view('admin/chefDepartement/profilChefDepartement', compact('genre','vars', 'departement'));
     }
     //enregistrer departement
     public function store(Request $request)
@@ -154,6 +279,7 @@ class DepartementController extends Controller
         $var = chefDepartement::findOrFail($id);
         return view('admin.chefDepartement.update', compact('var', 'roles', 'role_id'));
     }
+
 
     public function update(Request $request)
     {

@@ -129,6 +129,24 @@ $(document).ready(function() {
     });
 });
 
+// $(document).ready(function(){
+//     $(".changer_carret").click(function(){
+//         $(".collapse").collapse("toggle",[0]);
+//     });
+// });
+// function myFunction() {
+//     let x = document.getElementsByClassName("changer_carret").getAttribute("aria-expanded");
+//     console.log(x);
+//     if (x == "true")
+//     {
+//     x = "false"
+//     } else {
+//     x = "true"
+//     }
+//     document.getElementsByClassName("changer_carret").setAttribute("aria-expanded", x);
+//     document.getElementById("p2").innerHTML = "aria-expanded =" + x;
+// }
+
 let annee = document.getElementById("annee");
 
 let anneeEnCours = new Date().getFullYear();

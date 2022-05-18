@@ -1,13 +1,16 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Evaluation à froid</h3>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
             	<br>
                 <h3>EVALUATION</h3>
             </div>
-        </div>
+        </div> --}}
         <form action="{{route('evaluation.store')}}" method = "post">
             @csrf
 

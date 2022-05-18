@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Nouvelle formation</h3>
+@endsection
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,7 +14,7 @@
                 @can('isCFP')
                 <div class="col-12 d-flex justify-content-between" style="align-items: center">
                     <div class="col">
-                        <h3 class="mt-2">Nouvelle Moudule</h3>
+                        <h3 class="mt-2">Nouvelle Module</h3>
                     </div>
                     <div class="col search_formatiom">
                         <form action="">

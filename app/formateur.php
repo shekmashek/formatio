@@ -11,6 +11,10 @@ class Formateur extends Model
     protected $fillable = [
         'id', 'nom_formateur', 'prenom_formateur', 'photos', 'mail_formateur', 'numero_formateur'
     ];
+    public function genre()
+    {
+        return $this->belongsTo('App\genre');
+    }
 
     public function getFormateur($etp1, $etp2)
     {

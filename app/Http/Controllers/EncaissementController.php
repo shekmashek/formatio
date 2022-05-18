@@ -23,9 +23,12 @@ class EncaissementController extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+        $this->fonct = new FonctionGenerique();
     }
     public function index(Request $request)
     {
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $id_etp = $request->entreprise_id;
         $id_projet = $request->projet_id;
         $id_facture = encaissement::getIdFacture($id_projet);
@@ -33,7 +36,7 @@ class EncaissementController extends Controller
             $datas = DB::select('select * from frais_annexes');
             $data = encaissement::getProjetEntreprise($id_etp, $id_projet);
             $infos = encaissement::getFactureEncaissement($id_projet, $id_facture[0]->id);
-            return view('admin.encaissement.encaissement', compact('datas', 'data', 'id_facture', 'infos'));
+            return view('admin.encaissement.encaissement', compact('devise','datas', 'data', 'id_facture', 'infos'));
         } else {
             $projet = projet::get()->unique('nom_projet');
             $data = projet::orderBy('nom_projet')->with('entreprise')->take($id_projet)->get();
@@ -48,16 +51,18 @@ class EncaissementController extends Controller
 
     public function encaissement(Request $request)
     {
+        // dd($request->input());
+
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;
-
         DB::beginTransaction();
         try {
             encaissement::validation($request);
             encaissement::insert($request, $cfp_id, $resp->id, $resp->nom_resp_cfp . " " . $resp->prenom_resp_cfp);
             DB::commit();
-            return back()->with('encaissement_ok', 'Paiement réussi');
+            // return back()->with('encaissement_ok', 'Paiement réussi');
+            return redirect()->route('liste_facture');
         } catch (Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Paiements échoué');
@@ -68,22 +73,27 @@ class EncaissementController extends Controller
     {
         $fonct = new FonctionGenerique();
         $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
         $numero_fact = $request->num_facture;
         $encaissement = DB::select('select * from v_encaissement where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
-        return view('admin.encaissement.liste_encaissement', compact('encaissement','numero_fact'));
+        return view('admin.encaissement.liste_encaissement', compact('devise','encaissement', 'numero_fact'));
     }
 
-    public function generatePDF($numero_fact,Request $request)
+    public function generatePDF($numero_fact, Request $request)
     {
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
 
-        // $numero_fact = $request->num_facture;
+        $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
+        $facture = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
+
         $montant_totale = $fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
         $encaissement = DB::select('select * from v_encaissement where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
+        $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$montant_totale->entreprise_id]);
 
         PDF::setOptions([
             "defaultFont" => "Courier",
@@ -92,7 +102,7 @@ class EncaissementController extends Controller
         ]);
 
 
-        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
+        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('devise','encaissement', 'montant_totale','cfp','entreprise','facture'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
@@ -103,9 +113,9 @@ class EncaissementController extends Controller
             ])
         );
 
-            return $pdf->download("liste d'encaissment de la facture numero " . $numero_fact.".pdf");
+        return $pdf->download("liste d'encaissment de la facture numero " . $numero_fact . ".pdf");
 
-    //    return view('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
+        //    return view('admin.pdf.pdf_liste_encaissement', compact('encaissement','montant_totale'));
     }
 
     public function supprimer(Request $request)
@@ -128,14 +138,27 @@ class EncaissementController extends Controller
     public function modification(Request $request)
     {
         $id_encaissement = $request->encaissement_id;
-        $encaissement = encaissement::where('id', $id_encaissement)->get(['payement', 'libelle', 'num_facture']);
-        return response()->json([intval($encaissement[0]->payement), $encaissement[0]->libelle, $encaissement[0]->num_facture]);
+        $encaissement = encaissement::where('id', $id_encaissement)->get(['payement', 'libelle', 'num_facture', 'date_encaissement', 'mode_financement_id']);
+        $mode_finance = $this->fonct->findWhereMulitOne("mode_financements", ["id"], [$encaissement[0]->mode_financement_id]);
+        $mode_finance_list = $this->fonct->findWhereParam("mode_financements", ["id"], ["!="], [$encaissement[0]->mode_financement_id]);
+
+        $data["userData"][0] = intval($encaissement[0]->payement);
+        $data["userData"][1] = $encaissement[0]->libelle;
+        $data["userData"][2] = $encaissement[0]->num_facture;
+        $data["userData"][3] = $encaissement[0]->date_encaissement;
+        $data["mode_finance_edit"] =  $mode_finance;
+        $data["mode_finance_list"] =  $mode_finance_list;
+        // return response()->json([intval($encaissement[0]->payement), $encaissement[0]->libelle, $encaissement[0]->num_facture, $encaissement[0]->date_encaissement]);
+        // return response()->json([$data["userData"], $data["mode_finance_edit"], $data["mode_finance_list"]]);
+        return response()->json([$data]);
+
     }
 
 
 
     public function modifier(Request $request)
     {
+        $numero_fact =null;
         DB::beginTransaction();
         try {
             encaissement::validation($request);
@@ -143,7 +166,8 @@ class EncaissementController extends Controller
             $montant = $request->montant;
             $libelle = $request->libelle;
             $numero_fact = $request->num_facture;
-            encaissement::modifierEncaissementNow($id_encaissement, $montant, $libelle);
+            encaissement::modifierEncaissementNow($id_encaissement, $montant, $libelle,
+            $request->mode_payement, $request->date_encaissement);
             encaissement::modifierAutres($id_encaissement);
             DB::commit();
             return redirect()->route('listeEncaissement', [$numero_fact]);
@@ -151,6 +175,8 @@ class EncaissementController extends Controller
             DB::rollBack();
             return redirect()->back();
         }
+
+
     }
 
 
@@ -167,11 +193,11 @@ class EncaissementController extends Controller
         $user_id = Auth::user()->id;
         // $cfp_id = cfp::where('user_id', $user_id)->value('id');
         $fonct = new FonctionGenerique();
-        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
+        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
         $numero_fact = $request->num_facture;
-        $montant_restant = DB::select('select dernier_montant_ouvert from v_facture_actif where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
-        $montant_restant = number_format($montant_restant[0]->dernier_montant_ouvert, 2, ",", " ");
-        return response()->json([$montant_restant, $numero_fact]);
+        $dta = DB::select('select dernier_montant_ouvert,invoice_date from v_facture_actif where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
+        $montant_restant = number_format($dta[0]->dernier_montant_ouvert, 2, ",", " ");
+        return response()->json([$montant_restant, $numero_fact,$dta[0]->invoice_date]);
     }
 }

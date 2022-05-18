@@ -1,8 +1,11 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau Projet Inter</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">
 <div class="container pt-5">
-    <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5>
+    {{-- <h5 class="my-3 text-center text-capitalize">le projet de formation inter entreprise</h5> --}}
     <div class="m-4">
         <h6>Listes des formations disponibles</h6>
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
@@ -88,7 +91,7 @@
                             </div>
                         </div>
                         <div class="new_btn_programme text-center">
-                            <button type="button" class="btn btn_competence non_pub" ><a href="{{route('session_inter', $mod1->id)}}">Session Inter</a></button>
+                            <button type="button" class="btn btn_competence non_pub" ><a href="{{route('session_inter', $mod1->id)}}">Créer une session inter</a></button>
                         </div>
                     </div>
                     @endif

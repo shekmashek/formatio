@@ -1,5 +1,9 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Profil résponsable</h3>
+@endsection
 @section('content')
+
 {{-- <div class="page-content page-container" id="page-content">
         <div class="padding">
             <div class="row container d-flex justify-content-center">
@@ -66,11 +70,9 @@
         border-radius: 75px;
     }
 
-    .hover:hover {
-        background-color: rgb(233, 220, 220);
-        cursor: pointer;
+    .none:hover{
+        cursor:default;
     }
-
 </style>
 <div class="row">
     <div class="row mt-2">
@@ -80,58 +82,51 @@
             <div class="form-control">
                 <p class="text-center">Informations générales</p>
 
-                <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #d399c2;">
-                    <p class="p-1 m-0" style="font-size: 10px;">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal_photo"> PHOTO <i class="bx bx-edit" style="color: blue"></i></a>
-                    </p>
+                <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #e8dfe5;">
+                    <p class="p-1 m-0" style="font-size: 12px;">PHOTO</p>
                     <a href="{{route('edit_photos_resp',$refs->id)}}">
                         {{-- <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde"> --}}
                         @if($refs->photos==null)
-                        <div style="display: grid; place-content: center">
-                            <div class='randomColor photo_users' style="color:white; font-size: 15px; border: none; border-radius: 100%; height:45px; width:45px ; display: grid; place-content: center">
-                            </div>
-                        </div>
+                            <span>
+                                <div style="display: grid; place-content: center">
+                                    <div class='randomColor photo_users' style="color:white; font-size: 12px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center">
+                                    </div>
+                                </div>
+                            </span>
                         @else
-                            <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
+                        <img src="{{asset('images/responsables/'.$refs->photos)}}" class="image-ronde">
                         @endif
+<<<<<<< HEAD
+=======
+
+>>>>>>> debug_version_1
                     </a>
                 </div>
-                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                     <a href="{{route('edit_nom_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_name">
-                                NOM <i class="bx bx-edit" style="color: blue"></i></a>
-                            <span style="float: right;">{{$refs->nom_resp}} {{$refs->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 12px;">NOM<span style="float: right;">{{$refs->nom_resp}} {{$refs->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+
                         </p>
                     </a>
 
                 </div>
-                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                     <a href="{{route('edit_naissance_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_dte">
-                                ANNIVERSAIRE <i class="bx bx-edit" style="color: blue"></i></a>
-                            <span style="float: right;">{{date('j \\ F Y', strtotime($refs->date_naissance_resp))}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 12px;">ANNIVERSAIRE<span style="float: right;">{{date('j \\ F Y', strtotime($refs->date_naissance_resp))}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
 
                 </div>
-                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                     <a href="{{route('edit_genre_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_sexe">
-                                GENRE <i class="bx bx-edit" style="color: blue"></i></a>
-                            <span style="float: right;">{{$refs->sexe_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 12px;">GENRE<span style="float: right;">{{$refs->sexe_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
-                <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                     <a href="{{route('edit_pwd_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_mdp">
-                                Mot de passe <i class="bx bx-edit" style="color: blue"></i></a>
-                            <span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 12px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
@@ -145,50 +140,37 @@
             <div class="form-control">
                 <p class="text-center">Coordonnées</p>
 
-                <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                     <a href="{{route('edit_mail_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_email">
-                                ADRESSE E-MAIL <i class="bx bx-edit" style="color: blue"></i></a>
-                            <span style="float: right;">{{$refs->email_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 12px;">ADRESSE E-MAIL<span style="float: right;">{{$refs->email_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
                 </div>
-                <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                     <a href="{{route('edit_phone_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_phone">
-                                TELEPHONE <i class="bx bx-edit" style="color: blue"></i></a>
-                            <span style="float: right;">{{$refs->telephone_resp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                        <p class="p-1 m-0" style="font-size: 12px;">TELEPHONE<span style="float: right;">{{$refs->telephone_resp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                         </p>
                     </a>
                 </div>
 
-                <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                     <a href="{{route('edit_cin_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cin">
-                                CIN <i class="bx bx-edit" style="color: blue"></i></a>
-                            <span style="float: right;">{{$refs->cin_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 12px;">CIN<span style="float: right;">{{$refs->cin_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
-                <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                     <a href="{{route('edit_adresse_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 10px;">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_adresse">
-                                ADRESSE <i class="bx bx-edit" style="color: blue"></i></a>
-                            <span style="float: right;">{{$refs->adresse_lot}} &nbsp;{{$refs->adresse_quartier}} &nbsp;{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 12px;">ADRESSE<span style="float: right;">{{$refs->adresse_lot}} &nbsp;{{$refs->adresse_quartier}} &nbsp;{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
                 </div>
-                <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                    <a href="{{route('edit_fonction_resp',$refs->id)}} " data-bs-toggle="modal" data-bs-target="#modal_fonction">
-                        <p class="p-1 m-0" style="font-size: 10px;">FONCTION  <i class="bx bx-edit" style="color: blue"></i>
-                            <span style="float: right;">{{$refs->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
+                    <a href="{{route('edit_fonction_resp',$refs->id)}} ">
+                        <p class="p-1 m-0" style="font-size: 12px;">FONCTION<span style="float: right;">{{$refs->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>
@@ -208,18 +190,22 @@
                             <span style="float: right;">{{$refs->poste_emp}}&nbsp;<i class="fas fa-angle-right"></i></>
 
 
-                <div style="border-bottom: solid 1px #d399c2;" class="">
-                    <a hrefs="#">
-                        <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{optional(optional($refs)->entreprise)->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-
-                        </p>
+                <div style="border-bottom: solid 1px #e8dfe5;" class="">
+                    {{-- <a href="{{route('profile_entreprise',$refs->entreprise_id)}}"> --}}
+                    <a href="" class="none">
+                        <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{$nom_entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
                     </a>
-
                 </div>
 
-                {{-- <div style="border-bottom: solid 1px #d399c2;" class="">
+                {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
+                    <a href="" class="none">
+                        <p class="p-1 m-0" style="font-size: 10.3px;">Branche<span style="float: right;">{{$branche->nom_branche}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                    </a>
+                </div> --}}
+
+                {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
                     <a hrefs="#">
-                        <p class="p-1 m-0" style="font-size: 10px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 12px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
@@ -229,6 +215,7 @@
             </div>
         </div>
     </div>
+</div>
 
 
     <div id="modal_photo" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

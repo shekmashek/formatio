@@ -98,7 +98,8 @@ class ProjetControlleur extends Controller
     }
 
     public function accueilProjet(){
-        return view('projet_session.projetAccueil');
+        // return view('projet_session.projetAccueil');
+        return redirect()->route('liste_projet',[1]);
     }
 
     public function module_formation_intra(Request $rq)
@@ -121,5 +122,19 @@ class ProjetControlleur extends Controller
         return view('projet_session.projet_inter_form');
     }
 
+    public function projetInterne(){
+        return view('referent.projet_Interne.projet_interne');
+    }
 
+    public function formations(){
+        return view('referent.projet_Interne.formations.formation');
+    }
+
+    public function formateurs(){
+        return view('referent.projet_Interne.formateurs.formateur');
+    }
+
+    public function projets(){
+        return view('referent.projet_Interne.projets.projet');
+    }
 }

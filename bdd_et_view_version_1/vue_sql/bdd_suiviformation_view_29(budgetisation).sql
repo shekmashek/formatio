@@ -19,7 +19,7 @@ CREATE OR REPLACE VIEW v_responsable_entreprise as SELECT
 FROM
     responsables
 JOIN entreprises e ON e.id = responsables.entreprise_id
-JOIN secteurs s ON s.id = e.secteur_id;
+LEFT JOIN secteurs s ON s.id = e.secteur_id;
 
 CREATE OR REPLACE VIEW v_plan_formation as
 SELECT

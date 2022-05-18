@@ -1,9 +1,12 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau formateur</p>
+@endsection
 @section('content')
 
 <div id="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
                 <br>
                 <h3>Nouveau Formateur</h3>
@@ -29,20 +32,27 @@
                             </li>
 
                         </ul>
-{{-- q --}}
 
                     </div>
                 </div>
             </nav>
 
-        </div>
+        </div> --}}
 
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-lg-12">
                 @canany(['isCFP'])
                 @if(Session::has('success'))
                 <div class="alert alert-success">
                     {{Session::get('success')}}
+                </div>
+                @endif
+                 {{-- si l'utiliisateur a  choisir un fichier > 60Ko--}}
+                @if (\Session::has('erreur_photo'))
+                <div class="alert alert-danger col-md-4">
+                    <ul>
+                        <li>{!! \Session::get('erreur_photo') !!}</li>
+                    </ul>
                 </div>
                 @endif
                 @endcanany
@@ -53,11 +63,12 @@
                                 <form name="formInsert" id="formInsert" action="{{route('formateur.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();" class="form_insert_formateur">
                                     @csrf
 
-                                    <h1>Profil Formateur</h1>
+                                    <p style="font-size: 15px;">Profil Formateur</p>
 
                                     <div class="form-control-file mt-2">
                                         <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required>
-                                    </div>
+                                         <strong>Taille du fichier: (1.7 MB max)</strong> 
+                                    </div><br>
                                     @error('image')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -129,7 +140,7 @@
                                         <div class="col">
 
                                             <div class="form-group">
-                                                <input type="mail" class="form-control" name="mail" id="mail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]" title="entre votre adresse mail" placeholder="adresse mail*" required>
+                                                <input type="mail" class="form-control" name="mail" id="mail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]" title="entre votre adresse mail" placeholder="adresse e-mail*" required>
                                                 <span style="color:#ff0000;" id="mail_err"></span>
                                             </div>
                                             @error('mail')
@@ -194,12 +205,12 @@
                                     <div class="row mt-2">
                                         <div class="col-lg-5">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="domaine[]" id="domaine" pattern="[A-Za-z' -]{1,50}" title="5 à 50 caractères" placeholder="Domaine" class="domaine" required>
+                                                <input type="text" class="form-control" name="domaine[]" id="domaine" pattern="[A-Za-z' -]{1,50}" title="5 à 50 caractères" placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-5">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="competences[]" id="competences" pattern="[A-Za-z0-9&@+' ,-]{1,255}" title="5 à 255 caractères" placeholder="competences" class="domaine" required>
+                                                <input type="text" class="form-control" name="competences[]" id="competences" pattern="[A-Za-z0-9&@+' ,-]{1,255}" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 mt-3" align="center">
@@ -357,12 +368,12 @@ $(document).on('change', '#cin', function() {
         html += '<div class="row" id="inputFormRow1">';
         html += '<div class="col-lg-5">';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control" name="domaine[]" id="domaine" title="5 à 50 caractères" placeholder="Domaine" class="domaine" required>';
+        html += '<input type="text" class="form-control" name="domaine[]" id="domaine" title="5 à 50 caractères" placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>';
         html += '</div>';
         html += '</div>';
         html += '<div class="col-lg-5">';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control" name="competences[]" id="competences" title="5 à 255 caractères" placeholder="competences" class="domaine" required>';
+        html += '<input type="text" class="form-control" name="competences[]" id="competences" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>';
         html += '</div>';
         html += '</div>';
         html += '<div class="col-lg-2 mt-3" align="center">';

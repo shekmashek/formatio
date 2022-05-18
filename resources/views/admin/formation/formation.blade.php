@@ -1,13 +1,13 @@
 @extends('./layouts/admin')
 @section('title')
-<p class="text-white ms-5" style="font-size: 20px;">Votre catalogue de formation</p>
+<p class="text_header m-0 mt-1" style="font-size: 20px;">Votre catalogue de formation</p>
 @endsection
 @section('content')
 <div class="container-fluid px-5 pe-3">
-    <nav class="navbar navbar-expand-lg w-100">
-        <div class="row w-100 g-0 m-0">
-            <div class="col-lg-12">
-                <div class="row g-0 m-0 p-2" style="align-items: center">
+    {{-- <nav class="navbar navbar-expand-lg w-100"> --}}
+        {{-- <div class="row w-100 g-0 m-0"> --}}
+            {{-- <div class="col-lg-12"> --}}
+                {{-- <div class="row g-0 m-0 p-2" style="align-items: center">
                     @can('isCFP')
                     <div class="col-12 d-flex justify-content-between" style="align-items: center">
                         <div class="col">
@@ -35,11 +35,11 @@
                         @endcan
                     </div>
 
-                </div>
-            </div>
-        </div>
-    </nav>
-    <hr>
+                </div> --}}
+            {{-- </div> --}}
+        {{-- </div> --}}
+    {{-- </nav> --}}
+    {{-- <hr> --}}
     <div class="container-fluid ps-5">
         <div class="row w-100 my-5">
             <h5 class="text-dark">

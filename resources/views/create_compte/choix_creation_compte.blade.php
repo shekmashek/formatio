@@ -1,53 +1,53 @@
 @extends('create_compte.header')
 @section('content')
-
-
-<style>
-    .test a {
-        text-decoration-style: none;
-        transition: all .5s ease-in-out;
-    }
-
-    .test {
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    }
-
-    .test:hover {
-        transform: scale(0.95);
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    }
-
-</style>
-
-<div class="row justify-content-center">
-    <h5 class="nav-item active">
-
-        Inscription gratuite sur la plateforme <strong>formation.mg</strong>
-
-    </h5>
-    <p>D'abord, faites nous savoir si vous êtes un organisme de formation ou un employeur</p>
-
-    <div class="col-md-4  p-3 bg-body rounded test me-2">
-        <a href="{{route('create+compte+client/OF')}}" role="button">
-
-            <img src="{{asset('img_create-compte/instructor_signup.png')}}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h6 class="card-title text-center">Organisme de Formation</h6>
+<div class="container-fluid">
+    <div class="row info_choix">
+        <div class="col-6 choix_compte">
+            <div class="row">
+                <div class=" d-flex flex-row justify-content-center">
+                    <div class="me-4">
+                        <h3>UpSkills</h3>
+                    </div>
+                    <div>
+                        {{-- <img src="{{asset('img/logo_formation/logo_fmg7635dc trans.png')}}" alt="logo" > --}}
+                        <p class="separateur">|</p>
+                    </div>
+                    <div class="ms-4">
+                        <h3>formation.mg</h3>
+                    </div>
+                </div>
             </div>
-        </a>
-    </div>
-
-
-    <div class="col-md-4  p-3 bg-body rounded ms-2 test">
-        <a href="{{route('create+compte+client/employeur')}}" class="" role="button">
-            <img src="{{asset('img_create-compte/student_signup.png')}}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h6 class="card-title text-center">Employeur</h6>
+            <div class="row">
+                <p class="flex-wrap text_inscript text-center">
+                    Inscrivez votre organisme de formation et votre entreprise gratuitement sur notre plateforme
+                </p>
             </div>
-        </a>
-    </div>
+            <div class="row content_choice">
+                <p class="text-center txt_commencer">Commençons votre inscription</p>
+                <p class="mb-5"><span class="vous_etes">Vous êtes?</span><br>Plateforme pour les centres de formation. Si vous cherchez une formation inscrivez-vous en tant que entreprise.</p>
 
+                <div class="col-6 text-center icon_choice">
+                    <a href="{{route('create+compte+client/OF')}}" role="button">
+                        <p class="txt_titre fs-5">Organisme de Formation</p>
+                        <i class='bx bxs-home'></i>
+                    </a>
+                </div>
+                <div class="col-6 text-center icon_choice">
+                    <a href="{{route('create+compte+client/employeur')}}" class="" role="button">
+                        <p class="txt_titre etp_txt fs-5">Entreprise</p>
+                        <i class='bx bxs-city'></i>
+                    </a>
+                </div>
+                <div class="text-center">
+                    <p style="font-size: 14px" class="mt-2">Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ici.</a> Vous voulez revenir à l'accueil?  Appuyez sur <a href="{{route('accueil_perso')}}" style="color: blue">accueil</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 image_accueil">
+            <div class="text-center ">
+                <img src="{{asset('img/logo_formation/logo_fmg7635dc trans.png')}}" alt="logo" class="img-fluid" width="300px" height="300px">
+            </div>
+        </div>
+    </div>
 </div>
-
-
 @endsection

@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Modification photo</h3>
+@endsection
 @section('content')
 <style>
    .input{
@@ -49,9 +52,7 @@
 .image-ronde{
       width : 150px; height : 150px;
       border: none;
-      -moz-border-radius : 75px;
-      -webkit-border-radius : 75px;
-      border-radius : 75px;
+     
       cursor: pointer;
     }
         .image-upload > input
@@ -60,7 +61,7 @@
         }
 </style>
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profil_of',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+    <a href="{{route('affichage_parametre_cfp',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
  {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
@@ -80,7 +81,9 @@
 @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            <p style="text-align: left">Modifier le logo <strong>(60Ko Max)</strong></p>
+            <p style="text-align: left">Modifier le logo 
+               <strong>Taille du fichier: (1.7 MB max)</strong> 
+            </p>
             <form   class="btn-submit" action="{{route('enregistrer_modification_logo_cfp',$cfp->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" value="   {{ $cfp->nom}}" class="form-control test input"  name="nom">
@@ -97,7 +100,7 @@
                         </div>
                         </label>
                             <input id="file-input" type="file" name="image" value="{{$cfp->logo}}"/>
-                            <button style=" background-color: #801D68;color:white;float: right;" class=" mt-1 btn modification "> Enregister</button>
+                            <button style=" background-color: float: right;" class="btn_enregistrer mt-1 btn modification "> Enregister</button>
                         </div>
                     </center>
 

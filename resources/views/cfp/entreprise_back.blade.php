@@ -1,9 +1,12 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Entreprise</h3>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{ asset('design_entreprise/index.css') }}">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 <div class="d-flex justify-content-between pt-3">
-    <h5 class="mx-5">Entreprise</h5>
+    {{-- <h5 class="mx-5">Entreprise</h5> --}}
 
     <div>
         <i class="fa fa-search"></i>

@@ -49,6 +49,7 @@ CREATE TABLE `participant_groupe` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+alter table participant_groupe add column status int(10) default 0;
 
 
 CREATE TABLE `details` (
@@ -142,6 +143,8 @@ CREATE TABLE `description_champ_reponse` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE description_champ_reponse
+add column point_champ int(5) default 0;
 
 CREATE TABLE `reponse_evaluationchaud` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -324,6 +327,9 @@ create table ressources(
   demandeur varchar(255) not null,
   groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES goupes(id) ON DELETE CASCADe
 );
+alter table ressources add column pris_en_charge VARCHAR(200);
+alter table ressources add column note text;
+
 
 create table frais_annexe_formation(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

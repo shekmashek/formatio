@@ -1,14 +1,17 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Entreprises</h3>
+@endsection
 @section('content')
 
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
 
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
                 <br>
                 <h5>Entreprises</h5>
-            </div>
+            </div> --}}
 
             <nav class="navbar navbar-expand-lg navbar-light css-menuInter p-3 mb-2 rounded">
                 <div class="container-fluid">
@@ -17,14 +20,14 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
 
-                        <a class="nav-link {{ Route::currentRouteNamed('liste_entreprise') ? 'active' : '' }}" aria-current="page" href="{{route('liste_entreprise')}}">
+                        {{-- <a class="nav-link {{ Route::currentRouteNamed('liste_entreprise') ? 'active' : '' }}" aria-current="page" href="{{route('liste_entreprise')}}">
                         <i class="bx bx-list-ul" style="font-size: 20px;"></i><span>&nbsp;Liste des Entreprise</span></a>
 
-                        </li>
+                        </li> --}}
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                         <a class="nav-link  {{ Route::currentRouteNamed('nouvelle_entreprise') ? 'active' : '' }}" href="{{route('nouvelle_entreprise')}}"><i class="bx bxs-plus-circle" style="font-size: 20px;"></i><span>&nbsp;Nouvelle Entreprise</span></a>
-                        </li>
+                        </li> --}}
 
                         {{-- <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteNamed('liste_entreprise') ? 'active' : '' }}" aria-current="page" href="{{route('liste_entreprise')}}">
@@ -34,9 +37,21 @@
                             <a class="nav-link {{ Route::currentRouteNamed('liste_entreprise') ? 'active' : '' }}" aria-current="page" href="{{route('liste_entreprise')}}">
                             <i class="fa fa-list ">Mode Block</i></a>
                         </li> --}}
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteNamed('departement.index') ? 'active' : '' }}" aria-current="page" href="{{route('departement.index')}}">
                             <i class='bx bx-building' style="font-size: 20px;"></i><span>&nbsp;Departement</span></a>
+                        </li> --}}
+                        <li class="nav-item mx-1">
+                            <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('liste_utilisateur') || Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}" >
+                                Responsables  Entreprises</a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_cfp') ? 'active' : '' }}" href="{{route('utilisateur_cfp')}}">
+                                Organisme de Formation</a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_superAdmin') ? 'active' : '' }}" href="{{route('utilisateur_superAdmin')}}">
+                                Super Admin</a>
                         </li>
 
                     </ul>
@@ -44,10 +59,9 @@
                 </div>
                 </nav>
 
-
             <form class="navbar-form navbar-left" role="search">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown">
                         Tout <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
@@ -61,7 +75,7 @@
                     </ul>
                 </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown">
                     Rechercher par entreprise <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
@@ -90,14 +104,14 @@
                                     <tr>
                                         <th>Logo</th>
                                         <th>Nom de l'entreprise</th>
-                                        <th>Adresse</th>
+                                        {{-- <th>Adresse</th> --}}
                                         <th>Téléphone</th>
                                         <th>E-mail</th>
-                                        <th>Site web</th>
+                                        {{-- <th>Site web</th>
                                         <th>NIF</th>
                                         <th>STAT</th>
                                         <th>RCS</th>
-                                        <th>CIF</th>
+                                        <th>CIF</th> --}}
                                         <th>Secteur  d'Activités</th>
                                         <th colspan ="2">Actions</th>
                                     </tr>
@@ -111,24 +125,24 @@
                                                     <img src="{{asset('images/entreprises/'.$etp->logo)}}" width="100" height="100">
                                                 </td>
                                     			<td width = "200px">{{$etp->nom_etp}}</td>
-                                    			<td>{{$etp->adresse}}</td>
+                                    			{{-- <td>{{$etp->adresse}}</td> --}}
                                     			<td>{{$etp->telephone_etp }} <br>
                                     			<td>{{$etp->email_etp }}</td>
-                                                <td>{{$etp->site_etp}}</td>
+                                                {{-- <td>{{$etp->site_etp}}</td>
                                                 <td >{{$etp->nif}}</td>
                                                 <td>{{$etp->stat}}</td>
                                                 <td>{{$etp->rcs}}</td>
-                                                <td>{{$etp->cif}}</td>
+                                                <td>{{$etp->cif}}</td> --}}
                                                 <td>{{$etp->secteur->nom_secteur}}</td>
                                                 <td>
                                                     <div class=" btn-group dropend" >
-                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="fa fa-ellipsis-v"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                        <li style="font-size:15px"><a href="#"   class=" modifierEtp lien" title="Modifier" id="{{$etp->id}}" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li>
-                                                        <li style="font-size:15px"><a href="{{route('profile_entreprise',$etp->id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>Afficher</a></li>
-                                                        <li style="font-size:15px"><a href="#" data-toggle="modal"  data-target="#exampleModal_{{$etp->id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>Supprimer</a></li>
+                                                        {{-- <li style="font-size:15px"><a href="#"   class=" modifierEtp lien" title="Modifier" id="{{$etp->id}}" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa fa-pencil" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li> --}}
+                                                        <li style="font-size:15px"><a href="{{route('aff_parametre_referent',$etp->id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>Afficher</a></li>
+                                                        {{-- <li style="font-size:15px"><a href="#" data-bs-toggle="modal"  data-target="#exampleModal_{{$etp->id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>Supprimer</a></li> --}}
                                                     </div>
                                                 </td>
                                             </tr>

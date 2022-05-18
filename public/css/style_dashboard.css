@@ -1,8 +1,11 @@
-.overr:hover{
+/* .overr:hover{
     font-size: 10.5px;
     color: #8f2474;
+} */
+.overr:hover{
+    font-size: 12px;
+    color: #8c8c8c;
 }
-
 
 .nav .btn{
     background-color: #e2e2e2;
@@ -28,7 +31,7 @@
 .system_{
     text-align: left;
     border: none;
-    border-bottom: 0.1px solid #d0c1cc;
+    border-bottom: 0.1px solid #e8dfe5;
 }
 
 .systems_{
@@ -61,8 +64,8 @@
 
 .system_numero{
     text-align: right;
-    color: white;
-    background-color: #9d207d;
+    color: #5f5f5f;
+    /* background-color: #e5def0; */
     border: none;
     border-radius: 5px;
     float: right;
@@ -73,8 +76,9 @@
 
 .system_numeroAlert{
     text-align: right;
-    color: white;
-    background-color: #d32727;
+    /* color: rgb(146, 146, 146); */
+    color: #5f5f5f;
+    /* background-color: #f2e0df; */
     border: none;
     border-radius: 5px;
     float: right;
@@ -85,8 +89,8 @@
 
 .system_numeroSuccess{
     text-align: right;
-    color: white;
-    background-color: #25d315;
+    color: #5f5f5f;
+    /* background-color: #E6F4EA; */
     border: none;
     border-radius: 5px;
     float: right;

@@ -17,6 +17,7 @@ class ProgrammeController extends Controller
 
     public function __construct()
     {
+        $this->fonct = new FonctionGenerique();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
@@ -73,7 +74,7 @@ class ProgrammeController extends Controller
                 }
             }
         }
-        return back();
+        return back()->with('success', 'Cours ajouté avec succès, vous pouvez voir votre module dans la section "non publiées"');
         // return redirect()->route('liste_module');
     }
 
@@ -157,6 +158,7 @@ class ProgrammeController extends Controller
     public function ajout_programme($id)
     {
         $id = request('id');
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
         $categorie = DB::select('select * from formations where status = 1');
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id . ') as moduleExiste');
@@ -173,9 +175,11 @@ class ProgrammeController extends Controller
 
             $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
+            $competences = DB::select('select * from competence_a_evaluers where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
+            $niveau = DB::select('select * from niveaux');
             // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
-            return view('admin.module.modif_programme', compact('infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id'));
+            return view('admin.module.modif_programme', compact('devise','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id', 'competences','niveau'));
         } else return redirect()->route('liste_module');
     }
 

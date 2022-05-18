@@ -1,30 +1,11 @@
 @extends('./layouts/admin')
+@section('title')
+<p class="text_header m-0 mt-1">Nouveau Module</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<div id="page-wrapper">
-    <div class="container-fluid bg-light">
-        <nav class="navbar navbar-expand-lg w-100">
-            <div class="row w-100 g-0 m-0">
-                <div class="col-lg-12">
-                    <div class="row g-0 m-0" style="align-items: center">
-                        @can('isCFP')
-                        <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                            <div class="col titre_page">
-                                <h3 class="mt-3">Nouvelle Module</h3>
-                            </div>
 
-                            <div class="col" align="right">
-                                <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}" href="{{route('liste_module')}}">
-                                    <span class="btn_enregistrer text-center">Précedent</span>
-                                </a>
-                            </div>
-                            @endcan
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <hr>
+    <div class="container-fluid bg-light">
         <div class="panel-body">
             <div class="row">
                 <form action="{{route('module.store')}}" method="POST" id="frm_new_module">
@@ -34,32 +15,65 @@
                             <div class="col-lg-1 postion_fixe">
                                 <div class="row">
                                     <div class="col text-left ps-0 me-3">
-                                        <p id="changer_module" onclick="changer_module();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut"><i class='bx bxs-cube-alt' style="color: #7635dc; font-size:2rem"></i><br><span>Module</span></a>
+                                        <p id="changer_module" onclick="changer_module();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut"><i class='bx bxs-cube-alt' style="color: #637381; font-size:1.5rem"></i><br><span>Module</span></a>
                                         </p>
-                                        <p id="changer_objectif" onclick="changer_objectif();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut2"><i class='bx bx-radio-circle-marked' style="color: #7635dc; font-size:2rem"></i><br><span>Objectif</span></a>
+                                        <p id="changer_objectif" onclick="changer_objectif();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut2"><i class='bx bx-radio-circle-marked' style="color: #637381; font-size:1.5rem"></i><br><span>Objectif</span></a>
                                         </p>
-                                        <p id="changer_cible" onclick="changer_cible();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_objectif"><i class='bx bx-user' style="color: #7635dc; font-size:2rem"></i><br><span>Cible</span></a>
+                                        <p id="changer_cible" onclick="changer_cible();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_objectif"><i class='bx bx-user' style="color: #637381; font-size:1.5rem"></i><br><span>Cible</span></a>
                                         </p>
-                                        <p id="changer_reference" onclick="changer_reference();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_reference"><i class='bx bx-clipboard' style="color: #7635dc; font-size:2rem"></i><br><span>Reference</span></a>
+                                        <p id="changer_reference" onclick="changer_reference();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_reference"><i class='bx bx-clipboard' style="color: #637381; font-size:1.5rem"></i><br><span>Reference</span></a>
                                         </p>
-                                        <p id="changer_equipement" onclick="changer_equipement();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_equipement"><i class='bx bxs-cog' style="color: #7635dc; font-size:2rem"></i><br><span>Equipement</span></a>
+                                        <p id="changer_equipement" onclick="changer_equipement();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_equipement"><i class='bx bxs-cog' style="color: #637381; font-size:1.5rem"></i><br><span>Equipement</span></a>
                                         </p>
-                                        <p id="changer_prestation" onclick="changer_prestation();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_prestation"><i class='bx bx-hive' style="color: #7635dc; font-size:2rem"></i><br><span>Préstation</span></a>
+                                        <p id="changer_prestation" onclick="changer_prestation();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_prestation"><i class='bx bx-hive' style="color: #637381; font-size:1.5rem"></i><br><span>Préstation</span></a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 pe-5 postion_fixe_form" style="align-items: center">
                                 <div class="form-row">
+
+
+                                    <div class="form-group" id="premier_vue9">
+                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
+                                            <div class="acf-input">
+                                                <div class="acf-input-wrap premier_wrap">
+                                                    <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 50px;">
+                                                        <option value="null" disable selected hidden>Choisissez la
+                                                            domaine de formation ...</option>
+                                                        @foreach($domaine as $do)
+                                                        <option value="{{$do->id}}" data-value="{{$do->nom_domaine}}">
+                                                            {{$do->nom_domaine}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <label for="acf-domaine" class="form-control-placeholder">Domaine de Formation</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="premier_vue2">
+                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
+                                            <div class="acf-input">
+                                                <div class="acf-input-wrap premier_wrap">
+                                                    <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 50px;">
+                                                        {{-- <option value="null" disable selected hidden>Choisissez la
+                                                            catégorie de formation ...</option>
+                                                        @foreach($liste as $li)
+                                                        <option value="{{$li->id}}" data-value="{{$li->nom_formation}}">
+                                                        {{$li->nom_formation}}</option>
+                                                        @endforeach --}}
+                                                    </select>
+                                                    <label for="acf-categorie" class="form-control-placeholder">Thématique par Domaine</label><br>
+                                                    <span style="" id="domaine_id_err">Choisir le domaine de formation valide</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group" id="premier_vue">
                                         <div class="acf-field acf-field-text acf-field-nom_module is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    {{-- test input top --}}
-                                                    {{-- <div class="row px-3 mt-4">
-                                                        <div class="form-group mt-1 mb-1"> <input type="text" id="email" class="form-control test" required> <label class="ml-3 form-control-placeholder" for="email">Email</label> </div>
-                                                    </div> --}}
-                                                    <input type="text" class="form-control module module input" id="acf-nom_module" name="nom_module" required>
+                                                <div class="acf-input-wrap premier_wrap">
+                                                    <input type="text" class="form-control module module input" id="acf-nom_module" name="nom_module" required placeholder="Nom du module">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Nom du module</label>
                                                     @error('nom_module')
                                                     <div class="col-sm-6">
@@ -71,49 +85,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" id="premier_vue9">
-                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
-                                            <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 50px;">
-                                                        <option value="null" disable selected hidden>Choisissez la
-                                                            domaine de formation ...</option>
-                                                        @foreach($domaine as $do)
-                                                        <option value="{{$do->id}}" data-value="{{$do->nom_domaine}}">
-                                                            {{$do->nom_domaine}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <label for="acf-domaine" class="form-control-placeholder">Formation</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group" id="premier_vue2">
-                                        <div class="acf-field acf-field-text acf-field-categorie is-required">
-                                            <div class="acf-input">
-                                                <div class="acf-input-wrap">
-                                                    <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 50px;">
-                                                        {{-- <option value="null" disable selected hidden>Choisissez la
-                                                            catégorie de formation ...</option>
-                                                        @foreach($liste as $li)
-                                                        <option value="{{$li->id}}" data-value="{{$li->nom_formation}}">
-                                                        {{$li->nom_formation}}</option>
-                                                        @endforeach --}}
-                                                    </select>
-                                                    <label for="acf-categorie" class="form-control-placeholder">Modules</label>
-                                                    <span style="" id="domaine_id_err">choisir le type de domaine valide pour avoir ses formations</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="form-group" id="premier_vue3">
                                         <div class="acf-field acf-field-text acf-field-description is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap mt-2">
-                                                    <input type="text" class="form-control descript descript input" id="acf-description" name="description" required>
-                                                    <label for="acf-nom_module" class="form-control-placeholder">Déscription</label>
+                                                <div class="acf-input-wrap premier_wrap mt-1">
+                                                    <input type="text" class="form-control descript descript input" id="acf-description" name="description" required placeholder="Déscription courte" maxlength="70" title="Limiter à 70 caractères">
+                                                    <label for="acf-nom_module" class="form-control-placeholder">Déscription courte</label>
                                                     @error('description')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -130,8 +108,8 @@
                                             <div class="form-group" id="premier_vue4">
                                                 <div class="acf-field acf-field-text acf-field-jour is-required">
                                                     <div class="acf-input">
-                                                        <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control jour jour input" id="acf-jour" name="jour" min="1" max="365" onfocus="(this.type='number')" title="entrer une durée en jours" required>
+                                                        <div class="acf-input-wrap premier_wrap mt-1">
+                                                            <input type="text" class="form-control jour jour input " id="acf-jour" name="jour" min="1" max="365" onfocus="(this.type='number')" title="entrer une durée en jours" required  placeholder="Durée en Jours (J)">
                                                             <label for="acf-nom_module" class="form-control-placeholder">Durée en Jours (J)</label>
                                                         </div>
                                                     </div>
@@ -142,8 +120,8 @@
                                             <div class="form-group" id="premier_vue5">
                                                 <div class="acf-field acf-field-text acf-field-heur is-required">
                                                     <div class="acf-input">
-                                                        <div class="acf-input-wrap">
-                                                            <input type="text" class="form-control heur heur input" id="acf-heur" name="heure" min="1" max="8760" onfocus="(this.type='number')" title="entrer une durée en heure" required>
+                                                        <div class="acf-input-wrap premier_wrap mt-1">
+                                                            <input type="text" class="form-control heur heur input" id="acf-heur" name="heure" min="1" max="8760" onfocus="(this.type='number')" title="entrer une durée en heure" required placeholder="Durée en Heure (H)">
                                                             <label for="acf-nom_module" class="form-control-placeholder">Durée en Heure (H)</label>
                                                         </div>
                                                     </div>
@@ -156,13 +134,13 @@
                                     <div class="form-group" id="premier_vue6">
                                         <div class="acf-field acf-field-text acf-field-modalite is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap">
+                                                <div class="acf-input-wrap premier_wrap mt-1">
                                                     <select class="form-control select_formulaire modalite modalite input" id="acf-modalite" name="modalite" style="height: 50px;">
                                                         <option value="null" disable selected hidden>Choisissez la
                                                             modalite de formation ...</option>
                                                         <option value="En ligne">En ligne</option>
-                                                        <option value="Présentiel">Présentiel</option>
-                                                        <option value="En ligne/Présentiel">En ligne/Présentiel</option>
+                                                        <option value="Presentiel">Présentiel</option>
+                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
                                                     </select>
                                                     <label for="acf-nom_module" class="form-control-placeholder">Modalité de Formation</label>
                                                 </div>
@@ -173,7 +151,7 @@
                                     <div class="form-group" id="premier_vue7">
                                         <div class="acf-field acf-field-text acf-field-niveau is-required">
                                             <div class="acf-input">
-                                                <div class="acf-input-wrap">
+                                                <div class="acf-input-wrap premier_wrap">
                                                     <select class="form-control select_formulaire niveau niveau input" id="acf-niveau" name="niveau" style="height: 50px;">
                                                         <option value="null" disable selected hidden>Choisissez le
                                                             niveau de formation...</option>
@@ -190,17 +168,14 @@
 
                                     <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i class="bx bxs-edit close" onclick="myFunction()"></i>
                                         <br>
-                                        <p class="text-center mt-3"><button type="button" class="new_list_nouvelle btn_next" onclick="suivant_objectif();"><a href="#preview_haut2">Suivant</a></button></p>
+                                        <p class="text-center mt-3"><a href="#preview_haut2" class="new_list_nouvelle btn_next" onclick="suivant_objectif();" type="button">Suivant</a></p>
                                     </span>
-
-
-
                                     <div class="form-group apres_preview" id="second_vue">
                                         <div class="acf-field acf-field-text acf-field-objectif is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control objectif objectif text_area" id="acf-objectif" name="objectif" required></textarea>
-                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Objectif du Module</label>
+                                                    <textarea class="form-control objectif objectif text_area" id="acf-objectif" name="objectif" required placeholder="Objectifs"></textarea>
+                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Objectifs</label>
                                                     @error('objectif')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -212,7 +187,7 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_module();"><a href="#preview_haut">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_cible();"><a href="#preview_objectif">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#preview_objectif" class="new_list_nouvelle px-5 btn_next" onclick="suivant_cible();" type="button">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -220,7 +195,7 @@
                                         <div class="acf-field acf-field-text acf-field-cible is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control cible cible text_area" id="acf-cible" name="cible" required></textarea>
+                                                    <textarea class="form-control cible cible text_area" id="acf-cible" name="cible" required placeholder="Public cible"></textarea>
                                                     <label for="acf-nom_module" class="form-control-placeholder-text_area">Public Cible</label>
                                                     @error('cible')
                                                     <div class="col-sm-6">
@@ -236,7 +211,7 @@
                                         <div class="acf-field acf-field-text acf-field-prerequis is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control prerequis prerequis text_area" id="acf-prerequis" name="prerequis" required></textarea>
+                                                    <textarea class="form-control prerequis prerequis text_area mt-4" id="acf-prerequis" name="prerequis" required placeholder="Prérequis"></textarea>
                                                     <label for="acf-nom_module" class="form-control-placeholder-text_area">Prérequis</label>
                                                     @error('prerequis')
                                                     <div class="col-sm-6">
@@ -249,7 +224,7 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_objectif();"><a href="#preview_haut2">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_reference();"><a href="#preview_reference">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#preview_reference" type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_reference();">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -257,7 +232,7 @@
                                         <div class="acf-field acf-field-text acf-field-reference is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control reference reference input" id="acf-reference" name="reference" required>
+                                                    <input type="text" class="form-control reference reference input" id="acf-reference" name="reference" required placeholder="Reference">
                                                     <label for="acf-nom_module" class="form-control-placeholder">Reference</label>
                                                     @error('reference')
                                                     <div class="col-sm-6">
@@ -273,9 +248,22 @@
                                         <div class="acf-field acf-field-text acf-field-prix is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control prix prix input" id="acf-prix" name="prix" minlength="1" maxlength="7" pattern="[0-9]{1,7}" required>
-                                                    <label for="acf-nom_module" class="form-control-placeholder">Prix en AR</label>
+                                                    <input type="text" class="form-control prix prix input mt-4" id="acf-prix" name="prix" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" required placeholder="Prix en {{$devise->devise}}" onfocus="(this.type='number')">
+                                                    <label for="acf-nom_module" class="form-control-placeholder">Prix en {{$devise->devise}}</label>
                                                     @error('prix')
+                                                    <div class="col-sm-6">
+                                                        <span style="color:#ff0000;"> {{$message}} </span>
+                                                    </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="acf-field acf-field-text acf-field-prix is-required">
+                                            <div class="acf-input">
+                                                <div class="acf-input-wrap">
+                                                    <input type="text" class="form-control prix_groupe prix_groupe input mt-4" id="acf-prix_groupe" name="prix_groupe" min="0" minlength="1" maxlength="7" pattern="[0-9]{1,7}" placeholder="Prix par Groupe en {{$devise->devise}}" onfocus="(this.type='number')">
+                                                    <label for="acf-nom_module" class="form-control-placeholder">Prix par Groupe en {{$devise->devise}}</label>
+                                                    @error('prix_groupe')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
                                                     </div>
@@ -286,7 +274,7 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_cible();"><a href="#preview_objectif">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_equipement();"><a href="#changer_equipement">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#changer_equipement" type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_equipement();">Suivant</a></button></p>
                                         </div>
                                     </div>
 
@@ -294,8 +282,8 @@
                                         <div class="acf-field acf-field-text acf-field-materiel is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <input type="text" class="form-control materiel materiel input" id="acf-materiel" name="materiel" required>
-                                                    <label for="acf-nom_module" class="form-control-placeholder">Equipement necessaire</label>
+                                                    <textarea class="form-control materiel materiel text_area" id="acf-materiel" name="materiel" required placeholder="Equipement necessaire"></textarea>
+                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Equipement necessaire</label>
                                                     @error('materiel')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -310,8 +298,8 @@
                                         <div class="acf-field acf-field-text acf-field-bon_a_savoir is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control bon_a_savoir bon_a_savoir text_area" id="acf-bon_a_savoir" name="bon_a_savoir" required></textarea>
-                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Bon a savoir</label>
+                                                    <textarea class="form-control bon_a_savoir bon_a_savoir text_area mt-4" id="acf-bon_a_savoir" name="bon_a_savoir" required placeholder="Bon à savoir"></textarea>
+                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Bon à savoir</label>
                                                     @error('bon_a_savoir')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -323,7 +311,7 @@
                                         <br>
                                         <div class="d-flex justify-content-between">
                                             <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_reference();"><a href="#changer_reference">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_prestation();"><a href="#changer_prestation">Suivant</a></button></p>
+                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#changer_prestation" type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_prestation();">Suivant</a></p>
                                         </div>
                                     </div>
 
@@ -331,8 +319,8 @@
                                         <div class="acf-field acf-field-text acf-field-prestation is-required">
                                             <div class="acf-input">
                                                 <div class="acf-input-wrap">
-                                                    <textarea class="form-control prestation prestation text_area" id="acf-prestation" name="prestation" onkeyup='estComplet();' required></textarea>
-                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Prestations pedagogiques</label>
+                                                    <textarea class="form-control prestation prestation text_area" id="acf-prestation" name="prestation" onkeyup='estComplet();' required placeholder="Prestations pédagogiques"></textarea>
+                                                    <label for="acf-nom_module" class="form-control-placeholder-text_area">Prestations pédagogiques</label>
                                                     @error('prestation')
                                                     <div class="col-sm-6">
                                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -351,20 +339,18 @@
                                                     <div class="acf-field acf-field-text acf-field-min is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-                                                                <input type="text" class="form-control min min input" id="acf-min" name="min_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne minimale" required>
-                                                                <label for="acf-nom_module" class="form-control-placeholder">Nombre personne min</label>
+                                                                <input type="text" class="form-control min min input mt-4" id="acf-min" name="min_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne minimale" required placeholder="Nombre personne min">
+                                                                <label for="acf-nom_module" class="form-control-placeholder">Nombre personne minimale</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
                                                 <div class="form-group" id="premier_">
                                                     <div class="acf-field acf-field-text acf-field-max is-required">
                                                         <div class="acf-input">
                                                             <div class="acf-input-wrap">
-                                                                <input type="text" class="form-control max max input" id="acf-max" name="max_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne maximale" required>
-                                                                <label for="acf-nom_module" class="form-control-placeholder">Nombre personne max</label>
+                                                                <input type="text" class="form-control max max input mt-4" id="acf-max" name="max_pers" min="1" max="100" onfocus="(this.type='number')" title="entrer le nombre de personne maximale" required placeholder="Nombre personne max">
+                                                                <label for="acf-nom_module" class="form-control-placeholder">Nombre personne maximale</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -372,7 +358,7 @@
                                             </div>
                                         </div>
                                         <div class="col text-center">
-                                            <p class="mt-3" style="font-size: 16px;"><button type="button" class="new_list_nouvelle px-5 btn_next" onclick="retour_equipement();"><a href="#changer_equipement">Retour</a></button></p>
+                                            <p class="mt-3" style="font-size: 16px;"><a href="#changer_equipement" type="button" class="new_list_nouvelle px-5 btn_next" onclick="retour_equipement();">Retour</a></p>
                                         </div>
                                     </div>
 
@@ -396,12 +382,14 @@
                         <div class="row bg-light justify-content-space-between py-3 px-5" id="border_premier">
                             <div class="col-lg-6 col-md-6  new_back">
                                 <div class=" ">
-                                    <h4><span id="preview_categ"><span class="py-4 acf-categorie">Ms
-                                                Excel</span></span><span style="color: black !important;">&nbsp;-&nbsp;</span>
-                                        <span></span>
+                                    <h4>
                                         <span id="preview_module"><span class="acf-nom_module">Excel
                                                 avancee</span></span>
                                     </h4>
+                                    <span id="preview_categ">
+                                        <span class="py-4 acf-categorie">Ms Excel</span>
+                                    </span>
+
                                     <p id="preview_descript"><span class="acf-description">Optimiser et
                                             automatiser vos tableaux sans programmer</span></p>
                                     <div class="detail__formation__result__avis" >
@@ -523,6 +511,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="col-lg-4 detail__formation__item__right" id="border_reference">
@@ -536,7 +525,7 @@
                                 <div class="row detail__formation__item__main">
                                     <div class="detail__prix__main__presentiel pt-3">
                                         <div>
-                                            <p class="text-uppercase text-center" id="preview_modalite"><span class="acf-modalite text_mod">Presentiel et a
+                                            <p class="text-uppercase text-center" id="preview_modalite"><span class="acf-modalite text_mod font_size">Presentiel et a
                                                     distance</span></p>
                                         </div>
                                     </div>
@@ -544,12 +533,12 @@
                                 <div class="row detail__formation__item__main">
                                     <div class="col-lg-5 detail__prix__main__ref pt-2">
                                         <div>
-                                            <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
+                                            <p class="font_size"><i class="bx bx-clipboard "></i>&nbsp;Ref :</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-7 detail__prix__main__ref2 pt-2">
                                         <div id="preview_reference">
-                                            <p class="acf-reference">10MG2022-01</p>
+                                            <p class="acf-reference font_size">10MG2022-01</p>
                                         </div>
                                     </div>
                                 </div>
@@ -557,13 +546,13 @@
                                 <div class="row detail__formation__item__main">
                                     <div class="col-lg-6 detail__prix__main__dure">
                                         <div>
-                                            <p><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span>
+                                            <p class="font_size"><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span>
                                             </p>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 detail__prix__main__dure2">
                                         <div>
-                                            <p>
+                                            <p class="font_size">
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         4
                                                     </span>j</span>
@@ -578,12 +567,12 @@
                                 <div class="row detail__formation__item__rmain">
                                     <div class="col-lg-5 detail__prix__main__prix">
                                         <div>
-                                            <p><i class='bx bx-euro'></i>&nbsp;Prix :</p>
+                                            <p class="font_size"><i class='bx bx-euro'></i>&nbsp;Prix :</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-7 detail__prix__main__prix2">
                                         <div>
-                                            <p id="preview_prix"><span class="acf-prix">450000</span>&nbsp;AR&nbsp;HT
+                                            <p id="preview_prix" class="font_size"><span class="acf-prix">450000</span>&nbsp;{{$devise->devise}}&nbsp;HT
                                             </p>
                                         </div>
                                     </div>
@@ -629,7 +618,7 @@
                                         @csrf
                                         <table class="table">
                                             <thead>
-                                                <th>Nouvelle niveau : </th>
+                                                <th>Nouveau niveau : </th>
                                             </thead>
                                             <tbody>
                                                 <tr>
@@ -651,9 +640,7 @@
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
 $("#acf-domaine").change(function() {
@@ -834,7 +821,7 @@ function changer_module() {
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
     var mod_preview = document.getElementById("border_premier");
-    $("#border_premier").css("border", "4px solid #7635dc");
+    $("#border_premier").css("border", "2px solid #7635dc");
     $("#border_objectif").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_equipement").css("border", "none");
@@ -908,7 +895,7 @@ function changer_objectif() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_objectif").css("border", "4px solid #7635dc");
+    $("#border_objectif").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_equipement").css("border", "none");
@@ -980,7 +967,7 @@ function changer_cible() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_cible").css("border", "4px solid #7635dc");
+    $("#border_cible").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_objectif").css("border", "none");
     $("#border_equipement").css("border", "none");
@@ -1052,7 +1039,7 @@ function changer_reference() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_reference").css("border", "4px solid #7635dc");
+    $("#border_reference").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_equipement").css("border", "none");
@@ -1124,7 +1111,7 @@ function changer_equipement() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_equipement").css("border", "4px solid #7635dc");
+    $("#border_equipement").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_reference").css("border", "none");
@@ -1196,7 +1183,7 @@ function changer_prestation() {
     var materiel = document.getElementById("cinquiem_vue2");
     var prestation = document.getElementById("sixieme_vue");
     var bouttons = document.getElementById("sixieme_vue2");
-    $("#border_prestation").css("border", "4px solid #7635dc");
+    $("#border_prestation").css("border", "2px solid #7635dc");
     $("#border_premier").css("border", "none");
     $("#border_cible").css("border", "none");
     $("#border_equipement").css("border", "none");
@@ -1329,14 +1316,6 @@ function estComplet() {
     } else {
         btn.disabled = true;
     }
-}
-
-let sidebar = document.querySelector(".sidebar");
-let menu = document.querySelector(".bx-menu");
-
-function clickSidebar() {
-    sidebar.classList.toggle("active");
-    menu.classList.toggle("bx-menu-alt-right");
 }
 
 

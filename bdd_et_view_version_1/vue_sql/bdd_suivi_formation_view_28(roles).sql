@@ -14,8 +14,6 @@ CROSS JOIN role_users
 GROUP BY id,role_name,created_at,updated_at,role_description,user_id
 ;
 
-
-
 CREATE OR REPLACE VIEW v_role_user_etp_stg AS SELECT
     roles.role_name,roles.role_description,role_users.role_id,role_users.user_id,stagiaires.entreprise_id
 FROM

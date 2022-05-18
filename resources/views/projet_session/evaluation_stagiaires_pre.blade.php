@@ -17,6 +17,9 @@
         document.getElementById('voir_radar').style.display = "block";
         document.getElementById('modifier_note').style.display = "none";
     }
+
+    var nombre = @php echo count($stagiaire); @endphp;
+    // alert(nombre);
     </script>
 
 
@@ -31,52 +34,108 @@
         box-shadow: none;
     }
     </style>
-
+    <nav class="d-flex justify-content-between mb-1 ">
+        <span class="titre_detail_session"><strong style="font-size: 14px">Note des apprenants de la session</strong></span>
+    </nav>
     <nav class="d-flex justify-content-around">
-        <button id="btn_note" class="btn btn_note_radar" style="background-color: #fff; border: 1px solid grey" onclick="modifier_note()">Notes des stagiaires</button>
+        @canany(['isFormateur'])
+            <button id="btn_note" class="btn btn_note_radar" style="background-color: #fff; border: 1px solid grey" onclick="modifier_note()">Notes des stagiaires</button>
+        @endcanany
         <button id="btn_radar" class="btn btn_note_radar" onclick="voir_radar()">Résultats</button>
         {{-- <button id="btn_formateur" class="btn btn_note_radar" onclick="evaluation_formateur()">Evaluation des formateurs</button> --}}
     </nav>
+    @canany(['isFormateur'])
     <div id="modifier_note" style="display: block">
         <div class="row d-flex text-center mt-2">
             <form action="{{ route('insert_evaluation_stagiaire_apres') }}" method="POST">
                 @csrf
                 <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
                 <input type="hidden" name="module" value="{{ $projet[0]->module_id }}">
-                <div class="col-md-12 d-flex justify-content-around">
-                    <table class="table" >
-                        <thead>
-                        <tr>
-                            <th>Stagiaire(s)</th>
-                            @foreach ($competences as $cp)
-                                <th align="center">{{ $cp->titre_competence }}</th>
-                            @endforeach
-                        </tr>
-                        </thead>
-                        <tbody style="border-top: 0">
-                            @foreach ($stagiaire as $stg)
-                                <tr>
-                                    <td class="text-start"><input type="hidden" value="{{ $stg->stagiaire_id }}" name="stagiaire[{{ $stg->stagiaire_id }}]">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }}</td>
-                                    @for ($i = 0; $i < count($competences); $i++)
-                                        @foreach ($evaluation_stg as $e_stg)
-                                            @if ($e_stg->stagiaire_id == $stg->stagiaire_id && $e_stg->competence_id == $competences[$i]->id)
-                                                <td class="text-center"><input class="p-0 m-0" value="{{ $e_stg->note_apres }}" style="height: 1.563rem; width: 9rem;" type="number" min="1" max="10" placeholder="notes" name="note[{{ $stg->stagiaire_id }}][{{ $competences[$i]->id }}]" required></td>
+                @if (count($evaluation_stg)>0)
+                    <div class="col-md-12 d-flex justify-content-around">
+                        <table class="table table-borderless" >
+                            <thead style="border-bottom: 1px solid black; line-height: 20px">
+                            <tr>
+                                <th>Stagiaire(s)</th>
+                                @foreach ($competences as $cp)
+                                    <th align="center">{{ $cp->titre_competence }}</th>
+                                @endforeach
+                            </tr>
+                            </thead>
+                            <tbody style="border-top: 0">
+                                @foreach ($stagiaire as $stg)
+                                    <tr>
+                                        <td class="text-start"><input type="hidden" value="{{ $stg->stagiaire_id }}" name="stagiaire[{{ $stg->stagiaire_id }}]">
+                                            @if ($stg->photos == null)
+                                                <span class="me-2">{{ $stg->sans_photos }}</span>
+                                            @else
+                                                <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }} </div>
                                             @endif
-                                        @endforeach
-                                    @endfor
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <button class="btn inserer_emargement" type="submit">Sauvegarder</button>
-                </div>
+                                            
+                                        </td>
+                                        @for ($i = 0; $i < count($competences); $i++)
+                                            @foreach ($evaluation_stg as $e_stg)
+                                                @if ($e_stg->stagiaire_id == $stg->stagiaire_id && $e_stg->competence_id == $competences[$i]->id)
+                                                    <td class="text-center"><input class="p-0 m-0" value="{{ $e_stg->note_apres }}" style="height: 1.563rem; width: 9rem;" type="number" min="1" max="10" placeholder="notes" name="note[{{ $stg->stagiaire_id }}][{{ $competences[$i]->id }}]" required></td>
+                                                @endif
+                                            @endforeach
+                                        @endfor
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button class="btn inserer_emargement" type="submit">Sauvegarder</button>
+                    </div>
+                @else
+                    <div class="col-md-12 d-flex justify-content-around">
+                        <table class="table table-borderless" >
+                            <thead style="border-bottom: 1px solid black; line-height: 20px">
+                            <tr>
+                                {{-- <th>Stagiaire(s)</th> --}}
+                                @foreach ($competences as $cp)
+                                    <th align="center">{{ $cp->titre_competence }}</th>
+                                @endforeach
+                            </tr>
+                            </thead>
+                            <tbody style="border-top: 0">
+                                @foreach ($stagiaire as $stg)
+                                    <tr>
+                                        <td class="text-start"><input type="hidden" value="{{ $stg->stagiaire_id }}" name="stagiaire[{{ $stg->stagiaire_id }}]">
+                                            @if ($stg->photos == null)
+                                                <span class="me-2">{{ $stg->sans_photos }}</span>
+                                            @else
+                                                <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }} </div>
+                                            @endif
+                                            
+                                        </td>
+                                        @for ($i = 0; $i < count($competences); $i++)
+                                            @foreach ($evaluation_stg as $e_stg)
+                                                @if ($e_stg->stagiaire_id == $stg->stagiaire_id && $e_stg->competence_id == $competences[$i]->id)
+                                                    <td class="text-center"><input class="p-0 m-0" value="{{ $e_stg->note_apres }}" style="height: 1.563rem; width: 9rem;" type="number" min="1" max="10" placeholder="notes" name="note[{{ $stg->stagiaire_id }}][{{ $competences[$i]->id }}]" required></td>
+                                                @endif
+                                            @endforeach
+                                        @endfor
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide">
+                        <span class="text-center">Aucun apprenant inscrit</span>
+                    </div>
+                @endif
             </form>
         </div>
     </div>
-
-    <div id="voir_radar" style="display: none">
+    @endcanany
+    @canany(['isFormateur'])
+        <div id="voir_radar" style="display: none">
+    @endcanany
+    @canany(['isCFP','isReferent'])
+        <div id="voir_radar">
+    @endcanany
         <div class="row mt-2">
             <div class="col-md-4">
                 Choisissez votre stagiaire pour voir le résultat<br>

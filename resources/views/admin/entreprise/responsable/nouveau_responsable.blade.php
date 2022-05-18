@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text-white ms-5">Nouveau résponsable</h3>
+@endsection
 @section('content')
 <div class="container-fluid justify-content-center pb-3">
 
@@ -70,7 +73,7 @@
         <div class="col-md-5">
 
             <div class="shadow p-3 mb-5 bg-body rounded ">
-                <h4>Liste(s) de(s) responsable(s)</h4>
+                {{-- <h4>Liste(s) de(s) responsable(s)</h4> --}}
 
                 <table class="table  table-borderless table-lg">
                     <tbody id="data_collaboration">

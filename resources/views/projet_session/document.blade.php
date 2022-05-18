@@ -1,6 +1,9 @@
+
 <div class="row">
-    @can('isCFP')
-        <h6>Choisissez le(s) fichier(s) pour cette session</h6>
+    @canany(['isCFP','isFormateur'])
+        <nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
+            <span class="titre_detail_session"><strong style="font-size: 14px">Choisissez le(s) fichier(s) pour cette session</strong></span>
+        </nav>
         <div class="col-12 d-flex flex-wrap">
             <form action="{{ route('save_documents') }}" method="post">
                 @csrf
@@ -20,12 +23,17 @@
                         </div>
                     @endforeach
                 </div>
+                @if (count($documents) > 0)
                 <button type="submit" class="btn inserer_emargement">Enregistrer</button>
+                @endif
+                
             </form>
         </div>
-    @endcan
+    @endcanany
     @can('isReferent')
-        <h6>Le(s) fichier(s) pour cette session</h6>
+        <nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
+            <span class="titre_detail_session"><strong style="font-size: 14px">Les documents pour la session</strong></span>
+        </nav>
         <div class="col-12 d-flex flex-wrap">
             <div class="d-flex flex-row">
                 @foreach ($documents as $docs)

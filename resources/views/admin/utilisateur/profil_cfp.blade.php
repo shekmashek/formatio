@@ -1,8 +1,11 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Profil du responsable de centre de formation</h3>
+@endsection
 @section('content')
 <div class="page-content page-container" id="page-content">
     <div class="col" style="margin-left: 25px">
-        <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+        <a href="{{route('affichage_parametre_cfp')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
     </div>
     @foreach ($liste_cfps as $cfp)
 
@@ -16,7 +19,7 @@
                             <div class="card-block text-center">
                                 <div class="m-b-25 mt-2">
                                     <div class="hover">
-                                        <a href="{{ route('modification_logo',$cfp->id) }}">
+                                        <a href="{{ route('modification_logo_cfp',$cfp->id) }}">
 
                                     {{-- <img src="/dynamic-image/{{$cfp->logo}}" width="30%" height="30%"> --}}
                                         <img src="{{asset('images/CFP/'.$cfp->logo)}}" width="40%" height="30%">
@@ -25,7 +28,7 @@
                                 </div>
                                 <div class="hover" >
                                     <a href="{{ route('modification_nom_organisme',$cfp->id) }}">
-                                     <h4 class="f-w-600 mt-5">{{ $cfp->nom }}</h4>
+                                     <h4 class="f-w-600 mt-5">{{$cfp->nom }}</h4>
                                     </a>
                                 </div>
                                 <p></p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
@@ -41,12 +44,27 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="card-block">
+                                <div class="col-lg-12 text-center d-flex flex-column">
+                                    <span style="font-size: 17px;"><i class='bx bx-money-withdraw'></i> Assujetti à la TVA</span>
+                                    @if($cfp->assujetti_id == null)
+                                    {{-- <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"> --}}
+                                        <p class="mt-2 text-primary text-decoration-underline">incomplète</p>
+                                    </a>
+                                    @elseif($cfp->assujetti_id == 1)
+                                        {{-- <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"> --}}
+                                            <span class="mt-2 text-primary text-decoration-underline">Assujetti</span></a>
+                                    @else 
+                                        {{-- <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"> --}}
+                                            <span class="mt-2 text-primary text-decoration-underline">Non assujetti</span></a> 
+                                    @endif
+                                    <hr class="m-0 p-0 mt-0">
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <h6 class="m-b-20  f-w-600">Centre de formaton</h6>
-                                        <hr>
-                                        <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        {{-- <h6 class="m-b-20  f-w-600">Centre de formaton</h6> --}}
+                                        {{-- <hr> --}}
+                                        <p class="mt-3 m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Adresse</p>
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     lot:
@@ -58,7 +76,7 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     quartier:
@@ -71,7 +89,7 @@
                                             </a>
                                         </div>
 
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     ville:
@@ -83,7 +101,7 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_adresse_organisme',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     region:
@@ -95,24 +113,28 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
 
                                                  <p class="m-b-10 m-t-2 f-w-600"><i class="bx bx-envelope"></i>&nbsp;Email</p>
-                                                <h6 class="text-muted f-w-400">{{ $cfp->email }}</h6>
+                                        <a href="{{ route('modification_email',$cfp->id) }}">
 
+                                                 <h6 class="text-muted f-w-400">{{ $cfp->email }}</h6>
+                                        </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
 
                                                 <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
-                                                <h6 class="text-muted f-w-400">{{ $cfp->telephone }}</h6>
+                                        <a href="{{ route('modification_telephone',$cfp->id) }}">
 
+                                                <h6 class="text-muted f-w-400">{{ $cfp->telephone }}</h6>
+                                        </a>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
-                                        <br><br>
-                                        <p class="m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Horaire d'ouverture</p>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        
+                                        <p class="mt-3 m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Horaire d'ouverture</p>
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_horaire',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     @if ($horaire==NULL)
@@ -127,7 +149,7 @@
                                         </div>
 
                                         <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp; Slogan</p>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_slogan',$cfp->id)}}">
                                                 <h6 class="text-muted f-w-400">
                                                     @if ($cfp->slogan==NULL)
@@ -138,7 +160,7 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_site_web',$cfp->id)}}">
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Site web officiel</p>
                                                 <h6 class="text-muted f-w-400">
@@ -150,27 +172,40 @@
                                                 </h6>
                                             </a>
                                         </div>
-                                        <div class="hover" style="border-bottom: solid 1px #d399c2;">
+                                        <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
 
                                                 <p class="m-b-10 f-w-600"><i class="fa fa-globe"></i>&nbsp; Réseaux sociaux</p>
-                                                <a href="{{route('modification_site_web',$cfp->id)}}">
-                                                    <h6 class="text-muted f-w-400">
-                                                        @if ($reseaux_sociaux==NULL)
-                                                            Facebook :  <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
-                                                            Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
-                                                            Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
-                                                            Linkedin :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br>
-
+                                                 <h6 class="text-muted f-w-400">
+                                                        @if($reseaux_sociaux == null)
+                                                            <a href="{{route('lien_facebook',$cfp->id)}}">Facebook :  <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            <a href="{{route('lien_twitter',$cfp->id)}}">Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            <a href="{{route('lien_instagram',$cfp->id)}}">  Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            <a href="{{route('lien_linkedin',$cfp->id)}}"> Linkedin : <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
                                                         @else
-                                                            @for ($i=0;$i<count($reseaux_sociaux);$i++)
-                                                                Facebook : {{$reseaux_sociaux[$i]->lien_facebook}}<br>
-                                                                Twitter : {{$reseaux_sociaux[$i]->lien_twitter}}<br>
-                                                                Instagram : {{$reseaux_sociaux[$i]->lien_instagram}}<br>
-                                                                Linnkdin : {{$reseaux_sociaux[$i]->lien_linkedin}}<br>
-                                                            @endfor
+                                                            @if ($reseaux_sociaux[0]->lien_facebook==null)
+                                                                <a href="{{route('lien_facebook',$cfp->id)}}">Facebook :  <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            @else
+                                                                <a href="{{route('lien_facebook',$cfp->id)}}">Facebook : {{$reseaux_sociaux[0]->lien_facebook}}<br></a>
+                                                            @endif
+                                                            @if ($reseaux_sociaux[0]->lien_twitter==null)
+                                                                <a href="{{route('lien_twitter',$cfp->id)}}">Twitter :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            @else
+                                                                <a href="{{route('lien_twitter',$cfp->id)}}">Twitter : {{$reseaux_sociaux[0]->lien_twitter}}<br></a>
+                                                            @endif
+                                                            @if ($reseaux_sociaux[0]->lien_instagram==null)
+                                                                <a href="{{route('lien_instagram',$cfp->id)}}">  Instagram :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            @else
+                                                                <a href="{{route('lien_instagram',$cfp->id)}}">Instagram : {{$reseaux_sociaux[0]->lien_instagram}}<br></a>
+                                                            @endif
+                                                            @if ($reseaux_sociaux[0]->lien_linkedin==null)
+                                                                <a href="{{route('lien_linkedin',$cfp->id)}}">  Linkedin :   <strong style="color: rgb(202, 98, 98)">incomplète</strong> <br></a>
+                                                            @else
+                                                                <a href="{{route('lien_linkedin',$cfp->id)}}"> Linkedin : {{$reseaux_sociaux[0]->lien_linkedin}}<br></a>
+                                                            @endif
                                                         @endif
+
                                                     </h6>
-                                                </a>
+
 
                                         </div>
                                     </div>

@@ -16,7 +16,7 @@ use App\NouveauCompte;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
-
+use Image;
 class NouveauCompteController extends Controller
 {
     public function __construct()
@@ -83,7 +83,6 @@ class NouveauCompteController extends Controller
     public function create_compte_cfp(Request $req)
     {
         // dd($req->input());
-
         $this->new_compte->validation_form_cfp($req);
         $qst_IA_robot = 27 - 16;
         $value_confident = $req->value_confident;
@@ -94,22 +93,25 @@ class NouveauCompteController extends Controller
                 // ======== cfp
                 $date = date('d-m-y');
                 $data["logo_cfp"]  = str_replace(' ', '_', $req->name_cfp .  '' . $req->tel_cfp . '' . $date . '.' . $req->file('logo_cfp')->extension());
+<<<<<<< HEAD
                 $url = URL::to('/')."/images/CFP/".$data["logo_cfp"];
 
+=======
+
+                $url_logo = URL::to('/')."/images/CFP/".$data["logo_cfp"];
+>>>>>>> debug_version_1
                 $data["nom_cfp"] = $req->name_cfp;
                 $data["email_cfp"] = $req->email_resp_cfp;
-                $data["tel_cfp"] = $req->tel_resp_cfp;
-                $data["web_cfp"] = $req->web_cfp;
+                // $data["tel_cfp"] = $req->tel_resp_cfp;
+                // $data["web_cfp"] = $req->web_cfp;
                 $data["nif"] = $req->nif;
-
                 // ======= responsable
-
                 $resp["nom_resp"] = $req->nom_resp_cfp;
                 $resp["prenom_resp"] = $req->prenom_resp_cfp;
                 $resp["cin_resp"] = $req->cin_resp_cfp;
                 $resp["email_resp"] = $req->email_resp_cfp;
-                $resp["tel_resp"] = $req->tel_resp_cfp;
-                $resp["fonction_resp"] = $req->fonction_resp_cfp;
+                // $resp["tel_resp"] = $req->tel_resp_cfp;
+                // $resp["fonction_resp"] = $req->fonction_resp_cfp;
 
                 $verify = $this->new_compte->verify_cfp($req->name_cfp, $req->email_resp_cfp);
                 $verify_cfp_nif = $this->fonct->findWhere("cfps", ["nif"], [$req->nif]);
@@ -125,7 +127,7 @@ class NouveauCompteController extends Controller
                                     $this->user->name = $req->nom_resp_cfp . " " . $req->prenom_resp_cfp;
                                     $this->user->email = $req->email_resp_cfp;
                                     $this->user->cin = $req->cin_resp_cfp;
-                                    $this->user->telephone = $req->tel_resp_cfp;
+                                    // $this->user->telephone = $req->tel_resp_cfp;
                                     $ch1 = "0000";
                                     $this->user->password = Hash::make($ch1);
 
@@ -145,13 +147,28 @@ class NouveauCompteController extends Controller
                                         echo $e->getMessage();
                                     }
                                     //============= save image
-
                                     // $this->img->store_image("entreprise", $data["logo_cfp"], $req->file('logo_cfp')->getContent());
                                     $fonct = new FonctionGenerique();
                                     $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp]);
-
+                                    //imager  resize
+                                     $image = $req->file('logo_cfp');
+    
+                                    $image_name = $data["logo_cfp"];
+                                
+                                    $destinationPath = public_path('/images/CFP');
+                                
+                                    $resize_image = Image::make($image->getRealPath());
+                                
+                                    $resize_image->resize(256, 128, function($constraint){
+                                        $constraint->aspectRatio();
+                                    })->save($destinationPath . '/' .  $image_name);
+   /*                             
+                                    $destinationPath = public_path('/images');
+                                
+                                 $req->logo_cfp->move($destinationPath,$image_name);
+ */
                                     Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
-                                    $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
+                                    // $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
                                         return back();
@@ -198,8 +215,8 @@ class NouveauCompteController extends Controller
 
                 $data["nom_etp"] = $req->name_etp;
                 $data["email_etp"] = $req->email_resp_etp;
-                $data["tel_etp"] = $req->tel_resp_etp;
-                $data["web_etp"] = $req->web_etp;
+                // $data["tel_etp"] = $req->tel_resp_etp;
+                // $data["web_etp"] = $req->web_etp;
                 $data["nif"] = $req->nif;
                 $data["secteur_id"] = $req->secteur_id;
 
@@ -209,14 +226,13 @@ class NouveauCompteController extends Controller
                 $resp["prenom_resp"] = $req->prenom_resp_etp;
                 $resp["cin_resp"] = $req->cin_resp_etp;
                 $resp["email_resp"] = $req->email_resp_etp;
-                $resp["tel_resp"] = $req->tel_resp_etp;
-                $resp["fonction_resp"] = $req->fonction_resp_etp;
+                // $resp["tel_resp"] = $req->tel_resp_etp;
+                // $resp["fonction_resp"] = $req->fonction_resp_etp;
 
                 $verify = $this->new_compte->verify_etp($req->name_etp, $req->email_resp_etp);
                 $verify_etp_nif = $this->fonct->findWhere("entreprises", ["nif"], [$req->nif]);
                 $verify_resp_cin = $this->fonct->findWhere("users", ["cin"], [$req->cin_resp_etp]);
                 $verify_resp_mail = $this->fonct->findWhere("users", ["email"], [$req->email_resp_etp]);
-                $verify_resp_tel = $this->fonct->findWhere("users", ["telephone"], [$req->tel_resp_etp]);
 
 
                 if (count($verify) <= 0) { // etp n'existe pas
@@ -230,7 +246,7 @@ class NouveauCompteController extends Controller
                                     $this->user->name = $req->nom_resp_etp . " " . $req->prenom_resp_etp;
                                     $this->user->email = $req->email_resp_etp;
                                     $this->user->cin = $req->cin_resp_etp;
-                                    $this->user->telephone = $req->tel_resp_etp;
+                                    // $this->user->telephone = $req->tel_resp_etp;
                                     $ch1 = "0000";
                                     $this->user->password = Hash::make($ch1);
                                     $this->user->save();
@@ -256,8 +272,21 @@ class NouveauCompteController extends Controller
                                     // $this->img->store_image("entreprise", $data["logo_etp"], $req->file('logo_etp')->getContent());
                                     $etp =  $this->fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_etp]);
                                     $name = $req->nom_resp_etp . ' ' . $req->prenom_resp_etp;
+
+                                        //imager  resize
+                                        $image = $req->file('logo_etp');
+    
+                                        $image_name = $data["logo_etp"];
+                                    
+                                        $destinationPath = public_path('images/entreprises');
+                                    
+                                        $resize_image = Image::make($image->getRealPath());
+                                    
+                                        $resize_image->resize(256, 128, function($constraint){
+                                            $constraint->aspectRatio();
+                                        })->save($destinationPath . '/' .  $image_name);
                                     Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
-                                    $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
+                                    // $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
                                         return back();

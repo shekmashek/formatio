@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Nouveau employée</p>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
@@ -18,7 +21,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="shadow p-5 mb-5 mx-auto bg-body w-50" style="border-radius: 15px">
-                <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2>
+                {{-- <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2> --}}
                 @if (Session::has('success'))
                 <div class="alert alert-success">
                     <ul>
@@ -137,6 +140,7 @@
         </div>
     </div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>

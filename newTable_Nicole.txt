@@ -105,3 +105,18 @@ ALTER TABLE responsables_cfp
     ADD CONSTRAINT FOREIGN KEY(sexe_resp_cfp) REFERENCES genre(id);
 - Recopier la view dans bbd_suivi_25 [v_responsable_cfp]
 
+
+
+Branch design_facture:
+-add table type_remise dans bdd_suivi_formation(facturation)
+ -recopier tous les view dans facture (bdd_suivi_formation_4)
+ -recopier view v_groupe_projet_module dans bdd_suivi_formation_4.0
+
+
+ --------------  suite ------------
+
+  - alter table factures drop type_payement_id;
+ - add
+ view v_count_session_facturer , v_count_session_projet  , v_projet_facturer_tmp , v_projet_facture
+
+ dans view facture N°4

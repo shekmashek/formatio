@@ -48,7 +48,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
                     return 'trois';
                 case 4:
                     return 'quatre';
-                case 5:
+                case 10:
                     return 'cinq';
                 case 6:
                     return 'six';
@@ -68,7 +68,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
                     return 'treize';
                 case 14:
                     return 'quatorze';
-                case 15:
+                case 110:
                     return 'quinze';
                 case 16:
                     return 'seize';
@@ -84,7 +84,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
                         return 'trente';
                     case 40:
                         return 'quarante';
-                    case 50:
+                    case 100:
                         return 'cinquante';
                     case 60:
                         return 'soixante';
@@ -186,6 +186,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     public function verifyExistsFacture($cfp_id, $idProject, $idGroupe_etp, $id_type_facture)
     {
         $verify = DB::select('select (count(id)) verify from ' . $this->table . ' where projet_id = ? and groupe_entreprise_id=? and type_facture_id=? and cfp_id=?', [$idProject, $idGroupe_etp, $id_type_facture, $cfp_id]);
+
         return $verify[0]->verify;
     }
 
@@ -215,38 +216,72 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         Facture::where('projet_id', $idProject)->update($update);
     }
 
-    // fonction update frais annexe
-    public function update_frais_annexe($id, $montant)
+
+
+<<<<<<< HEAD
+    public function insert($cfp_id, $idProject, $entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $reference_bc, $remise, $type_facture_id)
+=======
+    public function insert($cfp_id, $idProject, $entrerpsie_id, $idGroupe_etp, $tabData, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $reference_bc, $remise, $type_facture_id)
+>>>>>>> debug_version_1
     {
-        DB::update("update montant_frais_annexes set montant=?, updated_at=NOW()  where id=?", [$montant, $id]);
+        $ht = $tabData['facture'] * $tabData['qte'];
+        $data = [
+            $ht, $idProject,
+            $tabDataDate['invoice_date'],
+            $tabDataDate['due_date'], $tabDataTypeFinance['tax_id'], $tabDataDesc['description'], $tabDataDesc['other_message'],
+<<<<<<< HEAD
+            $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe_etp, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id, $entrerpsie_id
+=======
+            $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe_etp, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id, $entrerpsie_id, $tabDataDesc['remise_id']
+>>>>>>> debug_version_1
+        ];
+
+        DB::insert('insert into factures (hors_taxe,projet_id,invoice_date,due_date,tax_id,description,other_message,qte,num_facture,type_financement_id,groupe_entreprise_id,created_at, updated_at,pu,reference_bc,remise,type_facture_id,cfp_id,entreprise_id,remise_id) values (?,?,?,?,?,?,?,?,?,?,?, NOW(), NOW(),?,?,?,?,?,?,?)', $data);
         DB::commit();
     }
 
-
-    public function insert($cfp_id, $idProject, $entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $reference_bc, $remise, $type_facture_id)
+    public function update_facture($cfp_id, $idProject, $entrerpsie_id, $idGroupe_etp, $tabData, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $reference_bc, $remise, $type_facture_id)
     {
-        $ttc = $this->TTC(($tabData['facture'] * $tabData['qte']), $taux);
+        // $ttc = $this->TTC(($tabData['facture'] * $tabData['qte']), $taux);
         $ht = $tabData['facture'] * $tabData['qte'];
         $data = [
-            $path['path_bc'], $path['path_fa'], $ht, $idProject,
-            $tabDataTypeFinance['id_type_payement'], $tabDataDate['invoice_date'],
-            $tabDataDate['due_date'], $tabDataTypeFinance['tax_id'], $tabDataDesc['description'], $tabDataDesc['other_message'],
-            $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe_etp, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id, $entrerpsie_id
+            $ht, $idProject, $tabDataDate['invoice_date'], $tabDataDate['due_date'],
+            $tabDataDesc['description'], $tabDataDesc['other_message'], $tabData['qte'], $tabDataTypeFinance['id_mode_financement'], $tabData['facture'],
+            $reference_bc, $remise, $type_facture_id, $num_facture, $idGroupe_etp, $entrerpsie_id, $cfp_id
         ];
-
-        DB::insert('insert into factures (bon_de_commande,devise,hors_taxe,projet_id,type_payement_id,invoice_date,due_date,tax_id,description,other_message,qte,num_facture,type_financement_id,groupe_entreprise_id,created_at, updated_at,pu,reference_bc,remise,type_facture_id,cfp_id,entreprise_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?, NOW(), NOW(),?,?,?,?,?,?)', $data);
-
+        DB::update('update factures set hors_taxe=?, projet_id=?, invoice_date=?, due_date=?, description=?, other_message=?,
+        qte=?, type_financement_id=?, pu=?, reference_bc=?, remise=?, type_facture_id=?,num_facture=? where  groupe_entreprise_id=? and entreprise_id=? and cfp_id=?', $data);
         DB::commit();
     }
 
     // fonction insert nouveau frais annexe par project
+<<<<<<< HEAD
     public function insert_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc, $taux)
+=======
+    public function insert_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc)
     {
-        $ttc = $this->TTC(($montant * $qte), $taux);
         $ht = $montant * $qte;
-        $data = [$idFrais, $num_facture, $ttc, $ht, $desc, $qte, $montant, $cfp_id, $projet_id, $entreprise_id];
+        $data = [$idFrais, $num_facture, $ht, $desc, $qte, $montant, $cfp_id, $projet_id, $entreprise_id];
 
-        DB::insert('insert into montant_frais_annexes (frais_annexe_id,num_facture,montant,hors_taxe,description,qte, created_at, updated_at,pu,date_frais_annexe,cfp_id,projet_id,entreprise_id) values (?,?,?,?,?,?, NOW(), NOW(),?, NOW(),?,?,?)', $data);
+        DB::insert('insert into montant_frais_annexes (frais_annexe_id,num_facture,hors_taxe,description,qte, created_at, updated_at,pu,date_frais_annexe,cfp_id,projet_id,entreprise_id) values (?,?,?,?,?, NOW(), NOW(),?, NOW(),?,?,?)', $data);
+        DB::commit();
+    }
+
+    // fonction update frais annexe
+    public function update_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc)
+>>>>>>> debug_version_1
+    {
+        $ht = $montant * $qte;
+<<<<<<< HEAD
+        $data = [$idFrais, $num_facture, $ttc, $ht, $desc, $qte, $montant, $cfp_id, $projet_id, $entreprise_id];
+=======
+        $data = [$ht, $desc, $qte, $montant, $num_facture, $idFrais, $cfp_id, $projet_id, $entreprise_id];
+
+        // dd($data);
+>>>>>>> debug_version_1
+
+        DB::update("update montant_frais_annexes set hors_taxe=?, description=?,
+            qte=?,pu=? where num_facture=?  and frais_annexe_id=? and cfp_id=? and projet_id=? and entreprise_id=?", $data);
         DB::commit();
     }
 
@@ -257,6 +292,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             DB::delete('delete from factures where num_facture = ? and cfp_id=?', [$num_facture, $cfp_id]);
             DB::delete('delete from montant_frais_annexes where num_facture = ? and cfp_id=?', [$num_facture, $cfp_id]);
             DB::delete('delete from encaissements where num_facture = ? and cfp_id=?', [$num_facture, $cfp_id]);
+            DB::commit();
         } catch (Exception $e) {
             DB::rollback();
             echo $e->getMessage();
@@ -272,16 +308,6 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     public function validation_form($imput)
     {
         $rules = [
-            'down_bc.required' => 'la fiche Bon de Commande ne doit pas etre null',
-            'down_bc.min' => 'le fichier Bon de Commande est corrompu ou pas de donner! veuillez choisir une autre',
-            'down_bc.max' => 'le fichier Bon de Commande est invalid car trop lourd!',
-            'down_bc.mimes' => 'Seul le fichier type "PDF" est autorisé pour le Bon de Commande',
-            'down_bc.pdf' => 'Seul le fichier type "PDF" est autorisé pour le Bon de Commande',
-            'down_fa.required' => 'la fiche Facture ne doit pas etre null ',
-            'down_fa.min' => 'la fiche Facture  est corrompu ou pas de donner! veuillez choisir une autre',
-            'down_fa.max' => 'la fiche Facture est invalid car trop lourd!',
-            'down_fa.mimes' => 'Seul le fichier type "PDF" est autorisé pour la Facture',
-            'down_fa.pdf' => 'Seul le fichier type "PDF" est autorisé pour la Facture',
             'facture.required' => 'le montant du facture ne doit pas etre null ou inferieur 100 AR ',
             'facture.regex' => 'le montant ne doit pas contenir des lettres',
             'facture.min' => 'le montant doit etre superieur 100 AR',
@@ -294,9 +320,16 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             'reference_bc.required' => 'le reference de bon de commande ne peut pas etre null',
             'remise.number' => 'le remise est de type nombre'
         ];
-        $critereForm = [
+        /*   $critereForm = [
             'down_bc' => 'required|min:3|max:10000|file|mimes:pdf',
             'down_fa' => 'required|min:3|max:10000|file|mimes:pdf',
+            'invoice_date' => 'required|date',
+            'num_facture' => 'required',
+            'due_date' => 'required|date',
+            'reference_bc' => 'required'
+        ];
+*/
+        $critereForm = [
             'invoice_date' => 'required|date',
             'num_facture' => 'required',
             'due_date' => 'required|date',
@@ -362,7 +395,12 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $imput->down_fa->move(public_path($path['str']), $path['name_fa']);
     }
 
+<<<<<<< HEAD
     public function verifyCreationFacture($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path)
+=======
+
+    public function verifyCreationFacture($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture)
+>>>>>>> debug_version_1
     {
         $this->validation_form($imput);
         $fonction = new FonctionGenerique();
@@ -370,8 +408,13 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
         if ($verify == 0) {
 
+<<<<<<< HEAD
             $this->insert($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $imput["reference_bc"], $imput["remise"], $imput["type_facture"]);
             return redirect()->route('save_facture');
+=======
+            $this->insert($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $imput["reference_bc"], $tabDataDesc["remise"], $imput["type_facture"]);
+            return redirect()->route('liste_facture');
+>>>>>>> debug_version_1
             // return back()->with('success', 'creation de la facture du project est effectué');
         } else {
             return back()->with('error', 'Oups! la facture existe déjà!');
@@ -380,26 +423,67 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     //====================================== modification de facture ===============
 
-    public function verifyUpdateFacture($idProject, $imput)
+    // public function verifyUpdateFacture($idProject, $imput)
+    // {
+    //     $this->validation_form_update($imput);
+    //     $frais_annexes = $this->getFraisAnnexe($idProject);
+
+    //     DB::beginTransaction();
+    //     try {
+    //         foreach ($frais_annexes as $frais) {
+    //             $data = $imput["montant_frais_annexe_" . $frais->montant_frais_annexe_id];
+    //             if ($data != null) {
+    //                 $this->update_frais_annexe($frais->montant_frais_annexe_id, $data);
+    //             }
+    //         }
+    //         $this->edit($idProject, $imput);
+    //     } catch (Exception $e) {
+    //         DB::rollback();
+    //         echo $e->getMessage();
+    //     }
+
+    //     return back()->with('success', 'modification de la facture du project est effectuer');
+    // }
+
+
+
+    public function listSessionInFacture($num_fact, $nom_champ_para, $cfp_id, $projet_id)
     {
-        $this->validation_form_update($imput);
-        $frais_annexes = $this->getFraisAnnexe($idProject);
+        $fonction = new FonctionGenerique();
 
-        DB::beginTransaction();
-        try {
-            foreach ($frais_annexes as $frais) {
-                $data = $imput["montant_frais_annexe_" . $frais->montant_frais_annexe_id];
-                if ($data != null) {
-                    $this->update_frais_annexe($frais->montant_frais_annexe_id, $data);
-                }
+        $data = array();
+        $concatRefModule = "";
+        $concatSession = "";
+        $concatModule = "";
+        $facture = $fonction->findWhere(
+            "factures",
+            ["num_facture", $nom_champ_para, "projet_id"],
+            [$num_fact, $cfp_id, $projet_id]
+        );
+
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $tabSession = $fonction->findWhereMulitOne(
+                "v_groupe_projet_module",
+                ["groupe_entreprise_id", $nom_champ_para],
+                [$facture[$i]->groupe_entreprise_id, $cfp_id]
+            );
+
+            $concatModule .= "" . $tabSession->nom_formation . "->" . $tabSession->nom_module;
+            $concatSession .= "" . $tabSession->nom_groupe;
+            $concatRefModule .= "" . $tabSession->reference;
+            if ($i + 1 < count($facture)) {
+                $concatModule .= "/<br>";
+                $concatSession .= "/<br>";
+                $concatRefModule .= "/<br>";
             }
-            $this->edit($idProject, $imput);
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
         }
-
-        return back()->with('success', 'modification de la facture du project est effectuer');
+        $concatSession = "<p>" . $concatSession . "</p>";
+        $concatModule = "<p>" . $concatModule . "</p>";
+        $concatRefModule = "<p>" . $concatRefModule . "</p>";
+        $data["getSession"] = $concatSession;
+        $data["getModule"] = $concatModule;
+        $data["getRefModule"] = $concatRefModule;
+        return $data;
     }
 
     //====================================== modification de facture ===============
@@ -409,7 +493,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $fonction = new FonctionGenerique();
         $info = $fonction->findWhereMulitOne("factures", ["num_facture", "cfp_id"], [$num_facture, $cfp_id]);
         $this->suprime($info->num_facture, $cfp_id);
-        $this->suprime_frais_annexe($info->num_facture, $cfp_id);
+        // $this->suprime_frais_annexe($info->num_facture, $cfp_id);
         File::delete($info->bon_de_commande);
         File::delete($info->devise);
 
@@ -423,6 +507,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     // ================= recherche par multi critère
 
+<<<<<<< HEAD
     public function search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, $factue_id, $nbPage)
     {
         if ($factue_id <= 0) {
@@ -456,29 +541,234 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             $factue_id = 1;
         }
         $data = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and cfp_id=? and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
-        return $data;
-    }
-
-
-    // public function search_intervale_dte_generique_cfp($nomTab, $invoice_dte, $due_dte, $cfp_id,$status)
-    // {
-    //     $data = DB::select("select * from " . $nomTab . " where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('".$status."') ", [$invoice_dte, $due_dte, $cfp_id]);
-    //     return $data;
-    // }
-
-
-    public function search_num_fact_inactif_cfp($num_fact, $cfp_id)
+=======
+    public function search_intervale_dte_generique_en_cour($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
     {
-        $data = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=?", [$cfp_id]);
+        $data = array();
+
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+
+        $facture = DB::select("select * from v_facture_actif where invoice_date>='" . $invoice_dte . "' and invoice_date<='" . $due_dte . "' and " . $nom_champ_para . "=? and facture_encour='en_cour' order by " . $col_order_by . " " . $order . "   limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$cfp_id]);
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
         return $data;
     }
+
+    public function search_intervale_dte_generique_actif($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+
+        $data = array();
+        $facture = DB::select("select * from v_facture_actif where facture_encour!='terminer' and invoice_date>=? and invoice_date<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . "  limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
+
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_intervale_dte_generique_payer($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+
+        $data = array();
+        $facture = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and " . $nom_champ_para . "=? and UPPER(facture_encour)=UPPER('terminer') order by " . $col_order_by . " " . $order . "  limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_intervale_dte_generique_inactif($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+        $facture = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$invoice_dte, $due_dte, $cfp_id]);
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+>>>>>>> debug_version_1
+        return $data;
+    }
+
+    public function search_intervale_solde_generique_actif($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+
+        $data = array();
+        $facture = DB::select("select * from v_facture_actif where facture_encour!='terminer' and montant_total>=? and montant_total<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$solde_debut, $solde_fin, $cfp_id]);
+
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_intervale_solde_generique_payer($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+
+        $data = array();
+        $facture = DB::select("select * from v_facture_actif where facture_encour='terminer' and montant_total>=? and montant_total<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$solde_debut, $solde_fin, $cfp_id]);
+
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+<<<<<<< HEAD
     public function search_num_fact_actif_cfp($nomTab, $num_fact, $satut_fact, $cfp_id)
+=======
+
+    public function search_intervale_solde_generique_inactif($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+>>>>>>> debug_version_1
     {
-        $data = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(facture_encour)=UPPER(?) and cfp_id=?", [$satut_fact, $cfp_id]);
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+        $facture = DB::select("select * from v_facture_inactif where montant_total>=? and montant_total<=? and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$solde_debut, $solde_fin, $cfp_id]);
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
         return $data;
     }
 
 
+    public function search_etp_inactif($etp_id, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+        $facture = DB::select("select * from v_facture_inactif where entreprise_id = " . $etp_id . " and cfp_id=?  order by " . $col_order_by . " " . $order . " limit  " . $nbLimit_page . " offset " . $nb_debut_pag, [$cfp_id]);
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_num_fact_inactif($num_fact, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+        $facture = DB::select("select * from v_facture_inactif where UPPER(num_facture) like ('%" . $num_fact . "%') and cfp_id=?  order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$cfp_id]);
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_entiter_actif($nomTab, $par_entiter_search, $entiter_id, $para_col_fact, $opt_col_fact, $satut_fact, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+        $facture = DB::select("select * from " . $nomTab . " where " . $par_entiter_search . " = " . $entiter_id . " and  UPPER(" . $para_col_fact . ") " . $opt_col_fact . " UPPER(?) and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . " limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$satut_fact, $cfp_id]);
+
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
+
+    public function search_num_fact_actif($nomTab, $num_fact, $para_col_fact, $opt_col_fact, $satut_fact, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
+    {
+        if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
+            $nb_debut_pag = 0;
+        } else {
+            $nb_debut_pag -= 1;
+        }
+        $facture = DB::select("select * from " . $nomTab . " where UPPER(num_facture) like ('%" . $num_fact . "%') and  UPPER(" . $para_col_fact . ") " . $opt_col_fact . " UPPER(?) and " . $nom_champ_para . "=? order by " . $col_order_by . " " . $order . "  limit " . $nbLimit_page . " offset " . $nb_debut_pag, [$satut_fact, $cfp_id]);
+
+        $data = array();
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+        return $data;
+    }
     // --------------------------------- show facture pagination
     public function pagination($cfp_id)
     {
@@ -488,4 +778,271 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $data["totale"] = 10;
         return $data;
     }
+<<<<<<< HEAD
+=======
+
+    public function getListDataFacture($nomTab, $para = [], $val = [], $nbDebutPagination, $nbPage, $col_order_by, $order)
+    {
+        $fonction = new FonctionGenerique();
+        $data = array();
+        $facture = $fonction->findWherePagination($nomTab, $para, $val, $nbDebutPagination, $nbPage, $col_order_by, $order);
+
+        for ($i = 0; $i < count($facture); $i += 1) {
+            $sessionConactener = $this->listSessionInFacture($facture[$i]->num_facture, "cfp_id", $facture[$i]->cfp_id, $facture[$i]->projet_id);
+
+            $data[$i] = $facture[$i];
+            $data[$i]->session_facture = $sessionConactener["getSession"];
+            $data[$i]->module_session = $sessionConactener["getModule"];
+            $data[$i]->ref_session = $sessionConactener["getRefModule"];
+        }
+
+        return $data;
+    }
+
+    public function queryWhereParam($nomTab, $para = [], $opt = [], $val = [])
+    {
+        $query = "SELECT * FROM " . $nomTab . " WHERE ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "" . $opt[$i] . " '" . $val[$i] . "'";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
+    public function queryWhereParamAndCritere($query_tmp, $para = [], $val = [])
+    {
+        $query = $query_tmp . " AND ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "= ?";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
+    public function findWhereParam($nomTab, $paraNot = [], $optNot = [], $valNot = [], $paraCrt = [], $valCrt = [])
+    {
+        $query_tmp = $this->queryWhereParam($nomTab, $paraNot, $optNot, $valNot);
+        $query = $this->queryWhereParamAndCritere($query_tmp, $paraCrt, $valCrt);
+
+        $data =  DB::select($query, $valCrt);
+        return $data;
+    }
+
+
+    public function queryWhere($nomTab, $para = [], $val = [])
+    {
+        $query = "SELECT ( COUNT(num_facture)) totale_pagination FROM " . $nomTab . " WHERE ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "= ?";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
+    public function queryWhere_intervale_solde($nomTab, $solde_debut, $solde_fin, $para = [], $val = [])
+    {
+        $query = "SELECT ( COUNT(num_facture)) totale_pagination FROM " . $nomTab . " WHERE net_ttc>='" . $solde_debut . "' and net_ttc<='" . $solde_fin . "' AND ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "= ?";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
+    public function queryWhere_intervale_date($nomTab, $invoice_dte, $due_dte, $para = [], $val = [])
+    {
+        $query = "SELECT ( COUNT(num_facture)) totale_pagination FROM " . $nomTab . " WHERE invoice_date>='" . $invoice_dte . "' and invoice_date<='" . $due_dte . "' AND ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "= ?";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
+    public function queryWhere_num_fact($nomTab, $num_fact, $para = [], $val = [])
+    {
+        $query = "SELECT ( COUNT(num_facture)) totale_pagination FROM " . $nomTab . " WHERE  UPPER(num_facture) like ('%" . $num_fact . "%')  AND ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "= ?";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
+    public function queryWhere_entiter($nomTab, $para_col, $entiter_id, $para = [], $val = [])
+    {
+        $query = "SELECT ( COUNT(num_facture)) totale_pagination FROM " . $nomTab . " WHERE  " . $para_col . " =" . $entiter_id . "  AND ";
+        if (count($para) != count($val)) {
+            return "ERROR: tail des onnees parametre et value est different";
+        } else {
+
+            for ($i = 0; $i < count($para); $i++) {
+                $query .= "" . $para[$i] . "= ?";
+                if ($i + 1 < count($para)) {
+                    $query .= " AND ";
+                }
+            }
+            return $query;
+        }
+    }
+
+    public function getNbPagination_entiter($para_col, $entiter_id, $para = [], $val = [])
+    {
+        $data =  DB::select($this->queryWhere_entiter("v_montant_facture", $para_col, $entiter_id, $para, $val), $val);
+        return $data[0];
+    }
+
+    public function getNbPagination_num_fact($num_fac, $para = [], $val = [])
+    {
+        $data =  DB::select($this->queryWhere_num_fact("v_montant_facture", $num_fac, $para, $val), $val);
+        return $data[0];
+    }
+
+    public function getNbPagination_intervale_solde($solde_debut, $solde_fin, $para = [], $val = [])
+    {
+        $data =  DB::select($this->queryWhere_intervale_solde("v_montant_facture", $solde_debut, $solde_fin, $para, $val), $val);
+        return $data[0];
+    }
+
+    public function getNbPagination_intervale_date($invoice_dte, $due_dte, $para = [], $val = [])
+    {
+        $data =  DB::select($this->queryWhere_intervale_date("v_montant_facture", $invoice_dte, $due_dte, $para, $val), $val);
+        return $data[0];
+    }
+
+    public function getNbPagination($para = [], $val = [])
+    {
+        $data =  DB::select($this->queryWhere("v_montant_facture", $para, $val), $val);
+        return $data[0];
+    }
+
+
+    public function nb_liste_fact_pagination($nbPag, $nb_debut_pag)
+    {
+        $nb_limit = 10;
+        if ($nbPag != null) {
+            $totale_pagination = $nbPag->totale_pagination;
+        } else {
+            $totale_pagination = 0;
+        }
+        $debut_aff = 0;
+        $fin_aff = 1;
+
+        if ($totale_pagination == 1) {
+            $nb_debut_pag = 1;
+            $fin_aff = 1;
+        }
+        if ($nb_debut_pag <= 0 || $nb_debut_pag == null) {
+            $nb_debut_pag = 1;
+        }
+
+        if ($nb_debut_pag == 1) { // 1
+            $debut_pagination = 0; //
+            $debut_aff = 1;
+            $fin_aff = $debut_pagination + $nb_limit;
+        }
+        if ($nb_debut_pag > 1 && $nb_debut_pag < $totale_pagination) {
+            $debut_pagination = ($nb_debut_pag - 1) + $nb_limit;
+            $fin_aff = $nb_debut_pag + $nb_limit;
+
+            $debut_aff = $nb_debut_pag;
+        }
+        if ($nb_debut_pag  == $totale_pagination) {
+            $debut_pagination = ($nb_debut_pag - 1) + $nb_limit;
+            $fin_aff = ($nb_debut_pag - 1) + $nb_limit;
+            $debut_aff = $nb_debut_pag;
+        }
+        $data["nb_limit"] = $nb_limit;
+        $data["debut_aff"] = $debut_aff;
+        $data["fin_aff"] = $fin_aff;
+        $data["totale_pagination"] = $totale_pagination;
+        return $data;
+    }
+
+    public function nb_liste_fact_entiter($nb_debut_pag, $para_col, $entiter_id, $para = [], $val = [])
+    {
+        $nbPag =  $this->getNbPagination_entiter($para_col, $entiter_id, $para, $val);
+        $data = $this->nb_liste_fact_pagination($nbPag, $nb_debut_pag);
+        return $data;
+    }
+
+    public function nb_liste_fact_num_fact($nb_debut_pag, $num_fact, $para = [], $val = [])
+    {
+        $nbPag =  $this->getNbPagination_num_fact($num_fact, $para, $val);
+        $data = $this->nb_liste_fact_pagination($nbPag, $nb_debut_pag);
+        return $data;
+    }
+
+
+    public function nb_liste_fact_intervale_solde($nb_debut_pag, $solde_debut, $solde_fin, $para = [], $val = [])
+    {
+        $nbPag =  $this->getNbPagination_intervale_solde($solde_debut, $solde_fin, $para, $val);
+        $data = $this->nb_liste_fact_pagination($nbPag, $nb_debut_pag);
+        return $data;
+    }
+
+    public function nb_liste_fact_intervale_dte($nb_debut_pag, $invoice_dte, $due_dte, $para = [], $val = [])
+    {
+        $nbPag =  $this->getNbPagination_intervale_date($invoice_dte, $due_dte, $para, $val);
+        $data = $this->nb_liste_fact_pagination($nbPag, $nb_debut_pag);
+        return $data;
+    }
+
+
+    public function nb_liste_fact($nb_debut_pag, $para = [], $val = [])
+    {
+        $nbPag =  $this->getNbPagination($para, $val);
+        $data = $this->nb_liste_fact_pagination($nbPag, $nb_debut_pag);
+        return $data;
+    }
+
+
+    public function veriry_session_deja_facture_sur_type_fact($cfp_id, $idProject, $request)
+    {
+        $verify = 0;
+        $fonct = new FonctionGenerique();
+        $para = ["groupe_id", "entreprise_id"];
+        for ($i = 0; $i < count($request["session_id"]); $i++) {
+            $temp = $this->verifyExistsFacture($cfp_id, $idProject, $request["session_id"][$i], $request["type_facture"]);
+            $verify += $temp;
+        }
+        return $verify;
+    }
+>>>>>>> debug_version_1
 }

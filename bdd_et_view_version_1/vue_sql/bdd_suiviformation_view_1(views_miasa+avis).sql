@@ -3,7 +3,9 @@ CREATE OR REPLACE VIEW v_moduleformation AS SELECT
     m.reference,
     m.nom_module,
     m.prix,
+    m.prix_groupe,
     m.duree,
+    m.etat_id,
     f.id AS formation_id,
     f.nom_formation,
     m.cfp_id
@@ -66,7 +68,7 @@ CREATE OR REPLACE VIEW v_detailmoduleformationprojetformateur AS SELECT
     f.photos,
     f.mail_formateur,
     f.numero_formateur,
-    f.genre,
+    (f.genre_id) genre,
     f.date_naissance,
     (f.adresse) adresse_formateur,
     f.cin,
@@ -165,16 +167,19 @@ CREATE OR REPLACE VIEW v_cours_programme AS SELECT
     m.nom_module,
     m.formation_id,
     m.prix,
+    m.prix_groupe,
     m.duree,
     m.prerequis,
     m.objectif,
-    m.modalite_formation
+    m.modalite_formation,
+    m.etat_id
 FROM
     cours c
 LEFT JOIN programmes p ON
     c.programme_id = p.id
 JOIN modules m ON
     m.id = p.module_id;
+
 CREATE OR REPLACE VIEW v_froid_evaluations AS SELECT
     id,
     cfp_id,
@@ -296,11 +301,13 @@ LEFT JOIN v_pourcentage_avis pa ON
     mn.id = pa.module_id AND mn.nombre = pa.note
 ORDER BY
     mn.id;
+
 CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.id AS module_id,
     m.reference,
     m.nom_module,
     m.prix,
+    m.prix_groupe,
     m.duree,
     m.modalite_formation,
     m.duree_jour,
@@ -314,6 +321,7 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.bon_a_savoir,
     m.status,
     m.cfp_id,
+    m.etat_id,
     IFNULL(m.max, 0) AS max_pers,
     IFNULL(m.min, 0) AS min_pers,
     n.niveau,
@@ -335,11 +343,13 @@ JOIN niveaux n ON
     n.id = m.niveau_id
 LEFT JOIN v_moyenne_avis_module a ON
     m.id = a.module_id;
+
 CREATE OR REPLACE VIEW cfpcours AS SELECT
     m.id AS module_id,
     m.reference,
     m.nom_module,
     m.prix,
+    m.prix_groupe,
     m.duree,
     m.modalite_formation,
     m.duree_jour,
@@ -349,6 +359,7 @@ CREATE OR REPLACE VIEW cfpcours AS SELECT
     m.materiel_necessaire,
     m.cible,
     m.niveau_id,
+    m.etat_id,
     n.niveau,
     f.id AS formation_id,
     f.nom_formation,
@@ -454,9 +465,9 @@ FROM
     stagiaires as stg
     join entreprises e
     on stg.entreprise_id = e.id
-    join v_departement_service_entreprise ds
+    left join v_departement_service_entreprise ds
     on ds.service_id = stg.service_id
-    join branches b
+    left join branches b
     on b.id = stg.branche_id;
 
 -- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT

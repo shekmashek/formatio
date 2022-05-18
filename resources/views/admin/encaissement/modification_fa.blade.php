@@ -1,19 +1,22 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Informations</h3>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12">
             	<br>
                 <h3>MODIFICATION</h3>
             </div>
-        </div>
+        </div> --}}
             <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Informations</h4>
+                        <h5>Informations</h5>
                     </div>
                     <div class="panel-body">
                         <div class="row">

@@ -38,3 +38,43 @@ CREATE TABLE reseaux_sociaux (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 creer des nouvelles vues pour le reseaux sociaux etle horair cfp dans view modification_view_projet.sql
+
+---------- Avril 14 -----------
+
+alter table modules add prix_groupe int(11) NULL;
+
+recréer vue v_moduleformation dans bdd_suiviformation_view_1(views_miasa+avis)
+recréer vue v_cours_programme dans bdd_suiviformation_view_1(views_miasa+avis)
+recréer vue moduleformation dans bdd_suiviformation_view_1(views_miasa+avis)
+recréer vue cfpcours dans bdd_suiviformation_view_1(views_miasa+avis)
+
+recréer vue v_programme dans bdd_suiviformation_view_2(view)
+recréer vue v_exportcatalogue dans bdd_suiviformation_view_2(view)
+
+recréer vue v_groupe_projet_entreprise_module dans modification_views_projet.sql
+
+------- 10 mai --------------
+creation copie coller bdd_suiviformation_mise_a_jour_12(formation interne entreprise)
+
+-------- 11 mai -------------
+creer table etats pour gerer la mise en ligne des modules
+
+CREATE TABLE `etats` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `etat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+alter table modules add etat_id bigint(20) NOT NULL REFERENCES etats(id) ON DELETE CASCADE;
+
+recréer vue v_moduleformation dans bdd_suiviformation_view_1(views_miasa+avis)
+recréer vue v_cours_programme dans bdd_suiviformation_view_1(views_miasa+avis)
+recréer vue moduleformation dans bdd_suiviformation_view_1(views_miasa+avis)
+recréer vue cfpcours dans bdd_suiviformation_view_1(views_miasa+avis)
+
+recréer vue v_programme dans bdd_suiviformation_view_2(view)
+recréer vue v_exportcatalogue dans bdd_suiviformation_view_2(view)
+
+recréer vue v_detailmodule dans modification_views_projet.sql
+

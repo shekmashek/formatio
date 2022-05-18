@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <p class="text_header m-0 mt-1">Appel d'offre</p>
+@endsection
 @section('content')
 
 <!-- include summernote css/js -->
@@ -25,14 +28,14 @@
 
     }
 
-    .test {
+    /* .test {
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     }
 
     .test:hover {
         transform: scale(1);
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    }
+    } */
 
 </style>
 
@@ -47,13 +50,13 @@
     @endif
 
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12">
                 <h1>Appel d'offre</h1>
             </div>
-        </div>
+        </div> --}}
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        {{-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -70,7 +73,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
 
         <div class="row">
             <div class="col-md-12">
@@ -105,13 +108,7 @@
             <div class="col"></div>
             <div class="col">
                 <div class="">
-                    <form class="d-flex" method="POST" action="{{route('result_recherche_appel_offre')}}">
-                        @csrf
-                        <input type="text" id="reference_search" name="reference_search" placeholder="Recherche de la préstation de l'appel d'offre" class="form-control" autocomplete="off">
-                        <button type="submit" class="btn btn-success">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </form>
+                    <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
                 </div>
             </div>
 
@@ -154,7 +151,7 @@
 
                             <tr class="test">
                                 <th scope="row">
-                                    <img src="{{asset('img/logo_formation/white_logo_color_background.jpg')}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
+                                    <img src="{{asset('images/entreprises/'.$nom_publier->logo)}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
                                     <br>
                                     <p>{{$nom_publier->nom_etp}}</p>
                                     <p><a data-bs-toggle="collapse" href="#detail_{{$nom_publier->id}}" role="button" aria-expanded="false" aria-controls="detail_{{$nom_publier->id}}">détail</a></p>
@@ -183,11 +180,11 @@
                 <div class="col">
                     <div class="collapse multi-collapse" id="detail_{{$nom_publier->id}}">
 
-                        <span class="shadow p-3 bg-body row mt-1 mb-1 mx-1" style="width: 40rem;">
+                        <span class="p-3 bg-body row mt-1 mb-1 mx-1" style="width: 40rem;">
                             <div class="row">
                                 <div class="col">
                                     <div align="left">
-                                        <img src="{{asset('img/logo_formation/white_logo_color_background.jpg')}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
+                                        <img src="{{asset('images/entreprises/'.$nom_publier->logo)}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
                                         <h5>{{$nom_publier->nom_etp}}</h5>
                                         <p>{{$nom_publier->email_etp}}</p>
                                         <p></p>
@@ -218,7 +215,7 @@
 
                     <div class="collapse multi-collapse mt-1 mb-1 mx-1" id="multiCollapseExample1_{{$nom_publier->id}}">
 
-                        <span class="shadow p-3 bg-body row mx-1" style="width: 40rem;">
+                        <span class=" p-3 bg-body row mx-1" style="width: 40rem;">
                             <form action="{{route('appel_offre.update',$nom_publier->id)}}" method="POST" enctype="multipart/form-data">
                                 @csrf
 
@@ -325,7 +322,7 @@
                         <tbody>
                             <tr class="test">
                                 <th scope="row">
-                                    <img src="{{asset('img/logo_formation/white_logo_color_background.jpg')}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
+                                    <img src="{{asset('images/entreprises/'.$publier->logo)}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
                                     <br>
                                     <p>{{$publier->nom_etp}}</p>
                                     <p><a data-bs-toggle="collapse" href="#detail_{{$publier->id}}" role="button" aria-expanded="false" aria-controls="detail_{{$publier->id}}">détail</a></p>
@@ -346,11 +343,11 @@
                 <div class="col">
                     <div class="collapse multi-collapse" id="detail_{{$publier->id}}">
 
-                        <span class="shadow p-3 bg-body row mt-1 mb-1 mx-1" style="width: 40rem;">
+                        <span class=" p-3 bg-body row mt-1 mb-1 mx-1" style="width: 40rem;">
                             <div class="row">
                                 <div class="col">
                                     <div align="left">
-                                        <img src="{{asset('img/logo_formation/white_logo_color_background.jpg')}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
+                                        <img src="{{asset('images/entreprises/'.$publier->logo)}}" class="card-img-top" alt="..." style="width: 100px; height:40px;">
                                         <h5>{{$publier->nom_etp}}</h5>
                                         <p>{{$publier->email_etp}}</p>
                                         <p></p>
@@ -386,6 +383,23 @@
             <h3>Aucun appel d'offre publié</h3>
             @endif
         </div>
+        <div class="filtrer mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0">Filter vos appel d'offre</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+                </div>
+                <hr class="mt-2">
+                <form class="d-flex" method="POST" action="{{route('result_recherche_appel_offre')}}">
+                    @csrf
+                    <input type="text" id="reference_search" name="reference_search" placeholder="Recherche de la préstation de l'appel d'offre" class="form-control" autocomplete="off">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </div>
 
 
 

@@ -1,4 +1,7 @@
 @extends('./layouts/admin')
+@section('title')
+    <h3 class="text_header m-0 mt-1">Tableau de bord</h3>
+@endsection
 @section('content')
 <script src="https://unpkg.com/boxicons@2.1.1/dist/boxicons.js"></script>
 <link rel="stylesheet" href="{{asset('css/stagiaires.css')}}">
@@ -7,8 +10,22 @@
         <div class="col-lg-6">
             <div class="card text-white mb-3 mt-3" id="bc">
                 <div class="" style="height:45px; ">
-                    <img id="example2" src="@foreach($phone_tmp as $item) {{$item->photos}}  @endforeach" alt="image stagiaire">
-                    <img id="exemple1" class="ms-3" src="{{asset('images/stagiaires/ilaina.png')}}" alt="Image">
+                    @foreach($phone_tmp as $item)
+                        @if($item->photos == null)
+                            <span>
+                                <div style="display: grid; place-content: center">
+                                    <div id="example2" class='randomColor photo_users' style="color:white; font-size:30px; border: none; border-radius: 100%; height:80px; width:80px ; display: grid; place-content: center"  >
+
+                                    </div>
+                                </div>
+                            </span>
+                        @else
+                            <img id="example2" src="{{asset('images/stagiaires/'.$item->photos)}}" alt="image stagiaire">
+                        @endif
+
+                    @endforeach
+
+                    <img id="exemple1" class="ms-3" src="{{asset('images/stagiaires/ilaina.png')}}">
                 </div>
                 <div class="card-body text-dark mt-3" id="cl">
                     <div class="mt-4">

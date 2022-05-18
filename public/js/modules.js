@@ -25,6 +25,7 @@ $(".afficher").on('click', function(e) {
         , success: function(response) {
 
             let userData = JSON.parse(response);
+
             console.log(userData);
             //parcourir le premier tableau contenant les info sur les programmes
             for (let $i = 0; $i < userData.length; $i++) {
@@ -62,32 +63,27 @@ $('#fermer', '.close').on('change', function(e) {
 $(".suppression").on('click', function(e) {
     let id = e.target.id;
     $.ajax({
-        type: "GET"
-        , url: "/destroy_module'"
+        type: "get"
+        , url: '/destroy_module'
+        ,dataType: "json"
         , data: {
             Id: id
         }
         , success: function(response) {
+
             if (response.success) {
                 window.location.reload();
             } else {
-                alert("Error")
+                alert("Error");
             }
         }
         , error: function(error) {
-            console.log(error)
+            console.log(JSON.parse(error));
+            // console.log(JSON.stringify(error));
         }
     });
 });
 
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-
-    // CSRF Token
-var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 $(document).ready(function() {
     $("#reference_search").autocomplete({
         source: function(request, response) {
@@ -118,8 +114,6 @@ $(document).ready(function() {
         }
     });
 });
-    // CSRF Token
-var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 $(document).ready(function() {
     $("#categorie_search").autocomplete({
         source: function(request, response) {
@@ -161,11 +155,11 @@ function resetForm() {
 
 function competence() {
     var html = '';
-    html += '<div class="d-flex" id="row_new">';
+    html += '<div class="d-flex mt-2" id="row_new">';
     html +=     '<div class="col-7">';
     html +=         '<div class="form-group">';
     html +=             '<div class="form-row">';
-    html +=                 '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" required>';
+    html +=                 '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>';
     html +=                 '<label for="titre_competence" class="form-control-placeholder">Compétences';
     html +=                 '</label>';
     html +=             '</div>';
@@ -175,7 +169,7 @@ function competence() {
     html +=     '<div class="col-4">';
     html +=         '<div class="form-group ms-1">';
     html +=             '<div class="form-row">';
-    html +=                 '<input type="number" name="objectif[]" id="objectif" min="1" max="10" class="form-control input" required>';
+    html +=                 '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
     html +=                 '<label for="objectif" class="form-control-placeholder">Notes';
     html +=                 '</label>';
     html +=             '</div>';
@@ -183,19 +177,25 @@ function competence() {
     html +=     '</div>';
 
     html +=     '<div class="col-1">';
-    html +=         '<div class="mt-3">';
-    html +=                '<button id="removeRow" class="form-control btn_competence" type="button">';
-    html +=                     '<i class="bx bx-minus" style="font-size: 20px">';
+    html +=         '<div class="mt-2">';
+    html +=                '<span id="removeRow" class="effacer_cours" role="button">';
+    html +=                     '<i class="bx bx-x">';
     html +=                     '</i>';
-    html +=                 '</button>';
+    html +=                 '</span>';
     html +=         '</div>';
     html +=     '</div>';
     html += '</div>';
 
-    $('#newRow').append(html);
+    $('.newRow').append(html);
 }
 
 // remove row
 $(document).on('click', '#removeRow', function() {
     $(this).closest('#row_new').remove();
 });
+
+
+
+// $('.changer_prix').click(function(){
+//     $('.new_module_prix').toggle('active_prix');
+// })

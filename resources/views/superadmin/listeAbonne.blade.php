@@ -27,26 +27,32 @@
                                 <thead>
                                     <th class="th_color"> Type d'abonnement </th>
                                     <th class="th_color"> Tarif mensuel </th>
-                                    <th class="th_color"> Tarif annuel </th>
                                     <th class="th_color"> Utilisateurs souscrits </th>
                                 </thead>
                                 <tbody>
-                                    @if(count($abonnementETP) > 0)
+                                    @foreach ($abonnementETP as $abonnement_etp)
+                                        <tr>
+                                            <td class="th_color"> {{ $abonnement_etp->nom_type }} - entreprises </td>
+                                            <td class="th_color"> {{ $abonnement_etp->tarif }} Ar</td>
+                                            <td class="th_color"><button class="btn btn-primary">  <a href="{{route('activation_page',['id' => $abonnement_etp->abonnement_id])}}">{{$abonnement_etp->total_inscrit}} utilisateurs</a></button></td>
+                                        </tr>
+                                    @endforeach
+                                    {{-- @if(count($abonnementETP) > 0)
                                         <tr>
                                             <td class="th_color"> {{ $abonnementETP[0]->nom_type }} - entreprises </td>
                                             <td class="th_color"> {{ $abonnementETP[0]->tarif/10 }} Ar</td>
                                             <td class="th_color"> {{ $abonnementETP[0]->tarif }} Ar</td>
                                             <td class="th_color"><button class="btn btn-primary">  <a href="{{route('activation_page',['id' => $abonnementETP[0]->abonnement_id])}}">{{count($abonnementETP)}} utilisateurs</a></button></td>
                                         </tr>
-                                    @endif
-                                    @if(count($abonnementCFP) > 0)
+                                    @endif --}}
+                                    {{-- @if(count($abonnementCFP) > 0)
                                         <tr>
                                             <td class="th_color"> {{ $abonnementCFP[0]->nom_type }} - CFP </td>
                                             <td class="th_color"> {{ $abonnementCFP[0]->tarif/10 }} Ar</td>
                                             <td class="th_color"> {{ $abonnementCFP[0]->tarif }} Ar</td>
                                             <td class="th_color"><button class="btn btn-primary">  <a href="{{route('activation_page',['id' => $abonnementCFP[0]->abonnement_id])}}">{{count($abonnementCFP)}} utilisateurs</a></button></td>
                                         </tr>
-                                    @endif
+                                    @endif --}}
                                 </tbody>
                             </table>
 

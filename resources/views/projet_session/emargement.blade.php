@@ -3,7 +3,56 @@
         cursor: pointer;
     }
 
+    .btn_emargement{
+        background-color: #7635dc;
+        color: #ffffff;
+    }
+    .btn_emargement:hover{
+        background-color: rgb(227, 227, 227);
+        color: #7635dc;
+    }
+
+    .answer {
+        display: block;
+    }
+
+    .answer~.answer {
+        display: none;
+    }
+    .edit_pointage{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        background-color: #7535dc2f;
+        transition: all .5s ease;
+    }
+    .edit_pointage:hover{
+        color: #7635dc;
+        background-color: #63738141;
+        transform: scale(1.1);
+    }
+    .inserer_emargement{
+        padding: 0 5px;
+        margin: 0;
+        color: #7635dc;
+        background-color: #7535dc2f;
+        transition: all .5s ease;
+    }
+    .inserer_emargement:hover{
+        color: #7635dc;
+        background-color: #63738141;
+        transform: scale(1.1);
+    }
+    .present_label{
+        color: #7635dc !important;
+    }
+    .absent_label{
+        color: red;
+    }
 </style>
+<nav class="d-flex justify-content-between mb-1 ">
+    <span class="titre_detail_session"><strong style="font-size: 14px" >Emargement des apprenants</strong></span>
+</nav>
 <div class="container">
     <div class="row m-0">
         <div class="col-md-2 text-center">Module</div>
@@ -12,7 +61,7 @@
         <div class="col-md-1 text-center">Début</div>
         <div class="col-md-1 text-center">Fin</div>
         <div class="col-md-2 text-center">Action</div>
-        <hr class="m-2 p-0">
+        <hr class="m-2 my-1 p-0">
     </div>
     @foreach ($datas as $dt)
         @php
@@ -24,26 +73,32 @@
             <input type="hidden" name="detail_id" value="{{ $dt->detail_id }}">
             <div id="presence_stagiaire">
                 <div class="row m-0 p-0">
-                    <div class="col-md-2 text-center">{{ $dt->nom_module }}</div>
-                    <div class="col-md-4 text-center">{{ $dt->lieu }}</div>
-                    <div class="col-md-2 text-center">{{ $dt->date_detail }}</div>
-                    <div class="col-md-1 text-center">{{ $dt->h_debut }}</div>
-                    <div class="col-md-1 text-center">{{ $dt->h_fin }}</div>
-                    <div class="col-md-2 text-center fermer_collapse"><i id="faire_presence" data-bs-toggle="collapse"
-                            href="#stagiaire_presence_{{ $dt->detail_id }}" class="bx bx-edit reset_radio">Emargement</i></div>
+                    <div class="col-md-2 mt-2 text-center">{{ $dt->nom_module }}</div>
+                    <div class="col-md-4 mt-2 text-center">{{ $dt->lieu }}</div>
+                    <div class="col-md-2 mt-2 text-center">{{ $dt->date_detail }}</div>
+                    <div class="col-md-1 mt-2 text-center">{{ $dt->h_debut }}</div>
+                    <div class="col-md-1 mt-2 text-center">{{ $dt->h_fin }}</div>
+                    <div class="col-md-2 text-center fermer_collapse"><span id="faire_presence" data-bs-toggle="collapse"
+                            href="#stagiaire_presence_{{ $dt->detail_id }}" class="btn reset_radio btn_emargement">Emargement</span></div>
                 </div>
                 <hr class="m-2 p-0">
                 <div class="collapse" id="stagiaire_presence_{{ $dt->detail_id }}">
-                    @foreach ($presence_detail as $pre)    
+                    @foreach ($presence_detail as $pre)
                         @if ($pre->detail_id == $dt->detail_id && $pre->text_status == "non")
                             @php
                                 $status='non';
                             @endphp
                             <div class="row m-0 p-0 d-flex flex-grow">
-                                <div class="col-md-1 text-center">{{ $pre->matricule }}</div>
+                                <div class="col-md-2 text-center">
+                                    @if ($pre->photos == null)
+                                        <span class="me-2" height="30px" width="30px" style="border-radius: 50%;">{{ $pre->sans_photos }}</span>{{$pre->matricule }}
+                                    @else
+                                        <img src="{{ asset('images/stagiaires/'.$pre->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{$pre->matricule }}
+                                    @endif
+                                </div>
                                 <div class="col-md-2 text-center">{{ $pre->nom_stagiaire }}</div>
                                 <div class="col-md-2 text-center">{{ $pre->prenom_stagiaire }}</div>
-                                <div class="col-md-3 text-center" id="resultat_presence_{{ $dt->detail_id . $pre->stagiaire_id }}">
+                                <div class="col-md-2 text-center" id="resultat_presence_{{ $dt->detail_id . $pre->stagiaire_id }}">
                                     <label class="present_label">
                                         <input class="m-2 present" type="radio" id="present"
                                             data-id="{{ $dt->detail_id . $pre->stagiaire_id }}"
@@ -84,7 +139,13 @@
                                 $status='oui';
                             @endphp
                             <div class="row m-0 p-0 d-flex flex-grow" id="edit_emargement_{{ $dt->detail_id.$pre->stagiaire_id }}">
-                                <div class="col-md-1 text-center">{{ $pre->matricule }}</div>
+                                <div class="col-md-2 text-center">
+                                    @if ($pre->photos == null)
+                                        <span class="me-2" height="30px" width="30px" style="border-radius: 50%;">{{ $pre->sans_photos }}</span>{{$pre->matricule }}
+                                    @else
+                                        <img src="{{ asset('images/stagiaires/'.$pre->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{$pre->matricule }}
+                                    @endif
+                                </div>
                                 <div class="col-md-2 text-center">{{ $pre->nom_stagiaire }}</div>
                                 <div class="col-md-2 text-center">{{ $pre->prenom_stagiaire }}</div>
                                 <div class="col-md-3 text-center mt-1" id="resultat_presence_{{ $pre->detail_id . $pre->stagiaire_id }}">
@@ -92,12 +153,12 @@
                                             {{ $pre->text_status }}
                                     </label>
                                 </div>
-                                <div class="col-md-2 mt-2">
-                                    <i type="button" class="bx bx-edit edit_presence"  data-detail="{{ $dt->detail_id }}" data-stagiaire="{{ $pre->stagiaire_id }}"></i>
+                                <div class="col-md-1">
+                                    <i type="button" class="bx bx-edit bx_modifier edit_presence" style="1rem !important;" data-detail="{{ $dt->detail_id }}" data-stagiaire="{{ $pre->stagiaire_id }}"></i>
                                 </div>
                             </div>
                         @endif
-                    @endforeach  
+                    @endforeach
                     @if ($status == 'non')
                         <div align="center">
                             <input type="submit" name="insert_form"  class="btn inserer_emargement w-25" value="Enregistrer">
@@ -109,45 +170,7 @@
     @endforeach
 </div>
 
-<style>
-    .answer {
-        display: block;
-    }
 
-    .answer~.answer {
-        display: none;
-    }
-    .edit_pointage{
-        padding: 0 5px;
-        margin: 0;
-        color: #7635dc;
-        background-color: #7535dc2f;
-        transition: all .5s ease;
-    }
-    .edit_pointage:hover{
-        color: #7635dc;
-        background-color: #63738141;
-        transform: scale(1.1);
-    }
-    .inserer_emargement{
-        padding: 0 5px;
-        margin: 0;
-        color: #7635dc;
-        background-color: #7535dc2f;
-        transition: all .5s ease;
-    }
-    .inserer_emargement:hover{
-        color: #7635dc;
-        background-color: #63738141;
-        transform: scale(1.1);
-    }
-    .present_label{
-        color: #7635dc !important;
-    }
-    .absent_label{
-        color: red;
-    }
-</style>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -204,14 +227,14 @@
                     html += '<div class="col-md-1 text-center">'+userData['matricule']+'</div>';
                     html += '<div class="col-md-2 text-center">'+userData['nom_stagiaire']+'</div>';
                     html += '<div class="col-md-2 text-center">'+userData['prenom_stagiaire']+'</div>';
-                    html += '<div class="col-md-2 text-center" id="resultat_presence_'+userData['detail_id']+userData['stagiaire_id']+'>';                
+                    html += '<div class="col-md-2 text-center" id="resultat_presence_'+userData['detail_id']+userData['stagiaire_id']+'>';
                     if(userData['status'] == 1){
                         html += '<label class="present_label">';
                         html += '<input class="m-2 present" type="radio" id="present" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="1" checked required>';
                         html += '<span class="present_label">Présent</span>';
                         html += '</label>';
                         html += '<label class="absent_label">';
-                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" required>';          
+                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" required>';
                         html += 'Absent';
                         html += '</label>';
                     }
@@ -221,32 +244,32 @@
                         html += '<span class="present_label">Présent</span>';
                         html += '</label>';
                         html += '<label class="absent_label">';
-                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" checked required>';          
+                        html += '<input class="m-2 absent" type="radio" id="absent" data-id="'+userData['detail_id']+userData['stagiaire_id']+'" name="edit_attendance['+userData['detail_id']+']['+userData['stagiaire_id']+']" value="0" checked required>';
                         html += 'Absent';
                         html += '</label>';
-                    }    
+                    }
                     html += '</div>';
                     html += '<div class="col-md-2">';
-                    html += '<div class="row" class="pointage" id="pointage">';         
+                    html += '<div class="row" class="pointage" id="pointage">';
                     html += '<div class="col-md-6 text-center p-0 m-0">';
-                    html += '<input type="time" class="m-0 pointage_entree" value="'+userData['h_debut']+'" name="edit_h_entree" style="width: 67.1px" onfocus="(this.type="time")" >';                 
-                    html += '</div>';            
-                    html += '<div class="col-md-6 text-center p-0 m-0">';            
-                    html += '<input type="time" class="m-0 pointage_sortie" value="'+userData['h_fin']+'" name="edit_h_sortie" style="width: 67.1px" onfocus="(this.type="time")" >';                            
-                    html += '</div>';                    
+                    html += '<input type="time" class="m-0 pointage_entree" value="'+userData['h_debut']+'" name="edit_h_entree" style="width: 67.1px" onfocus="(this.type="time")" >';
                     html += '</div>';
-                    html += '</div>';                            
+                    html += '<div class="col-md-6 text-center p-0 m-0">';
+                    html += '<input type="time" class="m-0 pointage_sortie" value="'+userData['h_fin']+'" name="edit_h_sortie" style="width: 67.1px" onfocus="(this.type="time")" >';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
                     html += '<div class="col-md-2 p-0">';
-                    html += '<input type="text" class="mt-0 p-0 m-0" value="'+userData['note']+'"  name="edit_note_desc" placeholder="Note(s)">';                    
+                    html += '<input type="text" class="mt-0 p-0 m-0" value="'+userData['note']+'"  name="edit_note_desc" placeholder="Note(s)">';
                     html += '</div>';
-                    html += '<input type="hidden" name="edit_stg_id" value="'+userData['stagiaire_id']+'">';  
+                    html += '<input type="hidden" name="edit_stg_id" value="'+userData['stagiaire_id']+'">';
                     html += '<input type="hidden" name="edit_detail_id" value="'+userData['detail_id']+'">';
-                    html += '<div class="col-md-1 mt-0 p-0">';  
-                    html += '<input type="submit" name="edit_form"  class="btn edit_pointage" value="Modifier">';                   
+                    html += '<div class="col-md-1 mt-0 p-0">';
+                    html += '<input type="submit" name="edit_form"  class="btn edit_pointage" value="Modifier">';
                     html += '</div>';
-                    html += '</tr>';              
+                    html += '</tr>';
                     html += '</div>';
-                                  
+
                     $(id).html(html);
                 },
                 error: function(error) {
