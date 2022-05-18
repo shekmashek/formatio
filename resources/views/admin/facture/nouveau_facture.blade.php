@@ -168,10 +168,10 @@
                                     <h6 class="m-0">Unité</h6>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">Prix unitaire ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">PU HT ({{$devise->devise}})</h6>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Totale ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">Totale HT ({{$devise->devise}})</h6>
                                 </div>
                                 <div class="col-1">
                                     <h6 class="m-0"></h6>
@@ -219,7 +219,6 @@
 
                         <div class="col-12 pb-4 element">
                             <div class="row  titres_services" style="display: none" id="titres_services_annexe">
-                                {{-- <div class="titre_annexe" style="display: inline-block"> --}}
                                 <div class="col-3">
                                     <h6 class="m-0">Frais annexes</h6>
                                 </div>
@@ -230,15 +229,14 @@
                                     <h6 class="m-0">Quantité</h6>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">Prix unitaire ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">PU HT ({{$devise->devise}})</h6>
                                 </div>
-                                <div class="col-1">
-                                    <h6 class="m-0">Totale ({{$devise->devise}})</h6>
+                                <div class="col-1" align="right">
+                                    <h6 class="m-0">Totale HT ({{$devise->devise}})</h6>
                                 </div>
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>
                                 </div>
-                            {{-- </div> --}}
                             </div>
 
                             <div id="newRow"></div>
@@ -256,7 +254,7 @@
                                     <p>Montant Brut HT</p>
                                 </div>
                                 <div class="col-2 text-end pe-2">
-                                    <p id="totale_facture_ht">0</p>
+                                    <p id="totale_facture_ht" align="right">0</p>
                                 </div>
                                 {{-- <div class="col-1 text-end pt-2">
                                 </div> --}}
@@ -276,7 +274,7 @@
                                 <div class="col-1 ">
                                 </div>
                                 <div class="col-2 text-end pe-2">
-                                    <p id="total_remise">0</p>
+                                    <p id="total_remise" align="right">0</p>
                                 </div>
                                 {{-- <div class="col-1">
                                 </div> --}}
@@ -297,10 +295,8 @@
                             </div>
                             <div class="col-2 text-end">
                                 <input type="hidden" id="taxe_value">
-                                <p class="text-end" id="taxe"></p>
+                                <p class="text-end" id="taxe" align="right"></p>
                             </div>
-                            {{-- <div class="col-1 text-end pt-2">
-                            </div> --}}
                         </div>
 
                         <div class="row mb-1">
@@ -316,10 +312,8 @@
                                 <p> Net à payer TTC</p>
                             </div>
                             <div class="col-2 text-end pe-3">
-                                <p id="totale_facture_ttc">0</p>
+                                <p id="totale_facture_ttc" align="right">0</p>
                             </div>
-                            {{-- <div class="col-1 text-end pt-2">
-                            </div> --}}
                         </div>
 
                         <hr>
