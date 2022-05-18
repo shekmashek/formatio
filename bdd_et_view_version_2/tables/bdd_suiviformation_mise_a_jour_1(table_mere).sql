@@ -71,16 +71,16 @@ INSERT INTO offre_gratuits (limite, type_abonne_id) VALUES
 (5, 1),
 (2, 2);
 
-CREATE TABLE type_abonnements (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  nom_type varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  created_at timestamp NULL DEFAULT  current_timestamp(),
-  updated_at timestamp NULL DEFAULT  current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- CREATE TABLE type_abonnements (
+--   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--   nom_type varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+--   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+--   created_at timestamp NULL DEFAULT  current_timestamp(),
+--   updated_at timestamp NULL DEFAULT  current_timestamp()
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO type_abonnements (id, nom_type, logo, created_at, updated_at) VALUES
-(51, 'Premium', 'Premium.png', '2021-11-29 02:54:23', '2021-11-29 02:54:23');
+-- INSERT INTO type_abonnements (id, nom_type, logo, created_at, updated_at) VALUES
+-- (51, 'Premium', 'Premium.png', '2021-11-29 02:54:23', '2021-11-29 02:54:23');
 
 CREATE TABLE mode_financements (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -132,13 +132,13 @@ INSERT INTO type_abonnes (id, abonne_name, created_at, updated_at) VALUES
 (1, 'entreprises', '2021-11-23 09:06:31', '2021-11-23 09:06:31'),
 (2, 'cfps', '2021-11-23 09:06:31', '2021-11-23 09:06:31');
 
-CREATE TABLE type_abonnement_roles (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  type_abonne_id bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnes(id) ON DELETE CASCADE,
-  type_abonnement_id bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnements(id) ON DELETE CASCADE,
-  created_at timestamp NULL DEFAULT  current_timestamp(),
-  updated_at timestamp NULL DEFAULT  current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- CREATE TABLE type_abonnement_roles (
+--   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--   type_abonne_id bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnes(id) ON DELETE CASCADE,
+--   type_abonnement_id bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnements(id) ON DELETE CASCADE,
+--   created_at timestamp NULL DEFAULT  current_timestamp(),
+--   updated_at timestamp NULL DEFAULT  current_timestamp()
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE categorie_paiements (
@@ -171,7 +171,7 @@ CREATE TABLE cfps (
   adresse_ville varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   adresse_region varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   email varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  telephone varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   slogan varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
   nif varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   stat varchar(255) COLLATE utf8mb4_unicode_ci default 'XXXXXXX',
@@ -214,11 +214,11 @@ CREATE TABLE responsables_cfp(
   nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   sexe_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  date_naissance_resp_cfp date default current_timestamp(),
+  date_naissance_resp_cfp date ,
   cin_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXXX',
   email_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  telephone_resp_cfp varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  fonction_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone_resp_cfp varchar(100) COLLATE utf8mb4_unicode_ci,
+  fonction_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
   adresse_lot varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_quartier varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
@@ -228,6 +228,7 @@ CREATE TABLE responsables_cfp(
   url_photo VARCHAR(155),
   cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+   genre_id bigint(20) UNSIGNED  REFERENCES genre(id) ON DELETE CASCADE,
   activiter boolean not null default true,
   prioriter boolean not null default false,
   presentation text COLLATE utf8mb4_unicode_ci NULL,
@@ -237,16 +238,8 @@ CREATE TABLE responsables_cfp(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE abonnement_cfps (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  date_demande date DEFAULT current_timestamp(),
-  date_debut date DEFAULT current_timestamp(),
-  date_fin date DEFAULT current_timestamp(),
-  mode_paiement varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  status varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  type_abonnement_role_id bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnement_roles(id) ON DELETE CASCADE,
-  cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
-  created_at timestamp NULL DEFAULT current_timestamp(),
-  updated_at timestamp NULL DEFAULT current_timestamp(),
-  categorie_paiement_id bigint(20) UNSIGNED NOT NULL REFERENCES categorie_paiements(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ALTER TABLE detail_evaluation_action_formation
+	DROP FOREIGN KEY detail_evaluation_action_formation_ibfk_2;
+
+alter table detail_evaluation_action_formation
+  add column groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE;
