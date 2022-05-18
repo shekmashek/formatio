@@ -181,6 +181,7 @@
                                         <td>  <span style="background: red;padding:10px;color:white;border-radius:10px"  id = "label_statut_of_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
                                     @endif
                                     <td>
+                                        <input type="hidden" value="{{$listes->cfp_id}}" id="id_cfp">
                                         <!-- Default switch -->
                                         <div class="form-check form-switch">
                                             <input class="form-check-input activer_of" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
@@ -251,6 +252,7 @@
     /* activation compte pour of*/
     $(".activer_of" ).on( "change", function() {
         var statut,idAbonnement;
+        var id_cfp = $('#id_cfp').val();
         if($(this).prop('checked')){
             statut = "Activé";
             idAbonnement = $(this).data('id');
@@ -263,11 +265,10 @@
         $.ajax({
             type: "GET",
             url: "{{route('activer_compte_of')}}",
-            data:{Id:idAbonnement,Statut:statut},
+            data:{Id:idAbonnement,Statut:statut,cfp_id:id_cfp},
             dataType: "html",
             success:function(response){
                 var userData=JSON.parse(response);
-                console.log(userData);
                 for (var $i = 0; $i < userData.length; $i++){
                     $('#span_statut_of').text(userData[$i].statut);
 
@@ -283,8 +284,6 @@
                     }
                     $('#debut_of_'+userData[$i].id).text(userData[$i].date_debut);
                     $('#fin_of_'+userData[$i].id).text(userData[$i].date_fin);
-
-
                 }
             },
             error:function(error){

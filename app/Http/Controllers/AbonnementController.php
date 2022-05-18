@@ -231,10 +231,7 @@ class AbonnementController extends Controller
             $test_abonne =$this->fonct->findWhere('abonnements',['entreprise_id','status'],[$responsable[0]->entreprise_id,'En attente']);
 
 
-            $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$entreprise_id]);
 
-            if($entreprise->statut_compte_id == 1) $vue = 1;
-            else $vue = 2;
 
 
             /** on récupère l'abonnement actuel */
@@ -330,11 +327,11 @@ class AbonnementController extends Controller
             if ($test_abonne) {
                 $payant = $this->fonct->findWhere("v_type_abonnement_etp",['entreprise_id'],[$entreprise_id]);
                 // $payant = abonnement::with('type_abonnement_role')->where('entreprise_id', $responsable[0]->entreprise_id)->get();
-                return view('superadmin.listeAbonnement', compact('vue','facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('vue','facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
             }
         }
         // else {
@@ -346,9 +343,7 @@ class AbonnementController extends Controller
             $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
 
-            $cfps = $this->fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
-            if($cfps->statut_compte_id == 1) $vue = 1;
-            else $vue = 2;
+
 
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->where('status','!=','En attente')->exists();
 
@@ -450,11 +445,11 @@ class AbonnementController extends Controller
                 $payant = $this->fonct->findWhere("v_type_abonnement_cfp",['cfp_id'],[$cfp_id]);
 
                 // $payant = abonnement_cfp::with('type_abonnement_role')->where('cfp_id', $cfp_id)->get();
-                return view('superadmin.listeAbonnement', compact('vue','facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('vue','facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
             }
         }
         // else {
@@ -566,69 +561,52 @@ class AbonnementController extends Controller
             $cfp_id = $resp[0]->cfp_id;
             $cfps = cfp::where('id', $cfp_id)->get();
 
-            if($cfps[0]->statut_compte_id == 1) $vue = 1;
-            else $vue = 2;
+
               //on verifie l'abonnemennt de l'of
             $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
             $entreprise = null;
             if($cfp_ab!=null){
                 //on teste d'abord si le dernier abonnement est gratuit,
-                if($cfp_ab[0]->nom_type == "Gratuit") {
-                    // si l'utilisateur choisi encore l'offre gratuit, il n'a plus droit d'accéder une deuxieme fois à cette offre
-                    if($typeAbonnement->nom_type == "Gratuit"){
-                        return back()->with('erreur_abonnement','Vous ne pouvez plus choisir une deuxième fois cette offre');
-                    }
-                    // si l'utilisateur choisi une autre offre
-                    else{
-                        $type_abonnement = $cfp_ab[0]->nom_type;
-                        return view('superadmin.index_abonnement', compact('vue','type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
-                    }
 
+                // si l'utilisateur choisi encore l'offre gratuit, il n'a plus droit d'accéder une deuxieme fois à cette offre
+                if($typeAbonnement->nom_type == "Invité"){
+                    return back()->with('erreur_abonnement','Vous ne pouvez plus choisir une deuxième fois cette offre');
                 }
-                //si le dernnier abonnement n'est pas gratuit
-                if($cfp_ab[0]->nom_type != "Gratuit"){
+                // // si l'utilisateur choisi une autre offre
+                // else{
+                //     $type_abonnement = $cfp_ab[0]->nom_type;
+                //     return view('superadmin.index_abonnement', compact('vue','type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
+                // }
+            //si le dernnier abonnement n'est pas gratuit
 
-                    $dtNow = Carbon::today()->toDateString();
-                    $un_mois_plus_tard = strtotime(date("Y-m-d", strtotime($cfp_ab[0]->invoice_date)) . " + 31 days");
-                    /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
-                    if($cfp_ab[0]->type_arret == ""){
-                        return back()->with('erreur','Vous devriez arrêter votre abonnement actuel avant de s\'abonner à une autre offre');
-                    }
-                    if($cfp_ab[0]->type_arret == 'fin abonnement'){
-                           /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
-                        if($dtNow < $un_mois_plus_tard){
-                            return back()->with('erreur','Vous devriez attendre un mois avant de s\'abonner à une autre offre');
-                        }
-                        else{
-                            if($cfp_ab == null) $type_abonnement = "Gratuit";
-                            else $type_abonnement = $cfp_ab[0]->nom_type;
-                            return view('superadmin.index_abonnement', compact('vue','type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'tarif', 'typeAbonnement'));
-                        }
+                $dtNow = Carbon::today()->toDateString();
+                $un_mois_plus_tard = strtotime(date("Y-m-d", strtotime($cfp_ab[0]->invoice_date)) . " + 31 days");
+                /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
+                if($cfp_ab[0]->type_arret == ""){
+                    return back()->with('erreur','Vous devriez arrêter votre abonnement actuel avant de s\'abonner à une autre offre');
+                }
+                if($cfp_ab[0]->type_arret == 'fin abonnement'){
+                        /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
+                    if($dtNow < $un_mois_plus_tard){
+                        return back()->with('erreur','Vous devriez attendre un mois avant de s\'abonner à une autre offre');
                     }
                     else{
-
                         if($cfp_ab == null) $type_abonnement = "Gratuit";
                         else $type_abonnement = $cfp_ab[0]->nom_type;
-                        return view('superadmin.index_abonnement', compact('vue','type_abonnement','cfp_ab', 'entreprise', 'cfps', 'typeAbonnement'));
+                        return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'tarif', 'typeAbonnement'));
                     }
                 }
-                // $dtNow = Carbon::today()->toDateString();
-                // $un_mois_plus_tard = strtotime(date("Y-m-d", strtotime($cfp_ab[0]->invoice_date)) . " + 31 days");
-                // /**si on est encore à moins de 31jours du dernier abonnement, l'utilisateur ne peut pas changer d'abonnement */
-                // if($dtNow < $un_mois_plus_tard){
-                //      return back()->with('erreur','Vous devriez attendre un mois avant de s\'abonner à une autre offre');
-                // }
-                // else{
-                //     if($cfp_ab == null) $type_abonnement = "Gratuit";
-                //     else $type_abonnement = $cfp_ab[0]->nom_type;
-                //     $entreprise = null;
-                //     return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'nb', 'tarif', 'typeAbonnement', 'type_abonnement_role_id'));
-                // }
+                else{
+
+                    if($cfp_ab == null) $type_abonnement = "Gratuit";
+                    else $type_abonnement = $cfp_ab[0]->nom_type;
+                    return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab', 'entreprise', 'cfps', 'typeAbonnement'));
+                }
             }
             else{
-                $type_abonnement = "Gratuit";
+                $type_abonnement = "Invité";
                 $entreprise = null;
-                return view('superadmin.index_abonnement', compact('vue','entreprise','type_abonnement', 'cfps', 'typeAbonnement'));
+                return view('superadmin.index_abonnement', compact('entreprise','type_abonnement', 'cfps', 'typeAbonnement'));
             }
 
         }
@@ -788,8 +766,9 @@ class AbonnementController extends Controller
     public function activer_of(Request $request)
     {
         $id = $request->Id;
-
         $Statut = $request->Statut;
+        $cfp_id = $request->cfp_id;
+
         $dt = Carbon::today()->toDateString();
         $mensuel = strtotime(date("Y-m-d", strtotime($dt)) . " + 31 days");
         $annuel = strtotime(date("Y-m-d", strtotime($dt)) . " +1 year");
@@ -798,13 +777,33 @@ class AbonnementController extends Controller
         // $ctg_id = abonnement_cfp::where('id', $id)->value('categorie_paiement_id');
          $date_fin = date("Y-m-d", $mensuel);
         // if ($ctg_id == 2)  $date_fin = date("Y-m-d", $annuel);
-        DB::table('abonnement_cfps')
+        if($Statut == "Activé") {
+            DB::table('abonnement_cfps')
             ->where('id', $id)
             ->update(['status' => $Statut, 'date_debut' => $dt, 'date_fin' => $date_fin,'activite' => 1]);
 
-        DB::table('factures_abonnements_cfp')
-            ->where('abonnement_cfps_id',$id)
-            ->update(['statut' => 'Payé']);
+            DB::table('factures_abonnements_cfp')
+                ->where('abonnement_cfps_id',$id)
+                ->update(['statut' => 'Payé']);
+
+            DB::table('cfps')
+                ->where('id',$cfp_id)
+                ->update(['statut_compte_id' => 2]);
+        }
+        else {
+            DB::table('abonnement_cfps')
+            ->where('id', $id)
+            ->update(['status' => $Statut, 'date_debut' => $dt, 'date_fin' => $date_fin,'activite' => 0,'type_arret' => 'immediat']);
+
+            DB::table('factures_abonnements_cfp')
+                ->where('abonnement_cfps_id',$id)
+                ->update(['statut' => 'Non payé']);
+
+            DB::table('cfps')
+                ->where('id',$cfp_id)
+                ->update(['statut_compte_id' => 3]);
+        }
+
 
         $liste = abonnement_cfp::where('id', $id)->get();
         // return response()->json([
@@ -882,9 +881,11 @@ class AbonnementController extends Controller
             return redirect()->back();
         }
         if (Gate::allows('isCFP')) {
+            $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp",["user_id"],[Auth::id()]);;
             $abonnement_id = DB::select('select * from v_abonnement_facture where type_abonnements_cfp_id = ? order by facture_id desc limit 1', [$id]);
                //on met à 0 l'activite pour desactiver l'offre
             DB::update('update abonnement_cfps set status = ?, activite = ?, type_arret = ? where id = ?',["Désactivé",0,"immediat",$abonnement_id[0]->abonnement_id]);
+            DB::update('update cfps set statut_compte_id = ? where id = ?', ['3',$cfp_id->cfp_id]);
             return redirect()->back();
         }
     }

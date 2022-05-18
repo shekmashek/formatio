@@ -85,7 +85,7 @@
                         <div class="container-fluid my-2">
                             <div class="row p-2">
                                 <div class="col-4">
-                                    <img src="{{asset('images/talenta.png')}}" alt="logo_cfp" class="img-fluid">
+                                    <img src="{{asset('images/upskill.png')}}" alt="logo_cfp" class="img-fluid">
                                 </div>
                                 @if ($facture[0]->status_facture == "Non payé")
                                     <div class="status col-4 text-end">

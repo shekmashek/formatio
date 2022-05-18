@@ -112,11 +112,13 @@
                                             @endif
                                         </ul>
                                         @if($abonnement_actuel != null)
-                                            @if($types_of->id == $abonnement_actuel[0]->type_abonnements_cfp_id and $abonnement_actuel[0]->activite == 1)
+                                            @if($types_of->id == $abonnement_actuel[0]->type_abonnements_cfp_id and $abonnement_actuel[0]->activite == 1 )
                                                 <div class="btn btn-primary"><a href="{{route('desactiver_offre',['id'=>$types_of->id])}}">Désactivation immédiat de mon offre</a></div>
                                             @else
                                                 <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_of->id)}}">S'abonner</a></button>
                                             @endif
+                                        @elseif($types_of->id==1)
+                                            <button class="btn btn-primary">Votre offre actuelle</button>
                                         @else
                                             <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_of->id)}}">S'abonner</a></button>
                                         @endif
