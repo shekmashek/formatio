@@ -211,6 +211,7 @@ class SessionController extends Controller
         // ----evaluation
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaires where groupe_id = ?',[$projet[0]->groupe_id])[0]->somme;
+
         //--modalite de formation
         $modalite = DB::select('select modalite from groupes where id = ?',[$id])[0]->modalite;
         $devise = DB::select('select * from devise')[0]->devise;
