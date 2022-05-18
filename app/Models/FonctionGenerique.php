@@ -303,13 +303,13 @@ class FonctionGenerique extends Model
                 ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
                 ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
                     'role_id', 'mail_stagiaire', 'photos',
-                    'stagiaires.user_id', 'fonction_stagiaire', 
+                    'stagiaires.user_id', 'fonction_stagiaire',
                     'users.name', 'users.telephone', 'users.email')
                 ->where('stagiaires.entreprise_id', '=', $etp_id)
                 ->where($search_param_name, 'like', '%'. $input .'%')
                 ->get();
-  
-        return $emps;   
+
+        return $emps;
     }
 
     //filtre Réferent
@@ -323,8 +323,8 @@ class FonctionGenerique extends Model
                 ->join('v_role_user_etp_referent', 'v_role_user_etp_referent.user_id', 'users.id')
                 ->join('responsables', 'responsables.user_id', 'users.id')
                 ->join('entreprises', 'entreprises.id', 'responsables.entreprise_id')
-                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name', 
-                'matricule', 
+                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name',
+                'matricule',
                 'nom_resp', 'prenom_resp',
                     'role_id', 'email_resp', 'photos',
                     'responsables.user_id', 'fonction_resp')
@@ -347,7 +347,7 @@ class FonctionGenerique extends Model
                 ->join('v_role_user_etp_manager', 'v_role_user_etp_manager.user_id', 'users.id')
                 ->join('chef_departements', 'chef_departements.user_id', 'users.id')
                 ->join('entreprises', 'entreprises.id', 'chef_departements.entreprise_id')
-                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name', 
+                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name',
                     'chef_departements.id', 'nom_chef', 'prenom_chef',
                     'role_id', 'mail_chef', 'photos',
                     'chef_departements.user_id', 'fonction_chef')
