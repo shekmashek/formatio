@@ -223,6 +223,16 @@
 
             {{-- <div class="shadow p-3 mb-5 bg-body rounded my-5"> --}}
         <div class="form-control p-4">
+            @if(Session::has('success'))
+            <div class="alert alert-success">
+                <strong> {{Session::get('success')}}</strong>
+            </div>
+            @endif
+            @if(Session::has('error'))
+            <div class="alert alert-danger">
+                <strong> {{Session::get('error')}}</strong>
+            </div>
+            @endif
             @if($resp_cfp_connecter->prioriter == 1)
             <P style="font-size: 15px">Créer un nouveau responsable dans votre organisation pour travailler plus vite pour plus de productivié et gagner du temps.</P>
 
@@ -341,16 +351,7 @@
                     </div>
                 {{-- </div> --}}
 
-                @if(Session::has('success'))
-                <div class="alert alert-success">
-                    <strong> {{Session::get('success')}}</strong>
-                </div>
-                @endif
-                @if(Session::has('error'))
-                <div class="alert alert-danger">
-                    <strong> {{Session::get('error')}}</strong>
-                </div>
-                @endif
+
             </form>
             @endif
 
