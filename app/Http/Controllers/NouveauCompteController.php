@@ -93,13 +93,8 @@ class NouveauCompteController extends Controller
                 // ======== cfp
                 $date = date('d-m-y');
                 $data["logo_cfp"]  = str_replace(' ', '_', $req->name_cfp .  '' . $req->tel_cfp . '' . $date . '.' . $req->file('logo_cfp')->extension());
-<<<<<<< HEAD
-                $url = URL::to('/')."/images/CFP/".$data["logo_cfp"];
-
-=======
 
                 $url_logo = URL::to('/')."/images/CFP/".$data["logo_cfp"];
->>>>>>> debug_version_1
                 $data["nom_cfp"] = $req->name_cfp;
                 $data["email_cfp"] = $req->email_resp_cfp;
                 // $data["tel_cfp"] = $req->tel_resp_cfp;
@@ -152,19 +147,19 @@ class NouveauCompteController extends Controller
                                     $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp]);
                                     //imager  resize
                                      $image = $req->file('logo_cfp');
-    
+
                                     $image_name = $data["logo_cfp"];
-                                
+
                                     $destinationPath = public_path('/images/CFP');
-                                
+
                                     $resize_image = Image::make($image->getRealPath());
-                                
+
                                     $resize_image->resize(256, 128, function($constraint){
                                         $constraint->aspectRatio();
                                     })->save($destinationPath . '/' .  $image_name);
-   /*                             
+   /*
                                     $destinationPath = public_path('/images');
-                                
+
                                  $req->logo_cfp->move($destinationPath,$image_name);
  */
                                     Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
@@ -275,13 +270,13 @@ class NouveauCompteController extends Controller
 
                                         //imager  resize
                                         $image = $req->file('logo_etp');
-    
+
                                         $image_name = $data["logo_etp"];
-                                    
+
                                         $destinationPath = public_path('images/entreprises');
-                                    
+
                                         $resize_image = Image::make($image->getRealPath());
-                                    
+
                                         $resize_image->resize(256, 128, function($constraint){
                                             $constraint->aspectRatio();
                                         })->save($destinationPath . '/' .  $image_name);

@@ -90,39 +90,37 @@ class DepartementController extends Controller
         return view('admin.chefDepartement.liste', compact('nom_chef','prenom_chef','roles_actif_stg', 'roles_not_actif_stg', 'roles_actif_referent', 'roles_not_actif_referent', 'roles_actif_manager', 'roles_not_actif_manager', 'chef', 'referent', 'stagiaires', 'user_role', 'roles'));
     }
 
-<<<<<<< HEAD
-=======
-//start filtre 
+//start filtre
  // filtre Employes fonction
     public function filtreFonction(Request $request){
         $function = new FonctionGenerique();
-        $emps = $function->filtreEmploye('fonction_stagiaire', $request->get('test'));   
-  
-        return json_encode($emps);      
+        $emps = $function->filtreEmploye('fonction_stagiaire', $request->get('test'));
+
+        return json_encode($emps);
     }
-    
+
     // filtre employes name
     public function filtreName(Request $request){
         $function = new FonctionGenerique();
-        $emps = $function->filtreEmploye('nom_stagiaire', $request->get('name'));   
-  
-        return json_encode($emps);   
+        $emps = $function->filtreEmploye('nom_stagiaire', $request->get('name'));
+
+        return json_encode($emps);
     }
 
     // filtre employes matricule
     public function filtreMatricule(Request $request){
         $function = new FonctionGenerique();
         $emps = $function->filtreEmploye('matricule', $request->get('matricule'));
- 
-        return json_encode($emps);    
+
+        return json_encode($emps);
     }
 
     // filtre employes role
     public function filtreRole(Request $request){
         $function = new FonctionGenerique();
         $emps = $function->filtreEmploye('role_name', $request->get('role_name'));
- 
-        return json_encode($emps);   
+
+        return json_encode($emps);
     }
 
 
@@ -210,7 +208,6 @@ class DepartementController extends Controller
         return view('admin.chefDepartement.liste', compact('chef','referent','stagiaires','user_role','roles'));
     }
 */
->>>>>>> debug_version_1
     public function create()
     {
         $fonct = new FonctionGenerique();

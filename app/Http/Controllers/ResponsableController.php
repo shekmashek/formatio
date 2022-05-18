@@ -288,27 +288,16 @@ class ResponsableController extends Controller
                 // $branche = branche::findorFail($id);
 
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-<<<<<<< HEAD
-            }
-            $entreprise = DB::select("select * from entreprises where id=?",[$refs->entreprise_id])[0];
-            return view('admin.responsable.profilResponsables', compact('refs','entreprise'));
-=======
                 $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
             // }
             // dd($refs);
             return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
->>>>>>> debug_version_1
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-<<<<<<< HEAD
-            $entreprise = DB::select("select * from entreprises where id=?",[$refs->entreprise_id])[0];
-            return view('admin.responsable.profilResponsable', compact('refs','entreprise'));
-=======
 
             return view('admin.responsable.profilResponsable', compact('refs'));
->>>>>>> debug_version_1
         }
     }
 
@@ -559,23 +548,6 @@ class ResponsableController extends Controller
     //modification photos
     public function update_photos_resp(Request $request)
     {
-<<<<<<< HEAD
-        $fonct = new FonctionGenerique();
-        $resp_etp = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
-        $date = date('d-m-y h:m:s');
-        $back_pho_ancient = $resp_etp->photos;
-
-        $nom_image  = str_replace(' ', '_', $resp_etp->nom_resp .  '' . $resp_etp->telephone_resp . '' . $date . '.' . $request->file('photos')->extension());
-        $url = URL::to('/') . "/images/responsables/" . $nom_image;
-
-        DB::update('update employers set photos = ?, url_photo=? where user_id = ? and id=?', [$nom_image, $url, Auth::user()->id, $resp_etp->id]);
-        $request->photos->move(public_path('images/responsables'), $nom_image);  //save image responsables
-
-        if ($resp_etp->photos != null) {
-            File::delete("images/responsables/" . $back_pho_ancient);
-        }
-        return redirect()->route('affResponsable');
-=======
         $image = $request->file('image');
         //tableau contenant les types d'extension d'images
         $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
@@ -616,7 +588,6 @@ class ResponsableController extends Controller
             return redirect()->back()->with('error', 'Choisissez une photo avant de cliquer sur enregistrer');
         }
 
->>>>>>> debug_version_1
     }
     //update password
     public function update_responsable_mdp(Request $request)

@@ -1149,13 +1149,8 @@ class ParticipantController extends Controller
             $doner["tel"]  = $req["tel_" . $i];
             if ($req["matricule_" . $i] != null && $req["nom_" . $i] != null) {
                 if (
-<<<<<<< HEAD
-                    $req["prenom_" . $i] != null  && $req["cin_" . $i] != null
-                    && $req["email_" . $i] != null && $req["tel_" . $i] != null && $req["fonction_" . $i] != null
-=======
                     $req["cin_" . $i] != null
                     && $req["email_" . $i] != null
->>>>>>> debug_version_1
                 ) {
                     $totale_valide += 1;
                     $verify = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req["email_" . $i]]);

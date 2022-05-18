@@ -77,13 +77,9 @@ class HomeController extends Controller
             DB::update('update employers set date_naissance_emp = ? where id = ?', [$request->input('date_naissance_stg'), $id_stg]);
         }
         if ($request->input('genre_stg') != null) {
-<<<<<<< HEAD
-            DB::update('update employers set sexe_emp = ? where id = ?', [$request->input('genre_stg'), $id_stg]);
-=======
             if ($request->input('genre_stg') == 'Femme') $genre = 1;
             if ($request->input('genre_stg') == 'Homme') $genre = 2;
             DB::update('update stagiaires set genre_stagiaire = ? where id = ?', [$genre, $id_stg]);
->>>>>>> debug_version_1
         }
         if ($request->input('tel_stg') != null) {
             DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_stg'), $id_stg]);
@@ -124,13 +120,9 @@ class HomeController extends Controller
             DB::update('update employers set nom_emp = ? where id = ?', [$request->input('nom_chef'), $id_chef]);
         }
         if ($request->input('genre_chef') != null) {
-<<<<<<< HEAD
-            DB::update('update employers set sexe_emp = ? where id = ?', [$request->input('genre_chef'), $id_chef]);
-=======
             if ($request->input('genre_chef') == 'Femme') $genre = 1;
             if ($request->input('genre_chef') == 'Homme') $genre = 2;
             DB::update('update chef_departements set genre_chef = ? where id = ?', [$genre, $id_chef]);
->>>>>>> debug_version_1
         }
         if ($request->input('tel_chef') != null) {
             DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_chef'), $id_chef]);
@@ -424,13 +416,9 @@ class HomeController extends Controller
                 $refs_tmp = DB::select('select nif,stat,rcs from entreprises where id = ?', [$etp_id]);
                 $refs = $refs_tmp[0];
 
-<<<<<<< HEAD
-                // $formateur_referent = DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ' . $ref . ' ');
-=======
                 $formateur_referent = DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ' . $ref . ' ');
                 // $formateurs =  DB::select('select * from demmande_formateur_cfp where demmandeur_formateur_id = ?', [$ref]);
                 // $formateur_referent = $formateurs[0];
->>>>>>> debug_version_1
 
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
                 $etp1Collaborer = $fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
@@ -474,11 +462,7 @@ class HomeController extends Controller
                     $referent = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
                 }
 
-<<<<<<< HEAD
-                return view('referent.dashboard_referent.dashboard_referent', compact('etp', 'referent', 'refs', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'name'));
-=======
                 return view('referent.dashboard_referent.dashboard_referent', compact('test','message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
->>>>>>> debug_version_1
             }
         }
 
@@ -704,10 +688,6 @@ class HomeController extends Controller
 
         $user_id = Auth::user()->id;
         $totale_invitation = 0;
-<<<<<<< HEAD
-
-=======
->>>>>>> debug_version_1
         $entp = new entreprise();
         $status = DB::select('select * from status');
         $type_formation_id = $request->type_formation;
@@ -724,10 +704,6 @@ class HomeController extends Controller
             return view('admin.projet.home', compact('data', 'cfp', 'projet', 'totale_invitation', 'entreprise', 'status'));
         }
         if (Gate::allows('isReferent')) {
-<<<<<<< HEAD
-            //on récupère l'entreprise id de la personne connecté
-=======
->>>>>>> debug_version_1
             if (Gate::allows('isReferentPrincipale')) {
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             }
@@ -769,15 +745,7 @@ class HomeController extends Controller
             $data = $fonct->findWhere("v_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
             $cfp = $fonct->findAll("cfps");
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
-<<<<<<< HEAD
-        }
-        // elseif (Gate::allows('isStagiaire')) {
-        //     return view('layouts.accueil_admin');
-        // }
-        elseif (Gate::allows('isCFP')) {
-=======
         } elseif (Gate::allows('isCFP')) {
->>>>>>> debug_version_1
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
             // pagination
@@ -805,13 +773,6 @@ class HomeController extends Controller
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request, $nb_par_page, $offset);
 
             $projet = DB::select($sql);
-<<<<<<< HEAD
-            $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
-            $data = $fonct->findWhere("v_groupe_projet_entreprise_module", ["cfp_id"], [$cfp_id]);
-            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-=======
->>>>>>> debug_version_1
 
             // dd( $projet);
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
@@ -871,14 +832,6 @@ class HomeController extends Controller
         }
         if (Gate::allows('isStagiaire')) {
             $evaluation = new EvaluationChaud();
-<<<<<<< HEAD
-            // $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
-            // $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
-            // $stg_id = stagiaire::where('user_id', $user_id)->value('id');
-            $stg_id =  $fonct->findWhereMulitOne("stagiaires", ["user_id"], [$user_id])->id;
-            $data = DB::select('select * from v_stagiaire_groupe where stagiaire_id = ? and groupe_id not in(select groupe_id from reponse_evaluationchaud) order by date_debut desc', [$stg_id]);
-            return view('projet_session.index2', compact('data', 'status', 'type_formation_id'));
-=======
             $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
             $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
             $stg_id = stagiaire::where('user_id', $user_id)->value('id');
@@ -909,7 +862,6 @@ class HomeController extends Controller
             $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc limit ? offset ?', [$stg_id, $nb_par_page, $offset]);
 
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
->>>>>>> debug_version_1
         }
     }
 
@@ -1100,12 +1052,7 @@ class HomeController extends Controller
         $total_engage = DB::select('select ifnull(sum(montant_total),0) as engage from v_facture_actif where entreprise_id = ? and facture_encour =  ? and year(due_date) = ?', [$entreprise_id[0]->entreprise_id, "en_cour", $current_year]);
         //get total budget restant
         $total_restant = $total_budget[0]->total - ($total_realise[0]->realise + $total_engage[0]->engage);
-<<<<<<< HEAD
-
-        return view('referent.dashboard_referent.dashboard_referent_budget_prev', compact('total_budget', 'total_realise', 'total_engage', 'total_restant'));
-=======
         return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
->>>>>>> debug_version_1
     }
 
     //creation iframe

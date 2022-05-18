@@ -56,13 +56,8 @@ class NouveauCompte extends Model
             $doner["matricule"], $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"],
             $entreprise_id, $user_id
         ];
-<<<<<<< HEAD
-        DB::insert('insert into employers(matricule_emp,nom_emp,prenom,cin_emp,email_emp,telephone_emp,fonction_emp
-        ,entreprise_id,user_id,activiter,created_at,prioriter) values(?,?,?,?,?,?,?,?,?,1,NOW(),true)', $data);
-=======
         DB::insert('insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp
         ,entreprise_id,user_id,activiter,created_at,prioriter) values(?,?,?,?,?,?,?,1,NOW(),true)', $data);
->>>>>>> debug_version_1
         DB::commit();
     }
 
@@ -135,7 +130,7 @@ class NouveauCompte extends Model
     public function validation_form_cfp($imput)
     {
       //  'logo_cfp.max' => 'la taille de votre image ne doit pas dépassé 60 Ko',
-           
+
         $rules = [
             'name_cfp.required' => 'la raison sociale de votre entreprise ne doit pas être null',
             'nif.required' => 'le NIF de votre entreprise ne doit pas être null',
@@ -157,7 +152,7 @@ class NouveauCompte extends Model
             'email_resp_cfp' => 'required|email'
         ];
       //  'logo_cfp' => 'required|file|max:60|mimes:jpeg,png,jpg',
-           
+
         $imput->validate($critereForm, $rules);
     }
 

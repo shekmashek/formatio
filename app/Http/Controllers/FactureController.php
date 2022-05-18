@@ -84,12 +84,6 @@ class FactureController extends Controller
         $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
 
 
-<<<<<<< HEAD
-        $facture_actif = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour","cfp_id"], ["valider",$cfp_id], "facture_id", 0, 10);
-        $facture_inactif = $this->fonct->findWherePagination("v_facture_inactif", ["cfp_id"], [$cfp_id], "facture_id", 0, 10);
-        $facture_payer = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], "facture_id", 0, 10);
-        $facture_encour = $this->fonct->findWherePagination("v_facture_actif", ["facture_encour", "cfp_id"], ["en_cour", $cfp_id], "facture_id", 0, 10);
-=======
         if ($nb_pag_full != null && $nb_pag_inactif != null && $nb_pag_actif != null &&  $nbPagination_payer != null) {
 
             $full_facture = $this->fact->getListDataFacture("v_full_facture", ["cfp_id"], [$cfp_id], $nb_pag_full, $nb_limit, "invoice_date", "DESC");
@@ -102,7 +96,6 @@ class FactureController extends Controller
             $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "cfp_id"], ["terminer", $cfp_id], 0, $nb_limit, "invoice_date", "DESC");
             $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "cfp_id"], ["terminer", $cfp_id], 0, $nb_limit, "invoice_date", "DESC");
         }
->>>>>>> debug_version_1
 
         $facture_actif_guide = $this->fonct->findWhere("v_facture_actif", ["cfp_id"], [$cfp_id]);
         $facture_inactif_guide = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
@@ -120,12 +113,6 @@ class FactureController extends Controller
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $user_id = Auth::user()->id;
         $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
-<<<<<<< HEAD
-        $facture_actif = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "entreprise_id"], ["valider",$entreprise_id]);
-        $facture_payer = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id]);
-        $facture_encour = $this->fonct->findWhere("v_facture_actif", ["facture_encour", "entreprise_id"], ["en_cour", $entreprise_id]);
-        return view('admin.facture.facture_etp', compact('facture_actif', 'facture_payer', 'facture_encour'));
-=======
         $cfp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["entreprise_id"], [$entreprise_id]);
         $cfp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
 
@@ -164,7 +151,6 @@ class FactureController extends Controller
         if (Gate::allows('isReferent')) {
             return $this->listeFacture_referent($nb_pag_full, $nb_pag_actif, $nbPagination_payer, $pour_list);
         }
->>>>>>> debug_version_1
     }
 
     // ================== Rehcerche Par critère ==================
@@ -905,15 +891,7 @@ class FactureController extends Controller
         $dossier_cfp = $un_cfp->nom . $un_cfp->id;
         $projet_folder = $un_projet->nom_projet . $un_projet->id;
         $bc = new getImageModel();
-<<<<<<< HEAD
-        //enregistrement du bc
-        $bc->create_sub_directory($dossier, $sous_dossier, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_bc')->getContent());
-        //enregistrement du devis
         $sous_dossier2 = 'devis';
-        $bc->create_sub_directory($dossier, $sous_dossier2, $dossier_cfp, $projet_folder, $contat_pathBC, $imput->file('down_fa')->getContent());
-=======
-        $sous_dossier2 = 'devis';
->>>>>>> debug_version_1
 
 
         $res = $this->fact->stockBcetFa('' . $imput->down_bc->extension(), '' . $imput->down_fa->extension(), $contat_file, $contat_pathBC, $contat_pathFA);

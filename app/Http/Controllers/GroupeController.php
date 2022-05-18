@@ -45,27 +45,16 @@ class GroupeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
-<<<<<<< HEAD
-        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
-=======
         // $cfp_id = cfp::where('user_id', $user_id)->value('id');
         // dd($fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]));
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
->>>>>>> debug_version_1
         $type_formation = request()->type_formation;
         $formations = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
         $modules = $fonct->findAll("modules");
 
-<<<<<<< HEAD
-        $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-        $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-        $entreprise = $fonct->concatTwoList($etp2, $etp1);
-
-=======
         $etp1 = $fonct->findWhere("v_demmande_cfp_etp", ['cfp_id'], [$cfp_id]);
         $etp2 = $fonct->findWhere("v_demmande_etp_cfp", ['cfp_id'], [$cfp_id]);
         $entreprise = $fonct->concatTwoList($etp1, $etp2);
->>>>>>> debug_version_1
         $payement = $fonct->findAll("type_payement");
         return view('projet_session.projet_intra_form', compact('type_formation', 'formations', 'modules', 'entreprise', 'payement'));
     }
@@ -94,13 +83,8 @@ class GroupeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
-<<<<<<< HEAD
-        $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-        $module = $fonct->findWhere("modules", ["formation_id","cfp_id"], [$rq->id,$cfp_id]);
-=======
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
         $module = $fonct->findWhere("modules", ["formation_id","cfp_id",'status'], [$rq->id,$cfp_id,2]);
->>>>>>> debug_version_1
 
         return response()->json($module);
     }

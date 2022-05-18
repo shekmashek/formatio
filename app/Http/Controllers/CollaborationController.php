@@ -69,7 +69,7 @@ class CollaborationController extends Controller
         $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
         $responsable_etp = $this->fonct->findWhereMulitOne("responsables", ["entreprise_id", "user_id"], [$entreprise_id, $user_id]);
         $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["email_resp_cfp"], [$req->email_cfp]);
-     
+
         if ($responsable_cfp != null) {
         //    $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$responsable_cfp->cfp_id, $entreprise_id]);
             $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$entreprise_id, $responsable_cfp->cfp_id]);
@@ -120,11 +120,7 @@ class CollaborationController extends Controller
     public function create_cfp_formateur(Request $req)
     {
         $user_id = Auth::user()->id;
-<<<<<<< HEAD
-        $cfp_id =  $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
-=======
         $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
->>>>>>> debug_version_1
 
         $formateur = $this->fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$req->email_format]);
 

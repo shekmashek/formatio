@@ -22,11 +22,7 @@ use PDF;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-<<<<<<< HEAD
-use App\Models\FonctionGenerique;
-=======
 use App\Facture;
->>>>>>> debug_version_1
 use function PHPSTORM_META\type;
 
 class AbonnementController extends Controller
@@ -227,20 +223,9 @@ class AbonnementController extends Controller
     //affichage des types d'abonnements
     public function ListeAbonnement()
     {
-<<<<<<< HEAD
-            $fonct = new FonctionGenerique();
-        // $role_id = User::where('Email', Auth::user()->email)->value('role_id');
-=======
->>>>>>> debug_version_1
 
         if (Gate::allows('isReferent')) {
 
-<<<<<<< HEAD
-            // $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
-            $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[Auth::user()->id]);
-            $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
-            $abn = type_abonnement::all();
-=======
             $responsable =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
             $entreprise_id = $responsable[0]->entreprise_id;
             $test_abonne =$this->fonct->findWhere('abonnements',['entreprise_id','status'],[$responsable[0]->entreprise_id,'En attente']);
@@ -335,7 +320,6 @@ class AbonnementController extends Controller
             }
 
 
->>>>>>> debug_version_1
 
             if ($test_abonne) {
                 $payant = $this->fonct->findWhere("v_type_abonnement_etp",['entreprise_id'],[$entreprise_id]);
@@ -352,19 +336,6 @@ class AbonnementController extends Controller
         // }
 
         if (Gate::allows('isCFP')) {
-<<<<<<< HEAD
-            $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[Auth::user()->id]);
-
-            // $cfp_id = cfp::where('user_id', Auth::user()->id)->value('id');
-            $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
-            $abn =type_abonnement::all();
-            $offregratuit = offre_gratuit::with('type_abonne')->where('type_abonne_id', 1)->get();
-            $typeAbonne_id = 2;
-            $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('type_abonne_id', $typeAbonne_id)->get();
-
-            $tarif = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '1')->get();
-            $tarifAnnuel = tarif_categorie::with('type_abonnement_role')->where('categorie_paiement_id', '2')->get();
-=======
 
             $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
@@ -464,7 +435,6 @@ class AbonnementController extends Controller
             }
 
 
->>>>>>> debug_version_1
             if ($test_abonne) {
                 $payant = $this->fonct->findWhere("v_type_abonnement_cfp",['cfp_id'],[$cfp_id]);
 

@@ -218,22 +218,14 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
 
 
-<<<<<<< HEAD
-    public function insert($cfp_id, $idProject, $entrerpsie_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $reference_bc, $remise, $type_facture_id)
-=======
     public function insert($cfp_id, $idProject, $entrerpsie_id, $idGroupe_etp, $tabData, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $reference_bc, $remise, $type_facture_id)
->>>>>>> debug_version_1
     {
         $ht = $tabData['facture'] * $tabData['qte'];
         $data = [
             $ht, $idProject,
             $tabDataDate['invoice_date'],
             $tabDataDate['due_date'], $tabDataTypeFinance['tax_id'], $tabDataDesc['description'], $tabDataDesc['other_message'],
-<<<<<<< HEAD
-            $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe_etp, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id, $entrerpsie_id
-=======
             $tabData['qte'], $num_facture, $tabDataTypeFinance['id_mode_financement'], $idGroupe_etp, $tabData['facture'], $reference_bc, $remise, $type_facture_id, $cfp_id, $entrerpsie_id, $tabDataDesc['remise_id']
->>>>>>> debug_version_1
         ];
 
         DB::insert('insert into factures (hors_taxe,projet_id,invoice_date,due_date,tax_id,description,other_message,qte,num_facture,type_financement_id,groupe_entreprise_id,created_at, updated_at,pu,reference_bc,remise,type_facture_id,cfp_id,entreprise_id,remise_id) values (?,?,?,?,?,?,?,?,?,?,?, NOW(), NOW(),?,?,?,?,?,?,?)', $data);
@@ -255,9 +247,6 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
     }
 
     // fonction insert nouveau frais annexe par project
-<<<<<<< HEAD
-    public function insert_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc, $taux)
-=======
     public function insert_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc)
     {
         $ht = $montant * $qte;
@@ -269,16 +258,11 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     // fonction update frais annexe
     public function update_frais_annexe($cfp_id, $projet_id, $entreprise_id, $num_facture, $qte, $idFrais, $montant, $desc)
->>>>>>> debug_version_1
     {
         $ht = $montant * $qte;
-<<<<<<< HEAD
-        $data = [$idFrais, $num_facture, $ttc, $ht, $desc, $qte, $montant, $cfp_id, $projet_id, $entreprise_id];
-=======
         $data = [$ht, $desc, $qte, $montant, $num_facture, $idFrais, $cfp_id, $projet_id, $entreprise_id];
 
         // dd($data);
->>>>>>> debug_version_1
 
         DB::update("update montant_frais_annexes set hors_taxe=?, description=?,
             qte=?,pu=? where num_facture=?  and frais_annexe_id=? and cfp_id=? and projet_id=? and entreprise_id=?", $data);
@@ -395,12 +379,8 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $imput->down_fa->move(public_path($path['str']), $path['name_fa']);
     }
 
-<<<<<<< HEAD
-    public function verifyCreationFacture($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path)
-=======
 
     public function verifyCreationFacture($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $imput, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture)
->>>>>>> debug_version_1
     {
         $this->validation_form($imput);
         $fonction = new FonctionGenerique();
@@ -408,13 +388,8 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
         if ($verify == 0) {
 
-<<<<<<< HEAD
-            $this->insert($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $path, $imput["reference_bc"], $imput["remise"], $imput["type_facture"]);
-            return redirect()->route('save_facture');
-=======
             $this->insert($cfp_id, $idProject, $entreprise_id, $idGroupe_etp, $tabData, $taux, $tabDataDate, $tabDataTypeFinance, $tabDataDesc, $num_facture, $imput["reference_bc"], $tabDataDesc["remise"], $imput["type_facture"]);
             return redirect()->route('liste_facture');
->>>>>>> debug_version_1
             // return back()->with('success', 'creation de la facture du project est effectué');
         } else {
             return back()->with('error', 'Oups! la facture existe déjà!');
@@ -507,41 +482,6 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
 
     // ================= recherche par multi critère
 
-<<<<<<< HEAD
-    public function search_intervale_dte_generique_cfp_en_courPagination($invoice_dte, $due_dte, $cfp_id, $factue_id, $nbPage)
-    {
-        if ($factue_id <= 0) {
-            $factue_id = 1;
-        }
-        $data = DB::select("select * from v_facture_actif where invoice_date>='" . $invoice_dte . "' and invoice_date<='" . $due_dte . "' and cfp_id=? and facture_encour='en_cour' and facture_id>=? limit " . $nbPage, [$cfp_id, $factue_id]);
-        return $data;
-    }
-
-    public function search_intervale_dte_generique_cfp_actifPagination($invoice_dte, $due_dte, $cfp_id, $factue_id, $nbPage)
-    {
-        if ($factue_id <= 0) {
-            $factue_id = 1;
-        }
-        $data = DB::select("select * from v_facture_actif where facture_encour='valider' and invoice_date>=? and invoice_date<=? and cfp_id=?  and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
-        return $data;
-    }
-
-    public function search_intervale_dte_generique_cfp_payerPagination($invoice_dte, $due_dte, $cfp_id, $factue_id, $nbPage)
-    {
-        if ($factue_id <= 0) {
-            $factue_id = 1;
-        }
-        $data = DB::select("select * from v_facture_actif where invoice_date>=? and invoice_date<=?  and cfp_id=? and UPPER(facture_encour)=UPPER('terminer') and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
-        return $data;
-    }
-
-    public function search_intervale_dte_generique_cfp_inactifPagination($invoice_dte, $due_dte, $cfp_id, $factue_id, $nbPage)
-    {
-        if ($factue_id <= 0) {
-            $factue_id = 1;
-        }
-        $data = DB::select("select * from v_facture_inactif where invoice_date>=? and invoice_date<=? and cfp_id=? and facture_id>=? limit " . $nbPage, [$invoice_dte, $due_dte, $cfp_id, $factue_id]);
-=======
     public function search_intervale_dte_generique_en_cour($invoice_dte, $due_dte, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
     {
         $data = array();
@@ -620,7 +560,6 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
             $data[$i]->module_session = $sessionConactener["getModule"];
             $data[$i]->ref_session = $sessionConactener["getRefModule"];
         }
->>>>>>> debug_version_1
         return $data;
     }
 
@@ -665,12 +604,8 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         }
         return $data;
     }
-<<<<<<< HEAD
-    public function search_num_fact_actif_cfp($nomTab, $num_fact, $satut_fact, $cfp_id)
-=======
 
     public function search_intervale_solde_generique_inactif($solde_debut, $solde_fin, $nom_champ_para, $cfp_id, $nb_debut_pag, $nbLimit_page, $col_order_by, $order)
->>>>>>> debug_version_1
     {
         if ($nb_debut_pag == null || $nb_debut_pag <= 0) {
             $nb_debut_pag = 0;
@@ -778,8 +713,6 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         $data["totale"] = 10;
         return $data;
     }
-<<<<<<< HEAD
-=======
 
     public function getListDataFacture($nomTab, $para = [], $val = [], $nbDebutPagination, $nbPage, $col_order_by, $order)
     {
@@ -1044,5 +977,4 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
         }
         return $verify;
     }
->>>>>>> debug_version_1
 }

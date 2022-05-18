@@ -73,10 +73,6 @@ class ProfController extends Controller
         $forma = new formateur();
         if (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-<<<<<<< HEAD
-            $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-            return view('admin.formateur.formateur', compact('formateur'));
-=======
 
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
@@ -91,7 +87,6 @@ class ProfController extends Controller
 
             return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
 
->>>>>>> debug_version_1
             if (count($formateur) <= 0) {
                 return view('admin.formateur.guide');
             } else {
@@ -162,55 +157,8 @@ class ProfController extends Controller
     {
         $fonct = new FonctionGenerique();
 
-<<<<<<< HEAD
-        $frm = new formateur();
-        $frm->nom_formateur = $request->nom;
-        $frm->prenom_formateur = $request->prenom;
-        $frm->mail_formateur = $request->mail;
-        $frm->numero_formateur = $request->phone;
-        $frm->genre_id = $request->sexe;
-        $frm->date_naissance = $request->date_naissance;
-        $frm->adresse = $request->adresse;
-        $frm->CIN = $request->cin;
-        $frm->specialite = $request->specialite;
-        $frm->niveau = $request->niveau;
-
-        $date = date('d-m-Y');
-        $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
-        $str = 'images/formateurs';
-
-        $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
-
-        $request->image->move(public_path($str), $nom_image);
-
-        $frm->photos = $nom_image;
-        $frm->url_photo = $url_photo;
-
-        $user = new User();
-        $user->name = $request->nom . " " . $request->prenom;
-        $user->email = $request->mail;
-
-        $user->cin = $request->cin;
-        $user->telephone = $request->phone;
-
-        $ch1 = '0000';
-        // $ch2 = substr($request->phone, 8, 2);
-        $user->password = Hash::make($ch1);
-        $user->save();
-
-        $user_id = $fonct->findWhereMulitOne("users", ["email"], [$request->mail])->id;
-        DB::beginTransaction();
-        try {
-            $fonct->insert_role_user($user_id, "4",true,true); // formateur user_id,role_id,prioriter,activiter
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
-        }
-=======
         $image = $request->file('image');
         if($image != null){
->>>>>>> debug_version_1
 
             if($image->getSize() > 1692728 or $image->getSize() == false){
                 return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 1.7 MB');
