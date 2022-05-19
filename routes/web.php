@@ -1187,7 +1187,7 @@ Route::post('/enregistrer_modification_fonction/{id}', 'ResponsableCfpController
 Route::get('/profil_of/{id}', 'UtilisateurControlleur@profil_cfp')->name('profil_of');
 Route::get('/modification_logo_cfp/{id}', 'CfpController@edit_logo')->name('modification_logo_cfp');
 Route::get('/modification_nom_organisme/{id}', 'CfpController@edit_nom')->name('modification_nom_organisme');
-Route::get('/modification_nom_organisme/{id}', 'CfpController@edit_nom')->name('modification_nom_organisme');
+// Route::get('/modification_nom_organisme/{id}', 'CfpController@edit_nom')->name('modification_nom_organisme');
 Route::get('/modification_adresse_organisme/{id}', 'CfpController@edit_adresse')->name('modification_adresse_organisme');
 
 Route::get('/modification_nif/{id}','CfpController@edit_nif')->name('modification_nif');

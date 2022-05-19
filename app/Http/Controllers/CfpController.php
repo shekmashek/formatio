@@ -98,7 +98,7 @@ class CfpController extends Controller
         } else {
             DB::update('update cfps set assujetti_id = ? where id = ?', [$request->assujetti, $id]);
             // ('insert into values (?, ?)' entreprises set assujeti_id = ? where id = ?', [$request->assujetti,$id]);
-            return redirect()->route('affichage_parametre_cfp', [$id]);
+            return redirect()->route('profil_of', [$id]);
         }
     }
 
@@ -139,6 +139,27 @@ class CfpController extends Controller
         return view('cfp.modification_profil.edit_horaire', compact('cfp', 'id'));
     }
 
+    public function edit_nif($id, Request $request){
+        $nif = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.modification_nif',compact('nif'));
+    }
+
+
+    public function edit_stat($id, Request $request){
+        $stat = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.modification_stat',compact('stat'));
+    }
+
+    public function edit_rcs($id, Request $request){
+        $rcs = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.modification_rcs',compact('rcs'));
+    }
+
+    public function edit_cif($id, Request $request){
+        $cif = $this->fonct->findWhereMulitOne("cfps",["id"],[$id]);
+        return view('cfp.modification_profil.modification_cif',compact('cif'));
+    }
+
     public function modifier_logo($id, Request $request)
     {
         $image = $request->file('image');
@@ -171,7 +192,8 @@ class CfpController extends Controller
                     $url_logo = URL::to('/')."/images/CFP/".$nom_image;
 
                     DB::update('update cfps set logo = ?,url_logo = ? where id = ?', [$nom_image,$url_logo,$id]);
-                    return redirect()->route('affichage_parametre_cfp',[$id]);
+                                return redirect()->route('profil_of', [$id]);
+
 
                  }
             }
@@ -185,7 +207,8 @@ class CfpController extends Controller
     //    }
     //    else{
     //     DB::update('update cfps set nom = ?, slogan = ? where id = ?', [$request->nom,$request->slogan,$id]);
-    //     return redirect()->route('affichage_parametre_cfp',[$id]);
+    //                 return redirect()->route('profil_of', [$id]);
+
     //    }
 
     // }
@@ -199,7 +222,7 @@ class CfpController extends Controller
         if ($request->nom == null) {
             return redirect()->back()->with('error_nom', 'Entrez le nom de votre organisme avant de cliquer sur enregistrer');
         } else {
-            DB::update('update cfps set nom = ? where id = ?', [$request->nom, $id]);
+            DB::update('update cfps set nom = ?, slogan = ? where id = ?', [$request->nom,$request->slogan, $id]);
             return redirect()->route('profil_of', [$id]);
         }
     }
@@ -227,15 +250,15 @@ class CfpController extends Controller
         DB::update('update cfps set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot, $request->quartier, $request->code_postal, $request->ville, $request->region, $id]);
         return redirect()->route('profil_of', [$id]);
     }
-    public function modifier_slogan($id, Request $request)
-    {
-        if ($request->slogan == null) {
-            return redirect()->back()->with('error_slogan', 'Entrez le slogan de votre organisme avant de cliquer sur enregistrer');
-        } else {
-            DB::update('update cfps set slogan = ? where id = ?', [$request->slogan, $id]);
-            return redirect()->route('profil_of', [$id]);
-        }
-    }
+    // public function modifier_slogan($id, Request $request)
+    // {
+    //     if ($request->slogan == null) {
+    //         return redirect()->back()->with('error_slogan', 'Entrez le slogan de votre organisme avant de cliquer sur enregistrer');
+    //     } else {
+    //         DB::update('update cfps set slogan = ? where id = ?', [$request->slogan, $id]);
+    //         return redirect()->route('profil_of', [$id]);
+    //     }
+    // }
     public function modifier_site($id, Request $request)
     {
         if ($request->site == null) {
@@ -264,6 +287,32 @@ class CfpController extends Controller
         }
         return redirect()->route('profil_of', [$id]);
     }
+
+    public function modifier_nif($id,Request $request){
+        DB::update('update cfps set nif = ? where id = ?', [$request->nif, $id]);
+                    return redirect()->route('profil_of', [$id]);
+
+    }
+
+
+    public function modifier_stat($id, Request $request){
+        DB::update('update cfps set stat = ? where id = ?', [$request->stat, $id]);
+                    return redirect()->route('profil_of', [$id]);
+
+    }
+
+    public function modifier_rcs($id, Request $request){
+        DB::update('update cfps set rcs = ? where id = ?', [$request->rcs, $id]);
+                    return redirect()->route('profil_of', [$id]);
+
+    }
+
+    public function modifier_cif($id, Request $request){
+        DB::update('update cfps set cif = ? where id = ?', [$request->cif, $id]);
+                    return redirect()->route('profil_of', [$id]);
+
+    }
+
     public function lien_facebook($id)
     {
         $lien = DB::select('select * from reseaux_sociaux where cfp_id = ?', [$id]);

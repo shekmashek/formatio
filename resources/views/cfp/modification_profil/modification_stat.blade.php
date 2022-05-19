@@ -28,7 +28,8 @@
 
                     </div>
                 </div>
-                <button class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregister</button>
+                <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
+
             </form>
         </div>
     </div>

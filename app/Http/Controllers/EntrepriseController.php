@@ -275,10 +275,6 @@ class EntrepriseController extends Controller
         else{
             return view('admin.entreprise.profile_entreprises', compact('entreprise', 'departement'));
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/fixAllDS
     }
 
     public function getImage($path)
@@ -366,11 +362,6 @@ class EntrepriseController extends Controller
            }
     }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/fixAllDS
     public function modification_assujetti_entreprise($id){
         $fonct = new FonctionGenerique();
         $assujetti = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);

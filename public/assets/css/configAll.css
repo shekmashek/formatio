@@ -311,3 +311,12 @@
     text-transform: uppercase !important;
 }
 
+input:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+button:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}

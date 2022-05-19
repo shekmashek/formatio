@@ -29,7 +29,8 @@
 
                     </div>
                 </div>
-                <button  class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
+
             </form>
         </div>
     </div>

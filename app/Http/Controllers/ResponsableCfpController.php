@@ -60,9 +60,9 @@ class ResponsableCfpController extends Controller
         $fonct = new FonctionGenerique();
 
         if (Gate::allows('isCFP')) {
-            if ($id!=null) {
+            if ($id != null) {
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
-
+                return view('cfp.responsable_cfp.affParametre_cfp', compact('refs'));
             }
             else{
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
@@ -79,6 +79,7 @@ class ResponsableCfpController extends Controller
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
                 $tva = DB::select('select * from taxes where id = ?', [1]);
             }
+            // dd($cfps);
             return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts','tva'));
 
         }

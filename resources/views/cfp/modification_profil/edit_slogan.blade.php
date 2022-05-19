@@ -30,7 +30,8 @@
                 </div>
 
 
-                <button class="btn_enregistrer  mt-1 btn modification "> Enregister</button>
+                <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
+
             </form>
             <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>
