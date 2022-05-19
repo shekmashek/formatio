@@ -631,8 +631,8 @@
 
                         <div class="col-5 header-right">
                             <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer">
-                                    {{-- <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span> --}}
+                                <div class="btn_creer" id="text_apprendre">
+                                   
                                     <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
 
                                 </div>
@@ -645,10 +645,8 @@
 
                         <div class="col-5 header-right">
                             <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer">
-                                    {{-- <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span> --}}
+                                <div class="btn_creer" id="text_apprendre">
                                     <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
-
                                 </div>
                             </div>
 
@@ -659,8 +657,7 @@
 
                         <div class="col-5 header-right">
                             <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
-                                <div class="btn_creer">
-                                    {{-- <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span> --}}
+                                <div class="btn_creer" id="text_apprendre">
                                     <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
 
                                 </div>
@@ -674,9 +671,8 @@
 
                         <div class="col-5 header-right">
                             <div class="col-11 d-flex flex-row justify-content-end apprendCreer">
-                                <div class="btn_creer">
-                                    {{-- <span class="text_apprendre" role="button" onclick="afficherTuto();"><i class='bx bxs-book-reader me-1 icon_creer_admin'></i>Apprendre</span> --}}
-                                    <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
+                                <div class="btn_creer" id="text_apprendre">
+                                   <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
 
                                 </div>
                             </div>
@@ -1137,7 +1133,7 @@
                     <div class="col">
                         <p class="m-0 titre_apprendre">Apprendre</p>
                     </div>
-                    <div class="col text-end close">
+                    <div class="col text-end close" id="close">
                         <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
                         <i class="bx bx-x" role="button"></i>
                     </div>

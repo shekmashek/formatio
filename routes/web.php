@@ -199,7 +199,7 @@ Route::post('/update_mdp_formateur/{id?}', 'ProfController@update_mdp_formateur'
 Route::post('/update_email_formateur/{id}', 'ProfController@update_email_formateur')->name('update_email_formateur');
 
 
-
+ 
 //collabforfateur
 Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur');
 //route formateur profil
@@ -294,6 +294,9 @@ Route::get('/edit_poste_resp/{id}', 'ResponsableController@edit_poste')->name('e
 Route::get('desactiver_personne','ResponsableCfpController@desactiver_personne')->name('desactiver_personne');
 Route::get('activer_personne','ResponsableCfpController@activer_personne')->name('activer_personne');
 
+// ====================== desactiver formateur =====================
+Route::get('desactiver_formateur','ProfController@desactiver_formateur')->name('desactiver_formateur');
+Route::get('activer_formateur','ProfController@activer_formateur')->name('activer_formateur');
 
 // update password
 Route::post('/update_responsable_mdp/{id}', 'ResponsableController@update_responsable_mdp')->name('update_responsable_mdp');
@@ -921,6 +924,13 @@ Route::get('supprimer_ressource', 'SessionController@supprimer_ressource')->name
 
 //-------------------- CRUD DEPARTEMENT - SERVICE -----------------------\\
 Route::get('liste_departement', 'DepartementController@show_departement')->name('liste_departement');
+Route::get('delete_depatement/{id}','DepartementController@delete_dep')->name('delete_departement');
+Route::post('update_departement','DepartementController@update_dep')->name('update_departement');
+Route::get('delete_service/{id}','DepartementController@delete_service')->name('delete_service');
+Route::post('update_service','DepartementController@update_service')->name('update_service');
+Route::get('delete_branche/{id}','DepartementController@delete_branche')->name('delete_branche');
+Route::post('update_branche','DepartementController@update_branche')->name('update_branche');  
+
 //enregistrement service
 Route::post('enregistrement_service', 'DepartementController@enregistrement_service')->name('enregistrement_service');
 //enregistrement de branche

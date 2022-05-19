@@ -855,8 +855,8 @@ input:-webkit-autofill:active {
 
 .text_apprendre{
     position: relative;
-    bottom: .3rem;
-    font-size: .8rem;
+    padding: 3rem .2rem ;
+    font-size: .9rem;
     animation-name: completer_programme;
     animation-duration: 4s;
     animation-delay: 2s;

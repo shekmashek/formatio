@@ -145,9 +145,9 @@ let menu = document.querySelector(".bx-menu");
         affichertuto.classList.toggle("afficher");
     }*/
 
-    function afficherInfos() {
-        afficherinfos.classList.toggle("afficher");
-    }
+    // function afficherInfos() {
+    //     afficherinfos.classList.toggle("afficher");
+    // }
 
 function clickSidebar() {
     sidebar.classList.toggle("active");

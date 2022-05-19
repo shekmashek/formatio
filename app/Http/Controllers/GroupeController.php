@@ -51,11 +51,14 @@ class GroupeController extends Controller
         $type_formation = request()->type_formation;
         $formations = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
         $modules = $fonct->findAll("modules");
-
+        
         $etp1 = $fonct->findWhere("v_demmande_cfp_etp", ['cfp_id'], [$cfp_id]);
         $etp2 = $fonct->findWhere("v_demmande_etp_cfp", ['cfp_id'], [$cfp_id]);
         $entreprise = $fonct->concatTwoList($etp1, $etp2);
+
+        
         $payement = $fonct->findAll("type_payement");
+        
         return view('projet_session.projet_intra_form', compact('type_formation', 'formations', 'modules', 'entreprise', 'payement'));
     }
 
@@ -85,7 +88,7 @@ class GroupeController extends Controller
         $user_id = Auth::user()->id;
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id])->cfp_id;
         $module = $fonct->findWhere("modules", ["formation_id","cfp_id",'status'], [$rq->id,$cfp_id,2]);
-
+        
         return response()->json($module);
     }
 

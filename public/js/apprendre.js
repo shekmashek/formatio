@@ -319,9 +319,9 @@ $(document).ready(function(){
             // var titre_apprendre = $('.titre_apprendre').append().text('Apprendre'+' ' +titre);
             // $('.tutorielApprendre').html('<h6 class="title_apprendre"><u>'+titre+'</u><p class="m-0"><span>.</span></p><p></p></h6>');
             // break;
-
-
         }
     }
+
+    
 
 });

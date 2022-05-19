@@ -43,19 +43,23 @@
                                 <div class="col-4">
                                     <img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo_cfp" class="img-fluid">
                                 </div>
-                                <div class="col-8 d-flex flex-column" align="rigth">
-                                    <select class="text-end titre_facture form-select  mb-2 m-0" id="type_facture" name="type_facture" aria-label="Default select example" required>
-                                        <option value="{{$session[0]->type_facture_id}}">{{$session[0]->reference_facture}}</option>
-                                        @foreach ($type_facture as $tp_fact)
-                                        <option value="{{$tp_fact->id}}">{{$tp_fact->reference}}</option>
-                                        @endforeach
-                                    </select>
-                                    <select class="text-end titre_facture form-select  mb-2 m-0" id="id_mode_financement" name="id_mode_financement" aria-label="Default select example" required>
-                                        <option value="{{$session[0]->type_financement_id}}">{{$session[0]->description_financement}}</option>
-                                        @foreach ($mode_payement as $mod)
-                                        <option value="{{$mod->id}}">{{$mod->description}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-8 d-flex flex-column" align="right">
+                                    <div>
+                                        <select class="text-end titre_facture form-select  mb-2 m-0" id="type_facture" name="type_facture" aria-label="Default select example" required>
+                                            <option value="{{$session[0]->type_facture_id}}">{{$session[0]->reference_facture}}</option>
+                                            @foreach ($type_facture as $tp_fact)
+                                            <option value="{{$tp_fact->id}}">{{$tp_fact->reference}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="text-end titre_facture form-select  mb-2 m-0" id="id_mode_financement" name="id_mode_financement" aria-label="Default select example" required>
+                                            <option value="{{$session[0]->type_financement_id}}">{{$session[0]->description_financement}}</option>
+                                            @foreach ($mode_payement as $mod)
+                                            <option value="{{$mod->id}}">{{$mod->description}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
                                     {{-- <input type="text" value="{{$session[0]->description_facture}}" name="description_facture" id="description_facture" class="text-end description_facture" placeholder="Déscription du facture"> --}}
                                     <div class="info_cfp">
