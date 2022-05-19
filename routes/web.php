@@ -294,6 +294,9 @@ Route::get('/edit_poste_resp/{id}', 'ResponsableController@edit_poste')->name('e
 Route::get('desactiver_personne','ResponsableCfpController@desactiver_personne')->name('desactiver_personne');
 Route::get('activer_personne','ResponsableCfpController@activer_personne')->name('activer_personne');
 
+// ====================== desactiver formateur =====================
+Route::get('desactiver_formateur','ProfController@desactiver_formateur')->name('desactiver_formateur');
+Route::get('activer_formateur','ProfController@activer_formateur')->name('activer_formateur');
 
 // update password
 Route::post('/update_responsable_mdp/{id}', 'ResponsableController@update_responsable_mdp')->name('update_responsable_mdp');
