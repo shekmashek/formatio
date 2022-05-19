@@ -105,7 +105,39 @@
         text-decoration: none;
     }
 
-    </style>
+
+    .label_eval{
+        border: 1px solid #babfc3;
+        color: #babfc3;
+    }
+    .label_start{
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+    .label_end{
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    .label_en_cours{
+        border: 1px solid #F16529;
+        background-color: #F16529;
+        color: #fff;
+    }
+    .label_non_acquis{
+        background-color: #e90721;
+        border: 1px solid #e90721 !important;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        color: #fff;
+    }
+    .label_acquis{
+        background-color: #00CDAC;
+        border: 1px solid #00CDAC;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: #fff;
+    }
+</style>
 <script>
     function modifier_note(){
         document.getElementById('btn_note').style.backgroundColor = "white";
@@ -149,23 +181,22 @@
                     for(let i = 0 ; i < detail.length ; i++){
                         html += '<div class="col-lg-5 text-start p-1"><span class="mt-2">'+detail[i].titre_competence+'</span></div>';
                         // html += '<div class="col-lg-2"><input class="p-0 m-1 py-1" style="height: 1.98rem; width: 4rem; justify-content:center;text-align:center;" type="number" min="1" max="10" name="note['+detail[i].competence_id+']" value="'+detail[i].note_apres+'" required></div>';
-                        html += '<div class="col-lg-7 d-flex justify-content-arround " >';
-
-                            html += '<div class="mb_top">';
-                            html += '<input type="radio" class="btn-check" name="status['+detail[i].competence_id+']" id="danger-outlined_'+detail[i].competence_id+'" data-id="'+detail[i].competence_id+'" autocomplete="off" readonly '+detail[i].non_acquis+'>';
-                            html += '<label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_'+detail[i].competence_id+'">NON-ACQUIS</label>';
+                        html += '<div class="col-lg-7">';
+                            html += '<div class="d-flex flex-row">';
+                                if(detail[i].status == 1){
+                                    html += '<label class="label_eval label_start label_non_acquis ps-2 pe-2" for="">NON-ACQUIS</label>';
+                                    html += '<label class="label_eval  ps-2 pe-2" for="">EN COURS</label>';
+                                    html += '<label class="label_eval label_end  ps-2 pe-2" for="">ACQUIS</label>';
+                                } else if(detail[i].status == 2){
+                                    html += '<label class="label_eval label_start  ps-2 pe-2" for="">NON-ACQUIS</label>';
+                                    html += '<label class="label_eval label_en_cours ps-2 pe-2" for="">EN COURS</label>';
+                                    html += '<label class="label_eval label_end  ps-2 pe-2" for="">ACQUIS</label>';
+                                } else if(detail[i].status == 3){
+                                    html += '<label class="label_eval label_start  ps-2 pe-2" for="">NON-ACQUIS</label>';
+                                    html += '<label class="label_eval  ps-2 pe-2" for="">EN COURS</label>';
+                                    html += '<label class="label_eval label_end label_acquis ps-2 pe-2" for="">ACQUIS</label>';
+                                }
                             html += '</div>';
-
-                            html += '<div class="mb_top">';
-                            html += '<input type="radio" class="btn-check" name="status['+detail[i].competence_id+']" id="warning-outlined_'+detail[i].competence_id+'" data-id="'+detail[i].competence_id+'" autocomplete="off" readonly '+detail[i].en_cours+'>';
-                            html += '<label class=" button_test mb-1 px-2 py-1 btn-outline-warning" role="button" for="warning-outlined_'+detail[i].competence_id+'">EN COURS</label>'
-                            html += '</div>';
-
-                            html += '<div class="mb_top">';
-                            html += '<input type="radio" class="btn-check" name="status['+detail[i].competence_id+']" id="success-outlined_'+detail[i].competence_id+'" data-id="'+detail[i].competence_id+'" autocomplete="off" readonly '+detail[i].acquis+'>';
-                            html += '<label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="success-outlined_'+detail[i].competence_id+'">ACQUIS</label>';
-                            html += '</div>';
-
                         html += '</div>';
                     }
 
@@ -400,41 +431,23 @@
                 </div>
                 <div class="row collapse" id="collapseEval_{{ $s->stagiaire_id }}" aria-labelledby="collapseEval_{{ $s->stagiaire_id }}">
                     <div class="col-lg-5 ms-2"> 
-                        <div id="resultat_eval_{{ $s->stagiaire_id }}" class="mt-2"></div>
-                            <script type="text/javascript">
-                                var id = @php echo $s->stagiaire_id; @endphp;
-                                eval_stagiaire(id);
-                            </script>
-                        </div>
-                        <div class="col-lg-6">
-                            <canvas class='mt-3' id="marksChart_{{ $s->stagiaire_id }}" width="500" height="300"></canvas>
-                            <script type="text/javascript">
-                                var id_stg = @php echo $s->stagiaire_id; @endphp;
-                                radar_stagiaire(id_stg);
-                            </script>
-                        </div>
-                </div>
-            @endforeach
-            {{-- <div class="col-md-5">
-                <div class="row" id="choix_stagiaire">
-                    <div class="col-lg-12">
-                        Choisissez votre stagiaire pour voir le résultat<br>
-                        <select class="form-select" id="stagiaire_radar"  aria-label="Default select example">
-                            <option hidden>Choisissez un stagiaire</option>
-                            @foreach ($stagiaire as $stg_r)
-                                <option  data-stg_id="{{ $stg_r->stagiaire_id }}" value="{{ $stg_r->stagiaire_id }}">{{ $stg_r->nom_stagiaire.' '.$stg_r->prenom_stagiaire }}</option>
-                            @endforeach
-                        </select>
+                        <div id="resultat_eval_{{ $s->stagiaire_id }}" class="mt-3"></div>
+                        <script type="text/javascript">
+                            var id = @php echo $s->stagiaire_id; @endphp;
+                            eval_stagiaire(id);
+                        </script>
+                    </div>
+                    <div class="col-lg-6">
+                        <canvas class='mt-3' id="marksChart_{{ $s->stagiaire_id }}" width="500" height="300"></canvas>
+                        <script type="text/javascript">
+                            var id_stg = @php echo $s->stagiaire_id; @endphp;
+                            radar_stagiaire(id_stg);
+                        </script>
                     </div>
                 </div>
-                <div id="resultat_eval" class="mt-2"></div>
-            </div>
-            <div class="col-md-7"><canvas id="marksChart" width="500" height="300"></canvas></div> --}}
+            @endforeach
         </div>
     </div>
-    {{-- <div id="evaluation_formateurs" style="display: none">
-        Evaluation des formateurs
-    </div> --}}
 
 
 

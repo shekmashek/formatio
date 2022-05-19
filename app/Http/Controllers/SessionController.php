@@ -117,6 +117,7 @@ class SessionController extends Controller
         // ???--
         $competences = [];
         $all_frais_annexe = [];
+        $frais_annexe = [];
         $documents = [];
         $stagiaire = [];
         $formateur_cfp = [];
@@ -170,6 +171,7 @@ class SessionController extends Controller
             $datas = $fonct->findWhere("v_detail_session", ["groupe_id"], [$id]);
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
+            $frais_annexe = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id]);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);
             $documents = DB::select('select * from mes_documents where groupe_id = ?',[$id]);
             $entreprise_id = $etp_id;
@@ -224,7 +226,7 @@ class SessionController extends Controller
             $lieu_formation[1]='';
         }
 
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation','frais_annexe'));
     }
 
     public function getFormateur(){
@@ -343,9 +345,12 @@ class SessionController extends Controller
         for ($i=0; $i < count($description); $i++) {
             DB::insert('insert into frais_annexe_formation(description,montant,entreprise_id,groupe_id) values(?,?,?,?)',[$description[$i],$montant[$i],$etp_id,$groupe_id]);
         }
-        $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$groupe_id,$etp_id]);
-        $devise = DB::select('select * from devise')[0]->devise;
-        return response()->json(['data'=>$all_frais_annexe,'devise'=>$devise]);
+        return back();
+    }
+
+    public function supprimer_frais($id){
+        DB::delete('delete from frais_annexe_formation where id = ?',[$id]);
+        return back();
     }
 
     public function modifier_frais_annexe_formation(Request $request){
@@ -584,8 +589,16 @@ class SessionController extends Controller
     }
 
     public function get_devise(){
+        $user_id = Auth::user()->id;
         $devise = DB::select('select * from devise')[0]->devise;
-        return response()->json(['devise'=>$devise]);
+        if (Gate::allows('isReferentPrincipale')) {
+            $etp_id = Responsable::where('user_id', $user_id)->value('entreprise_id');
+        }
+        if (Gate::allows('isManagerPrincipale')) {
+            $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
+        }
+        $frais = DB::select('select * from frais_annexes where entreprise_id = ?', [$etp_id]);
+        return response()->json(['devise'=>$devise,'frais'=>$frais]);
     }
 
 }

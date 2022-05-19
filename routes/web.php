@@ -937,8 +937,8 @@ Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep'
 //     return view('admin.departememnt.nouveau_departement');
 // })->name('nouvelle_departememnt');
 
-Route::get('insert_frais_annexe', 'SessionController@insert_frais_annexe')->name('insert_frais_annexe');
-Route::get('insert_frais_annexe', 'SessionController@insert_frais_annexe')->name('insert_frais_annexe');
+// Route::get('insert_frais_annexe', 'SessionController@insert_frais_annexe')->name('insert_frais_annexe');
+// Route::get('insert_frais_annexe', 'SessionController@insert_frais_annexe')->name('insert_frais_annexe');
 
 
 // Route::get('/recherche_admin', function(){
@@ -1309,3 +1309,9 @@ Route::get('/chefs/filtre/query/role', 'DepartementController@filtreChefRole')->
 Route::get('/formateurs/filtre/query/name', 'ProfController@filtreProfName')->name('prof.filter.name');
 
 
+Route::get('parametrage_frais_annexe','FraisAnnexesController@index')->name('parametrage_frais_annexe');
+Route::post('enregistrer_frais_annexe','FraisAnnexesController@store')->name('enregistrer_frais_annexe');
+Route::post('modifier_frais/{id}','FraisAnnexesController@update')->name('modifier_frais');
+Route::get('supprimer_frais/{id}','FraisAnnexesController@destroy')->name('supprimer_frais');
+
+Route::get('supprimer_frais_annexes/{id}','SessionController@supprimer_frais')->name('supprimer_frais_annexes');

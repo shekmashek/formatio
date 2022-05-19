@@ -758,6 +758,9 @@
                                             <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
                                                     <i class='bx bxs-buildings icon_plus'></i>&nbsp;Salle de formation
                                                 </a></li>
+                                            <li><a class="dropdown-item" href="{{route('parametrage_frais_annexe')}}">
+                                                    <i class='bx bxs-buildings icon_plus'></i>&nbsp;Frais annexes
+                                                </a></li>
                                         </ul>
                                     </div>
                                 </div>
