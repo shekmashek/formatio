@@ -1,13 +1,13 @@
 @extends('./layouts.admin')
 @section('content')
 <style>
-    /* .gradient-custom {
+    .gradient-custom {
         background: #f4f5f7;
-        background: -webkit-linear-gradient(to right bottom, rgba(232, 42, 148 , 1), rgba(42, 117, 232 ,1));
-        background: linear-gradient(to right bottom, rgba(232, 42, 148 , 1), rgba(42, 117, 232 , 1));
+        background: -webkit-linear-gradient(to right bottom, rgba(194, 71, 145, 1), rgba(42, 117, 232 ,1));
+        background: linear-gradient(to right bottom, rgba(194, 71, 145, 1), rgba(42, 117, 232 , 1));
         border-top-left-radius: .5rem; 
         border-bottom-left-radius: .5rem;
-    } */
+    }
     .boutonretour{
         background: #f4f5f7;
         background: -webkit-linear-gradient(to right bottom, rgba(232, 42, 148 , 1), rgba(42, 117, 232  ,1));
@@ -17,13 +17,13 @@
         color: #9B59AD;
         }
 </style>
-<section class="vh-100" style="background-color: #f4f5f7;">
+<section class="vh-100 " style="background-color: #f4f5f7;">
     <div class="container py-5">
         <div class="row d-flex justify-content-center align-items-center my-5">
             <div class="col col-lg-10 my-2 mb-4 mb-lg-0">
                 <div class="card mb-3 shadow" style="border-radius: .5rem;">
                     <div class="row g-0">
-                        <div class="col-md-4  text-center  little-profile" style="background-color: #f4f5f7;">
+                        <div class="col-md-4  text-center gradient-custom text-white little-profile">
                             @if($stagiaire->photos==null)
                                 <span>
                                     <div style="display: grid; place-content: center" class="form_photo my-5 p-2">
@@ -43,16 +43,16 @@
                             <hr class="mt-0 mb-4">
                             <div class="row pt-1 mx-3">
                                 <div class="col-6 mb-3 ">
-                                    <h6 class="fw-bold"><i class="fa-solid fa-envelope"></i>  &nbsp;Email</h6>
+                                    <h6><i class="fa-solid fa-envelope"></i>  &nbsp;Email</h6>
                                     <p class="text-muted mx-4">{{$stagiaire->mail_stagiaire}}</p>
-                                    <h6 class="fw-bold"><i class="fa-solid fa-cake-candles"></i> &nbsp;Né le </h6>
+                                    <h6 ><i class="fa-solid fa-cake-candles"></i> &nbsp;Né le </h6>
                                     <p class="text-muted mx-4">{{date('j \\ F Y', strtotime($stagiaire->date_naissance))}}</p>
                                 </div>
                                 
                                 <div class="col-6 mb-3 ">
-                                    <h6  class="fw-bold"><i class="fa-solid fa-phone"></i> &nbsp;Téléphone</h6>
+                                    <h6><i class="fa-solid fa-phone"></i> &nbsp;Téléphone</h6>
                                     <p class="text-muted mx-4">{{$stagiaire->telephone_stagiaire}}</p>
-                                    <h6 class="fw-bold"><i class="fa-solid fa-address-card"></i> &nbsp;Adresse</h6>
+                                    <h6><i class="fa-solid fa-address-card"></i> &nbsp;Adresse</h6>
                                     <p class="text-muted mx-4">{{$stagiaire->lot}} {{$stagiaire->quartier}} {{$stagiaire->ville}} {{$stagiaire->code_postal}}</p>
                                 </div>
                             </div>
@@ -60,19 +60,19 @@
                             <hr class="mt-0 mb-4">
                             <div class="row pt-1 mx-3">
                                 <div class="col-6 mb-3 ">
-                                    <h6 class="fw-bold"><i class="fa-solid fa-address-book"></i> &nbsp;Matricule</h6>
+                                    <h6><i class="fa-solid fa-address-book"></i> &nbsp;Matricule</h6>
                                     <p class="text-muted mx-4">{{$stagiaire->matricule}}</p>
                                 </div>
                                 <div class="col-6 mb-3">
                                     @if($stagiaire->service_id == null)
-                                        <h6 class="fw-bold"><i class="fa fa-briefcase"></i> &nbsp;Département</h6>  
+                                        <h6><i class="fa fa-briefcase"></i> &nbsp;Département</h6>  
                                         <p class="text-muted mx-4">{{ $departement }}</p>
-                                        <h6 class="fw-bold"><i class="fa fa-briefcase"></i> &nbsp;Service</h6>
+                                        <h6 ><i class="fa fa-briefcase"></i> &nbsp;Service</h6>
                                         <p class="text-muted mx-4">{{ $service }}</p>
                                   @else
-                                        <h6 class="fw-bold"><i class="fa fa-briefcase"></i> &nbsp;Département</h6>  
+                                        <h6 ><i class="fa fa-briefcase"></i> &nbsp;Département</h6>  
                                         <p class="text-muted mx-4">{{ $departement->nom_departement }}</p>
-                                        <h6 class="fw-bold"><i class="fa fa-briefcase"></i> &nbsp;Service</h6>
+                                        <h6><i class="fa fa-briefcase"></i> &nbsp;Service</h6>
                                         <p class="text-muted mx-4">{{ $service->nom_service }}</p>
                                     @endif
                                 </div>

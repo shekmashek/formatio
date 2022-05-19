@@ -351,14 +351,67 @@ class DepartementController extends Controller
             $rqt = DB::select('select * from chef_departements where user_id = ?', [Auth::user()->id]);
             $id_etp = $rqt[0]->entreprise_id;
         }
-
         $rqt = db::select('select * from departement_entreprises where entreprise_id = ?', [$id_etp]);
+        
         $nb = count($rqt);
         $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);
+        $service_departement_tena_izy = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? ", [$id_etp]);
+    
         $nb_serv = count($service_departement);
+      
         $branches = DB::select('select * from branches where entreprise_id = ?', [$id_etp]);
+        // dd($branches);
         $nb_branche = count($branches);
-            return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'branches', 'nb_branche'));
+            return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tena_izy','branches', 'nb_branche'));
+    }
+    public function delete_dep($id)
+    {
+        DB::delete('delete from departement_entreprises where id = ?', [$id]);
+        return back();
+
+    }
+    public function update_dep(Request $request)
+    {
+        DB::update('update departement_entreprises set nom_departement=? where id=?',[$request->departement,$request->id]);
+        return back();
+    }
+    public function delete_service($id)
+    {
+        DB::delete('delete from services  where id=?',[$id]);
+        return back();
+    }
+    public function update_services(Request $request)
+    {
+        $dep = $request->departement;
+        if (Gate::allows('isReferentPrincipale')) {
+            $rqt = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        if (Gate::allows('isStagiairePrincipale')) {
+            $rqt = DB::select('select * from stagiaires where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        if (Gate::allows('isManagerPrincipale')) {
+            $rqt = DB::select('select * from chef_departements where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        $services = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? and departement_entreprise_id = ?", [$id_etp,$dep]);
+        $req_services  = $request->service;
+        for($i =0 ; $i < count($req_services) ; $i++){
+            DB::update('update services set nom_service = ? where id = ?', [$req_services[$services[$i]->service_id],$services[$i]->service_id]);
+        }
+        return back();
+    }
+    public function delete_branche($id)
+    {
+        DB::delete('delete from branches where id=?',[$id]);
+        return back();
+    }
+    public function update_branche(Request $request)
+    {
+      
+        DB::update('update branches set nom_branche=? where id=?',[$request->branche,$request->id]);
+        return back();
     }
     //fonction qui enregistre les services ratachés aux départements
     public function enregistrement_service(Request $request)

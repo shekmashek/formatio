@@ -72,7 +72,7 @@
                     <a class="nav-link " href="#comportement">Comportements prohibés</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="#obligation">Obligations et responsabilité du TALENTA SARL </a>
+                    <a class="nav-link " href="#obligation">Obligations et responsabilité du UPSKILL SARL </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="#propriete">Propriété Intellectuelle
@@ -104,20 +104,20 @@
                 <h6>2. Le client, ou l’administrateur, doit fournir l’ensemble des informations marquées comme obligatoires, notamment son nom, prénom, adresse email professionnel et mot de passe. Il reconnaît et accepte que l’adresse email renseignée sur le formulaire d’inscription constitue son identifiant de connexion.</h6><br>
                 <h6>Toute inscription incomplète ne sera pas validée. </h6><br>
                 <h6>L’inscription entraîne :<br>
-                    -l’ouverture d’un compte au nom du client , lui donnant accès à un espace personnel qui lui permet de gérer son utilisation des services sous une forme et selon les moyens techniques que TALENTA SARL juge les plus appropriés pour rendre lesdits services.</h6><br>
+                    -l’ouverture d’un compte au nom du client , lui donnant accès à un espace personnel qui lui permet de gérer son utilisation des services sous une forme et selon les moyens techniques que UPSKILL SARL juge les plus appropriés pour rendre lesdits services.</h6><br>
                     -la réception de tout mail envoyé par l’équipe de la plateforme, que ce soit à titre informatif ou publicitaire.
                     <h6>Le client garantit que toutes les informations qu’il donne dans le formulaire d’inscription sont exactes, à jour et sincères et ne sont entachées d’aucun caractère trompeur.</h6><br>
 
                     <h6>Il s’engage à mettre à jour ces informations dans son espace personnel en cas de modifications, afin qu’elles correspondent toujours aux critères susvisés.</h6><br>
                 <h6 id="usage"> Le client est informé et accepte que les informations saisies aux fins de création ou de mise à jour de son compte, par lui ou par le biais de l’administrateur, vaillent preuve de son identité. Les informations saisies par le client l’engagent dès leur validation.</h6>
-            </div>
+            </div>   
             <div>
                 <h2>Usage strictement personnel, comptes administrateurs et utilisateurs</h2>
                 <h6>Une fois son inscription validée, le client, ou l’administrateur qu’il aura désigné, dispose de la faculté de créer plusieurs comptes utilisateurs via son espace personnel, donnant accès aux services.</h6><br>
                 <h6> Il appartient au client ou à l’administrateur de sélectionner les utilisateurs ayant accès à l’application ou aux services, dans la limite du nombre maximum prévu dans l’abonnement du client, de déterminer la nature des accès qui leur sont donnés, ainsi que les données et informations auxquelles ils ont accès.</h6><br>
                 <h6>L’utilisateur et/ou l’administrateur peuvent accéder à tout moment au compte du client par le biais de leur propre espace personnel, après s’être identifiés à l’aide de leur identifiant de connexion ainsi que de leur mot de passe.</h6><br>
                 <h6>L’utilisateur et l’administrateur s’engagent à utiliser personnellement les services et à ne permettre à aucun tiers de les utiliser à leur place ou pour leur compte, sauf à en supporter l’entière responsabilité.</h6><br>
-                <h6>Ils sont pareillement responsables du maintien de la confidentialité de leur identifiant et mot de passe, et reconnaissent expressément que toute utilisation des services depuis leur compte sera réputée avoir été effectuée par eux.  Ils doivent communiquer immédiatement avec TALENTA SARL s'ils s'aperçoivent que leur compte a été utilisé à leur insu. Ils reconnaissent à TALENTA SARL le droit de prendre toutes mesures appropriées en pareil cas.
+                <h6>Ils sont pareillement responsables du maintien de la confidentialité de leur identifiant et mot de passe, et reconnaissent expressément que toute utilisation des services depuis leur compte sera réputée avoir été effectuée par eux.  Ils doivent communiquer immédiatement avec UPSKILL SARL s'ils s'aperçoivent que leur compte a été utilisé à leur insu. Ils reconnaissent à UPSKILL SARL le droit de prendre toutes mesures appropriées en pareil cas.
                 </h6><br>
                 <h6 id="duree">Le client est responsable de l’utilisation des services par l’administrateur et les utilisateurs. Toute utilisation des services avec l’identifiant et le mot de passe d’un compte administrateur et/ou utilisateur est réputée effectuée par le client.</h6><br>
             </div>
@@ -134,7 +134,7 @@
                 <h2>Description des services</h2>
                 <h6>1. Licence(s) d’utilisation de l’application</h6>
                 <h6 style="margin-left: 10px">1.1 Objet de la licence</h6>
-                <h6>TALENTA SARL  concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des services.</h6><br>
+                <h6>UPSKILL SARL  concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des services.</h6><br>
                 <h6>L’accès à l’application est fourni : </h6><br>
                 <ul>
                     <li>- gratuitement en ce qui concerne les trois premiers mois (essai)  ;</li>
@@ -144,23 +144,23 @@
                 <h6>Cette licence est consentie pour le monde entier et pour la durée de l’abonnement souscrit.</h6><br>
                 <h6>Il est interdit au client d’en céder ou d’en transférer le bénéfice à un tiers, quel qu’il soit.</h6><br>
                 <h6 style="margin-left: 10px">1.2 Hébergement</h6>
-                <h6>Le client n’autorise aucune utilisation des données collectées par le biais de l’application par TALENTA SARL  ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du contrat, sans son autorisation explicite et écrite.</h6><br>
-                <h6>TALENTA SARL  s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaire pour assurer la sécurité et l’accès à l’application et aux services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructure, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
-                <h6>Eu égard à la complexité d’internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des clients de l’application, aux différents goulots d’étranglement sur lesquels TALENTA SARL  n’a aucune maîtrise, la responsabilité de TALENTA SARL  sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
-                <h6>TALENTA SARL  ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
+                <h6>Le client n’autorise aucune utilisation des données collectées par le biais de l’application par UPSKILL SARL  ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du contrat, sans son autorisation explicite et écrite.</h6><br>
+                <h6>UPSKILL SARL  s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaire pour assurer la sécurité et l’accès à l’application et aux services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructure, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
+                <h6>Eu égard à la complexité d’internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des clients de l’application, aux différents goulots d’étranglement sur lesquels UPSKILL SARL  n’a aucune maîtrise, la responsabilité de UPSKILL SARL  sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
+                <h6>UPSKILL SARL  ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
                 <h6 style="margin-left: 10px">1.3 Maintenance évolutive</h6>
-                <h6>TALENTA SARL  s’engage à faire bénéficier le client des évolutions et mises à jour de son application, dont la nature et la fréquence seront laissées à la libre appréciation de TALENTA SARL .</h6><br>
-                <h6>TALENTA SARL  se réserve la possibilité de limiter ou de suspendre l’accès à l’application pendant les opérations de maintenance. Elle informera le client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
+                <h6>UPSKILL SARL  s’engage à faire bénéficier le client des évolutions et mises à jour de son application, dont la nature et la fréquence seront laissées à la libre appréciation de UPSKILL SARL .</h6><br>
+                <h6>UPSKILL SARL  se réserve la possibilité de limiter ou de suspendre l’accès à l’application pendant les opérations de maintenance. Elle informera le client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
                 <h6 style="margin-left: 10px">1.4 Support technique</h6>
-                <h6>En dehors des dysfonctionnements et pour toute question liée à la simple utilisation des services, TALENTA SARL  offre au client un support technique consistant en une assistance et un conseil.</h6><br>
+                <h6>En dehors des dysfonctionnements et pour toute question liée à la simple utilisation des services, UPSKILL SARL  offre au client un support technique consistant en une assistance et un conseil.</h6><br>
                 <h6>Le support technique est aussi accessible à l’adresse email contact@formation.mg.</h6><br>
                 <h6 style="margin-left: 10px">1.5 Autres Services</h6>
-                <h6>TALENTA SARL  se réserve le droit de proposer tous autres services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits services. Aucune prestation supplémentaire n’aura lieu sans que le client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
+                <h6>UPSKILL SARL  se réserve le droit de proposer tous autres services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits services. Aucune prestation supplémentaire n’aura lieu sans que le client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
             </div>
             <div>
                 <h2>Conditions financières</h2>
                 <h6>1. Prix des services </h6>
-                <h6>En contrepartie de la réalisation des services, le client s’engage à payer à TALENTA SARL  le prix de l’abonnement choisi, tel qu’indiqué sur le site et préalablement à son inscription mensuelle ou annuelle, par virement bancaire.</h6><br>
+                <h6>En contrepartie de la réalisation des services, le client s’engage à payer à UPSKILL SARL  le prix de l’abonnement choisi, tel qu’indiqué sur le site et préalablement à son inscription mensuelle ou annuelle, par virement bancaire.</h6><br>
                 <h6>2. Facturation </h6>
                 <h6>Les services font l’objet de factures ponctuelles ou mensuelles communiquées au client par email et à chaque nouvelle souscription de service ou d’abonnement.</h6><br>
                 <h6 id="condition">3. Révision du Prix </h6>
@@ -200,7 +200,7 @@
                 <a class="nav-link " href="#comportement">Comportements prohibés</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="#obligation">Obligations et responsabilité du TALENTA SARL </a>
+                <a class="nav-link " href="#obligation">Obligations et responsabilité du UPSKILL SARL </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="#propriete">Propriété Intellectuelle
@@ -215,7 +215,7 @@
 
     <main class="col-6">
         <div id="access"></div>
-        <h1>Conditions générales de la plateforme TALENTA SARL </h1>
+        <h1>Conditions générales de la plateforme UPSKILL SARL </h1>
         <div>
             <h2>Accès aux Services</h2>
             1. Capacité juridique
@@ -232,7 +232,7 @@
             </h6><br>
             <h6>2. Le Client, ou l’administrateur, doit fournir l’ensemble des informations marquées comme obligatoires, notamment son nom, prénom, adresse email professionnelle et mot de passe. Il reconnaît et accepte que l’adresse email renseignée sur le formulaire d’inscription constitue son identifiant de connexion.</h6><br>
             <h6>Toute inscription incomplète ne sera pas validée. </h6><br>
-            <h6>L’inscription entraîne l’ouverture d’un compte au nom du Client , lui donnant accès à un espace personnel qui lui permet de gérer son utilisation des Services sous une forme et selon les moyens techniques que TALENTA SARL  juge les plus appropriés pour rendre lesdits Services.</h6><br>
+            <h6>L’inscription entraîne l’ouverture d’un compte au nom du Client , lui donnant accès à un espace personnel qui lui permet de gérer son utilisation des Services sous une forme et selon les moyens techniques que UPSKILL SARL  juge les plus appropriés pour rendre lesdits Services.</h6><br>
             <h6>Le Client garantit que toutes les informations qu’il donne dans le formulaire d’inscription sont exactes, à jour et sincères et ne sont entachées d’aucun caractère trompeur.</h6><br>
             <h6>Il s’engage à mettre à jour ces informations dans son Espace Personnel en cas de modifications, afin qu’elles correspondent toujours aux critères susvisés.</h6><br>
             <h6 id="usage"> Client est informé et accepte que les informations saisies aux fins de création ou de mise à jour de son Compte, par lui ou par le biais de l’Administrateur, vaillent preuve de son identité. Les informations saisies par le Client l’engagent dès leur validation.</h6>
@@ -243,7 +243,7 @@
             <h6> appartient au Client ou à l’administrateur de sélectionner les utilisateurs ayant accès à l’Application ou aux Services, dans la limite du nombre maximum prévu dans l’abonnement du Client, de déterminer la nature des accès qui leur sont donnés, ainsi que les données et informations auxquelles ils ont accès.</h6><br>
             <h6>L’utilisateur et/ou l’administrateur peuvent accéder à tout moment au Compte du Client par le biais de leur propre Espace Personnel, après s’être identifiés à l’aide de leur identifiant de connexion ainsi que de leur mot de passe.</h6><br>
             <h6>L’utilisateur et l’administrateur s’engagent à utiliser personnellement les Services et à ne permettre à aucun tiers de les utiliser à leur place ou pour leur compte, sauf à en supporter l’entière responsabilité.</h6><br>
-            <h6>Ils sont pareillement responsables du maintien de la confidentialité de leur identifiant et de leur mot de passe, et reconnaissent expressément que toute utilisation des Services depuis leur Compte sera réputée avoir été effectuée par eux. Ces derniers doivent immédiatement contacter Formation;mg s’ils remarquent que leur Compte a été utilisé à leur insu. Ils reconnaissent à TALENTA SARL  le droit de prendre toutes mesures appropriées en pareil cas.</h6><br>
+            <h6>Ils sont pareillement responsables du maintien de la confidentialité de leur identifiant et de leur mot de passe, et reconnaissent expressément que toute utilisation des Services depuis leur Compte sera réputée avoir été effectuée par eux. Ces derniers doivent immédiatement contacter Formation;mg s’ils remarquent que leur Compte a été utilisé à leur insu. Ils reconnaissent à UPSKILL SARL  le droit de prendre toutes mesures appropriées en pareil cas.</h6><br>
             <h6 id="duree">Le Client est responsable de l’utilisation des Services par l’administrateur et les utilisateurs. Toute utilisation des Services avec l’identifiant et le mot de passe d’un Compte administrateur et/ou utilisateur est réputée effectuée par le Client.</h6><br>
         </div>
         <div>
@@ -257,7 +257,7 @@
             <h2>Description des Services</h2>
             <h6>1. Licence(s) d’utilisation de l’Application</h6>
             <h6 style="margin-left: 10px">1.1 Objet de la licence</h6>
-            <h6>TALENTA SARL  concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son Application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des Services.</h6><br>
+            <h6>UPSKILL SARL  concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son Application, dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des Services.</h6><br>
             <h6>L’accès à l’Application est fourni : </h6><br>
             <ul>
                 <li>- Gratuitement en ce qui concerne l’abonnement basique ;</li>
@@ -267,47 +267,47 @@
             <h6>Cette licence est consentie pour le monde entier et pour la durée de l’abonnement souscrit.</h6><br>
             <h6>Il est interdit au Client d’en céder ou d’en transférer le bénéfice à un tiers, quel qu’il soit.</h6><br>
             <h6 style="margin-left: 10px">1.2 Hébergement</h6>
-            <h6>Le Client n’autorise aucune utilisation des données collectées par le biais de l’Application par TALENTA SARL  ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du Contrat, sans son autorisation explicite et écrite.</h6><br>
-            <h6>En cas de changement de prestataire d’hébergement, TALENTA SARL  s’engage à en aviser le Client dans les plus brefs délais, par tout moyen écrit utile. L’identité du nouvel hébergeur, ainsi que le territoire dans lequel ses serveurs seront situés s’ils sont hors Europe, seront communiqués au Client.</h6><br>
-            <h6>TALENTA SARL  s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaires pour assurer la sécurité et l’accès à l’Application et aux Services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructures, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
-            <h6>Eu égard à la complexité d’Internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des Clients de l’Application, aux différents goulots d’étranglement sur lesquels TALENTA SARL  n’a aucune maîtrise, la responsabilité de TALENTA SARL  sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
-            <h6>TALENTA SARL  ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du Client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
+            <h6>Le Client n’autorise aucune utilisation des données collectées par le biais de l’Application par UPSKILL SARL  ou par un tiers, qui ne serait pas rendue nécessaire par l’exécution du Contrat, sans son autorisation explicite et écrite.</h6><br>
+            <h6>En cas de changement de prestataire d’hébergement, UPSKILL SARL  s’engage à en aviser le Client dans les plus brefs délais, par tout moyen écrit utile. L’identité du nouvel hébergeur, ainsi que le territoire dans lequel ses serveurs seront situés s’ils sont hors Europe, seront communiqués au Client.</h6><br>
+            <h6>UPSKILL SARL  s’engage à mettre en œuvre l’ensemble des moyens techniques conformes à l’état de l’art nécessaires pour assurer la sécurité et l’accès à l’Application et aux Services, portant sur la protection et la surveillance des infrastructures, le contrôle de l’accès physique et/ou immatériel auxdites infrastructures, ainsi que sur la mise en œuvre des mesures de détection, de prévention et de récupération pour protéger ses serveurs d’actes malveillants.</h6><br>
+            <h6>Eu égard à la complexité d’Internet, l’inégalité des capacités des différents sous-réseaux, l’afflux à certaines heures des Clients de l’Application, aux différents goulots d’étranglement sur lesquels UPSKILL SARL  n’a aucune maîtrise, la responsabilité de UPSKILL SARL  sera limitée au fonctionnement de ses propres serveurs, dont les limites extérieures sont constituées par les points de raccordement.</h6><br>
+            <h6>UPSKILL SARL  ne saurait être tenue pour responsable (i) de l’indisponibilité des serveurs du Client ou de ceux de son système d’exploitation, (ii) des vitesses d’accès à ses serveurs, (iii) des ralentissements externes à ses serveurs, et (iv) des mauvaises transmissions dues à une défaillance ou à un dysfonctionnement de ses réseaux.</h6><br>
             <h6 style="margin-left: 10px">1.3 Maintenance évolutive</h6>
-            <h6>TALENTA SARL  s’engage à faire bénéficier le Client des évolutions et mises à jour de son Application, dont la nature et la fréquence seront laissées à la libre appréciation de TALENTA SARL .</h6><br>
-            <h6>TALENTA SARL  se réserve la possibilité de limiter ou de suspendre l’accès à l’Application pendant les opérations de maintenance. Elle informera le Client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
+            <h6>UPSKILL SARL  s’engage à faire bénéficier le Client des évolutions et mises à jour de son Application, dont la nature et la fréquence seront laissées à la libre appréciation de UPSKILL SARL .</h6><br>
+            <h6>UPSKILL SARL  se réserve la possibilité de limiter ou de suspendre l’accès à l’Application pendant les opérations de maintenance. Elle informera le Client au préalable par tout moyen utile de la réalisation de ces opérations.</h6><br>
             <h6 style="margin-left: 10px">1.4 Support technique</h6>
-            <h6>En dehors des dysfonctionnements et pour toute question liée à la simple utilisation des Services, TALENTA SARL  offre au Client un support technique consistant en une assistance et un conseil.</h6><br>
+            <h6>En dehors des dysfonctionnements et pour toute question liée à la simple utilisation des Services, UPSKILL SARL  offre au Client un support technique consistant en une assistance et un conseil.</h6><br>
             <h6>Le support technique est accessible à l’adresse email info@digiforma.com ou par chat.</h6><br>
             <h6 style="margin-left: 10px">1.5 Autres Services</h6>
-            <h6>TALENTA SARL  se réserve le droit de proposer tous autres Services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits Services. Aucune prestation supplémentaire n’aura lieu sans que le Client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
+            <h6>UPSKILL SARL  se réserve le droit de proposer tous autres Services ou abonnement qu’elle jugera utile, sous une forme et selon les fonctionnalités et moyens techniques qu’elle estimera les plus appropriés pour rendre lesdits Services. Aucune prestation supplémentaire n’aura lieu sans que le Client n’en ait accepté le prix et les conditions de mise en œuvre de façon expresse, préalable et par écrit.</h6><br>
         </div>
         <div>
             <h2>Conditions financières</h2>
             <h6>1. Prix des Services </h6>
-            <h6>En contrepartie de la réalisation des Services, le Client s’engage à payer à TALENTA SARL  le prix de l’abonnement choisi, tel qu’indiqué sur le Site et préalablement à son inscription mensuelle ou annuelle, par virement bancaire.</h6><br>
+            <h6>En contrepartie de la réalisation des Services, le Client s’engage à payer à UPSKILL SARL  le prix de l’abonnement choisi, tel qu’indiqué sur le Site et préalablement à son inscription mensuelle ou annuelle, par virement bancaire.</h6><br>
             <h6>2. Facturation </h6>
             <h6>Les Services font l’objet de factures ponctuelles ou mensuelles communiquées au Client par email et à chaque nouvelle souscription de Service ou d’abonnement.</h6><br>
             <h6 id="condition">3. Révision du Prix </h6>
             <h6>Le Prix a été calculé en fonction de l’abonnement choisi par le Client et des options éventuellement souscrites. Si l’un de ces paramètres venait à évoluer en cours de Contrat, le Prix des Services serait recalculé en conséquence.</h6><br>
             <h6>4. Retards et défauts de paiement
-                <h6>De convention expresse entre les parties, tout retard de paiement de tout ou partie d’une somme due à son échéance au titre de l’exécution des Services entraînera automatiquement et sans mise en demeure préalable : (i) la déchéance du terme de l’ensemble des sommes dues par le Client et leur exigibilité immédiate, (ii) la suspension immédiate des Services jusqu’au complet paiement de l’intégralité des sommes dues et (iii) la facturation au profit de TALENTA SARL  d’un intérêt de retard au taux de 3 fois (trois fois) le taux d’intérêt légal, assis sur le montant de l’intégralité des sommes dues par le Client.</h6><br>
+                <h6>De convention expresse entre les parties, tout retard de paiement de tout ou partie d’une somme due à son échéance au titre de l’exécution des Services entraînera automatiquement et sans mise en demeure préalable : (i) la déchéance du terme de l’ensemble des sommes dues par le Client et leur exigibilité immédiate, (ii) la suspension immédiate des Services jusqu’au complet paiement de l’intégralité des sommes dues et (iii) la facturation au profit de UPSKILL SARL  d’un intérêt de retard au taux de 3 fois (trois fois) le taux d’intérêt légal, assis sur le montant de l’intégralité des sommes dues par le Client.</h6><br>
         </div> --}}
 {{-- <div>
             <h2>Responsabilités et garanties du Client</h2>
             <h6>1. Le Client est seul responsable du respect des lois et règlements en vigueur applicables à son activité. Il est notamment seul responsable du bon accomplissement de toutes les formalités administratives, fiscales et/ ou sociales qui lui incombent en relation avec son utilisation des Services.</h6><br>
-            <h6>2. Le Client reconnait être seul responsable du traitement des données à caractère personnel pouvant être collectées à travers les Services et s’engage à respecter la législation applicable. TALENTA SARL  n’intervient qu’en qualité de sous-traitant et met en œuvre les moyens nécessaires au maintien de la sécurité et de la confidentialité desdites données. </h6><br>
+            <h6>2. Le Client reconnait être seul responsable du traitement des données à caractère personnel pouvant être collectées à travers les Services et s’engage à respecter la législation applicable. UPSKILL SARL  n’intervient qu’en qualité de sous-traitant et met en œuvre les moyens nécessaires au maintien de la sécurité et de la confidentialité desdites données. </h6><br>
             <h6>3.
             Le Client s’interdit, en son nom et au nom des Utilisateurs, de céder, concéder ou transférer tout ou partie de ses droits ou obligations au titre des présentes à un quelconque tiers, y compris si ce tiers a un lien direct ou indirect avec le Client, de quelque manière que ce soit.
             <h6>4.
             Le Client est informé et accepte que la mise en œuvre des Services nécessite qu’il soit connecté à internet et que la qualité des Services dépend directement de cette connexion.
             <h6>5.
-            Le Client déclare avoir pris connaissance des caractéristiques et des fonctionnalités de l’Application, qu’il est informé de la configuration technique nécessaire à son utilisation, qu’il a reçu de TALENTA SARL  tous conseils, instructions et précisions qui lui sont nécessaires pour souscrire aux Services en toute connaissance de cause, qu’il dispose ainsi d’une connaissance suffisante des Services et qu’il a, préalablement aux présentes, suffisamment échangé avec TALENTA SARL  pour s’assurer que les Services correspondent à ses attentes, besoins et contraintes.
+            Le Client déclare avoir pris connaissance des caractéristiques et des fonctionnalités de l’Application, qu’il est informé de la configuration technique nécessaire à son utilisation, qu’il a reçu de UPSKILL SARL  tous conseils, instructions et précisions qui lui sont nécessaires pour souscrire aux Services en toute connaissance de cause, qu’il dispose ainsi d’une connaissance suffisante des Services et qu’il a, préalablement aux présentes, suffisamment échangé avec UPSKILL SARL  pour s’assurer que les Services correspondent à ses attentes, besoins et contraintes.
             <h6>6.
-            De façon générale, le Client s’engage à ne rien faire qui puisse, de quelque manière que ce soit, nuire à l’image de marque ou à la réputation de TALENTA SARL .
+            De façon générale, le Client s’engage à ne rien faire qui puisse, de quelque manière que ce soit, nuire à l’image de marque ou à la réputation de UPSKILL SARL .
             <h6>7.
             Le Client est seul responsable des contenus de toute nature (rédactionnels, graphiques, audios, audiovisuels ou autres) qu’il publie sur l’Application et de toute conséquence qui en découlerait.
             <h6>8.
-            Le Client garantit à TALENTA SARL  qu’il dispose de tous les droits et autorisations nécessaires à la diffusion de ces Contenus. Il s’engage à ce que lesdits Contenus soient licites, ne portent pas atteinte à l’ordre public, aux bonnes mœurs ou aux droits de tiers, n’enfreignent aucune disposition législative ou règlementaire et plus généralement, ne soient aucunement susceptibles de mettre en jeu la responsabilité civile ou pénale de TALENTA SARL .
+            Le Client garantit à UPSKILL SARL  qu’il dispose de tous les droits et autorisations nécessaires à la diffusion de ces Contenus. Il s’engage à ce que lesdits Contenus soient licites, ne portent pas atteinte à l’ordre public, aux bonnes mœurs ou aux droits de tiers, n’enfreignent aucune disposition législative ou règlementaire et plus généralement, ne soient aucunement susceptibles de mettre en jeu la responsabilité civile ou pénale de UPSKILL SARL .
             Le Client s’interdit ainsi de diffuser, notamment et sans que cette liste soit exhaustive :
             des Contenus pédopornographiques, pornographiques, diffamatoires, injurieux, racistes, obscènes, indécents, choquants, violents, xénophobes ou révisionnistes,
             des Contenus contrefaisants,
@@ -315,7 +315,7 @@
             des Contenus mensongers, trompeurs ou proposant ou promouvant des activités illicites, frauduleuses ou trompeuses,
             et plus généralement des Contenus susceptibles de porter atteinte aux droits de tiers ou d’être préjudiciables à des tiers, de quelque manière et sous quelque forme que ce soit.
             <h6>9.
-            Le Client garantit TALENTA SARL  contre toutes plaintes, réclamations, actions et/ou revendications quelconques que TALENTA SARL  pourrait subir du fait d’un manquement par le Client de l’une quelconque de ses obligations ou garanties aux termes des présentes. Il s’engage à indemniser TALENTA SARL  de tout préjudice qu’il subirait et à lui payer tous les frais, charges et/ou condamnations qu’il pourrait avoir à supporter de ce fait.
+            Le Client garantit UPSKILL SARL  contre toutes plaintes, réclamations, actions et/ou revendications quelconques que UPSKILL SARL  pourrait subir du fait d’un manquement par le Client de l’une quelconque de ses obligations ou garanties aux termes des présentes. Il s’engage à indemniser UPSKILL SARL  de tout préjudice qu’il subirait et à lui payer tous les frais, charges et/ou condamnations qu’il pourrait avoir à supporter de ce fait.
 
         </div> --}}
 

@@ -141,7 +141,7 @@
 <script>
     $("#formation_id").on("change", function() {
         var id = $("#formation_id").val();
-        $("#module_id option").remove();
+        // $("#module_id option").remove();
         $.ajax({
             method: "GET",
             url: "{{ route('module_formation') }}",
@@ -152,6 +152,7 @@
             _token: "{{ csrf_token() }}",
             success: function(response) {
                 var data = JSON.parse(response);
+                console.log(data);
                 if (data.length <= 0) {
                     document.getElementById("module_id_err").innerHTML =
                         "Aucun module a été détecter! veuillez choisir la formation";
