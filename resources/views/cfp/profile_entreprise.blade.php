@@ -120,7 +120,6 @@
                                             <h4 class="modal-title text-white">Avertissement !</h4>
 
                                         </div>
-<<<<<<< HEAD
                                         <div class="modal-body">
                                             <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
                                         </div>
@@ -143,39 +142,6 @@
                         </tr>
 
                         @endforeach
-=======
-                                    </div> --}}
-                                </td>
-                                {{-- modal delete  --}}
-                                <div>
-                                    <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
-                                                <h6 class="modal-title text-white">Avertissement !</h6>
-
-                                            </div>
-                                            <div class="modal-body">
-                                                <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                <form action="{{ route('mettre_fin_cfp_etp') }}" method="post">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-secondary"> Oui </button>
-                                                    <input name="etp_id" type="text" value="{{$etp->entreprise_id}}" hidden>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-
-                                {{-- fin modal delete --}}
-
-                            </tr>
-                            @endforeach
->>>>>>> origin/Super_Admins
                         @endif
 
                 </tbody>
