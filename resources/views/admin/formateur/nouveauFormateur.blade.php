@@ -187,7 +187,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="specialite" id="specialite" pattern="[A-Za-z' -]{1,50}" title="5 à 50 caractères" placeholder="Spécialité*" required>
+                                                <input type="text" class="form-control" name="specialite" id="specialite"  placeholder="Spécialité*" required>
                                             </div>
                                             @error('niveau')
                                             <div class="col-sm-6">
@@ -197,7 +197,7 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="niveau" id="niveau" pattern="[A-Za-z0-9+' -]{1,50}" title="5 à 50 caractères" placeholder="Niveau d'étude*" required>
+                                                <input type="text" class="form-control" name="niveau" id="niveau"  placeholder="Niveau d'étude*" required>
                                             </div>
                                         </div>
                                         @error('specialite')
@@ -213,12 +213,12 @@
                                     <div class="row mt-2">
                                         <div class="col-lg-5">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="domaine[]" id="domaine" pattern="[A-Za-z' -]{1,50}" title="5 à 50 caractères" placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>
+                                                <input type="text" class="form-control" name="domaine[]" id="domaine"  placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-5">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="competences[]" id="competences" pattern="[A-Za-z0-9&@+' ,-]{1,255}" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>
+                                                <input type="text" class="form-control" name="competences[]" id="competences"  placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 mt-3" align="center">
@@ -234,17 +234,17 @@
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" name="entreprise[]" pattern="[A-Za-z0-9.@&' -/]{1,50}" title="5 à 50 caractères" id="entreprise" placeholder="Nom entreprise" class="domaine" required>
+                                                        <input type="text" class="form-control" name="entreprise[]"  id="entreprise" placeholder="Nom entreprise" class="domaine" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" name="poste[]" id="poste" pattern="[A-Za-z0-9' ,-/]{1,100}" title="5 à 100 caractères" placeholder="Poste occupé" class="domaine" required>
+                                                        <input type="text" class="form-control" name="poste[]" id="poste" placeholder="Poste occupé" class="domaine" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" name="taches[]" id="taches" pattern="[A-Za-z0-9' ,-/]{1,100}" title="5 à 100 caractères" placeholder="Description des tâches faites dans l'entreprise" class="domaine" required>
+                                                        <input type="text" class="form-control" name="taches[]" id="taches" placeholder="Description des tâches faites dans l'entreprise" class="domaine" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -375,12 +375,12 @@ $(document).on('change', '#cin', function() {
         html += '<div class="row" id="inputFormRow1">';
         html += '<div class="col-lg-5">';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control" name="domaine[]" id="domaine" title="5 à 50 caractères" placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>';
+        html += '<input type="text" class="form-control" name="domaine[]" id="domaine"  placeholder="Ex:Bureautique,Communication,Développement Informatique..." class="domaine" required>';
         html += '</div>';
         html += '</div>';
         html += '<div class="col-lg-5">';
         html += '<div class="form-group">';
-        html += '<input type="text" class="form-control" name="competences[]" id="competences" title="5 à 255 caractères" placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>';
+        html += '<input type="text" class="form-control" name="competences[]" id="competences"  placeholder="Ex:Ms Excel,communication interpersonnelle,HTML..." class="domaine" required>';
         html += '</div>';
         html += '</div>';
         html += '<div class="col-lg-2 mt-3" align="center">';
@@ -406,17 +406,17 @@ $(document).on('change', '#cin', function() {
         html2 += '<div class="row">';
         html2 += '<div class="col-lg-4">';
         html2 += '<div class="form-group">';
-        html2 += '<input type="text" class="form-control" name="entreprise[]" id="entreprise" title="5 à 50 caractères" placeholder="Nom entreprise" class="domaine" required>';
+        html2 += '<input type="text" class="form-control" name="entreprise[]" id="entreprise" placeholder="Nom entreprise" class="domaine" required>';
         html2 += '</div>';
         html2 += '</div>';
         html2 += '<div class="col-lg-4">';
         html2 += '<div class="form-group">';
-        html2 += '<input type="text" class="form-control" name="poste[]" id="poste" title="5 à 100 caractères" placeholder="Poste occupé" class="domaine" required>';
+        html2 += '<input type="text" class="form-control" name="poste[]" id="poste"  placeholder="Poste occupé" class="domaine" required>';
         html2 += '</div>';
         html2 += '</div>';
         html2 += '<div class="col-lg-4">';
         html2 += '<div class="form-group">';
-        html2 += '<input type="text" class="form-control"name="taches[]" id="taches" title="5 à 100 caractères" placeholder="Tâches effectuer dans l&apos;entreprise" class="domaine" required>';
+        html2 += '<input type="text" class="form-control"name="taches[]" id="taches"  placeholder="Tâches effectuer dans l&apos;entreprise" class="domaine" required>';
         html2 += '</div>';
         html2 += '</div>';
         html2 += '</div>';

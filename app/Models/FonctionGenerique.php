@@ -15,7 +15,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT COUNT(id) id FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
@@ -31,7 +31,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "" . $opt[$i] . " ?";
@@ -47,7 +47,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "" . $opt[$i] . " ?";
@@ -63,7 +63,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille des donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
@@ -79,7 +79,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
@@ -95,7 +95,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= '" . $val[$i] . "'";

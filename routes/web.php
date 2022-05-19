@@ -199,7 +199,7 @@ Route::post('/update_mdp_formateur/{id?}', 'ProfController@update_mdp_formateur'
 Route::post('/update_email_formateur/{id}', 'ProfController@update_email_formateur')->name('update_email_formateur');
 
 
-
+ 
 //collabforfateur
 Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur');
 //route formateur profil
@@ -921,6 +921,13 @@ Route::get('supprimer_ressource', 'SessionController@supprimer_ressource')->name
 
 //-------------------- CRUD DEPARTEMENT - SERVICE -----------------------\\
 Route::get('liste_departement', 'DepartementController@show_departement')->name('liste_departement');
+Route::get('delete_depatement/{id}','DepartementController@delete_dep')->name('delete_departement');
+Route::post('update_departement','DepartementController@update_dep')->name('update_departement');
+Route::get('delete_service/{id}','DepartementController@delete_service')->name('delete_service');
+Route::post('update_service','DepartementController@update_service')->name('update_service');
+Route::get('delete_branche/{id}','DepartementController@delete_branche')->name('delete_branche');
+Route::post('update_branche','DepartementController@update_branche')->name('update_branche');  
+
 //enregistrement service
 Route::post('enregistrement_service', 'DepartementController@enregistrement_service')->name('enregistrement_service');
 //enregistrement de branche

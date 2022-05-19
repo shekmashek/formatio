@@ -715,7 +715,7 @@ class AbonnementController extends Controller
             $liste =$this->fonct->findWhere('v_abonnement_facture_entreprise',['type_abonnement_role_id'],[$type_abonnement_role_id]);
             $nom_entreprise = [];
             for ($i=0; $i < count($liste); $i++) {
-                array_push($nom_entreprise ,$fonct->findWhere('entreprises',['id'],[$liste[$i]->entreprise_id]));
+                array_push($nom_entreprise ,$this->fonct->findWhere('entreprises',['id'],[$liste[$i]->entreprise_id]));
             }
 
             $cfpListe = null;
