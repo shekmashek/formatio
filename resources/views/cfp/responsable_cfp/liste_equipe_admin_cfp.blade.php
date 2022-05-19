@@ -118,7 +118,7 @@
                 <a href="{{route('liste+responsable+cfp')}}">&nbsp; <span id="text" style="vertical-align: middle" class="mt-3"> <i class="bx bx-plus mt-2" ></i> Nouveau réferent</span> &nbsp; &nbsp;</a>
             </li>
         @endif
-            
+
         </ul>
 
         <div class="tab-content">
@@ -126,11 +126,12 @@
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row">
                         <div class="col-lg-12">
-                            
+
                             <table class="mt-4 table  table-borderless table-lg">
                                 <thead  style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
-                                    <th>Photo</th>
-                                    <th>Nom & Prénom(s)</th>
+                                    {{-- <th>Photo</th> --}}
+                                    <th></th>
+                                    <th>Nom</th>
                                     {{-- <th>Prénom</th> --}}
                                     <th>E-mail</th>
                                     <th>Téléphone</th>
@@ -139,7 +140,7 @@
                                         <th class="text-center">Réferent principale</th>
                                         <th class="text-center">Activer</th>
                                     {{-- @endif --}}
-                
+
                                 </thead>
                                 <tbody id="data_collaboration" style="font-size: 11.5px;">
                                     @foreach($cfp as $responsables_cfp)
@@ -154,7 +155,7 @@
                                             <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->email_resp_cfp}}</td>
                                             <td class="td_hover" role="button" style="vertical-align: middle">
                                                 @php
-                                                  echo $groupe->formatting_phone($responsables_cfp->telephone_resp_cfp);  
+                                                  echo $groupe->formatting_phone($responsables_cfp->telephone_resp_cfp);
                                                 @endphp
                                             </td>
                                             <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
@@ -166,8 +167,8 @@
                                                         <i desabled @if($resp_connecte->prioriter == 1) data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$responsables_cfp->id }}" @endif class='bx bxs-star'></i>
                                                     </span>
                                                 @endif
-                                            </td>            
-                                            
+                                            </td>
+
                                             <td class="td_hover" role="button" style="vertical-align: middle" >
                                                 @if($responsables_cfp->prioriter == 1 && $responsables_cfp->id == $resp_connecte->id)
                                                     <div style="display: grid; place-content: center" class="form-check form-switch">
@@ -183,7 +184,7 @@
                                                             <input class="form-check-input main" data-bs-toggle="modal" name="switch" data-bs-target="#test_{{$responsables_cfp->id}}" id="switch2_{{$responsables_cfp->id}}" title="Désactiver la personne selectionner" type="checkbox" role="switch" @if($responsables_cfp->activiter == 1) checked @endif disabled/>
                                                         </div>
                                                     @endif
-                                                    
+
                                                 @endif
                                                 <td>
                                                         @if($responsables_cfp->activiter == 1)
@@ -194,14 +195,14 @@
                                                             </div>
                                                         @elseif($responsables_cfp->activiter == 0)
                                                             <div class="text-center mt-3">
-                                                                <p> 
+                                                                <p>
                                                                     <span style="color:white; background-color:rgb(255, 175, 175); border-radius:7px; padding: 5px" > Desactivé </span>
                                                                 </p>
                                                             </div>
                                                         @endif
                                                 </td>
                                             </td>
-                                            
+
                                         </tr>
                                         <div class="modal fade mt-5" id="staticBackdrop_{{$responsables_cfp->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -218,7 +219,7 @@
                                                     </div>
                                                     <div class="modal-footer mt-5">
                                                         <button style="border-radius:25px" type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">Annuler</button>
-                
+
                                                         <button style="border-radius:25px" type="submit" class="btn btn-outline-success btn-sm" data-bs-dismiss="modal">Confirmer</button>
                                                     </div>
                                                 </form>
