@@ -136,6 +136,8 @@
                                             <td><span style="background-color: red;padding:10px;color:white;border-radius:10px"  id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
                                         @endif
                                         <td>
+                                            <input type="hidden" value="{{$listes->entreprise_id}}" id="id_etp">
+
                                             <!-- Default switch -->
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input activer" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
@@ -210,6 +212,7 @@
     /* activation compte entreprise */
     $(".activer" ).on( "change", function() {
         var statut,idAbonnement;
+        var id_etp = $('#id_etp').val();
         if($( this ).prop('checked')){
             statut = "Activé";
             idAbonnement = $(this).data('id');
@@ -222,7 +225,7 @@
         $.ajax({
             type: "GET",
             url: "{{route('activer_compte')}}",
-            data:{Id:idAbonnement,Statut:statut},
+            data:{Id:idAbonnement,Statut:statut,etp_id:id_etp},
             dataType: "html",
             success:function(response){
                 var userData=JSON.parse(response);

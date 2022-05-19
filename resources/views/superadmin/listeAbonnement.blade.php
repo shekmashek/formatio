@@ -82,6 +82,8 @@
                                             @else
                                                 <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_etp->id)}}">S'abonner</a></button>
                                             @endif
+                                        @elseif($types_etp->id==1)
+                                            <button class="btn btn-primary">Votre offre actuelle</button>
                                         @else
                                             <button class="btn btn-primary"><a href="{{route('abonnement-page',$types_etp->id)}}">S'abonner</a></button>
                                         @endif
@@ -233,7 +235,7 @@
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 @can('isReferent')
                                                     <li>
-                                                        <a class="dropdown-item" href="{{route('arret_immediat_abonnement_entreprise',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
+                                                        <a class="dropdown-item" href="{{route('arret_immediat_abonnement_entreprise',[$fact->abonnement_id,$fact->entreprise_id])}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item" href="{{route('arret_fin_abonnement_entreprise',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>
@@ -241,7 +243,7 @@
                                                 @endcan
                                                 @can('isCFP')
                                                     <li>
-                                                        <a class="dropdown-item" href="{{route('arret_immediat_abonnement_of',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
+                                                        <a class="dropdown-item" href="{{route('arret_immediat_abonnement_of',[$fact->abonnement_id,$fact->cfp_id])}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i> &nbsp; Arrêter immédiatement</a>
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item" href="{{route('arret_fin_abonnement_of',$fact->abonnement_id)}}"><i class="bx bx-x" style="position: relative; top:0.3rem; font-size:1.3rem; color:red"></i>&nbsp; Arrêter à la fin de l'abonnement</a>

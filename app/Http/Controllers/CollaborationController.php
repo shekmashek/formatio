@@ -69,31 +69,35 @@ class CollaborationController extends Controller
     public function create_etp_cfp(Request $req)
     {
         $user_id = Auth::user()->id;
-        $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-        $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
-        $responsable_etp = $this->fonct->findWhereMulitOne("responsables", ["entreprise_id", "user_id"], [$entreprise_id, $user_id]);
-        $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["email_resp_cfp"], [$req->email_cfp]);
+        if(Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
+        else{
+            $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
+            $responsable_etp = $this->fonct->findWhereMulitOne("responsables", ["entreprise_id", "user_id"], [$entreprise_id, $user_id]);
+            $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["email_resp_cfp"], [$req->email_cfp]);
 
-        if ($responsable_cfp != null) {
-        //    $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$responsable_cfp->cfp_id, $entreprise_id]);
-            $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$entreprise_id, $responsable_cfp->cfp_id]);
-           // $verify = $verify1->id + $verify2->id;
-           $verify = $verify2->id;
+            if ($responsable_cfp != null) {
+            //    $verify1 = $this->fonct->verifyGenerique("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$responsable_cfp->cfp_id, $entreprise_id]);
+                $verify2 = $this->fonct->verifyGenerique("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$entreprise_id, $responsable_cfp->cfp_id]);
+               // $verify = $verify1->id + $verify2->id;
+               $verify = $verify2->id;
 
-            if ($verify <= 0) {
+                if ($verify <= 0) {
 
-                $msg = $this->collaboration->verify_collaboration_etp_cfp($responsable_cfp->cfp_id, $entreprise_id, $req->nom_cfp);
-       //         Mail::to($responsable_cfp->email_resp_cfp)->send(new invitation_etp_cfp_mail($entreprise->nom_etp, $responsable_etp, $responsable_cfp->nom_resp_cfp . " " . $responsable_cfp->prenom_resp_cfp, $req->email_cfp));
+                    $msg = $this->collaboration->verify_collaboration_etp_cfp($responsable_cfp->cfp_id, $entreprise_id, $req->nom_cfp);
+           //         Mail::to($responsable_cfp->email_resp_cfp)->send(new invitation_etp_cfp_mail($entreprise->nom_etp, $responsable_etp, $responsable_cfp->nom_resp_cfp . " " . $responsable_cfp->prenom_resp_cfp, $req->email_cfp));
 
-                return $msg;
-            } else {
-                return back()->with('error', "une invitation a été déjà envoyer sur ce Organisme de Formation Professionel!");
+                    return $msg;
+                } else {
+                    return back()->with('error', "une invitation a été déjà envoyer sur ce Organisme de Formation Professionel!");
+                }
+            } else { // send mail inscription
+
+           //       Mail::to($responsable_cfp->email_resp_cfp)->send(new inscription_etp_cfp_mail($entreprise->nom_etp, $responsable_etp->nom_resp, $responsable_etp->prenom_resp, $responsable_etp->email_resp, $req->email_cfp));
+                return back()->with('success', "une invitation a été envoyeé sur l'adresse mail en démandant!");
             }
-        } else { // send mail inscription
-
-       //       Mail::to($responsable_cfp->email_resp_cfp)->send(new inscription_etp_cfp_mail($entreprise->nom_etp, $responsable_etp->nom_resp, $responsable_etp->prenom_resp, $responsable_etp->email_resp, $req->email_cfp));
-            return back()->with('success', "une invitation a été envoyeé sur l'adresse mail en démandant!");
         }
+
     }
 
 

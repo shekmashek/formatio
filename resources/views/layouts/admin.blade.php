@@ -539,7 +539,7 @@
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
 
                     @canany('isReferent','isStagiaire','isManager')
-                        @can('isPremium')
+
                             <div class="row">
 
                                 <form method="GET" action="{{route('result_formation')}}">
@@ -550,14 +550,16 @@
                                                 name="nom_formation" placeholder="Rechercher par formations...">
                                             <button class="searchButtonMod recherche_formation" href="#">
                                             </button> --}}
-                                            <a href="{{route('liste_formation')}}" class="btn_racourcis me-4" role="button"
-                                                onclick="afficher_catalogue()"><span class="d-flex flex-column"><i
-                                                        class='bx bxs-category-alt'></i><span
-                                                        class="text_racourcis">Catalogue</span></span></a>
+                                            @can('isPremium')
+                                                <a href="{{route('liste_formation')}}" class="btn_racourcis me-4" role="button"
+                                                    onclick="afficher_catalogue()"><span class="d-flex flex-column"><i
+                                                            class='bx bxs-category-alt'></i><span
+                                                            class="text_racourcis">Catalogue</span></span></a>
                                             <a href="{{route('annuaire')}}" class="btn_racourcis me-4" role="button"
                                                 onclick="afficher_annuaire()"><span class="d-flex flex-column"><i
                                                         class='bx bx-analyse'></i><span
                                                         class="text_racourcis">Annuaire</span></span></a>
+                                            @endcan
                                             @canany(['isReferent','isStagiaire','isManager'])
                                                 <a href="{{route('calendrier_formation')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-calendar-edit'></i><span class="text_racourcis">Agenda</span></span></a>
                                                 <a href="{{route('employes.liste')}}" class="btn_racourcis me-4" role="button"><span class="d-flex flex-column"><i class='bx bxs-group'></i><span class="text_racourcis">employés</span></span></a>
@@ -573,7 +575,7 @@
                                     </div>
                                 </form>
                             </div>
-                        @endcan
+
                     @endcanany
                     @canany('isCFP')
                     <div class="d-flex flex-row">
@@ -790,12 +792,12 @@
                                             <li><a class="dropdown-item" href="{{route('liste_departement')}}">
                                                 <i class='bx bxs-buildings icon_plus'></i>&nbsp;Structure de l'entreprise
                                             </a></li>
-                                            <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
+                                            {{-- <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
                                                 <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
-                                            </a></li>
-                                            <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
+                                            </a></li> --}}
+                                            {{-- <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
                                                     <i class='bx bxs-buildings icon_plus'></i>&nbsp;Salle de formation
-                                                </a></li>
+                                                </a></li> --}}
                                         </ul>
                                     </div>
                                 </div>
