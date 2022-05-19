@@ -62,7 +62,6 @@
                       @endif
               </div>
                   </label>
-                     <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
                   </div>
             </center>
         </div>
@@ -92,6 +91,7 @@
 
 
 
+                  <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
 
 <button  class="btn_enregistrer mt-1 btn modification "> Enregister</button>
 </form>
