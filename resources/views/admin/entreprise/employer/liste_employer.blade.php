@@ -308,8 +308,8 @@
                             </th>
                             <th scope="col">Télephone
                             </th>
-                            <th scope="col">Action</th>
-                            <th style="width: 10px;">Rétirer</th>
+                            <th scope="col" colspan="2">Action</th>
+                            {{-- <th style="width: 10px;">Rétirer</th> --}}
                         </tr>
                     </thead>
                     <tbody id="list_data_trie_valider">
@@ -329,34 +329,49 @@
                             </td>
                             <td>
                                 @if ($emp->activiter==1)
-                                <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
+                                <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
 
                                 @else
-                                <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
+                                <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
 
                                 @endif
                             </td>
                             <th>
-                                {{$emp->nom_stagiaire}}
+                                {{$emp->nom_emp}}
                             </th>
                             <td>
-                                {{$emp->prenom_stagiaire}}
+                                {{$emp->prenom_emp}}
                             </td>
                             <td>
-                                {{$emp->mail_stagiaire}}
+                                {{$emp->email_emp}}
                             </td>
                             <td>
-                                @if($emp->telephone_stagiaire==null)
+                                @if($emp->telephone_emp==null)
                                 ----
                                 @else
-                                {{$emp->telephone_stagiaire}}
+                                {{$emp->telephone_emp}}
                                 @endif
                             </td>
                             <td>
                                 @if ($emp->activiter==1)
+                                @if ($connected->id == $emp->id)
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
+                                    <input class="form-check-input desactiver_stg" type="checkbox" disabled data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
+                                </div>
+                                @else
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
                                     <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
+                                </div>
+                                @endif
+
+                                @else
+
+                                @if ($connected->id == $emp->id)
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
+                                    <input class="form-check-input activer_stg" disabled type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
                                 </div>
                                 @else
                                 <div class="form-check form-switch">
@@ -364,9 +379,15 @@
                                     <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
                                 </div>
                                 @endif
+                                @endif
                             </td>
                             <td>
-                                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                                @if ($connected->id == $emp->id)
+                               <span style="color:green">moi</span>
+                                @else
+                                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                                @endif
+
                                </td>
                         </tr>
 

@@ -103,6 +103,10 @@
                                     <option value="{{$tp->entreprise_id}}">{{$tp->nom_etp}}</option>
                                     @endforeach
                                 </select>
+                                @if ((count($entreprise))<=0)
+                                <span style="color:#ff0000;"> vous ne pouvez pas faire la facturation si vous n'êtes collaboré avec aucun entreprise</span>
+
+                                @endif
                                 <div class="details">
                                     <p class="m-0 nom_cfp" id="nom_etp_detail"></p>
                                     <p class="m-0 " id="adresse_etp"></p>

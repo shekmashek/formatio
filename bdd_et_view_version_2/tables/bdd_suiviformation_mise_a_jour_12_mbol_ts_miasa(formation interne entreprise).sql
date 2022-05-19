@@ -128,7 +128,7 @@ ALTER TABLE `domaines_interne`
 COMMIT;
 
 CREATE TABLE `formations_interne` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
   `nom_formation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `domaine_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,

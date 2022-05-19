@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label for="name_etp" class="">Raison Sociale(Nom de votre
                                     entreprise)<strong style="color:#ff0000;">*</strong></label>
-                                <input type="text" name="name_etp" class="form-control input" id="name_etp"
+                                <input autocomplete="off" type="text" name="name_etp" class="form-control input" id="name_etp"
                                     required />
 
                                 @error('name_etp')
@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 <label for="nif_etp" class="">Numero d'Identité Fiscale<strong
                                         style="color:#ff0000;">*</strong></label>
-                                <input type="text" name="nif" required class="form-control input"
+                                <input autocomplete="off" type="text" name="nif" required class="form-control input"
                                     id="nif_etp" />
 
                                 @error('nif')
@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 <label for="exampleFormControlInput1" class="form-control-label">Logo (1.7 MB max)<strong
                                         style="color:#ff0000;">*</strong></label>
-                                <input type="file" required name="logo_etp" class="form-control input_file" id="logo_etp" />
+                                <input autocomplete="off" type="file" required name="logo_etp" class="form-control input_file" id="logo_etp" />
                                 @error('logo_etp')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -100,7 +100,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="matricule_resp_etp" class="" align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
-                                        <input type="text" required name="matricule_resp_etp"
+                                        <input autocomplete="off" type="text" required name="matricule_resp_etp"
                                             class="form-control input mb-1" id="matricule_resp_etp" placeholder="Matricule"/>
 
                                         @error('matricule_resp_etp')
@@ -116,7 +116,7 @@
 
                             <div class="form-group">
                                 <label for="nom_resp_etp" class="" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
-                                <input type="text" required name="nom_resp_etp" class="form-control input" id="nom_resp_etp" placeholder="Nom"/>
+                                <input autocomplete="off" type="text" required name="nom_resp_etp" class="form-control input" id="nom_resp_etp" placeholder="Nom"/>
                                 @error('nom_resp_etp')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -129,7 +129,7 @@
                             <div class="form-group">
                                 <label for="prenom_resp_etp" class=""
                                     align="left">Prénom</label>
-                                <input type="text" name="prenom_resp_etp" class="form-control input"
+                                <input autocomplete="off" type="text" name="prenom_resp_etp" class="form-control input"
                                     id="prenom_resp_etp" placeholder="Prenom"/>
 
                                 @error('prenom_resp_etp')
@@ -141,7 +141,7 @@
                             <div class="form-group">
                                 <label for="cin_resp_etp" class="" align="left">CIN<strong
                                         style="color:#ff0000;">*</strong></label>
-                                <input type="text" required name="cin_resp_etp" class="form-control input"
+                                <input autocomplete="off" type="text" required name="cin_resp_etp" class="form-control input"
                                     id="cin_resp_etp" placeholder="CIN"/>
 
                                 @error('cin_resp_etp')
@@ -155,7 +155,7 @@
                             <div class="form-group">
                                 <label for="email_resp_etp" class="" align="left">Email
                                     Responsable<strong style="color:#ff0000;">*</strong></label>
-                                <input type="email" required name="email_resp_etp"
+                                <input autocomplete="off" type="email" required name="email_resp_etp"
                                     class="form-control input mb-1" id="email_resp_etp" />
 
                                 @error('email_resp_etp')
@@ -191,7 +191,7 @@
                                 </div>
                                 <div class="col-sm-1" style="display: grid; place-content: center;">
                                     <div class="form-group">
-                                        <input required type="number" name="val_robot" class="form-control input"
+                                        <input autocomplete="off" required type="number" name="val_robot" class="form-control input"
                                             placeholder="?" id="val_robot"
                                             style="width: 60px; border: none; outline: none; position:relative; top:0.5rem;" />
                                     </div>

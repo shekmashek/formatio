@@ -350,7 +350,6 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.nom_stagiaire,
     stg.prenom_stagiaire,
     stg.genre_stagiaire,
-    stg.titre,
     stg.fonction_stagiaire,
     stg.mail_stagiaire,
     stg.telephone_stagiaire,

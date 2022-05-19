@@ -129,7 +129,7 @@ class NouveauCompteController extends Controller
                                     $this->user->save();
 
                                     $user_id = User::where('email', $req->email_resp_cfp)->value('id');
-                                    $this->new_compte->insert_CFP($data,$url);
+                                    $this->new_compte->insert_CFP($data,$url_logo);
 
                                     $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp])->id;
                                     $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);

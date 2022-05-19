@@ -113,7 +113,8 @@ class ParticipantController extends Controller
         if (Gate::allows('isManager')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
         }
-        $totale_pag = $this->fonct->getNbrePagination("stagiaires", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+        $connected = $this->fonct->findWhereMulitOne("employers",["entreprise_id","user_id"],[$entreprise_id,$user_id]);
+        $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
 
         if ($paginations != null) {
 
@@ -121,15 +122,15 @@ class ParticipantController extends Controller
                 $paginations = 1;
             }
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
-            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
         } else {
             if ($paginations <= 0) {
                 $paginations = 1;
             }
-            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
         }
-        return view("admin.entreprise.employer.liste_employer", compact('employers', 'pagination'));
+        return view("admin.entreprise.employer.liste_employer", compact('connected','employers', 'pagination'));
     }
 
     public function index()

@@ -78,15 +78,15 @@ alter table modules add status int(11) default 0;
 alter table modules add prix_groupe int(11) NULL;
 alter table modules add etat_id bigint(20) NOT NULL REFERENCES etats(id) ON DELETE CASCADE;
 
-INSERT INTO modules (id, reference, nom_module, formation_id, created_at, updated_at, prix, duree,duree_jour,prerequis, objectif, modalite_formation, description ,niveau_id,materiel_necessaire,cible,min,max,bon_a_savoir,prestation,cfp_id) VALUES
-(2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1),
-(3, 'MOD_EX03', 'NIII.Organisation et gestion des données', 1, NULL, NULL, 300000, 12, 4,'', '', '','',1,'pc','RH',0,0,'','',1),
-(4, 'MOD_EX04', 'NIV.Business Intelligence', 1, NULL, NULL, 350000, 12, 4,'', '', '','',1,'pc','RH',0,0,'','',1),
-(5, 'MOD_EX05', 'NV.VBA', 1, NULL, NULL, 450000, 18,4,'', '', '','',1,'pc','RH',0,0,'','',1),
-(6, 'MOD_BI01', 'NI.Fondamentaux', 2, NULL, '2021-08-31 09:07:56', 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'','',1),
-(7, 'MOD_BI02', 'NII.Perfectionnement Dax', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'','',1),
-(8, 'MOD_BI03', 'NIII.Dataviz et analytics', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'','',1),
-(9, 'MOD_EX01', 'NI.Fondamentaux', 1, '2021-09-01 03:25:44', '2021-09-01 03:25:44', 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1);
+INSERT INTO modules (id, reference, nom_module, formation_id, created_at, updated_at, prix, duree,duree_jour,prerequis, objectif, modalite_formation, description ,niveau_id,materiel_necessaire,cible,min,max,bon_a_savoir,prestation,cfp_id,etat_id) VALUES
+(2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1,1),
+(3, 'MOD_EX03', 'NIII.Organisation et gestion des données', 1, NULL, NULL, 300000, 12, 4,'', '', '','',1,'pc','RH',0,0,'','',1,1),
+(4, 'MOD_EX04', 'NIV.Business Intelligence', 1, NULL, NULL, 350000, 12, 4,'', '', '','',1,'pc','RH',0,0,'','',1,1),
+(5, 'MOD_EX05', 'NV.VBA', 1, NULL, NULL, 450000, 18,4,'', '', '','',1,'pc','RH',0,0,'','',1,1),
+(6, 'MOD_BI01', 'NI.Fondamentaux', 2, NULL, '2021-08-31 09:07:56', 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'','',1,1),
+(7, 'MOD_BI02', 'NII.Perfectionnement Dax', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'','',1,1),
+(8, 'MOD_BI03', 'NIII.Dataviz et analytics', 2, NULL, NULL, 450000, 18,5, '', '', '','',1,'pc','RH',0,0,'','',1,1),
+(9, 'MOD_EX01', 'NI.Fondamentaux', 1, '2021-09-01 03:25:44', '2021-09-01 03:25:44', 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1,1);
 
 
 CREATE TABLE programmes (

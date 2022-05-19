@@ -11,4 +11,4 @@ create or replace  view v_responsable_cfp as SELECT
 FROM
     responsables_cfp
 JOIN cfps ON  responsables_cfp.cfp_id = cfps.id
-LEFT JOIN genre ON  responsables_cfp.sexe_resp_cfp = genre.id
+LEFT JOIN genre ON  responsables_cfp.genre_id = genre.id

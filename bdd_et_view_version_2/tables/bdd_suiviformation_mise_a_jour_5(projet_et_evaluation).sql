@@ -254,89 +254,89 @@ insert into question_fille values (21,"",3,13,null,null);
 insert into question_fille values (22,"",3,14,null,null);
 
 
-insert into description_champ_reponse values (1,'Note sur 10',1,1,10,null,null);
+insert into description_champ_reponse values (1,'Note sur 10',1,1,10,null,null,0);
 
-insert into description_champ_reponse values (2,'Note sur 10',2,1,10,null,null);
+insert into description_champ_reponse values (2,'Note sur 10',2,1,10,null,null,0);
 
-insert into description_champ_reponse values (3,'Pas de Tout',3,1,null,null,null);
-insert into description_champ_reponse values (4,'Insuffisamment',3,3,null,null,null);
-insert into description_champ_reponse values (5,'En partie',3,1,null,null,null);
-insert into description_champ_reponse values (6,'Totalement',3,1,null,null,null);
+insert into description_champ_reponse values (3,'Pas de Tout',3,1,null,null,null,0);
+insert into description_champ_reponse values (4,'Insuffisamment',3,3,null,null,null,0);
+insert into description_champ_reponse values (5,'En partie',3,1,null,null,null,0);
+insert into description_champ_reponse values (6,'Totalement',3,1,null,null,null,0);
 
-insert into description_champ_reponse values (7,'Pas de Tout',4,1,null,null,null);
-insert into description_champ_reponse values (8,'Insuffisamment',4,1,null,null,null);
-insert into description_champ_reponse values (9,'En partie',4,1,null,null,null);
-insert into description_champ_reponse values (10,'Totalement',4,1,null,null,null);
+insert into description_champ_reponse values (7,'Pas de Tout',4,1,null,null,null,0);
+insert into description_champ_reponse values (8,'Insuffisamment',4,1,null,null,null,0);
+insert into description_champ_reponse values (9,'En partie',4,1,null,null,null,0);
+insert into description_champ_reponse values (10,'Totalement',4,1,null,null,null,0);
 
-insert into description_champ_reponse values (11,'Pas de Tout',5,1,null,null,null);
-insert into description_champ_reponse values (12,'Insuffisamment',5,1,null,null,null);
-insert into description_champ_reponse values (13,'En partie',5,1,null,null,null);
-insert into description_champ_reponse values (14,'Totalement',5,1,null,null,null);
+insert into description_champ_reponse values (11,'Pas de Tout',5,1,null,null,null,0);
+insert into description_champ_reponse values (12,'Insuffisamment',5,1,null,null,null,0);
+insert into description_champ_reponse values (13,'En partie',5,1,null,null,null,0);
+insert into description_champ_reponse values (14,'Totalement',5,1,null,null,null,0);
 
-insert into description_champ_reponse values (15,'Pas de Tout',6,1,null,null,null);
-insert into description_champ_reponse values (16,'Insuffisamment',6,1,null,null,null);
-insert into description_champ_reponse values (17,'En partie',6,1,null,null,null);
-insert into description_champ_reponse values (18,'Totalement',6,1,null,null,null);
+insert into description_champ_reponse values (15,'Pas de Tout',6,1,null,null,null,0);
+insert into description_champ_reponse values (16,'Insuffisamment',6,1,null,null,null,0);
+insert into description_champ_reponse values (17,'En partie',6,1,null,null,null,0);
+insert into description_champ_reponse values (18,'Totalement',6,1,null,null,null,0);
 
-insert into description_champ_reponse values (19,'Pas de Tout',7,1,null,null,null);
-insert into description_champ_reponse values (20,'Insuffisamment',7,1,null,null,null);
-insert into description_champ_reponse values (21,'En partie',7,1,null,null,null);
-insert into description_champ_reponse values (22,'Totalement',7,1,null,null,null);
+insert into description_champ_reponse values (19,'Pas de Tout',7,1,null,null,null,0);
+insert into description_champ_reponse values (20,'Insuffisamment',7,1,null,null,null,0);
+insert into description_champ_reponse values (21,'En partie',7,1,null,null,null,0);
+insert into description_champ_reponse values (22,'Totalement',7,1,null,null,null,0);
 
-insert into description_champ_reponse values (23,'Pas de Tout',8,1,null,null,null);
-insert into description_champ_reponse values (24,'Insuffisamment',8,1,null,null,null);
-insert into description_champ_reponse values (25,'En partie',8,1,null,null,null);
-insert into description_champ_reponse values (26,'Totalement',8,1,null,null,null);
+insert into description_champ_reponse values (23,'Pas de Tout',8,1,null,null,null,0);
+insert into description_champ_reponse values (24,'Insuffisamment',8,1,null,null,null,0);
+insert into description_champ_reponse values (25,'En partie',8,1,null,null,null,0);
+insert into description_champ_reponse values (26,'Totalement',8,1,null,null,null,0);
 
-insert into description_champ_reponse values (27,'Pas de Tout',9,1,null,null,null);
-insert into description_champ_reponse values (28,'Insuffisamment',9,1,null,null,null);
-insert into description_champ_reponse values (29,'En partie',9,1,null,null,null);
-insert into description_champ_reponse values (30,'Totalement',9,1,null,null,null);
+insert into description_champ_reponse values (27,'Pas de Tout',9,1,null,null,null,0);
+insert into description_champ_reponse values (28,'Insuffisamment',9,1,null,null,null,0);
+insert into description_champ_reponse values (29,'En partie',9,1,null,null,null,0);
+insert into description_champ_reponse values (30,'Totalement',9,1,null,null,null,0);
 
-insert into description_champ_reponse values (31,'Adapté',10,1,null,null,null);
-insert into description_champ_reponse values (32,'Trop rapide',10,1,null,null,null);
-insert into description_champ_reponse values (33,'Trop lent',10,1,null,null,null);
+insert into description_champ_reponse values (31,'Adapté',10,1,null,null,null,0);
+insert into description_champ_reponse values (32,'Trop rapide',10,1,null,null,null,0);
+insert into description_champ_reponse values (33,'Trop lent',10,1,null,null,null,0);
 
-insert into description_champ_reponse values (34,'Pas de Tout',11,1,null,null,null);
-insert into description_champ_reponse values (35,'Insuffisamment',11,1,null,null,null);
-insert into description_champ_reponse values (36,'En partie',11,1,null,null,null);
-insert into description_champ_reponse values (37,'Totalement',11,1,null,null,null);
+insert into description_champ_reponse values (34,'Pas de Tout',11,1,null,null,null,0);
+insert into description_champ_reponse values (35,'Insuffisamment',11,1,null,null,null,0);
+insert into description_champ_reponse values (36,'En partie',11,1,null,null,null,0);
+insert into description_champ_reponse values (37,'Totalement',11,1,null,null,null,0);
 
-insert into description_champ_reponse values (38,'Pas de Tout',12,1,null,null,null);
-insert into description_champ_reponse values (39,'Insuffisamment',12,1,null,null,null);
-insert into description_champ_reponse values (40,'En partie',12,1,null,null,null);
-insert into description_champ_reponse values (41,'Totalement',12,1,null,null,null);
+insert into description_champ_reponse values (38,'Pas de Tout',12,1,null,null,null,0);
+insert into description_champ_reponse values (39,'Insuffisamment',12,1,null,null,null,0);
+insert into description_champ_reponse values (40,'En partie',12,1,null,null,null,0);
+insert into description_champ_reponse values (41,'Totalement',12,1,null,null,null,0);
 
-insert into description_champ_reponse values (42,'Pas de Tout',13,1,null,null,null);
-insert into description_champ_reponse values (43,'Insuffisamment',13,1,null,null,null);
-insert into description_champ_reponse values (44,'En partie',13,1,null,null,null);
-insert into description_champ_reponse values (45,'Totalement',13,1,null,null,null);
+insert into description_champ_reponse values (42,'Pas de Tout',13,1,null,null,null,0);
+insert into description_champ_reponse values (43,'Insuffisamment',13,1,null,null,null,0);
+insert into description_champ_reponse values (44,'En partie',13,1,null,null,null,0);
+insert into description_champ_reponse values (45,'Totalement',13,1,null,null,null,0);
 
-insert into description_champ_reponse values (46,'Pas de Tout',14,1,null,null,null);
-insert into description_champ_reponse values (47,'Insuffisamment',14,1,null,null,null);
-insert into description_champ_reponse values (48,'En partie',14,1,null,null,null);
-insert into description_champ_reponse values (49,'Totalement',14,1,null,null,null);
+insert into description_champ_reponse values (46,'Pas de Tout',14,1,null,null,null,0);
+insert into description_champ_reponse values (47,'Insuffisamment',14,1,null,null,null,0);
+insert into description_champ_reponse values (48,'En partie',14,1,null,null,null,0);
+insert into description_champ_reponse values (49,'Totalement',14,1,null,null,null,0);
 
-insert into description_champ_reponse values (50,'Non',15,1,null,null,null);
-insert into description_champ_reponse values (51,'Un peu',15,1,null,null,null);
-insert into description_champ_reponse values (52,'Beaucoup',15,1,null,null,null);
+insert into description_champ_reponse values (50,'Non',15,1,null,null,null,0);
+insert into description_champ_reponse values (51,'Un peu',15,1,null,null,null,0);
+insert into description_champ_reponse values (52,'Beaucoup',15,1,null,null,null,0);
 
-insert into description_champ_reponse values (53,'Non',16,1,null,null,null);
-insert into description_champ_reponse values (54,'Un peu',16,1,null,null,null);
-insert into description_champ_reponse values (55,'Beaucoup',16,1,null,null,null);
+insert into description_champ_reponse values (53,'Non',16,1,null,null,null,0);
+insert into description_champ_reponse values (54,'Un peu',16,1,null,null,null,0);
+insert into description_champ_reponse values (55,'Beaucoup',16,1,null,null,null,0);
 
-insert into description_champ_reponse values (56,'Oui',17,1,null,null,null);
-insert into description_champ_reponse values (57,'Non',17,1,null,null,null);
+insert into description_champ_reponse values (56,'Oui',17,1,null,null,null,0);
+insert into description_champ_reponse values (57,'Non',17,1,null,null,null,0);
 
-insert into description_champ_reponse values (58,'rédigez votre commentaire',18,1,null,null,null);
+insert into description_champ_reponse values (58,'rédigez votre commentaire',18,1,null,null,null,0);
 
-insert into description_champ_reponse values (59,'',19,1,null,null,null);
+insert into description_champ_reponse values (59,'',19,1,null,null,null,0);
 
-insert into description_champ_reponse values (60,'',20,1,null,null,null);
+insert into description_champ_reponse values (60,'',20,1,null,null,null,0);
 
-insert into description_champ_reponse values (61,'',21,1,null,null,null);
+insert into description_champ_reponse values (61,'',21,1,null,null,null,0);
 
-insert into description_champ_reponse values (62,'',22,1,null,null,null);
+insert into description_champ_reponse values (62,'',22,1,null,null,null,0);
 
 
 

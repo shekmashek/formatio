@@ -30,7 +30,7 @@
                     <fieldset class="shadow mt-0 p-3 bg-body rounded  field-cfp">
                             <div class="form-group mb-2">
                                 <label for="name_cfp" class="text-start mb-2">Raison Sociale(Nom de votre organisme)<span style="color:#ff0000;">*</span></label>
-                                <input type="text" name="name_cfp" class="form-control input" id="name_cfp" placeholder="Raison Sociale(Nom de votre organisme)*" required/>
+                                <input type="text" autocomplete="off" name="name_cfp" class="form-control input" id="name_cfp" placeholder="Raison Sociale(Nom de votre organisme)*" required/>
                                 @error('name_cfp')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="name_entreprise" class="">Numero d'Identité Fiscale<strong style="color:#ff0000;">*</strong></label>
-                                <input type="text" name="nif" class="form-control input" id="nif_cfp" placeholder="Numero d'Identité Fiscale*" required/>
+                                <input type="text" autocomplete="off" name="nif" class="form-control input" id="nif_cfp" placeholder="Numero d'Identité Fiscale*" required/>
                                 @error('nif')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1" class="form-control-label">Logo (1.7 MB max)<strong style="color:#ff0000;">*</strong></label>
-                                <input type="file" required name="logo_cfp" class="form-control input_file" id="logo_cfp" />
+                                <input autocomplete="off" type="file" required name="logo_cfp" class="form-control input_file" id="logo_cfp" />
                                 @error('logo_cfp')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -79,7 +79,7 @@
 
                             <div class="form-group">
                                 <label for="nom_resp_cfp" class="" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
-                                <input type="text" required name="nom_resp_cfp" class="form-control input" id="nom_resp_cfp" placeholder="Nom*"/>
+                                <input type="text" autocomplete="off" required name="nom_resp_cfp" class="form-control input" id="nom_resp_cfp" placeholder="Nom*"/>
                                 @error('nom_resp_cfp')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -90,7 +90,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="prenom_resp_cfp" class="" align="left">Prénom</label>
-                                <input type="text" name="prenom_resp_cfp" class="form-control input" id="prenom_resp_cfp" placeholder="Prenom"/>
+                                <input type="text" autocomplete="off" name="prenom_resp_cfp" class="form-control input" id="prenom_resp_cfp" placeholder="Prenom"/>
                                 @error('prenom_resp_cfp')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000; font-size: 0.8rem;"> {{$message}} </span>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="cin_resp_cfp" class="" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
-                                <input type="text" name="cin_resp_cfp" class="form-control input" id="cin_resp_cfp" placeholder="CIN*" required/>
+                                <input type="text" autocomplete="off" name="cin_resp_cfp" class="form-control input" id="cin_resp_cfp" placeholder="CIN*" required/>
                                 @error('cin_resp_cfp')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -109,7 +109,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="email_resp_cfp" class="" align="left">Email Responsable<strong style="color:#ff0000;">*</strong></label>
-                                <input type="email" required name="email_resp_cfp" class="form-control input mb-1" id="email_resp_cfp" placeholder="E-mail*"/>
+                                <input type="email" autocomplete="off" required name="email_resp_cfp" class="form-control input mb-1" id="email_resp_cfp" placeholder="E-mail*"/>
                                 @error('email_resp_cfp')
                                 <div class="col-sm-6">
                                     <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -138,7 +138,7 @@
                                 </div>
                                 <div class="col-sm-1" style="display: grid; place-content: center;">
                                     <div class="form-group">
-                                        <input required type="number" name="val_robot" class="form-control input robot_input" placeholder="?" id="val_robot" style="width: 60px; outline: none; position:relative; top:0.5rem;" />
+                                        <input autocomplete="off" required type="number" name="val_robot" class="form-control input robot_input" placeholder="?" id="val_robot" style="width: 60px; outline: none; position:relative; top:0.5rem;" />
                                     </div>
                                 </div>
                                 <div class="col-sm-1" style="display: grid; place-content: center;">

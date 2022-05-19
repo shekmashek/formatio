@@ -1,17 +1,17 @@
 
-create or replace view v_liste_formateur_projet as
-select
-    projet_id,formateur_id,nom_projet,nom_formateur,prenom_formateur,photos
-    from v_detailmoduleformationprojetformateur group by
-    projet_id,formateur_id,nom_projet,nom_formateur,prenom_formateur,photos;
+-- create or replace view v_liste_formateur_projet as
+-- select
+--     projet_id,formateur_id,nom_projet,nom_formateur,prenom_formateur,photos
+--     from v_detailmoduleformationprojetformateur group by
+--     projet_id,formateur_id,nom_projet,nom_formateur,prenom_formateur,photos;
 
-create or replace view v_liste_stagiaire_groupe as
-select
-    stagiaire_id,nom_stagiaire,prenom_stagiaire,groupe_id,nom_groupe,
-    module_id,nom_module,reference,v_detailmoduleformation.projet_id
-    from stagiaires,participantsessions,groupes,v_detailmoduleformation
-    where
-        stagiaire_id = stagiaires.id and v_detailmoduleformation.detail_id = participantsessions.detail_id and groupe_id = groupes.id;
+-- create or replace view v_liste_stagiaire_groupe as
+-- select
+--     stagiaire_id,nom_stagiaire,prenom_stagiaire,groupe_id,nom_groupe,
+--     module_id,nom_module,reference,v_detailmoduleformation.projet_id
+--     from stagiaires,participantsessions,groupes,v_detailmoduleformation
+--     where
+--         stagiaire_id = stagiaires.id and v_detailmoduleformation.detail_id = participantsessions.detail_id and groupe_id = groupes.id;
 
 
 create or replace view v_groupe as

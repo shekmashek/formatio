@@ -36,6 +36,11 @@ CREATE TABLE entreprises (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+ALTER TABLE entreprises
+    add column assujetti_id bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(assujetti_id) REFERENCES assujetti(id);
+
+
 CREATE TABLE departement_entreprises (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_departement  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -73,7 +78,7 @@ CREATE TABLE employers (
   poste_emp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   service_id bigint(20) UNSIGNED,
   branche_id bigint(20) UNSIGNED ,
-  genre_id bigint(20) unsigned  REFERENCES genre(id),
+  genre_id bigint(20) unsigned DEFAULT 1  REFERENCES genre(id),
   departement_entreprises_id bigint(20) UNSIGNED,
   adresse_quartier varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_code_postal varchar(30) COLLATE utf8mb4_unicode_ci  default 'XXX',

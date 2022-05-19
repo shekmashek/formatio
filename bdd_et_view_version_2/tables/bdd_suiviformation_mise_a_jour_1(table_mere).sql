@@ -89,7 +89,7 @@ CREATE TABLE users (
   name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   email varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
   cin varchar(13) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
-  telephone varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone varchar(30) COLLATE utf8mb4_unicode_ci,
   email_verified_at timestamp NULL DEFAULT NULL,
   password varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   remember_token varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -167,6 +167,10 @@ CREATE TABLE cfps (
   site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXXX'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE cfps
+    add column assujetti_id bigint(20) unsigned,
+    ADD CONSTRAINT FOREIGN KEY(assujetti_id) REFERENCES assujetti(id);
+
 
 CREATE TABLE horaires (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -205,7 +209,7 @@ CREATE TABLE responsables_cfp(
   adresse_code_postal varchar(30) COLLATE utf8mb4_unicode_ci  default 'XXX',
   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default NULL,
   url_photo VARCHAR(155),
   cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -219,8 +223,3 @@ CREATE TABLE responsables_cfp(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-ALTER TABLE detail_evaluation_action_formation
-	DROP FOREIGN KEY detail_evaluation_action_formation_ibfk_2;
-
-alter table detail_evaluation_action_formation
-  add column groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE;
