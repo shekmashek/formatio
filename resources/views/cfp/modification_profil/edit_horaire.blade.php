@@ -3,11 +3,8 @@
     <h3 class="text_header m-0 mt-1">Modification horaire</h3>
 @endsection
 @section('content')
+<a href="{{route('affichage_parametre_cfp')}}"> <button class="btn btn_precedent" ><i class='bx bxs-chevron-left me-1'></i>Retour</button></a>
 
-<br>
-<br>
-<br>
-<br>
 <center>
     @if (\Session::has('error_adresse'))
         <div class="alert alert-danger col-md-4">
@@ -29,7 +26,7 @@
                                     <input type="time" class="form-control test input"  name="ouverture[]"  value="{{ $cfp[$i]->h_entree}}">&nbsp;
                                     <input type="time" class="form-control test input"  name="fermeture[]" value="{{ $cfp[$i]->h_sortie}}">&nbsp;
                             </div>
-                            
+
 
                         @endfor
                         <div class="text-end mt-1">

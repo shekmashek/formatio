@@ -52,7 +52,7 @@
 .image-ronde{
       width : 150px; height : 150px;
       border: none;
-     
+
       cursor: pointer;
     }
         .image-upload > input
@@ -61,7 +61,7 @@
         }
 </style>
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('affichage_parametre_cfp',$cfp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('affichage_parametre_cfp')}}"> <button class="btn btn_precedent" ><i class='bx bxs-chevron-left me-1'></i>Retour</button></a>
 </div>
 <center>
  {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
@@ -81,8 +81,8 @@
 @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            <p style="text-align: left">Modifier le logo 
-               <strong>Taille du fichier: (1.7 MB max)</strong> 
+            <p style="text-align: left">Modifier le logo
+               <strong>Taille du fichier: (1.7 MB max)</strong>
             </p>
             <form   class="btn-submit" action="{{route('enregistrer_modification_logo_cfp',$cfp->id)}}" method="post" enctype="multipart/form-data">
                 @csrf

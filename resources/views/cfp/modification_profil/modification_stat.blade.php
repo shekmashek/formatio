@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('affichage_parametre_cfp',$stat->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp">Page précédente</button></a>
+    <a href="{{route('affichage_parametre_cfp')}}"> <button class="btn btn_precedent" ><i class='bx bxs-chevron-left me-1'></i>Retour</button></a>
 </div>
 
 <center>
@@ -25,10 +25,10 @@
                     <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control test input" id="stat" name="stat" placeholder="Stat" value="{{$stat->stat}}">
                         <label class="form-control-placeholder ">Stat</label>
-                    
+
                     </div>
                 </div>
-                <button  class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                <button class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregister</button>
             </form>
         </div>
     </div>

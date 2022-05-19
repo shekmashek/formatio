@@ -17,7 +17,7 @@
         <div>
             <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
             href="{{route('liste_module')}}">
-            <span class="btn_enregistrer text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
+            <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
         </a>
         </div>
     </div>

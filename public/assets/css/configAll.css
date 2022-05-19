@@ -20,6 +20,10 @@
     --bg_fermer_bx: #26a0da;
     --bg_color_enregistrer: #9733EE;
     --bg_enregistrer_bx: #DA22FF;
+    --bg_color_precedent: #9733EE;
+    --bg_precedent_bx: #DA22FF;
+    --bg_color_suivant: #9733EE;
+    --bg_suivant_bx: #DA22FF;
     --bg_color_ajouter: #07cd19;
     --bg_color_nouveau: #3CA55C;
     --txt_color:#ffffff;
@@ -27,7 +31,7 @@
 
 /* components */
 /* icon */
-/* icon à utiliser pour modifier <i class='bx bx-edit me-1'></i> */
+/* icon à utiliser pour modifier <i class='bx bx-edit'></i> */
 .bx_modifier{
     padding: var(--padding_icon);
     background-color: var(--bgd_all);
@@ -148,6 +152,10 @@
     background-color: var(--bg_color_annuler);
 }
 
+.btn_annuler a:hover{
+    text-decoration: none !important;
+}
+
 /* button fermer */
 /* icon à utiliser pour fermer <i class='bx bx-block me-1'></i> */
 
@@ -220,4 +228,86 @@
     background-color: var(--bg_color_enregistrer);
 }
 
+/* button precedent */
+/* icon à utiliser pour precedent <i class='bx bxs-chevron-left me-1'></i> */
+
+.btn_precedent{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_precedent);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_precedent:hover{
+    text-decoration: none;
+    color: var(--bg_color_precedent);
+    border: 1px solid var(--bg_color_precedent);
+    background-color: var(--txt_color);
+}
+
+.btn_precedent .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_precedent_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    font-weight: 900;
+}
+
+.btn_precedent:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_precedent);
+}
+
+/* button suivant */
+/* icon à utiliser pour suivant <i class='bx bxs-chevron-right ms-1'></i> */
+
+.btn_suivant{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_suivant);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_suivant:hover{
+    text-decoration: none;
+    color: var(--bg_color_suivant);
+    border: 1px solid var(--bg_color_suivant);
+    background-color: var(--txt_color);
+}
+
+.btn_suivant .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_suivant_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    font-weight: 900;
+}
+
+.btn_suivant:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_suivant);
+}
+
 /* utilities */
+/* modal */
+
+.modal-header {
+    background-color: #2ebf91 ;
+    color: white !important;
+    text-align: center !important;
+    justify-content: center !important;
+    text-transform: uppercase !important;
+}
+

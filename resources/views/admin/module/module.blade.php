@@ -155,7 +155,7 @@
                                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
-                                                        <div class="modal-header  d-flex justify-content-center"
+                                                        <div class="modal-header .avertissement  d-flex justify-content-center"
                                                             style="background-color:#ee0707; color: white">
                                                             <h6 class="modal-title">Avertissement !</h6>
                                                         </div>
@@ -309,7 +309,7 @@
                                                     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
-                                                            <div class="modal-header  d-flex justify-content-center"
+                                                            <div class="modal-header .avertissement  d-flex justify-content-center"
                                                                 style="background-color:#ee0707; color: white">
                                                                 <h6 class="modal-title">Avertissement !</h6>
                                                             </div>
@@ -342,7 +342,7 @@
                                             <form action="{{route('publier_module')}}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="id" id="id" value="{{$mod->module_id}}">
-                                                <div class="modal-header">
+                                                <div class="modal-header ">
                                                     <h6>Compétences a évaluer</h6>
                                                 </div>
                                                 <div class="modal-body mt-2 mb-2">
@@ -533,7 +533,7 @@
                                             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
+                                                    <div class="modal-header .avertissement  d-flex justify-content-center"
                                                         style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
@@ -557,7 +557,7 @@
                                             role="dialog" aria-labelledby="en_ligne_{{$mod->module_id}}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
+                                                    <div class="modal-header .avertissement  d-flex justify-content-center"
                                                         style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
@@ -715,7 +715,7 @@
                                             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
+                                                    <div class="modal-header .avertissement  d-flex justify-content-center"
                                                         style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
@@ -739,7 +739,7 @@
                                             role="dialog" aria-labelledby="hors_ligne_{{$mod->module_id}}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
+                                                    <div class="modal-header .avertissement  d-flex justify-content-center"
                                                         style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
