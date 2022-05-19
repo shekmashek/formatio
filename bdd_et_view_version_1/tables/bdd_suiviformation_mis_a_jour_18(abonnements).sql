@@ -162,10 +162,10 @@ INSERT INTO `assujetti` (`assujetti`) VALUES
 (0);
 
 ALTER TABLE entreprises
-    add column assujetti_id bigint(20) unsigned,
+    add column assujetti_id bigint(20) unsigned default 0,
     ADD CONSTRAINT FOREIGN KEY(assujetti_id) REFERENCES assujetti(id);
 
 ALTER TABLE cfps
-    add column assujetti_id bigint(20) unsigned,
+    add column assujetti_id bigint(20) unsigned default 0,
     ADD CONSTRAINT FOREIGN KEY(assujetti_id) REFERENCES assujetti(id);
 
