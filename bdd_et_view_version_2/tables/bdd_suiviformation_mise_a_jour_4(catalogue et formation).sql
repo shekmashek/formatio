@@ -38,6 +38,17 @@ INSERT INTO formations (id, nom_formation, domaine_id, created_at, updated_at) V
 (15, 'Webmarketing', 6, '2021-11-17 04:08:53', '2021-11-17 04:08:53'),
 (16, 'PAO et Multimédia', 6, '2021-11-17 04:09:04', '2021-11-17 04:09:04');
 
+CREATE TABLE `etats` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `etat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO etats (id, etat, created_at, updated_at) VALUES
+(1, 'En ligne', NULL, NULL),
+(2, 'Hors ligne', NULL, NULL);
+
 
 CREATE TABLE modules (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -64,6 +75,8 @@ CREATE TABLE modules (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 alter table modules add status int(11) default 0;
+alter table modules add prix_groupe int(11) NULL;
+alter table modules add etat_id bigint(20) NOT NULL REFERENCES etats(id) ON DELETE CASCADE;
 
 INSERT INTO modules (id, reference, nom_module, formation_id, created_at, updated_at, prix, duree,duree_jour,prerequis, objectif, modalite_formation, description ,niveau_id,materiel_necessaire,cible,min,max,bon_a_savoir,prestation,cfp_id) VALUES
 (2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1),

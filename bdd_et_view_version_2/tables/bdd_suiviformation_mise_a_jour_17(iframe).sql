@@ -1,4 +1,3 @@
-
 create table iframe_entreprise(
     id bigint(20) unsigned primary key not null auto_increment,
     entreprise_id bigint(20) unsigned not null,

@@ -386,7 +386,7 @@ create or replace view v_detail_session as
         mf.domaine_id = dom.id
     join type_formations tf
         on tf.id = p.type_formation_id;
-    
+
 
 CREATE OR REPLACE VIEW v_participant_groupe AS
     SELECT

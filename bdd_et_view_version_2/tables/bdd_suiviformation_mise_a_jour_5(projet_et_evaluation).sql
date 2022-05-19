@@ -33,6 +33,8 @@ CREATE TABLE groupes (
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE groupes ADD COLUMN modalite VARCHAR(200);
+
 CREATE TABLE groupe_entreprises (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   groupe_id  bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
@@ -42,20 +44,17 @@ CREATE TABLE groupe_entreprises (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+
 create table status(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   status varchar(100) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into status (status)  VALUES   ('Prévisionnel'),('A venir'),('En cours'),('Terminé');
+insert into status(status) VALUES('Prévisionnel');
+insert into status(status) VALUES('A venir');
+insert into status(status) VALUES('En cours');
+insert into status(status) VALUES('Terminé');
 
-create table mes_documents(
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  path text not null,
-  nom_doc text not null,
-  extension varchar(8) not null,
-  groupe_id bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE participant_groupe (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -65,6 +64,36 @@ CREATE TABLE participant_groupe (
   updated_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+alter table participant_groupe add column status int(10) default 0;
+
+
+create table mes_documents(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  path text not null,
+  nom_doc text not null,
+  extension varchar(8) not null,
+  groupe_id bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+drop table if exists detail_evaluation_action_formation;
+create table detail_evaluation_action_formation(
+    id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    pourcent decimal(5,2) not null,
+    evaluation_action_formation_id bigint(20) UNSIGNED NOT NULL REFERENCES evaluation_action_formation(id) ON DELETE CASCADE,
+    cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+    created_at timestamp,
+    updated_at timestamp,
+    groupe_id  bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+create table salle_formation_of(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  salle_formation text not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+alter table salle_formation_of add column ville VARCHAR(200);
 
 CREATE TABLE details (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -157,6 +186,8 @@ CREATE TABLE description_champ_reponse (
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE description_champ_reponse
+add column point_champ int(5) default 0;
 
 CREATE TABLE reponse_evaluationchaud (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

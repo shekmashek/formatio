@@ -18,6 +18,7 @@ create or replace view v_horaire_cfp as
     from horaires h
     join cfps on cfps.id = h.cfp_id;
 
+
     create or replace view v_reseaux_sociaux_cfp as
     select
         rs.lien_facebook,

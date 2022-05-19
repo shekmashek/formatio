@@ -25,7 +25,7 @@ GROUP BY
     mail_formateur,
     numero_formateur,
     genre,
-     activiter_formateur,
+    activiter_formateur,
     user_id;
 
 
@@ -90,7 +90,6 @@ GROUP BY
     nom_projet;
 
 
-
 CREATE OR REPLACE VIEW v_detail_groupe_stagaire AS SELECT
     lieu,
     h_debut,
@@ -108,15 +107,11 @@ FROM
     v_detail_groupe_module_projet;
 
 
-
 create or replace view v_date_formation as
 select
     lieu,groupes.projet_id,groupe_id,date_debut,date_fin,cfp_id,status,activiter
     from details,groupes
     where groupe_id = groupes.id  group by groupes.projet_id,lieu,groupe_id,date_debut,date_fin,cfp_id,status,activiter;
-
-
-
 
 
 CREATE OR REPLACE VIEW v_evaluation_action_formation AS SELECT
@@ -132,7 +127,6 @@ WHERE
     evaluation_action_formation_id = evaluation_action_formation.id AND evaluation_action_formation.cfp_id = evaluation_action_formation.cfp_id;
 
 
-
 CREATE OR REPLACE VIEW v_pourcent_globale_evaluation_action_formation AS SELECT
     (ROUND(AVG(pourcent),
     2)) globale,
@@ -144,8 +138,9 @@ GROUP BY
     projet_id,cfp_id;
 
 
+
 CREATE OR REPLACE VIEW v_detail_cour AS SELECT
-    (details.id) detail_id,
+   (details.id) detail_id,
     cfp_id,
     cours_id,
     cours.titre_cours,
@@ -190,18 +185,18 @@ GROUP BY
 
 
 CREATE OR REPLACE VIEW v_trie_detail_programme AS SELECT
-    cfp_id,
+     cfp_id,
     projet_id,
     programme_id,
-    titre_programme
+    titre_programme,
+    groupe_id
 FROM
     v_programme_detail_activiter
 GROUP BY
     cfp_id,
     projet_id,
     programme_id,
-    titre_programme;
-
-
+    titre_programme,
+    groupe_id;
 
 

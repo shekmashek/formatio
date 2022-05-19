@@ -1,9 +1,11 @@
 CREATE OR REPLACE VIEW v_moduleformation AS SELECT
-    m.id AS module_id,
+   m.id AS module_id,
     m.reference,
     m.nom_module,
     m.prix,
+    m.prix_groupe,
     m.duree,
+    m.etat_id,
     f.id AS formation_id,
     f.nom_formation,
     m.cfp_id
@@ -68,7 +70,7 @@ CREATE OR REPLACE VIEW v_detailmoduleformationprojetformateur AS SELECT
     f.photos,
     f.mail_formateur,
     f.numero_formateur,
-    f.genre,
+    (f.genre_id) genre,
     f.date_naissance,
     (f.adresse) adresse_formateur,
     f.cin,
@@ -99,10 +101,12 @@ CREATE OR REPLACE VIEW v_cours_programme AS SELECT
     m.nom_module,
     m.formation_id,
     m.prix,
+    m.prix_groupe,
     m.duree,
     m.prerequis,
     m.objectif,
-    m.modalite_formation
+    m.modalite_formation,
+    m.etat_id
 FROM
     cours c
 LEFT JOIN programmes p ON
@@ -154,11 +158,11 @@ GROUP BY
 
 CREATE OR REPLACE VIEW v_liste_avis AS SELECT
     module_id,
-    (s.id) stagiaire_id,
+    stagiaire_id,
     commentaire,
     ROUND(note / 2, 1) AS note,
-    s.nom_stagiaire,
-    s.prenom_stagiaire,
+    nom_stagiaire,
+    prenom_stagiaire,
     date_avis
 FROM
     avis a
@@ -249,10 +253,11 @@ ORDER BY
 
 
 CREATE OR REPLACE VIEW moduleformation AS SELECT
-    m.id AS module_id,
+  m.id AS module_id,
     m.reference,
     m.nom_module,
     m.prix,
+    m.prix_groupe,
     m.duree,
     m.modalite_formation,
     m.duree_jour,
@@ -266,6 +271,7 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.bon_a_savoir,
     m.status,
     m.cfp_id,
+    m.etat_id,
     IFNULL(m.max, 0) AS max_pers,
     IFNULL(m.min, 0) AS min_pers,
     n.niveau,
@@ -294,6 +300,7 @@ CREATE OR REPLACE VIEW cfpcours AS SELECT
     m.reference,
     m.nom_module,
     m.prix,
+    m.prix_groupe,
     m.duree,
     m.modalite_formation,
     m.duree_jour,
@@ -303,6 +310,7 @@ CREATE OR REPLACE VIEW cfpcours AS SELECT
     m.materiel_necessaire,
     m.cible,
     m.niveau_id,
+    m.etat_id,
     n.niveau,
     f.id AS formation_id,
     f.nom_formation,
@@ -342,6 +350,7 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.nom_stagiaire,
     stg.prenom_stagiaire,
     stg.genre_stagiaire,
+    stg.titre,
     stg.fonction_stagiaire,
     stg.mail_stagiaire,
     stg.telephone_stagiaire,
@@ -379,13 +388,13 @@ FROM
     stagiaires as stg
     join entreprises e
     on stg.entreprise_id = e.id
-    join v_departement_service_entreprise ds
+    left join v_departement_service_entreprise ds
     on ds.service_id = stg.service_id
-    join branches b
+    left join branches b
     on b.id = stg.branche_id;
 
 CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
-    (stg.id) stagiaire_id,
+     stg.id AS stagiaire_id,
     stg.matricule,
     stg.nom_stagiaire,
     stg.prenom_stagiaire,
@@ -410,7 +419,8 @@ CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
 FROM
     stagiaires as stg,
     entreprises as etp,
-    historique_stagiaires as historique
+    historique_stagiaires as historique,
+     branches as branche
 WHERE
     stg.entreprise_id = etp.id and
-    historique.stagiaire_id = stg.id;
+    historique.stagiaire_id = stg.id and    stg.entreprise_id = branche.entreprise_id;

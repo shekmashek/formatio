@@ -1,5 +1,3 @@
-
-
 create or replace view v_question_fille as
 select
     (question_fille.id) id, qst_fille,id_type_champs,desc_champ,id_qst_mere

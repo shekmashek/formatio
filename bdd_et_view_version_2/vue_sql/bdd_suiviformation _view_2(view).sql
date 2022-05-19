@@ -1,11 +1,11 @@
 CREATE OR REPLACE VIEW v_programme AS SELECT
-    cfp_id,
     formation_id,
     nom_formation,
     id_module,
     nom_module,
     reference,
     (prix) prix_module,
+    (prix_groupe) prix_groupe_module,
     (duree) duree_module,
     (programmes.id) id_programme,
     (programmes.titre) titre_programme,
@@ -23,10 +23,12 @@ FROM
         formation_id,
         formations.nom_formation,
         prix,
+        prix_groupe,
         duree,
         prerequis,
         objectif,
-        modalite_formation
+        modalite_formation,
+        etat_id
     FROM
         modules,
         formations
@@ -44,7 +46,9 @@ CREATE OR REPLACE VIEW v_exportcatalogue AS SELECT
     modules.objectif,
     modules.modalite_formation,
     prix,
+    prix_groupe,
     duree,
+    etat_id,
     formations.nom_formation,
     domaine_id,
     nom_domaine

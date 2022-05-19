@@ -44,7 +44,10 @@ CREATE TABLE budgetisation (
   departement_entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES departement_entreprises(id) ON DELETE CASCADE,
   budget_total  decimal(15,2) DEFAULT 0.00,
   date_creation date NOT NULL,
-  annee year NOT NULL,
+   annee year NOT NULL,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+

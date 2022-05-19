@@ -52,88 +52,93 @@ insert into evaluation_action_formation values(2,"Pertinence de la formation",1,
 insert into evaluation_action_formation values(3,"Organisation de la formation",1,NULL,NULL);
 insert into evaluation_action_formation values(4,"Contenu de la formation",1,NULL,NULL);
 
+drop table if exists objectif_globaux;
 
 create table objectif_globaux(
     id bigint(20) unsigned primary key not null auto_increment,
     description TEXT NOT NULL,
     but_objectif_id bigint(20) unsigned NOT NULL,
-    projet_id bigint(20) unsigned NOT NULL,
+    groupe_id bigint(20) UNSIGNED NOT NULL  REFERENCES groupes(id) ON DELETE CASCADE,
     cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(but_objectif_id) references but_objectif(id) on delete cascade,
-    foreign key(projet_id) references projets(id) on delete cascade
+    foreign key(groupe_id) references groupes(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+drop table if exists objectif_pedagogique;
 
 
 create table objectif_pedagogique(
     id bigint(20) unsigned primary key not null auto_increment,
     description TEXT NOT NULL,
     pedagogique_id bigint(20) unsigned NOT NULL,
-    projet_id bigint(20) unsigned NOT NULL,
+    groupe_id bigint(20) UNSIGNED NOT NULL  REFERENCES groupes(id) ON DELETE CASCADE,
     cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(pedagogique_id) references pedagogique(id) on delete cascade,
-    foreign key(projet_id) references projets(id) on delete cascade
+    foreign key(groupe_id) references groupes(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+drop table if exists feed_back ;
 
 create table feed_back(
     id bigint(20) unsigned primary key not null auto_increment,
     description TEXT NOT NULL,
-    projet_id bigint(20) unsigned NOT NULL,
+    groupe_id bigint(20) UNSIGNED NOT NULL  REFERENCES groupes(id) ON DELETE CASCADE,
     cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
-    foreign key(projet_id) references projets(id) on delete cascade
+    foreign key(groupe_id) references groupes(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+drop table if exists conclusion ;
 create table conclusion(
     id bigint(20) unsigned primary key not null auto_increment,
     description TEXT NOT NULL,
-    projet_id bigint(20) unsigned NOT NULL,
+    groupe_id bigint(20) UNSIGNED NOT NULL  REFERENCES groupes(id) ON DELETE CASCADE,
     cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
-    foreign key(projet_id) references projets(id) on delete cascade
+    foreign key(groupe_id) references groupes(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+drop table if exists evaluation_resultat ;
 create table evaluation_resultat(
     id bigint(20) unsigned primary key not null auto_increment,
     description TEXT NOT NULL,
-    projet_id bigint(20) unsigned NOT NULL,
+    groupe_id bigint(20) UNSIGNED NOT NULL  REFERENCES groupes(id) ON DELETE CASCADE,
     cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
-    foreign key(projet_id) references projets(id) on delete cascade
+    foreign key(groupe_id) references groupes(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+drop table if exists detail_recommandation ;
 create table detail_recommandation(
     id bigint(20) unsigned primary key not null auto_increment,
     description TEXT NOT NULL,
     recommandation_id bigint(20) unsigned NOT NULL,
-    projet_id bigint(20) unsigned NOT NULL,
+    groupe_id bigint(20) UNSIGNED NOT NULL  REFERENCES groupes(id) ON DELETE CASCADE,
     cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(recommandation_id) references recommandation(id) on delete cascade,
-    foreign key(projet_id) references projets(id) on delete cascade
+    foreign key(groupe_id) references groupes(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+drop table if exists detail_evaluation_action_formation;
 
 create table detail_evaluation_action_formation(
     id bigint(20) unsigned primary key not null auto_increment,
     pourcent DECIMAL(5,2) NOT NULL,
     evaluation_action_formation_id bigint(20) unsigned NOT NULL,
     projet_id bigint(20) unsigned NOT NULL,
-    cfp_id bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
+    groupe_id bigint(20) UNSIGNED NOT NULL  REFERENCES groupes(id) ON DELETE CASCADE,
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(evaluation_action_formation_id) references evaluation_action_formation(id) on delete cascade,
-    foreign key(projet_id) references projets(id) on delete cascade
+    foreign key(groupe_id) references groupes(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

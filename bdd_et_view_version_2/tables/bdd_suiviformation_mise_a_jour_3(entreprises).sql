@@ -17,7 +17,7 @@ CREATE TABLE entreprises (
   nom_etp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   adresse_rue varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_quartier varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
+  adresse_code_postal varchar(30) COLLATE utf8mb4_unicode_ci  default 'XXX',
   adresse_ville varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   logo varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE entreprises (
   email_etp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   site_etp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   activiter boolean not null default true,
-  telephone_etp varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone_etp varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT '-----',
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -59,40 +59,24 @@ CREATE TABLE branches (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE abonnements (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  date_demande date DEFAULT '0000-0000-00',
-  date_debut date DEFAULT current_timestamp(),
-  date_fin date DEFAULT current_timestamp(),
-  mode_financement_id bigint(20) UNSIGNED NOT NULL  REFERENCES mode_financements(id) ON DELETE CASCADE,
-  status varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  type_abonnement_role_id bigint(20) UNSIGNED NOT NULL  REFERENCES type_abonnement_roles(id) ON DELETE CASCADE,
-  entreprise_id bigint(20) UNSIGNED NOT NULL  REFERENCES entreprises(id) ON DELETE CASCADE,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL,
-  categorie_paiement_id bigint(20) NOT NULL  REFERENCES categorie_paiements(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
 CREATE TABLE employers (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  couleur VARCHAR(125),
   matricule_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   nom_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  prenom varchar(255) COLLATE utf8mb4_unicode_ci,
-  sexe_emp varchar(255) COLLATE utf8mb4_unicode_ci,
+  prenom_emp varchar(255) COLLATE utf8mb4_unicode_ci,
   date_naissance_emp date DEFAULT current_timestamp(),
   cin_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
   email_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  telephone_emp varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  fonction_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone_emp varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXX',
+  fonction_emp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXX',
   poste_emp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   service_id bigint(20) UNSIGNED,
   branche_id bigint(20) UNSIGNED ,
-  genre_id bigint(20) unsigned default 1 REFERENCES genre(id),
+  genre_id bigint(20) unsigned  REFERENCES genre(id),
   departement_entreprises_id bigint(20) UNSIGNED,
   adresse_quartier varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
+  adresse_code_postal varchar(30) COLLATE utf8mb4_unicode_ci  default 'XXX',
   adresse_lot varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_ville varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',

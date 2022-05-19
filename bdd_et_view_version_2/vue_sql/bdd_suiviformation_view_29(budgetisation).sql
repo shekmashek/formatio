@@ -19,13 +19,11 @@ CREATE OR REPLACE VIEW v_responsable_entreprise as SELECT
 FROM
     responsables
 JOIN entreprises e ON e.id = responsables.entreprise_id
-JOIN secteurs s ON s.id = e.secteur_id;
-
-
+LEFT JOIN secteurs s ON s.id = e.secteur_id;
 
 CREATE OR REPLACE VIEW v_plan_formation as
 SELECT
-    (s.id) id,
+    s.id,
     s.nom_stagiaire,
     s.prenom_stagiaire,
     s.service_id,
@@ -53,7 +51,6 @@ JOIN annee_plans a ON a.id = r.annee_plan_id
 JOIN stagiaires s ON s.id = r.stagiaire_id
 JOIN services serv ON serv.id = s.service_id
 JOIN departement_entreprises dep ON dep.id = serv.departement_entreprise_id;
-
 
 CREATE OR REPLACE VIEW v_budgetisation as SELECT
     e.id as entreprise_id,
