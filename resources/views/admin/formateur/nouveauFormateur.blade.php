@@ -49,12 +49,20 @@
                 @endif
                  {{-- si l'utiliisateur a  choisir un fichier > 60Ko--}}
                 @if (\Session::has('erreur_photo'))
-                <div class="alert alert-danger col-md-4">
+                <div class="alert alert-danger">
                     <ul>
                         <li>{!! \Session::get('erreur_photo') !!}</li>
                     </ul>
                 </div>
                 @endif
+                @if (\Session::has('error'))
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{!! \Session::get('error') !!}</li>
+                    </ul>
+                </div>
+                @endif
+
                 @endcanany
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -67,7 +75,7 @@
 
                                     <div class="form-control-file mt-2">
                                         <input type="file" class="form-control" name="image" id="image" placeholder="fichier" title="veuillez choisir une image" required>
-                                         <strong>Taille du fichier: (1.7 MB max)</strong> 
+                                         <strong>Taille du fichier: (1.7 MB max)</strong>
                                     </div><br>
                                     @error('image')
                                     <div class="col-sm-6">

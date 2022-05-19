@@ -94,9 +94,15 @@ class GroupeController extends Controller
         $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+        $nb_projet = $fonct->findWhere("projets",["cfp_id"],[$cfp_id]);
+        /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le projet à ajouter */
+        $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
 
         $type_formation = $request->type_formation;
         try {
+            if($abonnement_cfp[0]->nb_projet == count($nb_projet)){
+                throw new Exception("Vous avez atteint le nombre maximum de projet, veuillez upgrader votre compte pour ajouter plus de projet");
+            }
             if($request->date_debut >= $request->date_fin){
                 throw new Exception("Date de début doit être inférieur date de fin.");
             }
@@ -203,9 +209,16 @@ class GroupeController extends Controller
         $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+        $nb_projet = $fonct->findWhere("projets",["cfp_id"],[$cfp_id]);
+        /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le projet à ajouter */
+        $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
+
         $type_formation = $request->type_formation;
 
         try {
+            if($abonnement_cfp[0]->nb_projet == count($nb_projet)){
+                throw new Exception("Vous avez atteint le nombre maximum de projet, veuillez upgrader votre compte pour ajouter plus de projet");
+            }
             if ($request->date_debut >= $request->date_fin) {
                 throw new Exception("Date de début doit être inférieur à la date de fin.");
             }

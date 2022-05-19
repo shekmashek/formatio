@@ -105,7 +105,7 @@
                                         <p class="m-0 adresse_cfp">+261 34 81 135 63</p>
                                         <p class="m-0 adresse_cfp">www.formation.mg</p><br>
 
-                                        {{-- <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p> --}}
+                                        <p class="m-0 adresse_cfp">NIF : 5011767848 <br> RCS : 2022B00475 <br> Stat : 62011 11 2022 0 10487 <br> Carte Fiscale : N° 0183506/DGI-J</p>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                                             <p class="m-0 adresse_cfp">{{$cfp->telephone}}</p>
                                             <p class="m-0 adresse_cfp">{{$cfp->site_web}}</p><br>
 
-                                            <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p>
+                                            <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} <br>RCS : {{$cfp->rcs}}  <br>Stat : {{$cfp->stat}}   <br> CIF : {{$cfp->cif}}</p>
                                         </div>
                                     </div>
                                 @endif
@@ -140,7 +140,7 @@
                                             <p class="m-0 adresse_cfp">{{$entreprises->telephone_etp}}</p>
                                             <p class="m-0 adresse_cfp">{{$entreprises->site_etp}}</p><br>
 
-                                            <p class="m-0 adresse_cfp">NIF : {{$entreprises->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$entreprises->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$entreprises->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$entreprises->cif}}</p>
+                                            <p class="m-0 adresse_cfp">NIF : {{$entreprises->nif}} <br> Stat : {{$entreprises->stat}} <br> RCS : {{$entreprises->rcs}}  <br> CIF : {{$entreprises->cif}}</p>
                                         </div>
                                     </div>
                                 @endif
