@@ -11,8 +11,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid pb-1">
 
-    <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i
-            class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+    <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();">
+        <i class='bx bx-filter icon_creer'></i>Afficher les filtres
+    </a>
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item active">

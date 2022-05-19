@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Liste des résponsables</p>
+    <p class="text_header m-0 mt-1">Nouveau réferent</p>
 @endsection
 @section('content')
 <div class="container justify-content-center mt-3">
@@ -66,7 +66,7 @@
         }
 
     </style>
-
+<div class="container-fluid">
 
     {{-- <div class="row w-100 bg-none mt-5 font_text"> --}}
 
@@ -249,11 +249,29 @@
                     </div>
 
                 </div>
+
+
                 <div class="form-row d-flex">
                     <div class="col">
                         <label for="exampleFormControlInput1" class="form-control-label" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
+                        <input autocomplete="off" required type="text" maxlength="20" class="form-control " id="inlineFormInput" name="cin"/>
+                        @error('cin')
+                            <div class="col-sm-6">
+                                <span style="color:#ff0000;"> {{$message}} </span>
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col ms-2">
+                        <label for="exampleFormControlInput1" class="form-control-label" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
+                        <input autocomplete="off" required type="text" class="form-control  mb-2" id="inlineFormInput" name="fonction" placeholder="Fonction *"  />
+                    </div>
+
+                </div>
+                {{-- <div class="form-row d-flex">
+                    <div class="col">
+                        <label for="exampleFormControlInput1" class="form-control-label" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
                         <div class="col">
-                            <input autocomplete="off" required type="text" maxlength="20" class="form-control mb-2" id="inlineFormInput" name="cin" />
+                            <input autocomplete="off" required type="text" maxlength="20" class="form-control " id="inlineFormInput" name="cin" />
                             @error('cin')
                             <div class="col-sm-6">
                                 <span style="color:#ff0000;"> {{$message}} </span>
@@ -299,13 +317,16 @@
                             </div>
                         </div> --}}
 
-                        {{-- <input required type="text" minlength="12" maxlength="12"  class="form-control mb-2" id="inlineFormInput" name="cin" /> --}}
+                        {{-- <input required type="text" minlength="12" maxlength="12"  class="form-control mb-2" id="inlineFormInput" name="cin" /> --
 
                     </div>
-                </div>
+                    <div class="col-sm-2">
+                        <label for="exampleFormControlInput1" class="form-control-label" align="">Fonction<strong style="color:#ff0000;">*</strong></label>
+                        <input autocomplete="off" required type="text" class="form-control  mb-2" id="inlineFormInput" name="fonction" placeholder="Fonction*" />
+                    </div>
+                </div> --}}
 
-                <label for="exampleFormControlInput1" class="form-control-label" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
-                <input autocomplete="off" required type="text" class="form-control  mb-2" id="inlineFormInput" name="fonction" placeholder="Fonction*" />
+                
 
                 <div class="form-row d-flex">
                     <div class="col">
