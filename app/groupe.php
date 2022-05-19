@@ -94,4 +94,12 @@ class Groupe extends Model
         }
         return $res;
     }
+
+    function formatting_phone($phone){
+        $format = '';
+        if(preg_match('/([0-9]{3})([0-9]{2})([0-9]{3})([0-9]{2})$/', $phone, $value)) { 
+            $format = $value[1] . ' ' . $value[2] . ' ' . $value[3] .' '.$value[4];
+        }
+        return $format;
+    }
 }
