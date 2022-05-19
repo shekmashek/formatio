@@ -164,7 +164,7 @@ class ProfController extends Controller
         $nb_formateur = $this->fonct->findWhere("demmande_cfp_formateur",["demmandeur_cfp_id"],[$cfp_id]);
         $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
 
-        if($abonnement_cfp[0]->nb_formateur == count($nb_formateur))  return back()->with('error', "Vous avez atteint le nombre maximum de formateur, veuillez upgrader votre compte pour ajouter plus de formateur");
+        if($abonnement_cfp[0]->nb_formateur == count($nb_formateur) && $abonnement_cfp[0]->illimite = 0)  return back()->with('error', "Vous avez atteint le nombre maximum de formateur, veuillez upgrader votre compte pour ajouter plus de formateur");
         else{
             $image = $request->file('image');
             if($image != null){
