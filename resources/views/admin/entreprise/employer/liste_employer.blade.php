@@ -323,7 +323,7 @@
                                         <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
                                     </p>
                                     @else
-                                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
                                     @endif
                                 </a>
                             </td>
