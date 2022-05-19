@@ -142,7 +142,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <img src="{{ public_path('images/talenta.png') }}" width="200px">
+                                    <img src="{{ public_path('images/upskill.png') }}" width="200px">
                                     {{-- <img src="{{ asset('images/talenta.png') }}" class="img-fluid" width="500px"> --}}
                                 </td>
                                 <td>

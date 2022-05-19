@@ -341,16 +341,17 @@ class HomeController extends Controller
             //date now
             $dtNow = Carbon::today()->toDateString();
             $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
+
             if ($cfp_ab != null) {
                 setlocale(LC_TIME, "fr_FR");
                 $j1 = strftime('%d', strtotime($cfp_ab[0]->due_date));
                 $j2 = strftime('%d', strtotime($dtNow));
-                $jour_restant = $j1 - $j2;
+                $jour_restant = $j2 - $j1;
                 $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
                 $test = 1;
             } else {
                 $test = 0;
-                $message = "Vous êtes en mode gratuit";
+                $message = "Vous êtes en mode invité";
             }
 
             return view('cfp.dashboard_cfp.dashboard', compact('vue','test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler'));
@@ -420,12 +421,12 @@ class HomeController extends Controller
                     setlocale(LC_TIME, "fr_FR");
                     $j1 = strftime('%d', strtotime($etp_ab[0]->due_date));
                     $j2 = strftime('%d', strtotime($dtNow));
-                    $jour_restant = $j1 - $j2;
+                    $jour_restant = $j2 - $j1;
                     $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
                     $test = 1;
                 } else {
                     $test = 0;
-                    $message = "Vous êtes en mode gratuit";
+                    $message = "Vous êtes en mode invité";
                 }
 
 

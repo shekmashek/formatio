@@ -60,7 +60,7 @@ class AuthServiceProvider extends ServiceProvider
             if($formateur!=null){
                 $verification_collaboration = DB::select('select * from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
                 if($verification_collaboration!=null){
-                    $cfps = DB::select('select * from cfps where id = ?',$verification_collaboration[0]->demmandeur_cfp_id);
+                    $cfps = DB::select('select * from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
                     if($cfps[0]->statut_compte_id == 1)
                     return "isInvite";
                 }
@@ -99,10 +99,11 @@ class AuthServiceProvider extends ServiceProvider
             $formateur = DB::select('select * from formateurs where user_id = ?',[Auth::id()]);
             if($formateur!=null){
                 $verification_collaboration = DB::select('select * from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
+
                 if($verification_collaboration!=null){
-                    $cfps = DB::select('select * from cfps where id = ?',$verification_collaboration[0]->demmandeur_cfp_id);
+                    $cfps = DB::select('select * from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
                     if($cfps[0]->statut_compte_id == 2)
-                    return "isInvite";
+                    return "isPremium";
                 }
             }
         });
@@ -140,9 +141,9 @@ class AuthServiceProvider extends ServiceProvider
             if($formateur!=null){
                 $verification_collaboration = DB::select('select * from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
                 if($verification_collaboration!=null){
-                    $cfps = DB::select('select * from cfps where id = ?',$verification_collaboration[0]->demmandeur_cfp_id);
+                    $cfps = DB::select('select * from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
                     if($cfps[0]->statut_compte_id == 3)
-                    return "isInvite";
+                    return "isPending";
                 }
             }
         });
