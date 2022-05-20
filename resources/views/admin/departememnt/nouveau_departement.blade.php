@@ -323,7 +323,7 @@
                                                                                 @endforeach
                                                                                 <div class="modal-footer">
                                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
-                                                                                    <button type="submit" class="btn btn_enregistrer">&nbsp; Supprimer</button>
+                                                                                    <button type="submit" class="btn btn-labeled btn-danger"><span class="btn-label"><i class='bx  bx-trash bx_supprimer' ></i></span>Supprimer</button>
                                                                                 </div>
                                                                             </form>
                                                                         </div>
