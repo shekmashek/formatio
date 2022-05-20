@@ -1,15 +1,15 @@
 
 --abonnement pour entreprise
-DROP TABLE tarif_categories;
-DROP TABLE type_abonnements;
-DROP TABLE type_abonnement_roles;
-DROP TABLE type_abonnes;
-DROP TABLE abonnements;
-DROP TABLE abonnement_cfps;
-DROP TABLE factures_abonnements;
-DROP TABLE factures_abonnements_cfp;
-DROP TABLE type_abonnements_of;
-DROP TABLE type_abonnements_etp;
+DROP TABLE IF EXISTS tarif_categories;
+DROP TABLE IF EXISTS type_abonnements;
+DROP TABLE IF EXISTS type_abonnement_roles;
+DROP TABLE IF EXISTS type_abonnes;
+DROP TABLE IF EXISTS abonnements;
+DROP TABLE  IF EXISTS abonnement_cfps;
+DROP TABLE IF EXISTS factures_abonnements;
+DROP TABLE IF EXISTS factures_abonnements_cfp;
+DROP TABLE IF EXISTS type_abonnements_of;
+DROP TABLE IF EXISTS type_abonnements_etp;
 
 CREATE TABLE `type_abonnements_of` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
