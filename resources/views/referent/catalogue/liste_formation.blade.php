@@ -20,9 +20,9 @@
                                 @csrf
                                 <div class="form-row">
                                     <div class="d-flex flex-row">
-                                        @foreach ($categorie as $categ)
+                                        {{-- @foreach ($categorie as $categ)
                                             <input type="hidden" name="id_formation" value="{{$categ->id}}">
-                                        @endforeach
+                                        @endforeach --}}
                                         <input class="form-control me-2" type="text" name="nom_formation" placeholder="Rechercher par formations ex. Excel">
                                         <button type="submit" class="btn"><i class="bx bx-search"></i></button>
                                     </div>
@@ -36,9 +36,9 @@
                         <button class="dropbtn"><i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines des formations<i class="fa fa-caret-down ms-2"></i></button>
                         <div class="dropdown-content">
                             <div class="row flex-wrap">
-                                @foreach ($domaines as $dom)
+                                {{-- @foreach ($domaines as $dom)
                                     <a href="#">{{$dom->nom_domaine}}</a>
-                                @endforeach
+                                @endforeach --}}
                             </div>
                         </div>
                     </div>
