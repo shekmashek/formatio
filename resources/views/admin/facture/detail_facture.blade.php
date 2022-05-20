@@ -7,7 +7,18 @@
 
 
 <link rel="stylesheet" href="{{asset('assets/css/facture_new.css')}}">
+<style>
+     .pdf_download{
+            background-color: #e73827 !important;
+        }
+        .pdf_download:hover{
+            background-color: #af3906 !important;
+        }
+        .pdf_download button{
+            color: #ffffff !important;
+        }
 
+</style>
 <div id="page-wrapper">
     <div class="container-fluid">
 </div>
@@ -17,14 +28,14 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <div class="">
-                    <a class="nav-link  {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
+                    <a class="nav-link   {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
                         Retour à la liste des factures</a></div>
             </li>
             @canany(['isCFP','isCFPrincipale'])
             <li class="nav-item">
-                <div class="btn_racourcis">
-                    <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$montant_totale->num_facture)}}">
-                        <i class="fa fa-download"></i> PDF</a></div>
+
+                    <a class="nav-link pdf_download  {{ Route::currentRouteNamed('imprime_feuille_facture') ? 'active' : '' }}" href="{{route('imprime_feuille_facture',$montant_totale->num_facture)}}">
+                        <button class="btn"><i class="bx bxs-file-pdf"></i> PDF </button> </a>
             </li>
             @endcanany
             @canany(['isReferentPrincipale','isManagerPrincipale','isReferent','isManager'])
