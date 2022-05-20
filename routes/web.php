@@ -926,8 +926,8 @@ Route::get('supprimer_ressource', 'SessionController@supprimer_ressource')->name
 Route::get('liste_departement', 'DepartementController@show_departement')->name('liste_departement');
 Route::get('delete_depatement/{id}','DepartementController@delete_dep')->name('delete_departement');
 Route::post('update_departement','DepartementController@update_dep')->name('update_departement');
-Route::get('delete_service/{id}','DepartementController@delete_service')->name('delete_service');
-Route::post('update_service','DepartementController@update_service')->name('update_service');
+Route::post('delete_service','DepartementController@delete_service')->name('delete_service');
+Route::post('update_services','DepartementController@update_services')->name('update_services');
 Route::get('delete_branche/{id}','DepartementController@delete_branche')->name('delete_branche');
 Route::post('update_branche','DepartementController@update_branche')->name('update_branche');  
 

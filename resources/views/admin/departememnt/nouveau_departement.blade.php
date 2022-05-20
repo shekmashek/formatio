@@ -135,38 +135,16 @@
                                                             
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    {{-- <div align="rigth">
-                                                        <p style="color: rgb(66, 55, 221)"><i class="bx bx-check"></i></p>
-                                                    </div> --}}
-
+                                                <td>     
                                                 </td>
                                                 <td>
-                                                    {{-- <div class="btn-group dropleft">
-                                                        <button type="button" class="btn btn-default btn-sm"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-eye"></i>
-                                                                &nbsp; modifier</a>
-                                                            <a class="dropdown-item" href="" data-bs-toggle="modal"
-                                                                data-target="#exampleModal_#"><i class="fa fa-trash"></i>
-                                                                <strong style="color: red">rétirer
-                                                                    définitvement</strong></a>
-                                                        </div>
-                                                    </div> --}}
-                                        
+                                                  
                                                  <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$rqt[$i]->id}}"  class="btn btn-labeled btn-success">
                                                             {{-- <i class='bx  bx-edit bx_modifier'></i> --}}
 
                                                     <span class="btn-label"><i class='bx  bx-edit bx_modifier'></i></span>Modifier</a>
                                                     <a href=""  data-bs-toggle="modal" data-bs-target="#deletedep_{{$rqt[$i]->id}}" type="button" class="btn btn-labeled btn-danger">
                                                     <span class="btn-label"><i class='bx  bx-trash bx_supprimer' ></i></span>Supprimer</a>
-                                                   
-                                                   
-                                                        
                                                 </td> 
                                             </tr>
                                             {{-- modal edit departement --}}
@@ -185,7 +163,7 @@
                                                                 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Retour</button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
                                                                 <button type="submit" class="btn btn_enregistrer">&nbsp; Enregistrer</button>
                                                             </form>
                                                         </div>
@@ -280,11 +258,13 @@
                                                             </h6>
                                                             <div class="row">
                                                               
-                                                                <div class="col-md-5">
-                                                                    <span>
+                                                                <div class="col-md-5 ms-2">
+                                                                    <span >
+                                                                        
                                                                         @php
                                                                             echo str_replace(',',' <br> ',$service_departement[$i]->nom_service);
                                                                         @endphp 
+                                                                       
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-md-1" style="white-space: nowrap">
@@ -301,13 +281,13 @@
                                                                             <h1>Modification</h1>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <form action="{{route('update_service')}}"  method="post">
+                                                                            <form action="{{route('update_services')}}"  method="post">
                                                                                 @csrf
                                                                                 <input type="hidden" name="departement" value="{{$service_departement[$i]->departement_entreprise_id}}">
                                                                                 <label for=""> Service(s)</label>
-                                                                                @foreach ($service_departement_tena_izy as $sd)
+                                                                                @foreach ($service_departement_tous as $sd)
                                                                                     @if ($sd->departement_entreprise_id == $service_departement[$i]->departement_entreprise_id)
-                                                                                        <input type="text" class="form-control mt-1" required name="service[{{ $sd->service_id }}]" value="{{$sd->nom_service}}">
+                                                                                        <input type="text" class="form-control mt-2" required name="service[{{ $sd->service_id }}]" value="{{$sd->nom_service}}">
                                                                                     @endif
                                                                                     
                                                                                 @endforeach
@@ -322,7 +302,35 @@
                                                             </div>
 
                                                             {{-- modal delete service --}}
-                                                <div class="modal fade" id="deleteserve_{{$service_departement[$i]->service_id}}" tabindex="-1" role="dialog"
+                                                            <div class="modal fade" id="deleteserve_{{$service_departement[$i]->departement_entreprise_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h1>Suppression</h1>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form action="{{route('delete_service')}}"  method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="departement" value="{{$service_departement[$i]->departement_entreprise_id}}">
+                                                                                <label > Selectionner les elements à supprimer</label><br>
+                                                                                @foreach ($service_departement_tous as $sd)
+                                                                                    @if ($sd->departement_entreprise_id == $service_departement[$i]->departement_entreprise_id)
+                                                                                    
+                                                                                    <br><span class="mx-5"><input type="checkbox" name="ids[{{$sd->service_id}}]" value="{{$sd->service_id}}" >
+                                                                                        <label for="scales">{{$sd->nom_service}}</label></span>
+                                                                                    
+                                                                                    @endif
+                                                                                @endforeach
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
+                                                                                    <button type="submit" class="btn btn-labeled btn-danger"><span class="btn-label"><i class='bx  bx-trash bx_supprimer' ></i></span>Supprimer</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                {{-- <div class="modal fade" id="deleteserve_{{$service_departement[$i]->service_id}}" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
@@ -346,7 +354,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                </div>
+                                                </div> --}}
                                                 @endfor
                                                 @endif
                                                 </tr>
@@ -447,7 +455,7 @@
                                                                 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Retour</button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
                                                                 <button type="submit" class="btn btn_enregistrer">&nbsp; Enregistrer</button>
                                                             </form>
                                                         </div>

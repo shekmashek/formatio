@@ -16,6 +16,7 @@ use App\responsable;
 use App\Models\FonctionGenerique;
 use App\Role;
 use App\RoleUser;
+use App\service;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -355,14 +356,12 @@ class DepartementController extends Controller
         
         $nb = count($rqt);
         $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);
-        $service_departement_tena_izy = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? ", [$id_etp]);
-    
+        $service_departement_tous = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? ", [$id_etp]);
         $nb_serv = count($service_departement);
-      
         $branches = DB::select('select * from branches where entreprise_id = ?', [$id_etp]);
-        // dd($branches);
+        
         $nb_branche = count($branches);
-            return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tena_izy','branches', 'nb_branche'));
+            return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tous','branches', 'nb_branche'));
     }
     public function delete_dep($id)
     {
@@ -375,9 +374,10 @@ class DepartementController extends Controller
         DB::update('update departement_entreprises set nom_departement=? where id=?',[$request->departement,$request->id]);
         return back();
     }
-    public function delete_service($id)
+    public function delete_service(Request $request)
     {
-        DB::delete('delete from services  where id=?',[$id]);
+        $ids=$request->ids;
+        service::whereIn('id',$ids)->delete();
         return back();
     }
     public function update_services(Request $request)
@@ -439,33 +439,33 @@ class DepartementController extends Controller
         return back();
     }
     //fonction qui modifie le nom de département
-    public function update_departement(Request $request)
-    {
-        $id_dep = $request->Id;
-        $nom_dep = $request->Nom;
-        db::update('update departement_entreprises set nom_departement = ? where id = ?', [$nom_dep, $id_dep]);
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Données modifiées avec succès',
+    // public function update_departement(Request $request)
+    // {
+    //     $id_dep = $request->Id;
+    //     $nom_dep = $request->Nom;
+    //     db::update('update departement_entreprises set nom_departement = ? where id = ?', [$nom_dep, $id_dep]);
+    //     return response()->json(
+    //         [
+    //             'success' => true,
+    //             'message' => 'Données modifiées avec succès',
 
-            ]
-        );
-    }
+    //         ]
+    //     );
+    // }
     //fonction qui modifie le nom du service
-    public function update_service(Request $request)
-    {
-        $id_serv = $request->Id;
-        $nom_serv = $request->Nom;
-        db::update('update services set nom_service = ? where id = ?', [$nom_serv, $id_serv]);
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Données modifiées avec succès',
+    // public function update_service(Request $request)
+    // {
+    //     $id_serv = $request->Id;
+    //     $nom_serv = $request->Nom;
+    //     db::update('update services set nom_service = ? where id = ?', [$nom_serv, $id_serv]);
+    //     return response()->json(
+    //         [
+    //             'success' => true,
+    //             'message' => 'Données modifiées avec succès',
 
-            ]
-        );
-    }
+    //         ]
+    //     );
+    // }
     //show departement select option
     public function liste_dep(Request $request)
     {
