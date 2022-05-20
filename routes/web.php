@@ -369,6 +369,7 @@ Route::get('/ajout_module', 'FormationController@ajout_module')->name('ajout_mod
 Route::get('result__formation', 'FormationController@rechercheParModule')->name('result_formation');
 Route::get('search__formation', 'FormationController@getModulesParReference')->name('search__formation');
 Route::get('domaine_formation', 'FormationController@formation_domaine')->name('domaine_formation');
+Route::get('domaine_vers_formation/{id}', 'FormationController@domaine_vers_formation')->name('domaine_vers_formation');
 Route::get('select_par_formation/{id}', 'FormationController@affichageParFormation')->name('select_par_formation');
 Route::get('select_par_formation_par_cfp/{id_formation}/{id_cfp}', 'FormationController@affichageParFormationParCfp')->name('select_par_formation_par_cfp');
 Route::get('select_par_module/{id}', 'FormationController@affichageParModule')->name('select_par_module');

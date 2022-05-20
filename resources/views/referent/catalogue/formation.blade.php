@@ -1,11 +1,11 @@
 @extends('./layouts/admin')
 @section('title')
-<p class="text_header m-0 mt-1">Catégorie</p>
+<p class="text_header m-0 mt-1">Catalogue</p>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 <div class="row navigation_detail ">
-    <div class="ps-5">
+    <div class="ps-5 pt-3">
         <ul class="">
             <div class="row align-items-center">
                 <div class="col-3">
@@ -32,8 +32,37 @@
                     </li>
                 </div>
                 <div class="col-3">
-                    <div class="dropdown">
-                        <button class="dropbtn"><i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines des formations<i class="fa fa-caret-down ms-2"></i></button>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle dropbtn text-center mt-3" href="#" id="domaine_dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines de Formations
+                        </a>
+                        <div class="dropdown-menu mega_menu pt-0 mt-3" aria-labelledby="domaine_dropdown">
+                            <div class="d-flex align-items-start flex-column flex-sm-row px-3 py-5">
+                                <div>
+                                    @foreach ($domaine_col1 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ($domaine_col2 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ($domaine_col3 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ($domaine_col4 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{-- <div class="dropdown">
+                        <button class=""><i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines de formations<i class="fa fa-caret-down ms-2"></i></button>
                         <div class="dropdown-content">
                             <div class="row flex-wrap">
                                 @foreach ($domaines as $dom)
@@ -41,8 +70,7 @@
                                 @endforeach
                             </div>
                         </div>
-                    </div>
-                    <button class="btn" type="btn"></button>
+                    </div> --}}
                 </div>
             </div>
         </ul>
