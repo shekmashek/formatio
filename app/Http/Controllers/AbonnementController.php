@@ -646,8 +646,8 @@ class AbonnementController extends Controller
              // $montant =$this->fonct->findWhere('v_categorie_abonnement_etp',['type_abonnement_role_id'],[$abonnement_id[0]->type_abonnement_role_id]);
             $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_etp",['abonnement_id'],[$abonnement_id[0]->id]);
 
-            //on change le statut compte id de l'entreprise
-            DB::update('update entreprises set statut_compte_id = 2 where id = ?', [$entreprise_id]);
+            // //on change le statut compte id de l'entreprise
+            // DB::update('update entreprises set statut_compte_id = 2 where id = ?', [$entreprise_id]);
             $this->abonnement_model->insert_factures_abonnements_etp($abonnement_id[0]->id,$dt,$due_date,$tarif->tarif);
 
         }
@@ -668,8 +668,8 @@ class AbonnementController extends Controller
             // $montant =$this->fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
             $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_cfp",['abonnement_id'],[$abonnement_cfp_id[0]->id]);
 
-            //on change le statut compte id de l'organisme de formation
-            DB::update('update cfps set statut_compte_id = 2 where id = ?', [$cfp_id]);
+            // //on change le statut compte id de l'organisme de formation
+            // DB::update('update cfps set statut_compte_id = 2 where id = ?', [$cfp_id]);
             // $last_num_facture =$this->fonct->fin
             $this->abonnement_model->insert_factures_abonnements_cfp($abonnement_cfp_id[0]->id,$dt,$due_date,$tarif->tarif);
             // DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$due_date,1,$montant[0]->tarif]);
