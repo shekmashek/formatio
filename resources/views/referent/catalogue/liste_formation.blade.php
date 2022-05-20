@@ -32,17 +32,35 @@
                     </li>
                 </div>
                 <div class="col-3">
-                    <div class="dropdown">
-                        <button class="dropbtn"><i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines des formations<i class="fa fa-caret-down ms-2"></i></button>
-                        <div class="dropdown-content">
-                            <div class="row flex-wrap">
-                                {{-- @foreach ($domaines as $dom)
-                                    <a href="#">{{$dom->nom_domaine}}</a>
-                                @endforeach --}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle dropbtn text-center mt-3" href="#" id="domaine_dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines de Formations
+                        </a>
+                        <div class="dropdown-menu mega_menu pt-0 mt-3" aria-labelledby="domaine_dropdown">
+                            <div class="d-flex align-items-start flex-column flex-sm-row px-3 py-5">
+                                <div>
+                                    @foreach ($domaine_col1 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ($domaine_col2 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ($domaine_col3 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ($domaine_col4 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="btn" type="btn"></button>
+                    </li>
                 </div>
             </div>
         </ul>
@@ -70,19 +88,6 @@
     </div>
     <div class="container pb-5 ">
         <div class="row justify-content-center">
-            {{-- <div class="col-lg-3 filtre_formation">
-                <div class="row">
-                    <p class="liste__formation__titre">Catégories</p>
-                    <div class="form-check liste__formation__radio">
-                        <input class="form-check-input" type="radio" name="flexRadioListe" id="flexRadioListe1" checked>
-                        <label class="form-check-label" for="flexRadioListe1">Nos Formations</label>
-                    </div>
-                    <div class="form-check liste__formation__radio">
-                        <input class="form-check-input" type="radio" name="flexRadioListe" id="flexRadioListe2">
-                        <label class="form-check-label" for="flexRadioListe2">Tous nos Contenus</label>
-                    </div>
-                </div>
-            </div> --}}
             <div class="col-lg-8">
 
                 @if (count($infos)>0)

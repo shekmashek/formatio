@@ -1,6 +1,7 @@
 @extends('./layouts/admin')
 @inject('groupe', 'App\groupe')
 @section('content')
+<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 @if (Session::has('error'))
     <div class="alert alert-danger">
@@ -37,17 +38,35 @@
                     </li>
                 </div>
                 <div class="col-3">
-                    <div class="dropdown">
-                        <button class="dropbtn"><i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines des formations<i class="fa fa-caret-down ms-2"></i></button>
-                        <div class="dropdown-content">
-                            <div class="row flex-wrap">
-                                @foreach ($domaines as $dom)
-                                    <a href="#">{{$dom->nom_domaine}}</a>
-                                @endforeach
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle dropbtn text-center mt-3" href="#" id="domaine_dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines de Formations
+                        </a>
+                        <div class="dropdown-menu mega_menu pt-0 mt-3" aria-labelledby="domaine_dropdown">
+                            <div class="d-flex align-items-start flex-column flex-sm-row px-3 py-5">
+                                <div>
+                                    @foreach ($domaine_col1 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ($domaine_col2 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ($domaine_col3 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ($domaine_col4 as $dom)
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="btn" type="btn"></button>
+                    </li>
                 </div>
             </div>
         </ul>
@@ -122,7 +141,7 @@
                 <h3 class="pb-3">Objectifs de la formation</h3>
                 <div class="row module_detail_content p-5">
                     <div class="col-lg-12">
-                        <p>@php echo html_entity_decode($res->objectif) @endphp</p>
+                        <p id="objectif_content">{{$res->objectif}}</p>
                         <div id="pour_qui"></div>
                     </div>
                 </div>
@@ -135,7 +154,9 @@
                             <span class="adresse__text"><i class="bx bx-user adresse__icon"></i>&nbsp;Pour qui
                                 ?</span>
                             <div class="col-12 ps-4">
-                                <p>@php echo html_entity_decode($res->cible) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->cible) @endphp</p> --}}
+                                <p id="cible_content">{{$res->cible}}</p>
+
                             </div>
                         </div>
                     </div>
@@ -145,7 +166,9 @@
                             <span class="adresse__text"><i
                                     class="bx bx-list-plus adresse__icon"></i>&nbsp;Prérequis</span>
                             <div class="col-12 ps-4">
-                                <p>@php echo html_entity_decode($res->prerequis) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->prerequis) @endphp</p> --}}
+                                <p id="prerequis_content">{{$res->prerequis}}</p>
+
                             </div>
                         </div>
                         <div class="row d-flex flex-row">
@@ -163,7 +186,9 @@
                                     class="bx bxs-cog adresse__icon"></i>&nbsp;Equipement
                                 necessaire</span>
                             <div class="col-12 ps-4">
-                                <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p> --}}
+                                <p id="equipement_content">{{$res->materiel_necessaire}}</p>
+
                             </div>
                         </div>
                     </div>
@@ -174,7 +199,9 @@
                                     class="bx bxs-message-check adresse__icon"></i>&nbsp;Bon
                                 a savoir</span>
                             <div class="col-12 ps-4">
-                                <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p> --}}
+                                <p id="bon_a_savoir_content">{{$res->bon_a_savoir}}</p>
+
                             </div>
                         </div>
                     </div>
@@ -187,7 +214,9 @@
                                     class="bx bx-hive adresse__icon"></i>&nbsp;Prestations
                                 pedagogiques</span>
                             <div class="col-12 ps-4">
-                                <p>@php echo html_entity_decode($res->prestation) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->prestation) @endphp</p> --}}
+                                <p id="prestation_content">{{$res->prestation}}</p>
+
                             </div>
                         </div>
                         <div id="programme"></div>
@@ -339,6 +368,37 @@
                 </div>
             </div>
 
+            <div class="d-none">
+                <textarea id="objectif_textarea" name="objectif" placeholder="Ajouter des textes" style="display: none"></textarea>
+                <div id="objectif_id">
+                    <p>@php echo html_entity_decode($res->objectif) @endphp</p>
+                </div>
+
+                <textarea id="public_textarea" name="public_cible" placeholder="Ajouter des textes" style="display: none"></textarea>
+                <div id="public_id">
+                    <p>@php echo html_entity_decode($res->cible) @endphp</p>
+                </div>
+
+                <textarea id="prerequis_textarea" name="prerequis" placeholder="Ajouter des textes" style="display: none"></textarea>
+                <div id="prerequis_id">
+                    <p>@php echo html_entity_decode($res->prerequis) @endphp</p>
+                </div>
+
+                <textarea id="equipement_textarea" name="equipement" placeholder="Ajouter des textes" style="display: none"></textarea>
+                <div id="equipement_id">
+                    <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p>
+                </div>
+
+                <textarea id="bon_a_savoir_textarea" name="bon_a_savoir" placeholder="Ajouter des textes" style="display: none"></textarea>
+                <div id="bon_a_savoir_id">
+                    <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p>
+                </div>
+
+                <textarea id="prestation_textarea" name="prestation" placeholder="Ajouter des textes" style="display: none"></textarea>
+                <div id="prestation_id">
+                    <p>@php echo html_entity_decode($res->prestation) @endphp</p>
+                </div>
+            </div>
             {{-- FIXME:mise en forme de design --}}
             <div class="col-lg-3 ">
                 <div class="row detail__intra">
@@ -415,6 +475,7 @@
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
     // CSRF Token
@@ -504,6 +565,96 @@
             }
         });
     }
+
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['code-block'],
+
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }]
+    ];
+
+    let objectif_editor = new Quill('#objectif_id', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow',
+    });
+
+    let public_editor = new Quill('#public_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let prerequis_editor = new Quill('#prerequis_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let equipement_editor = new Quill('#equipement_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let bon_a_savoir_editor = new Quill('#bon_a_savoir_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let prestation_editor = new Quill('#prestation_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let objectif = objectif_editor.root.innerHTML;
+
+    $('#objectif_content').html(objectif);
+    $("#form_objectif").on("submit",function() {
+        $("#objectif_textarea").val($("#objectif_id").html());
+    });
+
+
+    let cible = public_editor.root.innerHTML;
+    $('#cible_content').html(cible);
+    $("#form_public").on("submit",function() {
+        $("#public_textarea").val($("#public_id").html());
+    });
+
+    let prerequis = prerequis_editor.root.innerHTML;
+    $('#prerequis_content').html(prerequis);
+    $("#form_prerequis").on("submit",function() {
+        $("#prerequis_textarea").val($("#prerequis_id").html());
+    });
+
+    let equipement = equipement_editor.root.innerHTML;
+    $('#equipement_content').html(equipement);
+    $("#form_equipement").on("submit",function() {
+        $("#equipement_textarea").val($("#equipement_id").html());
+    });
+
+    let bon_a_savoir = bon_a_savoir_editor.root.innerHTML;
+    $('#bon_a_savoir_content').html(bon_a_savoir);
+    $("#form_bon_a_savoir").on("submit",function() {
+        $("#bon_a_savoir_textarea").val($("#bon_a_savoir_id").html());
+    });
+
+    let prestation = prestation_editor.root.innerHTML;
+    $('#prestation_content').html(prestation);
+    $("#form_prestation").on("submit",function() {
+        $("#prestation_textarea").val($("#prestation_id").html());
+    });
 
 </script>
 @endsection

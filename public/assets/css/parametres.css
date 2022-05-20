@@ -122,9 +122,72 @@ a:hover{
     border-bottom: 1px solid rgb(222, 221, 221);
 }
 
-.icon_sociaux{
+.icon_sociaux1{
     font-size: 1.5rem;
     color: #637381;
+    position: relative;
+    top: .3rem;
+}
+
+.icon_sociaux1{
+    font-size: 1.5rem;
+    color: #7635dc;
+    position: relative;
+    top: .3rem;
+}
+
+.icon_sociaux2{
+    font-size: 1.5rem;
+    color: #26a0da;
+    position: relative;
+    top: .3rem;
+}
+
+.icon_sociaux3{
+    font-size: 1.5rem;
+    color: #2ebf91;
+    position: relative;
+    top: .3rem;
+}
+
+.icon_sociauxf{
+    font-size: 1.5rem;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(37,145,251,0.98) 0.1%, rgba(0,7,128,1) 99.8% );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    position: relative;
+    top: .3rem;
+}
+
+.icon_sociauxist{
+    font-size: 1.5rem;
+    background-color: #FFE53B;
+    background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    position: relative;
+    top: .3rem;
+}
+
+.icon_sociauxtwt{
+    font-size: 1.5rem;
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    position: relative;
+    top: .3rem;
+}
+
+.icon_sociauxin{
+    font-size: 1.5rem;
+    background-image: radial-gradient( circle 976px at 51.2% 51%,  rgba(11,27,103,1) 0%, rgba(16,66,157,1) 0%, rgba(11,27,103,1) 17.3%, rgba(11,27,103,1) 58.8%, rgba(11,27,103,1) 71.4%, rgba(16,66,157,1) 100.2%, rgba(187,187,187,1) 100.2% );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
     position: relative;
     top: .3rem;
 }
@@ -176,4 +239,14 @@ a:hover{
 
 a:focus{
     text-decoration: none;
+}
+
+.bx_modifier{
+    display: none;
+    transition: all .5s;
+}
+
+.afficher_icon_modif:hover .bx_modifier{
+    display: block;
+    transition: all .5s;
 }

@@ -372,6 +372,7 @@ Route::get('/ajout_module', 'FormationController@ajout_module')->name('ajout_mod
 Route::get('result__formation', 'FormationController@rechercheParModule')->name('result_formation');
 Route::get('search__formation', 'FormationController@getModulesParReference')->name('search__formation');
 Route::get('domaine_formation', 'FormationController@formation_domaine')->name('domaine_formation');
+Route::get('domaine_vers_formation/{id}', 'FormationController@domaine_vers_formation')->name('domaine_vers_formation');
 Route::get('select_par_formation/{id}', 'FormationController@affichageParFormation')->name('select_par_formation');
 Route::get('select_par_formation_par_cfp/{id_formation}/{id_cfp}', 'FormationController@affichageParFormationParCfp')->name('select_par_formation_par_cfp');
 Route::get('select_par_module/{id}', 'FormationController@affichageParModule')->name('select_par_module');
@@ -1200,7 +1201,7 @@ Route::post('/enregistrer_modification_fonction/{id}', 'ResponsableCfpController
 Route::get('/profil_of/{id}', 'UtilisateurControlleur@profil_cfp')->name('profil_of');
 Route::get('/modification_logo_cfp/{id}', 'CfpController@edit_logo')->name('modification_logo_cfp');
 Route::get('/modification_nom_organisme/{id}', 'CfpController@edit_nom')->name('modification_nom_organisme');
-Route::get('/modification_nom_organisme/{id}', 'CfpController@edit_nom')->name('modification_nom_organisme');
+// Route::get('/modification_nom_organisme/{id}', 'CfpController@edit_nom')->name('modification_nom_organisme');
 Route::get('/modification_adresse_organisme/{id}', 'CfpController@edit_adresse')->name('modification_adresse_organisme');
 
 Route::get('/modification_nif/{id}','CfpController@edit_nif')->name('modification_nif');

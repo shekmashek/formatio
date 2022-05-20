@@ -20,6 +20,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
 </head>
 
 <body>
