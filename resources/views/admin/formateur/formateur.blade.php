@@ -58,6 +58,9 @@
             color: #f64f59;
             font-size: 4rem;
         }
+        td{
+            vertical-align: middle;
+        }
 
     </style>
 
@@ -98,7 +101,8 @@
 
                     <table class="table  table-borderless table-lg table-hover">
                         <thead style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
-                            <th>Nom & prénom formateur</th>
+                            <th>Nom</th>
+                            <th></th>
                             <th>Téléphone</th>
                             <th>E-mail</th>
                             @can('isCFP')
@@ -113,7 +117,13 @@
                                 @else
                                 @foreach($formateur as $frm)
                                 <tr class="information" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}">
-                                    <td role="button" onclick="afficherInfos();"><img src="{{asset("images/formateurs/".$frm->photos)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</span></td>
+                                    @if($frm->photos == NULL or $frm->photos == '' or $frm->photos == 'XXXXXXX')
+                                        <td ><span  class="randomColor text-uppercase" style="padding: 15px; border-radius:100%; color:white;"> {{$frm->n}} {{$frm->p}} </span></td>
+                                        <td><span>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</td>
+                                    @else
+                                        <td role="button" onclick="afficherInfos();"><img src="{{asset("images/formateurs/".$frm->photos)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3"></span></td>
+                                        <td><span>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</td>
+                                    @endif
                                     <td role="button" onclick="afficherInfos();" style="vertical-align: middle">
                                         @php
                                             echo $groupe->formatting_phone($frm->numero_formateur);  

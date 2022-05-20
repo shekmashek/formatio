@@ -159,6 +159,7 @@
                                                 @endphp
                                             </td>
                                             <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
+                                            
                                             <td style="vertical-align: middle" class="text-center">
                                                 @if($responsables_cfp->prioriter == 1 && $responsables_cfp->id == $resp_connecte->id)
                                                     <span data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class='bx bxs-star'></i></span>
