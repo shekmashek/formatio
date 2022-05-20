@@ -1026,6 +1026,7 @@ class AbonnementController extends Controller
     //of
     public function modifier_abonnement_of($id){
         $abonnement = $this->fonct->findWhereMulitOne("type_abonnements_of",["id"],[$id]);
+   
         return view('superadmin.modifier_type',compact('abonnement'));
     }
     public function enregistrer_modification_abonnement_of(Request $request,$id){
@@ -1050,7 +1051,7 @@ class AbonnementController extends Controller
         else{
             $nb_projet = 0;
         }
-        DB::update('update type_abonnements_of set nom_type = ?, tarif = ?, nb_utilisateur = ?,nb_formateur = ?,nb_projet = ?,illimite = ? where id = ?', [$nom_type,$prix,$nb_utilisateur,$nb_formateur,$nb_projet,$illimite,$id]);
+        DB::update('update type_abonnements_of set nom_type = ?,description = ?, tarif = ?, nb_utilisateur = ?,nb_formateur = ?,nb_projet = ?,illimite = ? where id = ?', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$nb_projet,$illimite,$id]);
         return redirect()->route('listeAbonne');
     }
     //entreprise
@@ -1083,7 +1084,7 @@ class AbonnementController extends Controller
             $min_emp = 0;
             $max_emp = 0;
         }
-        DB::update('update type_abonnements_etp set nom_type = ?, tarif = ?, nb_utilisateur = ?,nb_formateur = ?,min_emp = ?,max_emp = ?,illimite = ? where id = ?', [$nom_type,$prix,$nb_utilisateur,$nb_formateur,$min_emp,$max_emp,$illimite,$id]);
+        DB::update('update type_abonnements_etp set nom_type = ?, description = ?,tarif = ?, nb_utilisateur = ?,nb_formateur = ?,min_emp = ?,max_emp = ?,illimite = ? where id = ?', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$min_emp,$max_emp,$illimite,$id]);
         return redirect()->route('listeAbonne');
     }
 }
