@@ -375,16 +375,10 @@ class DepartementController extends Controller
         DB::update('update departement_entreprises set nom_departement=? where id=?',[$request->departement,$request->id]);
         return back();
     }
-<<<<<<< HEAD
     public function delete_service(Request $request)
     {
         $ids=$request->ids;
         service::whereIn('id',$ids)->delete();
-=======
-    public function delete_service($id)
-    {
-        DB::delete('delete from services  where id=?',[$id]);
->>>>>>> origin/reglageAbonnement
         return back();
     }
     public function update_services(Request $request)

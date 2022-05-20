@@ -52,8 +52,8 @@
                         @foreach ($typeAbonnement_of as $types_of)
                             <div class="col mt-5 justify-content-between">
                                 <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
-                                     <span class="nom_type mt-5">{{ $types_of->nom_type }}</span>
-                                     <span class="description mt-5">{{ $types_of->description }}</span>
+                                     <span class="nom_type">{{ $types_of->nom_type }}</span>
+                                     <span class="description mt-2">{{ $types_of->description }}</span>
                                      <span class="tarif"> <span class="number"> {{number_format($types_of->tarif,0, ',', '.')}}</span> <sup
                                             class="sup">AR</sup>/ mois</span>
                                    <ul class="mb-5 list-unstyled text-muted">
@@ -82,8 +82,8 @@
                         @foreach ($typeAbonnement_etp as $types_etp)
                             <div class="col mt-5 justify-content-between">
                                 <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
-                                    <p class="h-1 pt-5 nom_type mt-5">{{ $types_etp->nom_type }}</p>
-                                    <span class="description mt-5">{{ $types_etp->description }}</span>
+                                    <p class="h-1 pt-5 nom_type">{{ $types_etp->nom_type }}</p>
+                                    <span class="description mt-2">{{ $types_etp->description }}</span>
                                     <span class="tarif"> <span class="number"> {{number_format($types_etp->tarif,0, ',', '.')}}</span> <sup
                                             class="sup">AR</sup>/ mois</span>
 

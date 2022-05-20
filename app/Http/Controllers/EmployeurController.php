@@ -78,11 +78,12 @@ class EmployeurController extends Controller
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhere("responsables",["user_id"],[Auth::user()->id]);
+           
              /**On doit verifier le dernier abonnement de l'entreprise pour pouvoir limité le referent à ajouter */
-            $nb_referent = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id]);
-            $nb_stagiaire = $this->fonct->findWhere("stagiaires",["entreprise_id"],[$entreprise_id]);
+            $nb_referent = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
+            $nb_stagiaire = $this->fonct->findWhere("stagiaires",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
 
-            $abonnement_etp =  DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1',[$entreprise_id]);
+            $abonnement_etp =  DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1',[$entreprise_id[0]->entreprise_id]);
 
             $user->name = $request->nom . " " . $request->prenom;
             $user->email = $request->mail;
@@ -90,6 +91,7 @@ class EmployeurController extends Controller
             // $user->telephone =  $request->phone;
             $ch1 = "0000";
             $user->password = Hash::make($ch1);
+            $user->telephone = $phone;
             $user->save();
             // $nom_img = "images/users/user.png";
 
@@ -99,7 +101,9 @@ class EmployeurController extends Controller
 
 
             if ($request->type_enregistrement == "STAGIAIRE") {
-                if($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
+                if($abonnement_etp !=null){
+                    if($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
+                }
                 else{
                     $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
 
