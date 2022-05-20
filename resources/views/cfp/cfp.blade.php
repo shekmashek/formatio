@@ -51,6 +51,10 @@
         tbody tr{
             vertical-align: middle;
         }
+
+        td{
+            vertical-align: center;
+        }
     </style>
 
     <div class="row w-100 bg-none mt-5 font_text">
@@ -88,9 +92,10 @@
                                             <span class="d-flex flex-end ms-3 align-items-center">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
                                         </span>
                                       @else --}}
+
                                         <img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
                                         </td>
-                                     {{-- @endif --}}
+
                                     {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->email}}</td> --}}
 
                                     {{-- <td>
@@ -105,28 +110,19 @@
                                         </div>
                                     </td> --}}
                                     <td>
-                                        <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir les projets</a>
-                                        {{-- <div class="btn-group dropleft">
+                                        <a href="{{route('tous_projets')}}" class="btn btn-info btn-sm mt-3" style="color: white;text-decoration:none">Voir tous les projets</a>
+                                         <div class="btn-group dropleft">
                                             <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                {{-- <li class="dropdown-item">
-                                                    <a href="{{route('tous_projets')}}"> <button type="button" class="btn btn_creer" style="text-decoration:none">Voir les projets</button>
+                                                <li class="dropdown-item">
+                                                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
+
                                                     </a>
-                                                </li> --}}
-                                        <div class="btn-group dropleft">
-                                            <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </button>
-                                            <div class="btn-group dropleft">
-                                                    <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
-                                                    </li>
-                                                </ul>
+                                                </li>
                                             </div>
-                                        </div>
+
                                     </td>
                                 </tr>
 
@@ -421,6 +417,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     $(".montrer").on('click', function(e) {
+
         let id = $(this).data("id");
         $.ajax({
             method: "GET"

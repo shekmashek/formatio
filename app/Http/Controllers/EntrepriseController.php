@@ -70,7 +70,10 @@ class EntrepriseController extends Controller
             // dd($refuse_demmande_etp);
             $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
 
-            $entreprise = $entp->getEntreprise($etp2, $etp1);
+           $entreprise = $entp->getEntreprise($etp2, $etp1);
+            // $entreprise =DB::select('select logo_etp,nom_etp,entreprise_id,photos_resp,nom_resp,prenom_resp ,SUBSTRING(prenom_resp, 1, 1) AS pr, SUBSTRING(nom_resp, 1, 1) AS nm from v_demmande_cfp_etp where cfp_id=?',[$cfp_id]);
+
+
             // dd($entreprise);
             //  $entreprisess=DB::select('select * from  v_demmande_cfp_etp where cfp_id= ?',[$cfp_id]);
             //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where cfp_id= ?',[$cfp_id]);

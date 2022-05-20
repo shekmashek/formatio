@@ -281,7 +281,7 @@
                                                                             <h1>Modification</h1>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <form action="{{route('update_service')}}"  method="post">
+                                                                            <form action="{{route('update_services')}}"  method="post">
                                                                                 @csrf
                                                                                 <input type="hidden" name="departement" value="{{$service_departement[$i]->departement_entreprise_id}}">
                                                                                 <label for=""> Service(s)</label>
