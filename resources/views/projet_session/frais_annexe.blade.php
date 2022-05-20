@@ -195,7 +195,6 @@
                         <label class="me-1 mt-2">Montant&nbsp;</label>
                         <input type="text" name="montant[]" class="form-control mb-2 ms-3" required>
                     </div>
-                    <input type="hidden"  name="id" class="form-control mb-2" value="{{ $frais->id }}" required>
                     <div class="d-flex justify-content-around">
                         <button type="submit" class="btn modif_frais">Insérer</button>
                     </div>

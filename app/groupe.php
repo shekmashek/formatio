@@ -46,12 +46,16 @@ class Groupe extends Model
     }
 
     public function statut_evaluation($groupe_id){
-        $somme_eval = DB::select('select ifnull(sum(note_apres),0) as somme_note from evaluation_stagiaires where groupe_id = ?',[$groupe_id])[0]->somme_note;
-        if($somme_eval == 0){
-            return '#bdbebd';
+        $nb_participant = DB::select('select ifnull(count(groupe_id),0) as nombre_participant from participant_groupe where groupe_id = ?',[$groupe_id])[0]->nombre_participant;
+        $module = DB::select('select module_id from groupes where id = ?',[$groupe_id])[0]->module_id;
+        $nb_competence = DB::select('select ifnull(count(id),0) as nombre_comp from competence_a_evaluers where module_id = ?', [$module])[0]->nombre_comp;
+        $nombre_eval = DB::select('select ifnull(count(note_apres),0) as nombre_note from evaluation_stagiaires where groupe_id = ? and note_apres < 0',[$groupe_id])[0]->nombre_note;
+        // dd($nb_participant * $nb_competence,$nombre_eval);
+        if($nb_participant * $nb_competence == $nombre_eval){
+            return 1;
         }
-        elseif($somme_eval > 0){
-            return '#00ff00';
+        elseif($nombre_eval < $nb_participant * $nb_competence){
+            return 0;
         }
     }
 

@@ -470,14 +470,14 @@ class SessionController extends Controller
 
     public function acceptation_session(Request $request){
         // envoyer mail
-        $fonct = new FonctionGenerique();
-        $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
-        $name_session = $session->nom_groupe;
-        $name_etp = $session->nom_etp;
-        $date_debut = $session->date_debut;
-        $date_fin = $session->date_fin;
-        $mail_etp = $session->email_etp;
-        Mail::to('vonjitahinaranjelison@gmail.com')->send(new acceptation_session('contact@formation.mg',$name_session,$name_etp,$date_debut,$date_fin));
+        // $fonct = new FonctionGenerique();
+        // $session = $fonct->findWhereMulitOne('v_groupe_projet_entreprise',['groupe_id'],[$request->groupe]);
+        // $name_session = $session->nom_groupe;
+        // $name_etp = $session->nom_etp;
+        // $date_debut = $session->date_debut;
+        // $date_fin = $session->date_fin;
+        // $mail_etp = $session->email_etp;
+        // Mail::to('vonjitahinaranjelison@gmail.com')->send(new acceptation_session('contact@formation.mg',$name_session,$name_etp,$date_debut,$date_fin));
         // fin
         DB::update('update groupes set status = 2 where id = ?',[$request->groupe]);
         return back();

@@ -10,7 +10,7 @@
 <div class="container" role="tabpanel">
     <ul class="nav nav-tabs navigation_frais mt-4" id="myTab" role="tablist">
         <li class="nav-item active" role="presentation">
-        <a href="#liste_salle" class="nav-link active" id="home-tab" data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="color: black">Vos frais annexes&nbsp;&nbsp;{{ count($frais) }}</a>
+        <a href="#liste_salle" class="nav-link active" id="home-tab" data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="color: black">Frais annexes&nbsp;&nbsp;{{ count($frais) }}</a>
         </li>
         <li class="nav-item" role="presentation">
             <a href="#ajout_salle" class="nav-link" id="profile-tab" data-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" style="color: black">Ajouter une frais annexe</a>
@@ -27,8 +27,32 @@
             @endif
             <table class="table table-hover table-borderless">
                 <thead style="border-bottom: 1px solid black; line-height: 20px">
+                    <tr>
+                        <td>Frais annexes système</td>
+                      </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Frais de déplacement</td>
+                    </tr>
+                    <tr>
+                        <td>Hébergement</td>
+                    </tr>
+                    <tr>
+                        <td>Restauration</td>
+                    </tr>
+                    <tr>
+                        <td>Location salle</td>
+                    </tr>
+                    <tr>
+                        <td>Location matérielle</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-hover table-borderless">
+                <thead style="border-bottom: 1px solid black; line-height: 20px">
                   <tr>
-                    <th>Desription</th>
+                    <td>Vos frais annexes&nbsp;&nbsp;{{ count($frais) }}</td>
                     <th rowspan="2"></th>
                   </tr>
                 </thead>
