@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS factures_abonnements;
 DROP TABLE IF EXISTS factures_abonnements_cfp;
 DROP TABLE IF EXISTS type_abonnements_of;
 DROP TABLE IF EXISTS type_abonnements_etp;
+DROP TABLE IF EXISTS encaissements_abonnements;
+DROP TABLE IF EXISTS encaissements_abonnements_cfps;
 
 CREATE TABLE `type_abonnements_of` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
