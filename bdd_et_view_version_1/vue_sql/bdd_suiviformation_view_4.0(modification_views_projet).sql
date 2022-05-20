@@ -67,7 +67,7 @@ create or replace view v_groupe_entreprise as
             when g.status = 2 then
                 case
                     when (g.date_fin - curdate()) < 0 then 'Terminé'
-                    when (g.date_debut - curdate()) < 0 then 'En cours'
+                    when (g.date_debut - curdate()) <= 0 then 'En cours'
                     else 'A venir' end
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
@@ -161,7 +161,7 @@ create or replace view v_groupe_projet_module as
             when g.status = 2 then
                 case
                     when (g.date_fin - curdate()) < 0 then 'Terminé'
-                    when (g.date_debut - curdate()) < 0 then 'En cours'
+                    when (g.date_debut - curdate()) <= 0 then 'En cours'
                     else 'A venir' end
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
@@ -664,7 +664,7 @@ create or replace view v_projet_session_inter as
             when g.status = 2 then
                 case
                     when (g.date_fin - curdate()) < 0 then 'Terminé'
-                    when (g.date_debut - curdate()) < 0 then 'En cours'
+                    when (g.date_debut - curdate()) <= 0 then 'En cours'
                     else 'A venir' end
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,

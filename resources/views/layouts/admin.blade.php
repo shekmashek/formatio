@@ -632,7 +632,7 @@
                         <div class="col-5 header-right">
                             <div class="col-11 d-flex flex-row justify-content-center apprendCreer">
                                 <div class="btn_creer" id="text_apprendre">
-                                   
+
                                     <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span>
 
                                 </div>
@@ -791,9 +791,12 @@
                                             {{-- <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
                                                 <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
                                             </a></li> --}}
-                                            {{-- <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
+                                            <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
                                                     <i class='bx bxs-buildings icon_plus'></i>&nbsp;Salle de formation
-                                                </a></li> --}}
+                                                </a></li>
+                                            <li><a class="dropdown-item" href="{{route('parametrage_frais_annexe')}}">
+                                                    <i class='bx bxs-buildings icon_plus'></i>&nbsp;Frais annexes
+                                                </a></li>
                                         </ul>
                                     </div>
                                 </div>

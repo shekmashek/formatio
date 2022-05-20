@@ -137,16 +137,21 @@
         <div id="voir_radar">
     @endcanany
         <div class="row mt-2">
-            <div class="col-md-4">
-                Choisissez votre stagiaire pour voir le résultat<br>
-                <select class="form-select" id="stagiaire_radar"  aria-label="Default select example">
-                    <option hidden>Choisissez un stagiaire</option>
-                    @foreach ($stagiaire as $stg_r)
-                        <option  data-stg_id="{{ $stg_r->stagiaire_id }}" value="{{ $stg_r->stagiaire_id }}">{{ $stg_r->nom_stagiaire.' '.$stg_r->prenom_stagiaire }}</option>
-                    @endforeach
-                </select>
+            <div class="col-md-5">
+                <div>
+                     Choisissez votre stagiaire pour voir le résultat<br>
+                    <select class="form-select" id="stagiaire_radar"  aria-label="Default select example">
+                        <option hidden>Choisissez un stagiaire</option>
+                        @foreach ($stagiaire as $stg_r)
+                            <option  data-stg_id="{{ $stg_r->stagiaire_id }}" value="{{ $stg_r->stagiaire_id }}">{{ $stg_r->nom_stagiaire.' '.$stg_r->prenom_stagiaire }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+
+                </div>
             </div>
-            <div class="col-md-8"><canvas id="marksChart" width="500" height="300"></canvas></div>
+            <div class="col-md-7"><canvas id="marksChart" width="500" height="300"></canvas></div>
         </div>
     </div>
     {{-- <div id="evaluation_formateurs" style="display: none">
