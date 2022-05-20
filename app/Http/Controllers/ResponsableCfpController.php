@@ -60,7 +60,7 @@ class ResponsableCfpController extends Controller
         $fonct = new FonctionGenerique();
 
         if (Gate::allows('isCFP')) {
-            if ($id!=null) {
+            if ($id==null) {
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
 
             }

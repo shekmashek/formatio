@@ -367,10 +367,6 @@ class EntrepriseController extends Controller
     }
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/reglageAbonnement
     public function modification_assujetti_entreprise($id){
         $fonct = new FonctionGenerique();
         $assujetti = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
