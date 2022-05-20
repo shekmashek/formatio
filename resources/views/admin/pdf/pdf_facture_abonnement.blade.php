@@ -157,7 +157,7 @@
                                     @endif
                                 </td>
                                 <td align="right">
-                                    <h6>Talenta</h6>
+                                    <h6>UpSkill</h6>
                                     <h6>contact@formation.mg</h6>
                                     <h6>Lot IIN 60 Analamahitsy 101 Antananarivo Madagascar</h6>
                                     <h6>+261 34 81 135 63</h6>
