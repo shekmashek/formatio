@@ -1098,7 +1098,7 @@
                                 <th> Formation </th>
                                 <th> Module</th>
                                 <th></th>
-                                <th>Evaluation </th>
+                                <th></th>
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)

@@ -7,7 +7,7 @@
 <div class="container pt-1">
     <div class="row">
         {{-- <h5 class="my-3 text-center">Le Projet de Formation intra entreprise</h5> --}}
-        
+
         <form action="{{ route('groupe.store') }}" id="formPayement" method="POST" class="form_session pt-2">
             @csrf
             <input type="hidden" name="type_formation" value="{{ $type_formation }}">
@@ -93,14 +93,13 @@
                                     <select class="form-select selectP input" id="module_id" name="module_id"
                                         aria-label="Default select example">
                                         <option onselected>Choisir la module du session</option>
-                                        @foreach ($modules as $mod)
+                                        {{-- @foreach ($modules as $mod)
                                         <option value="{{$mod->id}}">{{$mod->nom_module}}</option>
-                                        @endforeach 
+                                        @endforeach  --}}
                                     </select>
                                     <label class="ml-3 form-control-placeholder" for="module_id">Modules<strong
                                         class="text-danger">*</strong></label>
-                                    <span style="color:#ff0000;" id="module_id_err">Aucun module détecté! veuillez
-                                        choisir la formation</span>
+                                    <span style="color:#ff0000;" id="module_id_err"></span>
                                 </div>
                             </div>
                             <div class="row px-3 mt-2">
@@ -158,6 +157,7 @@
                         "Aucun module a été détecter! veuillez choisir la formation";
                 } else {
                     document.getElementById("module_id_err").innerHTML = "";
+                    $("#module_id").html('');
                     for (var $i = 0; $i < data.length; $i++) {
                         $("#module_id").append(
                             '<option value="' +

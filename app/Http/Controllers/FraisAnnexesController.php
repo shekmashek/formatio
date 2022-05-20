@@ -6,7 +6,7 @@ use App\ChefDepartement;
 use App\Models\FonctionGenerique;
 use Illuminate\Http\Request;
 use App\Niveau;
-use App\Responsable;
+use App\responsable;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,14 +31,14 @@ class FraisAnnexesController extends Controller
         $salle = [];
         if(Gate::allows('isReferent')){
             if (Gate::allows('isReferentPrincipale')) {
-                $etp_id = Responsable::where('user_id', $user_id)->value('entreprise_id');
+                $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             }
             if (Gate::allows('isManagerPrincipale')) {
                 $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
             }
             $frais = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id]);
             return view('admin.frais_annexe.frais_annexe', compact('frais'));
-        } 
+        }
     }
 
 
@@ -53,7 +53,7 @@ class FraisAnnexesController extends Controller
         $user_id = Auth::user()->id;
         try{
             if (Gate::allows('isReferentPrincipale')) {
-                $etp_id = Responsable::where('user_id', $user_id)->value('entreprise_id');
+                $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             }
             if (Gate::allows('isManagerPrincipale')) {
                 $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
