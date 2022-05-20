@@ -106,11 +106,11 @@
                                             @if($types_of->illimite == 1)
                                                 <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
                                                 <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
-                                                <li><span class="bx bx-check me-2"></span>Projets illimités</li>
+                                                <li><span class="bx bx-check me-2"></span>Sessions illimités</li>
                                             @else
                                                 <li><span class="bx bx-check me-2"></span>{{$types_of->nb_utilisateur}} utilisateurs</li>
                                                 <li><span class="bx bx-check me-2"></span>{{$types_of->nb_formateur}} formateurs</li>
-                                                <li><span class="bx bx-check me-2"></span>{{$types_of->nb_projet}} projets</li>
+                                                <li><span class="bx bx-check me-2"></span>{{$types_of->nb_projet}} sessions</li>
                                             @endif
                                         </ul>
                                         @if($abonnement_actuel != null)
