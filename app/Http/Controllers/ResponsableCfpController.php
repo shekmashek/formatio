@@ -156,7 +156,7 @@ class ResponsableCfpController extends Controller
             /**On doit verifier le dernier abonnement de l'of pour pouvoir limité l'utilisateur à ajouter */
             $nb_referent = $this->fonct->findWhere("responsables_cfp",["cfp_id"],[$resp_cfp_connecter->cfp_id]);
             $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$resp_cfp_connecter->cfp_id]);
-            if($abonnement_cfp[0]->nb_utilisateur == count($nb_referent) &&  $abonnement_cfp[0]->illimite = 0)  return back()->with('error', "Vous avez atteint le nombre maximum d'utilisateur, veuillez upgrader votre compte pour ajouter plus d'utilisateurs");
+            if($abonnement_cfp[0]->nb_utilisateur == count($nb_referent) &&  $abonnement_cfp[0]->illimite == 0)  return back()->with('error', "Vous avez atteint le nombre maximum d'utilisateur, veuillez upgrader votre compte pour ajouter plus d'utilisateurs");
             else{
                 if ($resp_cfp_connecter->prioriter == 1) {
                     $resp->verify_form($request);
