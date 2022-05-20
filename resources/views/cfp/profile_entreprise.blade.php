@@ -84,24 +84,9 @@
                                 <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                                 <td role="button"  onclick="afficherInfos();">
 
-                                    @if($etp->photos_resp==null)
-                                     
-                                          
-                                    <div class="d-flex flex-row">
-                                        <div>
-                                            <p class="randomColor text-center"
-                                              style="color:white; font-size: 15px; border: none; border-radius: 100%; height:50px; width:50px ;">
-                                              <span class=""
-                                                  style="position:relative; top: .9rem;"><b>{{$etp->nm}} {{$etp->pr}}</b></span>
-                                          </p>
-                                        </div>
-                                        <div class="pt-3">
-                                            <span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
-                                        </div>
-                                    </div>
-                                   @else
+
                                         <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
-                                    @endif
+
                                 </td>
                             <td>
                                 <div class="dropdown mt-3">
@@ -118,7 +103,7 @@
                                     </div>
                                 </div>
                             </td>
-                         
+
                                {{-- modal delete  --}}
                             <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">

@@ -92,27 +92,10 @@
                                             <span class="d-flex flex-end ms-3 align-items-center">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
                                         </span>
                                       @else --}}
-                                      @if($centre->photos_resp_cfp== null)
-                                     
-                                          
-                                        <div class="d-flex flex-row">
-                                            <div>
-                                                <p class="randomColor text-center"
-                                                  style="color:white; font-size: 15px; border: none; border-radius: 100%; height:50px; width:50px ;">
-                                                  <span class=""
-                                                      style="position:relative; top: .9rem;"><b>{{$centre->nm}}{{$centre->pr}}</b></span>
-                                              </p>
-                                            </div>
-                                            <div class="pt-3">
-                                                <span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
-                                            </div>
-                                        </div>
-                                          
-                                      
-                                      @else
+
                                         <img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
                                         </td>
-                                     @endif
+
                                     {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->email}}</td> --}}
 
                                     {{-- <td>
@@ -138,8 +121,8 @@
 
                                                     </a>
                                                 </li>
-                                            </div> 
-                                       
+                                            </div>
+
                                     </td>
                                 </tr>
 
@@ -434,7 +417,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     $(".montrer").on('click', function(e) {
-       
+
         let id = $(this).data("id");
         $.ajax({
             method: "GET"
