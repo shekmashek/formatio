@@ -91,7 +91,7 @@
                     @for($j = 0; $j < count($date_groupe); $j++)
                         <label for="">- Séance {{$j+1}} : </label>&nbsp;<img src = "{{ public_path('images/icone/calendar.png')}}" width="20px" class="photo">{{$date_groupe[$j]->date_detail}}&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/times.png')}}" width="20px" class="photo">&nbsp;{{$date_groupe[$j]->h_debut}}h - {{$date_groupe[$j]->h_fin}}h <br>
                     @endfor
-                    <hr>
+
                     <label for=""><strong>Liste des apprenants</strong></label>
                     <table>
                         <tr>
