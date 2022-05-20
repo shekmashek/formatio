@@ -380,9 +380,9 @@ class FonctionGenerique extends Model
     }
     // ------------------------------
 
-    public function insert_role_user($user_id, $role_id, $activiter)
+    public function insert_role_user($user_id, $role_id,$prioriter, $activiter)
     {
-        DB::insert('insert into role_users (user_id, role_id,activiter) values (?, ?,?)', [$user_id, $role_id, $activiter]);
+        DB::insert('insert into role_users (user_id, role_id,prioriter,activiter) values (?,?,?,?)', [$user_id, $role_id,$prioriter, $activiter]);
     }
 
     //insertion iframe pour enntreprise et of dans la bd

@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-4">
-                                        <label for="name_etp" class="">Raison Sociale<strong style="color:#ff0000;">*</strong></label>        
+                                        <label for="name_etp" class="">Raison Sociale<strong style="color:#ff0000;">*</strong></label>
                                     </div>
                                     <div class="col-8">
                                         <input type="text" name="name_etp" class="form-control input" id="name_etp" placeholder="Nom de votre organisme*"
@@ -45,14 +45,14 @@
                                     <span style="color:#ff0000;" id="name_etp_err"></span>
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-4">
                                         <label for="nif_etp" class="">NIF<strong
-                                            style="color:#ff0000;">*</strong></label>    
+                                            style="color:#ff0000;">*</strong></label>
                                     </div>
                                     <div class="col-8">
                                         <input type="text" name="nif" required class="form-control input"
@@ -63,7 +63,7 @@
                                     </div>
                                     @enderror
                                     <span style="color:#ff0000; font-size: 0.8rem" id="nif_etp_err"></span>
-    
+
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <label for="exampleFormControlInput1" class="form-control-label">Logo (1.7 MB max)<strong
-                                            style="color:#ff0000;">*</strong></label>    
+                                            style="color:#ff0000;">*</strong></label>
                                     </div>
                                     <div class="col-8">
                                         <input type="file" required name="logo_etp" class="form-control input_file" id="logo_etp" />
@@ -80,13 +80,13 @@
                                             <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
                                         </div>
                                         @enderror
-                                        <p id="error_logo_etp" style="color:#ff0000; font-size: 0.8rem"></p>        
+                                        <p id="error_logo_etp" style="color:#ff0000; font-size: 0.8rem"></p>
                                     </div>
                                 </div>
                                 {{-- <p id="error_logo_etp" style="color:#ff0000; font-size: 0.8rem">les extension de type *.jpg, *.png, *.jpeg et *.webp seulement sont autorisé</p> --}}
 
                             </div>
-                            {{-- <div class="row">
+                            <div class="row">
                                 <div class="col">
                                     <div class="form-group m-0">
                                         <label for="#" class="form-control-label">Secteur d'activité<strong
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
 
-                            </div> --}}
+                            </div>
 
                             <input type="button" name="next" class="next btn action-button  suivant_etp_1 "
                                 id="suivant_etp_1" value="Suivant" />
@@ -122,7 +122,7 @@
                                             <div class="col-8">
                                                 <input type="text" required name="matricule_resp_etp"
                                                 class="form-control input mb-1" id="matricule_resp_etp" placeholder="Matricule"/>
-    
+
                                             @error('matricule_resp_etp')
                                             <div class="col-sm-6">
                                                 <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -132,14 +132,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-4">
-                                        <label for="nom_resp_etp" class="" align="left">Nom<strong style="color:#ff0000;">*</strong></label>                  
+                                        <label for="nom_resp_etp" class="" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
                                     </div>
                                     <div class="col-8">
                                         <input type="text" required name="nom_resp_etp" class="form-control input" id="nom_resp_etp" placeholder="Nom"/>
@@ -157,7 +157,7 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <label for="prenom_resp_etp" class=""
-                                        align="left">Prénom</label>    
+                                        align="left">Prénom</label>
                                     </div>
                                     <div class="col-8">
                                         <input type="text" name="prenom_resp_etp" class="form-control input"
@@ -174,12 +174,12 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <label for="cin_resp_etp" class="" align="left">CIN<strong
-                                            style="color:#ff0000;">*</strong></label>    
+                                            style="color:#ff0000;">*</strong></label>
                                     </div>
                                     <div class="col-8">
                                         <input type="text" required name="cin_resp_etp" class="form-control input"
                                         id="cin_resp_etp" placeholder="CIN"/>
-    
+
                                     @error('cin_resp_etp')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
@@ -188,14 +188,14 @@
                                     <span style="color:#ff0000; font-size: 0.8rem" id="cin_resp_etp_err"></span>
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-4">
                                         <label for="email_resp_etp" class="" align="left">Email
-                                            Responsable<strong style="color:#ff0000;">*</strong></label>        
+                                            Responsable<strong style="color:#ff0000;">*</strong></label>
                                     </div>
                                     <div class="col-8">
                                         <input type="email" required name="email_resp_etp"
@@ -210,7 +210,7 @@
 
                                     </div>
                                 </div>
-                                 
+
                             </div>
 
                             <div class="row">
