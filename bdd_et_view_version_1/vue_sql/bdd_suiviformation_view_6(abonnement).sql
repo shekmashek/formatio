@@ -75,3 +75,16 @@ FROM
 JOIN v_type_abonnement_etp v_ab_etp ON v_ab_etp.abonnement_id = factures.abonnement_id;
 
 
+CREATE OR REPLACE VIEW v_statut_compte_entreprise as SELECT
+    etp.*,
+    st.nom_statut
+FROM
+    entreprises as etp
+JOIN statut_compte st ON st.id = etp.statut_compte_id;
+
+CREATE OR REPLACE VIEW v_statut_compte_cfp as SELECT
+    cfp.*,
+    st.nom_statut
+FROM
+    cfps as cfp
+JOIN statut_compte st ON st.id = cfp.statut_compte_id;

@@ -932,12 +932,6 @@ Route::get('delete_branche/{id}', 'DepartementController@delete_branche')->name(
 Route::post('update_branche', 'DepartementController@update_branche')->name('update_branche');
 
 
-
-
-
-
-
-
 //enregistrement service
 Route::post('enregistrement_service', 'DepartementController@enregistrement_service')->name('enregistrement_service');
 //enregistrement de branche
@@ -1152,7 +1146,7 @@ Route::post('devise_enregistrer', 'HomeController@devise_enregistrer')->name('de
 Route::get('creer_iframe/{id?}/{page?}','HomeController@creer_iframe')->name('creer_iframe');
 Route::post('enregistrer_iframe_etp','HomeController@enregistrer_iframe_etp')->name('enregistrer_iframe_etp');
 Route::post('enregistrer_iframe_cfp','HomeController@enregistrer_iframe_cfp')->name('enregistrer_iframe_cfp');
-
+Route::post('enregistrer_iframe_inviter','HomeController@enregistrer_iframe_inviter')->name('enregistrer_iframe_inviter');
 
 Route::get('creer_iframe+entiter+filtre/{pag_cfp?}/{pag_etp?}/{prio?}/{nom_of?}/{nom_etp?}','HomeController@creer_iframe_filtre')->name('creer_iframe+entiter+filtre');
 
@@ -1169,6 +1163,9 @@ Route::post('supprimer_iframe_etp', 'HomeController@supprimer_iframe_etp')->name
 
 Route::post('modifier_iframe_cfp', 'HomeController@modifier_iframe_cfp')->name('modifier_iframe_cfp');
 Route::post('supprimer_iframe_cfp', 'HomeController@supprimer_iframe_cfp')->name('supprimer_iframe_cfp');
+
+Route::post('modifier_iframe_inviter','HomeController@modifier_iframe_inviter')->name('modifier_iframe_inviter');
+Route::post('supprimer_iframe_inviter','HomeController@supprimer_iframe_inviter')->name('supprimer_iframe_inviter');
 
 //------------------------MODIFIER PROFIL RESPONSABLE OF---------------------------------//
 //affichage profil
@@ -1286,10 +1283,10 @@ Route::get('/detail_facture_abonnement/{id}', 'AbonnementController@detail_factu
 Route::get('/desactiver_offre/{id}', 'AbonnementController@desactiver_offre')->name('desactiver_offre');
 Route::get('ajouter_salle_of', 'SessionController@ajouter_salle_of')->name('ajouter_salle_of');
 //arret immédiat pour entreprises
-Route::get('/arret_immediat_abonnement_entreprise/{id}', 'AbonnementController@arret_immediat_abonnement_entreprise')->name('arret_immediat_abonnement_entreprise');
+Route::get('/arret_immediat_abonnement_entreprise/{id}/{etp_id}', 'AbonnementController@arret_immediat_abonnement_entreprise')->name('arret_immediat_abonnement_entreprise');
 Route::get('/arret_fin_abonnement_entreprise/{id}', 'AbonnementController@arret_fin_abonnement_entreprise')->name('arret_fin_abonnement_entreprise');
 //arret immédiat pour organisme de formation
-Route::get('/arret_immediat_abonnement_of/{id}','AbonnementController@arret_immediat_abonnement_of')->name('arret_immediat_abonnement_of');
+Route::get('/arret_immediat_abonnement_of/{id}/{cfp_id}','AbonnementController@arret_immediat_abonnement_of')->name('arret_immediat_abonnement_of');
 Route::get('/arret_fin_abonnement_of/{id}','AbonnementController@arret_fin_abonnement_of')->name('arret_fin_abonnement_of');
 
 Route::get('parametrage_salle','SalleFormationController@index')->name('parametrage_salle');

@@ -141,7 +141,9 @@
 
                                                 <a href="{{route('profilFormateur',[$frm->formateur_id])}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-user" aria-hidden="true" style="font-size:15px"></i>&nbsp;&nbsp;CV</a>
                                                 @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$frm->formateur_id}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Mettre fin à la collaboration</strong></a>
+                                                    @can('isPremium')
+                                                        <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$frm->formateur_id}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Mettre fin à la collaboration</strong></a>
+                                                    @endcan
                                                 @endcanany
                                             </div>
                                         </div>
@@ -242,7 +244,7 @@
                 </div>
             </form>
 
-            
+
         <div class="infos mt-3">
             <div class="row">
                 <div class="col">
@@ -252,7 +254,7 @@
                     <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
                 </div>
                 <hr class="mt-2">
-              
+
                 <span class="text-center" id="logo"> </span>
                 <div style="font-size: 13px" >
                 <div class="text-center mt-2" >
@@ -277,7 +279,7 @@
                     <span id="adresse_formateur" > <span>
             </div>
             </div>
-                  
+
             </div>
         </div>
             @if(Session::has('success'))
@@ -385,7 +387,7 @@ $('.activer_formateur').on('click',function(e){
 
 
     $(".information").on('click', function(e) {
-        
+
     let id = $(this).data("id");
     $.ajax({
         method: "GET"
@@ -404,7 +406,7 @@ $('.activer_formateur').on('click',function(e){
                 url_photo = url_photo.replace(":url_img", userData[$i].photos);
                 $("#logo").html(" ");
                 $("#logo").append(url_photo);
-                $("#nom").text(userData[$i].nom_formateur); 
+                $("#nom").text(userData[$i].nom_formateur);
                 $("#prenom").text(userData[$i].prenom_formateur);
                 $("#genre").text(userData[$i].genre);
                  $("#email").text(userData[$i].mail_formateur);
@@ -433,26 +435,26 @@ $('.activer_formateur').on('click',function(e){
                 '_token': '{{ csrf_token() }}',
                 nameFormateur: nameFormateur,
             },
-            success: function (res) { 
+            success: function (res) {
                 var tableRow ='';
-                        
+
                 $('#data_collaboration').html('');
 
-                $.each(res, function (index, value) { 
+                $.each(res, function (index, value) {
 
                     tableRow += '<tr class="text-center content_table">';
-                    tableRow +='<td><img src="{{asset("images/formateurs/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">'; 
+                    tableRow +='<td><img src="{{asset("images/formateurs/:?")}}" alt="" style="width:50px; height:50px; border-radius:100%">';
                     tableRow = tableRow.replace(":?",value.photos);
-                    tableRow +=     
+                    tableRow +=
                         '</td><td>'+value.nom_formateur+
                         '</td><td>'+value.prenom_formateur+
                         '</td><td>'+value.mail_formateur+
                         '</td><tr>';
                     console.log(tableRow);
                 });
-                $('#data_collaboration').append(tableRow); 
+                $('#data_collaboration').append(tableRow);
                 // location.reload();
-            }   
+            }
         });
     });
 </script>

@@ -57,7 +57,11 @@ class EntrepriseController extends Controller
         if (Gate::allows('isCFP')) {
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-        //    dd($cfp_id);
+
+            $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
+
+
+
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
 
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
@@ -275,7 +279,6 @@ class EntrepriseController extends Controller
         else{
             return view('admin.entreprise.profile_entreprises', compact('entreprise', 'departement'));
         }
-
     }
 
     public function getImage($path)
@@ -364,6 +367,10 @@ class EntrepriseController extends Controller
     }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/reglageAbonnement
     public function modification_assujetti_entreprise($id){
         $fonct = new FonctionGenerique();
         $assujetti = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);

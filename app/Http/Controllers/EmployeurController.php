@@ -74,8 +74,15 @@ class EmployeurController extends Controller
         $fonction = $request->fonction;
         $mail = $request->mail;
         $phone = $request->phone;
-       $fonction_employer=null;
+        $fonction_employer=null;
+
         if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhere("responsables",["user_id"],[Auth::user()->id]);
+             /**On doit verifier le dernier abonnement de l'entreprise pour pouvoir limité le referent à ajouter */
+            $nb_referent = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id]);
+            $nb_stagiaire = $this->fonct->findWhere("stagiaires",["entreprise_id"],[$entreprise_id]);
+
+            $abonnement_etp =  DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1',[$entreprise_id]);
 
             $user->name = $request->nom . " " . $request->prenom;
             $user->email = $request->mail;
@@ -92,35 +99,41 @@ class EmployeurController extends Controller
 
 
             if ($request->type_enregistrement == "STAGIAIRE") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
+                if($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
+                else{
+                    $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
 
-                DB::beginTransaction();
-                try {
-                    $this->fonct->insert_role_user($user_id, "3",true); // EMPLOYEUR
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    echo $e->getMessage();
+                    DB::beginTransaction();
+                    try {
+                        $this->fonct->insert_role_user($user_id, "3",true); // EMPLOYEUR
+                        DB::commit();
+                    } catch (Exception $e) {
+                        DB::rollback();
+                        echo $e->getMessage();
+                    }
+                    $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
+                    DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
+                    entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
                 }
-                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
-                DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
-                entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-            }
+           }
             if ($request->type_enregistrement == "REFERENT") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"])->role_description;
+                if($abonnement_etp[0]->nb_utilisateur == count($nb_referent) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum de référént, veuillez upgrader votre compte pour ajouter plus de référent");
+                else{
+                    $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"])->role_description;
 
-                DB::beginTransaction();
-                try {
-                    $this->fonct->insert_role_user($user_id, "2",true); // RH
-                    $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    echo $e->getMessage();
+                    DB::beginTransaction();
+                    try {
+                        $this->fonct->insert_role_user($user_id, "2",true); // RH
+                        $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
+                        DB::commit();
+                    } catch (Exception $e) {
+                        DB::rollback();
+                        echo $e->getMessage();
+                    }
+                    $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
+                    DB::insert("insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
+                    ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
                 }
-                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
-                DB::insert("insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
-                ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
             }
             if ($request->type_enregistrement == "MANAGER") {
                 $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"])->role_description;

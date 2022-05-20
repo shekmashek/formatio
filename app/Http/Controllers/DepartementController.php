@@ -109,37 +109,37 @@ class DepartementController extends Controller
         return view('admin.chefDepartement.liste', compact('nom_chef','prenom_chef','roles_actif_stg', 'roles_not_actif_stg', 'roles_actif_referent', 'roles_not_actif_referent', 'roles_actif_manager', 'roles_not_actif_manager', 'chef', 'referent', 'stagiaires', 'user_role', 'roles'));
     }
 
-//start filtre 
+//start filtre
  // filtre Employes fonction
     public function filtreFonction(Request $request){
         $function = new FonctionGenerique();
-        $emps = $function->filtreEmploye('fonction_stagiaire', $request->get('test'));   
-  
-        return json_encode($emps);      
+        $emps = $function->filtreEmploye('fonction_stagiaire', $request->get('test'));
+
+        return json_encode($emps);
     }
-    
+
     // filtre employes name
     public function filtreName(Request $request){
         $function = new FonctionGenerique();
-        $emps = $function->filtreEmploye('nom_stagiaire', $request->get('name'));   
-  
-        return json_encode($emps);   
+        $emps = $function->filtreEmploye('nom_stagiaire', $request->get('name'));
+
+        return json_encode($emps);
     }
 
     // filtre employes matricule
     public function filtreMatricule(Request $request){
         $function = new FonctionGenerique();
         $emps = $function->filtreEmploye('matricule', $request->get('matricule'));
- 
-        return json_encode($emps);    
+
+        return json_encode($emps);
     }
 
     // filtre employes role
     public function filtreRole(Request $request){
         $function = new FonctionGenerique();
         $emps = $function->filtreEmploye('role_name', $request->get('role_name'));
- 
-        return json_encode($emps);   
+
+        return json_encode($emps);
     }
 
 
@@ -353,13 +353,14 @@ class DepartementController extends Controller
             $id_etp = $rqt[0]->entreprise_id;
         }
         $rqt = db::select('select * from departement_entreprises where entreprise_id = ?', [$id_etp]);
-        
+
         $nb = count($rqt);
         $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);
         $service_departement_tous = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? ", [$id_etp]);
         $nb_serv = count($service_departement);
+
         $branches = DB::select('select * from branches where entreprise_id = ?', [$id_etp]);
-        
+
         $nb_branche = count($branches);
             return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tous','branches', 'nb_branche'));
     }
@@ -374,10 +375,16 @@ class DepartementController extends Controller
         DB::update('update departement_entreprises set nom_departement=? where id=?',[$request->departement,$request->id]);
         return back();
     }
+<<<<<<< HEAD
     public function delete_service(Request $request)
     {
         $ids=$request->ids;
         service::whereIn('id',$ids)->delete();
+=======
+    public function delete_service($id)
+    {
+        DB::delete('delete from services  where id=?',[$id]);
+>>>>>>> origin/reglageAbonnement
         return back();
     }
     public function update_services(Request $request)
@@ -409,7 +416,7 @@ class DepartementController extends Controller
     }
     public function update_branche(Request $request)
     {
-      
+
         DB::update('update branches set nom_branche=? where id=?',[$request->branche,$request->id]);
         return back();
     }

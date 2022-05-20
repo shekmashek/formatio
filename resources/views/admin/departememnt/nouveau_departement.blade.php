@@ -88,7 +88,7 @@
         display: none;
     }
     /*modal*/
-    
+
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -130,22 +130,22 @@
                                             <tr >
                                                 <td >
                                                     <div align="left">
-                                                        
+
                                                             <span>{{$rqt[$i]->nom_departement}}</span></p>
-                                                            
+
                                                     </div>
                                                 </td>
-                                                <td>     
+                                                <td>
                                                 </td>
                                                 <td>
-                                                  
+
                                                  <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$rqt[$i]->id}}"  class="btn btn-labeled btn-success">
                                                             {{-- <i class='bx  bx-edit bx_modifier'></i> --}}
 
                                                     <span class="btn-label"><i class='bx  bx-edit bx_modifier'></i></span>Modifier</a>
                                                     <a href=""  data-bs-toggle="modal" data-bs-target="#deletedep_{{$rqt[$i]->id}}" type="button" class="btn btn-labeled btn-danger">
                                                     <span class="btn-label"><i class='bx  bx-trash bx_supprimer' ></i></span>Supprimer</a>
-                                                </td> 
+                                                </td>
                                             </tr>
                                             {{-- modal edit departement --}}
                                             <div class="modal fade" id="exampleModal_{{$rqt[$i]->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,7 +160,7 @@
                                                                 <label for=""> Département</label>
                                                                 <input type="text" class="form-control" required name="departement" value="{{$rqt[$i]->nom_departement}}">
                                                                 <input type="hidden" class="form-control" required name="id" value="{{$rqt[$i]->id}}"> <br><br>
-                                                                
+
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
@@ -199,7 +199,7 @@
                                                </div>
                                             @endfor
                                             @endif
-                                      
+
                                             @else
                                             <tr>
                                                 <td colspan="3"> Aucun département pour l'entreprise</td>
@@ -257,14 +257,14 @@
                                                             <strong>{{$service_departement[$i]->nom_departement}}</strong>
                                                             </h6>
                                                             <div class="row">
-                                                              
+
                                                                 <div class="col-md-5 ms-2">
                                                                     <span >
-                                                                        
+
                                                                         @php
                                                                             echo str_replace(',',' <br> ',$service_departement[$i]->nom_service);
-                                                                        @endphp 
-                                                                       
+                                                                        @endphp
+
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-md-1" style="white-space: nowrap">
@@ -289,7 +289,7 @@
                                                                                     @if ($sd->departement_entreprise_id == $service_departement[$i]->departement_entreprise_id)
                                                                                         <input type="text" class="form-control mt-2" required name="service[{{ $sd->service_id }}]" value="{{$sd->nom_service}}">
                                                                                     @endif
-                                                                                    
+
                                                                                 @endforeach
                                                                                 <div class="modal-footer">
                                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
@@ -315,10 +315,10 @@
                                                                                 <label > Selectionner les elements à supprimer</label><br>
                                                                                 @foreach ($service_departement_tous as $sd)
                                                                                     @if ($sd->departement_entreprise_id == $service_departement[$i]->departement_entreprise_id)
-                                                                                    
+
                                                                                     <br><span class="mx-5"><input type="checkbox" name="ids[{{$sd->service_id}}]" value="{{$sd->service_id}}" >
                                                                                         <label for="scales">{{$sd->nom_service}}</label></span>
-                                                                                    
+
                                                                                     @endif
                                                                                 @endforeach
                                                                                 <div class="modal-footer">
@@ -358,7 +358,7 @@
                                                 @endfor
                                                 @endif
                                                 </tr>
-                                                
+
                                                 </div>
                                                 @else
                                                 <tr>
@@ -422,12 +422,12 @@
                                         <tbody id="data_collaboration">
                                             @if (count($branches)>0)
                                             @if(isset($branches))
-                                            @for($i = 0; $i < $nb_branche; $i++) 
+                                            @for($i = 0; $i < $nb_branche; $i++)
                                             <tr>
                                                 <td>
                                                     <p class="ms-0">
                                                         <span>{{$branches[$i]->nom_branche}}</span></p>
-                                                       
+
                                                 </td>
                                                 <td>
                                                     <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#Modal_{{$branches[$i]->id}}"type="button" class="btn btn-labeled btn-success">
@@ -437,7 +437,7 @@
                                                    <span></span></a>
 
                                             </td>
-                                               
+
                                             </tr>
                                             {{-- modal edit branche --}}
                                             <div class="modal fade" id="Modal_{{$branches[$i]->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -452,7 +452,7 @@
                                                                 <label for="">Branche</label>
                                                                 <input type="text" class="form-control" required name="branche" value="{{$branches[$i]->nom_branche}}">
                                                                 <input type="hidden" class="form-control" required name="id" value="{{$branches[$i]->id}}"> <br><br>
-                                                                
+
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
@@ -548,7 +548,7 @@
         html += '</div>';
         html += '<div class="col ms-2">';
         html += ' <button id="removeRow1" type="button" class="btn btn-labeled btn-danger"> <span class="btn-label"><i class="bx bx-x"></i></span>Annuler</button>';
-        
+
         // html += '<button id="removeRow1" type="button" class="btn btn-danger mt-2"><i class="fa fa-close style="font-size: 15px;"></i></button>';
         html += '</div>';
         html += '</div>';
@@ -649,7 +649,7 @@
     });
     $(document).on('click','.affiche_btn1',function(){
         $(".save1").css({display: "block"});
-       
+
         // alert(input);
     });
     $(document).on('click','.affiche_btn2',function(){
@@ -657,9 +657,9 @@
     });
     $(document).on('click','.affiche_btn3',function(){
         $(".save3").css({display: "block"});
-        
+
     });
-    
+
     $(document).ready(function () {
        var service = $('#servId').text();
        console.log(service);

@@ -1,7 +1,9 @@
 @extends('./layouts/admin')
+
 @section('title')
 <p class="text_header m-0 mt-1">Entreprise collaboré</p>
 @endsection
+
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <div class="container-fluid justify-content-center pb-3">
@@ -105,10 +107,18 @@
                                                 <a href="{{route('tous_projets')}}"> <button type="button" class="btn btn_creer" style="text-decoration:none">Voir les projets</button>
                                                 </a>
                                             </li> --}}
-                                            <li>
-                                                <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
-                                            </li>
-                                        </ul>
+                            <td>
+                                <div class="dropdown mt-3">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        </button>
+                                        @can('isPremium')
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
+                                                </li>
+                                            </ul>
+                                        @endcan
                                     </div>
                                 </div>
                             </td>
@@ -120,28 +130,37 @@
                                             <h4 class="modal-title text-white">Avertissement !</h4>
 
                                         </div>
-                                        <div class="modal-body">
-                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                        </div>
-                                        <div class="modal-footer justify-content-center">
-                                            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
-                                            <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
-                                            <form action="{{ route('mettre_fin_cfp_etp') }}"  method="POST">
-                                                @csrf
-                                                <input name="etp_id" type="text" value="{{$etp->entreprise_id}}" hidden>
-                                                <div class="mt-4 mb-4">
-                                                    <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                                                </div>
-                                            </form>
+                                    </div> --}}
+                                </td>
+                                {{-- modal delete  --}}
+                                <div>
+                                    <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
+                                                <h6 class="modal-title text-white">Avertissement !</h6>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
+                                                <form action="{{ route('mettre_fin_cfp_etp') }}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-secondary"> Oui </button>
+                                                    <input name="etp_id" type="text" value="{{$etp->entreprise_id}}" hidden>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{-- fin modal delete --}}
+                                </div>
 
-                        </tr>
+                                {{-- fin modal delete --}}
 
-                        @endforeach
+                            </tr>
+                            @endforeach
                         @endif
 
                 </tbody>
@@ -532,4 +551,4 @@
         });
 
     </script>
-    @endsection
+@endsection

@@ -115,14 +115,20 @@
                                                     <a href="{{route('tous_projets')}}"> <button type="button" class="btn btn_creer" style="text-decoration:none">Voir les projets</button>
                                                     </a>
                                                 </li> --}}
-                                                <li>
-                                                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
-                                                </li>
-                                            </ul>
+                                        <div class="btn-group dropleft">
+                                            <button type="button" class="btn btn-default btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v"></i>
+                                            </button>
+                                            <div class="btn-group dropleft">
+                                                    <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
 
 
                             {{-- modal delete  --}}

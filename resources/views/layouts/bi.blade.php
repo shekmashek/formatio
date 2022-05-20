@@ -1,4 +1,4 @@
-@extends('./layouts/admin')
+@extends('layouts/admin')
 @section('title')
     <p class="text_header m-0 mt-1">Business intelligent</p>
 @endsection
@@ -27,5 +27,4 @@
         @endif
     @endcan
 </div>
-
 @endsection
