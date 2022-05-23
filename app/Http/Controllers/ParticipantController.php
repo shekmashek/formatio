@@ -106,6 +106,10 @@ class ParticipantController extends Controller
         $entreprise_id = 0;
         $nb_limit = 10;
         $user_id = Auth::user()->id;
+        $piasa = null;
+        $employers = [];
+        $responsables = [];
+        $chefs = [];
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
@@ -113,23 +117,90 @@ class ParticipantController extends Controller
         if (Gate::allows('isManager')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
         }
-        $totale_pag = $this->fonct->getNbrePagination("stagiaires", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+        $totale_pag_stg = $this->fonct->getNbrePagination("stagiaires", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+        $totale_pag_resp = $this->fonct->getNbrePagination("responsables", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+        $totale_pag_chef = $this->fonct->getNbrePagination("chef_departements", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+
+        $totale_pag = ($totale_pag_stg + $totale_pag_resp+$totale_pag_chef);
+
+        // $totale_pag =  $totale_pag_stg;
+
+        $service = $this->fonct->findWhere("v_departement_service_entreprise", ["entreprise_id"], [$entreprise_id]);
 
         if ($paginations != null) {
 
             if ($paginations <= 0) {
                 $paginations = 1;
             }
+            $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+            $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+            $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
-            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
         } else {
             if ($paginations <= 0) {
                 $paginations = 1;
             }
-            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
         }
-        return view("admin.entreprise.employer.liste_employer", compact('employers', 'pagination'));
+
+        for ($i = 0; $i < count($piasa); $i += 1) {
+            if (count($service) > 0) {
+                for ($j = 0; $j < count($service); $j += 1) {
+                    if ($piasa[$i]->service_id != null && $piasa[$i]->service_id == $service[$j]->service_id) {
+                        $piasa[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
+                        $piasa[$i]->nom_service = $service[$j]->nom_service;
+                        $piasa[$i]->nom_departement = $service[$j]->nom_departement;
+                    }
+                }
+            } else {
+                $piasa[$i]->departement_entreprise_id = null;
+                $piasa[$i]->nom_service = null;
+                $piasa[$i]->nom_departement = null;
+            }
+            $employers[] = $piasa[$i];
+        }
+
+        for ($i = 0; $i < count($resp); $i += 1) {
+            if (count($service) > 0) {
+                for ($j = 0; $j < count($service); $j += 1) {
+                    if ($resp[$i]->service_id != null && $resp[$i]->service_id == $service[$j]->service_id) {
+                        $resp[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
+                        $resp[$i]->nom_service = $service[$j]->nom_service;
+                        $resp[$i]->nom_departement = $service[$j]->nom_departement;
+                    }
+                }
+            } else {
+                $resp[$i]->departement_entreprise_id = null;
+                $resp[$i]->nom_service = null;
+                $resp[$i]->nom_departement = null;
+            }
+            $responsables[] = $resp[$i];
+        }
+
+        for ($i = 0; $i < count($sefo); $i += 1) {
+            if (count($service) > 0) {
+                for ($j = 0; $j < count($service); $j += 1) {
+                    if ($sefo[$i]->service_id != null && $sefo[$i]->service_id == $service[$j]->service_id) {
+                        $sefo[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
+                        $sefo[$i]->nom_service = $service[$j]->nom_service;
+                        $sefo[$i]->nom_departement = $service[$j]->nom_departement;
+                    }
+                }
+            } else {
+                $sefo[$i]->departement_entreprise_id = null;
+                $sefo[$i]->nom_service = null;
+                $sefo[$i]->nom_departement = null;
+            }
+            $chefs[] = $sefo[$i];
+        }
+
+
+        return view("admin.entreprise.employer.liste_employer", compact('chefs','responsables', 'employers', 'pagination'));
     }
 
     public function index()
@@ -889,6 +960,7 @@ class ParticipantController extends Controller
         $user_id =  $users = Auth::user()->id;
         //   $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
         $fonct = new FonctionGenerique();
+        $genre = null;
         if (Gate::allows('isStagiaire')) {
 
             $matricule = stagiaire::where('user_id', $user_id)->value('matricule');
@@ -919,13 +991,12 @@ class ParticipantController extends Controller
             $stagiaires_tmp = DB::select('SELECT * FROM stagiaires where id = ?', [$id]);
 
             $stagiaire = $stagiaires_tmp[0];
-            $initial_stagiaire = DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from stagiaires where id =  ?', [$id ]);
+            $initial_stagiaire = DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from stagiaires where id =  ?', [$id]);
 
-            if($stagiaire->service_id == null){
+            if ($stagiaire->service_id == null) {
                 $service = "---------------";
                 $departement = "---------------";
-            }
-            else{
+            } else {
                 $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
                 $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
             }
@@ -937,7 +1008,8 @@ class ParticipantController extends Controller
             if ($stagiaire->genre_stagiaire == 2) {
                 $genre = 'Homme';
             }
-            return view('profil_public.stagiaire', compact('initial_stagiaire','entreprise', 'stagiaire', 'service', 'departement', 'branche','genre'));
+
+            return view('profil_public.stagiaire', compact('initial_stagiaire', 'entreprise', 'stagiaire', 'service', 'departement', 'branche', 'genre'));
         }
         // $stagiaire=stagiaire::findOrFail($id);
         // if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
@@ -1044,12 +1116,11 @@ class ParticipantController extends Controller
     {
         $image = $request->file('image');
         //tableau contenant les types d'extension d'images
-        $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
-        if($image != null){
-            if($image->getSize() > 1692728 or $image->getSize() == false){
+        $extension_type = array('jpeg', 'jpg', 'png', 'gif', 'psd', 'ai', 'svg');
+        if ($image != null) {
+            if ($image->getSize() > 1692728 or $image->getSize() == false) {
                 return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
-            }
-            elseif(in_array($request->image->extension(),$extension_type)){
+            } elseif (in_array($request->image->extension(), $extension_type)) {
 
                 $stagiaire = $this->fonct->findWhereMulitOne("stagiaires", ["id"], [$id]);
                 $image_ancien = $stagiaire->photos;
@@ -1057,17 +1128,17 @@ class ParticipantController extends Controller
                 File::delete(public_path("images/stagiaires/" . $image_ancien));
                 //enregiistrer la nouvelle photo
 
-                    $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-                    $destinationPath = 'images/stagiaires';
-                      //imager  resize
-                    $image_name = $nom_image ;
-                    $destinationPath = public_path('images/stagiaires');
-                    $resize_image = Image::make($image->getRealPath());
-                    $resize_image->resize(228,128, function($constraint){
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' .  $image_name);
-                    // $image->move($destinationPath, $nom_image);
-                    $url_photo = URL::to('/')."/images/stagiaires/".$nom_image;
+                $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                $destinationPath = 'images/stagiaires';
+                //imager  resize
+                $image_name = $nom_image;
+                $destinationPath = public_path('images/stagiaires');
+                $resize_image = Image::make($image->getRealPath());
+                $resize_image->resize(228, 128, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath . '/' .  $image_name);
+                // $image->move($destinationPath, $nom_image);
+                $url_photo = URL::to('/') . "/images/stagiaires/" . $nom_image;
 
                 DB::update('update stagiaires set photos= ?,url_photo = ? where id = ?', [$nom_image, $url_photo, $id]);
                 return redirect()->route('profile_stagiaire');
