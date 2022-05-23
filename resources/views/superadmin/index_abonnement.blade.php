@@ -3,40 +3,11 @@
 <p class="text_header m-0 mt-1">Abonnement</p>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Abonnement</title>
     <link rel="stylesheet" href="{{ asset('bootstrapCss/css/bootstrap.min.css') }}">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
-</head>
-
-<body>
     <div class="container-fluid">
-        <div class="row">
-            <nav class="navbar navbar-expand-lg w-100">
-                <div class="row w-100 g-0 m-0">
-                    <div class="col-lg-12">
-                        <div class="row g-0 m-0" style="align-items: center">
-                            <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                                <div class="col" align="right">
-                                    {{-- <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('ListeAbonnement') ? 'active' : '' }}"   href="{{route('ListeAbonnement')}}">
-                                        <span class="btn_enregistrer text-center">Retour - Liste des factures</span>
-                                    </a> --}}
-                                </div>
-                            </div>
-                         </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
         <div class="row">
             <div class="col-lg-2">
                 <div class="col mt-5 justify-content-between">
@@ -231,6 +202,4 @@
            </div>
         </div>
     </div>
-</body>
-</html>
 @endsection

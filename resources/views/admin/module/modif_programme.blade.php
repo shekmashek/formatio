@@ -3,7 +3,8 @@
     <h3 class="text_header m-0 mt-1">Modification programme</h3>
 @endsection
 @section('content')
-<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modif_programme.css')}}">
 <div class="row navigation_detail">
@@ -18,7 +19,7 @@
         <div>
             <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
             href="{{route('liste_module')}}">
-            <span class="btn_enregistrer text-center">Précedent</span>
+            <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
         </a>
         </div>
     </div>
@@ -28,11 +29,12 @@
         <div class="row justify-content-space-between py-3 px-5" id="border_premier">
             <div class="col-lg-6 col-md-6 ">
                 <div class="">
-                    <h5 class="text-success">Pour faire vos modifications cliquer sur l'icone modifier&nbsp;<i class='bx bxs-hand-right'></i>&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier titre module"></i></span></h5>
                     @foreach ($infos as $res)
-                    <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier titre module"></i></span></h4>
-                    <p class="text_black">{{$res->nom_formation}} </p>
-                    <p class="text_black">{{$res->description}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#description"><i class='bx bxs-message-square-edit icon_creer' title="modifier description module"></i></span></p>
+                    <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bx-edit bx_modifier' title="modifier titre module"></i></span></h4>
+                    <p class="text_black">{{$res->nom_formation}}</p>
+                    <div class="d-flex">
+                        <p class="text_black">{{$res->description}}</p>&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#description"><i class='bx bx-edit bx_modifier' title="modifier description module"></i></span>
+                    </div>
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
                         <span class="text_black"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
@@ -82,7 +84,7 @@
                     {{$devise->devise}}<span class="text_black text_prix">&nbsp;{{number_format($res->prix_groupe, 0, ' ', ' ')}}&nbsp;</span>&nbsp;HT</span>
                 </div>
                 <div class="col">
-                    <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bxs-message-square-edit icon_creer' title="modifier details module"></i></span>
+                    <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
                 </div>
             </div>
         </div>
@@ -91,10 +93,11 @@
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pb-3">Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></h3>
+                <h3 class="pb-3">Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
-                        <p>@php echo html_entity_decode($res->objectif) @endphp</p>
+                        {{-- <p>@php echo html_entity_decode($res->objectif) @endphp</p> --}}
+                        <p id="objectif_content">{{$res->objectif}}</p>
                     </div>
                 </div>
 
@@ -102,21 +105,23 @@
                 {{-- FIXME:mise en forme de design --}}
                 <h3 class="pt-3 pb-3">A qui s'adresse cette formation?</h3>
                 <div class="row detail__formation__item__left__adresse">
-                    <div class="col-lg-5 d-flex flex-row">
-                        <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></h3></span>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->cible) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->cible) @endphp</p> --}}
+                                <p id="cible_content">{{$res->cible}}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-5">
+                    <div class="col-lg-6">
                         <div class="row d-flex flex-row w-100">
                             <span class="adresse__text"><i
-                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
+                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->prerequis) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->prerequis) @endphp</p> --}}
+                                <p id="prerequis_content">{{$res->prerequis}}</p>
                             </div>
                         </div>
                     </div>
@@ -127,9 +132,10 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
-                                necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
+                                necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p> --}}
+                                <p id="equipement_content">{{$res->materiel_necessaire}}</p>
                             </div>
                         </div>
                     </div>
@@ -138,9 +144,10 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
-                                a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
+                                a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p> --}}
+                                <p id="bon_a_savoir_content">{{$res->bon_a_savoir}}</p>
                             </div>
                         </div>
                     </div>
@@ -152,9 +159,10 @@
                         <div class="row d-flex flex-row">
                             <span class="adresse__text"><i
                                     class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bxs-message-square-edit icon_creer' title="modifier objectif de la formation"></i></span></span>
+                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12">
-                                <p>@php echo html_entity_decode($res->prestation) @endphp</p>
+                                {{-- <p>@php echo html_entity_decode($res->prestation) @endphp</p> --}}
+                                <p id="prestation_content">{{$res->prestation}}</p>
                             </div>
                         </div>
                     </div>
@@ -171,11 +179,11 @@
                                 <div id="newProg"></div>
                                 <div class="form-row d-flex flex-row">
                                     <input type="hidden" value="{{$id}}" name="id_module">
-                                    <button type="submit" class="btn btn-primary btn_enregistrer me-4" id="nouveau_prg"
-                                        style="display:none">Enregistrer</button>
-                                    <button type="button" id="addProg" class="btn_creer btn pb-2">
-                                        <i class='bx bx-plus-medical icon_creer'></i>
-                                        Ajouter un nouveau section dans votre programme
+                                    <button type="submit" class="btn btn_enregistrer me-4" id="nouveau_prg"
+                                        style="display:none"><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                    <button type="button" id="addProg" class="btn_nouveau btn">
+                                        <i class='bx bx-plus-medical '></i>
+                                        Ajouter un section
                                     </button>
                                 </div>
                             </form>
@@ -188,35 +196,32 @@
                                 <div class="accordionItem open" id="programme{{$prgc->id}}">
                                     <h6 class="accordionItemHeading py-2 ps-3 pe-3 justify-content-between d-flex flex-row">
                                         <div class="pt-2">{{$i+1}} - {{$prgc->titre}}</div>
-                                        <div class="suppression_programme px-2" role="button"
-                                            title="Supprimer le programme" id="{{$prgc->id}}"><i class='bx bx-x me-2'></i>Supprimer</div>
+                                        <div class="d-flex flex-row test_affichage">
+                                            <div role="button" data-bs-toggle="modal" class="ajouter_cours me-2" data-bs-target="#Modal_cours_{{$prgc->id}}" id="{{$prgc->id}}" title="ajouter une nouvelle point">
+                                                <i class='bx bx-plus-medical bx_ajouter'></i>
+                                            </div>
+                                            <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" data-bs-target="#Modal_{{$prgc->id}}" id="{{$prgc->id}}" title="modifier le programme">
+                                                <i class='bx bx-edit bx_modifier'></i>
+                                            </div>
+                                            <div class="suppression_programme" title="Supprimer le programme" id="{{$prgc->id}}">
+                                                <i class='bx bx-trash bx_supprimer'></i>
+                                            </div>
+                                        </div>
                                     </h6>
                                     <div class="accordionItemContent">
                                         @foreach ($cours as $c)
                                         @if($c->programme_id == $prgc->id)
                                         <div id="cours{{$c->cours_id}}" class="ps-4 m-0 pb-3 pt-2 p-0 cours_hover d-flex flex-row justify-content-between">
-                                            <div class="pt-2"><i class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}} </div>
+                                            <div class="pt-2"><i class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}}</div>
                                             <div class="me-2">
-                                                <span class="suppression effacer_cours"
-                                                    role="button" title="Supprimer le Cours"
-                                                    id="{{$c->cours_id}}"><i class='bx bx-x me-2'></i>Effacer</>
+                                                <span class="suppression mt-2" title="Supprimer le Cours" id="{{$c->cours_id}}">
+                                                    <i class='bx bx-trash bx_supprimer'></i>
                                                 </span>
                                             </div>
                                         </div>
                                         @endif
                                         @endforeach
-                                        <button type="button" class="btn_creer ms-2 mb-2 mt-2 pb-2"
-                                            data-bs-toggle="modal" data-bs-target="#Modal_cours_{{$prgc->id}}"
-                                            id="{{$prgc->id}}">
-                                            <i class='bx bx-plus-medical icon_creer'></i>
-                                            Ajouter de point dans votre section
-                                        </button>
-                                        <button type="button" class="btn btn_creer ms-2 mb-2 mt-2 pb-2"
-                                            data-bs-toggle="modal" data-bs-target="#Modal_{{$prgc->id}}"
-                                            id="{{$prgc->id}}">
-                                            <i class='bx bxs-edit-alt icon_creer'></i>
-                                            Modifier Section et Points
-                                        </button>
+
                                     </div>
                                     {{-- data-target="#Modal_{{$prgc->id}}" --}}
                                 </div>
@@ -226,8 +231,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="ModalLabel">Modifier les Cours et le
-                                                        Programme</h5>
+                                                    <h5 class="modal-title" id="ModalLabel">Modifier les Cours et le Programme</h5>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form action="{{route('update_prog_cours')}}" method="POST"
@@ -257,10 +261,9 @@
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div class="modal-footer d-flex flex-row">
-                                                    <button type="button" class="btn  btn_previous"
-                                                        data-bs-dismiss="modal">Fermer</button>
-                                                    <button type="submit" class="btn  btn_next">Enregistrer</button>
+                                                <div class="modal-footer justify-content-center">
+                                                    <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                                 </div>
                                                 </form>
                                             </div>
@@ -280,12 +283,11 @@
                                                     </div>
                                                     <div class="modal-body mt-2 mb-2">
                                                         <div class="container">
-                                                            <div class="row">
+                                                            <div class="row mb-5">
                                                                 <div class="mt-2 text-center">
-                                                                    <button type="button" class="btn_creer text-center mb-4 pb-2" onclick="Cours();" >
-                                                                        <i class='bx bx-plus-medical icon_creer'></i>Ajouter une nouvelle ligne
-                                                                    </button>
-
+                                                                    <span class="btn_nouveau text-center" onclick="Cours();" >
+                                                                        <i class='bx bx-plus-medical me-1'></i>Ajouter un point
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                             <div class="d-flex">
@@ -300,15 +302,12 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="newRow"></div>
+                                                            <div class="newRowCours"></div>
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn_previous " id="fermer"
-                                                            data-bs-dismiss="modal">
-                                                            Fermer </button>
-                                                        <button type="submit"
-                                                            class="btn btn_next non_pub">Enregistrer</button>
+                                                    <div class="modal-footer justify-content-center">
+                                                        <button type="button" class="btn btn_fermer" id="fermerCours" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -339,15 +338,13 @@
                             </div>
                         </div>
                         @endforeach
-                        <div class="text-center">
-                            <button type="button" class="btn_creer ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id}}" id="{{$id}}">
-                                <i class='bx bx-plus-medical icon_creer'></i>
-                                Ajouter
-                            </button>
-                            <button type="button" class="btn btn_creer ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id}}" id="{{$id}}">
-                                <i class='bx bxs-edit-alt icon_creer'></i>
-                                Modifier
-                            </button>
+                        <div class="text-center mb-3">
+                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id}}" id="{{$id}}" title="ajouter une nouvelle competence">
+                                <i class='bx bx-plus-medical bx_ajouter'></i>
+                            </span>
+                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id}}" id="{{$id}}" title="modifier les competence">
+                                <i class='bx bx-edit bx_modifier'></i>
+                            </span>
                         </div>
                 </div>
                 @endif
@@ -364,10 +361,10 @@
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
                                             <div class="row">
-                                                <div class="mt-2 text-center">
-                                                    <button id="addRow" type="button" class="btn_creer text-center mb-4 pb-2" onclick="competence();" >
-                                                        <i class='bx bx-plus-medical icon_creer'></i>Ajouter une nouvelle ligne
-                                                    </button>
+                                                <div class="mt-2 text-center mb-5">
+                                                    <span id="addRow" class="btn_nouveau text-center " onclick="competence();" >
+                                                        <i class='bx bx-plus-medical me-1'></i>Ajouter une competence
+                                                    </span>
 
                                                 </div>
                                             </div>
@@ -398,14 +395,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="newRow"></div>
+                                            <div class="newRowComp"></div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer d-flex flex-row">
-                                        <button type="button" class="btn btn_annuler " id="fermer"
-                                            data-bs-dismiss="modal">Annuler</button>
-                                        <button type="submit"
-                                            class="btn btn_enregistrer non_pub">Enregistrer</button>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn_fermer" id="fermerComp" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                     </div>
                                 </form>
                             </div>
@@ -459,17 +454,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-1">
-                                                    <div class="px-2 mt-2 suppre_{{$comp->id}} suppression_competence" role="button" title="Supprimer le competence" id="{{$comp->id}}" data-id="{{$comp->id}}"><i class='bx bx-x me-2'></i></div>
+                                                    <div class="suppre_{{$comp->id}} suppression_competence" role="button" title="Supprimer le competence" id="{{$comp->id}}" data-id="{{$comp->id}}"><i class='bx bx-trash bx_supprimer mt-1 ms-2'></i></div>
                                                 </div>
                                             </div>
                                             @endforeach
                                         </div>
                                     </div>
-                                    <div class="modal-footer d-flex flex-row">
-                                        <button type="button" class="btn btn_annuler " id="fermer"
-                                            data-bs-dismiss="modal">Annuler</button>
-                                        <button type="submit"
-                                            class="btn btn_enregistrer non_pub">Enregistrer</button>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn_fermer" id="fermer4" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                     </div>
                                 </form>
                             </div>
@@ -489,16 +482,15 @@
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Nom module</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <input type="text" class="form-control module module input" name="nom_module" required value="{{$res->nom_module}}" placeholder="Nom module" >
                                             <label for="nom_module" class="form-control-placeholder">Nom module</label>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -515,16 +507,15 @@
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Déscription module</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <input type="text" class="form-control module module input" name="description" required value="{{$res->description}}" placeholder="Déscription module" >
                                             <label for="description" class="form-control-placeholder">Déscription</label>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -541,7 +532,6 @@
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Détail module</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
@@ -598,9 +588,9 @@
                                             <input type="text" class="form-control module module input" name="prix_groupe" required value="{{$res->prix_groupe}}" onfocus="(this.type='number')" placeholder="Prix en groupe module" >
                                             <label for="prix_groupe" class="form-control-placeholder">Prix groupe en {{$devise->devise}}</label>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -613,19 +603,22 @@
                     <div class="modal" id="objectif_module" aria-labelledby="objectif_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_objectif',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_objectif',$res->module_id)}}" method="POST" id="form_objectif">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Objectif de la formation</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="objectif_text" name="objectif" placeholder="Ajouter des textes">{{$res->objectif}}</textarea>
+                                            <textarea id="objectif_textarea" name="objectif" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="objectif_id">
+                                                <p>@php echo html_entity_decode($res->objectif) @endphp</p>
+                                            </div>
+
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -638,19 +631,21 @@
                     <div class="modal" id="cible" aria-labelledby="cible" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_pour_qui',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_pour_qui',$res->module_id)}}" method="POST" id="form_public">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Public cible</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="public_cible" name="public_cible" placeholder="Ajouter des textes">{{$res->cible}}</textarea>
+                                            <textarea id="public_textarea" name="public_cible" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="public_id">
+                                                <p>@php echo html_entity_decode($res->cible) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -663,19 +658,21 @@
                     <div class="modal" id="prerequis_module" aria-labelledby="prerequis_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_prerequis',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_prerequis',$res->module_id)}}" method="POST" id="form_prerequis">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Prérequis</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="prerequis" name="prerequis" placeholder="Ajouter des textes">{{$res->prerequis}}</textarea>
+                                            <textarea id="prerequis_textarea" name="prerequis" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="prerequis_id">
+                                                <p>@php echo html_entity_decode($res->prerequis) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -688,19 +685,21 @@
                     <div class="modal" id="equipement_module" aria-labelledby="equipement_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_equipement',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_equipement',$res->module_id)}}" method="POST" id="form_equipement">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Equipement necessaire</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="equipement" name="equipement" placeholder="Ajouter des textes">{{$res->materiel_necessaire}}</textarea>
+                                            <textarea id="equipement_textarea" name="equipement" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="equipement_id">
+                                                <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -713,19 +712,21 @@
                     <div class="modal" id="bon_a_savoir_module" aria-labelledby="bon_a_savoir_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_bon_a_savoir',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_bon_a_savoir',$res->module_id)}}" method="POST" id="form_bon_a_savoir">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Bon à savoir</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="bon_a_savoir" name="bon_a_savoir" placeholder="Ajouter des textes">{{$res->bon_a_savoir}}</textarea>
+                                            <textarea id="bon_a_savoir_textarea" name="bon_a_savoir" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="bon_a_savoir_id">
+                                                <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -738,19 +739,21 @@
                     <div class="modal" id="prestation_module" aria-labelledby="prestation_module" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
-                                <form action="{{route('modification_prestation',$res->module_id)}}" method="POST">
+                                <form action="{{route('modification_prestation',$res->module_id)}}" method="POST" id="form_prestation">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title text-center">Préstation pédagogique</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div>
-                                            <textarea id="prestation" name="prestation" placeholder="Ajouter des textes">{{$res->prestation}}</textarea>
+                                            <textarea id="prestation_textarea" name="prestation" placeholder="Ajouter des textes" style="display: none"></textarea>
+                                            <div id="prestation_id">
+                                                <p>@php echo html_entity_decode($res->prestation) @endphp</p>
+                                            </div>
                                         </div>
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -763,15 +766,99 @@
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
-    let editor = new FroalaEditor('#objectif_text');
-    let editor2 = new FroalaEditor('#public_cible');
-    let editor3 = new FroalaEditor('#prerequis');
-    let editor4 = new FroalaEditor('#equipement');
-    let editor5 = new FroalaEditor('#bon_a_savoir');
-    let editor6 = new FroalaEditor('#prestation');
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['code-block'],
+
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }]
+    ];
+
+    let objectif_editor = new Quill('#objectif_id', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow',
+    });
+
+    let public_editor = new Quill('#public_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let prerequis_editor = new Quill('#prerequis_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let equipement_editor = new Quill('#equipement_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let bon_a_savoir_editor = new Quill('#bon_a_savoir_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let prestation_editor = new Quill('#prestation_id', {
+        modules: {
+            toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+
+    let objectif = objectif_editor.root.innerHTML;
+    $('#objectif_content').html(objectif);
+    $("#form_objectif").on("submit",function() {
+        $("#objectif_textarea").val($("#objectif_id").html());
+    });
+
+
+    let cible = public_editor.root.innerHTML;
+    $('#cible_content').html(cible);
+    $("#form_public").on("submit",function() {
+        $("#public_textarea").val($("#public_id").html());
+    });
+
+    let prerequis = prerequis_editor.root.innerHTML;
+    $('#prerequis_content').html(prerequis);
+    $("#form_prerequis").on("submit",function() {
+        $("#prerequis_textarea").val($("#prerequis_id").html());
+    });
+
+    let equipement = equipement_editor.root.innerHTML;
+    $('#equipement_content').html(equipement);
+    $("#form_equipement").on("submit",function() {
+        $("#equipement_textarea").val($("#equipement_id").html());
+    });
+
+    let bon_a_savoir = bon_a_savoir_editor.root.innerHTML;
+    $('#bon_a_savoir_content').html(bon_a_savoir);
+    $("#form_bon_a_savoir").on("submit",function() {
+        $("#bon_a_savoir_textarea").val($("#bon_a_savoir_id").html());
+    });
+
+    let prestation = prestation_editor.root.innerHTML;
+    $('#prestation_content').html(prestation);
+    $("#form_prestation").on("submit",function() {
+        $("#prestation_textarea").val($("#prestation_id").html());
+    });
+
 </script>
 @endsection

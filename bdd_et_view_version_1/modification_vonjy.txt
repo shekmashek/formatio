@@ -129,3 +129,7 @@ alter table participant_groupe add column status int(10) default 0;
 -------mai 13
 creation view v_evaluation_stagiaire_competence =>creation vu v_session_projet => bdd_suiviformation_view_19.1(competences_evaluation)
 creation view v_evaluation_globale =>creation vu v_session_projet => bdd_suiviformation_view_19.1(competences_evaluation)
+
+
+---------mai 19
+alter table frais_annexes add column entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE;

@@ -5,9 +5,9 @@
 @section('content')
 
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('aff_parametre_referent',$etp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+    <a href="{{route('aff_parametre_referent')}}"> <button class="btn btn_precedent"><i class='bx bxs-chevron-left me-1'></i>Retour</button></a>
 </div>
-<center>            
+<center>
         @if (\Session::has('error_logo'))
         <div class="alert alert-danger col-md-4">
             <ul>
@@ -25,32 +25,31 @@
         @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            <p style="text-align: left">Photo de profil 
+            <p class="text-center">Photo de profil
                 <strong>Taille du fichier: (1.7 MB max)</strong>
-            </p><br>
+            </p>
         <form   class="btn-submit" action="{{route('enregistrer_logo',$etp->id)}}" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="row px-3 mt-4">
+            <div class="row px-3 ">
                 <div class="form-group mt-1 mb-1">
                 <center>
                     <div class="image-upload">
                       <label for="file-input">
                         <div class="upload-icon">
-                            <br>
-                            <img src="{{asset('images/entreprises/'.$etp->logo)}}" id = "photo_stg"  class="image-ronde"> 
+                            <img src="{{asset('images/entreprises/'.$etp->logo)}}" id = "photo_stg"  class="image-ronde">
                           {{-- <input type="text" id = 'vartemp'> --}}
                   </div>
                       </label>
                          <input id="file-input" type="file" name="image" value="{{$etp->logo}}"/>
                       </div>
-                </center>  
+                </center>
             </div>
         </div>
-                   
-<button style=" background-color: float: right;" class=" btn btn btn_enregistrer modification "> Enregister</button>
+
+        <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-</center> 
+</center>
 </div>
 </div>
 </div>
@@ -58,7 +57,7 @@
 .image-ronde{
     width : 150px; height : 150px;
     border: none;
-    
+
     cursor: pointer;
   }
       .image-upload > input
@@ -69,7 +68,7 @@
       <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
       <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
       <script>
-      
+
         // $(document).ready(function(){
         //   alert("Bien venu");
         // });
@@ -82,16 +81,16 @@
         function readURL(input) {
               if (input.files && input.files[0]) {
                   var reader = new FileReader();
-      
+
                   reader.onload = function (e) {
                       //alert(e.target.result);
                       $('#photo_stg').attr('src', e.target.result);
                   }
-      
+
                   reader.readAsDataURL(input.files[0]);
               }
           }
-      
-      
+
+
       </script>
 @endsection

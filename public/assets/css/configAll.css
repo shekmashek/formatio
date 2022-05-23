@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300&display=swap");
 
 :root {
-    --padding: 5px;
+    --padding_icon: 5px;
+    --padding_button: 6px 5px 5px 5px !important;
     --font_size: 1.3rem;
     --bgd_all: rgba(197, 197, 197, 0.232);
     --bgd_modifier_hover: #4A00E727;
@@ -11,22 +12,34 @@
     --display: inline-block;
     --transition: all 200ms;
     --transform: scale(1.05);
-    --color_modifier: #4A00E0;
-    --color_supprimer: #ee0707;
-    --color_ajouter: #07cd19;
+    --bg_color_modifier: #4A00E0;
+    --bg_color_supprimer: #ee0707;
+    --bg_color_annuler: #ee0707;
+    --bg_annuler_bx: #b31217;
+    --bg_color_fermer: #1488CC;
+    --bg_fermer_bx: #26a0da;
+    --bg_color_enregistrer: #9733EE;
+    --bg_enregistrer_bx: #DA22FF;
+    --bg_color_precedent: #9733EE;
+    --bg_precedent_bx: #DA22FF;
+    --bg_color_suivant: #9733EE;
+    --bg_suivant_bx: #DA22FF;
+    --bg_color_ajouter: #07cd19;
+    --bg_color_nouveau: #3CA55C;
+    --txt_color:#ffffff;
 }
 
 /* components */
-
+/* icon */
 /* icon à utiliser pour modifier <i class='bx bx-edit'></i> */
 .bx_modifier{
-    padding: var(--padding);
+    padding: var(--padding_icon);
     background-color: var(--bgd_all);
     border-radius: var(--brd_radius);
     cursor: pointer;
     display: var(--display);
     transition: var(--transition);
-    color: var(--color_modifier);
+    color: var(--bg_color_modifier);
     font-size: var(--font_size) !important;
 }
 
@@ -35,20 +48,16 @@
     transform: var(--transform);
 }
 
-button:focus {
-    outline: none !important;
-    box-shadow: none !important;
-}
 
-/* icon à utiliser pour supprimer <i class='bx bx-trash'></i> */
+/* icon à utiliser pour supprimer <i class='bx bx-trash me-1'></i> */
 .bx_supprimer{
-    padding: var(--padding);
+    padding: var(--padding_icon);
     background-color: var(--bgd_all);
     border-radius: var(--brd_radius);
     cursor: pointer;
     display: var(--display);
     transition: var(--transition);
-    color: var(--color_supprimer);
+    color: var(--bg_color_supprimer);
     font-size: var(--font_size) !important;
 }
 
@@ -57,15 +66,15 @@ button:focus {
     transform: var(--transform);
 }
 
-/* icon à utiliser pour ajouter <i class='bx bx-plus-medical'></i> */
+/* icon à utiliser pour ajouter <i class='bx bx-plus-medical me-1'></i> */
 .bx_ajouter{
-    padding: var(--padding);
+    padding: var(--padding_icon);
     background-color: var(--bgd_all);
     border-radius: var(--brd_radius);
     cursor: pointer;
     display: var(--display);
     transition: var(--transition);
-    color: var(--color_ajouter);
+    color: var(--bg_color_ajouter);
     font-size: var(--font_size) !important;
 }
 
@@ -74,4 +83,240 @@ button:focus {
     transform: var(--transform);
 }
 
+/* button nouveau */
+/* icon à utiliser pour nouveau <i class='bx bx-plus-medical me-1'></i> */
+
+.btn_nouveau{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_nouveau);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_nouveau:hover{
+    text-decoration: none;
+    color: var(--bg_color_ajouter);
+    border: 1px solid var(--bg_color_ajouter);
+    background-color: var(--txt_color);
+}
+
+.btn_nouveau .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_color_ajouter);
+    border-radius: var(--brd_radius);
+}
+
+.btn_nouveau:hover .bx{
+    color: var(--txt_color);
+}
+
+/* button annuler */
+/* icon à utiliser pour annuler <i class='bx bx-x me-1'></i> */
+
+.btn_annuler{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_annuler);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_annuler:hover{
+    text-decoration: none;
+    color: var(--bg_color_annuler);
+    border: 1px solid var(--bg_color_annuler);
+    background-color: var(--txt_color);
+}
+
+.btn_annuler .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_annuler_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    font-weight: 900;
+}
+
+.btn_annuler:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_annuler);
+}
+
+.btn_annuler a:hover{
+    text-decoration: none !important;
+}
+
+/* button fermer */
+/* icon à utiliser pour fermer <i class='bx bx-block me-1'></i> */
+
+.btn_fermer{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_fermer);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_fermer:hover{
+    text-decoration: none;
+    color: var(--bg_color_fermer);
+    border: 1px solid var(--bg_color_fermer);
+    background-color: var(--txt_color);
+}
+
+.btn_fermer .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_fermer_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    font-weight: 900;
+}
+
+.btn_fermer:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_fermer);
+}
+
+/* button enregistrer */
+/* icon à utiliser pour enregistrer <i class='bx bx-check me-1'></i> */
+
+.btn_enregistrer{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_enregistrer);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_enregistrer:hover{
+    text-decoration: none;
+    color: var(--bg_color_enregistrer);
+    border: 1px solid var(--bg_color_enregistrer);
+    background-color: var(--txt_color);
+}
+
+.btn_enregistrer .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_enregistrer_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    font-weight: 900;
+}
+
+.btn_enregistrer:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_enregistrer);
+}
+
+/* button precedent */
+/* icon à utiliser pour precedent <i class='bx bxs-chevron-left me-1'></i> */
+
+.btn_precedent{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_precedent);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_precedent:hover{
+    text-decoration: none;
+    color: var(--bg_color_precedent);
+    border: 1px solid var(--bg_color_precedent);
+    background-color: var(--txt_color);
+}
+
+.btn_precedent .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_precedent_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    font-weight: 900;
+}
+
+.btn_precedent:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_precedent);
+}
+
+/* button suivant */
+/* icon à utiliser pour suivant <i class='bx bxs-chevron-right ms-1'></i> */
+
+.btn_suivant{
+    padding: var(--padding_button);
+    color: var(--txt_color);
+    background: var(--bg_color_suivant);
+    position: relative;
+    top: 5px;
+    border-radius: var(--brd_radius);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn_suivant:hover{
+    text-decoration: none;
+    color: var(--bg_color_suivant);
+    border: 1px solid var(--bg_color_suivant);
+    background-color: var(--txt_color);
+}
+
+.btn_suivant .bx{
+    position: relative;
+    top: 1px;
+    padding: var(--padding_icon);
+    background-color: var(--bg_suivant_bx);
+    border-radius: var(--brd_radius);
+    color: var(--txt_color);
+    font-weight: 900;
+}
+
+.btn_suivant:hover .bx{
+    color: var(--txt_color);
+    background-color: var(--bg_color_suivant);
+}
+
 /* utilities */
+/* modal */
+
+.modal-header {
+    background-color: #2ebf91 ;
+    color: white !important;
+    text-align: center !important;
+    justify-content: center !important;
+    text-transform: uppercase !important;
+}
+
+input:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+button:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}

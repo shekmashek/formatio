@@ -40,8 +40,8 @@ body {
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+    text-decoration: none !important;
+    color: inherit !important;
     pointer-events: auto;
     cursor: pointer;
 }
@@ -657,76 +657,6 @@ input:-webkit-autofill:active {
 
 /* btn design */
 
-.btn_enregistrer {
-    padding: 5px;
-    /* margin-top: 1rem; */
-    background-color: #7635dc;
-    border-radius: 5px;
-    border-width: 0;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Arial, sans-serif;
-    font-size: 1em;
-    transition: all 200ms;
-    color: white;
-    width: 13rem;
-    text-transform: capitalize !important;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-}
-
-.btn_enregistrer:hover {
-    /* background-color: rgba(92, 92, 241, 0.61); */
-    background-color: #7535dc21;
-    transform: scale(1.05);
-    color: #7635dc;
-    text-decoration-line: underline;
-}
-
-.btn_enregistrer a{
-    color: #7635dc;
-}
-
-.btn_enregistrer a:hover{
-    color: white;
-    cursor: pointer;
-}
-.btn_enregistrer a:focus{
-    color: white;
-    text-decoration: none;
-}
-
-.btn_annuler {
-    padding: 5px;
-    /* margin-top: 1rem; */
-    background-color: rgba(197, 197, 197, 0.192);
-    border-radius: 5px;
-    border-width: 0;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Arial, sans-serif;
-    font-size: 1em;
-    transition: all 200ms;
-    color: red;
-    width: 13rem;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-}
-
-.btn_annuler:hover {
-    /* background-color: rgba(92, 92, 241, 0.61); */
-    background-color: red;
-    transform: scale(1.05);
-    color: white;
-}
-
-.btn_annuler a{
-    text-decoration: none;
-    text-decoration-line: none;
-}
-
-.btn_annuler a:hover{
-    color: white;
-}
-
 .btn_racourcis{
     transition: all .5s ease;
 }
@@ -855,8 +785,8 @@ input:-webkit-autofill:active {
 
 .text_apprendre{
     position: relative;
-    bottom: .3rem;
-    font-size: .8rem;
+    padding: 3rem .2rem ;
+    font-size: .9rem;
     animation-name: completer_programme;
     animation-duration: 4s;
     animation-delay: 2s;

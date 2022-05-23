@@ -187,7 +187,7 @@
             <div  ></div>
             <div >
                 <h2 >Politique de confidentialité</h2>
-                <h6 >Merci de lire cette politique avec attention pour comprendre comment la société TALENTA SARL  traite les informations issues de ce site. </h6>
+                <h6 >Merci de lire cette politique avec attention pour comprendre comment la société UPSKILL SARL  traite les informations issues de ce site. </h6>
                 <h6 id="modification"  >En visitant ou en utilisant ce site web, vous acceptez les termes de cette politique.</h6>
                 <h6 > Si vous avez des questions, commentaires ou interrogations concernant cette politique, merci de contacter contact@formation.mg </h6>
             </div>
@@ -237,9 +237,9 @@
             <h2>Utilisation des informations du site web</h2>
             <h6 style="font-weight: bold" >Navigation et cookies</h6>
             <h6>Nous ne recueillons pas d’informations personnelles telles que votre nom, votre adresse professionnelle, votre numéro de téléphone ou votre adresse électronique lorsque vous naviguez simplement sur notre site.</h6>
-            <h6>TALENTA SARL utilise à la fois des cookies de session sur son site, qui sont stockés dans la mémoire temporaire et non conservés après la fermeture du navigateur, et des cookies persistants, qui stockent des informations sur votre disque dur. Ainsi, lorsque vous revenez sur le même site Web à une date ultérieure, les informations relatives aux cookies sont toujours présentes.</h6>
-            <h6>Celles-ci ne sont lisibles que par les employés de TALENTA SARL et les cookies ne peuvent accéder, lire ou modifier aucune autre donnée de votre ordinateur. Ils sont utilisés pour collecter des informations sur vos choix et préférences et personnaliser notre site en conséquence, y compris l’intégration avec les médias sociaux et des publicités adaptées à vos besoins.</h6>
-            <h6> Par exemple, pour effectuer une analyse statistique du nombre d’utilisateurs et de leurs habitudes d’utilisation afin d’améliorer la vitesse de chargement des pages.TALENTA SARL ne vend aucune donnée collectée par ces cookies ou issues de vos données personnelles.
+            <h6>UPSKILL SARL utilise à la fois des cookies de session sur son site, qui sont stockés dans la mémoire temporaire et non conservés après la fermeture du navigateur, et des cookies persistants, qui stockent des informations sur votre disque dur. Ainsi, lorsque vous revenez sur le même site Web à une date ultérieure, les informations relatives aux cookies sont toujours présentes.</h6>
+            <h6>Celles-ci ne sont lisibles que par les employés de UPSKILL SARL et les cookies ne peuvent accéder, lire ou modifier aucune autre donnée de votre ordinateur. Ils sont utilisés pour collecter des informations sur vos choix et préférences et personnaliser notre site en conséquence, y compris l’intégration avec les médias sociaux et des publicités adaptées à vos besoins.</h6>
+            <h6> Par exemple, pour effectuer une analyse statistique du nombre d’utilisateurs et de leurs habitudes d’utilisation afin d’améliorer la vitesse de chargement des pages.UPSKILL SARL ne vend aucune donnée collectée par ces cookies ou issues de vos données personnelles.
             </h6>
             <h6>Nous utilisons également des cookies à des fins d’analyse, notamment via Google Analytics, afin de collecter des informations sur votre utilisation de notre site et de nous permettre d’améliorer l’expérience de navigation.</h6>
             <h6 > Par exemple, les cookies d’analyse nous permettent  d’analyser la nature du trafic global, ainsi que les pages les plus visitées sur notre site, et de déterminer si notre publicité est efficace ou non.
@@ -252,7 +252,7 @@
           <div>
             <h2>Balises Web</h2>
             <h6>Une balise Web est une image graphique souvent invisible qui est placée sur un site Web ou dans un courrier électronique et utilisée pour surveiller le comportement de l’utilisateur visitant le site Web ou l’émetteur – courrier électronique de suivi et marquage de page pour l’analyse Web. Nous pouvons utiliser des balises Web (ou des pixels de suivi) seuls ou
-                conjointement avec des cookies, pour rassembler des informations sur votre utilisation de notre site et sur les interactions avec les courriers électroniques de TALENTA SARL. Dans la perspective d’améliorer l’expérience de notre site Web et la communication client, les balises Web peuvent être utilisées par nos analystes marketing dans des messages électroniques ou des lettres d’information pour déterminer si le message a été ouvert ou pour nous permettre de compter les utilisateurs ayant visité certaines pages, générer des statistiques sur l’utilisation de notre site.
+                conjointement avec des cookies, pour rassembler des informations sur votre utilisation de notre site et sur les interactions avec les courriers électroniques de UPSKILL SARL. Dans la perspective d’améliorer l’expérience de notre site Web et la communication client, les balises Web peuvent être utilisées par nos analystes marketing dans des messages électroniques ou des lettres d’information pour déterminer si le message a été ouvert ou pour nous permettre de compter les utilisateurs ayant visité certaines pages, générer des statistiques sur l’utilisation de notre site.
             </h6>
             <h6 id="données">Ils ne sont pas utilisés pour accéder à des informations personnellement identifiables.
             </h6>
@@ -299,12 +299,12 @@
         <h2>Divulgation de vos informations</h2>
         <h6>Notre politique générale est de ne divulguer aucune donnée personnelle à un tiers, sauf avec votre consentement préalable ou sur une base légale.</h6>
         <h6>
-            TALENTA SARL se conformera à tout moment aux réglementations, lois, ordonnances de la cour ou demandes officielles applicables.
+            UPSKILL SARL se conformera à tout moment aux réglementations, lois, ordonnances de la cour ou demandes officielles applicables.
         </h6>
-        <h6>Dans ce cadre, nous pouvons divulguer des informations personnelles pour nous conformer à une procédure légale valide telle qu’un mandat de perquisition, une assignation à comparaître, une autorité de surveillance ou une ordonnance du tribunal, si les actions d’un utilisateur enfreignent nos politiques ou pour protéger nos droits et la propriété de TALENTA SARL.</h6>
-        <h6 >TALENTA SARL se réserve donc le droit de divulguer des données à caractère personnel aux autorités de régulation et de surveillance, ainsi qu’à des fournisseurs de services d’analyse conformément à la présente déclaration de confidentialité.</h6>
+        <h6>Dans ce cadre, nous pouvons divulguer des informations personnelles pour nous conformer à une procédure légale valide telle qu’un mandat de perquisition, une assignation à comparaître, une autorité de surveillance ou une ordonnance du tribunal, si les actions d’un utilisateur enfreignent nos politiques ou pour protéger nos droits et la propriété de UPSKILL SARL.</h6>
+        <h6 >UPSKILL SARL se réserve donc le droit de divulguer des données à caractère personnel aux autorités de régulation et de surveillance, ainsi qu’à des fournisseurs de services d’analyse conformément à la présente déclaration de confidentialité.</h6>
         <ul>
-            <li >-Nous ne partagerons ces informations avec aucune autre personne, société ou organisation, à l’exception des tiers qui vous fourniront des produits ou des services, conformément à votre accord avec TALENTA SARL et dans la mesure où la loi l’exige.</li>
+            <li >-Nous ne partagerons ces informations avec aucune autre personne, société ou organisation, à l’exception des tiers qui vous fourniront des produits ou des services, conformément à votre accord avec UPSKILL SARL et dans la mesure où la loi l’exige.</li>
             <li >-Les informations concernant l’utilisation de nos sites ne seront divulguées à des tiers que sous forme globale / ou anonyme, de telle sorte que vos informations ne seront pas personnellement identifiables. Ces informations globales / anonymes sont collectées sur la base de données d’utilisation du<span id="site_web"> Web ou d’informations statistiques que nous avons assemblées à propos de nos utilisateurs.</span>
             </li>
         </ul>
@@ -312,21 +312,21 @@
     <div>
         <h2 >Sites web tiers</h2>
         <h6>Notre site Web contient des liens vers des sites Web de tiers qui sont fournis pour votre commodité.</h6>
-        <h6 >TALENTA SARL n’approuve ni n’est responsable des pratiques de confidentialité,du contenu ou des services desdits  sites Web. <span id="mineurs"></span></h6>
+        <h6 >UPSKILL SARL n’approuve ni n’est responsable des pratiques de confidentialité,du contenu ou des services desdits  sites Web. <span id="mineurs"></span></h6>
         <h6 > Nous vous recommandons de consulter les politiques de confidentialité et les conditions d’utilisation qui régissent ces sites Web lorsque vous les visitez.
         </h6>
     </div>
     <div>
         <h2 >Mineurs</h2>
-        <h6>Ce site est destiné aux adultes. TALENTA SARL ne collecte pas sciemment d’informations auprès de mineurs de moins de 18 ans. Les jeunes de moins de 18 ans ne doivent pas utiliser ce site Web ni nous<span id="reproduction" > soumettre d’informations. </span></h6>
+        <h6>Ce site est destiné aux adultes. UPSKILL SARL ne collecte pas sciemment d’informations auprès de mineurs de moins de 18 ans. Les jeunes de moins de 18 ans ne doivent pas utiliser ce site Web ni nous<span id="reproduction" > soumettre d’informations. </span></h6>
         <h6 >S’il nous arrive de collecter des données personnelles d’individus de moins de 18 ans, nous supprimerons immédiatement ces informations personnelles.
         </h6>
     </div>
     <div>
         <h2 >Reproduction de données personnelles</h2>
-        <h6>Des photos et des données personnelles de collaborateurs de TALENTA SARL ont été incluses sur ce site Web avec l’autorisation expresse de la personne concernée.</h6>
+        <h6>Des photos et des données personnelles de collaborateurs de UPSKILL SARL ont été incluses sur ce site Web avec l’autorisation expresse de la personne concernée.</h6>
         <h6>Les photos et les données personnelles de clients ont été incluses sur ce site Web avec l’autorisation expresse de la <span id="images">personne concernée.</span></h6>
-        <h6 >En aucun cas, des photos et / ou des données personnelles de collaborateurs ou de clients ne peuvent être reproduites sans l’autorisation écrite de TALENTA SARL. Pour obtenir la permission, contactez-nous au contact@formation.mg.
+        <h6 >En aucun cas, des photos et / ou des données personnelles de collaborateurs ou de clients ne peuvent être reproduites sans l’autorisation écrite de UPSKILL SARL. Pour obtenir la permission, contactez-nous au contact@formation.mg.
         </h6>
 
     </div>
@@ -335,7 +335,7 @@
         <h6>Les images, logos, marques de commerce et droits d’auteur appartiennent à leurs propriétaires respectifs et ont été utilisés avec l’autorisation expresse de leurs propriétaires. Ils ne doivent pas être copiés à partir de notre site. </h6>
         <h6>Tout le contenu de ce site (image, vidéo, son, texte…) est protégé par les lois en vigueur à Madagascar dans le domaine de la propriété intellectuelle et notamment le droit d’auteur, les droits voisins, le droit des marques.</h6>
         <h6 >Tous les droits de reprographie sont réservés, y compris en ce qui concerne les documents téléchargeables et les représentations <span id="credits">photographiques ou graphiques.</span></h6>
-        <h6 >En l’absence d’autorisation expresse de TALENTA SARL, il est strictement interdit d’exploiter ces contenus et notamment de les reproduire, les représenter, les modifier ou les adapter en tout ou en partie.</h6>
+        <h6 >En l’absence d’autorisation expresse de UPSKILL SARL, il est strictement interdit d’exploiter ces contenus et notamment de les reproduire, les représenter, les modifier ou les adapter en tout ou en partie.</h6>
     </div>
     <div>
         <h2>Crédits du site</h2>
@@ -350,7 +350,7 @@
         <h6 style="font-weight: bold">Revu de vos informations / Nous contacter</h6>
         <h6>Vous pouvez consulter et mettre à jour les informations personnelles que nous avons collectées à votre sujet en nous contactant à l’adresse marketing@training-orchestra.com.</h6>
         <h6>Pour protéger votre vie privée et votre sécurité, nous pouvons prendre des mesures raisonnables pour vérifier votre identité avant de divulguer ces informations aux tiers mentionnés dans cette politique ou d’y apporter des corrections.</h6>
-        <h6>Les droits spécifiés ci-dessus peuvent être refusés ou limités si les intérêts, les droits et les libertés de tierce partie ont préséance ou si le traitement est nécessaire pour établir, exercer ou défendre des droits légaux de TALENTA SARL</h6>
+        <h6>Les droits spécifiés ci-dessus peuvent être refusés ou limités si les intérêts, les droits et les libertés de tierce partie ont préséance ou si le traitement est nécessaire pour établir, exercer ou défendre des droits légaux de UPSKILL SARL</h6>
         <h6 style="font-weight: bold">Prise de décision automatisée</h6>
         <h6>Nous n’utiliserons pas les informations que nous collectons pour prendre des décisions automatisées qui pourraient avoir un effet juridique ou significatif sur vous.</h6>
          <h6>Les informations personnellement identifiables que nous recueillons à votre sujet sont stockées sur des serveurs à accès restreints gérés par nos fournisseurs de services de logiciels. Bien que nous maintenons des garanties raisonnables pour empêcher tout accès non autorisé, pour maintenir la sécurité des données et pour utiliser correctement les informations que nous recueillons, nous ne garantissons aucune transmission de données sur Internet.</h6>

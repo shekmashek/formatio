@@ -46,7 +46,15 @@
             border-radius: 10px;
         }
 
-
+        .pdf_download{
+            background-color: #e73827 !important;
+        }
+        .pdf_download:hover{
+            background-color: #af3906 !important;
+        }
+        .pdf_download button{
+            color: #ffffff !important;
+        }
 </style>
 
 <div id="page-wrapper">
@@ -58,7 +66,7 @@
                         <div class="row g-0 m-0" style="align-items: center">
                             <div class="col-12 d-flex justify-content-between" style="align-items: center">
                                 <div class="col" align="right">
-                                    <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i><a href="{{route('impression_facture',$facture[0]->facture_id)}}"> PDF</a></button>
+                                    <a href="{{route('impression_facture',$facture[0]->facture_id)}}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a>
                                     <a class="mb-2 new_list_nouvelle {{ Route::currentRouteNamed('ListeAbonnement') ? 'active' : '' }}"   href="{{route('ListeAbonnement')}}">
                                         <span class="btn_pdf text-center px-4 py-1" type="button">Retour à la liste des factures</span>
                                     </a>
@@ -77,7 +85,7 @@
                         <div class="container-fluid my-2">
                             <div class="row p-2">
                                 <div class="col-4">
-                                    <img src="{{asset('images/talenta.png')}}" alt="logo_cfp" class="img-fluid">
+                                    <img src="{{asset('images/upskill.png')}}" alt="logo_cfp" class="img-fluid">
                                 </div>
                                 @if ($facture[0]->status_facture == "Non payé")
                                     <div class="status col-4 text-end">
@@ -91,13 +99,13 @@
 
                                 <div class="col-4 text-end" align="rigth">
                                     <div class="info_cfp">
-                                        <h4 class="m-0 nom_cfp">Talenta</h4>
+                                        <h4 class="m-0 nom_cfp">UpSkill</h4>
                                         <p class="m-0 adresse_cfp">contact@formation.mg</p>
                                         <p class="m-0 adresse_cfp">Lot IIN 60 Analamahitsy 101 Antananarivo Madagascar</p>
                                         <p class="m-0 adresse_cfp">+261 34 81 135 63</p>
                                         <p class="m-0 adresse_cfp">www.formation.mg</p><br>
 
-                                        {{-- <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p> --}}
+                                        <p class="m-0 adresse_cfp">NIF : 5011767848 <br> RCS : 2022B00475 <br> Stat : 62011 11 2022 0 10487 <br> Carte Fiscale : N° 0183506/DGI-J</p>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +125,7 @@
                                             <p class="m-0 adresse_cfp">{{$cfp->telephone}}</p>
                                             <p class="m-0 adresse_cfp">{{$cfp->site_web}}</p><br>
 
-                                            <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$cfp->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$cfp->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$cfp->cif}}</p>
+                                            <p class="m-0 adresse_cfp">NIF : {{$cfp->nif}} <br>RCS : {{$cfp->rcs}}  <br>Stat : {{$cfp->stat}}   <br> CIF : {{$cfp->cif}}</p>
                                         </div>
                                     </div>
                                 @endif
@@ -132,7 +140,7 @@
                                             <p class="m-0 adresse_cfp">{{$entreprises->telephone_etp}}</p>
                                             <p class="m-0 adresse_cfp">{{$entreprises->site_etp}}</p><br>
 
-                                            <p class="m-0 adresse_cfp">NIF : {{$entreprises->nif}} &nbsp;&nbsp; - &nbsp;&nbsp; Stat : {{$entreprises->stat}} &nbsp;&nbsp; - &nbsp;&nbsp; RCS : {{$entreprises->rcs}}  &nbsp;&nbsp; - &nbsp;&nbsp; CIF : {{$entreprises->cif}}</p>
+                                            <p class="m-0 adresse_cfp">NIF : {{$entreprises->nif}} <br> Stat : {{$entreprises->stat}} <br> RCS : {{$entreprises->rcs}}  <br> CIF : {{$entreprises->cif}}</p>
                                         </div>
                                     </div>
                                 @endif

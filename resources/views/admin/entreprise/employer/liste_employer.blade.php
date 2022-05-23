@@ -309,6 +309,7 @@
                             <th scope="col">Télephone
                             </th>
                             <th scope="col">Action</th>
+                            <th scope="col">Voir profil</th>
                             <th style="width: 10px;">Rétirer</th>
                         </tr>
                     </thead>
@@ -323,7 +324,7 @@
                                         <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
                                     </p>
                                     @else
-                                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
                                     @endif
                                 </a>
                             </td>
@@ -364,6 +365,9 @@
                                     <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
                                 </div>
                                 @endif
+                            </td>
+                            <td>
+                                <a href="{{route('profile_stagiaire',$emp->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
                             </td>
                             <td>
                                     <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>

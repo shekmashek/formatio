@@ -317,7 +317,7 @@
                                                     data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static'
                                                     title="Nouvelle session"><i class="bx bx-plus-medical icon_creer"></i>Session</span> --}}
                                                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static' title="Nouvelle session" class="btn btn-ajout-session btn-success">
-                                                    <span class="btn-label-session"><i class='bx bxs-plus-circle'></i></span>Session</button>
+                                                <span class="btn-label-session"><i class='bx bxs-plus-circle'></i></span>Session</button>
                                             @endif
                                         @endcan
                                     </div>
@@ -384,7 +384,7 @@
                                                         @can('isCFP')
                                                             <td class="centrer_edit"><button href="#" class="btn" data-bs-toggle="modal"
                                                                     data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}"
-                                                                    data-backdrop="static" style="font-size: 1.2rem;"><i class='bx bx-edit bx_modifier'></i>
+                                                                    data-backdrop="static" ><i class='bx bx-edit bx_modifier' style="font-size: 1.1rem !important;"></i>
                                                             </button></td>
                                                         @endcan
 
@@ -1098,7 +1098,7 @@
                                 <th> Formation </th>
                                 <th> Module</th>
                                 <th></th>
-                                <th>Evaluation </th>
+                                <th></th>
                             </thead>
                             <tbody class="tbody_projet">
                                 @foreach ($data as $pj)

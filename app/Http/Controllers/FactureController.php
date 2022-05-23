@@ -1131,7 +1131,15 @@ class FactureController extends Controller
             $type_facture = $this->fonct->findWhereParam("type_facture", ["id"], ["!="], [$session[0]->type_facture_id]);
             $mode_payement = $this->fonct->findWhereParam("mode_financements", ["id"], ["!="], [$session[0]->type_facture_id]);
             $type_remise = $this->fonct->findWhereParam("type_remise", ["id"], ["!="], [$montant_totale->remise_id]);
-            return view('admin.facture.edit_facture', compact('devise', 'init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
+
+            $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$montant_totale->entreprise_id]);
+            $assujetti = $this->fonct->findWhereMulitOne("assujetti", ["id"], [$entreprise->assujetti_id]);
+            if ($assujetti->assujetti == true) { // true
+                $taxes = $this->fonct->findWhereMulitOne("taxes", ["id"], [1]); // tva
+            } else { // false
+                $taxes = $this->fonct->findWhereMulitOne("taxes", ["id"], [2]); // HT
+            }
+            return view('admin.facture.edit_facture', compact('taxes','devise', 'init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
         }
     }
 

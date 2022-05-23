@@ -6,7 +6,8 @@
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('aff_parametre_referent',$assujetti->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp"> Page précédente</button></a>
+    <a href="{{route('aff_parametre_referent')}}"> <button class="btn btn_precedent"><i class='bx bxs-chevron-left me-1'></i>Retour</button></a>
+
 </div>
 <center>
     @if (\Session::has('erreur_assujetti'))
@@ -18,7 +19,7 @@
     @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            
+
             <form   class="btn-submit" action="{{route('enregistrer_assujetti_entreprise',$assujetti->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <label class="text-left" for="exampleFormControlSelect1">Sélectionnée un type d'impôt sur votre entreprise</label>
@@ -27,7 +28,7 @@
                     <option value="1">Assujetti</option>
                     <option value="2">Non assujetti</option>
                 </select>
-                <button class="mt-3 btn_enregistrer mt-1 btn modification "> Enregister</button>
+                <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
             </form>
             <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

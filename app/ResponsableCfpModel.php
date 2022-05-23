@@ -57,7 +57,7 @@ class ResponsableCfpModel extends Model
             DB::rollback();
             echo $e->getMessage();
         }
-        return back()->with('success', 'terminé!');
+        return back()->with('success', 'Votre responsable a été enregistré avec succès!');
     }
 
     public function delete_resp_CFP($id_delete)
