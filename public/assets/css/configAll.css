@@ -39,7 +39,7 @@
     cursor: pointer;
     display: var(--display);
     transition: var(--transition);
-    color: var(--bg_color_modifier);
+    color: var(--bg_color_modifier) !important;
     font-size: var(--font_size) !important;
 }
 
@@ -57,7 +57,7 @@
     cursor: pointer;
     display: var(--display);
     transition: var(--transition);
-    color: var(--bg_color_supprimer);
+    color: var(--bg_color_supprimer) !important;
     font-size: var(--font_size) !important;
 }
 
@@ -74,7 +74,7 @@
     cursor: pointer;
     display: var(--display);
     transition: var(--transition);
-    color: var(--bg_color_ajouter);
+    color: var(--bg_color_ajouter) !important;
     font-size: var(--font_size) !important;
 }
 
@@ -88,18 +88,18 @@
 
 .btn_nouveau{
     padding: var(--padding_button);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     background: var(--bg_color_nouveau);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: uppercase;
+    text-transform: capitalize;
     cursor: pointer;
 }
 
 .btn_nouveau:hover{
     text-decoration: none;
-    color: var(--bg_color_ajouter);
+    color: var(--bg_color_ajouter) !important;
     border: 1px solid var(--bg_color_ajouter);
     background-color: var(--txt_color);
 }
@@ -107,6 +107,7 @@
 .btn_nouveau .bx{
     position: relative;
     top: 1px;
+    color: var(--txt_color) !important;
     padding: var(--padding_icon);
     background-color: var(--bg_color_ajouter);
     border-radius: var(--brd_radius);
@@ -121,18 +122,18 @@
 
 .btn_annuler{
     padding: var(--padding_button);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     background: var(--bg_color_annuler);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: uppercase;
+    text-transform: capitalize;
     cursor: pointer;
 }
 
 .btn_annuler:hover{
     text-decoration: none;
-    color: var(--bg_color_annuler);
+    color: var(--bg_color_annuler) !important;
     border: 1px solid var(--bg_color_annuler);
     background-color: var(--txt_color);
 }
@@ -143,7 +144,7 @@
     padding: var(--padding_icon);
     background-color: var(--bg_annuler_bx);
     border-radius: var(--brd_radius);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     font-weight: 900;
 }
 
@@ -161,18 +162,18 @@
 
 .btn_fermer{
     padding: var(--padding_button);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     background: var(--bg_color_fermer);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: uppercase;
+    text-transform: capitalize;
     cursor: pointer;
 }
 
 .btn_fermer:hover{
     text-decoration: none;
-    color: var(--bg_color_fermer);
+    color: var(--bg_color_fermer) !important;
     border: 1px solid var(--bg_color_fermer);
     background-color: var(--txt_color);
 }
@@ -183,7 +184,7 @@
     padding: var(--padding_icon);
     background-color: var(--bg_fermer_bx);
     border-radius: var(--brd_radius);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     font-weight: 900;
 }
 
@@ -197,18 +198,18 @@
 
 .btn_enregistrer{
     padding: var(--padding_button);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     background: var(--bg_color_enregistrer);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: uppercase;
+    text-transform: capitalize;
     cursor: pointer;
 }
 
 .btn_enregistrer:hover{
     text-decoration: none;
-    color: var(--bg_color_enregistrer);
+    color: var(--bg_color_enregistrer) !important;
     border: 1px solid var(--bg_color_enregistrer);
     background-color: var(--txt_color);
 }
@@ -219,7 +220,7 @@
     padding: var(--padding_icon);
     background-color: var(--bg_enregistrer_bx);
     border-radius: var(--brd_radius);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     font-weight: 900;
 }
 
@@ -233,18 +234,18 @@
 
 .btn_precedent{
     padding: var(--padding_button);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     background: var(--bg_color_precedent);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: uppercase;
+    text-transform: capitalize;
     cursor: pointer;
 }
 
 .btn_precedent:hover{
     text-decoration: none;
-    color: var(--bg_color_precedent);
+    color: var(--bg_color_precedent) !important;
     border: 1px solid var(--bg_color_precedent);
     background-color: var(--txt_color);
 }
@@ -255,7 +256,7 @@
     padding: var(--padding_icon);
     background-color: var(--bg_precedent_bx);
     border-radius: var(--brd_radius);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     font-weight: 900;
 }
 
@@ -269,18 +270,18 @@
 
 .btn_suivant{
     padding: var(--padding_button);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     background: var(--bg_color_suivant);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: uppercase;
+    text-transform: capitalize;
     cursor: pointer;
 }
 
 .btn_suivant:hover{
     text-decoration: none;
-    color: var(--bg_color_suivant);
+    color: var(--bg_color_suivant) !important;
     border: 1px solid var(--bg_color_suivant);
     background-color: var(--txt_color);
 }
@@ -291,7 +292,7 @@
     padding: var(--padding_icon);
     background-color: var(--bg_suivant_bx);
     border-radius: var(--brd_radius);
-    color: var(--txt_color);
+    color: var(--txt_color) !important;
     font-weight: 900;
 }
 
@@ -308,7 +309,7 @@
     color: white !important;
     text-align: center !important;
     justify-content: center !important;
-    text-transform: uppercase !important;
+    text-transform: capitalize !important;
 }
 
 input:focus{
@@ -320,3 +321,9 @@ button:focus{
     box-shadow: none !important;
     outline: none !important;
 }
+
+a:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+

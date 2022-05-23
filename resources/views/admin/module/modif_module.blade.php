@@ -14,7 +14,7 @@
                 <li class="me-5"><a href="#pour_qui">pour qui ?</a></li>
             </ul>
         </div>
-        <div>
+        <div class="pb-3">
             <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
             href="{{route('liste_module')}}">
             <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>

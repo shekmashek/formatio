@@ -89,7 +89,13 @@
                 <h2 class="accordion-header" id="{{$frmt->id}}">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#frmt_{{$frmt->id}}" aria-expanded="false" aria-controls="frmt_{{$frmt->id}}">
-                        Formation sur :<strong>&nbsp;{{$frmt->nom_formation}}</strong>
+                        Formation sur :<strong>&nbsp;{{$frmt->nom_formation}}
+                            @foreach ($modules_counts as $mdc)
+                                @if ($frmt->id == $mdc->formation_id)
+                                    {{$mdc->nb_modules}}
+                                @endif
+                            @endforeach
+                        </strong>
                     </button>
                 </h2>
                 <div id="frmt_{{$frmt->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$frmt->id}}">
@@ -102,17 +108,22 @@
                                     <a href="{{route('select_par_module',$mod->id)}}" class="">
                                         <div id="module{{$mod->id}}" class="row mb-3 module_lien justify-content-center align-items-center">
                                             <div class="col-6">
-                                                <div class="pt-2">{{$mod->id}}{{$mod->nom_module}}</div>
+                                                <div class="pt-2">{{$mod->nom_module}}</div>
                                             </div>
-                                            <div class="col-3 ">
-                                                <div class="mb-2"><i class='bx bx-calendar bx_modifier me-2'></i>{{$mod->duree_jour}}&nbsp;J</div>
+                                            <div class="col-2 ">
+                                                <div class="mb-2"><i class='bx bx-calendar bx_modifier me-2'></i>{{$mod->duree_jour}}&nbsp;J / {{$mod->duree}}&nbsp;H</div>
                                                 <div><i class='bx bx-windows bx_ajouter me-2'></i>{{$mod->modalite_formation}}</div>
                                             </div>
-                                            <div class="col-3 text-center">
+                                            <div class="col-2 text-center">
                                                 <div class="mb-2">{{$devise->devise}}&nbsp;{{$mod->prix}}</div>
                                                 @if($mod->prix_groupe != null)
                                                     <div>{{$devise->devise}}&nbsp;{{$mod->prix_groupe}}</div>
                                                 @endif
+                                            </div>
+                                            <div class="col-2 text-center">
+                                                <div class="">
+                                                    {{$mod->nom}}
+                                                </div>
                                             </div>
                                         </div>
                                     </a>
