@@ -4,6 +4,11 @@
     @endsection
     @section('content')
     <link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
+    <style>
+        td{
+            vertical-align: middle
+        }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
         integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -136,11 +141,9 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Numéro de facture</th>
-                            <th scope="col">Type d'abonnement</th>
-                            <th scope="col">Montant HT</th>
-                            <th scope="col">TVA (20%)</th>
-                            <th scope="col">Net à payer TTC</th>
+                            <th scope="col">Facture #</th>
+                            <th scope="col">Abonnement</th>
+                            <th scope="col">Montant
                             <th scope="col">Invoice date</th>
                             <th scope="col">Due date</th>
                             <th scope="col">Statut</th>
@@ -160,14 +163,12 @@
 
                                     <td>{{$fact->nom_type}}</td>
                                     <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
-                                    <td>{{number_format($tva[$i], 0, ',', '.')}} Ar</td>
-                                    <td>{{number_format($net_ttc[$i], 0, ',', '.')}} Ar</td>
                                     <td>{{$fact->invoice_date}}</td>
                                     <td>{{$fact->due_date}}</td>
                                     @if($fact->status_facture == "Non payé")
-                                        <td><span style="background-color: red;padding:10px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
+                                        <td><span style="background-color: red;padding:5px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
                                     @else
-                                        <td><span style="background-color: green;padding:10px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
+                                        <td><span style="background-color: green;padding:5px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
                                     @endif
                                     @if ($fact->nom_type == "Gratuit" && $fact->status_facture == "Non payé")
                                         <td scope="col"><button class="btn btn-primary"> <a href="{{route('activer_compte_gratuit',$fact->abonnement_id)}}"> Payer </a></button></td>
@@ -199,7 +200,7 @@
                         <thead>
                         <tr>
                             <th scope="col">Date d'inscription</th>
-                            <th scope="col">Type d'abonnement</th>
+                            <th scope="col">Abonnement</th>
                             <th scope="col">Prochaine facture</th>
                             <th scope="col">Activité</th>
                             <th scope="col">Action</th>
@@ -208,18 +209,17 @@
                         <tbody>
                             @php $i = 0; @endphp
                             @foreach ($facture as $fact )
-
                                 <tr>
                                     <td>{{$fact->invoice_date}}</td>
 
                                     <td>{{$fact->nom_type}}&nbsp;, Mensuel, &nbsp; {{number_format($fact->montant_facture, 0, ',', '.')}}Ar</td>
                                     <td>{{$facture_suivant[$i]}}</td>
                                     @if($fact->activite == 1)
-                                        <td><span style="background-color: green;padding:10px;color:white;border-radius:10px"> En cours </span></td>
+                                        <td><span style="background-color: green;padding:5px;color:white;border-radius:10px"> En cours </span></td>
                                     @elseif ($fact->status == "En attente")
-                                        <td><span style="background-color: orange;padding:10px;color:white;border-radius:10px"> En attente </span></td>
+                                        <td><span style="background-color: orange;padding:5px;color:white;border-radius:10px"> En attente </span></td>
                                     @else
-                                        <td><span style="background-color: red;padding:10px;color:white;border-radius:10px"> Terminé </span></td>
+                                        <td><span style="background-color: red;padding:5px;color:white;border-radius:10px"> Terminé </span></td>
                                     @endif
                                     <td>
                                         <div class="dropdown">

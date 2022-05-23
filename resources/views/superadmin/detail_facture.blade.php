@@ -48,6 +48,8 @@
 
         .pdf_download{
             background-color: #e73827 !important;
+            border-radius: 5px;
+            padding: 7px;
         }
         .pdf_download:hover{
             background-color: #af3906 !important;
@@ -198,9 +200,7 @@
                                     <thead class="table" style="background-color:#acacac ">
                                         <tr>
                                             <th scope="col">Description</th>
-                                            <th> Montant HT</th>
-                                            <th> TVA (20%) </th>
-                                            <th> Net à payer TTC </th>
+                                            <th> Montant </th>
                                         </tr>
                                     </thead>
                                     <tbody class="mb-1">
@@ -211,8 +211,6 @@
                                                 <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : {{$dates_abonnement[0]->date_debut}} <br> Fin: {{$dates_abonnement[0]->date_fin}}</td>
                                             @endif
                                             <td>{{number_format($facture[0]->montant_facture, 0, ',', '.')}} Ar</td>
-                                            <td>{{number_format($tva,0,',','.')}} Ar</td>
-                                            <td>{{number_format($net_ttc,0,',','.')}} Ar</td>
                                         </tr>
                                     </tbody>
                                 </table>

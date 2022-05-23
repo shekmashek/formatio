@@ -857,7 +857,7 @@ class AbonnementController extends Controller
                     $tva = 0;
                     $net_ttc = $facture[0]->montant_facture;
                 }
-                $lettre_montant = $this->fact->int2str($net_ttc);
+                $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
             }
             else{
                 $test_assujetti = $tva = $net_ttc ='';
@@ -884,7 +884,7 @@ class AbonnementController extends Controller
                     $tva = 0;
                     $net_ttc = $facture[0]->montant_facture;
                 }
-                $lettre_montant = $this->fact->int2str($net_ttc);
+                $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
             }
             else{
                 $test_assujetti = $tva = $net_ttc ='';
@@ -941,13 +941,13 @@ class AbonnementController extends Controller
                     $tva = 0;
                     $net_ttc = $facture[0]->montant_facture;
                 }
-                $lettre_montant = $this->fact->int2str($net_ttc);
+                $lettre_montant = $this->fact->int2str( $facture[0]->montant_facture);
             }
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
             $dates_abonnement =$this->fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
-            $lettre_montant = $this->fact->int2str($net_ttc);
+            $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
             $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','lettre_montant','entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
 
         }
@@ -970,13 +970,13 @@ class AbonnementController extends Controller
                     $tva = 0;
                     $net_ttc = $facture[0]->montant_facture;
                 }
-                $lettre_montant = $this->fact->int2str($net_ttc);
+                $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
             }
             else{
                 $test_assujetti = $tva = $net_ttc ='';
             }
             $dates_abonnement =$this->fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
-            $lettre_montant = $this->fact->int2str($net_ttc);
+            $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
             $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('lettre_montant','dates_abonnement','cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
             // return view('admin.pdf.pdf_facture_abonnement', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
         }
@@ -1026,7 +1026,7 @@ class AbonnementController extends Controller
     //of
     public function modifier_abonnement_of($id){
         $abonnement = $this->fonct->findWhereMulitOne("type_abonnements_of",["id"],[$id]);
-   
+
         return view('superadmin.modifier_type',compact('abonnement'));
     }
     public function enregistrer_modification_abonnement_of(Request $request,$id){

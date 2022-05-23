@@ -172,10 +172,10 @@
         .gauche{
             float: left;
         }
-        .contenu{
+        /* .contenu{
             color: #7635dc;
             cursor: pointer;
-        }
+        } */
         .contenu a:hover{
             color: #7635dc;
             text-decoration-line: underline;
@@ -212,8 +212,9 @@
             padding: 1;
             color: #ffffff;
          }
-         .pdf_download{
+        .pdf_download{
             background-color: #e73827 !important;
+            border-radius: 5px;
         }
         .pdf_download:hover{
             background-color: #af3906 !important;
@@ -268,12 +269,12 @@
                             <label class="contenu ps-3 pt-2" id="session"></label>
                             <i class='bx bx-time-five'></i> Du <label class="" id="debut"></label> au <label class="" id="fin"></label>
                             <i class='bx bx-group ms-3' style="font-size: 1rem;"></i> apprenants inscrits: <label id="nb_apprenant"></label>
-                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i> <label id="lieu"></label>
+                            <i class='bx bxs-map-pin  ms-3' style="font-size: 1rem;"></i> <label id="lieu"></label>
                             <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i><label id="salle"></label>
                         </div>
                         <div>
-                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i> </label> &nbsp;<label id="etp" class="contenu"> </label> <label for="logo" id="logo_etp"></label>
-                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i><label id="cfp" class="contenu"> </label><label for="logo" id="logo_cfp"></label><br>
+                            <i class='bx bx-building-house ms-3' style="font-size: 1rem;"></i> </label> &nbsp;<label id="etp" class="contenu"> </label> <label for="logo" id="logo_etp"></label>
+                            <i class='bx bx-buildings ms-3' style="font-size: 1rem;"></i><label id="cfp" class="contenu"> </label><label for="logo" id="logo_cfp"></label><br>
                             <label class="ps-3 pt-2"">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
                         </div>
                         {{-- <label class="gauche" for="">Entreprise client: </label>&nbsp;<label for="logo" id="logo_etp"></label> &nbsp;<label id="etp" class="contenu"> </label><br>
@@ -294,11 +295,10 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Matricule</th>
                                         <th>Noms</th>
                                         <th>Fonction</th>
-                                        <th>E-mail</th>
-                                        <th>Téléphone</th>
+                                        <th>Contact</th>
+                                        <th>Dept & Sce</th>
                                     </tr>
                                 </thead>
                                 <tbody id="liste_app" >
@@ -704,7 +704,7 @@
                                         if(stg[$a].photos == null) {
                                            html += '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+initial_stg[$a][0].nm + initial_stg[$a][0].pr+'</a></span>';
                                             html = html.replace(":?",stg[$a].stagiaire_id);
-                                            html += '</td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+ t1 + "&nbsp" + t2 + "&nbsp"+ t3 + "&nbsp" + t4 + '</td></tr>'
+                                            html += '</td><td>'+stg[$a].nom_stagiaire +' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + "&nbsp" + t2 + "&nbsp"+ t3 + "&nbsp" + t4 + '</td><td>'+stg[$a].nom_departement +'<br>'+stg[$a].nom_service+'</td></tr>'
                                         }
                                         else{
                                             html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:30px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
