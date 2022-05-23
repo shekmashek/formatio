@@ -51,17 +51,13 @@ class EmployeurController extends Controller
             'matricule.required' => 'invalid',
             'mail.required' => 'invalid',
             'cin.required' => 'invalid',
-            'fonction.required' => 'invalid',
-            'phone.required' => 'invalid',
-            'phone.email' => 'email est invalid'
+            'mail.email' => 'email est invalid'
         ];
         $critereForm = [
             'nom' => 'required',
             'matricule' => 'required',
             'mail' => 'required|email',
-            'cin' => 'required',
-            'fonction' => 'required',
-            'phone' => 'required'
+            'cin' => 'required'
         ];
         $request->validate($critereForm, $rules);
 
@@ -71,9 +67,7 @@ class EmployeurController extends Controller
         $nom = $request->nom;
         $prenom = $request->prenom;
         $cin = $request->cin;
-        $fonction = $request->fonction;
         $mail = $request->mail;
-        $phone = $request->phone;
        $fonction_employer=null;
         if (Gate::allows('isReferent')) {
 
@@ -106,9 +100,9 @@ class EmployeurController extends Controller
                         $this->fonct->insert_role_user($user_id, "5",false,true); // MANAGER
                         $this->fonct->insert_role_user($user_id, "3",false,false); // EMPLOYEUR
                     }
-                    $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
-                    DB::insert("insert into employers(matricule_emp,nom_emp,prenom,cin_emp,email_emp,telephone_emp,fonction_emp
-                    ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+                    $data = [$matricule, $nom, $prenom, $cin, $mail, $resp->entreprise_id, $user_id];
+                    DB::insert("insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp
+                    ,entreprise_id,user_id,activiter,created_at,genre_id) values(?,?,?,?,?,?,?,1,NOW(),1)", $data);
 
                     DB::commit();
 
@@ -116,8 +110,9 @@ class EmployeurController extends Controller
                     DB::rollback();
                     echo $e->getMessage();
                 }
-            Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
-            return back()->with('success',"Terminé !");
+            // Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
+            // return back()->with('success',"Terminé !");
+            return redirect()->route('employes.liste');
         }
 
     }
@@ -166,7 +161,7 @@ class EmployeurController extends Controller
     {
         DB::delete('delete from users where id = ?', [$id]);
         DB::delete("delete from role_users where user_id=?",[$id]);
-        DB::delete("delete from stagiaires where user_id=?",[$id]);
+        DB::delete("delete from employers where user_id=?",[$id]);
         return back();
     }
 }

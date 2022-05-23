@@ -128,6 +128,11 @@
                         import EXCEL employé
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('employes.equipe')}}" class="nav-link">
+                        Equipe
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -160,7 +165,7 @@
                     @endif
 
                     <div class="form-group mb-2" align="center">
-                        <button type="submit" class="btn btn_creer" id="saver_multi_stg">sauvegarder</button>
+                        <button type="submit" class="btn btn_enregistrer" id="saver_multi_stg">sauvegarder</button>
                     </div>
 
                     <table id="example" class="table table-bordered">

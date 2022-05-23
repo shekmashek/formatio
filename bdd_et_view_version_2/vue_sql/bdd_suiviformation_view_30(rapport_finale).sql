@@ -38,22 +38,22 @@ select
         reference,nom_module,nom_groupe
     from v_detail_groupe_module_projet;
 
-create or replace view v_date_formation as
-select
-    lieu,projet_id,session_id,date_debut,date_fin
-    from details,sessions
-    where session_id = sessions.id  group by projet_id,lieu,session_id,date_debut,date_fin;
+-- create or replace view v_date_formation as
+-- select
+--     lieu,projet_id,session_id,date_debut,date_fin
+--     from details,sessions
+--     where session_id = sessions.id  group by projet_id,lieu,session_id,date_debut,date_fin;
 
-create table but_objectif(
-    id bigint(20) unsigned primary key not null auto_increment,
-    description TEXT,
-    created_at timestamp NULL DEFAULT NULL,
-    updated_at timestamp NULL DEFAULT NULL
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- create table but_objectif(
+--     id bigint(20) unsigned primary key not null auto_increment,
+--     description TEXT,
+--     created_at timestamp NULL DEFAULT NULL,
+--     updated_at timestamp NULL DEFAULT NULL
+-- )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into but_objectif values(1,"Objectifs globaux de la formation :",NULL,NULL);
-insert into but_objectif values(2,"Objectif pédagogique de la formation Compétences clé :",NULL,NULL);
-insert into but_objectif values(3,"Objectif pédagogique de la formation Business Intelligence :",NULL,NULL);
+-- insert into but_objectif values(1,"Objectifs globaux de la formation :",NULL,NULL);
+-- insert into but_objectif values(2,"Objectif pédagogique de la formation Compétences clé :",NULL,NULL);
+-- insert into but_objectif values(3,"Objectif pédagogique de la formation Business Intelligence :",NULL,NULL);
 
 
 create table objectif_globaux(

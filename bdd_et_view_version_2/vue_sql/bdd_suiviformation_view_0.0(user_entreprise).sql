@@ -20,13 +20,13 @@ SELECT
     (employers.date_naissance_emp) date_naissance,
     employers.niveau_etude,
     employers.activiter,
-    employers.prioriter,
     (employers.adresse_quartier) quartier,
     (employers.adresse_code_postal) code_postal,
     (employers.adresse_ville) ville,
     (employers.adresse_region) region,
     (employers.adresse_lot) lot,
-    role_users.role_id
+    role_users.role_id,
+    role_users.prioriter
 FROM
 employers, role_users, genre
 WHERE
@@ -54,13 +54,13 @@ SELECT
     (employers.date_naissance_emp) date_naissance_resp,
     employers.niveau_etude,
     employers.activiter,
-    employers.prioriter,
     employers.adresse_quartier,
     employers.adresse_code_postal,
     employers.adresse_ville,
     employers.adresse_region,
     employers.adresse_lot,
-    role_users.role_id
+    role_users.role_id,
+    role_users.prioriter
 FROM
 employers, role_users , genre
 WHERE
@@ -88,13 +88,13 @@ SELECT
     (employers.date_naissance_emp) date_naissance_chef,
     employers.niveau_etude,
     employers.activiter,
-    employers.prioriter,
     employers.adresse_quartier,
     employers.adresse_code_postal,
     employers.adresse_ville,
     employers.adresse_region,
     employers.adresse_lot,
-    role_users.role_id
+    role_users.role_id,
+    role_users.prioriter
 FROM
 employers, role_users, genre
 WHERE

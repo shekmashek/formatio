@@ -15,6 +15,7 @@ use App\DepartementEntreprise;
 use App\entreprise;
 use App\stagiaire;
 use App\User;
+use App\Role;
 use App\responsable;
 use App\Models\getImageModel;
 use Illuminate\Support\Facades\File;
@@ -106,14 +107,14 @@ class ParticipantController extends Controller
         $entreprise_id = 0;
         $nb_limit = 10;
         $user_id = Auth::user()->id;
-
+        $role = new Role();
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
         }
         if (Gate::allows('isManager')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
         }
-        $connected = $this->fonct->findWhereMulitOne("employers",["entreprise_id","user_id"],[$entreprise_id,$user_id]);
+        $connected = $this->fonct->findWhereMulitOne("employers", ["entreprise_id", "user_id"], [$entreprise_id, $user_id]);
         $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
 
         if ($paginations != null) {
@@ -122,16 +123,72 @@ class ParticipantController extends Controller
                 $paginations = 1;
             }
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
-            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+            $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+            $employers = $role->getEmployerReferent($employers_tmp);
         } else {
             if ($paginations <= 0) {
                 $paginations = 1;
             }
-            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
+            $employers = $role->getEmployerReferent($employers_tmp);
         }
-        return view("admin.entreprise.employer.liste_employer", compact('connected','employers', 'pagination'));
+        return view("admin.entreprise.employer.liste_employer", compact('connected', 'employers', 'pagination'));
     }
+
+    public function equipe()
+    {
+        $entreprise_id = 0;
+        $nb_limit = 10;
+        $user_id = Auth::user()->id;
+
+        if (Gate::allows('isReferent')) {
+            $sql = "SELECT SUBSTRING(nom_resp,1,1) AS sub_nom_resp,SUBSTRING(prenom_resp,1,1) AS sub_prenom_resp,responsables.*,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND role_users.role_id=2 AND entreprise_id=?"; // get referent
+            $sql_connected = "SELECT SUBSTRING(nom_resp,1,1) AS sub_nom_resp,SUBSTRING(prenom_resp,1,1) AS sub_prenom_resp,responsables.*,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND role_users.role_id=2 AND entreprise_id=? AND responsables.user_id=?"; // get referent
+
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
+            $responsables = DB::select($sql, [$entreprise_id]);
+            $connected_tmp = DB::select($sql, [$entreprise_id,$user_id]);
+
+            $connected = $connected_tmp[0];
+            // dd($responsables);
+            // $prioriter = $this->fonct->findWhereMulitOne("role_users", [""], [$user_id]);
+// dd($responsables);
+            return view("admin.entreprise.employer.equipe_administratif", compact('connected', 'responsables'));
+
+            // $responsables = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id]);
+        } else {
+            return back();
+        }
+    }
+    public function change_role_principale($id_user_new = null)
+    {
+        $user_id = Auth::user()->id;
+
+
+        // dd($id_user_new);
+
+        DB::beginTransaction();
+        try {
+            DB::update("UPDATE role_users SET prioriter=False WHERE user_id=? AND role_id=?", [$user_id, 2]); // new referent
+            // $sql = "UPDATE role_users SET prioriter=1 WHERE user_id=".$id_user_new." AND role_id=2";
+            // echo $sql;
+            DB::update("UPDATE role_users SET prioriter=1 WHERE user_id=? AND role_id=?", [$id_user_new, 2]); // ancien
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
+       return back();
+    }
+
+    // public function change_role_principale(Request $request){
+    //     $fonct = new FonctionGenerique();
+    //     $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::id()])->user_id;
+    //     DB::update('update prioriter set prioriter = 0 where user_id = ? ', [$entreprise_id]);
+    //     DB::update('update prioriter set prioriter = 1 where user_id = ? and id = ?', [$entreprise_id->id_ref]);
+    //     return back();
+    // }
 
     public function index()
     {
@@ -920,13 +977,12 @@ class ParticipantController extends Controller
             $stagiaires_tmp = DB::select('SELECT * FROM stagiaires where id = ?', [$id]);
 
             $stagiaire = $stagiaires_tmp[0];
-            $initial_stagiaire = DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from stagiaires where id =  ?', [$id ]);
+            $initial_stagiaire = DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from stagiaires where id =  ?', [$id]);
 
-            if($stagiaire->service_id == null){
+            if ($stagiaire->service_id == null) {
                 $service = "---------------";
                 $departement = "---------------";
-            }
-            else{
+            } else {
                 $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
                 $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
             }
@@ -938,7 +994,7 @@ class ParticipantController extends Controller
             if ($stagiaire->genre_stagiaire == 2) {
                 $genre = 'Homme';
             }
-            return view('profil_public.stagiaire', compact('initial_stagiaire','entreprise', 'stagiaire', 'service', 'departement', 'branche','genre'));
+            return view('profil_public.stagiaire', compact('initial_stagiaire', 'entreprise', 'stagiaire', 'service', 'departement', 'branche', 'genre'));
         }
         // $stagiaire=stagiaire::findOrFail($id);
         // if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
@@ -1045,12 +1101,11 @@ class ParticipantController extends Controller
     {
         $image = $request->file('image');
         //tableau contenant les types d'extension d'images
-        $extension_type = array('jpeg','jpg','png','gif','psd','ai','svg');
-        if($image != null){
-            if($image->getSize() > 1692728 or $image->getSize() == false){
+        $extension_type = array('jpeg', 'jpg', 'png', 'gif', 'psd', 'ai', 'svg');
+        if ($image != null) {
+            if ($image->getSize() > 1692728 or $image->getSize() == false) {
                 return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
-            }
-            elseif(in_array($request->image->extension(),$extension_type)){
+            } elseif (in_array($request->image->extension(), $extension_type)) {
 
                 $stagiaire = $this->fonct->findWhereMulitOne("stagiaires", ["id"], [$id]);
                 $image_ancien = $stagiaire->photos;
@@ -1058,17 +1113,17 @@ class ParticipantController extends Controller
                 File::delete(public_path("images/stagiaires/" . $image_ancien));
                 //enregiistrer la nouvelle photo
 
-                    $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-                    $destinationPath = 'images/stagiaires';
-                      //imager  resize
-                    $image_name = $nom_image ;
-                    $destinationPath = public_path('images/stagiaires');
-                    $resize_image = Image::make($image->getRealPath());
-                    $resize_image->resize(228,128, function($constraint){
-                        $constraint->aspectRatio();
-                    })->save($destinationPath . '/' .  $image_name);
-                    // $image->move($destinationPath, $nom_image);
-                    $url_photo = URL::to('/')."/images/stagiaires/".$nom_image;
+                $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
+                $destinationPath = 'images/stagiaires';
+                //imager  resize
+                $image_name = $nom_image;
+                $destinationPath = public_path('images/stagiaires');
+                $resize_image = Image::make($image->getRealPath());
+                $resize_image->resize(228, 128, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath . '/' .  $image_name);
+                // $image->move($destinationPath, $nom_image);
+                $url_photo = URL::to('/') . "/images/stagiaires/" . $nom_image;
 
                 DB::update('update stagiaires set photos= ?,url_photo = ? where id = ?', [$nom_image, $url_photo, $id]);
                 return redirect()->route('profile_stagiaire');
@@ -1166,13 +1221,12 @@ class ParticipantController extends Controller
                         $user->password = Hash::make($ch1);
                         $user->save();
                         $user_stg_id = $fonct->findWhereMulitOne("users", ["email"], [$req["email_" . $i]])->id;
-                        $fonct->insert_role_user($user_stg_id, 3, True);
                         if (Gate::allows('isReferent')) {
                             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
                             $etp = $fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
 
                             $stg->insert_multi($doner, $user_stg_id, $entreprise_id);
-                            $fonct->insert_role_user($user_id, "3", false, true); // STG (user_id, role_id, prioriter, activiter)
+                            $fonct->insert_role_user($user_stg_id, "3", false, true); // STG (user_id, role_id, prioriter, activiter)
 
 
                             Mail::to($doner['email'])->send(new save_new_compte_stagiaire_Mail($doner["nom"] . ' ' . $doner["prenom"], $doner['email'], $etp->nom_etp));
@@ -1188,27 +1242,52 @@ class ParticipantController extends Controller
             }
         }
 
-        return back()->with('success', "" + $totale_valide + " desc nouveaux employés sont terminés avec succès!");
+        return redirect()->route('employes.liste');
+        // return back()->with('success', "" + $totale_valide + " desc nouveaux employés sont terminés avec succès!");
     }
 
     public function verify_matricule_stg(Request $req)
     {
         $fonct = new FonctionGenerique();
-        $data = $fonct->findWhere("stagiaires", ["matricule"], [$req->valiny]);
+        $user_id = Auth::user()->id;
+        $entreprise_id = 0;
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+        }
+        $data = $fonct->findWhere("employers", ["matricule_emp", "entreprise_id"], [$req->valiny, $entreprise_id]);
         return response()->json($data);
     }
 
     public function verify_email_stg(Request $req)
     {
         $fonct = new FonctionGenerique();
-        $data = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req->valiny]);
+        $user_id = Auth::user()->id;
+        $entreprise_id = 0;
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+        }
+        $data = $fonct->findWhere("users", ["email"], [$req->valiny]);
         return response()->json($data);
     }
 
     public function verify_cin_stg(Request $req)
     {
         $fonct = new FonctionGenerique();
-        $data = $fonct->findWhere("stagiaires", ["cin"], [$req->valiny]);
+        $user_id = Auth::user()->id;
+        $entreprise_id = 0;
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+        }
+        $data = $fonct->findWhere("users", ["cin"], [$req->valiny]);
         return response()->json($data);
     }
 }

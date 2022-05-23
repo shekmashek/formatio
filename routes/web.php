@@ -706,6 +706,10 @@ Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')-
 
 
 Route::get('employes.liste/{nbPag?}','ParticipantController@liste_employer')->name('employes.liste');
+Route::get('employes.equipe','ParticipantController@equipe')->name('employes.equipe');
+Route::get('employeur.change_role_principale/{id_new?}','ParticipantController@change_role_principale')->name('employeur.change_role_principale');
+// Route::post('change_role_principale','ParticipantController@change_role_principale')->name('change_role_principale');
+
 
 Route::get('employes.export.nouveau','ParticipantController@export_excel_new_participant')->name('employes.export.nouveau');
 Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
@@ -1055,7 +1059,7 @@ Route::post('recherche_intervale_date_appel_offre', 'AppelOffreController@recher
 Route::get('add_role_user', 'RoleController@add_role_user')->name('add_role_user');
 
 // Route::get('delete_role_user/{user_id}/{role_id}','RoleController@delete_role_user')->name('delete_role_user');
-Route::get('delete_role_use', 'RoleController@delete_role_user')->name('delete_role_user');
+Route::get('delete_role_user', 'RoleController@delete_role_user')->name('delete_role_user');
 
 Route::post('insert_session', 'GroupeController@insert_session')->name('insert_session');
 //Route impression detail_calendrier

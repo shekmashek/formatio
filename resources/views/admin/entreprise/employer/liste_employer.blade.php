@@ -277,7 +277,7 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="{{route('employes.liste')}}" class="nav-link active">
-                    employés
+                    employés {{ count($employers)}}
                 </a>
             </li>
             <li class="nav-item">
@@ -288,6 +288,11 @@
             <li class="nav-item">
                 <a href="{{route('employes.export.nouveau')}}" class="nav-link">
                     import EXCEL employé
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('employes.equipe')}}" class="nav-link">
+                    Equipe
                 </a>
             </li>
         </ul>
@@ -309,7 +314,7 @@
                             <th scope="col">Télephone
                             </th>
                             <th scope="col" colspan="2">Action</th>
-                            {{-- <th style="width: 10px;">Rétirer</th> --}}
+                            <th style="width: 10px;">Réferent</th>
                         </tr>
                     </thead>
                     <tbody id="list_data_trie_valider">
@@ -323,7 +328,7 @@
                                         <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
                                     </p>
                                     @else
-                                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$referent[$i]->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
                                     @endif
                                 </a>
                             </td>
@@ -383,35 +388,87 @@
                             </td>
                             <td>
                                 @if ($connected->id == $emp->id)
-                               <span style="color:green">moi</span>
+                                &nbsp;<span style="color:green" >moi</span>
                                 @else
-                                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                                &nbsp;<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                                @endif
+                            </td>
+
+                            {{-- =================== add et delete new role employes ====================== --}}
+                            {{-- <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$referent[$i]->user_id,$roles_not_actif_referent[$i]["role_inactif"][$ii]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button> --}}
+
+                            <td>
+
+                                @if ($emp->prioriter == True)
+
+                                @if($emp->is_referent == True)
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
+                                    <input class="form-check-input" type="checkbox" disabled data-user-id="{{$emp->user_id}}" value="{{$emp->role_id}}" checked>
+                                </div>
                                 @endif
 
-                               </td>
+                                @else
+
+                                @if($emp->activiter_role == True)
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
+                                    <input class="form-check-input delete_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->role_id}}" checked>
+                                </div>
+                                @else
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
+                                    <input class="form-check-input add_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->role_id}}">
+                                </div>
+                                @endif
+
+                                @endif
+
+
+                                {{-- @if ($emp->is_referent == True && $emp->prioriter == True)
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" disabled data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
+                                </div>
+                                @endif
+
+                                @if ($emp->is_referent == True && $emp->prioriter == false)
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input delete_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
+                                </div>
+                                @endif
+
+                                @if ($emp->is_referent == false && $emp->prioriter == false)
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input add_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
+                                </div>
+                                @endif
+
+                                @if ($emp->is_referent == false && $emp->prioriter == false)
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input delete_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
+                                </div>
+                                @endif --}}
+
+                            </td>
                         </tr>
 
                         <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
-                                @csrf
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                            <h4 class="modal-title text-white">Avertissement !</h4>
 
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                                        <h4 class="modal-title text-white">Avertissement !</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
+                                        </div>
 
-                                    </div>
-                                    <div class="modal-body">
-                                        <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
-                                    </div>
-
-                                    <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                            <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
 
                         </div>
                         @endforeach
@@ -488,6 +545,47 @@
 
             <script type="text/javascript">
                 /*============ stg =================*/
+
+
+                $(".add_role_employes").on('click', function(e) {
+                    var user_id = $(this).data("user-id");
+                    var role_id = $(this).val();
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('add_role_user')}}"
+                        , data: {
+                            user_id: user_id
+                            , role_id: role_id
+                        }
+                        , success: function(response) {
+                            window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                });
+
+                $(".delete_role_employes").on('click', function(e) {
+                    var user_id = $(this).data("user-id");
+                    var role_id = $(this).val();
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('delete_role_user')}}"
+                        , data: {
+                            user_id: user_id
+                            , role_id: role_id
+                        }
+                        , success: function(response) {
+                            window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                });
+
+
                 $(".desactiver_stg").on('click', function(e) {
                     var user_id = $(this).data("user-id");
                     var stg_id = $(this).val();
@@ -506,6 +604,7 @@
                         }
                     });
                 });
+
                 $(".activer_stg").on('click', function(e) {
                     var user_id = $(this).data("user-id");
                     var stg_id = $(this).val();
