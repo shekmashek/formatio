@@ -18,64 +18,40 @@
                     </div>
                 @endif
                 <div class="form-group">
-                    <div class="form-row d-flex">
-                        <div class="col">
-                            <div class="row px-3 mt-2">
-                                <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" name="date_debut" required
-                                        onfocus="(this.type='date')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Date debut du session<strong
-                                            class="text-danger">*</strong></label>
-                                </div>
-                            </div>
-
-                            <div class="row px-3 mt-2">
-                                <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" min="1" max="50"
-                                        name="min_part" onfocus="(this.type='number')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
-                                        minimal</label>
-                                </div>
-                            </div>
-                            <div class="row px-3 mt-2">
-                                <div class="form-group mt-1 mb-1">
-                                    <select class="form-select selectP input" id="etp_id" name="modalite"
-                                        aria-label="Default select example">
-                                        <option value="null" selected hidden>Choisir la modalité de formation...</option>
-                                        <option value="Présentielle">Présentielle</option>
-                                        <option value="En ligne">En ligne</option>
-                                        <option value="Présentielle/En ligne">Présentiel/En ligne</option>
-                                    </select>
-                                    <label class="ml-3 form-control-placeholder" for="etp_id">Modalite</label>
-                                </div>
-                            </div>
-                            <div class="text-center "><button type="submit" form="formPayement"
-                                    class="btn btn_enregistrer">Valider</button></div>
+                    <div class="row mt-2">
+                        <div class="col-lg-6 text-end mt-2"><span>Date debut de la session<strong
+                                    class="text-danger">*</strong></span></div>
+                        <div class="col-lg-6"><input type="date" id="min" class="form-control input"
+                                name="date_debut" style="width: 12rem;" required></div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-6 text-end mt-2"><span>Date fin de la session<strong
+                                    class="text-danger">*</strong></span></div>
+                        <div class="col-lg-6"><input type="date" id="min" class="form-control input"
+                                name="date_fin" style="width: 12rem;" required></div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-6 text-end mt-2"><span>Modalité<strong class="text-danger">*</strong> </span>
                         </div>
-                        <div class="col">
-                            <div class="row px-3 mt-2">
-                                <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" name="date_fin" required
-                                        onfocus="(this.type='date')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Date fin du session<strong
-                                            class="text-danger">*</strong></label>
-                                </div>
-                            </div>
-                            <div class="row px-3 mt-2">
-                                <div class="form-group mt-1 mb-1">
-                                    <input type="text" id="min" class="form-control input" min="1" max="50"
-                                        name="max_part" onfocus="(this.type='number')">
-                                    <label class="ml-3 form-control-placeholder" for="min">Nombre de participant
-                                        maximal</label>
-                                </div>
-                            </div>
-
-                            <div class="text-center " id="annuler_session"><button type="button" class="btn  btn_annuler"><a
-                                        href="{{route('liste_projet')}}">Annuler</a></button>
-                            </div>
+                        <div class="col-lg-6 text-end">
+                            <select class="form-select input_select" name="modalite" aria-label="Default select example"
+                                style="width: 15rem;" required>
+                                <option value="null">Sélectionnez</option>
+                                <option value="Présentiel">Présentielle</option>
+                                <option value="En ligne">En ligne</option>
+                                <option value="Présentiel/En ligne">Présentiel/En ligne</option>
+                            </select>
                         </div>
                     </div>
-                </div>
+                    <div class="row mt-3">
+                        <div class="col-lg-6 text-end"><button type="submit" form="formPayement"
+                                class="btn btn_enregistrer">Enregistrer</button></div>
+                        <div class="col-lg-6">
+                            <a href="{{ route('liste_projet') }}"><button type="button" class="btn  btn_annuler"
+                                    data-dismiss="modal">Annuler</button></a>
+                        </div>
+                    </div>
+                    
             </div>
         </form>
     </div>
@@ -89,4 +65,7 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="{{asset('js/projet_inter_intra.js')}}"></script>
+<script>
+    localStorage.setItem('activeTab', 'detail');
+</script>
 @endsection

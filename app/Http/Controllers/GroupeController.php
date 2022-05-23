@@ -49,8 +49,9 @@ class GroupeController extends Controller
         // dd($fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]));
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
         $type_formation = request()->type_formation;
-        $formations = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
-        $modules = $fonct->findAll("modules");
+        // $formations = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
+        // $modules = $fonct->findAll("modules");
+        $modules = $fonct->findWhere("modules", ["cfp_id",'status'], [$cfp_id,2]);
 
         $etp1 = $fonct->findWhere("v_demmande_cfp_etp", ['cfp_id'], [$cfp_id]);
         $etp2 = $fonct->findWhere("v_demmande_etp_cfp", ['cfp_id'], [$cfp_id]);
@@ -59,7 +60,7 @@ class GroupeController extends Controller
 
         $payement = $fonct->findAll("type_payement");
 
-        return view('projet_session.projet_intra_form', compact('type_formation', 'formations', 'modules', 'entreprise', 'payement'));
+        return view('projet_session.projet_intra_form', compact('type_formation', 'modules', 'entreprise', 'payement'));
     }
 
     public function createInter()
@@ -123,9 +124,9 @@ class GroupeController extends Controller
             if($request->payement == null){
                 throw new Exception("Vous devez choisir le mode de payement pour la formation.");
             }
-            if($request->min_part >= $request->max_part ){
-                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
-            }
+            // if($request->min_part >= $request->max_part ){
+            //     throw new Exception("Participant minimal doit être inférieur au participant maximal.");
+            // }
             if($request->modalite == null){
                 throw new Exception("Vous devez choisir la modalité de formation.");
             }
@@ -171,9 +172,9 @@ class GroupeController extends Controller
             if($request->payement == null){
                 throw new Exception("Vous devez choisir une entreprise pour la formation.");
             }
-            if($request->min_part >= $request->max_part ){
-                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
-            }
+            // if($request->min_part >= $request->max_part ){
+            //     throw new Exception("Participant minimal doit être inférieur au participant maximal.");
+            // }
             DB::beginTransaction();
             DB::update('update groupes set max_participant = ? ,min_participant = ? , module_id = ? ,type_payement_id = ? , date_debut = ? , date_fin = ? where id = ?',
             [$request->max_part,$request->min_part,$request->module_id,$request->payement,$request->date_debut,$request->date_fin,$request->id]);
@@ -193,9 +194,9 @@ class GroupeController extends Controller
             if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
             }
-            if($request->min_part >= $request->max_part ){
-                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
-            }
+            // if($request->min_part >= $request->max_part ){
+            //     throw new Exception("Participant minimal doit être inférieur au participant maximal.");
+            // }
             DB::beginTransaction();
             DB::update('update groupes set max_participant = ? ,min_participant = ? , date_debut = ? , date_fin = ? where id = ?',
             [$request->max_part,$request->min_part,$request->date_debut,$request->date_fin,$request->id]);
@@ -228,9 +229,9 @@ class GroupeController extends Controller
             if ($request->date_debut == null || $request->date_fin == null) {
                 throw new Exception("Date de début ou date de fin est vide.");
             }
-            if ($request->min_part >= $request->max_part) {
-                throw new Exception("Participant minimal doit être au participant maximal.");
-            }
+            // if ($request->min_part >= $request->max_part) {
+            //     throw new Exception("Participant minimal doit être au participant maximal.");
+            // }
             if($request->modalite == null){
                 throw new Exception("Vous devez choisir la modalité de formation.");
             }
@@ -311,9 +312,9 @@ class GroupeController extends Controller
             if($request->date_debut == null || $request->date_fin == null){
                 throw new Exception("Date de début ou date de fin est vide.");
             }
-            if($request->min_part >= $request->max_part ){
-                throw new Exception("Participant minimal doit être inférieur au participant maximal.");
-            }
+            // if($request->min_part >= $request->max_part ){
+            //     throw new Exception("Participant minimal doit être inférieur au participant maximal.");
+            // }
             if($request->modalite == null){
                 throw new Exception("Vous devez choisir la modalité de formation.");
             }

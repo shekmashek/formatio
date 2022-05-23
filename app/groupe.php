@@ -21,10 +21,10 @@ class Groupe extends Model
         if($num_projet[0]->nom_groupe==NULL){
             $num_session=1;
         } else{
-            $str = explode(" ",$num_projet[0]->nom_groupe);
+            $str = explode("-",$num_projet[0]->nom_groupe);
             $num_session=intval($str[1])+1;
         }
-            $nom_session ="Session ".$num_session;
+            $nom_session ="Sess-".$num_session;
             return $nom_session;
     }
 
@@ -51,6 +51,9 @@ class Groupe extends Model
         $nb_competence = DB::select('select ifnull(count(id),0) as nombre_comp from competence_a_evaluers where module_id = ?', [$module])[0]->nombre_comp;
         $nombre_eval = DB::select('select ifnull(count(note_apres),0) as nombre_note from evaluation_stagiaires where groupe_id = ? and note_apres < 0',[$groupe_id])[0]->nombre_note;
         // dd($nb_participant * $nb_competence,$nombre_eval);
+        if($nb_participant == 0){
+            $nb_participant = $nb_participant + 1;
+        }
         if($nb_participant * $nb_competence == $nombre_eval){
             return 1;
         }

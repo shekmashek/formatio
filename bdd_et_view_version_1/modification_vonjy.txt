@@ -133,3 +133,6 @@ creation view v_evaluation_globale =>creation vu v_session_projet => bdd_suivifo
 
 ---------mai 19
 alter table frais_annexes add column entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE;
+
+------------mai 29
+recréer vue v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_views_projet)
