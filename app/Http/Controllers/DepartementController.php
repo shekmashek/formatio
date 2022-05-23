@@ -16,6 +16,7 @@ use App\responsable;
 use App\Models\FonctionGenerique;
 use App\Role;
 use App\RoleUser;
+use App\service;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -108,37 +109,37 @@ class DepartementController extends Controller
         return view('admin.chefDepartement.liste', compact('nom_chef','prenom_chef','roles_actif_stg', 'roles_not_actif_stg', 'roles_actif_referent', 'roles_not_actif_referent', 'roles_actif_manager', 'roles_not_actif_manager', 'chef', 'referent', 'stagiaires', 'user_role', 'roles'));
     }
 
-//start filtre 
+//start filtre
  // filtre Employes fonction
     public function filtreFonction(Request $request){
         $function = new FonctionGenerique();
-        $emps = $function->filtreEmploye('fonction_stagiaire', $request->get('test'));   
-  
-        return json_encode($emps);      
+        $emps = $function->filtreEmploye('fonction_stagiaire', $request->get('test'));
+
+        return json_encode($emps);
     }
-    
+
     // filtre employes name
     public function filtreName(Request $request){
         $function = new FonctionGenerique();
-        $emps = $function->filtreEmploye('nom_stagiaire', $request->get('name'));   
-  
-        return json_encode($emps);   
+        $emps = $function->filtreEmploye('nom_stagiaire', $request->get('name'));
+
+        return json_encode($emps);
     }
 
     // filtre employes matricule
     public function filtreMatricule(Request $request){
         $function = new FonctionGenerique();
         $emps = $function->filtreEmploye('matricule', $request->get('matricule'));
- 
-        return json_encode($emps);    
+
+        return json_encode($emps);
     }
 
     // filtre employes role
     public function filtreRole(Request $request){
         $function = new FonctionGenerique();
         $emps = $function->filtreEmploye('role_name', $request->get('role_name'));
- 
-        return json_encode($emps);   
+
+        return json_encode($emps);
     }
 
 
@@ -351,14 +352,66 @@ class DepartementController extends Controller
             $rqt = DB::select('select * from chef_departements where user_id = ?', [Auth::user()->id]);
             $id_etp = $rqt[0]->entreprise_id;
         }
-
         $rqt = db::select('select * from departement_entreprises where entreprise_id = ?', [$id_etp]);
+
         $nb = count($rqt);
         $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);
+        $service_departement_tous = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? ", [$id_etp]);
         $nb_serv = count($service_departement);
         $branches = DB::select('select * from branches where entreprise_id = ?', [$id_etp]);
+
         $nb_branche = count($branches);
-            return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'branches', 'nb_branche'));
+            return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tous','branches', 'nb_branche'));
+    }
+    public function delete_dep($id)
+    {
+        DB::delete('delete from departement_entreprises where id = ?', [$id]);
+        return back();
+
+    }
+    public function update_dep(Request $request)
+    {
+        DB::update('update departement_entreprises set nom_departement=? where id=?',[$request->departement,$request->id]);
+        return back();
+    }
+    public function delete_service(Request $request)
+    {
+        $ids=$request->ids;
+        service::whereIn('id',$ids)->delete();
+        return back();
+    }
+    public function update_services(Request $request)
+    {
+        $dep = $request->departement;
+        if (Gate::allows('isReferentPrincipale')) {
+            $rqt = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        if (Gate::allows('isStagiairePrincipale')) {
+            $rqt = DB::select('select * from stagiaires where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        if (Gate::allows('isManagerPrincipale')) {
+            $rqt = DB::select('select * from chef_departements where user_id = ?', [Auth::user()->id]);
+            $id_etp = $rqt[0]->entreprise_id;
+        }
+        $services = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? and departement_entreprise_id = ?", [$id_etp,$dep]);
+        $req_services  = $request->service;
+        for($i =0 ; $i < count($req_services) ; $i++){
+            DB::update('update services set nom_service = ? where id = ?', [$req_services[$services[$i]->service_id],$services[$i]->service_id]);
+        }
+        return back();
+    }
+    public function delete_branche($id)
+    {
+        DB::delete('delete from branches where id=?',[$id]);
+        return back();
+    }
+    public function update_branche(Request $request)
+    {
+
+        DB::update('update branches set nom_branche=? where id=?',[$request->branche,$request->id]);
+        return back();
     }
     //fonction qui enregistre les services ratachés aux départements
     public function enregistrement_service(Request $request)
@@ -386,33 +439,33 @@ class DepartementController extends Controller
         return back();
     }
     //fonction qui modifie le nom de département
-    public function update_departement(Request $request)
-    {
-        $id_dep = $request->Id;
-        $nom_dep = $request->Nom;
-        db::update('update departement_entreprises set nom_departement = ? where id = ?', [$nom_dep, $id_dep]);
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Données modifiées avec succès',
+    // public function update_departement(Request $request)
+    // {
+    //     $id_dep = $request->Id;
+    //     $nom_dep = $request->Nom;
+    //     db::update('update departement_entreprises set nom_departement = ? where id = ?', [$nom_dep, $id_dep]);
+    //     return response()->json(
+    //         [
+    //             'success' => true,
+    //             'message' => 'Données modifiées avec succès',
 
-            ]
-        );
-    }
+    //         ]
+    //     );
+    // }
     //fonction qui modifie le nom du service
-    public function update_service(Request $request)
-    {
-        $id_serv = $request->Id;
-        $nom_serv = $request->Nom;
-        db::update('update services set nom_service = ? where id = ?', [$nom_serv, $id_serv]);
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Données modifiées avec succès',
+    // public function update_service(Request $request)
+    // {
+    //     $id_serv = $request->Id;
+    //     $nom_serv = $request->Nom;
+    //     db::update('update services set nom_service = ? where id = ?', [$nom_serv, $id_serv]);
+    //     return response()->json(
+    //         [
+    //             'success' => true,
+    //             'message' => 'Données modifiées avec succès',
 
-            ]
-        );
-    }
+    //         ]
+    //     );
+    // }
     //show departement select option
     public function liste_dep(Request $request)
     {

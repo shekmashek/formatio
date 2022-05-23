@@ -334,7 +334,7 @@
                     html += '</div>';
 
                     html += '<div class="col-1 text-end">';
-                    html += '<p name="totale_frais_annexe[]" class="text_prix">0</p>';
+                    html += '<p name="totale_frais_annexe[]" class="text_prix" align="right">0</p>';
 
                     html += '</div>';
 
@@ -467,7 +467,7 @@
                     html += '<input type="number" min="0" value="0" autocomplete="off" required name="facture[]" class="somme_totale_montant form-control input_quantite2 montant_session_facture" id="facture[]" placeholder="0">';
                     html += '</div>';
                     html += '<div class="col-1 text-end pe-0">';
-                    html += '<p name="totale_facture[]" class="text_prix">0</p>';
+                    html += '<p name="totale_facture[]" class="text_prix" align="right">0</p>';
                     html += '</div>';
                     html += '<div class="col-1 text-start pt-2">';
                     html += '<button id="removeRowMontant" type="button" class="btn icon_suppre_frais "><i class="fa fa-trash"></i></button></span></p>';

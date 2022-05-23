@@ -104,6 +104,7 @@ class FormationController extends Controller
 
         $id_cfp = cfp::where('user_id', $id_user)->value('id');
 
+
         //enregistrer les formations dans la bdd
         $formation = new formation();
         $formation->nom_formation = $request->nom_formation;
@@ -111,7 +112,6 @@ class FormationController extends Controller
         $formation->cfp_id = $id_cfp;
 
         $formation->save();
-
 
         return redirect()->route('liste_formation');
     }

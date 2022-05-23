@@ -12,7 +12,7 @@
 
 <div class="col-lg-6">
     <div class="p-3 form-control">
-        
+
         <form   class="btn-submit" action="{{route('enregistrer_modification_email',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row px-3 mt-4">

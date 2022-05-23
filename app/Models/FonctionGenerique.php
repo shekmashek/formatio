@@ -15,7 +15,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT COUNT(id) id FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
@@ -31,7 +31,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "" . $opt[$i] . " ?";
@@ -47,7 +47,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "" . $opt[$i] . " ?";
@@ -63,7 +63,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille des donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
@@ -79,7 +79,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
@@ -95,7 +95,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= '" . $val[$i] . "'";
@@ -303,13 +303,13 @@ class FonctionGenerique extends Model
                 ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
                 ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
                     'role_id', 'mail_stagiaire', 'photos',
-                    'stagiaires.user_id', 'fonction_stagiaire', 
+                    'stagiaires.user_id', 'fonction_stagiaire',
                     'users.name', 'users.telephone', 'users.email')
                 ->where('stagiaires.entreprise_id', '=', $etp_id)
                 ->where($search_param_name, 'like', '%'. $input .'%')
                 ->get();
-  
-        return $emps;   
+
+        return $emps;
     }
 
     //filtre Réferent
@@ -323,8 +323,8 @@ class FonctionGenerique extends Model
                 ->join('v_role_user_etp_referent', 'v_role_user_etp_referent.user_id', 'users.id')
                 ->join('responsables', 'responsables.user_id', 'users.id')
                 ->join('entreprises', 'entreprises.id', 'responsables.entreprise_id')
-                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name', 
-                'matricule', 
+                ->select('responsables.entreprise_id' ,'telephone_resp' ,'role_name',
+                'matricule',
                 'nom_resp', 'prenom_resp',
                     'role_id', 'email_resp', 'photos',
                     'responsables.user_id', 'fonction_resp')
@@ -347,7 +347,7 @@ class FonctionGenerique extends Model
                 ->join('v_role_user_etp_manager', 'v_role_user_etp_manager.user_id', 'users.id')
                 ->join('chef_departements', 'chef_departements.user_id', 'users.id')
                 ->join('entreprises', 'entreprises.id', 'chef_departements.entreprise_id')
-                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name', 
+                ->select('chef_departements.entreprise_id' ,'telephone_chef' ,'role_name',
                     'chef_departements.id', 'nom_chef', 'prenom_chef',
                     'role_id', 'mail_chef', 'photos',
                     'chef_departements.user_id', 'fonction_chef')
@@ -380,9 +380,9 @@ class FonctionGenerique extends Model
     }
     // ------------------------------
 
-    public function insert_role_user($user_id, $role_id, $activiter)
+    public function insert_role_user($user_id, $role_id,$prioriter, $activiter)
     {
-        DB::insert('insert into role_users (user_id, role_id,activiter) values (?, ?,?)', [$user_id, $role_id, $activiter]);
+        DB::insert('insert into role_users (user_id, role_id,prioriter,activiter) values (?,?,?,?)', [$user_id, $role_id,$prioriter, $activiter]);
     }
 
     //insertion iframe pour enntreprise et of dans la bd
@@ -392,10 +392,19 @@ class FonctionGenerique extends Model
         DB::insert('insert into ' . $table . ' (' . $colonnes . ', iframe) values (?, ?)', [$id, $iframe]);
     }
 
+    public function insert_iframe_invite($iframe)
+    {
+        DB::insert('insert into iframe_invite(iframe) values (?)', [$iframe]);
+    }
+
     //modification iframe
     public function update_iframe($table, $col1, $col2, $id, $iframe)
     {
         DB::update('update ' . $table . ' set ' . $col1 . ' = "' . $iframe . '" where ' . $col2 . ' = ?', [$id]);
+    }
+    public function update_iframe_invite($id,$iframe)
+    {
+        DB::update('update iframe_invite set iframe = ? where id = ?', [$iframe,$id]);
     }
 
     //suppressionn iframe
@@ -403,6 +412,12 @@ class FonctionGenerique extends Model
     {
         DB::delete('delete from ' . $table . ' where ' . $colonne . ' = ?', [$id]);
     }
+
+    public function supprimer_iframe_invite($id)
+    {
+        DB::delete('delete from iframe_invite where id = ?', [$id]);
+    }
+
 
     // find where avec odrer by
 

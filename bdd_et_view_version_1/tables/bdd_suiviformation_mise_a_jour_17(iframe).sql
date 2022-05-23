@@ -16,8 +16,16 @@ create table iframe_cfp(
     foreign key(cfp_id) references cfps(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+create table iframe_invite(
+    id bigint(20) unsigned primary key not null auto_increment,
+    iframe TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE OR REPLACE VIEW v_entreprise_iframe as SELECT
     e.id as entreprise_id,
+    e.statut_compte_id,
     e.nom_etp,
     i.iframe
 FROM iframe_entreprise i
@@ -26,6 +34,7 @@ RIGHT JOIN entreprises e ON e.id = i.entreprise_id;
 CREATE OR REPLACE VIEW v_cfp_iframe as SELECT
     c.id as cfp_id,
     c.nom,
+    c.statut_compte_id,
     i.iframe
 FROM iframe_cfp i
 RIGHT JOIN cfps c ON c.id = i.cfp_id;

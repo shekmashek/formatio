@@ -171,7 +171,6 @@
         }
         .gauche{
             float: left;
-            font-weight: bold;
         }
         .contenu{
             color: #7635dc;
@@ -213,6 +212,22 @@
             padding: 1;
             color: #ffffff;
          }
+         .pdf_download{
+            background-color: #e73827 !important;
+        }
+        .pdf_download:hover{
+            background-color: #af3906 !important;
+        }
+        .pdf_download button{
+            color: #ffffff !important;
+        }
+
+        th{
+            font-weight: 500 !important;
+        }
+        tbody tr{
+            vertical-align: middle
+        }
 
     </style>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
@@ -246,12 +261,12 @@
                         <div class="p-0 m-0 d-flex justify-content-start">
                             <i class='bx bxs-book-open mt-2 me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i> <span class="type_formation_cal pt-1 mt-2 ps-2 pe-2" id="types"> </span>
                             <label class="status_grise pt-1 mt-2 ps-2 pe-2 ms-2" id="statut"></label>
-                            <label class="contenu mt-3 ps-2 pe-2 ms-2" id="formation"> </label><label class="mt-3 ps-2 pe-2">-</label> <label class="contenu mt-3 ps-2 pe-2 ms-2" id="module"></label>
+                            <label class="contenu mt-3 ps-2 pe-2 ms-2" id="module"></label>
                         </div>
                         <div>
                             <label  class="contenu ps-3 pt-2" id="projet"> </label>
                             <label class="contenu ps-3 pt-2" id="session"></label>
-                            <i class = "bx bxs-time icones"></i> Du <label class="" id="debut"></label> au <label class="" id="fin"></label>
+                            <i class='bx bx-time-five'></i> Du <label class="" id="debut"></label> au <label class="" id="fin"></label>
                             <i class='bx bx-group ms-3' style="font-size: 1rem;"></i> apprenants inscrits: <label id="nb_apprenant"></label>
                             <i class='bx bx-home ms-3' style="font-size: 1rem;"></i> <label id="lieu"></label>
                             <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i><label id="salle"></label>
@@ -272,7 +287,7 @@
                         <label class="gauche">Lieu:</label>&nbsp;<label id="lieu"> </label><br> --}}
                         <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
-                         <hr>
+
                         @canany(['isReferent','isCFP','isFormateur'])
                             <label class="gauche" for="">Liste des apprenants</label><br>
                             <table class="table">
@@ -379,51 +394,12 @@
                     var userDataDetail = JSON.parse(data);
                     // alert(userData.length);
                     var details = userDataDetail['detail'];
-                    console.log(details);
                     var modules = userDataDetail['modules'];
                     var formations = userDataDetail['formations'];
-                    var letters = '0123456789ABCDEF';
-                    var couleur = '#';
-                    for (var i = 0; i < 6; i++) {
-                        couleur += letters[Math.floor(Math.random() * 16)];
-                    }
-
+                    // var letters = '0123456789ABCDEF';
+                    // var couleur = '#';
                     for (var $i = 0; $i < details.length; $i++) {
-                        // couleur  = "red";
-                        // var meme_groupe = new Array();
-                        for(var $j = $i+1; $j < details.length; $j++){
-                            if (details[$i].groupe_id == details[$j].groupe_id ) {
-                                meme_groupe = details[$i].groupe_id;
-                                // meme_groupe.push(details[$i].groupe_id ) ;
-                            }
-                        }
-                        if(details[$i].groupe_id == meme_groupe){
-                            // couleur  = "red";
-
-                            // console.log("ambany",details[$i].groupe_id);
-                            // console.log("mitovy",couleur);
-                            event.push({
-                                title: formations[$i][0].nom_formation
-                                , start: details[$i].date_detail
-                                ,backgroundColor:couleur
-                                , nom_projet: details[$i].nom_projet
-                                , nom_module: modules[$i][0].nom_module
-                                , h_debut: details[$i].h_debut
-                                , h_fin: details[$i].h_fin
-                                , lieu: details[$i].lieu
-                                , formateur: details[$i].nom_formateur + ' ' + details[$i].prenom_formateur
-                                , detail_id: details[$i].details_id
-                                , nom_cfp: details[$i].nom_cfp
-                                , customRender: true
-                            });
-                            for (var i = 0; i < 6; i++) {
-                                couleur += letters[Math.floor(Math.random() * 16)];
-                            }
-                        }
-                        else{
-                            // console.log("tsy mitovy",$i);
-                            // console.log("tsy mitovy",getRandomColor());
-                            event.push({
+                        event.push({
                                 title: formations[$i][0].nom_formation
                                 , start: details[$i].date_detail
                                 ,backgroundColor:getRandomColor()
@@ -438,8 +414,49 @@
                                 , customRender: true
                             });
                         }
+                    // for (var i = 0; i < 6; i++) {
+                    //     couleur += letters[Math.floor(Math.random() * 16)];
+                    // }
 
-                    }
+                    // for (var $i = 0; $i < details.length; $i++) {
+                    //     // couleur  = "red";
+                    //     // var meme_groupe = new Array();
+                    //     for(var $j = $i+1; $j < details.length; $j++){
+                    //         if (details[$i].groupe_id == details[$j].groupe_id ) {
+                    //             meme_groupe = details[$i].groupe_id;
+                    //             // meme_groupe.push(details[$i].groupe_id ) ;
+                    //         }
+                    //     }
+                    //     if(details[$i].groupe_id == meme_groupe){
+                    //         // couleur  = "red";
+
+                    //         // console.log("ambany",details[$i].groupe_id);
+                    //         // console.log("mitovy",couleur);
+                    //         event.push({
+                    //             title: formations[$i][0].nom_formation
+                    //             , start: details[$i].date_detail
+                    //             ,backgroundColor:couleur
+                    //             , nom_projet: details[$i].nom_projet
+                    //             , nom_module: modules[$i][0].nom_module
+                    //             , h_debut: details[$i].h_debut
+                    //             , h_fin: details[$i].h_fin
+                    //             , lieu: details[$i].lieu
+                    //             , formateur: details[$i].nom_formateur + ' ' + details[$i].prenom_formateur
+                    //             , detail_id: details[$i].details_id
+                    //             , nom_cfp: details[$i].nom_cfp
+                    //             , customRender: true
+                    //         });
+                    //         for (var i = 0; i < 6; i++) {
+                    //             couleur += letters[Math.floor(Math.random() * 16)];
+                    //         }
+                    //     }
+                    //     else{
+                    //         // console.log("tsy mitovy",$i);
+                    //         // console.log("tsy mitovy",getRandomColor());
+
+                    //     }
+
+                    // }
                     // $.each(userDataDetail, function(i, entry) {
                     //     console.log( entry);
                     //     event.push({
@@ -545,8 +562,8 @@
                                          logo_formateur.innerHTML = '';
                                      }
 
-                                    var formation = document.getElementById('formation');
-                                    formation.innerHTML = '';
+                                    // var formation = document.getElementById('formation');
+                                    // formation.innerHTML = '';
                                     var module = document.getElementById('module');
                                     module.innerHTML = '';
                                     var formateur = document.getElementById('formateur');
@@ -586,7 +603,7 @@
                                     var etp = '';
                                     var printpdf = '';
                                     for (var $i = 0; $i < userData.length; $i++) {
-                                        printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank"><button class="btn liste_projet ms-3 me-1"><i class="bx bxs-cloud-download"></i>&nbsp;&nbsp;&nbsp;PDF</button></a>';
+                                        printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a>';
                                         printpdf = printpdf.replace(":?",id_detail);
                                         $('#printpdf').append(printpdf);
 
@@ -646,7 +663,13 @@
                                         logo_cfp = logo_cfp.replace(":?",userData[$i].logo);
                                         $('#logo_cfp').append(logo_cfp);
 
-                                        html += '<a href="{{url("profile_formateur/:?")}}" target = "_blank">'+userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + '&nbsp&nbsp<i class="fas fa-envelope-square"></i>'+ userData[$i].mail_formateur + '&nbsp&nbsp<i class="fas fa-phone-alt"></i> '+ userData[$i].numero_formateur+'</a>'
+                                          //separation num telephone
+                                        var n1 = userData[$i].numero_formateur.substr(0,3);
+                                        var n2 = userData[$i].numero_formateur.substr(3,2);
+                                        var n3 = userData[$i].numero_formateur.substr(5,3);
+                                        var n4 = userData[$i].numero_formateur.substr(6,2);
+
+                                        html += '<a href="{{url("profile_formateur/:?")}}" target = "_blank">'+userData[$i].nom_formateur + ' ' + userData[$i].prenom_formateur + '&nbsp&nbsp<i class="fas fa-envelope-square"></i>'+ userData[$i].mail_formateur + '&nbsp&nbsp<i class="fas fa-phone-alt"></i> '+  n1 + "&nbsp"+ n2 + "&nbsp"+ n3 + "&nbsp"+ n4+'</a>'
                                         html = html.replace(":?",userData[$i].formateur_id);
                                         $('#formateur').append(html);
 
@@ -662,17 +685,26 @@
                                     }
                                     var html = '';
                                     for (var $j = 0; $j < date_groupe.length; $j++) {
-                                        html += '<li>- Séance ' + ($j+1) +': <i class="bx bxs-calendar icones" ></i> '+date_groupe[$j].date_detail+'&nbsp <i class = "bx bxs-time icones"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
+                                        html += '<li>- Séance ' + ($j+1) +': <i class="bx bx-calendar" ></i> '+date_groupe[$j].date_detail+'&nbsp <i class="bx bx-time-five"></i> '+date_groupe[$j].h_debut+'h - '+date_groupe[$j].h_fin+'h </li>'
                                     }
                                     $('#date_formation').append(html);
                                     $('#nb_seance').append(nb_seance);
                                     var html = '';
+                                      //separation num telephone
+                                    var t1;
+                                    var t2;
+                                    var t3;
+                                    var t4;
 
                                     for (var $a = 0; $a < stg.length; $a++) {
+                                        t1 = stg[$a].telephone_stagiaire.substr(0,3);
+                                        t2 = stg[$a].telephone_stagiaire.substr(3,2);
+                                        t3 = stg[$a].telephone_stagiaire.substr(5,3);
+                                        t4 = stg[$a].telephone_stagiaire.substr(6,2);
                                         if(stg[$a].photos == null) {
                                            html += '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+initial_stg[$a][0].nm + initial_stg[$a][0].pr+'</a></span>';
                                             html = html.replace(":?",stg[$a].stagiaire_id);
-                                            html += '</td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                            html += '</td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+ t1 + "&nbsp" + t2 + "&nbsp"+ t3 + "&nbsp" + t4 + '</td></tr>'
                                         }
                                         else{
                                             html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:30px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'

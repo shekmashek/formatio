@@ -65,6 +65,7 @@ class ProfController extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+        $this->fonct = new FonctionGenerique();
     }
     public function index($id = null)
     {
@@ -75,7 +76,6 @@ class ProfController extends Controller
 
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
             // $formateur = $forma->getFormateur($formateur1, $formateur2);
@@ -86,6 +86,11 @@ class ProfController extends Controller
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
 
             $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
+
+            // $cfp_formateur = $fonct->findWhereMulitOne("v_demmande_cfp_formateur",["cfp_id"],[$cfp_id])->activiter_formateur;
+            // dd($cfp_formateur);
+
+            // $cfp_formateur = DB::select('select * from v_demmande_cfp_formateur where cfp_id = ?', [$cfp_id]);
 
             return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
 
@@ -158,109 +163,117 @@ class ProfController extends Controller
     public function store(Request $request)
     {
         $fonct = new FonctionGenerique();
+        /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le formateur à ajouter */
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::id()])->cfp_id;
+        $nb_formateur = $this->fonct->findWhere("demmande_cfp_formateur",["demmandeur_cfp_id"],[$cfp_id]);
+        $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
 
-        $image = $request->file('image');
-        if($image != null){
+        if($abonnement_cfp[0]->nb_formateur == count($nb_formateur) && $abonnement_cfp[0]->illimite == 0)  return back()->with('error', "Vous avez atteint le nombre maximum de formateur, veuillez upgrader votre compte pour ajouter plus de formateur");
+        else{
+            $image = $request->file('image');
+            if($image != null){
 
-            if($image->getSize() > 1692728 or $image->getSize() == false){
-                return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 1.7 MB');
-            }
-            else{
-                if($request->sexe == "homme") $genre = 2;
-                if($request->sexe == "femme") $genre = 1;
-                if($request->sexe == "null") $genre = null;
-
-                $frm = new formateur();
-                $frm->nom_formateur = $request->nom;
-                $frm->prenom_formateur = $request->prenom;
-                $frm->mail_formateur = $request->mail;
-                $frm->numero_formateur = $request->phone;
-                $frm->genre_id = $genre;
-                $frm->date_naissance = $request->date_naissance;
-                $frm->adresse = $request->adresse;
-                $frm->CIN = $request->cin;
-                $frm->specialite = $request->specialite;
-                $frm->niveau = $request->niveau;
-
-                $date = date('d-m-Y');
-                $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
-                $str = 'images/formateurs';
-                $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
-
-                //imager  resize
-
-                $image_name = $nom_image;
-
-                $destinationPath = public_path('images/formateurs');
-
-                $resize_image = Image::make($image->getRealPath());
-
-                $resize_image->resize(228, 128, function($constraint){
-                    $constraint->aspectRatio();
-                })->save($destinationPath . '/' .  $image_name);
-                // $request->image->move(public_path($str), $nom_image);
-
-                $frm->photos = $nom_image;
-                // $frm->url_photo = $url_photo;
-
-                $user = new User();
-                $user->name = $request->nom . " " . $request->prenom;
-                $user->email = $request->mail;
-
-                $user->cin = $request->cin;
-                $user->telephone = $request->phone;
-
-                $ch1 = '0000';
-                // $ch2 = substr($request->phone, 8, 2);
-                $user->password = Hash::make($ch1);
-                $user->save();
-
-                $user_id = $fonct->findWhereMulitOne("users", ["email"], [$request->mail])->id;
-                DB::beginTransaction();
-                try {
-                    $fonct->insert_role_user($user_id, "4",true); // formateur
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    echo $e->getMessage();
+                if($image->getSize() > 1692728 or $image->getSize() == false){
+                    return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 1.7 MB');
                 }
+                else{
+                    if($request->sexe == "homme") $genre = 2;
+                    if($request->sexe == "femme") $genre = 1;
+                    if($request->sexe == "null") $genre = null;
 
-                //get user id
-                $frm->user_id = $user_id;
-                $frm->save();
+                    $frm = new formateur();
+                    $frm->nom_formateur = $request->nom;
+                    $frm->prenom_formateur = $request->prenom;
+                    $frm->mail_formateur = $request->mail;
+                    $frm->numero_formateur = $request->phone;
+                    $frm->genre_id = $genre;
+                    $frm->date_naissance = $request->date_naissance;
+                    $frm->adresse = $request->adresse;
+                    $frm->CIN = $request->cin;
+                    $frm->specialite = $request->specialite;
+                    $frm->niveau = $request->niveau;
 
-                // $idmail_formateur = formateur::where('mail_formateur', $request->mail)->value('id');
-                $idmail_formateur = $fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$request->mail])->id;
+                    $date = date('d-m-Y');
+                    $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
+                    $str = 'images/formateurs';
+                    $url_photo = URL::to('/')."/images/formateurs/".$nom_image;
 
-                $input = $request->all();
-                for ($i = 0; $i < count($input['domaine']); $i++) {
-                    $competence = new competenceFormateur();
-                    $competence->competence = $input['competences'][$i];
-                    $competence->domaine = $input['domaine'][$i];
-                    $competence->formateur_id = $idmail_formateur;
-                    $competence->save();
+                    //imager  resize
+
+                    $image_name = $nom_image;
+
+                    $destinationPath = public_path('images/formateurs');
+
+                    $resize_image = Image::make($image->getRealPath());
+
+                    $resize_image->resize(228, 128, function($constraint){
+                        $constraint->aspectRatio();
+                    })->save($destinationPath . '/' .  $image_name);
+                    // $request->image->move(public_path($str), $nom_image);
+
+                    $frm->photos = $nom_image;
+                    // $frm->url_photo = $url_photo;
+
+                    $user = new User();
+                    $user->name = $request->nom . " " . $request->prenom;
+                    $user->email = $request->mail;
+
+                    $user->cin = $request->cin;
+                    $user->telephone = $request->phone;
+
+                    $ch1 = '0000';
+                    // $ch2 = substr($request->phone, 8, 2);
+                    $user->password = Hash::make($ch1);
+                    $user->save();
+
+                    $user_id = $fonct->findWhereMulitOne("users", ["email"], [$request->mail])->id;
+                    DB::beginTransaction();
+                    try {
+                        $fonct->insert_role_user($user_id, "4",true); // formateur
+                        DB::commit();
+                    } catch (Exception $e) {
+                        DB::rollback();
+                        echo $e->getMessage();
+                    }
+
+                    //get user id
+                    $frm->user_id = $user_id;
+                    $frm->save();
+
+                    // $idmail_formateur = formateur::where('mail_formateur', $request->mail)->value('id');
+                    $idmail_formateur = $fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$request->mail])->id;
+
+                    $input = $request->all();
+                    for ($i = 0; $i < count($input['domaine']); $i++) {
+                        $competence = new competenceFormateur();
+                        $competence->competence = $input['competences'][$i];
+                        $competence->domaine = $input['domaine'][$i];
+                        $competence->formateur_id = $idmail_formateur;
+                        $competence->save();
+                    }
+
+                    for ($i = 0; $i < count($input['entreprise']); $i++) {
+                        $experience = new experienceFormateur();
+                        $experience->nom_entreprise = $input['entreprise'][$i];
+                        $experience->poste_occuper = $input['poste'][$i];
+                        $experience->debut_travail = $input['date_debut'][$i];
+                        $experience->fin_travail = $input['date_fin'][$i];
+                        $experience->taches = $input['taches'][$i];
+                        $experience->formateur_id = $idmail_formateur;
+                        $experience->save();
+                    }
+                    if (Gate::allows('isCFP')) {
+
+                        DB::insert("insert into demmande_cfp_formateur(demmandeur_cfp_id,inviter_formateur_id,activiter,created_at,updated_at) values(?,?,true,NOW(),NOW())", [$cfp_id, $idmail_formateur]);
+                    }
+                //   $request->image->move(public_path('images/formateurs'), $nom_image);  //save image cfp
+
+                    // return redirect()->route('utilisateur_formateur');
+                    return back()->with('success', 'Formateur ajouté avec succès!');
                 }
-
-                for ($i = 0; $i < count($input['entreprise']); $i++) {
-                    $experience = new experienceFormateur();
-                    $experience->nom_entreprise = $input['entreprise'][$i];
-                    $experience->poste_occuper = $input['poste'][$i];
-                    $experience->debut_travail = $input['date_debut'][$i];
-                    $experience->fin_travail = $input['date_fin'][$i];
-                    $experience->taches = $input['taches'][$i];
-                    $experience->formateur_id = $idmail_formateur;
-                    $experience->save();
-                }
-                if (Gate::allows('isCFP')) {
-                    $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::id()])->cfp_id;
-                    DB::insert("insert into demmande_cfp_formateur(demmandeur_cfp_id,inviter_formateur_id,activiter,created_at,updated_at) values(?,?,true,NOW(),NOW())", [$cfp_id, $idmail_formateur]);
-                }
-            //   $request->image->move(public_path('images/formateurs'), $nom_image);  //save image cfp
-
-                // return redirect()->route('utilisateur_formateur');
-                return back()->with('success', 'Formateur ajouté avec succès!');
             }
         }
+
     }
 
 
@@ -663,5 +676,20 @@ class ProfController extends Controller
         $dossier = 'formateur';
         $etp = new getImageModel();
         return $etp->get_image($path, $dossier);
+    }
+
+    public function desactiver_formateur(Request $request){
+        $id  = $request->Id;
+        $activiter = 0;
+        DB::update('update formateurs set activiter = ? where id = ?', [$activiter, $id]);
+        return response()->json(['success' => 'ok']);
+    }
+
+
+    public function activer_formateur(Request $request){
+        $id  = $request->Id;
+        $activiter = 1;
+        DB::update('update formateurs set activiter = ? where id = ?', [$activiter, $id]);
+        return response()->json(['success' => 'ok']);
     }
 }

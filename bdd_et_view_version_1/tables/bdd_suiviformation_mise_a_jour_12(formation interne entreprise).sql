@@ -258,7 +258,7 @@ CREATE TABLE modules_interne (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 alter table modules_interne add status int(11) default 0;
-
+alter table modules_interne add etp_id bigint(20);
 
 CREATE TABLE programmes_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

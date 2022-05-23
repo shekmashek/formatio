@@ -130,8 +130,8 @@ class ResponsableCfpController extends Controller
             $cfp_id = $resp_connecte->cfp_id;
             $cfp = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where cfp_id = ?' , [$cfp_id]);
             $cfpPrincipale = DB::select('select * from responsables_cfp where prioriter = 1');
-            $cfpPrincipal = DB::select('select * from responsables_cfp where activiter = 0');
-            return view('cfp.responsable_cfp.liste_equipe_admin_cfp', compact('cfp','resp_connecte','cfpPrincipale','cfpPrincipal'));
+            // $cfpPrincipal = DB::select('select * from responsables_cfp where activiter = 0');
+            return view('cfp.responsable_cfp.liste_equipe_admin_cfp', compact('cfp','resp_connecte','cfpPrincipale'));
         }
     }
 
@@ -153,71 +153,78 @@ class ResponsableCfpController extends Controller
 
         $user_id = Auth::id();
         if (Gate::allows('isCFP')) {
-
             $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
-            if ($resp_cfp_connecter->prioriter == 1) {
-                $resp->verify_form($request);
+            /**On doit verifier le dernier abonnement de l'of pour pouvoir limité l'utilisateur à ajouter */
+            $nb_referent = $this->fonct->findWhere("responsables_cfp",["cfp_id"],[$resp_cfp_connecter->cfp_id]);
+            $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$resp_cfp_connecter->cfp_id]);
+            if($abonnement_cfp[0]->nb_utilisateur == count($nb_referent) &&  $abonnement_cfp[0]->illimite == 0)  return back()->with('error', "Vous avez atteint le nombre maximum d'utilisateur, veuillez upgrader votre compte pour ajouter plus d'utilisateurs");
+            else{
+                if ($resp_cfp_connecter->prioriter == 1) {
+                    $resp->verify_form($request);
 
-                $verify_cin = $resp->verify_cin($request->cin);
-                $verify_email = $fonct->findWhere("users", ["email"], [$request->email]);
-                $verify_phone = $fonct->findWhere("users", ["telephone"], [$request->phone]);
+                    $verify_cin = $resp->verify_cin($request->cin);
+                    $verify_email = $fonct->findWhere("users", ["email"], [$request->email]);
+                    $verify_phone = $fonct->findWhere("users", ["telephone"], [$request->phone]);
 
-                // $doner["cin"] = $resp->concat_nb_cin($request->input());
-                $doner["cin"] = $request->cin;
-                $doner["nom"] = $request->nom;
-                $doner["prenom"] = $request->prenom;
-              //  $doner["sexe"] = $request->sexe;
-              //  $doner["dte"] = $request->dte;
-                $doner["email"] = $request->email;
-                $doner["phone"] = $request->phone;
-                $doner["fonction"] = $request->fonction;
+                    // $doner["cin"] = $resp->concat_nb_cin($request->input());
+                    $doner["cin"] = $request->cin;
+                    $doner["nom"] = $request->nom;
+                    $doner["prenom"] = $request->prenom;
+                  //  $doner["sexe"] = $request->sexe;
+                  //  $doner["dte"] = $request->dte;
+                    $doner["email"] = $request->email;
+                    $doner["phone"] = $request->phone;
+                    $doner["fonction"] = $request->fonction;
 
-                if (count($verify_cin) > 0) {
-                    return back()->with('error', 'cin existe déjà');
-                } else {
-                    if (count($verify_email) > 0) {
-                        return back()->with('error', 'mail existe déjà');
+                    if (count($verify_cin) > 0) {
+                        return back()->with('error', 'cin existe déjà');
                     } else {
-                        if (count($verify_phone) > 0) {
-                            return back()->with('error', 'télephone existe déjà');
+                        if (count($verify_email) > 0) {
+                            return back()->with('error', 'mail existe déjà');
                         } else {
-                            $user->name = $request->nom . " " . $request->prenom;
-                            $user->email = $request->email;
-                            $user->cin = $request->cin;
-                            $user->telephone =  $request->phone;
-                            $ch1 = "0000";
-                            $user->password = Hash::make($ch1);
-                         //   $user->role_id = '7';
-                            $user->save();
-                            $use_id_inserer = $fonct->findWhereMulitOne("users",["email"],[$request->email])->id;
+                            if (count($verify_phone) > 0) {
+                                return back()->with('error', 'télephone existe déjà');
+                            } else {
+                                $user->name = $request->nom . " " . $request->prenom;
+                                $user->email = $request->email;
+                                $user->cin = $request->cin;
+                                $user->telephone =  $request->phone;
+                                $ch1 = "0000";
+                                $user->password = Hash::make($ch1);
+                             //   $user->role_id = '7';
+                                $user->save();
+                                $use_id_inserer = $fonct->findWhereMulitOne("users",["email"],[$request->email])->id;
 
-                            DB::beginTransaction();
-                            try {
-                                $fonct->insert_role_user($use_id_inserer,"7",true); // cfp
-                                DB::commit();
-                            } catch (Exception $e) {
-                                DB::rollback();
-                                echo $e->getMessage();
-                            }
-                            if (Gate::allows('isCFP')) {
-                                $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
-                                $result = $resp->insert_resp_CFP($doner, $resp_cfp_connecter->cfp_id, $user->id);
-                                return $result;
-                            }
-                            if (Gate::allows('isSuperAdmin')) {
-                                $result = $resp->insert_resp_CFP($doner, $request->cfp_id, $user->id);
-                                return $result;
-                            }
-                            if (Gate::allows('isAdmin')) {
-                                $result = $resp->insert_resp_CFP($doner, $request->cfp_id, $user->id);
-                               return $result;
+                                DB::beginTransaction();
+                                try {
+                                    $fonct->insert_role_user($use_id_inserer,"7",true); // cfp
+                                    DB::commit();
+                                } catch (Exception $e) {
+                                    DB::rollback();
+                                    echo $e->getMessage();
+                                }
+                                if (Gate::allows('isCFP')) {
+                                    $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
+                                    $result = $resp->insert_resp_CFP($doner, $resp_cfp_connecter->cfp_id, $user->id);
+                                    return $result;
+                                }
+                                if (Gate::allows('isSuperAdmin')) {
+                                    $result = $resp->insert_resp_CFP($doner, $request->cfp_id, $user->id);
+                                    return $result;
+                                }
+                                if (Gate::allows('isAdmin')) {
+                                    $result = $resp->insert_resp_CFP($doner, $request->cfp_id, $user->id);
+                                   return $result;
+                                }
                             }
                         }
                     }
                 }
-            } else {
-                return back()->with('error', "seul lre responsable principale a le droit d'ajouter un nouveau responsable");
+                else {
+                    return back()->with('error', "seul le responsable principale a le droit d'ajouter un nouveau responsable");
+                }
             }
+
         }
     }
 

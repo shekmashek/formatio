@@ -25,6 +25,26 @@
             width: 100%;
             border-collapse: collapse;
         }
+        .type_formation_cal{
+            border-radius: 1rem;
+            background-color: #826bf3;
+            color: rgb(255, 255, 255);
+            padding-top:2px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .status_grise {
+            border-radius: 1rem;
+            background-color: #637381;
+            color: white;
+            /* width: 60%; */
+            align-items: center margin: 0 auto;
+            padding: .1rem .5rem;
+         }
+         .contenu{
+            color: #7635dc;
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -35,28 +55,43 @@
             <div class="col-xs-4">
                 @for ($i=0;$i<count($detail);$i++)
 
-                    <h1>Projet de formation: {{$detail[$i]->type_formation}}&nbsp;</h1>
-                    <label for=""><strong>Entreprise client:</strong>&nbsp;<img src = "{{ public_path('images/entreprises/'.$detail[$i]->logo_entreprise)}}" width="50px" class="photo">&nbsp; {{$detail[$i]->nom_etp}}</label><br><br>
+                    <img src="{{public_path('images/icone/book-open.png')}}" style="width: 20px"/> <span class="type_formation_cal pt-1 mt-2 ps-2 pe-2" id="types">{{$detail[$i]->type_formation}}</span>
+                    <span class="status_grise pt-1 mt-2 ps-2 pe-2 ms-2">{{$status[0]->item_status_groupe}}</span>
+                    <span class="contenu mt-3 ps-2 pe-2 ms-2" id="module"> {{$detail[$i]->nom_module}}</span><br><br>
+                    <span  class="contenu ps-3 pt-2">{{$detail[$i]->nom_projet}}</span>&nbsp;&nbsp;
+                    <span class="contenu ps-3 pt-2">{{$detail[$i]->nom_groupe}}</span>&nbsp;&nbsp;
+                    <img src="{{public_path('images/icone/times.png')}}" style="width: 20px" /> <span>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($detail[$i]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($detail[$i]->date_fin)); @endphp</span>
+                    &nbsp;&nbsp;<img src="{{public_path('images/icone/group.png')}}" style="width: 20px"/> <span> apprenants inscrits: {{$nb_stg}}</span><br><br>
+                    <img src="{{public_path('images/icone/home.png')}}" style="width: 20px"/><span>{{$lieu_formation[0]}}</span>
+                    &nbsp;&nbsp;<img src="{{public_path('images/icone/door-open.png')}}" style="width: 20px"><span>{{$lieu_formation[1]}}</span><br><br>
+                    <img src="{{public_path('images/icone/home.png')}}" style="width: 20px"><span>{{$detail[$i]->nom_etp}} <img src = "{{ public_path('images/entreprises/'.$detail[$i]->logo_entreprise)}}" width="50px" class="photo"></span>
+                    &nbsp;&nbsp;  <img src="{{public_path('images/icone/home.png')}}" style="width: 20px"><span>{{$detail[$i]->nom_cfp}} <img src="{{ public_path('images/CFP/'.$detail[$i]->logo_cfp)}}" width="50px"></span>
+                    {{-- <label for=""><strong>Entreprise client:</strong>&nbsp;<img src = "{{ public_path('images/entreprises/'.$detail[$i]->logo_entreprise)}}" width="50px" class="photo">&nbsp; {{$detail[$i]->nom_etp}}</label><br><br>
                     <label for=""><strong>Organisme de formation:</strong>&nbsp;<img src = "{{ public_path('images/CFP/'.$detail[$i]->logo_cfp)}}" width="50px">&nbsp; {{$detail[$i]->nom_cfp}}</label><br><br>
                     <label for=""><strong>Nom du projet:</strong>&nbsp; {{$detail[$i]->nom_projet}}</label><br><br>
                     <label for=""><strong>Session:</strong>&nbsp; {{$detail[$i]->nom_groupe}}</label><br><br>
                     <label for=""><strong>Statut:</strong>&nbsp; {{$status[0]->item_status_groupe}}</label><br><br>
                     <label for=""><strong>Formation:</strong>&nbsp; {{$detail[$i]->nom_formation}}</label><br><br>
-                    <label for=""><strong>Module:</strong>&nbsp; {{$detail[$i]->nom_module}}</label><br><br>
-                    <label for=""><strong>Formateur:</strong><br>
+                    <label for=""><strong>Module:</strong>&nbsp; {{$detail[$i]->nom_module}}</label><br><br> --}}
+                    <br><br><label for=""><strong>Formateur:</strong><br>
                     <ul>
+                        @php
+                            $t1 = substr($detail[$i]->numero_formateur,0,3);
+                            $t2 = substr($detail[$i]->numero_formateur,3,2);
+                            $t3 = substr($detail[$i]->numero_formateur,5,3);
+                            $t4 = substr($detail[$i]->numero_formateur,6,2);
+                        @endphp
                         @if($detail[$i]->photos != null)
-                            <li><img src = "{{ public_path('images/formateurs/'.$detail[$i]->photos)}}" width="50px" class="photo">&nbsp;{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$detail[$i]->numero_formateur}}</li>
+                            <li><img src = "{{ public_path('images/formateurs/'.$detail[$i]->photos)}}" width="50px" class="photo">&nbsp;{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$t1}} {{$t2}} {{$t3}} {{$t4}}</li>
                         @else
                             <li>{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$detail[$i]->numero_formateur}}</li>
                         @endif
                     </ul>
-                    <label for=""><strong>Lieu:</strong>&nbsp; {{$detail[$i]->lieu}}</label><br><br>
-                    <label for=""><strong>Date - Heure:</strong><br><br>
+                    <span>{{$nb_seance}}</span><br><br>
                     @for($j = 0; $j < count($date_groupe); $j++)
                         <label for="">- Séance {{$j+1}} : </label>&nbsp;<img src = "{{ public_path('images/icone/calendar.png')}}" width="20px" class="photo">{{$date_groupe[$j]->date_detail}}&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/times.png')}}" width="20px" class="photo">&nbsp;{{$date_groupe[$j]->h_debut}}h - {{$date_groupe[$j]->h_fin}}h <br>
                     @endfor
-                    <hr>
+
                     <label for=""><strong>Liste des apprenants</strong></label>
                     <table>
                         <tr>
@@ -69,6 +104,12 @@
                         </tr>
 
                             @for ($k = 0;$k< count($stg);$k++)
+                                @php
+                                    $t1 = substr($stg[$k]->telephone_stagiaire,0,3);
+                                    $t2 = substr($stg[$k]->telephone_stagiaire,3,2);
+                                    $t3 = substr($stg[$k]->telephone_stagiaire,5,3);
+                                    $t4 = substr($stg[$k]->telephone_stagiaire,6,2);
+                                @endphp
                                 <tr>
                                     @if($stg[$k]->photos != null)
                                         <td> <img src= "{{ public_path('images/stagiaires/'.$stg[$k]->photos)}}" width="50px" class="photo" alt=""></td>
@@ -79,7 +120,7 @@
                                     <td>{{$stg[$k]->nom_stagiaire}} {{$stg[$k]->prenom_stagiaire}}</td>
                                     <td>{{$stg[$k]->fonction_stagiaire}} </td>
                                     <td>{{$stg[$k]->mail_stagiaire}}</td>
-                                    <td>{{$stg[$k]->telephone_stagiaire}}</td>
+                                    <td>{{$t1}} {{$t2}} {{$t3}} {{$t4}}</td>
                                 </tr>
                             @endfor
                     </table>

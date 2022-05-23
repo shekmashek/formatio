@@ -20,9 +20,9 @@
                                 @csrf
                                 <div class="form-row">
                                     <div class="d-flex flex-row">
-                                        @foreach ($categorie as $categ)
+                                        {{-- @foreach ($categorie as $categ)
                                             <input type="hidden" name="id_formation" value="{{$categ->id}}">
-                                        @endforeach
+                                        @endforeach --}}
                                         <input class="form-control me-2" type="text" name="nom_formation" placeholder="Rechercher par formations ex. Excel">
                                         <button type="submit" class="btn"><i class="bx bx-search"></i></button>
                                     </div>

@@ -52,19 +52,19 @@
                         @foreach ($typeAbonnement_of as $types_of)
                             <div class="col mt-5 justify-content-between">
                                 <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
-                                     <span class="nom_type mt-5">{{ $types_of->nom_type }}</span>
-                                     <span class="description mt-5">{{ $types_of->description }}</span>
+                                     <span class="nom_type">{{ $types_of->nom_type }}</span>
+                                     <span class="description mt-2">{{ $types_of->description }}</span>
                                      <span class="tarif"> <span class="number"> {{number_format($types_of->tarif,0, ',', '.')}}</span> <sup
                                             class="sup">AR</sup>/ mois</span>
                                    <ul class="mb-5 list-unstyled text-muted">
                                         @if($types_of->illimite == 1)
                                             <li><span class="bx bx-check me-2"></span>Utilisateurs illimités</li>
                                             <li><span class="bx bx-check me-2"></span>Formateurs illimités</li>
-                                            <li><span class="bx bx-check me-2"></span>Projets illimités</li>
+                                            <li><span class="bx bx-check me-2"></span>Sessions illimités</li>
                                         @else
                                             <li><span class="bx bx-check me-2"></span>{{$types_of->nb_utilisateur}} utilisateurs</li>
                                             <li><span class="bx bx-check me-2"></span>{{$types_of->nb_formateur}} formateurs</li>
-                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_projet}} projets</li>
+                                            <li><span class="bx bx-check me-2"></span>{{$types_of->nb_projet}} sessions</li>
                                         @endif
 
                                     </ul>
@@ -82,8 +82,8 @@
                         @foreach ($typeAbonnement_etp as $types_etp)
                             <div class="col mt-5 justify-content-between">
                                 <div class="card ab_{{$i}} d-flex align-items-center justify-content-center">
-                                    <p class="h-1 pt-5 nom_type mt-5">{{ $types_etp->nom_type }}</p>
-                                    <span class="description mt-5">{{ $types_etp->description }}</span>
+                                    <p class="h-1 pt-5 nom_type">{{ $types_etp->nom_type }}</p>
+                                    <span class="description mt-2">{{ $types_etp->description }}</span>
                                     <span class="tarif"> <span class="number"> {{number_format($types_etp->tarif,0, ',', '.')}}</span> <sup
                                             class="sup">AR</sup>/ mois</span>
 
@@ -136,6 +136,8 @@
                                             <td><span style="background-color: red;padding:10px;color:white;border-radius:10px"  id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
                                         @endif
                                         <td>
+                                            <input type="hidden" value="{{$listes->entreprise_id}}" id="id_etp">
+
                                             <!-- Default switch -->
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input activer" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
@@ -181,6 +183,7 @@
                                         <td>  <span style="background: red;padding:10px;color:white;border-radius:10px"  id = "label_statut_of_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
                                     @endif
                                     <td>
+                                        <input type="hidden" value="{{$listes->cfp_id}}" id="id_cfp">
                                         <!-- Default switch -->
                                         <div class="form-check form-switch">
                                             <input class="form-check-input activer_of" data-id="{{$listes->abonnement_id}}" type="checkbox" role="switch"/>
@@ -209,6 +212,7 @@
     /* activation compte entreprise */
     $(".activer" ).on( "change", function() {
         var statut,idAbonnement;
+        var id_etp = $('#id_etp').val();
         if($( this ).prop('checked')){
             statut = "Activé";
             idAbonnement = $(this).data('id');
@@ -221,7 +225,7 @@
         $.ajax({
             type: "GET",
             url: "{{route('activer_compte')}}",
-            data:{Id:idAbonnement,Statut:statut},
+            data:{Id:idAbonnement,Statut:statut,etp_id:id_etp},
             dataType: "html",
             success:function(response){
                 var userData=JSON.parse(response);
@@ -251,6 +255,7 @@
     /* activation compte pour of*/
     $(".activer_of" ).on( "change", function() {
         var statut,idAbonnement;
+        var id_cfp = $('#id_cfp').val();
         if($(this).prop('checked')){
             statut = "Activé";
             idAbonnement = $(this).data('id');
@@ -263,11 +268,10 @@
         $.ajax({
             type: "GET",
             url: "{{route('activer_compte_of')}}",
-            data:{Id:idAbonnement,Statut:statut},
+            data:{Id:idAbonnement,Statut:statut,cfp_id:id_cfp},
             dataType: "html",
             success:function(response){
                 var userData=JSON.parse(response);
-                console.log(userData);
                 for (var $i = 0; $i < userData.length; $i++){
                     $('#span_statut_of').text(userData[$i].statut);
 
@@ -283,8 +287,6 @@
                     }
                     $('#debut_of_'+userData[$i].id).text(userData[$i].date_debut);
                     $('#fin_of_'+userData[$i].id).text(userData[$i].date_fin);
-
-
                 }
             },
             error:function(error){

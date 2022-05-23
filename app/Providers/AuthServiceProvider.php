@@ -25,6 +25,129 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        /** role en fonction de statut des comptes */
+        Gate::define('isInvite',function($id){
+            /**ENTREPRISE */
+            //on verifie d'abord le responsable
+            $responsable = DB::select('select * from v_responsable_entreprise where user_id = ?',[Auth::id()]);
+            if($responsable!=null){
+                $statut_compte = DB::select('select * from entreprises where id = ?',[$responsable[0]->entreprise_id]);
+                if($statut_compte[0]->statut_compte_id == 1)
+                return "isInvite";
+            }
+             //on verifie ensuite  le stagiaire
+            $stagiaire = DB::select('select * from stagiaires where user_id = ?',[Auth::id()]);
+             if($stagiaire!=null){
+                 $statut_compte = DB::select('select * from entreprises where id = ?',[$stagiaire[0]->entreprise_id]);
+                 if($statut_compte[0]->statut_compte_id == 1)
+                 return "isInvite";
+             }
+              //on verifie le manager
+            $manager = DB::select('select * from chef_departements where user_id = ?',[Auth::id()]);
+            if($manager!=null){
+                $statut_compte = DB::select('select * from entreprises where id = ?',[$manager[0]->entreprise_id]);
+                if($statut_compte[0]->statut_compte_id == 1)
+                return "isInvite";
+            }
+             /**OF */
+            $responsable_cfp = DB::select('select * from v_responsable_cfp where user_id = ?',[Auth::id()]);
+            if($responsable_cfp!=null){
+                 $statut_compte = DB::select('select * from cfps where id = ?',[$responsable_cfp[0]->cfp_id]);
+                 if($statut_compte[0]->statut_compte_id == 1)
+                 return "isInvite";
+            }
+            $formateur = DB::select('select * from formateurs where user_id = ?',[Auth::id()]);
+            if($formateur!=null){
+                $verification_collaboration = DB::select('select * from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
+                if($verification_collaboration!=null){
+                    $cfps = DB::select('select * from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
+                    if($cfps[0]->statut_compte_id == 1)
+                    return "isInvite";
+                }
+            }
+        });
+        Gate::define('isPremium',function($id){
+            /**ENTREPRISE */
+            //on verifie d'abord le responsable
+            $responsable = DB::select('select * from v_responsable_entreprise where user_id = ?',[Auth::id()]);
+            if($responsable!=null){
+                $statut_compte = DB::select('select * from entreprises where id = ?',[$responsable[0]->entreprise_id]);
+                if($statut_compte[0]->statut_compte_id == 2)
+                return "isPremium";
+            }
+             //on verifie ensuite  le stagiaire
+            $stagiaire = DB::select('select * from stagiaires where user_id = ?',[Auth::id()]);
+             if($stagiaire!=null){
+                 $statut_compte = DB::select('select * from entreprises where id = ?',[$stagiaire[0]->entreprise_id]);
+                 if($statut_compte[0]->statut_compte_id == 2)
+                 return "isPremium";
+             }
+              //on verifie le manager
+            $manager = DB::select('select * from chef_departements where user_id = ?',[Auth::id()]);
+            if($manager!=null){
+                $statut_compte = DB::select('select * from entreprises where id = ?',[$manager[0]->entreprise_id]);
+                if($statut_compte[0]->statut_compte_id == 2)
+                return "isPremium";
+            }
+             /**OF */
+            $responsable_cfp = DB::select('select * from v_responsable_cfp where user_id = ?',[Auth::id()]);
+            if($responsable_cfp!=null){
+                 $statut_compte = DB::select('select * from cfps where id = ?',[$responsable_cfp[0]->cfp_id]);
+                 if($statut_compte[0]->statut_compte_id == 2)
+                 return "isPremium";
+            }
+            $formateur = DB::select('select * from formateurs where user_id = ?',[Auth::id()]);
+            if($formateur!=null){
+                $verification_collaboration = DB::select('select * from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
+
+                if($verification_collaboration!=null){
+                    $cfps = DB::select('select * from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
+                    if($cfps[0]->statut_compte_id == 2)
+                    return "isPremium";
+                }
+            }
+        });
+        Gate::define('isPending',function($id){
+             /**ENTREPRISE */
+            //on verifie d'abord le responsable
+            $responsable = DB::select('select * from v_responsable_entreprise where user_id = ?',[Auth::id()]);
+            if($responsable!=null){
+                $statut_compte = DB::select('select * from entreprises where id = ?',[$responsable[0]->entreprise_id]);
+                if($statut_compte[0]->statut_compte_id == 3)
+                return "isPending";
+            }
+             //on verifie ensuite  le stagiaire
+            $stagiaire = DB::select('select * from stagiaires where user_id = ?',[Auth::id()]);
+             if($stagiaire!=null){
+                 $statut_compte = DB::select('select * from entreprises where id = ?',[$stagiaire[0]->entreprise_id]);
+                 if($statut_compte[0]->statut_compte_id == 3)
+                 return "isPending";
+             }
+              //on verifie le manager
+            $manager = DB::select('select * from chef_departements where user_id = ?',[Auth::id()]);
+            if($manager!=null){
+                $statut_compte = DB::select('select * from entreprises where id = ?',[$manager[0]->entreprise_id]);
+                if($statut_compte[0]->statut_compte_id == 3)
+                return "isPending";
+            }
+             /**OF */
+            $responsable_cfp = DB::select('select * from v_responsable_cfp where user_id = ?',[Auth::id()]);
+            if($responsable_cfp!=null){
+                 $statut_compte = DB::select('select * from cfps where id = ?',[$responsable_cfp[0]->cfp_id]);
+                 if($statut_compte[0]->statut_compte_id == 3)
+                 return "isPending";
+            }
+            $formateur = DB::select('select * from formateurs where user_id = ?',[Auth::id()]);
+            if($formateur!=null){
+                $verification_collaboration = DB::select('select * from demmande_cfp_formateur where inviter_formateur_id = ?',[$formateur[0]->id]);
+                if($verification_collaboration!=null){
+                    $cfps = DB::select('select * from cfps where id = ?',[$verification_collaboration[0]->demmandeur_cfp_id]);
+                    if($cfps[0]->statut_compte_id == 3)
+                    return "isPending";
+                }
+            }
+        });
+
         //access principal
         Gate::define('isAdminPrincipale',function($users_roles){
             $rqt =  DB::select('select * from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]);

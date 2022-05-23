@@ -1,50 +1,77 @@
 @extends('./layouts.admin')
 @section('content')
 <style>
-
-    .form_photo{
-        padding-top: 100px;
+    .gradient-custom {
+        background: #f4f5f7;
+        background: -webkit-linear-gradient(to right bottom, rgba(194, 71, 145, 1), rgba(42, 117, 232 ,1));
+        background: linear-gradient(to right bottom, rgba(194, 71, 145, 1), rgba(42, 117, 232 , 1));
+        border-top-left-radius: .5rem; 
+        border-bottom-left-radius: .5rem;
     }
-    .detail{
-        padding-left: 60px;
+    .boutonretour{
+        background: #f4f5f7;
+        background: -webkit-linear-gradient(to right bottom, rgba(232, 42, 148 , 1), rgba(42, 117, 232  ,1));
+        background: linear-gradient(to right bottom, rgba(232, 42, 148 , 1), rgba(42, 117, 232 , 1));
     }
 </style>
-<div class="container mt-5">
-    <div class="page-content page-container" id="page-content">
-        <div class="padding">
-            <div class="row container d-flex justify-content-center">
-                <div class="col-lg-6 col-xlg-6">
-                    <div class="card" style="border-radius: 2%">
-                        <div class="card-body little-profile text-center">
+<section class="vh-100 " style="background-color: #f4f5f7;">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center my-5">
+            <div class="col col-lg-10 my-2 mb-4 mb-lg-0">
+                <div class="card mb-3 shadow" style="border-radius: .5rem;">
+                    <div class="row g-0">
+                        <div class="col-md-4  text-center gradient-custom text-white little-profile">
                             @if($formateur->photos==null)
-                            <span>
+                                <span>
                                 <div style="display: grid; place-content: center" class="form_photo">
                                     <div class='randomColor ' style="color:white; font-size: 100px; border: none; border-radius: 100%; height:200px; width:200px ; display: grid; place-content: center">{{$initial_formateur[0]->nm}}{{$initial_formateur[0]->pr}}</div>
                                 </div>
-                            </span>
+                                </span>
                             @else
-                            <img src="{{asset('images/formateurs/'.$formateur->photos)}}" class="image-ronde form_photo" style=" border: none; border-radius: 100%; height:200px; width:200px ;">
+                            <img src="{{asset('images/formateurs/'.$formateur->photos)}}" class="image-ronde form_photo my-4" style=" border: none; border-radius: 100%; height:200px; width:200px ;"/>
                             @endif
+                            
+                            <h5 class="my-1 fw-bold">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}}</h5>
+                            <p class="fw-bold my-2">{{$formateur->specialite}}</p>
                         </div>
-                        <div class=" bg-light">
-                            <div class="row">
-                                <h2 class=" text-center ">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}}</h2>
-                                <div class="col-lg-6 col-md-6  detail mt-5">
-                                    <span><i class="fa fa-calendar"></i> Né le {{date('j \\ F Y', strtotime($formateur->date_naissance))}}</span><br>
-                                    <span><i class="fa fa-envelope"></i> {{$formateur->mail_formateur}}</span><br>
-                                    <span><i class="fa fa-phone-square"></i> {{$formateur->numero_formateur}}</span><br>
-                                    <span><i class="fa fa-address-book" ></i> {{$formateur->adresse}}</span>
+                        <div class="col-md-8">
+                        <div class="card-body pt-4">
+                            <h6 class="fw-bold pt-2 inform"><i class="fa-solid fa-user-pen "></i> &nbsp;INFORMATIONS PERSONNELLES</h5>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1 mx-3">
+                                <div class="col-6 mb-3 ">
+                                    <h6><i class="fa-solid fa-envelope"></i>  &nbsp;Email</h6>
+                                    <p class="text-muted mx-4">{{$formateur->mail_formateur}}</p>
+                                    <h6 ><i class="fa-solid fa-cake-candles"></i> &nbsp;Né le </h6>
+                                    <p class="text-muted mx-4">{{date('j \\ F Y', strtotime($formateur->date_naissance))}}</p>
                                 </div>
-                                <div class="col-lg-6 col-md-6 detail mt-5">
-                                    <span><i class="fa fa-briefcase"></i> Poste: {{$formateur->specialite}}</span><br>
-                                    <span><i class="fa fa-graduation-cap"></i> Niveau d'étude: {{$formateur->niveau}}</span><br>
+                                
+                                <div class="col-6 mb-3 ">
+                                    <h6><i class="fa-solid fa-phone"></i> &nbsp;Téléphone</h6>
+                                    <p class="text-muted mx-4">{{$formateur->numero_formateur}}</p>
+                                    <h6><i class="fa-solid fa-address-card"></i> &nbsp;Adresse</h6>
+                                    <p class="text-muted mx-4">{{$formateur->adresse}}</p>
                                 </div>
                             </div>
+                            <h6 class="fw-bold inform" ><i class="fa-solid fa-user-tag"></i> &nbsp;INFORMATIONS PROFESSIONNELLES</h6>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1 mx-3">
+                                <div class="col-6 mb-3 ">
+                                    <h6><i class="fa fa-briefcase"></i> &nbsp;Poste</h6>
+                                    <p class="text-muted mx-4">{{$formateur->specialite}}</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6><i class="fas fa-graduation-cap"></i> &nbsp;Niveau d'étude</h6>  
+                                    <p class="text-muted mx-4">{{ $formateur->niveau }}</p>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
 @endsection

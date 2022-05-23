@@ -146,7 +146,7 @@
                         <div class="row px-3">
                             <div class="form-group">
                                 <input type="number" name="nb_projet" class="form-control input" min="1" id="projet" required/>
-                                <label for="projet" class="form-control-placeholder" align="left">Nombre de projet<strong style="color:#ff0000;">*</strong></label>
+                                <label for="projet" class="form-control-placeholder" align="left">Nombre de session<strong style="color:#ff0000;">*</strong></label>
                                 <span style="color:#ff0000;" id="mail_err"></span>
                                 @error('projet')
                                 <div class="col-sm-6">

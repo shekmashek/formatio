@@ -38,7 +38,7 @@
             <thead>
             <th>TVA</th>
             <th>Action</th>
-
+           
             </thead>
             <tbody>
                 @foreach ($tva as $taxe )

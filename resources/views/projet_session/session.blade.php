@@ -286,7 +286,7 @@
     }
 
     .planning p{
-        font-size: .8rem;
+        font-size: .85rem;
     }
 
     @keyframes action{
@@ -668,11 +668,15 @@
                                     <button class="planning d-flex justify-content-between action_animation evaluation_pre_formation-tab"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">EVALUATION</p>
-                                        @if ($evaluation_apres <= 0)
-                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
-                                        @else
-                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
-                                        @endif
+                                        @php
+                                            $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
+                                            if($statut_eval == 0){
+                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                            }
+                                            elseif ($statut_eval == 1) {
+                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                            }
+                                        @endphp
                                     </button>
                                 </a>
                             </div>
@@ -684,11 +688,15 @@
                                     <button class="planning d-flex justify-content-between evaluation_pre_formation-tab"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">EVALUATION</p>
-                                        @if ($evaluation_apres <= 0)
-                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
-                                        @else
-                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
-                                        @endif
+                                        @php
+                                            $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
+                                            if($statut_eval == 0){
+                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                            }
+                                            elseif ($statut_eval == 1) {
+                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                            }
+                                        @endphp
                                     </button>
                                 </a>
                             </div>
