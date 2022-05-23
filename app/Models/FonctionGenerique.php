@@ -15,7 +15,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT COUNT(id) id FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
@@ -31,7 +31,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "" . $opt[$i] . " ?";
@@ -47,7 +47,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "" . $opt[$i] . " ?";
@@ -63,7 +63,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille des donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
@@ -79,7 +79,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";
@@ -95,7 +95,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: taille de donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= '" . $val[$i] . "'";
@@ -392,10 +392,19 @@ class FonctionGenerique extends Model
         DB::insert('insert into ' . $table . ' (' . $colonnes . ', iframe) values (?, ?)', [$id, $iframe]);
     }
 
+    public function insert_iframe_invite($iframe)
+    {
+        DB::insert('insert into iframe_invite(iframe) values (?)', [$iframe]);
+    }
+
     //modification iframe
     public function update_iframe($table, $col1, $col2, $id, $iframe)
     {
         DB::update('update ' . $table . ' set ' . $col1 . ' = "' . $iframe . '" where ' . $col2 . ' = ?', [$id]);
+    }
+    public function update_iframe_invite($id,$iframe)
+    {
+        DB::update('update iframe_invite set iframe = ? where id = ?', [$iframe,$id]);
     }
 
     //suppressionn iframe
@@ -403,6 +412,12 @@ class FonctionGenerique extends Model
     {
         DB::delete('delete from ' . $table . ' where ' . $colonne . ' = ?', [$id]);
     }
+
+    public function supprimer_iframe_invite($id)
+    {
+        DB::delete('delete from iframe_invite where id = ?', [$id]);
+    }
+
 
     // find where avec odrer by
 

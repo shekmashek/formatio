@@ -4,7 +4,6 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-
     <div class="container-fluid bg-light">
         <div class="panel-body">
             <div class="row">
@@ -21,17 +20,20 @@
                                         </p>
                                         <p id="changer_cible" onclick="changer_cible();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_objectif"><i class='bx bx-user' style="color: #637381; font-size:1.5rem"></i><br><span>Cible</span></a>
                                         </p>
-                                        <p id="changer_reference" onclick="changer_reference();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_reference"><i class='bx bx-clipboard' style="color: #637381; font-size:1.5rem"></i><br><span>Reference</span></a>
+                                        <p id="changer_reference" onclick="changer_reference();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_haut"><i class='bx bx-clipboard' style="color: #637381; font-size:1.5rem"></i><br><span>Reference</span></a>
                                         </p>
                                         <p id="changer_equipement" onclick="changer_equipement();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_equipement"><i class='bx bxs-cog' style="color: #637381; font-size:1.5rem"></i><br><span>Equipement</span></a>
                                         </p>
                                         <p id="changer_prestation" onclick="changer_prestation();" role="button" class="text-center btn_change_form py-2 mb-1"><a href="#preview_prestation"><i class='bx bx-hive' style="color: #637381; font-size:1.5rem"></i><br><span>Préstation</span></a>
                                         </p>
+                                        <p>
+
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 pe-5 postion_fixe_form" style="align-items: center">
-                                <div class="form-row">
+                                <div class="form-row text-center">
 
 
                                     <div class="form-group" id="premier_vue9">
@@ -166,9 +168,9 @@
                                         </div>
                                     </div>
 
-                                    <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i class="bx bxs-edit close" onclick="myFunction()"></i>
+                                    <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i class="bx bx-edit bx_modifier" onclick="changer_niveau()"></i>
                                         <br>
-                                        <p class="text-center mt-3"><a href="#preview_haut2" class="new_list_nouvelle btn_next" onclick="suivant_objectif();" type="button">Suivant</a></p>
+                                        <button type="button" class="btn new_list_nouvelle text-center" onclick="suivant_objectif();"><a href="#preview_haut2" class="btn_suivant">Suivant<i class='bx bxs-chevron-right ms-1'></i></a></button>
                                     </span>
                                     <div class="form-group apres_preview" id="second_vue">
                                         <div class="acf-field acf-field-text acf-field-objectif is-required">
@@ -186,8 +188,8 @@
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-between">
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_module();"><a href="#preview_haut">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#preview_objectif" class="new_list_nouvelle px-5 btn_next" onclick="suivant_cible();" type="button">Suivant</a></p>
+                                            <button type="button" class="btn new_list_nouvelle" onclick="retour_module();"><a href="#preview_haut" class="btn_precedent"><i class='bx bxs-chevron-left me-1'></i>Retour</a></button>
+                                            <button type="button" class="btn new_list_nouvelle" onclick="suivant_cible();"><a href="#preview_objectif" class="btn_suivant">Suivant<i class='bx bxs-chevron-right ms-1'></i></a></button>
                                         </div>
                                     </div>
 
@@ -223,8 +225,8 @@
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-between">
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_objectif();"><a href="#preview_haut2">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#preview_reference" type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_reference();">Suivant</a></p>
+                                            <button type="button" class="btn new_list_nouvelle" onclick="retour_objectif();"><a href="#preview_haut2" class="btn_precedent"><i class='bx bxs-chevron-left me-1'></i>Retour</a></button>
+                                            <button type="button" class="btn new_list_nouvelle" onclick="suivant_reference();"><a href="#preview_reference" class="btn_suivant">Suivant<i class='bx bxs-chevron-right ms-1'></i></a></button>
                                         </div>
                                     </div>
 
@@ -273,8 +275,8 @@
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-between">
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_cible();"><a href="#preview_objectif">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#changer_equipement" type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_equipement();">Suivant</a></button></p>
+                                            <button type="button" class="btn new_list_nouvelle" onclick="retour_cible();"><a href="#preview_objectif" class="btn_precedent"><i class='bx bxs-chevron-left me-1'></i>Retour</a></button>
+                                            <button type="button" class="btn new_list_nouvelle" onclick="suivant_equipement();"><a href="#changer_equipement" class="btn_suivant">Suivant<i class='bx bxs-chevron-right ms-1'></i></a></button>
                                         </div>
                                     </div>
 
@@ -310,8 +312,8 @@
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-between">
-                                            <p class="text-center mt-3" style="font-size: 16px"><button type="button" class="new_list_nouvelle px-5 btn_previous" onclick="retour_reference();"><a href="#changer_reference">Retour</a></button></p>
-                                            <p class="text-center mt-3" style="font-size: 16px"><a href="#changer_prestation" type="button" class="new_list_nouvelle px-5 btn_next" onclick="suivant_prestation();">Suivant</a></p>
+                                            <button type="button" class="btn new_list_nouvelle" onclick="retour_reference();"><a href="#changer_reference" class="btn_precedent"><i class='bx bxs-chevron-left me-1'></i>Retour</a></button>
+                                            <button type="button" class="btn new_list_nouvelle" onclick="suivant_prestation();"><a href="#changer_prestation" class="btn_suivant">Suivant<i class='bx bxs-chevron-right ms-1'></i></a></button>
                                         </div>
                                     </div>
 
@@ -358,7 +360,7 @@
                                             </div>
                                         </div>
                                         <div class="col text-center">
-                                            <p class="mt-3" style="font-size: 16px;"><a href="#changer_equipement" type="button" class="new_list_nouvelle px-5 btn_next" onclick="retour_equipement();">Retour</a></p>
+                                            <button type="button" class="btn new_list_nouvelle" onclick="retour_equipement();"><a href="#changer_equipement" class="btn_precedent"><i class='bx bxs-chevron-left me-1'></i>Retour</a></button>
                                         </div>
                                     </div>
 
@@ -366,11 +368,14 @@
                                         <hr>
                                         <div class="form-row d-flex">
                                             <div class="col me-1">
-                                                <button type="submit" class="btn w-100 btn_enregistrer" id="sauvegarder">Sauvegarder</button>
+                                                <button type="submit" class="btn w-100 btn_enregistrer" id="sauvegarder"><i class='bx bx-check me-1'></i>Enregistrer</button>
                                             </div>
                                             <div class="col">
                                                 <button type="button" class="btn w-100 btn_annuler" onclick="resetForm();">
-                                                    Annuler</button>
+                                                    <a class="new_list_nouvelle " href="{{route('liste_module')}}">
+                                                        <i class='bx bx-x me-1'></i>annuler
+                                                    </a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -406,7 +411,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 ">
                                 <div class="">
-                                    <div class="text-center"><img src="{{asset('images/CFP/'.$cfp->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height: 100px;"></div>
+                                    <div class="text-center"><img src="{{asset('images/CFP/Votre-logo-1.png')}}" alt="logo" class="img-fluid" style="width: 200px; height: 100px;"></div>
                                 </div>
                             </div>
                             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
@@ -425,10 +430,22 @@
                                 <div class="col" id="preview_niveau">
                                     <i class='bx bx-equalizer bx_icon' style="color: #7635dc !important;"></i>&nbsp;<span class="acf-niveau">Debutant</span>
                                 </div>
+                                <div class="col">
+                                    <div id="preview_reference">
+                                        <span class="acf-reference font_size"><i class="bx bx-clipboard" style="color: #7635dc !important;"></i>10MG2022-01</span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div id="preview_reference">
+                                        <span id="preview_prix" class="font_size">
+                                            <span class="acf-prix">450000</span>&nbsp;{{$devise->devise}}&nbsp;HT
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row detail__formation__detail justify-content-space-between py-5 px-5">
-                            <div class="col-lg-8 detail__formation__content">
+                        <div class="row detail__formation__detail justify-content-space-between pb-5 px-5">
+                            <div class="col-lg-12 detail__formation__content">
 
                                 <div class="row detail__formation__item__left__objectif" id="border_objectif">
                                     <div class="col-lg-12" id="preview_objectif">
@@ -511,72 +528,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <div class="col-lg-4 detail__formation__item__right" id="border_reference">
-                                <div class="row detail__formation__item__main__head align-items-center">
-                                    <div class="detail__prix__head">
-                                        <div class="detail__prix__text">
-                                            <p class="pt-2"><b>INTRA</b></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row detail__formation__item__main">
-                                    <div class="detail__prix__main__presentiel pt-3">
-                                        <div>
-                                            <p class="text-uppercase text-center" id="preview_modalite"><span class="acf-modalite text_mod font_size">Presentiel et a
-                                                    distance</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row detail__formation__item__main">
-                                    <div class="col-lg-5 detail__prix__main__ref pt-2">
-                                        <div>
-                                            <p class="font_size"><i class="bx bx-clipboard "></i>&nbsp;Ref :</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7 detail__prix__main__ref2 pt-2">
-                                        <div id="preview_reference">
-                                            <p class="acf-reference font_size">10MG2022-01</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="hr">
-                                <div class="row detail__formation__item__main">
-                                    <div class="col-lg-6 detail__prix__main__dure">
-                                        <div>
-                                            <p class="font_size"><i class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée :</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 detail__prix__main__dure2">
-                                        <div>
-                                            <p class="font_size">
-                                                <span id="preview_jour"><span class="acf-jour">
-                                                        4
-                                                    </span>j</span>
-                                                <span id="preview_heur">/<span class="acf-heur">
-                                                        28
-                                                    </span>h</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="hr">
-                                <div class="row detail__formation__item__rmain">
-                                    <div class="col-lg-5 detail__prix__main__prix">
-                                        <div>
-                                            <p class="font_size"><i class='bx bx-euro'></i>&nbsp;Prix :</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7 detail__prix__main__prix2">
-                                        <div>
-                                            <p id="preview_prix" class="font_size"><span class="acf-prix">450000</span>&nbsp;{{$devise->devise}}&nbsp;HT
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -601,22 +552,26 @@
                                     </thead>
                                     <tbody>
                                         @foreach($niveau as $nv)
-                                        <tr>
+                                        <tr align="center">
                                             <td>{{$nv->niveau}}</td>
-                                            <td align="center"><a href="{{route('supprimer_niveau',$nv->id)}}"><i class="bx bxs-trash"></i></a></td>
+                                            <td align="center"><a href="{{route('supprimer_niveau',$nv->id)}}"><i class="bx bx-trash bx_supprimer"></i></a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="d-flex justify-content-end mx-5 pb-3">
-                                    <button type="button" class="btn btn-secondary" onclick="myFunction()">Retour</button>&nbsp;
-                                    <button class="btn btn-primary" onclick="myFunction1()">Ajouter
-                                        un niveau</button>
+                                <div class="text-center mb-3">
+                                    <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                    <button class="btn btn_nouveau text-center" onclick="ajouter_niveau();" >
+                                        <i class='bx bx-plus-medical me-1'></i>Ajouter un niveau
+                                    </button>
                                 </div>
-                                <div id="mydiv" style="display: none;">
+                                <div id="mydiv" style="display: none;" class="text-center px-2 mt-3">
                                     <form action="{{route('enregistrer_niveau')}}" method="POST">
                                         @csrf
-                                        <table class="table">
+                                        <input type="text" class="form-control mb-2 input" name="niveau" placeholder="Niveau" required>
+                                        <button type="submit" class="btn btn_enregistrer mb-3" ><i class='bx bx-check me-1'></i>Enregistrer</button>
+
+                                        {{-- <table class="table">
                                             <thead>
                                                 <th>Nouveau niveau : </th>
                                             </thead>
@@ -625,12 +580,12 @@
                                                     <td>
                                                         <input type="text" class="form-control" name="niveau" placeholder="niveau" required>
                                                     </td>
-                                                    <td align="center" class="p-2">
-                                                        <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+                                                    <td align="center" class="p-0 pt-1 ">
+                                                        <button type="submit" class="btn w-100 btn_enregistrer" ><i class='bx bx-check me-1'></i>Enregistrer</button>
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </table>
+                                        </table> --}}
                                     </form>
                                 </div>
                             </div>
@@ -779,7 +734,7 @@ $(".prestation").keyup(function() {
     $("#preview_presentation").css("color", "black");
 });
 
-function myFunction() {
+function changer_niveau() {
     var x = document.getElementById("myDIV");
     if (x.style.display === "none") {
         x.style.display = "block";
@@ -790,7 +745,7 @@ function myFunction() {
     }
 }
 
-function myFunction1() {
+function ajouter_niveau() {
     var x = document.getElementById("mydiv");
     if (x.style.display === "none") {
         x.style.display = "block";

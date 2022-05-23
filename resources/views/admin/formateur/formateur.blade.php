@@ -1,7 +1,8 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Formateurs</p>
+    <p class="text_header m-0 mt-1">Listes des formateurs</p>
 @endsection
+@inject('groupe', 'App\groupe')
 @section('content')
 <div class="container-fluid justify-content-center pb-3">
 
@@ -49,6 +50,15 @@
             border-bottom: 2px solid black;
         }
 
+
+        .main{
+            cursor: pointer;
+        }
+        .warning{
+            color: #f64f59;
+            font-size: 4rem;
+        }
+
     </style>
 
     <div class="row w-100 bg-none mt-3 font_text">
@@ -79,7 +89,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="">
-                            <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+                            <a href="#" class="btn_creer text-center filter mt-1" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
                         </div>
                     </div>
                 </div>
@@ -89,7 +99,11 @@
                     <table class="table  table-borderless table-lg table-hover">
                         <thead style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
                             <th>Nom & prénom formateur</th>
+                            <th>Téléphone</th>
                             <th>E-mail</th>
+                            @can('isCFP')
+                                <th>Action</th>
+                            @endcan
                         </thead>
                         <tbody id="data_collaboration" style="font-size: 11.5px">
 
@@ -100,7 +114,12 @@
                                 @foreach($formateur as $frm)
                                 <tr class="information" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}">
                                     <td role="button" onclick="afficherInfos();"><img src="{{asset("images/formateurs/".$frm->photos)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</span></td>
-                                    <td role="button" onclick="afficherInfos();">{{$frm->mail_formateur}}</td>
+                                    <td role="button" onclick="afficherInfos();" style="vertical-align: middle">
+                                        @php
+                                            echo $groupe->formatting_phone($frm->numero_formateur);  
+                                        @endphp
+                                    </td>
+                                    <td role="button" onclick="afficherInfos();" style="vertical-align: middle">{{$frm->mail_formateur}}</td>
                                     {{-- <td>
                                         <div align="left">
                                             <strong>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</strong>
@@ -111,7 +130,7 @@
                                             <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
                                         </div>
                                     </td> --}}
-                                    <td>
+                                    {{-- <td>
                                         <div class=" btn-group dropleft">
                                             <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-ellipsis-v"></i>
@@ -122,44 +141,77 @@
 
                                                 <a href="{{route('profilFormateur',[$frm->formateur_id])}}" class="dropdown-item" title="Voir Profile"><i class="fa fa-user" aria-hidden="true" style="font-size:15px"></i>&nbsp;&nbsp;CV</a>
                                                 @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                                <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$frm->formateur_id}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Mettre fin à la collaboration</strong></a>
+                                                    @can('isPremium')
+                                                        <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$frm->formateur_id}}"><i class="fa fa-trash" aria-hidden="true" style="font-size:15px"></i>&nbsp; <strong style="color: red">Mettre fin à la collaboration</strong></a>
+                                                    @endcan
                                                 @endcanany
                                             </div>
                                         </div>
-
-
-
-                                    </td>
+                                    </td> --}}
+                                    @can('isCFP')
+                                        <td style="vertical-align: middle">
+                                            <div style="vertical-align: middle" class="form-check form-switch mt-3">
+                                                <input class="form-check-input {{$frm->formateur_id}} main" data-bs-toggle="modal"  name="switch"  
+                                                    @if($frm->activiter_formateur == 1)  data-bs-target="#test_{{$frm->formateur_id}}" id="switch2_{{$frm->formateur_id}}" title="Désactiver la personne selectionner" 
+                                                    @elseif($frm->activiter_formateur == 0) data-bs-target="#test2_{{$frm->formateur_id}}" id="switch_{{$frm->formateur_id}}" title="Activer la personne selectionner" 
+                                                    @endif   class="form-check-input activer" data-id="" type="checkbox" role="switch" 
+                                                    @if($frm->activiter_formateur == 1) checked @endif/>
+                                            </div>
+                                            <td class="ms-0 mt-5"> 
+                                                <div class="text-center mt-3">
+                                                    @if($frm->activiter_formateur == 1)
+                                                        <p> <span style="color:white; background-color:rgb(144, 208, 134); border-radius:7px; padding: 5px" > Activé </span></p>
+                                                    @elseif($frm->activiter_formateur == 0)
+                                                        <p> <span style="color:white; background-color:rgb(255, 175, 175); border-radius:7px; padding: 5px" > Desactivé </span></p>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </td>
+                                    @endcan
                                 </tr>
 
-
-                                <!-- Modal desactivation -->
-                                <div class="modal fade" id="exampleModal_{{$frm->formateur_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                {{-- debut --}}
+                                    <div class="modal fade" id="test_{{$frm->formateur_id}}" tabindex="-1" aria-labelledby="test_{{$frm->formateur_id}}" aria-hidden="true">
+                                        <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
-                                                <h6 class="modal-title">
-                                                    <font color="white">Avertissement !</font>
-                                                </h6>
-
+                                            <div class="modal-header justify-content-center" style="background-color:rgb(224,182,187);">
+                                                <h6 class="modal-title">Avertissement !</h6>
                                             </div>
                                             <div class="modal-body">
-                                                <small>Vous êtes sur le point désactiver un utilisateur, cet action est réversible . Continuer ?</small>
+                                                <div class="text-center my-2">
+                                                    <i class="fa-solid fa-circle-exclamation warning"></i>
+                                                </div>
+                                                <p class="text-center">Vous allez désactiver cette personne. Êtes-vous sur?</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                <form action="{{ route('mettre_fin_cfp_formateur') }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-secondary">Oui </button>
-                                                    <input type="text" value="{{$frm->formateur_id}}" hidden name="formateur_id">
-                                                </form>
+                                                <button type="button" class="btn btn-secondary non_active" data-bs-dismiss="modal" id="{{$frm->formateur_id}}"> Non </button>
+                                                <button type="button" class="btn btn-secondary desactiver_formateur" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}"> Oui</button>
                                             </div>
                                         </div>
+                                        </div>
                                     </div>
-                                </div>
-                                {{-- fin modal desactivation --}}
-
-
+                                    <div class="modal fade" id="test2_{{$frm->formateur_id}}" tabindex="-1" aria-labelledby="test2_{{$frm->formateur_id}}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header justify-content-center" style="background-color:rgb(224,182,187);">
+                                                <h6 class="modal-title">Avertissement !</h6>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="text-center my-2">
+                                                    <i class="fa-solid fa-circle-exclamation warning"></i>
+                                                </div>
+                                                <p class="text-center">Vous allez activer cette personne. Êtes-vous sur?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary non_active2"
+                                                    data-bs-dismiss="modal" id="{{$frm->formateur_id}}">Non
+                                                </button>
+                                                <button type="button" class="btn btn-secondary activer_formateur" id="{{$frm->formateur_id}}">Oui</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                {{-- fin --}}
                                 @endforeach
                                 @endif
                         </tbody>
@@ -181,10 +233,10 @@
                 @csrf
                 <div class="form-row d-flex">
                     <div class="col">
-                        <input type="text" class="form-control mb-2" id="inlineFormInput" name="nom_format" placeholder="Nom*" required />
+                        <input type="text" class="form-control mb-2" id="inlineFormInput" autocomplete="off" name="nom_format" placeholder="Nom*" required />
                     </div>
                     <div class="col ms-2">
-                        <input type="email" class="form-control  mb-2" id="inlineFormInput" name="email_format" placeholder="Adresse mail*" required />
+                        <input type="email" class="form-control  mb-2" id="inlineFormInput" autocomplete="off" name="email_format" placeholder="Adresse mail*" required />
                     </div>
                     <div class="col ms-2">
                         <button type="submit" class="btn btn-primary">Envoyer l'invitation</button>
@@ -282,10 +334,58 @@
         </div>
     </div>
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
+
+$(".non_active2").on('click', function(e) {
+    let id = e.target.id;
+    let id2 = $("#switch_"+id).val();
+    $("#switch_"+id).prop('checked',false);
+});
+
+$(".non_active").on('click', function(e) {
+    let id = e.target.id;
+    let id2 = $("#switch_"+id).val();
+    $("#switch2_"+id).prop('checked',true);
+});
+
+
+$('.desactiver_formateur').on('click',function(e){
+    let id = e.target.id;
+    $.ajax({
+        method: "GET"
+        , url: "{{route('desactiver_formateur')}}"
+        , data: {Id : id}
+        , success: function(response) {
+            window.location.reload();
+        }
+        , error: function(error) {
+            console.log(error)
+        }
+    });
+});
+
+
+
+$('.activer_formateur').on('click',function(e){
+        let id = e.target.id;
+        $.ajax({
+            method: "GET"
+            , url: "{{route('activer_formateur')}}"
+            , data: {Id : id}
+            , success: function(response) {
+                window.location.reload();
+            }
+            , error: function(error) {
+                console.log(error)
+            }
+        });
+});
+
+
+
+
     $(".information").on('click', function(e) {
 
     let id = $(this).data("id");

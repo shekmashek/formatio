@@ -26,3 +26,13 @@ recopier view :dans facture bdd_suiviformation_mise_a_jour_4.sql(facturation)
 Vendredi 13 mai 2022
 
 -recopier view v_full_facture,v_facture_actif,v_facture_inactif
+
+
+-========== Branch: debug_version_1.1
+
+alter table demmande_cfp_etp add column  resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
+alter table demmande_cfp_etp add column  resp_etp_id bigint(20) unsigned;
+alter table demmande_etp_cfp add column  resp_etp_id bigint(20) unsigned not null references employers(id) on delete cascade;
+alter table demmande_etp_cfp add column  resp_cfp_id bigint(20) unsigned;
+
+recopier view collaboration dans:bdd_version_2:  ==>  bdd_suiviformation_mise_a_jour_8(collaboration table principale pour les entreprise).sql

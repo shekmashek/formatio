@@ -123,15 +123,19 @@ class ParticipantController extends Controller
                 $paginations = 1;
             }
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
-            $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-            $employers = $role->getEmployerReferent($employers_tmp);
+            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+
+            // $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+            // $employers = $role->getEmployerReferent($employers_tmp);
         } else {
             if ($paginations <= 0) {
                 $paginations = 1;
             }
-            $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+
+            // $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
-            $employers = $role->getEmployerReferent($employers_tmp);
+            // $employers = $role->getEmployerReferent($employers_tmp);
         }
         return view("admin.entreprise.employer.liste_employer", compact('connected', 'employers', 'pagination'));
     }

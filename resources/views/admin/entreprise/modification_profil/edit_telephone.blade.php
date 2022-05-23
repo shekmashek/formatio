@@ -5,7 +5,8 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('aff_parametre_referent',$etp->id)}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" style="color:black"> Page précédente</button></a>
+    <a href="{{route('aff_parametre_referent')}}"> <button class="btn btn_precedent"><i class='bx bxs-chevron-left me-1'></i>Retour</button></a>
+
 </div>
 <center>
     @if (\Session::has('erreur_telephone'))
@@ -17,7 +18,6 @@
     @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            <p style="text-align: left">Modifier le numéro de téléphone de l'entreprise</p>
             <form   class="btn-submit" action="{{route('enregistrer_telephone_entreprise',$etp->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row px-3 mt-4">
@@ -28,7 +28,8 @@
                 </div>
 
 
-                <button type="submit" class=" mt-1 btn_enregistrer"> Enregister</button>
+                <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
+
             </form>
 </center>
         </div>

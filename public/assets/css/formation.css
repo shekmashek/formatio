@@ -13,14 +13,14 @@ a:focus {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
 }
-.content_formation {
+/* .content_formation {
     background: linear-gradient(60deg, #4222c3, #7635dc);
     height: 40vh;
     width: 100%;
     color: white;
     border-bottom-left-radius: 20%;
     border-bottom-right-radius: 50%;
-}
+} */
 
 .navigation_detail h3 {
     font-size: 1.3rem;
@@ -460,33 +460,62 @@ a:focus {
     padding: 10px 12px;
     background: linear-gradient(60deg, #7635dc, #4222c3);
     position: relative;
-    top: 10px;
+    bottom: 15px;
     font: inherit;
-    margin: 0;
     border-radius: 50px;
+    transition: all .5s ease-in-out;
   }
 
-  .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: red;
+  .dropdown .dropbtn:hover{
+      color: white;
+      transform: scale(1.02);
   }
 
-  .dropdown-content {
-    display: none;
+   .mega_menu{
     position: absolute;
-    background-color: #f9f9f9;
-    width: ;
-    left: 0;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 999;
+    right: 0px;
+    width: max-content;
+    border: none;
+    background: linear-gradient(60deg, #7635dc, #4222c3);
   }
 
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {
-    display: block;
+  .mega_menu .dropdown-item{
+      color: white;
+      text-transform: capitalize;
+      border-radius: 5px;
+  }
+
+  .mega_menu .dropdown-item:hover{
+    color: #5433FF;
+    background-color: rgba(255, 255, 255, 0.713);
   }
 
 
 .icon_dom{
     position: relative;
     top: 5px;
+}
+
+.titre_domaine{
+    background: linear-gradient(60deg, #7635dc, #4222c3);
+    color: white;
+    padding: 1.3rem 2rem;
+}
+
+.content_formation{
+    background-color: #6373811e;
+}
+
+.module_lien{
+    background: #c7c8c851;
+    padding: .5rem 1rem;
+    border-radius: 5px;
+    transition: all .5s ease-in-out;
+}
+
+.module_lien:hover{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    transform: scale(1.01);
+    background: white;
+    color: #4222c3;
 }

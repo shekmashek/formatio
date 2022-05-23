@@ -26,7 +26,9 @@ SELECT
     (employers.adresse_region) region,
     (employers.adresse_lot) lot,
     role_users.role_id,
-    role_users.prioriter
+    role_users.prioriter,
+employers.created_at,
+employers.updated_at
 FROM
 employers, role_users, genre
 WHERE
@@ -60,7 +62,9 @@ SELECT
     employers.adresse_region,
     employers.adresse_lot,
     role_users.role_id,
-    role_users.prioriter
+    role_users.prioriter,
+employers.created_at,
+employers.updated_at
 FROM
 employers, role_users , genre
 WHERE
@@ -94,7 +98,9 @@ SELECT
     employers.adresse_region,
     employers.adresse_lot,
     role_users.role_id,
-    role_users.prioriter
+    role_users.prioriter,
+employers.created_at,
+employers.updated_at
 FROM
 employers, role_users, genre
 WHERE

@@ -60,8 +60,9 @@ $('#fermer', '.close').on('change', function(e) {
     ul.innerHTML = '';
 
 });
-$(".suppression").on('click', function(e) {
+$(".suppression_module").on('click', function(e) {
     let id = e.target.id;
+    alert(id);
     $.ajax({
         type: "get"
         , url: '/destroy_module'
@@ -72,6 +73,7 @@ $(".suppression").on('click', function(e) {
         , success: function(response) {
 
             if (response.success) {
+
                 window.location.reload();
             } else {
                 alert("Error");

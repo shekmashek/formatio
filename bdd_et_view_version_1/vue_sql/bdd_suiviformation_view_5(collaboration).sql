@@ -13,7 +13,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_etp AS SELECT
     (entreprises.rcs) nif_rcs,
     (entreprises.cif) cif_rcs,
     secteur_id,
-    responsables.nom_resp,
+     responsables.nom_resp,
     responsables.prenom_resp,
     responsables.email_resp,
     secteurs.nom_secteur,
@@ -33,7 +33,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_etp AS SELECT
             (demmande_cfp_etp.created_at) date_demmande
         FROM
             demmande_cfp_etp,secteurs,
-            entreprises,responsables
+            entreprises,responsables,responsables_cfp
         WHERE
             inviter_etp_id = entreprises.id and secteur_id = secteurs.id  and
             entreprises.id = responsables.entreprise_id and demmande_cfp_etp.activiter = 0;

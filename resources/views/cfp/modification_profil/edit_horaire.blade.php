@@ -3,11 +3,8 @@
     <h3 class="text_header m-0 mt-1">Modification horaire</h3>
 @endsection
 @section('content')
+<a href="{{route('affichage_parametre_cfp')}}"> <button class="btn btn_precedent" ><i class='bx bxs-chevron-left me-1'></i>Retour</button></a>
 
-<br>
-<br>
-<br>
-<br>
 <center>
     @if (\Session::has('error_adresse'))
         <div class="alert alert-danger col-md-4">
@@ -29,15 +26,18 @@
                                     <input type="time" class="form-control test input"  name="ouverture[]"  value="{{ $cfp[$i]->h_entree}}">&nbsp;
                                     <input type="time" class="form-control test input"  name="fermeture[]" value="{{ $cfp[$i]->h_sortie}}">&nbsp;
                             </div>
-                            
+
 
                         @endfor
-                        <div class="text-end mt-1">
-                            <button title="Ajouter une nouvelle horaire" type="button" class="btn btn-success btn-lg" id="addRow2"><i class='bx bxs-plus-circle'></i></button>
+                        <div class="text-center mt-3 mb-4">
+                            {{-- <button title="Ajouter une nouvelle horaire" type="button" class="btn btn-success btn-lg" ><i class='bx bxs-plus-circle'></i></button> --}}
+                            <button type="button" class="btn btn_nouveau" id="addRow2"><i class='bx bx-plus-medical'></i>Nouveau horaire</button>
+
                         </div>
                     </div>
                     <div id="add_column2"></div>
-                    <button  class="btn_enregistrer mt-2 btn modification "> Enregister</button>
+                    <button type="submit" class="btn btn_enregistrer mt-3"><i class='bx bx-check me-1'></i>Enregistrer</button>
+
                 </form>
             @else
             <form  class="btn-submit" action="{{route('remplir_horaire',$id)}}" method="post" enctype="multipart/form-data">
@@ -51,11 +51,12 @@
                     </div>
                     <div class="col-4" style="display: flex">
                         <input type="time" class="form-control" id="inlineFormInput3" name="fermeture[]" placeholder="Fermeture" required />&nbsp;
-                        <button type="button" class="btn btn-success" id="addRow"><i class='bx bxs-plus-circle'></i></button>
+                        <button type="button" class="btn btn_nouveau" id="addRow"><i class='bx bx-plus-medical'></i>Nouveau horaire</button>
                     </div>
                 </div>
                 <div id="add_column"></div>
-                <button type="submit" class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
+
 
             </form>
             @endif
@@ -72,15 +73,17 @@
         var html = '';
 
         html += '<div class="row" id = "inputFormRow1">';
-        html += '<div class="col-4" style="display: flex">';
+        html += '<div class="col-4">';
         html += '<input type="text" class="form-control" id="inlineFormInput3" name="jour[]" placeholder="Jour" required />';
         html += '</div>';
-        html += '<div class="col-4" style="display: flex">';
+        html += '<div class="col-3">';
         html += '<input type="time" class="form-control" id="inlineFormInput3" name="ouverture[]" placeholder="Jour" required />';
         html += '</div>';
-        html += '<div class="col-4" style="display: flex">';
+        html += '<div class="col-3">';
         html += '<input type="time" class="form-control" id="inlineFormInput3" name="fermeture[]" placeholder="Jour" required />';
-        html += '<button id="removeRow1" type="button" class="btn btn-danger mt-2"><i class="bx bx-x" style="font-size: 15px;"></i></button>&nbsp;';
+        html += '</div>';
+        html += '<div class="col-2">';
+        html += '<button id="removeRow1" type="button" class="btn mb-1"><i class="bx bx-trash bx_supprimer ms-2" ></i></button>&nbsp;';
         html += '</div>';
         $('#add_column').append(html);
     });
@@ -93,16 +96,18 @@
     $(document).on('click', '#addRow2', function() {
         var html = '';
 
-        html += '<div class="row" id = "inputFormRow2">';
-        html += '<div class="col-4" style="display: flex">';
+        html += '<div class="row mb-2" id = "inputFormRow2">';
+        html += '<div class="col-4">';
         html += '<input type="text" class="form-control" id="inlineFormInput3" name="jour[]" placeholder="Jour" required />';
         html += '</div>';
-        html += '<div class="col-4" style="display: flex">';
+        html += '<div class="col-3">';
         html += '<input type="time" class="form-control" id="inlineFormInput3" name="ouverture[]" placeholder="Jour" required />';
         html += '</div>';
-        html += '<div class="col-4" style="display: flex">';
+        html += '<div class="col-3">';
         html += '<input type="time" class="form-control" id="inlineFormInput3" name="fermeture[]" placeholder="Jour" required />';
-        html += '<button id="removeRow2" type="button" class="btn btn-danger mt-2"><i class="bx bx-x" style="font-size: 15px;"></i></button>&nbsp;';
+        html += '</div>';
+        html += '<div class="col-2">';
+        html += '<button id="removeRow2" type="button" class="btn mb-1"><i class="bx bx-trash bx_supprimer ms-2" ></i></button>&nbsp;';
         html += '</div>';
         $('#add_column2').append(html);
     });

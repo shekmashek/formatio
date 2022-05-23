@@ -257,6 +257,11 @@ class HomeController extends Controller
 
             $cfp = Cfp::where('id', $cfp_id)->value('nom');
 
+            $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
+
+            if($cfps->statut_compte_id == 1) $vue = 1;
+            else $vue = 2;
+
             $user_id = User::where('id', Auth::user()->id)->value('id');
             $centre_fp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
 
@@ -325,18 +330,21 @@ class HomeController extends Controller
             //date now
             $dtNow = Carbon::today()->toDateString();
             $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
-            if ($cfp_ab != null) {
+
+            if ($cfp_ab != null && $cfp_ab[0]->status != "Désactivé") {
                 setlocale(LC_TIME, "fr_FR");
                 $j1 = strftime('%d', strtotime($cfp_ab[0]->due_date));
                 $j2 = strftime('%d', strtotime($dtNow));
-                $jour_restant = $j1 - $j2;
+                $jour_restant = $j2 - $j1;
                 $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
                 $test = 1;
             } else {
                 $test = 0;
-                $message = "Vous êtes en mode gratuit";
+                $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
+                $message = "Vous êtes en mode ".$statut_compte->nom_statut;
             }
-            return view('cfp.dashboard_cfp.dashboard', compact('test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler'));
+
+            return view('cfp.dashboard_cfp.dashboard', compact('vue','test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler'));
         }
         if (Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
@@ -398,16 +406,17 @@ class HomeController extends Controller
                 //date now
                 $dtNow = Carbon::today()->toDateString();
                 $etp_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$etp_id]);
-                if ($etp_ab != null) {
+                if ($etp_ab != null && $etp_ab[0]->status != "Désactivé") {
                     setlocale(LC_TIME, "fr_FR");
                     $j1 = strftime('%d', strtotime($etp_ab[0]->due_date));
                     $j2 = strftime('%d', strtotime($dtNow));
-                    $jour_restant = $j1 - $j2;
+                    $jour_restant = $j2 - $j1;
                     $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
                     $test = 1;
                 } else {
                     $test = 0;
-                    $message = "Vous êtes en mode gratuit";
+                    $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
+                    $message = "Vous êtes en mode ".$statut_compte->nom_statut;
                 }
 
 
@@ -1058,6 +1067,7 @@ class HomeController extends Controller
     //creation iframe
     public function creer_iframe($nbPagination_etp = null, $nbPagination_cfp = null, $pour_list = null)
     {
+        $lien_invite = $this->fonct->findAll("iframe_invite");
         $nb_limit = 10;
         if ($nbPagination_cfp == null || $nbPagination_cfp <= 0) {
             $nbPagination_cfp = 1;
@@ -1096,7 +1106,7 @@ class HomeController extends Controller
 
         // $iframe_etp = $this->fonct->findAll("v_entreprise_iframe");
         // $iframe_of = $this->fonct->findAll("v_cfp_iframe");
-        return view('bi.iframe', compact('iframe_etp', 'iframe_of', 'pagination_cfp', 'pagination_etp', 'pour_list'));
+        return view('bi.iframe', compact('lien_invite','iframe_etp', 'iframe_of', 'pagination_cfp', 'pagination_etp', 'pour_list'));
     }
 
 
@@ -1333,6 +1343,20 @@ class HomeController extends Controller
         $entreprise = $fonct->insert_iframe('iframe_cfp', 'cfp_id', $cfp_id, $url_iframe);
         return back();
     }
+    public function enregistrer_iframe_inviter(Request $request){
+        $this->fonct->insert_iframe_invite($request->url_invite);
+        // on va recuperer toutes les entreprises qui ont un statut compte = 1 (invité)
+        $entreprises = $this->fonct->findWhere("entreprises",["statut_compte_id"],[1]);
+        for ($i=0; $i < count($entreprises); $i++) {
+            $this->fonct->insert_iframe('iframe_entreprise','entreprise_id',$entreprises[$i]->id,$request->url_invite);
+        }
+         // on va recuperer toutes les cfps qui ont un statut compte = 1 (invité)
+        $cfps = $this->fonct->findWhere("cfps",["statut_compte_id"],[1]);
+        for ($i=0; $i < count($cfps); $i++) {
+            $this->fonct->insert_iframe('iframe_cfp','cfp_id',$cfps[$i]->id,$request->url_invite);
+        }
+        return back();
+    }
     //liste par entreprise
     public function iframe_etp()
     {
@@ -1347,8 +1371,13 @@ class HomeController extends Controller
     {
         $fonct = new FonctionGenerique();
         $id_cfp = DB::select('select * from responsables_cfp where user_id = ?', [Auth::user()->id]);
+
+        $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$id_cfp[0]->cfp_id]);
+        if($cfps->statut_compte_id == 1) $vue = 1;
+        else $vue = 2;
+
         $iframe_cfp = $fonct->findWhereMulitOne("v_cfp_iframe", ["cfp_id"], [$id_cfp[0]->cfp_id]);
-        return view('layouts.bi', compact('iframe_cfp'));
+        return view('layouts.bi', compact('vue','iframe_cfp'));
     }
     public function BI()
     {
@@ -1364,12 +1393,40 @@ class HomeController extends Controller
         $modification->update_iframe('iframe_entreprise', 'iframe', 'entreprise_id', $entreprise, $iframe);
         return back();
     }
+    public function modifier_iframe_inviter(Request $request){
+        $this->fonct->update_iframe_invite($request->id_inviter,$request->n_iframe_invite);
+        // on va recuperer toutes les entreprises qui ont un statut compte = 1 (invité)
+        $entreprises = $this->fonct->findWhere("entreprises",["statut_compte_id"],[1]);
+        for ($i=0; $i < count($entreprises); $i++) {
+            DB::update('update iframe_entreprise set iframe = ? where entreprise_id = ?', [$request->n_iframe_invite,$entreprises[$i]->id]);
+        }
+         // on va recuperer toutes les cfps qui ont un statut compte = 1 (invité)
+        $cfps = $this->fonct->findWhere("cfps",["statut_compte_id"],[1]);
+        for ($i=0; $i < count($cfps); $i++) {
+            DB::update('update iframe_cfp set iframe = ? where cfp_id = ?', [$request->n_iframe_invite,$cfps[$i]->id]);
+        }
+        return back();
+    }
     //suppression
     public function supprimer_iframe_etp(Request $request)
     {
         $id_etp = $request->id_etp;
         $suppression = new FonctionGenerique();
         $suppression->supprimer_iframe('iframe_entreprise', 'entreprise_id', $id_etp);
+        return back();
+    }
+    public function supprimer_iframe_inviter(Request $request){
+        $this->fonct->supprimer_iframe_invite($request->id_invite);
+         // on va recuperer toutes les entreprises qui ont un statut compte = 1 (invité)
+        $entreprises = $this->fonct->findWhere("entreprises",["statut_compte_id"],[1]);
+        for ($i=0; $i < count($entreprises); $i++) {
+            DB::delete('delete from iframe_entreprise where entreprise_id = ?', [$entreprises[$i]->id]);
+        }
+          // on va recuperer toutes les cfps qui ont un statut compte = 1 (invité)
+        $cfps = $this->fonct->findWhere("cfps",["statut_compte_id"],[1]);
+        for ($i=0; $i < count($cfps); $i++) {
+            DB::delete('delete from iframe_cfp where cfp_id = ?', [$cfps[$i]->id]);
+        }
         return back();
     }
 

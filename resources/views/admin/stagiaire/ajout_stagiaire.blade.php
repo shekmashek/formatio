@@ -143,7 +143,11 @@
                     <td>{{ $stg->matricule }}</td>
                     <td>{{ $stg->nom_stagiaire }}</td>
                     <td>{{ $stg->prenom_stagiaire }}</td>
-                    <td>{{ $stg->telephone_stagiaire }}</td>
+                    <td>
+                        @php
+                            echo $groupe->formatting_phone($stg->telephone_stagiaire);
+                        @endphp
+                    </td>
                     <td>{{ $stg->mail_stagiaire }}</td>
                     <td>{{ $stg->fonction_stagiaire }}</td>
                     {{-- <td>{{ $stg->nom_departement }}</td>
@@ -369,49 +373,51 @@ td{
                 $("#prenom").val('');
                 $("#fonction").val('');
                 $("#test_table > tbody").empty();
-                var html = '';
-                for (var i = 0; i < userData.length; i++){
-                    photo = '';
-                    if(userData[i].photos == null){
-                        photo = '<span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">'+userData[0].sans_photo+'</span>';
-                    }else{
-                        photo = '<img src="{{ asset("images/stagiaires/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
-                        photo = photo.replace(":?",userData[i].photos);
-                    }
-                    // alert(html);
-                    html +='<tr id="row_'+userData[i].stagiaire_id+'">';
-                    html += '<td>'+photo+'</td>';
-                    html +='<td>'+userData[i].matricule+'</td>';
-                    html += '<td>'+userData[i].nom_stagiaire+'</td>';
-                    html += '<td>'+userData[i].prenom_stagiaire+'</td>';
-                    html += '<td>'+userData[i].telephone_stagiaire+'</td>';
-                    html += '<td>'+userData[i].mail_stagiaire+'</td>';
-                    html += '<td>'+userData[i].fonction_stagiaire+'</td>';
-                    // html += '<td>'+userData[i].nom_departement+'</td>';
-                    // html += '<td>'+userData[i].nom_service+'</td>';
-                    html += '<td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#exampleModal_'+userData[i].stagiaire_id+'"><i class="fa fa-trash-alt supprimer"></i></button></td>';
-                    html += '</tr>';
-                    html += '<div class="modal fade" id="exampleModal_'+userData[i].stagiaire_id+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-                    html += '<div class="modal-dialog modal-dialog-centered" role="document">';
-                    html += '<div class="modal-content">';
-                    html += '<div class="modal-header  d-flex justify-content-center" style="background-color:rgb(224,182,187);">';
-                    html += '<h6 class="modal-title">Avertissement !</h6>';
-                    html += '</div>';
-                    html += '<div class="modal-body">';
-                    html += '<small>Vous êtes sur le point d\'effacer une donnée, cette action est irréversible. Continuer ?</small>';
-                    html += '</div>';
-                    html += '<div class="modal-footer">';
-                    html += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Non </button>';
-                    html += '<button type="button" class="btn btn-secondary supprimer_stg" id="'+userData[i].stagiaire_id+'" data-bs-dismiss="modal"> Oui </button>'
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                }
-                $('#participant_groupe').append(html);
+                // var html = '';
+                // for (var i = 0; i < userData.length; i++){
+                //     photo = '';
+                //     if(userData[i].photos == null){
+                //         photo = '<span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">'+userData[0].sans_photo+'</span>';
+                //     }else{
+                //         photo = '<img src="{{ asset("images/stagiaires/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
+                //         photo = photo.replace(":?",userData[i].photos);
+                //     }
+                //     // alert(html);
+                //     html +='<tr id="row_'+userData[i].stagiaire_id+'">';
+                //     html += '<td>'+photo+'</td>';
+                //     html +='<td>'+userData[i].matricule+'</td>';
+                //     html += '<td>'+userData[i].nom_stagiaire+'</td>';
+                //     html += '<td>'+userData[i].prenom_stagiaire+'</td>';
+                //     html += '<td>'+userData[i].telephone_stagiaire+'</td>';
+                //     html += '<td>'+userData[i].mail_stagiaire+'</td>';
+                //     html += '<td>'+userData[i].fonction_stagiaire+'</td>';
+                //     // html += '<td>'+userData[i].nom_departement+'</td>';
+                //     // html += '<td>'+userData[i].nom_service+'</td>';
+                //     html += '<td><button type="button" class="supprimer" data-bs-toggle="modal" data-bs-target="#exampleModal_'+userData[i].stagiaire_id+'"><i class="bx bx-trash bx_supprimer"></i></button></td>';
+                //     html += '</tr>';
+                //     html += '<div class="modal fade" id="exampleModal_'+userData[i].stagiaire_id+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+                //     html += '<div class="modal-dialog modal-dialog-centered" role="document">';
+                //     html += '<div class="modal-content">';
+                //     html += '<div class="modal-header  d-flex justify-content-center" style="background-color:rgb(224,182,187);">';
+                //     html += '<h6 class="modal-title">Avertissement !</h6>';
+                //     html += '</div>';
+                //     html += '<div class="modal-body">';
+                //     html += '<small>Vous êtes sur le point d\'effacer une donnée, cette action est irréversible. Continuer ?</small>';
+                //     html += '</div>';
+                //     html += '<div class="modal-footer">';
+                //     html += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Non </button>';
+                //     html += '<button type="button" class="btn btn-secondary supprimer_stg" id="'+userData[i].stagiaire_id+'" data-bs-dismiss="modal"> Oui </button>'
+                //     html += '</div>';
+                //     html += '</div>';
+                //     html += '</div>';
+                //     html += '</div>';
+                // }
+                // $('#participant_groupe').append(html);
                 $(".span_ajout").hide();
                 $("#image_stg").hide();
                 $("#liste_vide").remove();
+
+                location.reload();
            },
            error:function(error){
               console.log(error)

@@ -72,7 +72,6 @@
                                       {{-- <input type="text" id = 'vartemp'> --}}
                               </div>
                                   </label>
-                                     <input id="file-input" type="file" name="image" value="{{$chef->photos}}"/>
                                   </div>
                             </center>
                         </div>
@@ -101,6 +100,7 @@
 
 
 
+                        <input id="file-input" type="file" name="image" value="{{$chef->photos}}"/>
 
 <button  class="btn_enregistrer  mt-1 btn modification "> Enregister</button>
 </form>

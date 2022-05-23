@@ -620,10 +620,6 @@ font-size: 0.850rem;
 .text_black{
     color: black;
 }
-.btn_enregistrer a:hover{
-    color: white;
-    text-decoration: none;
-}
 
 /* mises à jours */
 
@@ -679,7 +675,7 @@ font-size: 0.850rem;
     top: .2rem;
 }
 
-.effacer_cours{
+/* .effacer_cours{
     background-color: white;
     padding: .5rem 1rem;
     border-radius: 5px;
@@ -697,7 +693,7 @@ font-size: 0.850rem;
     color: red;
     position: relative;
     top: .35rem;
-}
+}*/
 
 #preview_reference{
     font-size: 0.850rem;
@@ -718,16 +714,13 @@ font-size: 0.850rem;
 .icon_vide{
     font-size: 20rem;
     color: #637381;
+    transition: all .5s;
 }
 
-.btn_enregistrer{
-    background-color: #7635dc;
-}
-
-.btn_enregistrer:hover{
-    background-color: white;
-    color: #7635dc;
-    border: 1px solid #7635dc;
+.icon_vide:hover{
+    background-color: #637381;
+    color: white;
+    border-radius: 10px;
 }
 
 .competence_box{
@@ -830,64 +823,6 @@ font-size: 0.850rem;
     bottom: .35rem;
 }
 
-#fr-logo,
-#markdown-1,
-#insertLink-1,
-#insertFiles-1,
-#insertImage-1,
-#moreRich-1,
-#undo-1,
-#redo-1,
-#moreMisc-1,
-#markdown-2,
-#insertLink-2,
-#insertFiles-2,
-#insertImage-2,
-#moreRich-2,
-#undo-2,
-#redo-2,
-#moreMisc-2,
-#markdown-3,
-#insertLink-3,
-#insertFiles-3,
-#insertImage-3,
-#moreRich-3,
-#undo-3,
-#redo-3,
-#moreMisc-3,
-#markdown-4,
-#insertLink-4,
-#insertFiles-4,
-#insertImage-4,
-#moreRich-4,
-#undo-4,
-#redo-4,
-#moreMisc-4,
-#markdown-5,
-#insertLink-5,
-#insertFiles-5,
-#insertImage-5,
-#moreRich-5,
-#undo-5,
-#redo-5,
-#moreMisc-5,
-#markdown-6,
-#insertLink-6,
-#insertFiles-6,
-#insertImage-6,
-#moreRich-6,
-#undo-6,
-#redo-6,
-#moreMisc-6,
-.fr-second-toolbar,
-.fr-quick-insert{
-    display: none;
-}
-
-.fr-box.fr-basic {
-    border-radius: 0 !important;
-}
-
 .width_large{
     width: 50rem !important;
     /* margin: 0 auto; */
@@ -902,8 +837,8 @@ font-size: 0.850rem;
 }
 
 .button_choix_hors_ligne{
-    border: 1px solid #f64f59;
-    background-color: #f64f59;
+    border: 1px solid #ee0707;
+    background-color: #ee0707;
     color: white;
     padding: .3rem 1rem;
     border-radius: 15px;
@@ -922,10 +857,37 @@ font-size: 0.850rem;
 
 .form-switch .form-check-input{
     width: 4rem;
-    border-color: #f64f59;
+    border-color: #ee0707;
 }
 
 .warning{
-    color: #f64f59;
+    color: #ee0707;
     font-size: 4rem;
+}
+
+.suppression_programme,
+.ajouter_cours,
+.modifier_cours,
+.suppression{
+    display: none;
+    transition: all 1s ;
+}
+
+.accordionItemHeading:hover .suppression_programme,
+.accordionItemHeading:hover .ajouter_cours,
+.accordionItemHeading:hover .modifier_cours{
+    display: block;
+}
+
+.cours_hover:hover .suppression{
+    display: grid;
+    place-content: center;
+}
+
+.avertissement{
+    background-color: #ee0707 !important;
+    color: white !important;
+    text-align: center !important;
+    justify-content: center !important;
+    text-transform: uppercase !important;
 }

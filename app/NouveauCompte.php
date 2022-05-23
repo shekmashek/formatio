@@ -44,10 +44,10 @@ class NouveauCompte extends Model
 
         $data = [
             $doner["nom_etp"], $doner["email_etp"],
-            $doner["nif"], $doner["logo_etp"], $doner["secteur_id"],$url
+            $doner["nif"], $doner["logo_etp"],$url,$doner["secteur_id"]
         ];
 
-        DB::insert('insert into entreprises(nom_etp,email_etp,nif,logo,created_at,secteur_id,url_logo) values (?,?,?,?, NOW(),?,?)', $data);
+        DB::insert('insert into entreprises(nom_etp,email_etp,nif,logo,created_at,url_logo,secteur_id) values (?,?,?,?, NOW(),?,?)', $data);
         DB::commit();
     }
     public function insert_resp_ETP($doner, $entreprise_id, $user_id)

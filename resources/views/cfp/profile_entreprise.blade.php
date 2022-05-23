@@ -1,7 +1,9 @@
 @extends('./layouts/admin')
+
 @section('title')
 <p class="text_header m-0 mt-1">Entreprise collaboré</p>
 @endsection
+
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <div class="container-fluid justify-content-center pb-3">
@@ -81,73 +83,52 @@
 
                                 <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                                 <td role="button"  onclick="afficherInfos();">
-                                    {{-- @if($etp->photos_resp==null)
-                                        <span class="d-flex flex-row">
-                                            <div class='randomColor photo_users' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:60px; width:60px; display: grid; place-content: center"></div>
-                                            <span class="d-flex flex-end ms-3 align-items-center">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
-                                        </span>
-                                    @else --}}
+
+
                                         <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
-                                    {{-- @endif --}}
+
                                 </td>
-
-                                {{-- <td>
-                                    <div align="left">
-
-                            </td>
                             <td>
                                 <div class="dropdown mt-3">
                                     <div class="btn-group dropstart">
                                         <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         </button>
-                                        <ul class="dropdown-menu">
-                                            {{-- <li class="dropdown-item">
-                                                <a href="{{route('tous_projets')}}"> <button type="button" class="btn btn_creer" style="text-decoration:none">Voir les projets</button>
-                                                </a>
-                                            </li> --}}
-                                            <li>
-                                                <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
-                                            </li>
-                                        </ul>
+                                        @can('isPremium')
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a>
+                                                </li>
+                                            </ul>
+                                        @endcan
                                     </div>
                                 </div>
                             </td>
-                            {{-- modal delete  --}}
+
+                               {{-- modal delete  --}}
                             <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
                                             <h4 class="modal-title text-white">Avertissement !</h4>
-
                                         </div>
-                                    </div> --}}
-                                </td>
-                                {{-- modal delete  --}}
-                                <div>
-                                    <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header d-flex justify-content-center" style="background-color:rgb(224,182,187);">
-                                                <h6 class="modal-title text-white">Avertissement !</h6>
-
-                                            </div>
-                                            <div class="modal-body">
-                                                <small>Vous êtes sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button>
-                                                <form action="{{ route('mettre_fin_cfp_etp') }}" method="post">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-secondary"> Oui </button>
-                                                    <input name="etp_id" type="text" value="{{$etp->entreprise_id}}" hidden>
-                                                </form>
-                                            </div>
+                                        <div class="modal-body">
+                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
+                                            <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
+                                            <form action="{{ route('mettre_fin_cfp_etp') }}"  method="POST">
+                                                @csrf
+                                                <input name="etp_id" type="text" value="{{$etp->entreprise_id}}" hidden>
+                                                <div class="mt-4 mb-4">
+                                                    <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                </div>
-
-                                {{-- fin modal delete --}}
+                            </div>
+                            {{-- fin modal delete --}}
 
                             </tr>
                             @endforeach
@@ -202,12 +183,12 @@
                     <div class="col-md-12">
                         <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list">
                             <li class="nav-item">
-                                <a href="#" class=" active" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
+                                <a href="#" class=" active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-invitation" type="button" role="tab" aria-controls="nav-invitation" aria-selected="true">
                                     Invitations en attentes
                                 </a>
                             </li>
                             <li class="nav-item ms-5">
-                                <a href="#" class="" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                <a href="#" class="" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
                                     Invitations réfuser
                                 </a>
                             </li>
@@ -540,4 +521,4 @@
         });
 
     </script>
-    @endsection
+@endsection

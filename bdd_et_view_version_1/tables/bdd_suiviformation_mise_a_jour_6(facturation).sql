@@ -29,12 +29,14 @@ CREATE TABLE `frais_annexes` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into frais_annexes(description) values
-('frais de deplacement'),
-("frais d'hebergement"),
-('frais de restauration'),
-('frais de logistique'),
-('frais de location de salle');
+alter table frais_annexes add column entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE;
+
+-- insert into frais_annexes(description) values
+-- ('frais de deplacement'),
+-- ("frais d'hebergement"),
+-- ('frais de restauration'),
+-- ('frais de logistique'),
+-- ('frais de location de salle');
 
 CREATE TABLE `factures` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

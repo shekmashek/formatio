@@ -162,7 +162,7 @@ class NouveauCompteController extends Controller
 
                                  $req->logo_cfp->move($destinationPath,$image_name);
  */
-                                    Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
+                                 //   Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
                                     // $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {
@@ -280,7 +280,7 @@ class NouveauCompteController extends Controller
                                         $resize_image->resize(256, 128, function($constraint){
                                             $constraint->aspectRatio();
                                         })->save($destinationPath . '/' .  $image_name);
-                                    Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
+                          //          Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
                                     // $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {

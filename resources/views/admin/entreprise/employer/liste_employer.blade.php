@@ -277,7 +277,7 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <a href="{{route('employes.liste')}}" class="nav-link active">
-                    employés {{ count($employers)}}
+                    employés
                 </a>
             </li>
             <li class="nav-item">
@@ -290,11 +290,6 @@
                     import EXCEL employé
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{route('employes.equipe')}}" class="nav-link">
-                    Equipe
-                </a>
-            </li>
         </ul>
 
         <div class="row">
@@ -304,349 +299,234 @@
                     <thead>
                         <tr>
                             <th scope="col">Photo</th>
-                            <th scope="col">Matricule
-                            </th>
-                            <th scope="col">Nom
-                            </th>
-                            <th scope="col">Prénom</th>
-                            <th scope="col">E-mail
-                            </th>
-                            <th scope="col">Télephone
-                            </th>
+                            <th scope="col">Noms</th>
+                            <th scope="col">Contact </th>
+                            <th scope="col"> Dept et Se</th>
                             <th scope="col" colspan="2">Action</th>
-                            <th style="width: 10px;">Réferent</th>
+                            {{-- <th scope="col">Voir profil</th> --}}
+                            {{-- <th style="width: 10px;">Rétirer</th> --}}
                         </tr>
                     </thead>
                     <tbody id="list_data_trie_valider">
 
-                        @foreach ($employers as $emp)
-                        <tr>
-                            <td>
-                                <a href="#">
-                                    @if($emp->photos == null)
-                                    <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
-                                        <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
-                                    </p>
-                                    @else
-                                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
-                                    @endif
-                                </a>
-                            </td>
-                            <td>
-                                @if ($emp->activiter==1)
-                                <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
 
-                                @else
-                                <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
-
-                                @endif
-                            </td>
-                            <th>
-                                {{$emp->nom_emp}}
-                            </th>
-                            <td>
-                                {{$emp->prenom_emp}}
-                            </td>
-                            <td>
-                                {{$emp->email_emp}}
-                            </td>
-                            <td>
-                                @if($emp->telephone_emp==null)
-                                ----
-                                @else
-                                {{$emp->telephone_emp}}
-                                @endif
-                            </td>
-                            <td>
-                                @if ($emp->activiter==1)
-                                @if ($connected->id == $emp->id)
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
-                                    <input class="form-check-input desactiver_stg" type="checkbox" disabled data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
-                                </div>
-                                @else
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
-                                    <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
-                                </div>
-                                @endif
-
-                                @else
-
-                                @if ($connected->id == $emp->id)
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
-                                    <input class="form-check-input activer_stg" disabled type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
-                                </div>
-                                @else
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
-                                    <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
-                                </div>
-                                @endif
-                                @endif
-                            </td>
-                            <td>
-                                @if ($connected->id == $emp->id)
-                                &nbsp;<span style="color:green" >moi</span>
-                                @else
-                                &nbsp;<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
-                                @endif
-                            </td>
-
-                            {{-- =================== add et delete new role employes ====================== --}}
-                            {{-- <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$referent[$i]->user_id,$roles_not_actif_referent[$i]["role_inactif"][$ii]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button> --}}
-
-                            <td>
-
-                                @if ($emp->prioriter == True)
-
-                                @if($emp->is_referent == True)
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
-                                    <input class="form-check-input" type="checkbox" disabled data-user-id="{{$emp->user_id}}" value="{{$emp->role_id}}" checked>
-                                </div>
-                                @endif
-
-                                @else
-
-                                @if($emp->activiter_role == True)
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
-                                    <input class="form-check-input delete_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->role_id}}" checked>
-                                </div>
-                                @else
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
-                                    <input class="form-check-input add_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->role_id}}">
-                                </div>
-                                @endif
-
-                                @endif
-
-
-                                {{-- @if ($emp->is_referent == True && $emp->prioriter == True)
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" disabled data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
-                                </div>
-                                @endif
-
-                                @if ($emp->is_referent == True && $emp->prioriter == false)
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input delete_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
-                                </div>
-                                @endif
-
-                                @if ($emp->is_referent == false && $emp->prioriter == false)
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input add_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
-                                </div>
-                                @endif
-
-                                @if ($emp->is_referent == false && $emp->prioriter == false)
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input delete_role_employes" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
-                                </div>
-                                @endif --}}
-
-                            </td>
-                        </tr>
-
-                        <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                                            <h4 class="modal-title text-white">Avertissement !</h4>
-
-                                        </div>
-                                        <div class="modal-body">
-                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
-                                        </div>
-
-                                        <div class="modal-footer justify-content-center">
-                                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                            <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                        </div>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-
-            <div class="filtrer mt-3">
-                <div class="row">
-                    <div class="col">
-                        <p class="m-0">Filtre</p>
+            {{-- ============================================================ --}}
+            @foreach ($employers as $emp)
+            <tr>
+                <td>
+                    <a href="{{route('profile_stagiaire',$emp->id)}}">
+                        @if($emp->photos == null)
+                        <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
+                            <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
+                        </p>
+                        @else
+                        <a href="{{asset('images/employers/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/employers/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                        @endif
+                    </a>
+                </td>
+                <td>
+                    <a href="{{route('profile_stagiaire',$emp->id)}}">
+                        <p> {{$emp->nom_emp." ".$emp->prenom_emp}} </p>
+                        <p> @if ($emp->activiter==1)
+                            <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
+                            @else
+                            <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
+                            @endif</p>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{route('profile_stagiaire',$emp->id)}}">
+                        <p> {{$emp->email_emp}} </p>
+                        @if($emp->telephone_emp==null)
+                        <p> ----</p>
+                        @else
+                        <p> {{$emp->telephone_emp}}</p>
+                        @endif
+                    </a>
+                </td>
+                <td>
+                    @if($emp->service_id!=null)
+                    <p>{{$emp->nom_branche}}</p>
+                    <p>{{$emp->nom_service}}</p>
+                    @else
+                    <p>-----</p>
+                    <p>------</p>
+                    @endif
+                </td>
+                <td>
+                    @if ($emp->activiter==1)
+                    <div class="form-check form-switch">
+                        <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
                     </div>
-                    <div class="col text-end">
-                        <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+                    @else
+                    <div class="form-check form-switch">
+                        <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
                     </div>
-                    <hr class="mt-2">
-                    <div class="row mt-0">
-                        <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="detail_par_thematique">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
-                                <br>
-                                <label for="dte_fin" class="form-label" align="left">Date de règlement <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-                            </form>
-                        </div>
-                        <hr>
-                        <p>
-                            <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par N° facture</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="search_num_fact">
-                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
-                                @csrf
-                                <label for="num_fact" class="form-control-placeholder">N° facture<strong style="color:#ff0000;">*</strong></label>
-                                <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
-                                <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
-                            </form>
-                        </div>
-                        <hr>
+                    @endif
 
-                        <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par activité</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="detail_par_etp">
-                            <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
-                                <br>
-                                <select class="form-select" autocomplete="on">
-                                    <option value="">actif</option>
-                                    <option value="">inactif</option>
-                                </select>
-                                <br>
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-                            </form>
-                        </div>
-                        <hr>
+                </td>
+                {{-- <td>
+                                <a href="{{route('profile_stagiaire',$emp->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
+                </td> --}}
+                <td>
+                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                </td>
+            </tr>
 
+            <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                            <h4 class="modal-title text-white">Avertissement !</h4>
+
+                        </div>
+                        <div class="modal-body">
+                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
+                        </div>
+
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                            <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                        </div>
                     </div>
                 </div>
+
             </div>
+            @endforeach
+            </tbody>
+            </table>
+        </div>
+
+
+        <div class="filtrer mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0">Filtre</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+                </div>
+                <hr class="mt-2">
+                <div class="row mt-0">
+                    <p>
+                        <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
+                    </p>
+                    <div class="collapse multi-collapse" id="detail_par_thematique">
+                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
+                            <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
+                            <br>
+                            <label for="dte_fin" class="form-label" align="left">Date de règlement <strong style="color:#ff0000;">*</strong></label>
+                            <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
+                            <button type="submit" class="btn_creer mt-2">Recherche</button>
+                        </form>
+                    </div>
+                    <hr>
+                    <p>
+                        <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par N° facture</a>
+                    </p>
+                    <div class="collapse multi-collapse" id="search_num_fact">
+                        <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
+                            @csrf
+                            <label for="num_fact" class="form-control-placeholder">N° facture<strong style="color:#ff0000;">*</strong></label>
+                            <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
+                            <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
+                        </form>
+                    </div>
+                    <hr>
+
+                    <p>
+                        <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par activité</a>
+                    </p>
+                    <div class="collapse multi-collapse" id="detail_par_etp">
+                        <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
+                            <br>
+                            <select class="form-select" autocomplete="on">
+                                <option value="">actif</option>
+                                <option value="">inactif</option>
+                            </select>
+                            <br>
+                            <button type="submit" class="btn_creer mt-2">Recherche</button>
+                        </form>
+                    </div>
+                    <hr>
+
+                </div>
+            </div>
+        </div>
 
 
 
-            <script src="{{ asset('assets/js/jquery.js') }}"></script>
-            <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-            <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <script src="{{ asset('assets/js/jquery.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-            <script type="text/javascript">
-                /*============ stg =================*/
+        <script type="text/javascript">
 
-
-                $(".add_role_employes").on('click', function(e) {
-                    var user_id = $(this).data("user-id");
-                    var role_id = $(this).val();
-                    $.ajax({
-                        type: "GET"
-                        , url: "{{route('add_role_user')}}"
-                        , data: {
-                            user_id: user_id
-                            , role_id: role_id
-                        }
-                        , success: function(response) {
-                            window.location.reload();
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
+            /*============ stg =================*/
+            $(".desactiver_stg").on('click', function(e) {
+                var user_id = $(this).data("user-id");
+                var stg_id = $(this).val();
+                $.ajax({
+                    type: "GET"
+                    , url: "{{route('employes.liste.desactiver')}}"
+                    , data: {
+                        user_id: user_id
+                        , emp_id: stg_id
+                    }
+                    , success: function(response) {
+                        window.location.reload();
+                    }
+                    , error: function(error) {
+                        console.log(error)
+                    }
                 });
-
-                $(".delete_role_employes").on('click', function(e) {
-                    var user_id = $(this).data("user-id");
-                    var role_id = $(this).val();
-                    $.ajax({
-                        type: "GET"
-                        , url: "{{route('delete_role_user')}}"
-                        , data: {
-                            user_id: user_id
-                            , role_id: role_id
-                        }
-                        , success: function(response) {
-                            window.location.reload();
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
+            });
+            $(".activer_stg").on('click', function(e) {
+                var user_id = $(this).data("user-id");
+                var stg_id = $(this).val();
+                $.ajax({
+                    type: "GET"
+                    , url: "{{route('employes.liste.activer')}}"
+                    , data: {
+                        user_id: user_id
+                        , emp_id: stg_id
+                    }
+                    , success: function(response) {
+                        window.location.reload();
+                    }
+                    , error: function(error) {
+                        console.log(error)
+                    }
                 });
+            });
 
 
-                $(".desactiver_stg").on('click', function(e) {
-                    var user_id = $(this).data("user-id");
-                    var stg_id = $(this).val();
-                    $.ajax({
-                        type: "GET"
-                        , url: "{{route('employes.liste.desactiver')}}"
-                        , data: {
-                            user_id: user_id
-                            , emp_id: stg_id
-                        }
-                        , success: function(response) {
-                            window.location.reload();
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                });
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function() {
+                'use strict'
 
-                $(".activer_stg").on('click', function(e) {
-                    var user_id = $(this).data("user-id");
-                    var stg_id = $(this).val();
-                    $.ajax({
-                        type: "GET"
-                        , url: "{{route('employes.liste.activer')}}"
-                        , data: {
-                            user_id: user_id
-                            , emp_id: stg_id
-                        }
-                        , success: function(response) {
-                            window.location.reload();
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                });
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)
+                    .forEach(function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
+
+        </script>
 
 
-                // Example starter JavaScript for disabling form submissions if there are invalid fields
-                (function() {
-                    'use strict'
-
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.querySelectorAll('.needs-validation')
-
-                    // Loop over them and prevent submission
-                    Array.prototype.slice.call(forms)
-                        .forEach(function(form) {
-                            form.addEventListener('submit', function(event) {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
-
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
-
-            </script>
-
-
-            @endsection
+        @endsection

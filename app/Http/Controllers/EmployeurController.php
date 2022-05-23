@@ -44,78 +44,7 @@ class EmployeurController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $rules = [
-            'nom.required' => 'le Nom ne doit pas être null',
-            'matricule.required' => 'invalid',
-            'mail.required' => 'invalid',
-            'cin.required' => 'invalid',
-            'mail.email' => 'email est invalid'
-        ];
-        $critereForm = [
-            'nom' => 'required',
-            'matricule' => 'required',
-            'mail' => 'required|email',
-            'cin' => 'required'
-        ];
-        $request->validate($critereForm, $rules);
 
-        $user = new User();
-        // dd($request->input());
-        $matricule = $request->matricule;
-        $nom = $request->nom;
-        $prenom = $request->prenom;
-        $cin = $request->cin;
-        $mail = $request->mail;
-       $fonction_employer=null;
-        if (Gate::allows('isReferent')) {
-
-            $user->name = $request->nom . " " . $request->prenom;
-            $user->email = $request->mail;
-            $user->cin = $cin;
-            // $user->telephone =  $request->phone;
-            $ch1 = "0000";
-            $user->password = Hash::make($ch1);
-            $user->save();
-            // $nom_img = "images/users/user.png";
-
-            $resp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
-            $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$resp->entreprise_id]);
-            $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
-
-            DB::beginTransaction();
-                try {
-                    if ($request->type_enregistrement == "STAGIAIRE") {
-                        $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
-                        $this->fonct->insert_role_user($user_id, "3",false,true); // EMPLOYEUR
-                    }
-                    if ($request->type_enregistrement == "REFERENT") {
-                        $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"])->role_description;
-                        $this->fonct->insert_role_user($user_id, "2",false,true); // RH
-                        $this->fonct->insert_role_user($user_id, "3",false,false); // EMPLOYEUR
-                    }
-                    if ($request->type_enregistrement == "MANAGER") {
-                        $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"])->role_description;
-                        $this->fonct->insert_role_user($user_id, "5",false,true); // MANAGER
-                        $this->fonct->insert_role_user($user_id, "3",false,false); // EMPLOYEUR
-                    }
-                    $data = [$matricule, $nom, $prenom, $cin, $mail, $resp->entreprise_id, $user_id];
-                    DB::insert("insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp
-                    ,entreprise_id,user_id,activiter,created_at,genre_id) values(?,?,?,?,?,?,?,1,NOW(),1)", $data);
-
-                    DB::commit();
-
-                } catch (Exception $e) {
-                    DB::rollback();
-                    echo $e->getMessage();
-                }
-            // Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
-            // return back()->with('success',"Terminé !");
-            return redirect()->route('employes.liste');
-        }
-
-    }
 
     /**
      * Display the specified resource.
@@ -123,7 +52,7 @@ class EmployeurController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id=null)
     {
         //
     }
@@ -164,4 +93,78 @@ class EmployeurController extends Controller
         DB::delete("delete from employers where user_id=?",[$id]);
         return back();
     }
+
+    public function store(Request $request)
+    {
+        $rules = [
+            'nom.required' => 'le Nom ne doit pas être null',
+            'matricule.required' => 'invalid',
+            'mail.required' => 'invalid',
+            'cin.required' => 'invalid',
+            'mail.email' => 'email est invalid'
+        ];
+        $critereForm = [
+            'nom' => 'required',
+            'matricule' => 'required',
+            'mail' => 'required|email',
+            'cin' => 'required'
+        ];
+        $request->validate($critereForm, $rules);
+
+        $user = new User();
+        // dd($request->input());
+        $matricule = $request->matricule;
+        $nom = $request->nom;
+        $prenom = $request->prenom;
+        $cin = $request->cin;
+        $mail = $request->mail;
+        $phone = $request->phone;
+        $fonction_employer=null;
+
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhere("responsables",["user_id"],[Auth::user()->id]);
+
+             /**On doit verifier le dernier abonnement de l'entreprise pour pouvoir limité le referent à ajouter */
+            $nb_referent = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
+            $nb_stagiaire = $this->fonct->findWhere("stagiaires",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
+
+            $abonnement_etp =  DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1',[$entreprise_id[0]->entreprise_id]);
+
+            $user->name = $request->nom . " " . $request->prenom;
+            $user->email = $request->mail;
+            $user->cin = $cin;
+            // $user->telephone =  $request->phone;
+            $ch1 = "0000";
+            $user->password = Hash::make($ch1);
+            $user->telephone = $phone;
+            $user->save();
+            // $nom_img = "images/users/user.png";
+
+            $resp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
+            $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$resp->entreprise_id]);
+            $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
+
+
+                if($abonnement_etp !=null){
+                    if($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
+                }
+                else{
+                    $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
+
+                    DB::beginTransaction();
+                    try {
+                        $this->fonct->insert_role_user($user_id, "3",true); // EMPLOYEUR
+                        DB::commit();
+                    } catch (Exception $e) {
+                        DB::rollback();
+                        echo $e->getMessage();
+                    }
+                    $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
+                    DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
+                    entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+                }
+
+            }
+    }
+
 }

@@ -29,6 +29,7 @@ create or replace view v_projet_session as
     join cfps on p.cfp_id = cfps.id
     join v_totale_session ts on ts.projet_id = p.id;
 
+
 create or replace view v_groupe_entreprise as
     select
         ge.id as groupe_entreprise_id,

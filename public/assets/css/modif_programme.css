@@ -297,41 +297,10 @@ box-shadow: none;
 outline: none;
 }
 
-.suppression_programme{
-    background-color: white;
-    padding-bottom: .5rem;
-    border-radius: 5px;
-    transition: all .5s ease;
-}
-
-.suppression_programme:hover{
-    color: red;
-    transform: scale(1.05);
-}
-
-.suppression_programme .bx{
-    font-size: 1.5rem;
-    color: red;
-    position: relative;
-    top: .35rem;
-}
-
-.effacer_cours{
-    background-color: white;
-    padding: .5rem 1rem;
-    border-radius: 5px;
-    transition: all .5s ease;
-    margin-top: 5px;
-}
-
-.effacer_cours:hover{
-    color: red;
-    transform: scale(1.05);
-}
-
-.effacer_cours .bx{
-    font-size: 1.5rem;
-    color: red;
-    position: relative;
-    top: .35rem;
+.modal-header {
+    background-color: #2ebf91 !important;
+    color: white !important;
+    text-align: center !important;
+    justify-content: center !important;
+    text-transform: uppercase !important;
 }

@@ -25,9 +25,9 @@
 
                     <div id="formulaire">
                         <fieldset class="shadow p-3 mb-5 bg-body rounded">
-                            <h5 class="mb-5 text-center">Félicitation, pour activer votre, veuillez confirmé votre insciption</strong></h5>
+                            <h5 class="mb-5 text-center">Félicitation,votre compte a été creer,vous pouvez maintenant vous connecter à l'aide des identifiant que nous avons envoyer par mail</strong></h5>
                             <div class="form-group">
-                                <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image mb-5" style="width: 300px; heigth: 300px;">
+                                <img src="{{asset('img_create-compte/terminer.png')}}" class="fit-image mb-5" style="width: 250px; heigth: 250px;">
                             </div>
                             <a href="{{route('sign-in')}}">
                                 <button type="button" style="background: #7635dc; padding: 5px 5px 5px 5px; color:white; border: none; border-radius: 5px">Terminé</button>
