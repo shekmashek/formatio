@@ -62,7 +62,7 @@
         <div class="row mt-3">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <div class="shadow-sm p-3 mb-5 bg-body rounded" style="border-radius: 1px">
+                <div  style="border-radius: 1px">
                     {{-- <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2> --}}
                     @if (Session::has('success'))
                     <div class="alert alert-success">
@@ -81,13 +81,15 @@
                     {{-- <form action="{{route('create_compte_employeur')}}" method="POST" enctype="multipart/form-data"> --}}
                     <form id="formInsert" action="{{route('employeur.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label align="left">Matricule<strong style="color:#ff0000;">*</strong></label>
+
+                        <h4 class="text-center">Nouveau Employé</h4>
+                        <div class="row mt-4">
+                            <div class="col-md-4  text-end">
+                                <label class="mt-2">Matricule<strong style="color:#ff0000;">*</strong></label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" required name="matricule" class="form-control input" id="matricule" placeholder="Matricule"/>
+                                    <input type="text" autocomplete="off" required name="matricule" class="form-control input w-50" id="matricule" placeholder="Matricule"/>
                                     @error('matricule')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -99,8 +101,8 @@
                         </div>
 
                         <div class="row mt-1">
-                            <div class="col-md-4">
-                                <label for="nom"  align="left">Nom<strong style="color:#ff0000;">*</strong></label>
+                            <div class="col-md-4 text-end">
+                                <label for="nom" class="mt-2">Nom<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -115,8 +117,8 @@
                         </div>
 
                         <div class="row mt-1">
-                            <div class="col-md-4">
-                                <label for="prenom"  align="left">Prénom</label>
+                            <div class="col-md-4 text-end">
+                                <label for="prenom"  class="mt-2">Prénom</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -126,12 +128,12 @@
                         </div>
 
                         <div class="row mt-1">
-                            <div class="col-md-4">
-                                <label for="cin"  align="left">CIN<strong style="color:#ff0000;">*</strong></label>
+                            <div class="col-md-4 text-end">
+                                <label for="cin"  class="mt-2">CIN<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" required autocomplete="off" name="cin" class="form-control input" id="cin" required  placeholder="Carte d'Identité Fiscale"/>
+                                    <input type="text" required autocomplete="off" name="cin" class="form-control input" id="cin" required  placeholder="Carte d'Identité Nationale"/>
                                     <span style="color:#ff0000;" id="cin_err"></span>
                                     @error('cin')
                                     <div class="col-sm-6">
@@ -143,12 +145,12 @@
                         </div>
 
                         <div class="row mt-1">
-                            <div class="col-md-4">
-                                <label for="phone"  align="left">Téléphone<strong style="color:#ff0000;">*</strong></label>
+                            <div class="col-md-4 text-end">
+                                <label for="phone"  class="mt-2">Téléphone<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" min=6 required name="phone" class="form-control input" id="phone" required  placeholder="Télephone"/>
+                                    <input oninput="return onlynumero()" type="text" autocomplete="off" min=6 required name="phone" class="form-control input" id="phone" required  placeholder="Télephone"/>
                                     <span style="color:#ff0000;" id="phone_err"></span>
                                     @error('phone')
                                     <div class="col-sm-6">
@@ -160,8 +162,8 @@
                         </div>
 
                         <div class="row mt-1">
-                            <div class="col-md-4">
-                                <label for="mail"  align="left">Email<strong style="color:#ff0000;">*</strong></label>
+                            <div class="col-md-4 text-end">
+                                <label for="mail" class="mt-2">Email<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -177,8 +179,8 @@
                         </div>
 
                         <div class="row mt-1">
-                            <div class="col-md-4">
-                                <label for="fonction"  align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
+                            <div class="col-md-4 text-end">
+                                <label for="fonction"  class="mt-2">Fonction<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -191,6 +193,8 @@
                                 </div>
                             </div>
                         </div>
+
+
 
                         <div class=" text-center mt-3">
                             <button type="submit" class="btn btn-lg btn_creer" id="saver_stg">Enregistrer</button>
@@ -222,6 +226,45 @@
         return false;
     }
     */
+
+
+
+$(function() {
+        $("input[name='phone']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+        $("input[name='cin']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
+
+
+    /*
+ <input type="text" name="passkey"
+                        id="num"
+                        oninput="return onlynum()"
+                        minlength="2">
+    */
+function onlynum() {
+        var fm = document.getElementById("formInsert");
+        var ip = document.getElementById("num");
+        var tag = document.getElementById("value");
+        var res = ip.value;
+
+        if (res != '') {
+            if (isNaN(res)) {
+
+                // Set input value empty
+                ip.value = "";
+
+                // Reset the form
+                fm.reset();
+                return false;
+            } else {
+                return true
+            }
+        }
+    }
 
 
     $(document).ready(function() {

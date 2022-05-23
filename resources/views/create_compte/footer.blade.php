@@ -28,6 +28,18 @@
     });
 
 
+    $(function() {
+        $("input[name='cin_resp_etp']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+        $("input[name='cin_resp_cfp']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+        $("input[name='val_robot']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
+
 
     $(document).ready(function() {
 

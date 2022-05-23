@@ -525,12 +525,10 @@
                 <td>
                     @if ($emp->activiter==1)
                     <div class="form-check form-switch">
-                        <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
                         <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
                     </div>
                     @else
                     <div class="form-check form-switch">
-                        <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
                         <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
                     </div>
                     @endif
@@ -636,6 +634,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <script type="text/javascript">
+
             /*============ stg =================*/
             $(".desactiver_stg").on('click', function(e) {
                 var user_id = $(this).data("user-id");
