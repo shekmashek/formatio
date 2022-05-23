@@ -754,10 +754,10 @@
 
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
                                             <li><a class="dropdown-item" href="{{route('aff_parametre_referent')}}"><i
-                                                        class="fas fa-building icon_plus  "></i>&nbsp; Information
+                                                        class="bx bxs-info-circle icon_plus  "></i>&nbsp; Information
                                                     légales</a></li>
                                             <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
-                                                        class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
+                                                        class="bx bxl-sketch icon_plus"></i>&nbsp;Abonnement</a>
                                             </li>
                                             <li><a class="dropdown-item" href="{{route('liste_departement')}}">
                                                 <i class='bx bxs-buildings icon_plus'></i>&nbsp;Structure de l'entreprise
@@ -766,7 +766,7 @@
                                                 <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
                                             </a></li>
                                             <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
-                                                    <i class='bx bxs-buildings icon_plus'></i>&nbsp;Salle de formation
+                                                    <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
                                                 </a></li>
                                         </ul>
                                     </div>
@@ -830,13 +830,13 @@
                                         </a>
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
                                             <li><a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}"><i
-                                                        class="fas fa-building icon_plus  "></i>&nbsp; Information
+                                                        class="bx bx-info-circle icon_plus  "></i>&nbsp; Information
                                                     légales</a></li>
                                             <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
-                                                        class="bx bxs-credit-card icon_plus"></i>&nbsp;Abonnement</a>
+                                                        class="bx bxl-sketch icon_plus"></i>&nbsp;Abonnement</a>
                                             </li>
                                             <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
-                                                    <i class='bx bxs-building icon_plus'></i>&nbsp;Salle de formation
+                                                    <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
                                                 </a></li>
                                         </ul>
                                     </div>
