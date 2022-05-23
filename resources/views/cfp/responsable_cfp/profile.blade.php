@@ -95,16 +95,15 @@
                 <p class="text-center">Coordonnées</p>
 
                 <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('modification_email',$refs->id)}} ">
+                    <a href="{{route('modification_adresse_email',$refs->id)}}">
                         <p class="p-1 m-0" style="font-size: 12px;">ADRESSE E-MAIL<span style="float: right;">{{$refs->email_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('modification_telephone',$refs->id)}} ">
+                    <a href="{{route('modification_numero_telephone',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 12px;">TELEPHONE<span style="float: right;">{{$refs->telephone_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
-
                         </p>
                     </a>
                 </div>
@@ -154,12 +153,7 @@
                     </a>
                 </div>
 
-                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('modification_fonction',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;">FONCTION<span style="float: right;">{{$refs->fonction_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                        </p>
-                    </a>
-                </div>
+
 
 
                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
@@ -182,6 +176,12 @@
                     {{-- <a href="{{route('profil_of',$refs->cfp_id)}}"> --}}
                     <a class="none" href="">
                         <p class="p-1 m-0" style="font-size: 12px;">ORGANISME DE FORMATION<span style="float: right;">{{$refs->nom_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                        </p>
+                    </a>
+                </div>
+                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
+                    <a href="{{route('modification_fonction',$refs->id)}} ">
+                        <p class="p-1 m-0" style="font-size: 12px;">FONCTION<span style="float: right;">{{$refs->fonction_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>

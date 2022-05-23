@@ -9,7 +9,14 @@
     <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
-
+     {{-- si l'utiliisateur a cliqué sur enregistrer en laissant des champs vides--}}
+     @if (\Session::has('error_fonction'))
+     <div class="alert alert-danger col-md-4">
+         <ul>
+             <li>{!!\Session::get('error_fonction')!!}</li>
+         </ul>
+     </div>
+     @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
             <form   class="btn-submit" action="{{route('enregistrer_modification_fonction',$responsable->id)}}" method="post" enctype="multipart/form-data">
@@ -18,7 +25,7 @@
                     <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control test input"  name="fonction" placeholder="Fonction" value="  {{ $responsable->fonction_resp_cfp}}" >
                         <label class="ml-3 form-control-placeholder" >Fonction</label>
-                   
+
                     </div>
                 </div>
 

@@ -1178,8 +1178,8 @@ Route::get('/modification_nom/{id}', 'ResponsableCfpController@edit_nom')->name(
 Route::get('/modification_date_de_naissance/{id}', 'ResponsableCfpController@edit_naissance')->name('modification_date_de_naissance');
 Route::get('/modification_genre/{id}', 'ResponsableCfpController@edit_genre')->name('modification_genre');
 Route::get('/modification_mdp/{id}', 'ResponsableCfpController@edit_mdp')->name('modification_mdp');
-Route::get('/modification_email/{id}', 'ResponsableCfpController@edit_mail')->name('modification_email');
-Route::get('/modification_telephone/{id}', 'ResponsableCfpController@edit_phone')->name('modification_telephone');
+Route::get('/modification_adresse_email/{id}', 'ResponsableCfpController@edit_mail')->name('modification_adresse_email');
+Route::get('/modification_numero_telephone/{id}', 'ResponsableCfpController@edit_phone')->name('modification_numero_telephone');
 Route::get('/modification_cin/{id}', 'ResponsableCfpController@edit_cin')->name('modification_cin');
 Route::get('/modificationn_adresse/{id}', 'ResponsableCfpController@edit_adresse')->name('modificationn_adresse');
 Route::get('/modification_fonction/{id}', 'ResponsableCfpController@edit_fonction')->name('modification_fonction');

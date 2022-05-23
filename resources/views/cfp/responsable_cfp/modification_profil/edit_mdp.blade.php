@@ -17,9 +17,24 @@
      </ul>
  </div>
 @endif
+{{-- si l'utilisateur a laissé des champs vides --}}
+@if (\Session::has('error_ancien_pwd'))
+<div class="alert alert-danger col-md-4">
+    <ul>
+        <li>{!! \Session::get('error_ancien_pwd') !!}</li>
+    </ul>
+</div>
+@endif
+@if (\Session::has('error_new_pwd'))
+<div class="alert alert-danger col-md-4">
+    <ul>
+        <li>{!! \Session::get('error_new_pwd') !!}</li>
+    </ul>
+</div>
+@endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        
+
         <form   class="btn-submit" action="{{route('enregistrer_modification_mdp',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 

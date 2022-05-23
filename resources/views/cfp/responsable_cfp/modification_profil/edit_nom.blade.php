@@ -9,7 +9,20 @@
     <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp"> Page précédente</button></a>
 </div>
 <center>
-
+    @if (\Session::has('error_nom'))
+        <div class="alert alert-danger col-md-4">
+            <ul>
+                <li>{!! \Session::get('error_nom') !!}</li>
+            </ul>
+        </div>
+    @endif
+    @if (\Session::has('error_prenom'))
+        <div class="alert alert-danger col-md-4">
+            <ul>
+                <li>{!! \Session::get('error_prenom') !!}</li>
+            </ul>
+        </div>
+    @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
             <form   class="btn-submit" action="{{route('enregistrer_modification_nom',$responsable->id)}}" method="post" enctype="multipart/form-data">

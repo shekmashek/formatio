@@ -8,6 +8,15 @@
     <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_precedent" ><i class='bx bxs-chevron-left me-1'></i>Retour</button></a>
 </div>
 <center>
+
+     {{-- si l'utiliisateur a cliqué sur enregistrer en laissant des champs vides--}}
+    @if (\Session::has('error_adresse'))
+    <div class="alert alert-danger col-md-4">
+        <ul>
+            <li>{!!\Session::get('error_adresse')!!}</li>
+        </ul>
+    </div>
+    @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
 
