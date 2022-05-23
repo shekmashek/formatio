@@ -9,7 +9,14 @@
   <a href="{{route('profil_referent')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
-
+ {{-- si l'utiliisateur a cliqué sur enregistrer en laissant des champs vides--}}
+ @if (\Session::has('error_adresse'))
+ <div class="alert alert-danger col-md-4">
+     <ul>
+         <li>{!!\Session::get('error_adresse')!!}</li>
+     </ul>
+ </div>
+ @endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
         <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
@@ -28,28 +35,29 @@
                         </select> --}}
 
 
-                        <input type="hidden" class="form-control test" name="genre" value="{{ $responsable->genre_id}}">
+                        <input type="hidden" class="form-control test" name="genre" value="{{$responsable->genre_id}}">
                         <input type="hidden" class="form-control test" name="date_naissance" value="{{ $responsable->date_naissance_resp}}">
 
-                          <input type="hidden" value="{{ $responsable->cin_resp}}" class="form-control test"  name="cin" >
+                          <input type="hidden" value="{{ $responsable->cin_resp}}" class="form-control test"  name="adresse" >
 
-                        <input type="hidden" class="form-control test"  name="mail" value="{{ $responsable->email_resp }}" >
+                        <input type="hidden" class="form-control test"  name="mail" value="{{$responsable->email_resp }}" >
 
-                        <input type="hidden" class="form-control test"  name="phone" value="{{ $responsable->telephone_resp }}">
+                        <input type="hidden" class="form-control test"  name="phone" value="{{$responsable->telephone_resp }}">
 
 
                         <input type="hidden" class="form-control test input" value=""  name="password" placeholder="">
-                        <input type="hidden" class="form-control input test"  name="etp"  value="  {{ optional(optional($responsable)->entreprise)->nom_etp}}" >
-                        <input type="hidden" class="form-control input test"  name="rcs"  value="  {{ optional(optional($responsable)->entreprise)->rcs}}" >
-                        <input type="hidden" class="form-control input test"  name="nif"  value="  {{ optional(optional($responsable)->entreprise)->nif}}" >
-                        <input type="hidden" class="form-control input test"  name="stat"  value="  {{ optional(optional($responsable)->entreprise)->stat}}" >
-                        <input type="hidden" class="form-control input test"  name="email_etp"  value="  {{ optional(optional($responsable)->entreprise)->email_etp}}" >
-                        <input type="hidden" class="form-control input test"  name="site"  value="  {{ optional(optional($responsable)->entreprise)->site_etp}}" >
-                        <input type="hidden" class="form-control input test"  name="phone_etp"  value="  {{ optional(optional($responsable)->entreprise)->telephone_etp}}" >
+                        <input type="hidden" class="form-control input test"  name="etp"  value="{{ optional(optional($responsable)->entreprise)->nom_etp}}" >
+                        <input type="hidden" class="form-control input test"  name="rcs"  value="{{ optional(optional($responsable)->entreprise)->rcs}}" >
+                        <input type="hidden" class="form-control input test"  name="nif"  value="{{ optional(optional($responsable)->entreprise)->nif}}" >
+                        <input type="hidden" class="form-control input test"  name="stat"  value="{{ optional(optional($responsable)->entreprise)->stat}}" >
+                        <input type="hidden" class="form-control input test"  name="email_etp"  value="{{ optional(optional($responsable)->entreprise)->email_etp}}" >
+                        <input type="hidden" class="form-control input test"  name="cin"  value="{{ $responsable->cin_resp}}">
+                        <input type="hidden" class="form-control input test"  name="site"  value="{{ optional(optional($responsable)->entreprise)->site_etp}}" >
+                        <input type="hidden" class="form-control input test"  name="phone_etp"  value="{{ optional(optional($responsable)->entreprise)->telephone_etp}}" >
 
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control test input" id="lot" name="lot" placeholder="Lot" value="   {{ $responsable->adresse_lot}}">
+                        <input type="text" class="form-control test input" id="lot" name="lot" placeholder="Lot" value="{{$responsable->adresse_lot}}">
                         <label class="ml-3 form-control-placeholder" >Lot</label>
 
 
@@ -57,7 +65,7 @@
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                          <input type="text" class="form-control test input" id="quartier" name="quartier" placeholder="Quartier" value="   {{ $responsable->adresse_quartier}}">
+                          <input type="text" class="form-control test input" id="quartier" name="quartier" placeholder="Quartier" value="{{$responsable->adresse_quartier}}">
                           <label class="ml-3 form-control-placeholder" >Quartier</label>
 
 
@@ -65,22 +73,22 @@
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                          <input type="text" class="form-control test input" id="code_postal" name="code_postal" placeholder="Code Postale" value="   {{ $responsable->adresse_code_postal}}">
+                          <input type="text" class="form-control test input" id="code_postal" name="code_postal" placeholder="Code Postale" value="{{$responsable->adresse_code_postal}}">
                           <label class="ml-3 form-control-placeholder" >Code postale</label>
 
                         </div>
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                          <input type="text" class="form-control test input" id="ville" name="ville" placeholder="Ville" value="   {{ $responsable->adresse_ville}}">
-                                               
+                          <input type="text" class="form-control test input" id="ville" name="ville" placeholder="Ville" value="{{$responsable->adresse_ville}}">
+
              <label class="ml-3 form-control-placeholder" >Ville</label>
 
                         </div>
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                          <input type="text" class="form-control test input" id="region" name="region" placeholder="Region" value="   {{ $responsable->adresse_region}}">
+                          <input type="text" class="form-control test input" id="region" name="region" placeholder="Region" value="{{ $responsable->adresse_region}}">
                           <label class="ml-3 form-control-placeholder" >Région</label>
 
 

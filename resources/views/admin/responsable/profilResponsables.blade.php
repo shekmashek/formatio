@@ -102,7 +102,6 @@
                 <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                     <a href="{{route('edit_nom_resp',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 12px;">NOM<span style="float: right;">{{$refs->nom_resp}} {{$refs->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-
                         </p>
                     </a>
 
@@ -165,12 +164,7 @@
                         </p>
                     </a>
                 </div>
-                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('edit_fonction_resp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;">FONCTION<span style="float: right;">{{$refs->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                        </p>
-                    </a>
-                </div>
+
 
 
                 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
@@ -187,6 +181,12 @@
                     {{-- <a href="{{route('profile_entreprise',$refs->entreprise_id)}}"> --}}
                     <a href="" class="none">
                         <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{$nom_entreprise->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span></p>
+                    </a>
+                </div>
+                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
+                    <a href="{{route('edit_fonction_resp',$refs->id)}} ">
+                        <p class="p-1 m-0" style="font-size: 12px;">FONCTION<span style="float: right;">{{$refs->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        </p>
                     </a>
                 </div>
 

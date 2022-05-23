@@ -593,23 +593,35 @@ class ResponsableController extends Controller
     //update password
     public function update_responsable_mdp(Request $request)
     {
-
-        $users =  db::select('select * from users where id = ?', [Auth::id()]);
-        $pwd = $users[0]->password;
-        $new_password = Hash::make($request->new_password);
-        if (Hash::check($request->get('ancien_password'), $pwd)) {
-            DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
-            return redirect()->route('profil_referent');
-        } else {
-            return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+        if($request->ancien_password == null){
+            return back()->with('error_ancien_pwd','Entrez votre ancien mot de passe');
+        }
+        elseif($request->new_password == null){
+            return back()->with('error_ancien_pwd','Entrez votre nouveau mot de passe avant de cliquer sur enregistrer');
+        }
+        else{
+            $users =  db::select('select * from users where id = ?', [Auth::id()]);
+            $pwd = $users[0]->password;
+            $new_password = Hash::make($request->new_password);
+            if (Hash::check($request->get('ancien_password'), $pwd)) {
+                DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
+                return redirect()->route('profil_referent');
+            } else {
+                return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+            }
         }
     }
     //update e-mail
     public function update_mail_resp(Request $request)
     {
-        DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
-        DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
-        return redirect()->route('profil_referent');
+        if ($request->mail_resp == null) {
+            return back()->with('error_email','Entrez votre adresse e-mail avant de cliquer sur enregistrer');
+        }
+        else{
+            DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
+            DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
+            return redirect()->route('profil_referent');
+        }
     }
     public function update(Request $request, $id)
     {
@@ -624,7 +636,6 @@ class ResponsableController extends Controller
             $nom = $request->nom;
             $prenom = $request->prenom;
             $date_naiss = $request->date_naissance;
-
             $cin = $request->cin;
             $genre = $request->genre;
             $code_postal = $request->code_postal;
@@ -640,7 +651,6 @@ class ResponsableController extends Controller
             $mdpHash = Hash::make($mdp);
 
             $input = $request->image;
-
             //stocker logo dans google drive
             //stocker logo dans google drive
             // $dossier = 'responsable';
@@ -656,47 +666,69 @@ class ResponsableController extends Controller
                 $image->move($destinationPath, $profileImage);
                 $input = "$profileImage";
             }
-            if ($input != null) {
-
-                responsable::where('id', $id)
-                    ->update([
-                        'nom_resp' => $nom,
-                        'prenom_resp' => $prenom,
-                        'fonction_resp' => $fonction,
-                        'email_resp' => $mail,
-                        'telephone_resp' => $phone,
-                        'date_naissance_resp' => $date_naiss,
-                        'genre_id' => $genre,
-                        'cin_resp' => $cin,
-                        'adresse_lot' => $lot,
-                        'adresse_code_postal' => $code_postal,
-                        'adresse_quartier' => $quartier,
-                        'adresse_ville' => $ville,
-                        'adresse_region' => $region,
-                        'poste_resp' => $poste,
-                        'photos' => $input
-                    ]);
-
-            } else {
-                responsable::where('id', $id)
-                    ->update([
-                        'nom_resp' => $nom,
-                        'prenom_resp' => $prenom,
-                        'fonction_resp' => $fonction,
-                        'email_resp' => $mail,
-                        'telephone_resp' => $phone,
-                        'date_naissance_resp' => $date_naiss,
-                        'genre_id' => $genre,
-                        'cin_resp' => $cin,
-                        'adresse_lot' => $lot,
-                        'adresse_code_postal' => $code_postal,
-                        'adresse_quartier' => $quartier,
-                        'adresse_ville' => $ville,
-                        'adresse_region' => $region,
-                        'poste_resp' => $poste,
-
-                    ]);
+            if($nom == null){
+                return back()->with('error_nom','Entrez votre nom avant  de cliquer sur enregistrer');
             }
+            elseif($prenom == null){
+                return back()->with('error_prenom','Entrez votre prenom avant  de cliquer sur enregistrer');
+            }
+            elseif($phone == null){
+                return back()->with('error_phone','Entrez votre numéro de téléphone avant  de cliquer sur enregistrer');
+            }
+            elseif($cin == null){
+                return back()->with('error_cin','Entrez votre CIN avant  de cliquer sur enregistrer');
+            }
+            elseif($lot == null || $ville == null || $region == null || $quartier == null || $code_postal == null){
+                return back()->with('error_adresse','Entrez votre adresse complète avant  de cliquer sur enregistrer');
+            }
+            elseif($fonction == null){
+                return back()->with('error_fonction','Entrez votre fonction avant de cliquer sur enregistrer');
+            }
+            else{
+                if ($input != null) {
+
+                    responsable::where('id', $id)
+                        ->update([
+                            'nom_resp' => $nom,
+                            'prenom_resp' => $prenom,
+                            'fonction_resp' => $fonction,
+                            'email_resp' => $mail,
+                            'telephone_resp' => $phone,
+                            'date_naissance_resp' => $date_naiss,
+                            'genre_id' => $genre,
+                            'cin_resp' => $cin,
+                            'adresse_lot' => $lot,
+                            'adresse_code_postal' => $code_postal,
+                            'adresse_quartier' => $quartier,
+                            'adresse_ville' => $ville,
+                            'adresse_region' => $region,
+                            'poste_resp' => $poste,
+                            'photos' => $input
+                        ]);
+
+                } else {
+                    responsable::where('id', $id)
+                        ->update([
+                            'nom_resp' => $nom,
+                            'prenom_resp' => $prenom,
+                            'fonction_resp' => $fonction,
+                            'email_resp' => $mail,
+                            'telephone_resp' => $phone,
+                            'date_naissance_resp' => $date_naiss,
+                            'genre_id' => $genre,
+                            'cin_resp' => $cin,
+                            'adresse_lot' => $lot,
+                            'adresse_code_postal' => $code_postal,
+                            'adresse_quartier' => $quartier,
+                            'adresse_ville' => $ville,
+                            'adresse_region' => $region,
+                            'poste_resp' => $poste,
+
+                        ]);
+                }
+
+            }
+
 
             DB::update('update users set name = ? where id = ?', [$nom.' '.$prenom,Auth::user()->id]);
             DB::update('update users set telephone = ? where id = ?', [$phone,Auth::user()->id]);
