@@ -9,10 +9,10 @@
     <a href="{{route('aff_parametre_referent')}}"> <button class="btn btn_precedent"><i class='bx bxs-chevron-left me-1'></i>Retour</button></a>
 </div>
 <center>
-    @if (\Session::has('erreur_site web'))
+    @if (\Session::has('erreur_site_etp'))
         <div class="alert alert-danger col-md-4">
             <ul>
-                <li>{!! \Session::get('erreur_site web') !!}</li>
+                <li>{!! \Session::get('erreur_site_etp') !!}</li>
             </ul>
         </div>
     @endif

@@ -408,10 +408,14 @@ class EntrepriseController extends Controller
         return view('admin.entreprise.modification_profil.edit_adresse', compact('etp'));
     }
     public function enregistrer_adresse_entreprise(Request $request,$id){
-
+        if($request->rue == null || $request->quartier == null || $request->code_postal == null || $request->ville == null || $request->region == null) {
+            return back()->with('erreur_adresse','Entrez votre adresse complète avant de cliquer sur enregistrer');
+        }
+        else{
             DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ?
                where id = ?', [$request->rue,$request->quartier,$request->code_postal,$request->ville,$request->region,$id]);
             return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
     public function modification_site_etp_entreprise($id){
         $fonct = new FonctionGenerique();
