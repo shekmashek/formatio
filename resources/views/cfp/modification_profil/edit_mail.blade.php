@@ -25,13 +25,10 @@
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                    <input type="text" value="   {{ $cfp->email}}" class="form-control test input"  name="mail">
+                    <input type="email" value="   {{ $cfp->email}}" class="form-control test input"  name="mail">
                         <label class="form-control-placeholder ">Email</label>
-
                     </div>
                 </div>
-
-
                 <button  class="btn btn_enregistrer  mt-1 btn modification "> Enregister</button>
             </form>
             <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>

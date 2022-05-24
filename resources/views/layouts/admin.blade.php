@@ -20,6 +20,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
 </head>
 
 <body>
@@ -594,7 +595,7 @@
                             <a href="{{route('liste_equipe_admin')}}" class="btn_racourcis me-4" role="button">
                                 <span class="d-flex flex-column">
                                     <i class='bx bxs-user-account'></i>
-                                    <span class="text_racourcis">equipes</span>
+                                    <span class="text_racourcis">Equipes</span>
                                 </span>
                             </a>
                         @endcan
