@@ -29,7 +29,7 @@ class save_new_compte_etp_Mail extends Mailable
      */
     public function build()
     {
-        return $this->from("contact@formation.mg")
+        return $this->from("contact-mg@upskill-sarl.com")
             ->subject('Votre compte a été crée avec succès')
             ->view('collaboration.mail.save_new_compte_etp_Mail')
             ->with([

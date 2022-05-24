@@ -24,7 +24,7 @@ class save_new_compte_stagiaire_Mail extends Mailable
      */
     public function build()
     {
-        return $this->from('contact@formation.mg')
+        return $this->from('contact-mg@upskill-sarl.com')
             ->subject('Compte crée avec success')
             ->view('collaboration.mail.save_new_compte_stagiaire_Mail')
             ->with([
