@@ -1,13 +1,13 @@
 .btn_submit {
     padding: 5px 20px !important;
-    color: white;
+    color: white !important;
     border-radius: 30px;
     background-color: #2811f3;
     transition: all 0.5s ease;
 }
 .btn_submit:hover {
     transform: scale(1.1);
-    color: white;
+    color: white !important;
     text-decoration-line: underline;
 }
 
@@ -36,7 +36,7 @@
 
 .header_facture h6{
     background: rgba(211, 211, 211, 0.289);
-    color: #333;
+    color: #333 !important;
     border: none;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;

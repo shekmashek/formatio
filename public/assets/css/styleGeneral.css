@@ -55,6 +55,10 @@ a:focus,
     text-decoration-line: underline;
 }
 
+.hors_taxe{
+    font-size: 0.5rem;
+}
+
 ul {
     margin: 0;
     padding: 0;
@@ -68,6 +72,7 @@ ul li a {
     text-decoration: none;
     color: var(--second-color);
 }
+
 .bg-light{
     background: white !important;
 }
@@ -141,37 +146,6 @@ ul li a {
     height: 33px;
 }
 
-#btn_menu {
-    color: var(--body-font-color);
-    font-size: 1.7rem;
-    height: 50px;
-    width: 50px;
-    text-align: center;
-    line-height: 50px;
-    transition: 0;
-    padding: .1rem .5rem .2rem .5rem;
-    position: relative;
-    bottom: .6rem;
-    transition: all .5s ease;
-    /* margin-left: 0.3rem; */
-    /* display: inline-block; */
-}
-
-#btn_menu:hover{
-    background-color: rgba(237, 235, 235, 0.604);
-    border: none;
-    border-radius: 30px;
-}
-
-#btn_menu:focus{
-    transform: scale(0.9);
-}
-
-/* #btn_menu {
-    left: 90%;
-    transition: all 0.5s ease;
-} */
-
 .sidebar ul {
     margin-top: 20px;
 }
@@ -201,7 +175,7 @@ ul li a {
 
 .sidebar ul li a:hover{
     /* color: var(--font-sidebar-color); */
-    color: black;
+    color: black !important;
     background: rgba(192, 192, 192, 0.171);
 }
 
@@ -239,7 +213,7 @@ ul li a {
 .sidebar.active .links_name {
     opacity: 1;
     pointer-events: auto;
-    font-size: .55rem;
+    font-size: .8rem;
     position: relative;
     bottom: 1rem;
     height: 25px;
@@ -659,27 +633,49 @@ input:-webkit-autofill:active {
 
 .btn_racourcis{
     transition: all .5s ease;
+    display: grid;
+    place-content: center;
+    text-transform: capitalize;
+    padding: 0.13rem .5rem;
 }
 
 .btn_racourcis .bx{
-    text-align: center;
-    display: block;
-    position: relative;
-    bottom: .6rem;
-    font-size: 1rem;
+    font-size: 1.5rem;
+    color: #637381;
+}
+
+.btn_racourcis .fa-solid{
+    font-size: 1.5rem;
+    color: #637381;
 }
 
 .btn_racourcis .text_racourcis{
     font-size: .8rem;
-    position: relative;
-    bottom: .5rem;
+    color: #637381;
+}
+
+.btn_racourcis:hover a{
+    color: black !important;
+}
+
+.btn_racourcis:hover .bx{
+    color: black !important;
+}
+
+.btn_racourcis:hover .text_racourcis{
+    color: black !important;
+}
+
+.btn_racourcis:hover .fa-solid{
+    color: black !important;
 }
 
 .btn_racourcis:hover {
-    color: #637381;
     text-decoration: none;
+    background: rgba(192, 192, 192, 0.171);
+    border-radius: 10px;
     /* border-bottom: 2px solid black; */
-    transform: scale(1.2);
+    /* transform: scale(1.2); */
 }
 
 .text_header{
@@ -710,10 +706,30 @@ input:-webkit-autofill:active {
     padding: .5rem auto;
 }
 
+.btn_profil{
+    position: relative;
+    bottom: 12px;
+}
+
+.btn_creer .text_racourcis{
+    font-size: .8rem;
+    color: #637381;
+    position: relative;
+    bottom: 5px;
+}
+
 .btn_vous:hover{
     background: #6373812a;
-    color: inherit !important;
 }
+
+.btn_vous:hover a{
+    color: black !important;
+}
+
+.btn_vous:hover .bx{
+    color: black !important;
+}
+
 
 .btn_creer_trie{
     background-color: white;
@@ -733,7 +749,7 @@ input:-webkit-autofill:active {
 }
 
 .btn_creer a:hover{
-    color: inherit;
+    color: black;
 }
 
 .btn_creer_trie:hover{
@@ -745,6 +761,15 @@ input:-webkit-autofill:active {
     background: #6373812a;
     color: inherit !important;
 }
+
+.btn_creer:hover .bx{
+    color: black;
+}
+
+/* .btn_creer:hover a{
+    color: black !important;
+} */
+
 
 /* .btn_creer:focus{
     color: blue;
@@ -783,7 +808,7 @@ input:-webkit-autofill:active {
     color: #637381;
 }
 
-.text_apprendre{
+/* .text_apprendre{
     position: relative;
     padding: 3rem .2rem ;
     font-size: .9rem;
@@ -791,7 +816,7 @@ input:-webkit-autofill:active {
     animation-duration: 4s;
     animation-delay: 2s;
     animation-iteration-count: 10;
-}
+} */
 @keyframes completer_programme{
     0%{
         opacity: 0;
@@ -827,7 +852,7 @@ input:-webkit-autofill:active {
 }
 
 .btn_completer{
-    color: white;
+    color: white !important;
     border: none;
     padding: 5px 15px;
     background-color: #7635dc;
@@ -843,7 +868,7 @@ input:-webkit-autofill:active {
 }
 
 .btn_completer:hover{
-    color: #7635dc;
+    color: #7635dc !important;
     transform: scale(1.1);
     text-decoration-line: underline;
     background-color: #7535dc25;
@@ -946,8 +971,22 @@ font-size: 0.850rem;
 
 .searchBoxMod{
     position: relative;
-    bottom: 0.7rem;
-    left: 1rem;
+    display: grid;
+    place-items: center;
+    bottom: 14px;
+    /* bottom: 0.7rem;
+    left: 1rem; */
+    /* height: 80px; */
+}
+
+.apprendreBox{
+    position: relative;
+    display: grid;
+    place-items: center;
+    bottom: 5px;
+    /* bottom: 0.7rem;
+    left: 1rem; */
+    /* height: 80px; */
 }
 /* search form header */
 
@@ -1138,4 +1177,8 @@ font-size: 0.850rem;
     color: green;
     font-size: 10px;
     position: relative;
+}
+
+a{
+    color: white;
 }

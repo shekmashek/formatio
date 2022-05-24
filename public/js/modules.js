@@ -181,7 +181,7 @@ function competence() {
     html +=     '<div class="col-1">';
     html +=         '<div class="mt-2">';
     html +=                '<span id="removeRow" class="effacer_cours" role="button">';
-    html +=                     '<i class="bx bx-x">';
+    html +=                     '<i class="bx bx-trash bx_supprimer mt-1 ms-1">';
     html +=                     '</i>';
     html +=                 '</span>';
     html +=         '</div>';

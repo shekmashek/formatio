@@ -17,47 +17,47 @@
                 {{-- =============== condition pagination ==================== --}}
                 @if ($pagination["nb_limit"] >= $pagination["totale_pagination"])
 
-                @if(isset($nom_entiter))
-                {{-- -------- --}}
-                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                    @if(isset($nom_entiter))
+                        {{-- -------- --}}
+                        <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
-                @if(isset($nom_entiter))
+                    @if(isset($nom_entiter))
 
-                {{-- -------- --}}
-                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' pt-1></i></a>
+                    {{-- -------- --}}
+                    <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+                    <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a>
 
-                    @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                        <a href="{{route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                        <a href="{{  route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-right pagination pt-1'></i></a>
-                    @else
-                        <a href="{{ route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                        <a href="{{ route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a>
+                        @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
+                            <a href="{{route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+                            <a href="{{  route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-right pagination pt-1'></i></a>
+                        @else
+                            <a href="{{ route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+                            <a href="{{ route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a>
+                        @endif
+                        </span>
+
                     @endif
-                    </span>
 
-                @endif
+                    @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
 
-                @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+                    @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) >= $pagination["totale_pagination"])
 
-                @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) >= $pagination["totale_pagination"])
+                        @if ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
+                            <a href="{{route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+                            <a href="{{  route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-right pagination pt-1'></i></a>
+                        @else
+                            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+                            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a>
+                        @endif
+                        </span>
+                        {{-- sinon --}}
 
-                    @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                        <a href="{{route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                        <a href="{{  route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-right pagination pt-1'></i></a>
                     @else
-                        <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                        <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a>
-                    @endif
-                    </span>
-                    {{-- sinon --}}
 
-                @else
-
-                {{-- -------- --}}
-                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' pt-1></i></a>
+                    {{-- -------- --}}
+                    <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
+                    <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a>
 
                 @endif
                 <a href="#" class="btn_creer text-center filter mx-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
@@ -67,15 +67,14 @@
 </div>
 <section class="annuaire mb-5">
     <div class="container my-2">
-        <div class="row justify-content-center">
-            <div class="row mb-5">
-                <div class="col-12 alphabet">
+        <div class="row">
+            <div class="row mb-5 justify-content-center">
+                <div class="col-12 alphabet mb-5">
                     @foreach ($initial as $init)
                     <span title="{{$init->initial}}" class="lien_filtre activer" id="{{$init->initial}}"
                         role="button">{{$init->initial}}</span>
                     @endforeach
                 </div>
-
                 <div class="col-9 justify-content-center px-5">
                     <div id="result">
                         @foreach ($cfps as $cfp)

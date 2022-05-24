@@ -42,7 +42,7 @@
 
 .btn_submit {
     background-color: #7635dc;
-    color: white;
+    color: white !important;
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
@@ -60,7 +60,7 @@
 
 .btn_actions {
     background: #7635dc;
-    color: white;
+    color: white !important;
     padding: 0.5rem 0.5rem;
     border: none;
     border-radius: 5px;
@@ -171,7 +171,7 @@ color: #7635dc;
     padding: 1rem 1.5rem;
     margin: auto;
     transition: all .5s ease;
-    color: black;
+    color: black !important;
     border: none;
     border-bottom: 1px solid grey;
     /* border-top: 1px solid grey; */

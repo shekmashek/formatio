@@ -74,7 +74,7 @@ class ProgrammeController extends Controller
                 }
             }
         }
-        return back()->with('success', 'Cours ajouté avec succès, vous pouvez voir votre module dans la section "non publiées"');
+        return back()->with('success', 'Programme ajouté avec succès, vous pouvez voir votre module dans la section CONFIGURER COMPETENCE pour entrer vos competences.');
         // return redirect()->route('liste_module');
     }
 

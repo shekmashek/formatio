@@ -36,7 +36,7 @@
 
 .btn_competence{
     background: #7635dc;
-    color: #f1f1f1;
+    color: #f1f1f1 !important;
     transition: all 0.5s ease;
     position: relative;
     bottom: .65rem;
@@ -50,7 +50,7 @@
 }
 
 .btn_competence:hover{
-    color: #7635dc;
+    color: #7635dc !important;
     transform: scale(1.1);
     background: #7535dc28;
 }
@@ -378,14 +378,14 @@
     border: none;
     border-radius: 30px;
     padding: .2rem 1rem;
-    color: white;
+    color: white !important;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     transition: all .5s ease;
 }
 
 .btn_changer_prix:hover{
     transform: scale(1.05);
-    color: white;
+    color: white !important;
 
 }
 
@@ -442,7 +442,7 @@
     border: none;
     background-color: #7535dc3f;
     border-radius: 5px;
-    color: #7635dc;
+    color: #7635dc !important;
     padding-top: 0.4rem;
     padding-bottom: 0.2rem;
     padding-left: 0.5rem;
@@ -468,14 +468,14 @@
 
 .searchBoxMod:hover > .searchButtonMod {
     background: rgba(128, 128, 128, 0.247);
-    color: #7635dc;
+    color: #7635dc !important;
     border-radius: 15px;
     transform: scale(1.1);
     font-size: 17px;
 }
 
 .searchInputMod::placeholder {
-    color: #7635dc;
+    color: #7635dc !important;
 font-size: 0.850rem;
 }
 
@@ -831,7 +831,7 @@ font-size: 0.850rem;
 .button_choix{
     border: 1px solid #2ebf91;
     background-color: #2ebf91;
-    color: white;
+    color: white !important;
     padding: .3rem 1rem;
     border-radius: 15px;
 }
@@ -839,7 +839,7 @@ font-size: 0.850rem;
 .button_choix_hors_ligne{
     border: 1px solid #ee0707;
     background-color: #ee0707;
-    color: white;
+    color: white !important;
     padding: .3rem 1rem;
     border-radius: 15px;
 }
@@ -890,4 +890,8 @@ font-size: 0.850rem;
     text-align: center !important;
     justify-content: center !important;
     text-transform: uppercase !important;
+}
+
+.apres_ajout_prog{
+    color: blue !important;
 }

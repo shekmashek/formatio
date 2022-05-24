@@ -83,9 +83,9 @@
                 <li class="me-5"><a href="#dates">dates</a></li>
             </ul>
         </div>
-        <div>
+        {{-- <div>
             <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i>PDF</button>
-        </div>
+        </div> --}}
     </nav>
     <div class="container py-5">
         <div class="row justify-content-space-between py-3 px-5 back" id="border_premier">
@@ -93,7 +93,7 @@
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
                     <h4 class="py-4">{{$res->nom_module}}</h4>
-                    <p>{{$res->nom_formation}}</p>
+                    <p class="lien_formation"><a href="{{route('affichage_formation',$res->formation_id)}}">{{$res->nom_formation}}</a></p>
                     <p>{{$res->description}}</p>
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
@@ -103,11 +103,13 @@
             </div>
             <div class="col-lg-4 col-md-4 ">
                 <div class="">
-                    <a href="#">
+                    <a href="{{route('detail_cfp',$res->cfp_id)}}">
                         <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
+
+                        <div class="text-center">
+                            <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
+                        </div>
                     </a>
-                    <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid"
-                            style="width: 200px; height:100px;"></div>
                 </div>
             </div>
             <div id="objectif"></div>
@@ -128,7 +130,10 @@
                 </div>
                 <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
                 <div class="col"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong>&nbsp;HT</span></div>
+                <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                @if($res->prix_groupe != null)
+                    <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                @endif
                 {{-- <div class="col pt-1" ><a href="#" role="button" class="btn_demander">Demander un dévis</a></div>
                  <div class="text-center mt-5"><a href="#" role="button" class="btn_demander">Demander un dévis</a></div> --}}
             </div>
@@ -416,7 +421,7 @@
                     </div>
                     <div class="row g-0 m-0 detail_ref_ref">
                         <div class="col-lg-12 py-5">
-                            <a href="#" role="button" class="btn_demander">Demander un dévis</a>
+                            <a href="{{route('demande_devis_client',$infos[0]->module_id)}}" role="button" class="btn_demander">Demander un dévis</a>
                         </div>
                     </div>
                 </div>

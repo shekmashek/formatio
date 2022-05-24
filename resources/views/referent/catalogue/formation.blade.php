@@ -137,8 +137,10 @@
                                         class='bx bxs-notification me-2'></i>{{$mod->modalite_formation}}</p>
                             </div>
                             <div class="col-6 text-center">
-                                <p class="text-capitalize"><strong>{{$mod->prix}}&nbsp;{{$devise->devise}}&nbsp;<span
-                                            class="text-muted">HT</span></strong> </p>
+                                <p class="text-capitalize"><strong>{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></strong> </p>
+                                @if ($mod->prix_groupe != null)
+                                    <p class="text-capitalize"><strong>{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></strong> </p>
+                                @endif
                             </div>
                         </div>
                     </div>
