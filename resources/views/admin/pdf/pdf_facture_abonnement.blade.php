@@ -158,10 +158,11 @@
                                 </td>
                                 <td align="right">
                                     <h6>UpSkill</h6>
-                                    <h6>contact@formation.mg</h6>
+                                    <h6>contact-mg@upskill-sarl.com</h6>
                                     <h6>Lot IIN 60 Analamahitsy 101 Antananarivo Madagascar</h6>
                                     <h6>+261 34 81 135 63</h6>
                                     <h6>www.formation.mg</h6><br>
+                                    <p class="m-0 adresse_cfp">NIF : 5011767848 <br> RCS : 2022B00475 <br> Stat : 62011 11 2022 0 10487 <br> Carte Fiscale : N° 0183506/DGI-J</p>
                                 </td>
                             </tr>
                             <tr>

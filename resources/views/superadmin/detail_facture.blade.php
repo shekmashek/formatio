@@ -102,7 +102,7 @@
                                 <div class="col-4 text-end" align="rigth">
                                     <div class="info_cfp">
                                         <h4 class="m-0 nom_cfp">UpSkill</h4>
-                                        <p class="m-0 adresse_cfp">contact@formation.mg</p>
+                                        <p class="m-0 adresse_cfp">contact-mg@upskill-sarl.com</p>
                                         <p class="m-0 adresse_cfp">Lot IIN 60 Analamahitsy 101 Antananarivo Madagascar</p>
                                         <p class="m-0 adresse_cfp">+261 34 81 135 63</p>
                                         <p class="m-0 adresse_cfp">www.formation.mg</p><br>

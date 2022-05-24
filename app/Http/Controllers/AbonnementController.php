@@ -292,42 +292,42 @@ class AbonnementController extends Controller
                 $mois_dernier = $due_suivant = $mois = '';
             }
 
-            $tva = array();
-            $net_ttc = array();
+            // $tva = array();
+            // $net_ttc = array();
 
-            if($facture!=null){
+            // if($facture!=null){
 
-                $test_assujetti =$this->fonct->findWhere('entreprises',['id'],[$responsable[0]->entreprise_id]);
+            //     $test_assujetti =$this->fonct->findWhere('entreprises',['id'],[$responsable[0]->entreprise_id]);
 
-                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
-                if($test_assujetti[0]->assujetti_id == 1) {
-                    for ($i=0; $i < count($facture); $i++) {
-                        array_push ($tva,($facture[$i]->montant_facture * 20) / 100);
-                        array_push($net_ttc,$facture[$i]->montant_facture + $tva[$i]);
-                    }
-                }
+            //         //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+            //     if($test_assujetti[0]->assujetti_id == 1) {
+            //         for ($i=0; $i < count($facture); $i++) {
+            //             array_push ($tva,($facture[$i]->montant_facture * 20) / 100);
+            //             array_push($net_ttc,$facture[$i]->montant_facture + $tva[$i]);
+            //         }
+            //     }
 
-                if($test_assujetti[0]->assujetti_id == 2) {
-                    for ($i=0; $i < count($facture); $i++) {
-                        $tva = 0;
-                        array_push($net_ttc, $facture[$i]->montant_facture);
-                    }
-                }
-            }
-            else{
-                $test_assujetti = $tva = $net_ttc ='';
-            }
+            //     if($test_assujetti[0]->assujetti_id == 2) {
+            //         for ($i=0; $i < count($facture); $i++) {
+            //             $tva = 0;
+            //             array_push($net_ttc, $facture[$i]->montant_facture);
+            //         }
+            //     }
+            // }
+            // else{
+            //     $test_assujetti = $tva = $net_ttc ='';
+            // }
 
 
 
             if ($test_abonne) {
                 $payant = $this->fonct->findWhere("v_type_abonnement_etp",['entreprise_id'],[$entreprise_id]);
                 // $payant = abonnement::with('type_abonnement_role')->where('entreprise_id', $responsable[0]->entreprise_id)->get();
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','facture', 'payant', 'typeAbonnement'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','facture', 'gratuit', 'typeAbonnement'));
             }
         }
         // else {
@@ -412,40 +412,40 @@ class AbonnementController extends Controller
             else{
                 $mois_dernier = $due_suivant = $mois = '';
             }
-            $tva = array();
-            $net_ttc = array();
+            // $tva = array();
+            // $net_ttc = array();
 
 
-            if($facture!=null){
-                $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
-                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
-                if($test_assujetti[0]->assujetti_id == 1) {
-                    for ($i=0; $i < count($facture); $i++) {
-                        array_push ($tva,($facture[$i]->montant_facture * 20) / 100);
-                        array_push($net_ttc,$facture[$i]->montant_facture + $tva[$i]);
-                    }
-                }
-                if($test_assujetti[0]->assujetti_id == 2) {
-                    for ($i=0; $i < count($facture); $i++) {
-                        $tva = 0;
-                        array_push($net_ttc, $facture[$i]->montant_facture);
-                    }
-                }
-            }
-            else{
-                $test_assujetti = $tva = $net_ttc ='';
-            }
+            // if($facture!=null){
+            //     $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
+            //         //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+            //     if($test_assujetti[0]->assujetti_id == 1) {
+            //         for ($i=0; $i < count($facture); $i++) {
+            //             array_push ($tva,($facture[$i]->montant_facture * 20) / 100);
+            //             array_push($net_ttc,$facture[$i]->montant_facture + $tva[$i]);
+            //         }
+            //     }
+            //     if($test_assujetti[0]->assujetti_id == 2) {
+            //         for ($i=0; $i < count($facture); $i++) {
+            //             $tva = 0;
+            //             array_push($net_ttc, $facture[$i]->montant_facture);
+            //         }
+            //     }
+            // }
+            // else{
+            //     $test_assujetti = $tva = $net_ttc ='';
+            // }
 
 
             if ($test_abonne) {
                 $payant = $this->fonct->findWhere("v_type_abonnement_cfp",['cfp_id'],[$cfp_id]);
 
                 // $payant = abonnement_cfp::with('type_abonnement_role')->where('cfp_id', $cfp_id)->get();
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'payant', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','facture', 'payant', 'typeAbonnement'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','net_ttc','tva','facture', 'gratuit', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','facture', 'gratuit', 'typeAbonnement'));
             }
         }
         // else {
@@ -842,24 +842,25 @@ class AbonnementController extends Controller
             $cfp =$this->fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
             $facture =$this->fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
 
-            if($facture!=null){
-                $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
-                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
-                if($test_assujetti[0]->assujetti_id == 1) {
-                    $tva = ($facture[0]->montant_facture * 20) / 100;
-                    $net_ttc = $facture[0]->montant_facture + $tva;
-                }
-                if($test_assujetti[0]->assujetti_id == 2) {
-                    $tva = 0;
-                    $net_ttc = $facture[0]->montant_facture;
-                }
-                $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
-            }
-            else{
-                $test_assujetti = $tva = $net_ttc ='';
-            }
+            // if($facture!=null){
+            //     $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
+            //         //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+            //     if($test_assujetti[0]->assujetti_id == 1) {
+            //         $tva = ($facture[0]->montant_facture * 20) / 100;
+            //         $net_ttc = $facture[0]->montant_facture + $tva;
+            //     }
+            //     if($test_assujetti[0]->assujetti_id == 2) {
+            //         $tva = 0;
+            //         $net_ttc = $facture[0]->montant_facture;
+            //     }
+            //     $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
+            // }
+            // else{
+            //     $test_assujetti = $tva = $net_ttc ='';
+            // }
+            $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
             $dates_abonnement =$this->fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
-            return view('superadmin.detail_facture',compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
+            return view('superadmin.detail_facture',compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','mode_paiements'));
         }
         if(Gate::allows('isReferent')){
             $cfp = null;
@@ -869,25 +870,25 @@ class AbonnementController extends Controller
 
             $facture =$this->fonct->findWhere('v_abonnement_facture_entreprise',['facture_id'],[$id]);
 
-            if($facture!=null){
-                $test_assujetti =$this->fonct->findWhere('entreprises',['id'],[$entreprise_id]);
-                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
-                if($test_assujetti[0]->assujetti_id == 1) {
-                    $tva = ($facture[0]->montant_facture * 20) / 100;
-                    $net_ttc = $facture[0]->montant_facture + $tva;
-                }
-                if($test_assujetti[0]->assujetti_id == 2) {
-                    $tva = 0;
-                    $net_ttc = $facture[0]->montant_facture;
-                }
-                $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
-            }
-            else{
-                $test_assujetti = $tva = $net_ttc ='';
-            }
+            // if($facture!=null){
+            //     $test_assujetti =$this->fonct->findWhere('entreprises',['id'],[$entreprise_id]);
+            //         //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+            //     if($test_assujetti[0]->assujetti_id == 1) {
+            //         $tva = ($facture[0]->montant_facture * 20) / 100;
+            //         $net_ttc = $facture[0]->montant_facture + $tva;
+            //     }
+            //     if($test_assujetti[0]->assujetti_id == 2) {
+            //         $tva = 0;
+            //         $net_ttc = $facture[0]->montant_facture;
+            //     }
+            //     $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
+            // }
+            // else{
+            //     $test_assujetti = $tva = $net_ttc ='';
+            // }
             $dates_abonnement =$this->fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
 
-            return view('superadmin.detail_facture',compact('dates_abonnement','cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
+            return view('superadmin.detail_facture',compact('dates_abonnement','cfp','lettre_montant','entreprises','facture','mode_paiements'));
         }
     }
     public function desactiver_offre($id){
@@ -926,25 +927,25 @@ class AbonnementController extends Controller
             $cfp =$this->fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
             $facture =$this->fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
 
-            if($facture!=null){
-                $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
-                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
-                if($test_assujetti[0]->assujetti_id == 1) {
-                    $tva = ($facture[0]->montant_facture * 20) / 100;
-                    $net_ttc = $facture[0]->montant_facture + $tva;
-                }
-                if($test_assujetti[0]->assujetti_id == 2) {
-                    $tva = 0;
-                    $net_ttc = $facture[0]->montant_facture;
-                }
-                $lettre_montant = $this->fact->int2str( $facture[0]->montant_facture);
-            }
-            else{
-                $test_assujetti = $tva = $net_ttc ='';
-            }
+            // if($facture!=null){
+            //     $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
+            //         //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+            //     if($test_assujetti[0]->assujetti_id == 1) {
+            //         $tva = ($facture[0]->montant_facture * 20) / 100;
+            //         $net_ttc = $facture[0]->montant_facture + $tva;
+            //     }
+            //     if($test_assujetti[0]->assujetti_id == 2) {
+            //         $tva = 0;
+            //         $net_ttc = $facture[0]->montant_facture;
+            //     }
+            //     $lettre_montant = $this->fact->int2str( $facture[0]->montant_facture);
+            // }
+            // else{
+            //     $test_assujetti = $tva = $net_ttc ='';
+            // }
             $dates_abonnement =$this->fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
             $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
-            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','lettre_montant','entreprises','lettre_montant','cfp','facture','tva','net_ttc','mode_paiements'));
+            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','lettre_montant','entreprises','lettre_montant','cfp','facture','mode_paiements'));
 
         }
         if(Gate::allows('isReferent')){
@@ -955,25 +956,25 @@ class AbonnementController extends Controller
 
             $facture =$this->fonct->findWhere('v_abonnement_facture_entreprise',['facture_id'],[$id]);
 
-            if($facture!=null){
-                $test_assujetti =$this->fonct->findWhere('entreprises',['id'],[$entreprise_id]);
-                    //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
-                if($test_assujetti[0]->assujetti_id == 1) {
-                    $tva = ($facture[0]->montant_facture * 20) / 100;
-                    $net_ttc = $facture[0]->montant_facture + $tva;
-                }
-                if($test_assujetti[0]->assujetti_id == 2) {
-                    $tva = 0;
-                    $net_ttc = $facture[0]->montant_facture;
-                }
-                $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
-            }
-            else{
-                $test_assujetti = $tva = $net_ttc ='';
-            }
+            // if($facture!=null){
+            //     $test_assujetti =$this->fonct->findWhere('entreprises',['id'],[$entreprise_id]);
+            //         //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
+            //     if($test_assujetti[0]->assujetti_id == 1) {
+            //         $tva = ($facture[0]->montant_facture * 20) / 100;
+            //         $net_ttc = $facture[0]->montant_facture + $tva;
+            //     }
+            //     if($test_assujetti[0]->assujetti_id == 2) {
+            //         $tva = 0;
+            //         $net_ttc = $facture[0]->montant_facture;
+            //     }
+            //     $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
+            // }
+            // else{
+            //     $test_assujetti = $tva = $net_ttc ='';
+            // }
             $dates_abonnement =$this->fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
             $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
-            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('lettre_montant','dates_abonnement','cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
+            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('lettre_montant','dates_abonnement','cfp','lettre_montant','entreprises','facture','mode_paiements'));
             // return view('admin.pdf.pdf_facture_abonnement', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
         }
         $pdf->getDomPDF()->setHttpContext(
