@@ -13,14 +13,14 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
 
-        <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
+        <form class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
-                    <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input"  name="nom">
+                    <input type="hidden" value="{{$formateur->nom_formateur }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
 
 
-                        <input type="hidden" class="form-control test input" value="   {{ $formateur->prenom_formateur }}"  name="prenom">
+                        <input type="hidden" class="form-control test input" value="{{ $formateur->prenom_formateur }}"  name="prenom">
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label> --}}
 
                    <input type="hidden" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse">
@@ -55,15 +55,15 @@
 
                           <input type="hidden" value="{{ $formateur->cin}}" class="form-control test"  name="cin" >
 
-                        <input type="hidden" class="form-control test"  name="mail" value="   {{ $formateur->mail_formateur }}" >
+                        <input type="hidden" class="form-control test"  name="mail" value="{{ $formateur->mail_formateur }}" >
 
 
-                        <input type="hidden" class="form-control test"  name="phone" value="  {{ $formateur->numero_formateur }}">
-                        <input type="hidden" class="form-control test"  name="niveau" value="  {{ $formateur->niveau}}">
+                        <input type="hidden" class="form-control test"  name="phone" value="{{ $formateur->numero_formateur }}">
+                        <input type="hidden" class="form-control test"  name="niveau" value="{{$niveau->niveau_etude}}">
 
 
 
-                  <input type="hidden" class="form-control test"  name="specialite" value="   {{ $formateur->specialite }}">
+                  <input type="hidden" class="form-control test"  name="specialite" value="{{ $formateur->specialite }}">
 
 
 

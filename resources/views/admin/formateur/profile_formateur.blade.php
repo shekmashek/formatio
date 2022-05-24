@@ -180,17 +180,17 @@
                                  <div class="form-control">
                                      <p class="text-center">Informations professionnelles</p>
 
-                                     <div style="border-bottom: solid 1px #d399c2;" class="hover">
+                                     {{-- <div style="border-bottom: solid 1px #d399c2;" class="hover">
                                          <a href="{{route('editer_etp',$formateur->id)}} " >
                                      <p class="p-1 m-0" style="font-size: 12px;">Poste<span style="float: right;">{{$formateur->specialite}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p>
                                          </a>
-                                     </div>
+                                     </div> --}}
 
                                      <div style="border-bottom: solid 1px #d399c2;" class="hover">
                                          <a href="{{route('editer_niveau',$formateur->id)}}  " >
-                                     <p class="p-1 m-0" style="font-size: 12px;">Niveau d'étude<span style="float: right;">{{$formateur->niveau}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;">Niveau d'étude<span style="float: right;">{{$niveau->niveau_etude}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p>
                                          </a>
@@ -222,7 +222,7 @@
                                         </div>
                                         <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                             <a href="{{route('editer_poste',$formateur->id)}}  " >
-                                        <p class="p-1 m-0" style="font-size: 12px;">Poste occuper<span style="float: right;">{{$exp->poste_occuper}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        <p class="p-1 m-0" style="font-size: 12px;">Poste occupé<span style="float: right;">{{$exp->poste_occuper}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                         </p>
                                             </a>

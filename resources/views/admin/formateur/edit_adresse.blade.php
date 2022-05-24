@@ -24,7 +24,7 @@
 
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse">
+                        <input type="text" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse" required>
                         <label class="ml-3 form-control-placeholder" >Adresse</label>
 
                     </div>
@@ -54,20 +54,19 @@
 
                           <input type="hidden" value="{{ $formateur->cin}}" class="form-control test"  name="cin" >
 
-                        <input type="hidden" class="form-control test input"  name="mail" value="   {{ $formateur->mail_formateur }}" >
+                        <input type="hidden" class="form-control test input"  name="mail" value="{{ $formateur->mail_formateur }}" >
 
 
-                        <input type="hidden" class="form-control test"  name="phone" value="  {{ $formateur->numero_formateur }}">
-                        <input type="hidden" class="form-control test"  name="niveau" value="  {{ $formateur->niveau}}">
+                        <input type="hidden" class="form-control test"  name="phone" value="{{ $formateur->numero_formateur }}">
 
 
-                        <input type="hidden" class="form-control test"  name="phone" value="  {{ $formateur->numero_formateur }}">
+                        <input type="hidden" class="form-control test"  name="phone" value="{{ $formateur->numero_formateur }}">
                                        <input type="hidden" class="form-control test" value=""  name="password" placeholder="">
-                        <input type="hidden" class="form-control test"  name="niveau" value="  {{ $formateur->niveau}}">
+                        <input type="hidden" class="form-control test"  name="niveau" value="{{ $niveau->niveau_etude}}">
 
 
 
-                  <input type="hidden" class="form-control test"  name="specialite" value="   {{ $formateur->specialite }}">
+                  <input type="hidden" class="form-control test"  name="specialite" value="{{ $formateur->specialite }}">
 
 
 

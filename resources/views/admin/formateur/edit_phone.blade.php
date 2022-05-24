@@ -13,7 +13,7 @@
     <div class="col-lg-4">
         <div class="p-3 form-control">
 
-            <form class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
+            <form class="btn-submit" action="{{route('update_telephone_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input" name="nom">
@@ -57,16 +57,15 @@
 
         <div class="row px-3 mt-4">
             <div class="form-group mt-1 mb-1">
-                <input type="text" class="form-control test input" name="phone" value="  {{ $formateur->numero_formateur }}">
+                <input type="text" class="form-control test input" name="phone" value="{{ $formateur->numero_formateur }}" required>
                 <label class="ml-3 form-control-placeholder">Téléphone</label>
             </div>
         </div>
 
         <input type="hidden" class="form-control test" value="" name="password" placeholder="">
-        <input type="hidden" class="form-control test" name="niveau" value="  {{ $formateur->niveau}}">
+        <input type="hidden" class="form-control test" name="niveau" value="{{$niveau->niveau_etude}}">
 
 
-        <input type="hidden" class="form-control test" name="niveau" value="  {{ $formateur->niveau}}">
 
 
         <input type="hidden" class="form-control test" name="specialite" value="   {{ $formateur->specialite }}">
@@ -96,7 +95,14 @@
     }
 
 </style>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  $(function() {
+        $("input[name='phone']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
+</script>
 
 
 

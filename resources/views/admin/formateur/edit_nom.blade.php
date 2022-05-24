@@ -9,7 +9,21 @@
     <a href="{{route('profile_formateur')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp"> Page précédente</button></a>
 </div>
 <center>
-
+      {{-- si l'utiliisateur a cliqué sur enregistrer sans entrez  un nom ou prenom --}}
+  @if (\Session::has('error_nom'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_nom') !!}</li>
+      </ul>
+  </div>
+  @endif
+  @if (\Session::has('error_prenom'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_prenom') !!}</li>
+      </ul>
+  </div>
+  @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
 
@@ -17,18 +31,18 @@
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                        <input type="text" value="   {{ $formateur->nom_formateur }}" class="form-control  input" name="nom" required>
+                        <input type="text" value="{{ $formateur->nom_formateur}}" class="form-control  input" name="nom" required>
                         <label class="form-control-placeholder">Nom</label>
                     </div>
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control  input" value="   {{ $formateur->prenom_formateur }}" name="prenom" required>
+                        <input type="text" class="form-control  input" value="{{$formateur->prenom_formateur }}" name="prenom" required>
                         <label class="form-control-placeholder ">Prénom</label>
 
                     </div>
                 </div>
-                <input type="hidden" class="form-control  input" value="{{ $formateur->adresse }}" name="adresse">
+                <input type="hidden" class="form-control  input" value="{{$formateur->adresse }}" name="adresse">
 
 
                 {{-- <center>
@@ -56,20 +70,19 @@
 
         <input type="hidden" value="{{ $formateur->cin}}" class="form-control test" name="cin">
 
-        <input type="hidden" class="form-control test" name="mail" value="   {{ $formateur->mail_formateur }}">
+        <input type="hidden" class="form-control test" name="mail" value="{{ $formateur->mail_formateur }}">
 
 
-        <input type="hidden" class="form-control test" name="phone" value="  {{ $formateur->numero_formateur }}">
-        <input type="hidden" class="form-control test" name="niveau" value="  {{ $formateur->niveau}}">
+        <input type="hidden" class="form-control test" name="phone" value="{{ $formateur->numero_formateur }}">
+        <input type="hidden" class="form-control test" name="niveau" value="{{$niveau->niveau_etude}}">
 
 
-        <input type="hidden" class="form-control test" name="phone" value="  {{ $formateur->numero_formateur }}">
+        <input type="hidden" class="form-control test" name="phone" value="{{ $formateur->numero_formateur }}">
         <input type="hidden" class="form-control test" value="" name="password" placeholder="">
-        <input type="hidden" class="form-control test" name="niveau" value="  {{ $formateur->niveau}}">
 
 
 
-        <input type="hidden" class="form-control test" name="specialite" value="   {{ $formateur->specialite }}">
+        <input type="hidden" class="form-control test" name="specialite" value="{{ $formateur->specialite }}">
 
 
 

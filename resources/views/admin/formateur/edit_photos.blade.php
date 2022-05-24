@@ -62,9 +62,8 @@
                       @endif
                 </div>
                   </label>
-                  <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
                   </div>
-
+                  <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
 
             </center>
         </div>

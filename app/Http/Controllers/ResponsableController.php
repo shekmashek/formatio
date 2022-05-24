@@ -508,6 +508,7 @@ class ResponsableController extends Controller
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
         $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+        
         return view('admin.responsable.edit_photos', compact('responsable'));
     }
     public function edit_pwd($id, Request $request)

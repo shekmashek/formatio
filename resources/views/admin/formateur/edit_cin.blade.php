@@ -8,74 +8,74 @@
 <div class="col" style="margin-left: 25px">
   <a href="{{route('profile_formateur')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
-<center>                
+<center>
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        
+
         <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
-        
+
                     <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
-                 
-               
+
+
                         <input type="hidden" class="form-control test input" value="   {{ $formateur->prenom_formateur }}"  name="prenom">
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label> --}}
-                      
-                  
+
+
                         <input type="hidden" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse">
-                         
-      
+
+
             {{-- <center>
                 <div class="image-upload">
                   <label for="file-input">
                     <div class="upload-icon">
-                        <img src="{{asset('images/formateurs/'.$formateur->photos)}}" id = "photo_stg"  class="image-ronde"> 
+                        <img src="{{asset('images/formateurs/'.$formateur->photos)}}" id = "photo_stg"  class="image-ronde">
                       {{-- <input type="text" id = 'vartemp'> --}}
               {{-- </div>
                   </label>
                      <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
                   </div> --}}
-            
+
                {{-- <select hidden  value="{{$formateur->genre}}" name="genre" class="form-select test" id="genre"  >
                           <option value="{{$formateur->genre}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
                         </select> --}}
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label> --}}
- 
-                       
-                      
+
+
+
                         <input type="hidden" class="form-control test" name="genre" value="{{ $formateur->genre_id }}">
                         <input type="hidden" class="form-control test" name="dateNais" value="{{ $formateur->date_naissance }}">
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-           
-                          <input type="text" value="{{ $formateur->cin}}" class="form-control test input"  name="cin" >
+
+                          <input type="text" value="{{ $formateur->cin}}" class="form-control test input"  name="cin" required>
                           <label class="ml-3 form-control-placeholder">CIN</label>
-                        
+
                         </div>
-                    </div>  
-                        <input type="hidden" class="form-control test input"  name="mail" value="   {{ $formateur->mail_formateur }}" >
+                    </div>
+                        <input type="hidden" class="form-control test input"  name="mail" value="{{ $formateur->mail_formateur }}" >
 
-              
-               
-                        <input type="hidden" class="form-control test input"  name="phone" value="  {{ $formateur->numero_formateur }}"> 
-                 
 
-                        <input type="hidden" class="form-control test"  name="niveau" value="  {{ $formateur->niveau}}"> 
-                
-                      
-                  <input type="hidden" class="form-control test"  name="specialite" value="   {{ $formateur->specialite }}">
-               
 
-               
-               
+                        <input type="hidden" class="form-control test input"  name="phone" value="{{ $formateur->numero_formateur }}">
+
+
+                        <input type="hidden" class="form-control test"  name="niveau" value="{{ $niveau->niveau_etude}}">
+
+
+                  <input type="hidden" class="form-control test"  name="specialite" value="{{ $formateur->specialite }}">
+
+
+
+
 <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-</center> 
+</center>
 </div>
 </div>
 </div>
@@ -94,8 +94,16 @@
         display: none;
     }
       </style>
-    
-    
-    
-   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  $(function() {
+        $("input[name='cin']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
+
+</script>
+
+
+
 @endsection

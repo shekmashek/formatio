@@ -12,7 +12,7 @@
     <div class="col-lg-4">
         <div class="p-3 form-control">
 
-            <form class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
+            <form class="btn-submit" action="{{route('update_niveau_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input" name="nom">
@@ -50,20 +50,23 @@
 
         <input type="hidden" value="{{ $formateur->cin}}" class="form-control test" name="cin">
 
-        <input type="hidden" class="form-control test input" name="mail" value="   {{ $formateur->mail_formateur }}">
+        <input type="hidden" class="form-control test input" name="mail" value="{{ $formateur->mail_formateur }}">
 
 
-        <input type="hidden" class="form-control test" name="phone" value="  {{ $formateur->numero_formateur }}">
+        <input type="hidden" class="form-control test" name="phone" value="{{ $formateur->numero_formateur }}">
         <div class="row px-3 mt-4">
             <div class="form-group mt-1 mb-1">
-                <input type="text" class="form-control test input" name="niveau" value="  {{ $formateur->niveau}}">
-
+                <select name="niveau" class="form-select input">
+                    @foreach ($niveau as $nv)
+                        <option value="{{$nv->id}}">{{$nv->niveau_etude}}</option>
+                    @endforeach
+                </select>
                 <label class="ml-3 form-control-placeholder">Niveau d'étude</label>
 
             </div>
         </div>
 
-        <input type="hidden" class="form-control test input" name="specialite" value="   {{ $formateur->specialite }}">
+        <input type="hidden" class="form-control test input" name="specialite" value="{{ $formateur->specialite }}">
 
 
 

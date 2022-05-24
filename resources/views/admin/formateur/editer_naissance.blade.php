@@ -55,20 +55,19 @@
         </div>
         <input type="hidden" value="{{ $formateur->cin}}" class="form-control test" name="cin">
 
-        <input type="hidden" class="form-control test" name="mail" value="   {{ $formateur->mail_formateur }}">
+        <input type="hidden" class="form-control test" name="mail" value="{{ $formateur->mail_formateur }}">
 
 
-        <input type="hidden" class="form-control test" name="phone" value="  {{ $formateur->numero_formateur }}">
-        <input type="hidden" class="form-control test" name="niveau" value="  {{ $formateur->niveau}}">
+        <input type="hidden" class="form-control test" name="phone" value="{{$formateur->numero_formateur }}">
 
 
-        <input type="hidden" class="form-control test" name="phone" value="  {{ $formateur->numero_formateur }}">
+        <input type="hidden" class="form-control test" name="phone" value="{{$formateur->numero_formateur }}">
         <input type="hidden" class="form-control test" value="" name="password" placeholder="">
-        <input type="hidden" class="form-control test" name="niveau" value="  {{ $formateur->niveau}}">
+        <input type="hidden" class="form-control test" name="niveau" value="{{$niveau->niveau_etude}}">
 
 
 
-        <input type="hidden" class="form-control test" name="specialite" value="   {{ $formateur->specialite }}">
+        <input type="hidden" class="form-control test" name="specialite" value="{{$formateur->specialite }}">
 
 
 
