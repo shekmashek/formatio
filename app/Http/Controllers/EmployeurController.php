@@ -78,7 +78,7 @@ class EmployeurController extends Controller
 
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhere("responsables",["user_id"],[Auth::user()->id]);
-           
+
              /**On doit verifier le dernier abonnement de l'entreprise pour pouvoir limité le referent à ajouter */
             $nb_referent = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
             $nb_stagiaire = $this->fonct->findWhere("stagiaires",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
@@ -100,7 +100,7 @@ class EmployeurController extends Controller
             $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
 
 
-            if ($request->type_enregistrement == "STAGIAIRE") {
+            // if ($request->type_enregistrement == "STAGIAIRE") {
                 if($abonnement_etp !=null){
                     if($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
                 }
@@ -109,7 +109,7 @@ class EmployeurController extends Controller
 
                     DB::beginTransaction();
                     try {
-                        $this->fonct->insert_role_user($user_id, "3",true); // EMPLOYEUR
+                        $this->fonct->insert_role_user($user_id, "3",false,true); // EMPLOYEUR
                         DB::commit();
                     } catch (Exception $e) {
                         DB::rollback();
@@ -119,42 +119,42 @@ class EmployeurController extends Controller
                     DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
                     entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
                 }
-           }
-            if ($request->type_enregistrement == "REFERENT") {
-                if($abonnement_etp[0]->nb_utilisateur == count($nb_referent) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum de référént, veuillez upgrader votre compte pour ajouter plus de référent");
-                else{
-                    $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"])->role_description;
+        //    }
+        //     if ($request->type_enregistrement == "REFERENT") {
+        //         if($abonnement_etp[0]->nb_utilisateur == count($nb_referent) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum de référént, veuillez upgrader votre compte pour ajouter plus de référent");
+        //         else{
+        //             $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"])->role_description;
 
-                    DB::beginTransaction();
-                    try {
-                        $this->fonct->insert_role_user($user_id, "2",true); // RH
-                        $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
-                        DB::commit();
-                    } catch (Exception $e) {
-                        DB::rollback();
-                        echo $e->getMessage();
-                    }
-                    $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
-                    DB::insert("insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
-                    ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-                }
-            }
-            if ($request->type_enregistrement == "MANAGER") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"])->role_description;
+        //             DB::beginTransaction();
+        //             try {
+        //                 $this->fonct->insert_role_user($user_id, "2",true); // RH
+        //                 $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
+        //                 DB::commit();
+        //             } catch (Exception $e) {
+        //                 DB::rollback();
+        //                 echo $e->getMessage();
+        //             }
+        //             $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
+        //             DB::insert("insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
+        //             ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+        //         }
+        //     }
+        //     if ($request->type_enregistrement == "MANAGER") {
+        //         $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"])->role_description;
 
-                DB::beginTransaction();
-                try {
-                    $this->fonct->insert_role_user($user_id, "5",true); // MANAGER
-                    $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    echo $e->getMessage();
-                }
-                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id,$user_id];
-                DB::insert("insert into chef_departements(matricule,nom_chef,prenom_chef,cin_chef,mail_chef,telephone_chef,fonction_chef
-                ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-            }
+        //         DB::beginTransaction();
+        //         try {
+        //             $this->fonct->insert_role_user($user_id, "5",true); // MANAGER
+        //             $this->fonct->insert_role_user($user_id, "3",false); // EMPLOYEUR
+        //             DB::commit();
+        //         } catch (Exception $e) {
+        //             DB::rollback();
+        //             echo $e->getMessage();
+        //         }
+        //         $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id,$user_id];
+        //         DB::insert("insert into chef_departements(matricule,nom_chef,prenom_chef,cin_chef,mail_chef,telephone_chef,fonction_chef
+        //         ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+        //     }
             Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
             return back()->with('success',"Terminé !");
         }

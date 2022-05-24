@@ -299,85 +299,81 @@
                     <thead>
                         <tr>
                             <th scope="col">Photo</th>
-                            <th scope="col">Matricule
-                            </th>
-                            <th scope="col">Nom
-                            </th>
-                            <th scope="col">Prénom</th>
-                            <th scope="col">E-mail
-                            </th>
-                            <th scope="col">Télephone
-                            </th>
-                            <th scope="col">Action</th>
-                            <th scope="col">Voir profil</th>
-                            <th style="width: 10px;">Rétirer</th>
+                            <th scope="col">Noms</th>
+                            <th scope="col">Contact </th>
+                            <th scope="col"> Dept et Se</th>
+                            <th scope="col" colspan="2">Action</th>
+                            {{-- <th scope="col">Voir profil</th> --}}
+                            {{-- <th style="width: 10px;">Rétirer</th> --}}
                         </tr>
                     </thead>
                     <tbody id="list_data_trie_valider">
 
-                        @foreach ($employers as $emp)
+                        {{-- @foreach ($chefs as $sefo)
                         <tr>
                             <td>
-                                <a href="#">
-                                    @if($emp->photos == null)
+                                <a href="{{route('profile_resp',$sefo->id)}}">
+                                    @if($sefo->photos == null)
                                     <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
-                                        <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
+                                        <span class="" style="position:relative; top: .5rem;"><b>{{$sefo->nom_cf}}{{$sefo->prenom_cf}}</b></span>
                                     </p>
                                     @else
-                                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                    <a href="{{asset('images/chefDepartement/'.$sefo->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/chefDepartement/'.$sefo->photos)}}" style="width:30px; height:30px; border-radius:100%; font-size:15px; border: 1px solid black;"></a>
                                     @endif
                                 </a>
                             </td>
                             <td>
-                                @if ($emp->activiter==1)
-                                <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
-
+                                <a href="{{route('profile_stagiaire',$sefo->id)}}">
+                                    <p> {{$sefo->nom_chef." ".$sefo->prenom_chef}} </p>
+                                    <p> @if ($sefo->activiter==1)
+                                        <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$sefo->matricule}}
+                                        @else
+                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$sefo->matricule}}
+                                        @endif</p>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{route('profile_stagiaire',$sefo->id)}}">
+                                    <p> {{$sefo->mail_chef}} </p>
+                                    @if($sefo->telephone_chef==null)
+                                    <p> ----</p>
+                                    @else
+                                    <p> {{$sefo->telephone_chef}}</p>
+                                    @endif
+                                </a>
+                            </td>
+                            <td>
+                                @if($sefo->service_id!=null)
+                                <p>{{$sefo->nom_branche}}</p>
+                                <p>{{$sefo->nom_service}}</p>
                                 @else
-                                <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
-
+                                <p>-----</p>
+                                <p>------</p>
                                 @endif
                             </td>
-                            <th>
-                                {{$emp->nom_stagiaire}}
-                            </th>
                             <td>
-                                {{$emp->prenom_stagiaire}}
-                            </td>
-                            <td>
-                                {{$emp->mail_stagiaire}}
-                            </td>
-                            <td>
-                                @if($emp->telephone_stagiaire==null)
-                                ----
-                                @else
-                                {{$emp->telephone_stagiaire}}
-                                @endif
-                            </td>
-                            <td>
-                                @if ($emp->activiter==1)
+                                @if ($sefo->activiter==1)
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
-                                    <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
+                                    <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$sefo->user_id}}" value="{{$sefo->id}}" checked>
                                 </div>
                                 @else
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
-                                    <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
+                                    <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$sefo->user_id}}" value="{{$sefo->id}}">
                                 </div>
                                 @endif
+
+                            </td>
+                            {{-- <td>
+                                <a href="{{route('profile_stagiaire',$sefo->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
                             </td>
                             <td>
-                                <a href="{{route('profile_stagiaire',$emp->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
+                                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$sefo->id}}"><span class="fa fa-trash" style="color:red"></span></button>
                             </td>
-                            <td>
-                                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
-                               </td>
                         </tr>
 
-                        <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
-                                @csrf
-
+                        <div class="modal fade" id="delete_emp_{{$sefo->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
@@ -390,147 +386,316 @@
 
                                     <div class="modal-footer justify-content-center">
                                         <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                        <a href="{{route('employeur.destroy',$sefo->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-
                         </div>
-                        @endforeach
-                    </tbody>
-                </table>
+                        @endforeach --}}
+
+                        {{-- ============================================================ --}}
+                        @foreach ($responsables as $resp)
+                        <tr>
+                            <td>
+                                <a href="{{route('profile_resp',$resp->id)}}">
+                                    @if($resp->photos == null)
+                                    <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
+                                        <span class="" style="position:relative; top: .5rem;"><b>{{$resp->nom_rsp}}{{$resp->prenom_rsp}}</b></span>
+                                    </p>
+                                    @else
+                                    <a href="{{asset('images/responsables/'.$resp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/responsables/'.$resp->photos)}}" style="width:30px; height:30px; border-radius:100%; font-size:15px; border: 1px solid black;"></a>
+                                    @endif
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{route('profile_stagiaire',$resp->id)}}">
+                                    <p> {{$resp->nom_resp." ".$resp->prenom_resp}} </p>
+                                    <p> @if ($resp->activiter==1)
+                                        <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$resp->matricule}}
+                                        @else
+                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$resp->matricule}}
+                                        @endif</p>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{route('profile_stagiaire',$resp->id)}}">
+                                    <p> {{$resp->email_resp}} </p>
+                                    @if($resp->telephone_resp==null)
+                                    <p> ----</p>
+                                    @else
+                                    <p> {{$resp->telephone_resp}}</p>
+                                    @endif
+                                </a>
+                            </td>
+                            <td>
+                                @if($resp->service_id!=null)
+                                {{-- <p>{{$resp->nom_branche}}</p> --}}
+                                {{-- <p>{{$resp->nom_service}}</p> --}}
+                                @else
+                                <p>-----</p>
+                                <p>------</p>
+                                @endif
+                            </td>
+                            <td>
+                                responsable
+                                {{-- @if ($resp->activiter==1 && $resp->prioriter!=True)
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
+                                    <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$resp->user_id}}" value="{{$resp->id}}" checked>
             </div>
+            @else
+            <div class="form-check form-switch">
+                <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
+                <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$resp->user_id}}" value="{{$resp->id}}">
+            </div>
+            @endif --}}
 
+            </td>
+            {{-- <td>
+                                <a href="{{route('profile_stagiaire',$resp->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
+            </td> --}}
+            <td>
+                {{-- <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$resp->id}}"><span class="fa fa-trash" style="color:red"></span></button> --}}
+            </td>
+            </tr>
 
-            <div class="filtrer mt-3">
-                <div class="row">
-                    <div class="col">
-                        <p class="m-0">Filtre</p>
-                    </div>
-                    <div class="col text-end">
-                        <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
-                    </div>
-                    <hr class="mt-2">
-                    <div class="row mt-0">
-                        <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="detail_par_thematique">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
-                                <br>
-                                <label for="dte_fin" class="form-label" align="left">Date de règlement <strong style="color:#ff0000;">*</strong></label>
-                                <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-                            </form>
+            <div class="modal fade" id="delete_emp_{{$resp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                            <h4 class="modal-title text-white">Avertissement !</h4>
+
                         </div>
-                        <hr>
-                        <p>
-                            <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par N° facture</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="search_num_fact">
-                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
-                                @csrf
-                                <label for="num_fact" class="form-control-placeholder">N° facture<strong style="color:#ff0000;">*</strong></label>
-                                <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
-                                <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
-                            </form>
+                        <div class="modal-body">
+                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
                         </div>
-                        <hr>
 
-                        <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par activité</a>
-                        </p>
-                        <div class="collapse multi-collapse" id="detail_par_etp">
-                            <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
-                                <br>
-                                <select class="form-select" autocomplete="on">
-                                    <option value="">actif</option>
-                                    <option value="">inactif</option>
-                                </select>
-                                <br>
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-                            </form>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                            <a href="{{route('employeur.destroy',$resp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
                         </div>
-                        <hr>
-
                     </div>
                 </div>
             </div>
+            @endforeach
+
+            {{-- ============================================================ --}}
+            @foreach ($employers as $emp)
+            <tr>
+                <td>
+                    <a href="{{route('profile_stagiaire',$emp->id)}}">
+                        @if($emp->photos == null)
+                        <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
+                            <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
+                        </p>
+                        @else
+                        <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                        @endif
+                    </a>
+                </td>
+                <td>
+                    <a href="{{route('profile_stagiaire',$emp->id)}}">
+                        <p> {{$emp->nom_stagiaire." ".$emp->prenom_stagiaire}} </p>
+                        <p> @if ($emp->activiter==1)
+                            <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
+                            @else
+                            <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
+                            @endif</p>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{route('profile_stagiaire',$emp->id)}}">
+                        <p> {{$emp->mail_stagiaire}} </p>
+                        @if($emp->telephone_stagiaire==null)
+                        <p> ----</p>
+                        @else
+                        <p> {{$emp->telephone_stagiaire}}</p>
+                        @endif
+                    </a>
+                </td>
+                <td>
+                    @if($emp->service_id!=null)
+                    {{-- <p>{{$emp->nom_branche}}</p>
+                    <p>{{$emp->nom_service}}</p> --}}
+                    @else
+                    <p>-----</p>
+                    <p>------</p>
+                    @endif
+                </td>
+                <td>
+                    @if ($emp->activiter==1)
+                    <div class="form-check form-switch">
+                        <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
+                    </div>
+                    @else
+                    <div class="form-check form-switch">
+                        <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
+                    </div>
+                    @endif
+
+                </td>
+                {{-- <td>
+                                <a href="{{route('profile_stagiaire',$emp->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
+                </td> --}}
+                <td>
+                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                </td>
+            </tr>
+
+            <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                            <h4 class="modal-title text-white">Avertissement !</h4>
+
+                        </div>
+                        <div class="modal-body">
+                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
+                        </div>
+
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                            <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @endforeach
+            </tbody>
+            </table>
+        </div>
+
+
+        <div class="filtrer mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0">Filtre</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+                </div>
+                <hr class="mt-2">
+                <div class="row mt-0">
+                    <p>
+                        <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
+                    </p>
+                    <div class="collapse multi-collapse" id="detail_par_thematique">
+                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
+                            <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
+                            <br>
+                            <label for="dte_fin" class="form-label" align="left">Date de règlement <strong style="color:#ff0000;">*</strong></label>
+                            <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
+                            <button type="submit" class="btn_creer mt-2">Recherche</button>
+                        </form>
+                    </div>
+                    <hr>
+                    <p>
+                        <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par N° facture</a>
+                    </p>
+                    <div class="collapse multi-collapse" id="search_num_fact">
+                        <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
+                            @csrf
+                            <label for="num_fact" class="form-control-placeholder">N° facture<strong style="color:#ff0000;">*</strong></label>
+                            <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
+                            <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
+                        </form>
+                    </div>
+                    <hr>
+
+                    <p>
+                        <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par activité</a>
+                    </p>
+                    <div class="collapse multi-collapse" id="detail_par_etp">
+                        <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
+                            <br>
+                            <select class="form-select" autocomplete="on">
+                                <option value="">actif</option>
+                                <option value="">inactif</option>
+                            </select>
+                            <br>
+                            <button type="submit" class="btn_creer mt-2">Recherche</button>
+                        </form>
+                    </div>
+                    <hr>
+
+                </div>
+            </div>
+        </div>
 
 
 
-            <script src="{{ asset('assets/js/jquery.js') }}"></script>
-            <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-            <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <script src="{{ asset('assets/js/jquery.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-            <script type="text/javascript">
-                /*============ stg =================*/
-                $(".desactiver_stg").on('click', function(e) {
-                    var user_id = $(this).data("user-id");
-                    var stg_id = $(this).val();
-                    $.ajax({
-                        type: "GET"
-                        , url: "{{route('employes.liste.desactiver')}}"
-                        , data: {
-                            user_id: user_id
-                            , emp_id: stg_id
-                        }
-                        , success: function(response) {
-                            window.location.reload();
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
+        <script type="text/javascript">
+
+            /*============ stg =================*/
+            $(".desactiver_stg").on('click', function(e) {
+                var user_id = $(this).data("user-id");
+                var stg_id = $(this).val();
+                $.ajax({
+                    type: "GET"
+                    , url: "{{route('employes.liste.desactiver')}}"
+                    , data: {
+                        user_id: user_id
+                        , emp_id: stg_id
+                    }
+                    , success: function(response) {
+                        window.location.reload();
+                    }
+                    , error: function(error) {
+                        console.log(error)
+                    }
                 });
-                $(".activer_stg").on('click', function(e) {
-                    var user_id = $(this).data("user-id");
-                    var stg_id = $(this).val();
-                    $.ajax({
-                        type: "GET"
-                        , url: "{{route('employes.liste.activer')}}"
-                        , data: {
-                            user_id: user_id
-                            , emp_id: stg_id
-                        }
-                        , success: function(response) {
-                            window.location.reload();
-                        }
-                        , error: function(error) {
-                            console.log(error)
-                        }
-                    });
+            });
+            $(".activer_stg").on('click', function(e) {
+                var user_id = $(this).data("user-id");
+                var stg_id = $(this).val();
+                $.ajax({
+                    type: "GET"
+                    , url: "{{route('employes.liste.activer')}}"
+                    , data: {
+                        user_id: user_id
+                        , emp_id: stg_id
+                    }
+                    , success: function(response) {
+                        window.location.reload();
+                    }
+                    , error: function(error) {
+                        console.log(error)
+                    }
                 });
+            });
 
 
-                // Example starter JavaScript for disabling form submissions if there are invalid fields
-                (function() {
-                    'use strict'
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function() {
+                'use strict'
 
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.querySelectorAll('.needs-validation')
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')
 
-                    // Loop over them and prevent submission
-                    Array.prototype.slice.call(forms)
-                        .forEach(function(form) {
-                            form.addEventListener('submit', function(event) {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)
+                    .forEach(function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
 
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
 
-            </script>
+        </script>
 
 
-            @endsection
+        @endsection
