@@ -128,6 +128,7 @@
                                     Lot/Rue: {{$refs->adresse_lot}}
                                     Qter: {{$refs->adresse_quartier}}
                                     Vlle: {{$refs->adresse_ville}}
+                                    <br>
                                     Region: {{$refs->adresse_region}}
                                     CP: {{$refs->adresse_code_postal}}
                                 @endif
