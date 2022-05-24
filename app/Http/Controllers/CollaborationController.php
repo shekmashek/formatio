@@ -11,6 +11,7 @@ use App\User;
 use App\cfp;
 use App\formateur;
 use App\responsable;
+use Illuminate\Support\Facades\DB;
 
 
 use Illuminate\Support\Facades\Mail;
@@ -162,11 +163,24 @@ class CollaborationController extends Controller
         if (Gate::allows('isCFP')) {
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id =$this->fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
+            
             return $this->collaboration->verify_annulation_collaboration_etp_cfp($cfp_id, $req->etp_id);
         }
         if (Gate::allows('isReferent')) {
+           
             $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            $supprimer_id=DB::select('select * from v_groupe_projet_entreprise where entreprise_id = ? and  cfp_id  = ? ',[$etp_id,$req->cfp_id]);
+           
+         if($supprimer_id==NULL){
+           
             return $this->collaboration->verify_annulation_collaboration_etp_cfp($req->cfp_id, $etp_id);
+
+            }
+         else{
+            return back()->with('message', 'Vous ne pouvez pas supprimer cette collaboration parce que vous  avez des projets ensembles!');;
+         }
+
+
         }
     }
 

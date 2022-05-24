@@ -21,7 +21,7 @@
             font-size: 12px;
         }
 
-        .font_text h5,
+        .font_text h6,
         .font_text h6 {
             font-size: 10px;
         }
@@ -87,6 +87,9 @@
     .save3{
         display: none;
     }
+    .label{
+        font-weight: 200;
+    }
     /*modal*/
 
 </style>
@@ -119,7 +122,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="p-3 mb-5 bg-body rounded ">
-                                <h5>Départements</h5>
+                                <h6>Départements</h6>
                                 <hr>
                                 <div class="table-responsive text-center mt-0">
                                     <table class="table  table-borderless table-sm ">
@@ -139,12 +142,11 @@
                                                 </td>
                                                 <td>
 
-                                                 <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$rqt[$i]->id}}"  class="btn btn-labeled btn-success">
+                                                 <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$rqt[$i]->id}}"  >
                                                             {{-- <i class='bx  bx-edit bx_modifier'></i> --}}
 
-                                                    <span class="btn-label"><i class='bx  bx-edit bx_modifier'></i></span>Modifier</a>
-                                                    <a href=""  data-bs-toggle="modal" data-bs-target="#deletedep_{{$rqt[$i]->id}}" type="button" class="btn btn-labeled btn-danger">
-                                                    <span class="btn-label"><i class='bx  bx-trash bx_supprimer' ></i></span>Supprimer</a>
+                                                    <i class='bx  bx-edit bx_modifier'></i></a>
+                                                    <a href=""  data-bs-toggle="modal" data-bs-target="#deletedep_{{$rqt[$i]->id}}" role="button" ><i class='bx bx-trash bx_supprimer' ></i></a>
                                                 </td>
                                             </tr>
                                             {{-- modal edit departement --}}
@@ -157,14 +159,14 @@
                                                         <div class="modal-body">
                                                             <form action="{{route('update_departement')}}"  method="post">
                                                                 @csrf
-                                                                <label for=""> Département</label>
+                                                                <label for="" class="label"> Département</label>
                                                                 <input type="text" class="form-control" required name="departement" value="{{$rqt[$i]->nom_departement}}">
                                                                 <input type="hidden" class="form-control" required name="id" value="{{$rqt[$i]->id}}"> <br><br>
 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
-                                                                <button type="submit" class="btn btn_enregistrer">&nbsp; Enregistrer</button>
+                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
+                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -223,14 +225,14 @@
                                         <div class="col ms-2">
                                             {{-- <button type="button" class="btn btn-success mt-2" id="addRow1"><i
                                                     class='bx bxs-plus-circle'></i></button> --}}
-                                                    <button type="button" class="btn btn-labeled btn-success affiche_btn1" id="addRow1">
-                                                        <span class="btn-label"><i class="bx bxs-plus-circle"></i></span>Ajouter département</button>
+                                                    <button type="button" class="btn btn_nouveau affiche_btn1" id="addRow1">
+                                                        <i class="bx bx-plus-medical me-1"></i>nouveau département</button>
                                                         {{-- <button type="button" class="btn btn-labeled btn-danger">
                                                         <span class="btn-label"><i class="fa fa-remove"></i></span>Cancel</button> --}}
                                         </div>
                                     </div>
                                     <div id="add_column"></div>
-                                    <button type="submit" class="btn btn_enregistrer mt-2 save1" >Sauvegarder</button>
+                                    <button type="submit" class="btn btn_enregistrer mt-2 save1" ><i class="bx bx-check me-1"></i>Enregistrer</button>
                                 </form>
                             </div>
                         </div>
@@ -242,7 +244,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class=" p-3 mb-5 bg-body rounded ">
-                                <h5>Services</h5>
+                                <h6>Services</h6>
                                 <hr>
                                 <div class="table-responsive text-center  mt-0">
                                     <table class="table  table-borderless table-sm">
@@ -268,8 +270,9 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-md-1" style="white-space: nowrap">
-                                                                    <a type="button" class="btn btn-labeled btn-success" href="" data-bs-toggle="modal" data-bs-target="#example_{{$service_departement[$i]->departement_entreprise_id}}"><span class="btn-label"><i class='bx  bx-edit bx_modifier'></i></span>Modifier</a>
-                                                                    <a type="button" class="btn btn-labeled btn-danger" href="" data-bs-toggle="modal" data-bs-target="#deleteserve_{{$service_departement[$i]->departement_entreprise_id}}"><span class="btn-label"><i class='bx  bx-trash bx_supprimer' ></i></span>Supprimer</a>
+                                                                    
+                                                                    <a type="button"  href="" data-bs-toggle="modal" data-bs-target="#example_{{$service_departement[$i]->departement_entreprise_id}}"><i class='bx  bx-edit bx_modifier'></i></a>
+                                                                    <a type="button"  href="" data-bs-toggle="modal" data-bs-target="#deleteserve_{{$service_departement[$i]->departement_entreprise_id}}"><i class='bx  bx-trash bx_supprimer' ></i></a>
 
                                                                 </div>
                                                             </div>
@@ -292,8 +295,8 @@
 
                                                                                 @endforeach
                                                                                 <div class="modal-footer">
-                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
-                                                                                    <button type="submit" class="btn btn_enregistrer">&nbsp; Enregistrer</button>
+                                                                                    <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
+                                                                                    <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
                                                                                 </div>
                                                                             </form>
                                                                         </div>
@@ -322,8 +325,9 @@
                                                                                     @endif
                                                                                 @endforeach
                                                                                 <div class="modal-footer">
-                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
-                                                                                    <button type="submit" class="btn btn-labeled btn-danger"><span class="btn-label"><i class='bx  bx-trash bx_supprimer' ></i></span>Supprimer</button>
+                                                                                    <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
+                                                                                    <button type="submit" class="btn btn_annuler" ><i class='bx bx-trash me-1'></i>supprimer</button>
+
                                                                                 </div>
                                                                             </form>
                                                                         </div>
@@ -392,16 +396,16 @@
                                         <div class="col">
                                             <input type="text" class="form-control mb-2" id="inlineFormInput"
                                                 name="service[]" placeholder="Nom de service" required />
-                                        </div> --}}
+                                        </div> --}} 
                                         <div class="col ms-2">
-                                            <button type="button" class="btn btn-labeled btn-success affiche_btn2" id="addRow2" >
-                                                <span class="btn-label"><i class="bx bxs-plus-circle"></i></span>Ajouter service</button>
+                                            <button type="button" class="btn btn_nouveau affiche_btn2" id="addRow2" >
+                                                <i class="bx bx-plus-medical me-1"></i>nouveau service</button>
                                             {{-- <button type="button" class="btn btn-success mt-2" id="addRow2"><i
                                                     class='bx bxs-plus-circle'></i></button> --}}
                                         </div>
                                     </div>
                                     <div id="add_column2"></div>
-                                    <button type="submit" class="btn btn_enregistrer mt-2 save2">Sauvegarder</button>
+                                    <button type="submit" class="btn btn_enregistrer mt-2 save2"><i class="bx bx-check me-1"></i>Enregistrer</button>
                                 </form>
                             </div>
                         </div>
@@ -415,7 +419,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class=" p-3 mb-5 bg-body rounded ">
-                                <h5>Branche</h5>
+                                <h6>Branche</h6>
                                 <hr>
                                 <div class="table-responsive mt-0">
                                     <table class="table  table-borderless table-sm">
@@ -430,11 +434,11 @@
 
                                                 </td>
                                                 <td>
-                                                    <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#Modal_{{$branches[$i]->id}}"type="button" class="btn btn-labeled btn-success">
-                                                        <span class="btn-label"><i class='bx  bx-edit bx_modifier'></i></span>Modifier</a>
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#deletebranche_{{$branches[$i]->id}}" type="button" class="btn btn-labeled btn-danger">
-                                                        <span class="btn-label"><i class='bx  bx-trash bx_supprimer'></i></span>Supprimer</a>
-                                                   <span></span></a>
+                                                    <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#Modal_{{$branches[$i]->id}}"type="button" >
+                                                        <i class='bx  bx-edit bx_modifier'></i></a>
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#deletebranche_{{$branches[$i]->id}}" type="button" >
+                                                       <i class='bx  bx-trash bx_supprimer'></i></a>
+                                                
 
                                             </td>
 
@@ -455,8 +459,8 @@
 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
-                                                                <button type="submit" class="btn btn_enregistrer">&nbsp; Enregistrer</button>
+                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
+                                                                <button type="submit" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i>Enregistrer</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -515,12 +519,12 @@
                                         <div class="col ms-2">
                                             {{-- <button type="button" class="btn btn-success mt-2" id="addRow3"><i
                                                     class='bx bxs-plus-circle'></i></button> --}}
-                                                    <button type="button" class="btn btn-labeled btn-success affiche_btn3" id="addRow3">
-                                                    <span class="btn-label"><i class="bx bxs-plus-circle"></i></span>Ajouter branche</button>
+                                                    <button type="button" class="btn  btn_nouveau affiche_btn3" id="addRow3">
+                                                    <i class="bx bx-plus-medical me-1"></i>nouveau branche</button>
                                         </div>
                                     </div>
                                     <div id="add_column3"></div>
-                                    <button type="submit" class="btn btn_enregistrer mt-2 save3">Sauvegarder</button>
+                                    <button type="submit" class="btn btn_enregistrer mt-2 save3"><i class="bx bx-check me-1"></i>Enregistrer</button>
                                 </form>
                             </div>
                         </div>
@@ -544,10 +548,10 @@
         var html = '';
         html += '<div class="form-row d-flex" id="inputFormRow1">';
         html += '<div class="col">';
-        html += '<input type="text" class="form-control  mb-2" name="departement[]" id="inlineFormInput"  placeholder="Nom de département"  required>';
+        html += '<input type="text" class="form-control  mb-2 mt-2" name="departement[]" id="inlineFormInput"  placeholder="Nom de département"  required>';
         html += '</div>';
-        html += '<div class="col ms-2">';
-        html += ' <button id="removeRow1" type="button" class="btn btn-labeled btn-danger"> <span class="btn-label"><i class="bx bx-x"></i></span>Annuler</button>';
+        html += '<div class="col ms-2 ">';
+        html += ' <button id="removeRow1" type="button" class="btn btn_annuler"><i class="bx bx-x me-1"></i>Annuler</button>';
 
         // html += '<button id="removeRow1" type="button" class="btn btn-danger mt-2"><i class="fa fa-close style="font-size: 15px;"></i></button>';
         html += '</div>';
@@ -590,7 +594,7 @@
                 var html = '';
                 html += '<div class="form-row d-flex" id="inputFormRow2">';
                 html += '<div class="col">';
-                html += '<select class="form-select mt-2" id="inlineFormInput" aria-label="Default select example" name = "departement_id[]">';
+                html += '<select class="form-select mt-3" id="inlineFormInput" aria-label="Default select example" name = "departement_id[]">';
                 html += ' <option selected>Choisissez le département </option>';
                 for (var $i = 0; $i < userData.length; $i++) {
                     html += ' <option value="' + userData[$i].id + '"> ' + userData[$i].nom_departement + '</option>';
@@ -598,11 +602,11 @@
                 html += ' </select>';
                 html += '</div>';
                 html += '<div class="col mb-2">';
-                html += '<input type="text" class="form-control mt-2 mb-2 ms-1" name="service[]" id="inlineFormInput"  placeholder="Nom de service"   required>';
+                html += '<input type="text" class="form-control mt-3 mb-2 ms-1" name="service[]" id="inlineFormInput"  placeholder="Nom de service"   required>';
                 html += '</div>';
                 html += '<div class="col ms-2">';
                 // html += '<button id="removeRow2" type="button" class="btn btn-danger mt-2"><i class="fa fa-close style="font-size: 15px;"></i></button>';
-                html += ' <button id="removeRow2" type="button" class="btn btn-labeled btn-danger mt-2"> <span class="btn-label"><i class="bx bx-x"></i></span>Annuler</button>';
+                html += ' <button id="removeRow2" type="button" class="btn btn_annuler mt-2"><i class="bx bx-x me-1"></i>Annuler</button>';
 
                 html += '</div>';
                 html += '</div>';
@@ -629,11 +633,11 @@
         var html = '';
         html += '<div class="form-row d-flex" id="inputFormRow3">';
         html += '<div class="col">';
-        html += '<input type="text" class="form-control  mb-2" name="nom_branche[]" id="inlineFormInput3"  placeholder="Nom de la branche"  required>';
+        html += '<input type="text" class="form-control  mb-2 mt-2" name="nom_branche[]" id="inlineFormInput3"  placeholder="Nom de la branche"  required>';
         html += '</div>';
         html += '<div class="col ms-2">';
         // html += '<button id="removeRow3" type="button" class="btn btn-danger mt-2"><i class="fa fa-close style="font-size: 15px;"></i></button>';
-        html += ' <button id="removeRow3" type="button" class="btn btn-labeled btn-danger "> <span class="btn-label"><i class="bx bx-x"></i></span>Annuler</button>';
+        html += ' <button id="removeRow3" type="button" class="btn btn_annuler "> <i class="bx bx-x"></i>Annuler</button>';
         html += '</div>';
         html += '</div>';
         $('#add_column3').append(html);

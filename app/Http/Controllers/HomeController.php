@@ -619,7 +619,6 @@ class HomeController extends Controller
             $page = 1;
         }
         $fonct = new FonctionGenerique();
-
         $projet_model = new projet();
         $totale_invitation = 0;
         $entp = new entreprise();
@@ -627,7 +626,7 @@ class HomeController extends Controller
         $status = DB::select('select * from status');
         $type_formation_id = $request->type_formation;
         $responsable_id = responsable::where('user_id', $user_id)->value('id');
-        $cfp_id = ResponsableCfpModel::value('cfp_id');
+        $cfp_id=$request->id;
         if (Gate::allows('isReferent')) {
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ? and cfp_id=?', [$entreprise_id, $cfp_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
