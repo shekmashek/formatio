@@ -334,6 +334,9 @@ Route::get('/destroy_participant/{id}', 'ParticipantController@destroy')->name('
 Route::post('/update_participant', 'ParticipantController@update')->name('update_participant');
 Route::post('/update_stagiaire/{id}', 'ParticipantController@update_stagiaire')->name('update_stagiaire');
 Route::post('/update_photo_stagiaire/{id}', 'ParticipantController@update_photo_stagiaire')->name('update_photo_stagiaire');
+Route::post('/update_mot_de_passe_stagiaire/{id}','ParticipantController@update_mot_de_passe_stagiaire')->name('update_mot_de_passe_stagiaire');
+Route::post('/update_email_stagiaire/{id}','ParticipantController@update_email_stagiaire')->name('update_email_stagiaire');
+Route::post('/update_niveau_stagiaire/{id}','ParticipantController@update_niveau_stagiaire')->name('update_niveau_stagiaire');
 // profile_stagiaire
 // Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 

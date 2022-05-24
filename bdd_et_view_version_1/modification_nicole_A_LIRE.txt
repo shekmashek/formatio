@@ -1,0 +1,11 @@
+--------17Mai
+Recopier les scripts dans bdd_suiviformation_mis_a_jour_18(abonnements)
+Recopier les scripts dans bdd_suiviformation_view_6(abonnement)
+Creer la table iframe_invite dans  bdd_suiviformation_mis_a_jour_17
+Recopier les views dans bdd_suiviformation_mis_a_jour_17 : v_entreprise_iframe et v_cfp_iframe
+
+---------24Mai
+Copier le script create table niveau_etude/insert into/Alter table niveau  dans table mere
+Recopier le view v_stagiaire_entreprise dans bdd_suiviformation_view_1(view miasa + avis)
+Recopier le view v_stagiaire_groupe/v_participant_groupe_detail dans bdd_suiviformation_view_4.0
+

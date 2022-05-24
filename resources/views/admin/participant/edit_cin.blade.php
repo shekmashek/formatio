@@ -8,10 +8,16 @@
   <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
-
+  @if (\Session::has('error_cin'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_cin') !!}</li>
+      </ul>
+  </div>
+@endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-      
+
         <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
@@ -57,7 +63,7 @@
                         <input type="hidden" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                          <input type="text" value="   {{ $stagiaire->cin}}" class="form-control test input"  name="cin" >
+                          <input type="text" value="{{ $stagiaire->cin}}" class="form-control test input"  name="cin" >
                         <label class="ml-3 form-control-placeholder" >CIN</label>
 
                         </div>
@@ -104,5 +110,13 @@
 </div>
 </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  $(function() {
+        $("input[name='cin']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
 
+</script>
 @endsection

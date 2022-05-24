@@ -8,14 +8,20 @@
   <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
-
+  @if (\Session::has('error_email'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_email') !!}</li>
+      </ul>
+  </div>
+@endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-       
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
+
+        <form   class="btn-submit" action="{{route('update_email_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
             @csrf
-                    <input type="hidden" value="email" name="modifier_mail">
-                    <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
+
+                    <input type="hidden" value="{{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
 
 
                         <input type="hidden" class="form-control test" value="   {{ $stagiaire->prenom_stagiaire }}"  name="prenom">
@@ -59,7 +65,7 @@
                           <input type="hidden" value="{{ $stagiaire->cin}}" class="form-control test"  name="cin" >
                           <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control test input"  name="mail" value="   {{ $stagiaire->mail_stagiaire }}" >
+                        <input type="email" class="form-control test input"  name="mail" value="{{ $stagiaire->mail_stagiaire }}" >
                         <label class="ml-3 form-control-placeholder" >Email</label>
                             </div>
                           </div>

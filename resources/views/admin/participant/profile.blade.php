@@ -31,7 +31,7 @@
         {{-- <div class="m-b-25"> <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}"  class="image-ronde">
                                     </div>
                                     @can('isStagiaire')
-                                    <a href="{{route('edit_participant',$stagiaire->id)}} " ><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
+                                    <a href="{{route('edit_participant',$stagiaire->stagiaire_id)}} " ><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
                                 @endcan
                                     </center>
                                    <div class="row">
@@ -107,7 +107,7 @@
                         <p class="p-1 m-0" style="font-size: 12px">PHOTO
 
                         </p>
-                        <a href="{{ route('edit_photos', $stagiaire->id) }} ">
+                        <a href="{{ route('edit_photos', $stagiaire->stagiaire_id) }} ">
                             @if($stagiaire->photos==null)
                             <span>
                                 <div style="display: grid; place-content: center">
@@ -121,7 +121,7 @@
                         </a>
                     </div>
                     <div class="hover" style="border-bottom: solid 1px  #e8dfe5;">
-                        <a href="{{ route('edit_nom', $stagiaire->id) }} ">
+                        <a href="{{ route('edit_nom', $stagiaire->stagiaire_id) }} ">
                             <p class="p-1 m-0" style="font-size: 12px">NOM<span
                                     style="float: right;">{{ $stagiaire->nom_stagiaire }}
                                     {{ $stagiaire->prenom_stagiaire }}&nbsp;<i class="fas fa-angle-right"></i></span>
@@ -131,7 +131,7 @@
 
                     </div>
                     <div class="hover" style="border-bottom: solid 1px  #e8dfe5;">
-                        <a href="{{ route('edit_naissance', $stagiaire->id) }} ">
+                        <a href="{{ route('edit_naissance', $stagiaire->stagiaire_id) }} ">
                             <p class="p-1 m-0" style="font-size: 12px">ANNIVERSAIRE<span
                                     style="float: right;">{{ date('j \\ F Y', strtotime($stagiaire->date_naissance)) }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
@@ -141,10 +141,16 @@
 
                     </div>
                     <div class="hover" style="border-bottom: solid 1px  #e8dfe5;">
-                        <a href="{{ route('edit_genre', $stagiaire->id) }} ">
+                        <a href="{{ route('edit_genre', $stagiaire->stagiaire_id) }} ">
                             <p class="p-1 m-0" style="font-size: 12px">GENRE<span
-                                    style="float: right;">{{ $genre }}&nbsp;<i
+                                    style="float: right;">{{ $stagiaire->genre }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
+                            </p>
+                        </a>
+                    </div>
+                    <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
+                        <a href="{{route('edit_pwd',$stagiaire->stagiaire_id)}} ">
+                            <p class="p-1 m-0" style="font-size: 12px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
                             </p>
                         </a>
                     </div>
@@ -159,7 +165,7 @@
                     <p class="text-center">Coordonnées</p>
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
-                        <a href="{{ route('edit_mail', $stagiaire->id) }} ">
+                        <a href="{{ route('edit_mail', $stagiaire->stagiaire_id) }} ">
                             <p class="p-1 m-0" style="font-size: 12px">ADRESSE E-MAIL<span
                                     style="float: right;">{{ $stagiaire->mail_stagiaire }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
@@ -168,7 +174,7 @@
                         </a>
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
-                        <a href="{{ route('edit_phone', $stagiaire->id) }} ">
+                        <a href="{{ route('edit_phone', $stagiaire->stagiaire_id) }} ">
                             <p class="p-1 m-0" style="font-size: 12px">TELEPHONE<span
                                     style="float: right;">{{ $stagiaire->telephone_stagiaire }}&nbsp;<i
                                         class="fas fa-angle-right"></i> </span>
@@ -178,7 +184,7 @@
                     </div>
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
-                        <a href="{{ route('edit_cin', $stagiaire->id) }} ">
+                        <a href="{{ route('edit_cin', $stagiaire->stagiaire_id) }} ">
                             <p class="p-1 m-0" style="font-size: 12px">CIN<span
                                     style="float: right;">{{ $stagiaire->cin }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
@@ -186,14 +192,14 @@
                         </a>
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
-                        {{-- <a href="{{route('edit_adresse',$stagiaire->id)}} " >
+                        {{-- <a href="{{route('edit_adresse',$stagiaire->stagiaire_id)}} " >
                                         <p class="p-1 m-0" style="font-size: 12px">ADRESSE<span style="float: right;">{{$stagiaire->lot}} &nbsp;{{$stagiaire->quartier}} &nbsp;{{$stagiaire->ville}} &nbsp;{{$stagiaire->code_postal}}&nbsp;{{$stagiaire->region}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                         </p>
                                      </a> --}}
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
-                        <a href="{{ route('edit_fonction', $stagiaire->id) }} ">
+                        <a href="{{ route('edit_fonction', $stagiaire->stagiaire_id) }} ">
                             <p class="p-1 m-0" style="font-size: 12px">FONCTION<span
                                     style="float: right;">{{ $stagiaire->fonction_stagiaire }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
@@ -201,10 +207,9 @@
                         </a>
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
-                        <a href="{{ route('edit_niveau', $stagiaire->id) }} ">
+                        <a href="{{ route('edit_niveau', $stagiaire->stagiaire_id) }} ">
                             <p class="p-1 m-0" style="font-size: 12px">NIVEAU D'ETUDE<span
-                                    style="float: right;">{{ $stagiaire->niveau_etude }}&nbsp;<i
-                                        class="fas fa-angle-right"></i></span>
+                                    style="float: right;">{{$stagiaire->niveau_etude}}&nbsp;<iclass="fas fa-angle-right"></iclass=></span>
                             </p>
                         </a>
                     </div>
@@ -226,7 +231,7 @@
                                 </p>
                         @endcan
                         @can('isReferent')
-                            <a href="{{ route('edit_matricule', $stagiaire->id) }} ">
+                            <a href="{{ route('edit_matricule', $stagiaire->stagiaire_id) }} ">
                                 <p class="p-1 m-0" style="font-size: 12px">MATRICULE<span
                                         style="float: right;">{{ $stagiaire->matricule }}&nbsp;<i
                                             class="fas fa-angle-right"></i></span>
@@ -237,9 +242,9 @@
                     </div>
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
-                        {{-- <a href="{{route('edit_entreprise',$stagiaire->id)}} " > --}}
+                        {{-- <a href="{{route('edit_entreprise',$stagiaire->stagiaire_id)}} " > --}}
                         <p class="p-1 m-0" style="font-size: 12px">ENTREPRISE<span
-                                style="float: right;">{{ $entreprise->nom_etp }} &nbsp;<i
+                                style="float: right;">{{ $stagiaire->nom_etp }} &nbsp;<i
                                     class="fas fa-angle-right"></i></span>
 
                         </p>
@@ -250,10 +255,10 @@
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
 
                         <p class="p-1 m-0" style="font-size: 12px">DEPARTEMENT<span style="float: right;">
-                                @if ($departement == null)
-                                    <strong style="color: red">incomplète</strong>&nbsp;
+                                @if ($stagiaire->nom_departement == null)
+                                    <strong style="color: red">---</strong>&nbsp;
                                 @else
-                                    {{ $departement->nom_departement }}&nbsp;
+                                    {{ $stagiaire->nom_departement }}&nbsp;
                                 @endif
                                 <i class="fas fa-angle-right"></i>
                             </span>
@@ -263,17 +268,17 @@
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         @can('isStagiaire')
                             <p class="p-1 m-0" style="font-size: 12px">SERVICE<span style="float: right;">
-                                @if ($service == null)
-                                    <strong style="color: red">incomplète</strong>&nbsp;
+                                @if ($stagiaire->nom_service == null)
+                                    <strong style="color: red">---</strong>&nbsp;
                                 @else
-                                    {{ $service->nom_service }}&nbsp;
+                                    {{$stagiaire->nom_service }}&nbsp;
                                 @endif
                                 <i class="fas fa-angle-right"></i>
                                 </span>
                             </p>
                         @endcan
                         @canany(['isReferent'])
-                            <a href="{{ route('edit_departement', $stagiaire->id) }} ">
+                            <a href="{{ route('edit_departement', $stagiaire->stagiaire_id) }} ">
                                 <p class="p-1 m-0" style="font-size: 12px">SERVICE<span style="float: right;">
                                         @if ($service == null)
                                             <strong style="color: red">incomplète</strong>&nbsp;
@@ -290,17 +295,17 @@
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         @can('isStagiaire')
                             <p class="p-1 m-0" style="font-size: 12px">BRANCHE<span style="float: right;">
-                                    @if ($branche == null)
-                                        <strong style="color: red">incomplète</strong>&nbsp;
+                                    @if ($stagiaire->nom_branche == null)
+                                        <strong style="color: red">---</strong>&nbsp;
                                     @else
-                                        {{ $branche->nom_branche }}&nbsp;
+                                        {{$stagiaire->nom_branche }}&nbsp;
                                     @endif
                                     <i class="fas fa-angle-right"></i>
                                 </span>
                             </p>
                         @endcan
                         @canany(['isReferent'])
-                            <a href="{{ route('edit_branche', $stagiaire->id) }} ">
+                            <a href="{{ route('edit_branche', $stagiaire->stagiaire_id) }} ">
                                 <p class="p-1 m-0" style="font-size: 12px">BRANCHE<span style="float: right;">
                                         @if ($branche == null)
                                             <strong style="color: red">incomplète</strong>&nbsp;

@@ -11,8 +11,8 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
+
+        <form   class="btn-submit" action="{{route('update_niveau_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -78,11 +78,16 @@
 
                           <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                  <input type="text" class="form-control test input"  name="niveau" value="   {{ $stagiaire->niveau_etude }}">
-                  <label class="ml-3 form-control-placeholder" >Niveau d'etude</label>
+                              <select name="niveau" id="" class="form-select input">
+                                  @foreach($niveau_etude as $niveau)
+                                    <option value="{{$niveau->id}}">{{$niveau->niveau_etude}}</option>
+                                  @endforeach
+                              </select>
+                            {{-- <input type="text" class="form-control test input"  name="niveau" value="{{ $stagiaire->niveau_etude }}"> --}}
+                            <label class="ml-3 form-control-placeholder" >Niveau d'etude</label>
 
-                </div>
-            </div>
+                          </div>
+                      </div>
                     <input type="hidden" value="   {{ $stagiaire->matricule}}"  class="form-control test"  name="matricule" placeholder="Matricule" >
 
 

@@ -435,7 +435,6 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.photos,
     stg.cin,
     stg.date_naissance,
-    stg.niveau_etude,
     stg.activiter,
     stg.branche_id,
     stg.quartier,
@@ -460,7 +459,10 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     e.site_etp,
     (e.activiter) activiter_etp,
     e.telephone_etp,
-    ds.*
+    ds.*,
+    niveau.id as niveau_etude_id,
+    niveau.niveau_etude,
+    gr.genre
 FROM
     stagiaires as stg
     join entreprises e
@@ -468,7 +470,11 @@ FROM
     left join v_departement_service_entreprise ds
     on ds.service_id = stg.service_id
     left join branches b
-    on b.id = stg.branche_id;
+    on b.id = stg.branche_id
+    join niveau_etude niveau
+    on niveau.id = stg.niveau_etude_id
+    join genre gr
+    on gr.id = stg.genre_stagiaire;
 
 -- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
 --     stg.id AS stagiaire_id,

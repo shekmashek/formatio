@@ -8,17 +8,38 @@
   <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
-
+@if (\Session::has('error_ancien_pwd'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_ancien_pwd') !!}</li>
+      </ul>
+  </div>
+@endif
+@if (\Session::has('error_new_pwd'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_new_pwd') !!}</li>
+      </ul>
+  </div>
+@endif
+ {{-- si l'ancien mot de passe est incorrect --}}
+ @if (\Session::has('error'))
+ <div class="alert alert-danger col-md-4">
+     <ul>
+         <li>{!! \Session::get('error') !!}</li>
+     </ul>
+ </div>
+@endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-    
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->stagiaire_id)}}" method="post" enctype="multipart/form-data" >
+
+        <form   class="btn-submit" action="{{route('update_mot_de_passe_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
             @csrf
 
-                    <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
+                    <input type="hidden" value="{{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
 
 
-                        <input type="hidden" class="form-control test" value="   {{ $stagiaire->prenom_stagiaire }}"  name="prenom">
+                        <input type="hidden" class="form-control test" value="{{ $stagiaire->prenom_stagiaire }}"  name="prenom">
 
 
   {{-- hidden --}}
@@ -65,14 +86,7 @@
 
                       <input type="password" class="form-control test input" value=""  name="ancien_password" placeholder="">
                       <label class="ml-3 form-control-placeholder" >Ancien mot de passe</label>
-                      {{-- si l'ancien mot de passe est incorrect --}}
-                      @if (\Session::has('error'))
-                        <div class="alert alert-danger">
-                            <ul>
-                                <li>{!! \Session::get('error') !!}</li>
-                            </ul>
-                        </div>
-                      @endif
+
                           {{-- nouveau mot de passe --}}
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
@@ -107,7 +121,7 @@
 
                     <input type="hidden" class="form-control"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}" readonly>
 
-                    <input type="hidden" value="{{ $stagiaire->lieu_travail }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
+                    <input type="hidden" value=""  class="form-control"  name="lieu" placeholder="Matricule" readonly>
 
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>

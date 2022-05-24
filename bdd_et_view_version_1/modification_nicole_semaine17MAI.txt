@@ -1,4 +1,0 @@
-Recopier les scripts dans bdd_suiviformation_mis_a_jour_18(abonnements)
-Recopier les scripts dans bdd_suiviformation_view_6(abonnement)
-Creer la table iframe_invite dans  bdd_suiviformation_mis_a_jour_17
-Recopier les views dans bdd_suiviformation_mis_a_jour_17 : v_entreprise_iframe et v_cfp_iframe

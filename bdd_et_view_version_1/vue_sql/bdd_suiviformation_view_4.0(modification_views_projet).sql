@@ -386,7 +386,7 @@ create or replace view v_detail_session as
         mf.domaine_id = dom.id
     join type_formations tf
         on tf.id = p.type_formation_id;
-    
+
 
 CREATE OR REPLACE VIEW v_participant_groupe AS
     SELECT
@@ -482,9 +482,10 @@ select
         concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photos,
         (s.service_id) departement_id,
         s.cin,
+        niveau.id as niveau_etude_id,
+        niveau.niveau_etude,
         s.date_naissance,
         (s.lot) adresse,
-        s.niveau_etude,
         s.activiter as activiter_stagiaire,
         s.branche_id,
         ifnull(d.nom_departement,' ') as nom_departement,
@@ -505,7 +506,9 @@ select
     left join v_departement_service_entreprise d
         on s.service_id = d.service_id
     join moduleformation mf
-        on mf.module_id = g.module_id;
+        on mf.module_id = g.module_id
+    join niveau_etude niveau
+        on niveau.id = s.niveau_etude_id;
 
 
 create or replace view v_detail_presence as
