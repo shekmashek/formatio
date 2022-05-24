@@ -138,9 +138,24 @@ class ResponsableCfpController extends Controller
     public function modifReferent(Request $request){
         // dd($request->all());
         $fonct = new FonctionGenerique();
+        $user_id_ancien_principale = Auth::id();
         $cfp_id = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [Auth::id()])->cfp_id;
+
+        $user_id_new_principale = $fonct->findWhereMulitOne('responsables_cfp', ["id"], [$request->id_resp])->user_id;
+
+        // role_users
+        DB::beginTransaction();
+        try {
         DB::update('update responsables_cfp set prioriter = 0 where cfp_id = ?',[$cfp_id]);
         DB::update('update responsables_cfp set prioriter = 1 where cfp_id = ? and id = ?', [$cfp_id,$request->id_resp]);
+
+        DB::update("UPDATE role_users SET prioriter=1 WHERE user_id=? AND role_id=?", [$user_id_ancien_principale, 7]); // new referent pincipale OF role =7
+        DB::update("UPDATE role_users SET prioriter=0 WHERE user_id=? AND role_id=?", [$user_id_new_principale, 7]); // ancien referent principale OF  role =7
+        DB::commit();
+    } catch (Exception $e) {
+        DB::rollback();
+        echo $e->getMessage();
+    }
         return back();
     }
 

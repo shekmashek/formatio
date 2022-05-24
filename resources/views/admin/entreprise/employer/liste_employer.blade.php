@@ -257,7 +257,7 @@
     @endif
     <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
-    {{-- =============== condition pagination ==================== --}}
+        {{-- =============== condition pagination ==================== --}}
         @if ($pagination["nb_limit"] >= $pagination["totale_pagination"])
 
         {{-- --}}
@@ -282,7 +282,7 @@
 
         @endif
 
-            {{-- =============== condition pagination ==================== --}}
+        {{-- =============== condition pagination ==================== --}}
         @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) > $pagination["totale_pagination"])
         {{-- --}}
         @if(isset($matricule))
@@ -305,7 +305,7 @@
 
         @endif
 
-    {{-- =============== condition pagination ==================== --}}
+        {{-- =============== condition pagination ==================== --}}
         @elseif ($pagination["debut_aff"] == 1)
         {{-- --}}
         @if(isset($matricule))
@@ -348,32 +348,32 @@
         <a href="{{  route('employes.liste',$pagination["debut_aff"] +  $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
         @endif
-    {{-- =============== condition pagination ==================== --}}
+        {{-- =============== condition pagination ==================== --}}
 
-    @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) == $pagination["totale_pagination"] && $pagination["debut_aff"]>1)
+        @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) == $pagination["totale_pagination"] && $pagination["debut_aff"]>1)
 
-    {{-- --}}
-    @if(isset($matricule))
-    <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] - $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-    <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] + $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+        {{-- --}}
+        @if(isset($matricule))
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] - $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] + $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
-    {{-- --}}
-    @elseif(isset($email))
-    <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] - $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-    <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] + $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+        {{-- --}}
+        @elseif(isset($email))
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] - $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] + $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
-    @elseif(isset($activiter))
-    <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-    <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+        @elseif(isset($activiter))
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
-    {{-- --}}
-    @else
-    <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
-    <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+        {{-- --}}
+        @else
+        <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
-    @endif
+        @endif
 
-    {{-- =============== condition pagination ==================== --}}
+        {{-- =============== condition pagination ==================== --}}
 
         @else
         {{-- --}}
@@ -428,7 +428,11 @@
 
         <div class="row">
             <div class="col-12">
-
+                @if (Session::has('success'))
+                <span class="alert alert-success">
+                    {{Session::get('success') }}
+                </span>
+                @endif
                 <table class="table  table-hover">
                     <thead>
                         <tr>
@@ -490,6 +494,9 @@
                             </td>
                             @canany(['isReferentPrincipale'])
                             <td>
+                                @if ($emp->id == $connected->id)
+                                <span style="color:green">moi</span>
+                                @else
                                 @if ($emp->activiter==1)
                                 <div class="form-check form-switch">
                                     <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
@@ -499,9 +506,13 @@
                                     <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
                                 </div>
                                 @endif
+                                @endif
+
                             </td>
                             <td>
+                                @if ($emp->id != $connected->id)
                                 <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                                @endif
                             </td>
                             @endcanany
                         </tr>

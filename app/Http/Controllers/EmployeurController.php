@@ -125,54 +125,55 @@ class EmployeurController extends Controller
         $verify_cin = $this->fonct->findWhere("employers", ["cin"], [$cin]);
 
         if (count($verify_mail) < 0) {
-            if(count($verify_cin) < 0) {
-            if (Gate::allows('isReferent')) {
-                $entreprise_id = $this->fonct->findWhere("responsables", ["user_id"], [Auth::user()->id]);
+            if (count($verify_cin) < 0) {
+                if (Gate::allows('isReferent')) {
+                    $entreprise_id = $this->fonct->findWhere("responsables", ["user_id"], [Auth::user()->id]);
 
-                /**On doit verifier le dernier abonnement de l'entreprise pour pouvoir limité le referent à ajouter */
-                $nb_referent = $this->fonct->findWhere("responsables", ["entreprise_id"], [$entreprise_id[0]->entreprise_id]);
-                $nb_stagiaire = $this->fonct->findWhere("stagiaires", ["entreprise_id"], [$entreprise_id[0]->entreprise_id]);
+                    /**On doit verifier le dernier abonnement de l'entreprise pour pouvoir limité le referent à ajouter */
+                    $nb_referent = $this->fonct->findWhere("responsables", ["entreprise_id"], [$entreprise_id[0]->entreprise_id]);
+                    $nb_stagiaire = $this->fonct->findWhere("stagiaires", ["entreprise_id"], [$entreprise_id[0]->entreprise_id]);
 
-                $abonnement_etp =  DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id[0]->entreprise_id]);
+                    $abonnement_etp =  DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id[0]->entreprise_id]);
 
-                $user->name = $request->nom . " " . $request->prenom;
-                $user->email = $request->mail;
-                $user->cin = $cin;
-                // $user->telephone =  $request->phone;
-                $ch1 = "0000";
-                $user->password = Hash::make($ch1);
-                $user->telephone = $phone;
-                $user->save();
+                    $user->name = $request->nom . " " . $request->prenom;
+                    $user->email = $request->mail;
+                    $user->cin = $cin;
+                    // $user->telephone =  $request->phone;
+                    $ch1 = "0000";
+                    $user->password = Hash::make($ch1);
+                    $user->telephone = $phone;
+                    $user->save();
 
-                $resp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
-                $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
+                    $resp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
+                    $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
 
 
-                if ($abonnement_etp != null) {
-                    if ($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
-                } else {
-                }
-                DB::beginTransaction();
-                try {
-                    $this->fonct->insert_role_user($user_id, "3", true, true); // EMPLOYEUR
-                    $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $resp->entreprise_id, $user_id, $fonction_employer];
-                    DB::insert("insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp,telephone_emp,
+                    if ($abonnement_etp != null) {
+                        if ($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
+                    } else {
+                    }
+                    DB::beginTransaction();
+                    try {
+                        $this->fonct->insert_role_user($user_id, "3", true, true); // EMPLOYEUR
+                        $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $resp->entreprise_id, $user_id, $fonction_employer];
+                        DB::insert("insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp,telephone_emp,
                     entreprise_id,user_id,activiter,created_at,fonction_emp) values(?,?,?,?,?,?,?,?,1,NOW(),?)", $data);
 
-                //    Mail::to($resp->email_resp)->send(new save_new_compte_stagiaire_Mail($nom . ' ' . $prenom, $email, $etp->nom_etp));
+                        //    Mail::to($resp->email_resp)->send(new save_new_compte_stagiaire_Mail($nom . ' ' . $prenom, $email, $etp->nom_etp));
 
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    echo $e->getMessage();
+                        DB::commit();
+                    } catch (Exception $e) {
+                        DB::rollback();
+                        echo $e->getMessage();
+                    }
+                    return back()->with('success',"l'employer a été bien rétirer de la plateforme");
+                    // return redirect()->route('employes.liste');
+                } else {
+                    return back()->with('error', 'CIN déjà utilisé');
                 }
-                return redirect()->route('employes.liste');
+            } else {
+                return back()->with('error', 'E-mail est déjà utilisé');
             }
-            else {
-                return back()->with('error', 'CIN déjà utilisé');
-            }
-        } else {
-            return back()->with('error', 'E-mail est déjà utilisé');
         }
     }
 }
