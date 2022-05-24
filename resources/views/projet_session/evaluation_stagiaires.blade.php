@@ -11,9 +11,9 @@
             <table class="table table-borderless">
                 <thead style="border-bottom: 1px solid black; line-height: 20px">
                 <tr>
-                    <th>Stagiaire(s)</th>
+                    <td>Stagiaire(s)</td>
                     @foreach ($competences as $cp)
-                        <th align="center">{{ $cp->titre_competence }}</th>
+                        <td align="center">{{ $cp->titre_competence }}</td>
                     @endforeach
                 </tr>
                 </thead>
@@ -36,8 +36,8 @@
             </table>
         </div>
         @if (count($stagiaire) > 0)
-            <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn inserer_emargement" type="submit">Sauvegarder</button>
+            <div class="d-grid gap-1 col-2 ms-3">
+                <button class="btn btn_enregistrer" type="submit"><i class="bx bx-check me-1"></i>Enregistrer</button>
             </div>
         @else
         <div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide">
@@ -54,9 +54,9 @@
                 <table class="table table-borderless" >
                     <thead style="border-bottom: 1px solid black; line-height: 20px">
                     <tr style="border: 0">
-                        <th>Stagiaire(s)</th>
+                        <td>Stagiaire(s)</td>
                         @foreach ($competences as $cp)
-                            <th align="center">{{ $cp->titre_competence }}</th>
+                            <td align="center">{{ $cp->titre_competence }}</td>
                         @endforeach
                     </tr>
                     </thead>
@@ -82,8 +82,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn inserer_emargement" type="submit">Sauvegarder</button>
+            <div class="d-grid gap-1 col-2 ms-3">
+                <button class="btn btn_enregistrer" type="submit"><i class="bx bx-check me-1"></i>Enregistrer</button>
             </div>
         </form>
     @endif

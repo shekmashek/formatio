@@ -24,7 +24,7 @@
                     @endforeach
                 </div>
                 @if (count($documents) > 0)
-                <button type="submit" class="btn inserer_emargement">Enregistrer</button>
+                <button type="submit" class="btn btn_enregistrer py-1"><i class="bx bx-check me-1"></i> Enregistrer</button>
                 @endif
                 
             </form>

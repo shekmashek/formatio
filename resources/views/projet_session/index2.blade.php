@@ -183,6 +183,12 @@
 
         .pdf_download {
             background-color: #e73827 !important;
+            padding: 0.3rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .5ms ease;
+            color: white !important;
+            position: relative;
         }
 
         .pdf_download:hover {
@@ -212,6 +218,32 @@
             padding-bottom: 0;
         }
 
+        .resultat_stg{
+            background-color: #2cb445;
+            padding: 0.3rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .5ms ease;
+            position: relative;
+        }
+        .resultat_stg button{
+            color: #ffffff !important;
+        }
+        .resultat_stg:hover{
+            background-color: #1c7f2e;
+        }
+
+        .btn_eval_stg{
+            background-color: #363dbc;
+            padding: 0.3rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .5ms ease;
+            position: relative;
+        }
+        .btn_eval_stg:hover{
+            background-color: #262b86;
+        }
     </style>
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
@@ -324,7 +356,7 @@
                                                     title="Nouvelle session"><i class="bx bx-plus-medical icon_creer"></i>Session</span> --}}
                                                 <span role="button" data-bs-toggle="modal"
                                                     data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static'
-                                                    title="Nouvelle session" class="btn btn_nouveau">
+                                                    title="Nouvelle session" class="btn btn_nouveau py-1 mb-2">
                                                     <i class='bx bx-plus-medical me-1'></i>Session</span>
                                             @endif
                                         @endcan
@@ -375,7 +407,11 @@
                                                             @endforeach
                                                         </td>
                                                         <td><span class="modalite">{{ $pj->modalite }}</span></td>
-                                                        <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
+                                                        <td>
+                                                            @php
+                                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                                                            @endphp
+                                                        </td>
                                                         <td align="center" style="min-width: 6rem;">
                                                             <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1">
                                                                 {{ $pj->item_status_groupe }}</p>
@@ -959,7 +995,11 @@
                                                 echo $groupe->module_session($pj->module_id) . '&nbsp;' . $groupe->nombre_apprenant_session($pj->groupe_id);
                                             @endphp
                                         </td>
-                                        <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
+                                        <td> 
+                                            @php
+                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                                            @endphp
+                                        </td>
                                         <td class="text-start">
                                             @foreach ($entreprise as $etp)
                                                 @if ($etp->groupe_id == $pj->groupe_id)
@@ -983,11 +1023,17 @@
                                                     echo $groupe->statut_presences($pj->groupe_id);
                                                 @endphp
                                                 "></i>&nbsp;Emargement</p>
-                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle'
                                                 @php
-                                                    echo $groupe->statut_evaluation($pj->groupe_id);
+                                                    $statut_eval = $groupe->statut_evaluation($pj->groupe_id);
+                                                    if($statut_eval == 0){
+                                                        echo 'style="color:#bdbebd;"';
+                                                    }
+                                                    elseif ($statut_eval == 1) {
+                                                        echo 'style="color:#00ff00;"';
+                                                    }
                                                 @endphp
-                                                "></i>&nbsp;Evaluation</p>
+                                                ></i>&nbsp;Evaluation</p>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -1044,7 +1090,11 @@
                                                 echo $groupe->nombre_apprenant_session($pj->groupe_id);
                                             @endphp
                                         </td>
-                                        <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
+                                        <td>
+                                            @php
+                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                                            @endphp
+                                        </td>
                                         <td class="text-start"> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
                                         <td><span class="modalite">{{ $pj->modalite }}</span></td>
@@ -1080,8 +1130,9 @@
                                 <th> Module</th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </thead>
-                            <tbody class="tbody_projet">
+                            <tbody class="">
                                 @foreach ($data as $pj)
                                     <tr>
                                         {{-- <td>{{ $pj->nom_projet }}</td> --}}
@@ -1091,7 +1142,10 @@
                                                 echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
-                                        <td> {{ date('d-m-Y', strtotime($pj->date_debut)) }}-{{ date('d-m-Y', strtotime($pj->date_fin)) }}
+                                        <td> 
+                                            @php
+                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                                            @endphp
                                         </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ $pj->nom_formation }} </td>
@@ -1102,12 +1156,21 @@
                                                         class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td>
                                             @if ($pj->statut_eval == 0)
-                                                <a class="btn btn_filtre filtre_appliquer"
-                                                    href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}">Evaluation</a>
+                                                <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn pb-2" style="color: #ffffff !important">Evaluation</button></a>
                                             @elseif ($pj->statut_eval == 1)
-                                                <p style="color: green">Evaluation terminé</p>
+                                                <p class="mt-3" style="color: green">Evaluation terminé</p>
                                             @endif
 
+                                        </td>
+                                        <td>
+                                            <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}">
+                                            @php
+                                                $res = $groupe->resultat_eval($pj->groupe_id);
+                                                if ($res == 1) {
+                                                    echo '<button class="btn pb-2">Résultat</button>';
+                                                }
+                                            @endphp
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

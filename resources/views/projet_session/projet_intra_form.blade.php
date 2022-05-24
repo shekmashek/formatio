@@ -22,6 +22,11 @@
                     @endif
 
                     <div class="form-group">
+                        <div class="row my-2">
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-4"><span class="text-danger">* Champ obligatoire</span></div>
+                            <div class="col-lg-4"></div>
+                        </div>
                         <div class="row mt-2">
                             <div class="col-lg-6 text-end mt-2"><span>Date debut de la session<strong
                                         class="text-danger">*</strong></span></div>
@@ -88,10 +93,10 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-lg-6 text-end"><button type="submit" form="formPayement"
-                                    class="btn btn_enregistrer">Enregistrer</button></div>
+                                    class="btn btn_enregistrer py-1"><i class='bx bx-check me-1'></i>Créer</button></div>
                             <div class="col-lg-6">
-                                <a href="{{ route('liste_projet') }}"><button type="button" class="btn  btn_annuler"
-                                        data-dismiss="modal">Annuler</button></a>
+                                <a href="{{ route('liste_projet') }}"><button type="button" class="btn  btn_fermer py-1"
+                                        data-dismiss="modal"><i class='bx bxs-chevron-left me-1'></i>Retour en arrière</button></a>
                             </div>
                         </div>
                     </div>

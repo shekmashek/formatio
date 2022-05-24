@@ -366,19 +366,19 @@
                         <div class="table-responsive">
                             <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
                                 <thead style="border-bottom: 1px solid black; line-height: 20px">
-                                    <th>Séance</th>
+                                    <td>Séance</td>
                                     @canany(['isReferent', 'isManager'])
-                                        <th>CFP</th>
+                                        <td>CFP</td>
                                     @endcanany
-                                    <th>Module</th>
-                                    <th>Ville</th>
-                                    <th width="30%">Salle de formation</th>
-                                    <th>Date</th>
-                                    <th>Début</th>
-                                    <th>Fin</th>
-                                    <th>Formateur</th>
+                                    <td>Module</td>
+                                    <td>Ville</td>
+                                    <td width="30%">Salle de formation</td>
+                                    <td>Date</td>
+                                    <td>Début</td>
+                                    <td>Fin</td>
+                                    <td>Formateur</td>
                                     @canany(['isCFP'])
-                                        <th>Action</th>
+                                        <td>Action</td>
                                     @endcanany
                                 </thead>
                                 <tbody>

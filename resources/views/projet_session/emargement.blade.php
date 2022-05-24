@@ -4,12 +4,13 @@
     }
 
     .btn_emargement{
-        background-color: #7635dc;
+        background-color: #25d680;
         color: #ffffff;
     }
     .btn_emargement:hover{
-        background-color: rgb(227, 227, 227);
-        color: #7635dc;
+        background-color: rgb(255, 255, 255);
+        color: #21b06b;
+        border: 1px solid #25d680;
     }
 
     .answer {
@@ -161,7 +162,7 @@
                     @endforeach
                     @if ($status == 'non')
                         <div align="center">
-                            <input type="submit" name="insert_form"  class="btn inserer_emargement w-25" value="Enregistrer">
+                            <button type="submit" name="insert_form"  class="btn btn_enregistrer"><i class="bx bx-check me-1"></i>Enregistrer</button>
                         </div>
                     @endif
                 </div>
