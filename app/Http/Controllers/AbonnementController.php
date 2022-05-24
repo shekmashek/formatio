@@ -886,6 +886,7 @@ class AbonnementController extends Controller
             // else{
             //     $test_assujetti = $tva = $net_ttc ='';
             // }
+            $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
             $dates_abonnement =$this->fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
 
             return view('superadmin.detail_facture',compact('dates_abonnement','cfp','lettre_montant','entreprises','facture','mode_paiements'));
@@ -945,7 +946,7 @@ class AbonnementController extends Controller
             // }
             $dates_abonnement =$this->fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
             $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
-            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','lettre_montant','entreprises','lettre_montant','cfp','facture','mode_paiements'));
+            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','mode_paiements'));
 
         }
         if(Gate::allows('isReferent')){
@@ -974,7 +975,7 @@ class AbonnementController extends Controller
             // }
             $dates_abonnement =$this->fonct->findWhere('abonnements',['entreprise_id'],[$entreprise_id]);
             $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
-            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('lettre_montant','dates_abonnement','cfp','lettre_montant','entreprises','facture','mode_paiements'));
+            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','cfp','lettre_montant','entreprises','facture','mode_paiements'));
             // return view('admin.pdf.pdf_facture_abonnement', compact('cfp','lettre_montant','entreprises','facture','tva','net_ttc','mode_paiements'));
         }
         $pdf->getDomPDF()->setHttpContext(
