@@ -98,7 +98,7 @@
 } */
 
 .plus_prog {
-    color: #7635dc;
+    color: #7635dc !important;
     float: right;
     position: relative;
     bottom: 3rem;
@@ -160,14 +160,14 @@
     font-size: 1em;
     transition: all 200ms;
     margin-left: 2.2rem;
-    color: #7635dc;
+    color: #7635dc !important;
 }
 
 .background_grey6:hover {
     /* background-color: rgba(92, 92, 241, 0.61); */
     background-color: #7535dc2d;
     transform: scale(1.05);
-    color: #7635dc;
+    color: #7635dc !important;
 }
 
 .marge_inferieur {

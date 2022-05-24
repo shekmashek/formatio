@@ -122,8 +122,9 @@
 
 .btn_annuler{
     padding: var(--padding_button);
-    color: var(--txt_color) !important;
-    background: var(--bg_color_annuler);
+    color: var(--bg_color_annuler) !important;
+    border: 1px solid var(--bg_color_annuler);
+    background-color: var(--txt_color);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
@@ -133,16 +134,15 @@
 
 .btn_annuler:hover{
     text-decoration: none;
-    color: var(--bg_color_annuler) !important;
-    border: 1px solid var(--bg_color_annuler);
-    background-color: var(--txt_color);
+    color: var(--txt_color) !important;
+    background: var(--bg_color_annuler);
 }
 
 .btn_annuler .bx{
     position: relative;
     top: 1px;
     padding: var(--padding_icon);
-    background-color: var(--bg_annuler_bx);
+    background-color: var(--bg_color_annuler);
     border-radius: var(--brd_radius);
     color: var(--txt_color) !important;
     font-weight: 900;
@@ -150,7 +150,7 @@
 
 .btn_annuler:hover .bx{
     color: var(--txt_color);
-    background-color: var(--bg_color_annuler);
+    background-color: var(--bg_annuler_bx);
 }
 
 .btn_annuler a:hover{
@@ -162,8 +162,9 @@
 
 .btn_fermer{
     padding: var(--padding_button);
-    color: var(--txt_color) !important;
-    background: var(--bg_color_fermer);
+    border: 1px solid var(--bg_color_fermer);
+    background-color: var(--txt_color);
+    color: var(--bg_color_fermer) !important;
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
@@ -173,9 +174,9 @@
 
 .btn_fermer:hover{
     text-decoration: none;
-    color: var(--bg_color_fermer) !important;
-    border: 1px solid var(--bg_color_fermer);
-    background-color: var(--txt_color);
+    color: var(--txt_color) !important;
+    background: var(--bg_color_fermer);
+
 }
 
 .btn_fermer .bx{
@@ -190,7 +191,7 @@
 
 .btn_fermer:hover .bx{
     color: var(--txt_color);
-    background-color: var(--bg_color_fermer);
+    background-color: var(--bg_fermer_bx);
 }
 
 /* button enregistrer */
@@ -327,3 +328,18 @@ a:focus{
     outline: none !important;
 }
 
+thead th{
+    font-weight: 500 !important;
+}
+
+th{
+    font-weight: 500 !important;
+}
+
+tbody td{
+    vertical-align: middle;
+}
+
+sup{
+    color: red;
+}

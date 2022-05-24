@@ -46,20 +46,21 @@ class DemandeDevisController extends Controller
      */
     public function store(Request $request)
     {
+        $id_module = $request->id_module;
+        $id_cfp = $request->id_cfp;
         $fonct = new FonctionGenerique();
         if (Gate::allows('isReferent')) {
-            $module = $fonct->findWhereMulitOne("v_module",["id"],[$request->module_id]);
-            $resp_cfp = $fonct->findWhereMulitOne("responsables_cfp",["cfp_id","prioriter"],[$module->cfp_id,"1"]);
+            $module = $fonct->findWhereMulitOne("v_module",["id"],[$id_module]);
+            $resp_cfp = $fonct->findWhereMulitOne("responsables_cfp",["cfp_id","prioriter"],[$id_cfp,"1"]);
             $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id]);
             $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$resp_etp->entreprise_id]);
 
-            // dd($module);
             // dd($resp_cfp);
             // dd($resp_etp);
             // dd($etp);
-    // ($resp_cfp,$module,$resp_etp,$etp)
+            // ($resp_cfp,$module,$resp_etp,$etp);
             Mail::to($resp_etp->email_resp)->send(new demande_devisMail($resp_cfp, $module, $resp_etp, $etp));
-            return back()->with('success','demande de devis a été envoyé!');
+            return redirect()->route('liste_formation');
         }
 
     }

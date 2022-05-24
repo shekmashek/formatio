@@ -78,25 +78,30 @@
         <h4 class="mt-3 mb-3">Les thématiques Inter / Intra de la formation {{$nom_domaine[0]->nom_domaine}}</h4>
         <ul>
             @foreach ($formations as $frmt)
-            <li><i class='bx bxs-chevron-right bx_modifier me-2 mb-2'></i>{{$frmt->nom_formation}}</li>
+            <li class="encre"><a href="#encre_{{$frmt->id}}" ><i class='bx bxs-chevron-right bx_modifier me-2 mb-2'></i>{{$frmt->nom_formation}}</a></li>
             @endforeach
         </ul>
     </div>
     <div class="content_modules mt-5">
         <div class="accordion accordion-flush" id="accordionFlushExample">
             @foreach ($formations as $frmt)
+            <div id="encre_{{$frmt->id}}"></div>
             <div class="accordion-item" id="formation{{$frmt->id}}">
                 <h2 class="accordion-header" id="{{$frmt->id}}">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#frmt_{{$frmt->id}}" aria-expanded="false" aria-controls="frmt_{{$frmt->id}}">
-                        Formation sur :<strong>&nbsp;{{$frmt->nom_formation}}
-                            @foreach ($modules_counts as $mdc)
-                                @if ($frmt->id == $mdc->formation_id)
-                                    {{$mdc->nb_modules}}
+                        <span>Formation sur :<strong>&nbsp;{{$frmt->nom_formation}}</strong></span>
+                        @foreach ($modules_counts as $mdc)
+                            @if ($frmt->id == $mdc->formation_id)
+                                @if ($mdc->nb_modules != null)
+                                    <span class="nbr_module"><span>{{$mdc->nb_modules}}</span>&nbsp;Modules</span>
+                                @else
+                                    <span class="nbr_module"><span>0</span>&nbsp;Modules</span>
                                 @endif
-                            @endforeach
-                        </strong>
+                            @endif
+                        @endforeach
                     </button>
+
                 </h2>
                 <div id="frmt_{{$frmt->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$frmt->id}}">
                     <div class="accordion-body">
@@ -111,16 +116,19 @@
                                                 <div class="pt-2">{{$mod->nom_module}}</div>
                                             </div>
                                             <div class="col-2 ">
-                                                <div class="mb-2"><i class='bx bx-calendar bx_modifier me-2'></i>{{$mod->duree_jour}}&nbsp;J / {{$mod->duree}}&nbsp;H</div>
+                                                <div class="mb-2"><i class='bx bx-calendar bx_supprimer me-2'></i>{{$mod->duree_jour}}&nbsp;J / {{$mod->duree}}&nbsp;H</div>
                                                 <div><i class='bx bx-windows bx_ajouter me-2'></i>{{$mod->modalite_formation}}</div>
                                             </div>
-                                            <div class="col-2 text-center">
-                                                <div class="mb-2">{{$devise->devise}}&nbsp;{{$mod->prix}}</div>
+                                            <div class="col-2 text-end">
+                                                <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                 @if($mod->prix_groupe != null)
-                                                    <div>{{$devise->devise}}&nbsp;{{$mod->prix_groupe}}</div>
+                                                    <div>{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                 @endif
                                             </div>
                                             <div class="col-2 text-center">
+                                                <div class="mb-3">
+                                                    <span class="btn_annuler text-uppercase">Organisme</span>
+                                                </div>
                                                 <div class="">
                                                     {{$mod->nom}}
                                                 </div>

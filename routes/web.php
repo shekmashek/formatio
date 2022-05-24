@@ -370,6 +370,7 @@ Route::get('/ajout_categorie', 'FormationController@ajout_categorie')->name('ajo
 Route::get('/ajout_module', 'FormationController@ajout_module')->name('ajout_module');
 //route catalogue de formation
 Route::get('result__formation', 'FormationController@rechercheParModule')->name('result_formation');
+Route::get('affichage_formation/{id}', 'FormationController@affichage_formation')->name('affichage_formation');
 Route::get('search__formation', 'FormationController@getModulesParReference')->name('search__formation');
 Route::get('domaine_formation', 'FormationController@formation_domaine')->name('domaine_formation');
 Route::get('domaine_vers_formation/{id}', 'FormationController@domaine_vers_formation')->name('domaine_vers_formation');
@@ -378,6 +379,7 @@ Route::get('select_par_formation_par_cfp/{id_formation}/{id_cfp}', 'FormationCon
 Route::get('select_par_module/{id}', 'FormationController@affichageParModule')->name('select_par_module');
 Route::get('select_tous', 'FormationController@affichageTousCategories')->name('select_tous');
 Route::get('inscriptionInter/{type_formation_id}/{id_groupe}', 'SessionController@inscription')->name('inscriptionInter');
+Route::get('demande_devis_client/{id}', 'FormationController@demande_devis_client')->name('demande_devis_client');
 //route annuaire de cfp
 Route::get('annuaire','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
@@ -415,6 +417,7 @@ Route::post('modification_equipement/{id}','ModuleController@edit_equipement')->
 Route::post('modification_bon_a_savoir/{id}','ModuleController@edit_bon_a_savoir')->name('modification_bon_a_savoir');
 Route::post('modification_prestation/{id}','ModuleController@edit_prestation')->name('modification_prestation');
 Route::get('mettre_en_ligne','ModuleController@mettre_en_ligne')->name('mettre_en_ligne');
+Route::get('mettre_hors_ligne','ModuleController@mettre_hors_ligne')->name('mettre_hors_ligne');
 Route::get('mettre_hors_ligne','ModuleController@mettre_hors_ligne')->name('mettre_hors_ligne');
 
 

@@ -21,31 +21,28 @@ href="{{route('liste_module')}}">
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
                 @if (\Session::has('success'))
-                    <div class="alert alert-success col-md-12">
+                    <div class="alert alert-success col-md-12 text-center">
                         <ul>
                             <li>{!! \Session::get('success') !!}</li>
                         </ul>
-                        <a href="{{route('liste_module')}}">Cliquez ici pour voir le module</a>
+                        <a href="{{route('liste_module')}}" class="apres_ajout_prog">Cliquez ici pour voir le module</a>
                     </div>
                 @endif
                 <div class="row detail__formation__item__left">
-                    <h3 class="pt-3 pb-3">Programme de la formation</h3>
+                    <h3 class="pt-3 pb-3 text-center">Programme de la formation</h3>
                     <div></div>
                     <div class="col-lg-12">
                         <form action="{{route('insert_prog_cours')}}" method="POST" class="w-100 h-100">
                             @csrf
                             <div class="row detail__formation__item__left__accordion">
-                                <span id="addProg" class="btn_nouveau w-25 mb-5 fixed_position" title="ajouter un nouveau programme">
-                                    <i class='bx bx-plus-medical'></i>
-                                    Ajouter un nouveau section
-                                </span>
+
                                 <span role="button" class="accordion ">
                                     <input type="text" class="form-control input" name="titre_prog[0]" placeholder="Titre de votre programme" required>
                                 </span>
                                 <div class="panel pb-3 mt-3" id="heading2">
                                     <span class="d-flex input_cours">
                                         <i class="bx bx-chevron-right pt-4"></i>&nbsp;<input type="text"
-                                            class="form-control" name="cours_0[]" placeholder="Votre cours">
+                                            class="form-control" name="cours_0[]" placeholder="Votre cours" required>
                                     </span>
                                     <span id="newCours0"></span>
                                     <span class="btn_nouveau" id="addCours0" title="ajouter un nouveau cours">
@@ -57,9 +54,18 @@ href="{{route('liste_module')}}">
                             <br>
                             <div id="newProg"></div>
                             <br>
-                            <div class="form-row text-center">
+                            <div class="form-row  d-flex justify-content-center">
                                 <input type="hidden" value="{{$id}}" name="id_module">
-                                <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
+
+                                <div>
+                                    <button id="addProg" class="btn btn_nouveau me-5 fixed_position" type="button" title="ajouter un nouveau programme">
+                                        <i class='bx bx-plus-medical'></i>
+                                        Ajouter un nouveau section
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -148,7 +154,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_0[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_0[]" placeholder="Votre cours" required>';
         html += '<span class=" px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -163,7 +169,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_1[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_1[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -179,7 +185,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_2[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_2[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -195,7 +201,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_3[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_3[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -211,7 +217,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_4[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_4[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -227,7 +233,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_5[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_5[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -243,7 +249,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_6[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_6[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -259,7 +265,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_7[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_7[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -275,7 +281,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_8[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_8[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -291,7 +297,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_9[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_9[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -307,7 +313,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_10[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_10[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -324,7 +330,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_11[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_11[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -339,7 +345,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_12[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_12[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -355,7 +361,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_13[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_13[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -371,7 +377,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_14[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_14[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -387,7 +393,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_15[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_15[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -403,7 +409,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_16[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_16[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -419,7 +425,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_17[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_17[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -435,7 +441,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours" id="headingcours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_18[]" placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_18[]" placeholder="Votre cours" required>';
         html += '<span class="effacer_cours px-2 d-flex" role="button" title="Supprimer le cours" id="removeCours">';
         html += '<i class="bx bx-trash bx_supprimer me-2 mt-2">';
         html += '</i>';
@@ -458,7 +464,7 @@ href="{{route('liste_module')}}">
         html += '<div class="row detail__formation__item__left__accordion" id="heading1">';
 
         html += '<span role="button" class="accordion  d-flex">';
-        html += '<input type="text" class="form-control" name="titre_prog['+i+']" placeholder="Titre de votre programme">';
+        html += '<input type="text" class="form-control" name="titre_prog['+i+']" placeholder="Titre de votre programme" required> ';
         html += '<span class="suppression_programmed-flex mt-2 ms-1" role="button" title="Supprimer le cours" id="removeProg" title="Supprimer un programme">';
         html += '<i class="bx bx-trash bx_supprimer">';
         html += '</i>';
@@ -469,7 +475,7 @@ href="{{route('liste_module')}}">
         html += '<span class="d-flex input_cours">';
         html += '<i class="bx bx-chevron-right pt-4">';
         html += '</i>&nbsp;';
-        html += '<input type="text" class="form-control" name="cours_'+i+'[]"  placeholder="Votre cours">';
+        html += '<input type="text" class="form-control" name="cours_'+i+'[]"  placeholder="Votre cours" required>';
         html += '</span>';
         html += '<span id="newCours'+i+'">';
         html += '</span>';

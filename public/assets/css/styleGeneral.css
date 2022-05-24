@@ -55,6 +55,10 @@ a:focus,
     text-decoration-line: underline;
 }
 
+.hors_taxe{
+    font-size: 0.5rem;
+}
+
 ul {
     margin: 0;
     padding: 0;
@@ -704,7 +708,7 @@ input:-webkit-autofill:active {
 
 .btn_profil{
     position: relative;
-    bottom: 14px;
+    bottom: 12px;
 }
 
 .btn_creer .text_racourcis{

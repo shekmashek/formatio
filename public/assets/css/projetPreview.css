@@ -36,7 +36,7 @@
 
 .btn_competence{
     background: #7635dc;
-    color: #f1f1f1;
+    color: #f1f1f1 !important;
     transition: all 0.5s ease;
     position: relative;
     bottom: .65rem;
@@ -50,7 +50,7 @@
 }
 
 .btn_competence:hover{
-    color: #7635dc;
+    color: #7635dc !important;
     transform: scale(1.1);
     background: #7535dc28;
 }
@@ -427,7 +427,7 @@
     border: none;
     background-color: #7535dc3f;
     border-radius: 5px;
-    color: #7635dc;
+    color: #7635dc !important;
     padding-top: 0.4rem;
     padding-bottom: 0.2rem;
     padding-left: 0.5rem;
@@ -453,14 +453,14 @@
 
 .searchBoxMod:hover > .searchButtonMod {
     background: rgba(128, 128, 128, 0.247);
-    color: #7635dc;
+    color: #7635dc !important;
     border-radius: 15px;
     transform: scale(1.1);
     font-size: 17px;
 }
 
 .searchInputMod::placeholder {
-    color: #7635dc;
+    color: #7635dc !important;
 font-size: 0.850rem;
 }
 

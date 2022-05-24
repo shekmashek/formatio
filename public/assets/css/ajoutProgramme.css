@@ -71,15 +71,6 @@
     padding-left: .5rem;
 }
 
-.btn_enregistrer{
-    background-color: #7635dc;
-}
-
-.btn_enregistrer:hover{
-    background-color: white;
-    color: #7635dc;
-    border: 1px solid #7635dc;
-}
 
 /* .active:after {
     content: "\2212";
