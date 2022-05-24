@@ -257,7 +257,8 @@
     @endif
     <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
-        @if ($pagination["debut_aff"] >= $pagination["totale_pagination"])
+    {{-- =============== condition pagination ==================== --}}
+        @if ($pagination["nb_limit"] >= $pagination["totale_pagination"])
 
         {{-- --}}
         @if(isset($matricule))
@@ -281,7 +282,8 @@
 
         @endif
 
-        @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) >= $pagination["totale_pagination"])
+            {{-- =============== condition pagination ==================== --}}
+        @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) > $pagination["totale_pagination"])
         {{-- --}}
         @if(isset($matricule))
         <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] - $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
@@ -303,6 +305,7 @@
 
         @endif
 
+    {{-- =============== condition pagination ==================== --}}
         @elseif ($pagination["debut_aff"] == 1)
         {{-- --}}
         @if(isset($matricule))
@@ -325,14 +328,14 @@
 
         @endif
 
-        @elseif ($pagination["debut_aff"] == $pagination["totale_pagination"] || $pagination["debut_aff"]> $pagination["totale_pagination"])
-        {{-- --}}
+        @elseif ($pagination["debut_aff"] == $pagination["fin_aff"] || $pagination["debut_aff"]> $pagination["fin_aff"])
+
         @elseif(isset($email))
         <a href="{{route('employes.liste.email',[($pagination["debut_aff"] -  $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{  route('employes.liste.email',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$email] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
         @if(isset($matricule))
-        {{-- --}}
+
         <a href="{{route('employes.liste.matricule',[($pagination["debut_aff"] -  $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{  route('employes.liste.matricule',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$matricule] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
@@ -340,12 +343,37 @@
         <a href="{{route('employes.liste.activiter',[($pagination["debut_aff"] -  $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{  route('employes.liste.activiter',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$activiter] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
-        {{-- --}}
         @else
         <a href="{{route('employes.liste',$pagination["debut_aff"] -  $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{  route('employes.liste',$pagination["debut_aff"] +  $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
         @endif
+    {{-- =============== condition pagination ==================== --}}
+
+    @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) == $pagination["totale_pagination"] && $pagination["debut_aff"]>1)
+
+    {{-- --}}
+    @if(isset($matricule))
+    <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] - $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+    <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] + $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+    {{-- --}}
+    @elseif(isset($email))
+    <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] - $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+    <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] + $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+    @elseif(isset($activiter))
+    <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+    <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+    {{-- --}}
+    @else
+    <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+    <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+    @endif
+
+    {{-- =============== condition pagination ==================== --}}
 
         @else
         {{-- --}}

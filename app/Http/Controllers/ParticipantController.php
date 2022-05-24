@@ -102,10 +102,11 @@ class ParticipantController extends Controller
         return view('admin.entreprise.employer.nouveau_employer');
     }
 
-    public function liste_employer($paginations = null)
+    public function liste_employer($nb_pag = null)
     {
         $entreprise_id = 0;
         $nb_limit = 10;
+        $paginations=0;
         $user_id = Auth::user()->id;
         $role = new Role();
         if (Gate::allows('isReferent')) {
@@ -117,20 +118,13 @@ class ParticipantController extends Controller
         $connected = $this->fonct->findWhereMulitOne("employers", ["entreprise_id", "user_id"], [$entreprise_id, $user_id]);
         $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
 
-        if ($paginations != null) {
-
-            if ($paginations <= 0) {
-                $paginations = 1;
-            }
+        if ($nb_pag <= 0 || $nb_pag == null) {
+            $paginations = 1;
+        } else {
+            $paginations = $nb_pag;
+        }
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
             $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-        } else {
-            if ($paginations <= 0) {
-                $paginations = 1;
-            }
-            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
-            $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
-        }
         return view("admin.entreprise.employer.liste_employer", compact('employers', 'pagination'));
     }
 
@@ -150,8 +144,12 @@ class ParticipantController extends Controller
         }
         if ($nb_pag <= 0 || $nb_pag == null) {
             $nb_pagination = 1;
+        } else {
+            $nb_pagination = $nb_pag;
         }
         $totale_pag = $this->fonct->getNbrePagination("employers", "matricule_emp", ["matricule_emp", "entreprise_id"], ["LIKE", "="], ["%" . $matricule . "%", $entreprise_id], "AND");
+
+
         $pagination = $this->fonct->nb_liste_pagination($totale_pag, $nb_pagination, $nb_limit);
         $employers =  DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE matricule_emp LIKE '%".$matricule."%' AND entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET " . ($nb_pagination - 1), [$entreprise_id]);
 
@@ -173,6 +171,8 @@ class ParticipantController extends Controller
         }
         if ($nb_pag <= 0 || $nb_pag == null) {
             $nb_pagination = 1;
+        } else {
+            $nb_pagination = $nb_pag;
         }
         $totale_pag = $this->fonct->getNbrePagination("employers", "matricule_emp", ["email_emp", "entreprise_id"], ["=", "="], [$email, $entreprise_id], "AND");
         $pagination = $this->fonct->nb_liste_pagination($totale_pag, $nb_pagination, $nb_limit);
@@ -193,9 +193,14 @@ class ParticipantController extends Controller
         } else {
             $activiter =$req->activiter;
         }
+
         if ($nb_pag <= 0 || $nb_pag == null) {
             $nb_pagination = 1;
+        } else {
+            $nb_pagination = $nb_pag;
         }
+
+
         $totale_pag = $this->fonct->getNbrePagination("employers", "matricule_emp", ["activiter", "entreprise_id"], ["=", "="], [$activiter, $entreprise_id], "AND");
         $pagination = $this->fonct->nb_liste_pagination($totale_pag, $nb_pagination, $nb_limit);
         $employers =  DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE activiter='".$activiter."' AND entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET " . ($nb_pagination - 1), [$entreprise_id]);
