@@ -54,20 +54,26 @@
         tbody tr{
             vertical-align: middle;
         }
+        th{
+            font-weight: 300;
+        }
 
     </style>
 
     <div class="row w-100 bg-none mt-3 font_text">
 
-        <div class="col-md-7">
-
+        <div class="col-md-8">
+            @if(Session::has('message'))
+            <div class="alert alert-danger close">
+                <strong> {{Session::get('message')}}</strong>
+            </div>
+            @endif
             {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
             <h4>Entreprise déjà collaboré</h4>
 
             <table class="table  table-borderless table-lg table-hover">
-                <thead style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
+                <thead style="font-size: 12.5px; color: #000000; border-bottom: 0.5px solid rgb(0, 0, 0); line-height: 20px">
                     <th>Nom de l'entreprise</th>
-
                     <th>Réferent Principal</th>
                     <th>Action</th>
 
@@ -89,7 +95,7 @@
 
                                 </td>
                             <td>
-                                <div class="dropdown mt-3">
+                                {{-- <div class="dropdown mt-3">
                                     <div class="btn-group dropstart">
                                         <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         </button>
@@ -101,7 +107,15 @@
                                             </ul>
                                         @endcan
                                     </div>
-                                </div>
+                                </div> --}}
+                                @can('isPremium')
+                                    {{-- <ul class="dropdown-menu">
+                                        <li> --}}
+                                            {{-- <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a> --}}
+                                            <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
+                                        {{-- </li>
+                                    </ul> --}}
+                                @endcan
                             </td>
 
                                {{-- modal delete  --}}
@@ -117,7 +131,7 @@
                                         <div class="modal-footer justify-content-center">
                                             {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
                                             <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
-                                            <form action="{{ route('mettre_fin_cfp_etp') }}"  method="POST">
+                                            <form action="{{route('mettre_fin_cfp_etp') }}"  method="POST">
                                                 @csrf
                                                 <input name="etp_id" type="text" value="{{$etp->entreprise_id}}" hidden>
                                                 <div class="mt-4 mb-4">
@@ -128,7 +142,8 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- fin modal delete --}}
+
+                                {{-- fin modal delete --}}
 
                             </tr>
                             @endforeach
@@ -143,19 +158,42 @@
 
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-4">
 
             {{-- <div class="shadow p-3 mb-5 bg-body rounded my-5"> --}}
 
-            <h4>Inviter une entreprise à partir de son responsable</h4>
-            <p>
+            <span style="font-size: 16px">Inviter une entreprise</span>
+            {{-- <p>
                 Pour travailler avec une entreprise,il suffit simplement de se collaborer.
                 La procédure de collaboration ce qu'il faut avoir "<strong> le Nom et adresse mail vers son responsable</strong>".
-            </p>
+            </p> --}}
 
-            <form class="form form_colab" action="{{ route('create_cfp_etp') }}" method="POST">
+            <form class="form form_colab mt-3" action="{{ route('create_cfp_etp') }}" method="POST">
                 @csrf
-                <div class="form-row d-flex">
+                <div class="mb-3 row " style="font-size: 13px">
+                    <label for="" class="col-sm-2 col-form-label text-end">Nom <span style="color: red">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" autocomplete="off" class="form-control mb-2 ms-3" id="inlineFormInput" name="nom_resp"  required />
+                    </div>
+                </div>
+                <div class="mb-3 row " style="font-size: 13px">
+                    <label for="" class="col-sm-2 col-form-label text-end">Email <span style="color: red">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="email" autocomplete="off" class="form-control  mb-2 ms-3" id="inlineFormInput" name="email_resp" required />
+                    </div>
+                </div>
+                {{-- <div class="">
+                    <label for="" style="font-size: 13px">Nom résponsable<span style="color: red"> * </span></label>
+                    <input type="text" autocomplete="off" class="form-control mb-2" id="inlineFormInput" name="nom_resp"  required />
+                </div>
+                <div class="">
+                    <label for="" style="font-size: 13px">Email résponsable<span style="color: red"> * </span></label>
+                    <input type="email" autocomplete="off" class="form-control  mb-2" id="inlineFormInput" name="email_resp" required />
+                </div> --}}
+                <div class="text-end col-sm-11">
+                    <button type="submit" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Envoyer l'invitation</button>
+                </div>
+                {{-- <div class="form-row d-flex">
                     <div class="col">
                         <input type="text" autocomplete="off" class="form-control mb-2" id="inlineFormInput" name="nom_resp" placeholder="Nom*" required />
                     </div>
@@ -165,9 +203,9 @@
                     <div class="col ms-2">
                         <button type="submit" class="btn btn-primary">Envoyer l'invitation</button>
                     </div>
-                </div>
+                </div> --}}
             </form>
-
+            <br>
             @if(Session::has('success'))
             <div class="alert alert-success">
                 <strong> {{Session::get('success')}}</strong>

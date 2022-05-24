@@ -11,7 +11,7 @@ use App\User;
 use App\cfp;
 use App\formateur;
 use App\responsable;
-
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\collaboration\inscription_cfp_etp_mail;
@@ -39,7 +39,7 @@ class CollaborationController extends Controller
         $user_id = Auth::user()->id;
         if(Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
         else{
-            $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", [ "user_id"], [$user_id]);
+            $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id]);
 
             $responsable = $this->fonct->findWhereMulitOne("responsables", ["email_resp"], [$req->email_resp]);
 
@@ -49,7 +49,7 @@ class CollaborationController extends Controller
           //      $verify = $verify1->id + $verify2->id;
           $verify = $verify1->id;
                 if ($verify <= 0) {
-                    $msg = $this->collaboration->verify_collaboration_cfp_etp($responsable_cfp->cfp_id, $responsable->entreprise_id, $req->nom_format,$responsable_cfp->id);
+                    $msg = $this->collaboration->verify_collaboration_cfp_etp($responsable_cfp->cfp_id, $responsable->entreprise_id, $req->nom_format);
       //              Mail::to($req->email_resp)->send(new invitation_cfp_etp_mail($cfp->nom, $responsable_cfp, $responsable->nom_resp . " " . $responsable->prenom_resp, $req->email_resp));
 
                     return $msg;
@@ -161,7 +161,15 @@ class CollaborationController extends Controller
         if (Gate::allows('isCFP')) {
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id =$this->fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-            return $this->collaboration->verify_annulation_collaboration_etp_cfp($cfp_id, $req->etp_id);
+
+            $btn_suppr = DB::select('select * from v_groupe_projet_entreprise where cfp_id = ? and entreprise_id = ?', [$cfp_id,$req->etp_id]);
+            if($btn_suppr == NULL || $btn_suppr == ""){
+                return $this->collaboration->verify_annulation_collaboration_etp_cfp($cfp_id, $req->etp_id);
+
+            }else{
+                return back()->whith('message','Vous ne pouvez pas supprimer cette collaboration parce que vous avez des projets ensembles !');
+            }
+
         }
         if (Gate::allows('isReferent')) {
             $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');

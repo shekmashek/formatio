@@ -67,7 +67,7 @@
 
     </style>
 <div class="container-fluid">
-
+    
     {{-- <div class="row w-100 bg-none mt-5 font_text"> --}}
 
         {{-- <div class="col-md-5" >
@@ -222,7 +222,9 @@
         {{-- <div class="col-md-12"> --}}
 
             {{-- <div class="shadow p-3 mb-5 bg-body rounded my-5"> --}}
-        <div class="form-control p-4">
+        <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 p-4">
             @if(Session::has('success'))
             <div class="alert alert-success">
                 <strong> {{Session::get('success')}}</strong>
@@ -234,25 +236,69 @@
             </div>
             @endif
             @if($resp_cfp_connecter->prioriter == 1)
-            <P style="font-size: 15px">Créer un nouveau responsable dans votre organisation pour travailler plus vite pour plus de productivié et gagner du temps.</P>
-
-            <form class="form form_colab" action="{{ route('save+nouveau+responsable+cfp') }}" method="POST">
+            {{-- <P style="font-size: 15px">Créer un nouveau responsable dans votre organisation pour travailler plus vite pour plus de productivié et gagner du temps.</P> --}}
+            <form class="form form_colab " action="{{ route('save+nouveau+responsable+cfp') }}" method="POST">
                 @csrf
-                <div class="form-row d-flex">
-                    <div class="col">
+                {{-- <div class="form-row d-flex"> --}}
+                      <div class="mb-3 row text-end">
+                        <label for="" class="col-sm-2 col-form-label">Nom <span style="color: red">*</span></label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" required type="text" class="form-control" id="inlineFormInput" name="nom" placeholder="" required />
+                        </div>
+                      </div>
+
+                      <div class="mb-3 row text-end">
+                        <label for="" class="col-sm-2 col-form-label">Prénom <span style="color: red">*</span></label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" type="text" class="form-control " id="inlineFormInput" name="prenom" placeholder="" />
+                        </div>
+                      </div>
+
+                      <div class="mb-3 row text-end">
+                        <label for="" class="col-sm-2 col-form-label">Email <span style="color: red">*</span></label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" required type="email" class="form-control mb-2" id="email" name="email" placeholder="" />
+                        </div>
+                      </div>
+
+                      <div class="mb-3 row text-end">
+                        <label for="" class="col-sm-2 col-form-label">Télephone <span style="color: red">*</span></label>
+                        <div class="col-sm-4">
+                            <input autocomplete="off" required type="text" class="form-control  mb-2" id="phone" name="phone" placeholder="" />
+                        </div>
+                      </div>
+
+                      <div class="mb-3 row text-end">
+                        <label for="" class="col-sm-2 col-form-label">CIN <span style="color: red">*</span></label>
+                        <div class="col-sm-4">
+                            <input autocomplete="off" required type="text" maxlength="20" class="form-control " id="inlineFormInput" name="cin"/>
+                        </div>
+                      </div>
+
+                      <div class="mb-3 row text-end">
+                        <label for="" class="col-sm-2 col-form-label">Fonction <span style="color: red">*</span></label>
+                        <div class="col-sm-4">
+                            <input autocomplete="off" required type="text" class="form-control " id="inlineFormInput" name="fonction" placeholder=""  />
+                        </div>
+                      </div>
+
+                      
+
+{{-- eto --}}
+                    {{-- <div class="col">
                         <label for="exampleFormControlInput1" class="form-control-label" align="left">Nom<strong style="color:#ff0000;">*</strong></label>
-                        <input autocomplete="off" required type="text" class="form-control mb-2" id="inlineFormInput" name="nom" placeholder="Nom*" required />
+                        <input autocomplete="off" required type="text" class="form-control" id="inlineFormInput" name="nom" placeholder="Nom*" required />
                     </div>
-                    <div class="col ms-2">
-                        <label for="exampleFormControlInput1" class="form-control-label" align="left">Prénom</label>
-                        <input autocomplete="off" type="text" class="form-control  mb-2" id="inlineFormInput" name="prenom" placeholder="Prénom" />
-                    </div>
-
-                </div>
-
-
-                <div class="form-row d-flex">
                     <div class="col">
+                        <label for="exampleFormControlInput1" class="form-control-label" align="left">Prénom</label>
+                        <input autocomplete="off" type="text" class="form-control " id="inlineFormInput" name="prenom" placeholder="Prénom" />
+                    </div> --}}
+
+                {{-- </div> --}}
+
+
+                {{-- <div class="form-row d-flex"> --}}
+                    {{-- <div class="col">
                         <label for="exampleFormControlInput1" class="form-control-label" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
                         <input autocomplete="off" required type="text" maxlength="20" class="form-control " id="inlineFormInput" name="cin"/>
                         @error('cin')
@@ -261,12 +307,12 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="col ms-2">
+                    <div class=" col">
                         <label for="exampleFormControlInput1" class="form-control-label" align="left">Fonction<strong style="color:#ff0000;">*</strong></label>
-                        <input autocomplete="off" required type="text" class="form-control  mb-2" id="inlineFormInput" name="fonction" placeholder="Fonction *"  />
-                    </div>
+                        <input autocomplete="off" required type="text" class="form-control " id="inlineFormInput" name="fonction" placeholder="Fonction *"  />
+                    </div> --}}
 
-                </div>
+                {{-- </div> --}}
                 {{-- <div class="form-row d-flex">
                     <div class="col">
                         <label for="exampleFormControlInput1" class="form-control-label" align="left">CIN<strong style="color:#ff0000;">*</strong></label>
@@ -328,8 +374,8 @@
 
                 
 
-                <div class="form-row d-flex">
-                    <div class="col">
+                {{-- <div class="form-row d-flex"> --}}
+                    {{-- <div class="col">
                         <label for="exampleFormControlInput1" class="form-control-label" align="left">Email<strong style="color:#ff0000;">*</strong></label>
                         <input autocomplete="off" required type="email" class="form-control mb-2" id="email" name="email" placeholder="Email*" />
                         <span style="color:#ff0000;" id="email_err"></span>
@@ -339,7 +385,7 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="col ms-2">
+                    <div class="col">
                         <label for="exampleFormControlInput1" class="form-control-label" align="left">Télephone<strong style="color:#ff0000;">*</strong></label>
                         <input autocomplete="off" required type="text" class="form-control  mb-2" id="phone" name="phone" placeholder="Télephone*" />
                         <span style="color:#ff0000;" id="phone_err"></span>
@@ -348,8 +394,8 @@
                             <span style="color:#ff0000;"> {{$message}} </span>
                         </div>
                         @enderror
-                    </div>
-                </div>
+                    </div> --}}
+                {{-- </div> --}}
 
                 {{-- <div class="form-row d-flex">
                     <div class="col">
@@ -367,8 +413,9 @@
                 </div> --}}
 
                 {{-- <div class="form-row d-flex"> --}}
-                    <div class="col m-0">
-                        <button type="submit" class="btn btn-outline-primary btn-lg mt-2">Enregistrer</button>
+                    <div class="col mt-4 ms-5" style="font-size: 14px">
+                        <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-2"></i> Enregistrer</button>
+                        <a href="{{route('liste_equipe_admin')}}" role="button" class="btn_annuler ms-3 text-center"><i class="bx bx-x me-2"></i> Annuler</a>
                     </div>
                 {{-- </div> --}}
 
@@ -376,9 +423,9 @@
             </form>
             @endif
 
-
+<div class="col-lg-2"></div>
         </div>
-
+        </div>
     </div>
     {{-- </div> --}}
 
