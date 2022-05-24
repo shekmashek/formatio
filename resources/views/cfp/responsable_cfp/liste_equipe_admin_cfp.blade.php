@@ -4,7 +4,7 @@
 @endsection
 @inject('groupe', 'App\groupe')
 @section('content')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
+{{-- <link rel="stylesheet" href="{{asset('assets/css/ConfigAll.css')}}"> --}}
 <style>
     .td_hover:hover{
         background: #f0f0f0;
@@ -99,6 +99,11 @@
 #text:hover{
     color: rgb(255, 255, 255);
 }
+
+th{
+    font-weight: 300;
+    font-size: 14px
+}
 </style>
 
 
@@ -115,7 +120,7 @@
             </li>
         @if($resp_connecte->prioriter == 1)
             <li class="nav-item mt-1 ms-0" id="tabDynamique">
-                <a href="{{route('liste+responsable+cfp')}}">&nbsp; <span id="text" style="vertical-align: middle" class="mt-3"> <i class="bx bx-plus mt-2" ></i> Nouveau réferent</span> &nbsp; &nbsp;</a>
+                <a href="{{route('liste+responsable+cfp')}}" class="btn_nouveau btn" role="button"><i class="bx bx-plus-medical me-1"></i>nouveau referent</a>
             </li>
         @endif
 
@@ -128,11 +133,9 @@
                         <div class="col-lg-12">
 
                             <table class="mt-4 table  table-borderless table-lg">
-                                <thead  style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
-                                    {{-- <th>Photo</th> --}}
+                                <thead class="thead_projet" style="border-bottom: 1px solid black;">
                                     <th></th>
                                     <th>Nom</th>
-                                    {{-- <th>Prénom</th> --}}
                                     <th>E-mail</th>
                                     <th>Téléphone</th>
                                     <th>Fonction</th>
@@ -159,6 +162,7 @@
                                                 @endphp
                                             </td>
                                             <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
+                                            
                                             <td style="vertical-align: middle" class="text-center">
                                                 @if($responsables_cfp->prioriter == 1 && $responsables_cfp->id == $resp_connecte->id)
                                                     <span data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class='bx bxs-star'></i></span>
@@ -190,13 +194,13 @@
                                                         @if($responsables_cfp->activiter == 1)
                                                             <div class="text-center mt-3">
                                                                 <p>
-                                                                    <span style="color:white; background-color:rgb(144, 208, 134); border-radius:7px; padding: 5px" > Activé </span>
+                                                                    <span style="color:white; background-color:rgb(23, 171, 0); border-radius:7px; padding: 5px" > Activé </span>
                                                                 </p>
                                                             </div>
                                                         @elseif($responsables_cfp->activiter == 0)
                                                             <div class="text-center mt-3">
                                                                 <p>
-                                                                    <span style="color:white; background-color:rgb(255, 175, 175); border-radius:7px; padding: 5px" > Desactivé </span>
+                                                                    <span style="color:white; background-color:rgb(255, 38, 38); border-radius:7px; padding: 5px" > Desactivé </span>
                                                                 </p>
                                                             </div>
                                                         @endif

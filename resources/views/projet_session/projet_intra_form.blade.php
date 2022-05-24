@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Nouveau Projet Intra</p>
+    <p class="text_header m-0 mt-1">Nouveau session de projet Intra</p>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/projets.css')}}">

@@ -79,7 +79,9 @@ class ProfController extends Controller
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
             // $formateur = $forma->getFormateur($formateur1, $formateur2);
-            $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+            // $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
+            $formateur = DB::select('select SUBSTRING(nom_formateur, 1, 1) AS n,  SUBSTRING(prenom_formateur, 1, 1) AS p, activiter_demande,cfp_id, nom, adresse_lot, adresse_ville, 
+            adresse_region, email, telephone, slogan, nif, stat, rcs, cif, logo, activiter_cfp, site_web, user_id, formateur_id, nom_formateur, prenom_formateur,mail_formateur,activiter_formateur,numero_formateur,photos from v_demmande_cfp_formateur where cfp_id = ?', [$cfp_id]);
             // dd($formateur);
             // $formateurs=formateur::findorFail($cfp_id);
 

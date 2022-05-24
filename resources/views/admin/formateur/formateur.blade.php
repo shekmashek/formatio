@@ -58,6 +58,14 @@
             color: #f64f59;
             font-size: 4rem;
         }
+        td{
+            vertical-align: middle;
+        }
+
+        th{
+            font-weight: 300;
+            font-size: 13px
+        }
 
     </style>
 
@@ -80,9 +88,8 @@
                 </div>
             </div>
         </nav>
-        <div class="col-md-7">
+        <div class="col-md-8">
             {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
-
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Formateurs déjà collaborer</h4>
@@ -95,10 +102,10 @@
                 </div>
 
                 {{-- <div class="table-responsive text-center"> --}}
-
                     <table class="table  table-borderless table-lg table-hover">
                         <thead style="font-size: 12.5px; color: #676767; border-bottom: 0.5px solid rgb(103,103, 103); line-height: 20px">
-                            <th>Nom & prénom formateur</th>
+                            <th>Nom</th>
+                            <th></th>
                             <th>Téléphone</th>
                             <th>E-mail</th>
                             @can('isCFP')
@@ -113,7 +120,13 @@
                                 @else
                                 @foreach($formateur as $frm)
                                 <tr class="information" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}">
-                                    <td role="button" onclick="afficherInfos();"><img src="{{asset("images/formateurs/".$frm->photos)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3">{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</span></td>
+                                    @if($frm->photos == NULL or $frm->photos == '' or $frm->photos == 'XXXXXXX')
+                                        <td ><span  class="randomColor text-uppercase" style="padding: 15px; border-radius:100%; color:white;"> {{$frm->n}} {{$frm->p}} </span></td>
+                                        <td><span>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</td>
+                                    @else
+                                        <td role="button" onclick="afficherInfos();"><img src="{{asset("images/formateurs/".$frm->photos)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3"></span></td>
+                                        <td><span>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</td>
+                                    @endif
                                     <td role="button" onclick="afficherInfos();" style="vertical-align: middle">
                                         @php
                                             echo $groupe->formatting_phone($frm->numero_formateur);  
@@ -160,9 +173,9 @@
                                             <td class="ms-0 mt-5"> 
                                                 <div class="text-center mt-3">
                                                     @if($frm->activiter_formateur == 1)
-                                                        <p> <span style="color:white; background-color:rgb(144, 208, 134); border-radius:7px; padding: 5px" > Activé </span></p>
+                                                        <p> <span style="color:white; background-color:rgb(23, 171, 0); border-radius:7px; padding: 5px" > Activé </span></p>
                                                     @elseif($frm->activiter_formateur == 0)
-                                                        <p> <span style="color:white; background-color:rgb(255, 175, 175); border-radius:7px; padding: 5px" > Desactivé </span></p>
+                                                        <p> <span style="color:white; background-color:rgb(255, 38, 38); border-radius:7px; padding: 5px" > Desactivé </span></p>
                                                     @endif
                                                 </div>
                                             </td>
@@ -221,17 +234,16 @@
             {{-- </div> --}}
         </div>
 
-        <div class="col-md-5">
-
-            <h4>Inviter un Formateur</h4>
-            <p>
+        <div class="col-md-4">
+            <span style="font-size:16px">Inviter un formateur</span>
+            {{-- <p>
                 Pour travailler avec un formateur,il suffit simplement de se collaborer.
                 La procédure de collaboration ce qu'il faut avoir "<strong> le Nom et adresse mail</strong>".
-            </p>
+            </p> --}}
 
-            <form class="form form_colab" action="{{ route('create_cfp_formateur') }}" method="POST">
+            <form class="form form_colab mt-4" action="{{route('create_cfp_formateur') }}" method="POST">
                 @csrf
-                <div class="form-row d-flex">
+                {{-- <div class="form-row d-flex">
                     <div class="col">
                         <input type="text" class="form-control mb-2" id="inlineFormInput" autocomplete="off" name="nom_format" placeholder="Nom*" required />
                     </div>
@@ -241,6 +253,30 @@
                     <div class="col ms-2">
                         <button type="submit" class="btn btn-primary">Envoyer l'invitation</button>
                     </div>
+                </div> --}}
+                <div class="mb-3 row " style="font-size: 13px">
+                    <label for="" class="col-sm-2 col-form-label text-end">Nom <span style="color: red">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control mb-2 ms-3" id="inlineFormInput" autocomplete="off" name="nom_format" required />
+                    </div>
+                </div>
+                <div class="mb-3 row text-end" style="font-size: 13px">
+                    <label for="" class="col-sm-2 col-form-label">Email <span style="color: red">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control  mb-2 ms-3" id="inlineFormInput" autocomplete="off" name="email_format" required />
+                    </div>
+                </div>
+                  {{-- 
+                <div class="">
+                    <label for="" style="font-size: 13px">Nom formateur<span style="color: red"> * </span></label>
+                    <input type="text" class="form-control mb-2" id="inlineFormInput" autocomplete="off" name="nom_format" required />
+                </div>
+                <div class="">
+                    <label for="" style="font-size: 13px">Email formateur<span style="color: red"> * </span></label>
+                    <input type="email" class="form-control  mb-2" id="inlineFormInput" autocomplete="off" name="email_format" required />
+                </div> --}}
+                <div class="text-end col-sm-11">
+                    <button type="submit" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Envoyer l'invitation</button>
                 </div>
             </form>
 
