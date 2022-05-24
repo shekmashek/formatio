@@ -687,7 +687,7 @@ input:-webkit-autofill:active {
     color: #637381;
     position: relative;
     bottom: .5rem;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .btn_creer{

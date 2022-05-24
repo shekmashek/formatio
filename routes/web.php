@@ -80,7 +80,7 @@ Route::get('/image-cfp/{logo_cfp}', 'CfpController@img_cfp')->name('image-cfp');
 Route::get('listes_notifs', 'HomeController@liste_notification')->name('listes_notifs');
 Route::get('listes_messages', 'HomeController@liste_message')->name('listes_messages');
 //route affiche chaque projet
-Route::get('tous_projets', 'HomeController@tous_projets')->name('tous_projets');
+Route::get('tous_projets/{id}', 'HomeController@tous_projets')->name('tous_projets');
 
 // --------------------ROUTE ADMIN ---------------------------//
 
