@@ -241,32 +241,133 @@
 <div class="container-fluid">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Filtre</a>
 
+    @if(isset($matricule))
+    <a href="{{route('employes.liste')}}" class="btn_creer text-center filter" role="button">
+        filtre activé <i class="fas fa-times"></i> </a>
+    @elseif(isset($solde_debut) && isset($solde_fin))
+    <a href="{{route('employes.liste')}}"><span class="btn_creer  text-center filter"><span style="position: relative; bottom: -0.2rem">
+            </span> filtre activé <i class="fas fa-times"></i></span>
+    </a>
+    @elseif(isset($email))
+    <a href="{{route('employes.liste')}}" class="btn_creer text-center filter" role="button">
+        filtre activé <i class="fas fa-times"></i> </a>
+    @elseif(isset($activiter))
+    <a href="{{route('employes.liste')}}" class="btn_creer text-center filter" role="button">
+        filtre activé <i class="fas fa-times"></i> </a>
+    @endif
     <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
         @if ($pagination["debut_aff"] >= $pagination["totale_pagination"])
 
+        {{-- --}}
+        @if(isset($matricule))
+
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] - $pagination["nb_limit"]),$matricule] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$matricule] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+        {{-- --}}
+        @elseif(isset($email))
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] - $pagination["nb_limit"]),$email] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$email] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+        @elseif(isset($activiter))
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$activiter] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$activiter] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+        {{-- --}}
+        @else
         <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{ route('employes.liste',$pagination["debut_aff"] +  $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
-        @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) >= $pagination["totale_pagination"])
+        @endif
 
+        @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) >= $pagination["totale_pagination"])
+        {{-- --}}
+        @if(isset($matricule))
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] - $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$matricule] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+        {{-- --}}
+        @elseif(isset($email))
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] - $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$email] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+        @elseif(isset($activiter))
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$activiter] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+        {{-- --}}
+        @else
         <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{ route('employes.liste',$pagination["debut_aff"] +  $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
-        @elseif ($pagination["debut_aff"] == 1)
+        @endif
 
+        @elseif ($pagination["debut_aff"] == 1)
+        {{-- --}}
+        @if(isset($matricule))
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] - $pagination["nb_limit"]),$matricule] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+        {{-- --}}
+        @elseif(isset($email))
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] - $pagination["nb_limit"]),$email] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+        @elseif(isset($activiter))
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$activiter] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+        {{-- --}}
+        @else
         <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{ route('employes.liste',$pagination["debut_aff"] +  $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
-        @elseif ($pagination["debut_aff"] == $pagination["totale_pagination"] || $pagination["debut_aff"]> $pagination["totale_pagination"])
+        @endif
 
+        @elseif ($pagination["debut_aff"] == $pagination["totale_pagination"] || $pagination["debut_aff"]> $pagination["totale_pagination"])
+        {{-- --}}
+        @elseif(isset($email))
+        <a href="{{route('employes.liste.email',[($pagination["debut_aff"] -  $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{  route('employes.liste.email',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$email] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+        @if(isset($matricule))
+        {{-- --}}
+        <a href="{{route('employes.liste.matricule',[($pagination["debut_aff"] -  $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{  route('employes.liste.matricule',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$matricule] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+        @elseif(isset($activiter))
+        <a href="{{route('employes.liste.activiter',[($pagination["debut_aff"] -  $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{  route('employes.liste.activiter',[($pagination["debut_aff"] +  $pagination["nb_limit"]),$activiter] ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+        {{-- --}}
+        @else
         <a href="{{route('employes.liste',$pagination["debut_aff"] -  $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{  route('employes.liste',$pagination["debut_aff"] +  $pagination["nb_limit"]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
-        @else
+        @endif
 
+        @else
+        {{-- --}}
+        @if(isset($matricule))
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] - $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.matricule',[($pagination["debut_aff"] + $pagination["nb_limit"]),$matricule] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+        {{-- --}}
+        @elseif(isset($email))
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] - $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.email',[($pagination["debut_aff"] + $pagination["nb_limit"]),$email] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+        @elseif(isset($activiter))
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+        <a href="{{ route('employes.liste.activiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$activiter] ) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+        {{-- --}}
+        @else
         <a href="{{ route('employes.liste',$pagination["debut_aff"] - $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
         <a href="{{ route('employes.liste',$pagination["debut_aff"] + $pagination["nb_limit"]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+        @endif
 
         @endif
 
@@ -290,6 +391,11 @@
                     import EXCEL employé
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{route('employes.equipe')}}" class="nav-link">
+                    Equipe
+                </a>
+            </li>
         </ul>
 
         <div class="row">
@@ -302,231 +408,280 @@
                             <th scope="col">Noms</th>
                             <th scope="col">Contact </th>
                             <th scope="col"> Dept et Se</th>
+                            @canany(['isReferentPrincipale'])
                             <th scope="col" colspan="2">Action</th>
-                            {{-- <th scope="col">Voir profil</th> --}}
-                            {{-- <th style="width: 10px;">Rétirer</th> --}}
+                            @endcanany
+
                         </tr>
                     </thead>
                     <tbody id="list_data_trie_valider">
 
 
-            {{-- ============================================================ --}}
-            @foreach ($employers as $emp)
-            <tr>
-                <td>
-                    <a href="{{route('profile_stagiaire',$emp->id)}}">
-                        @if($emp->photos == null)
-                        <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
-                            <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
+                        {{-- ============================================================ --}}
+                        @foreach ($employers as $emp)
+                        <tr>
+                            <td>
+                                <a href="{{route('profile_stagiaire',$emp->id)}}">
+                                    @if($emp->photos == null)
+                                    <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
+                                        <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
+                                    </p>
+                                    @else
+                                    <a href="{{asset('images/employers/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/employers/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                                    @endif
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{route('profile_stagiaire',$emp->id)}}">
+                                    <p> {{$emp->nom_emp." ".$emp->prenom_emp}} </p>
+                                    <p> @if ($emp->activiter==1)
+                                        <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
+                                        @else
+                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
+                                        @endif</p>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{route('profile_stagiaire',$emp->id)}}">
+                                    <p> {{$emp->email_emp}} </p>
+                                    @if($emp->telephone_emp==null)
+                                    <p> ----</p>
+                                    @else
+                                    <p> {{$emp->telephone_emp}}</p>
+                                    @endif
+                                </a>
+                            </td>
+                            <td>
+                                @if($emp->service_id!=null)
+                                <p>{{$emp->nom_branche}}</p>
+                                <p>{{$emp->nom_service}}</p>
+                                @else
+                                <p>-----</p>
+                                <p>------</p>
+                                @endif
+                            </td>
+                            @canany(['isReferentPrincipale'])
+                            <td>
+                                @if ($emp->activiter==1)
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
+                                </div>
+                                @else
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
+                                </div>
+                                @endif
+                            </td>
+                            <td>
+                                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                            </td>
+                            @endcanany
+                        </tr>
+
+                        <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                        <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                    </div>
+                                    <div class="modal-body">
+                                        <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
+                                    </div>
+
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="filtrer mt-3">
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0">Filtre</p>
+                    </div>
+                    <div class="col text-end">
+                        <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+                    </div>
+                    <hr class="mt-2">
+                    <div class="row mt-0">
+                        <p>
+                            <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique" class="matricule_filtre">Recherche par Matricule <i class='bx icon_trie bxs-chevron-up'></i></a>
                         </p>
-                        @else
-                        <a href="{{asset('images/employers/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/employers/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
-                        @endif
-                    </a>
-                </td>
-                <td>
-                    <a href="{{route('profile_stagiaire',$emp->id)}}">
-                        <p> {{$emp->nom_emp." ".$emp->prenom_emp}} </p>
-                        <p> @if ($emp->activiter==1)
-                            <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
-                            @else
-                            <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
-                            @endif</p>
-                    </a>
-                </td>
-                <td>
-                    <a href="{{route('profile_stagiaire',$emp->id)}}">
-                        <p> {{$emp->email_emp}} </p>
-                        @if($emp->telephone_emp==null)
-                        <p> ----</p>
-                        @else
-                        <p> {{$emp->telephone_emp}}</p>
-                        @endif
-                    </a>
-                </td>
-                <td>
-                    @if($emp->service_id!=null)
-                    <p>{{$emp->nom_branche}}</p>
-                    <p>{{$emp->nom_service}}</p>
-                    @else
-                    <p>-----</p>
-                    <p>------</p>
-                    @endif
-                </td>
-                <td>
-                    @if ($emp->activiter==1)
-                    <div class="form-check form-switch">
-                        <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
-                    </div>
-                    @else
-                    <div class="form-check form-switch">
-                        <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
-                    </div>
-                    @endif
-
-                </td>
-                {{-- <td>
-                                <a href="{{route('profile_stagiaire',$emp->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
-                </td> --}}
-                <td>
-                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
-                </td>
-            </tr>
-
-            <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                            <h4 class="modal-title text-white">Avertissement !</h4>
-
+                        <div class="collapse multi-collapse" id="detail_par_thematique">
+                            <form class="mt-1 mb-2 form_colab" action="{{route('employes.liste.matricule')}}" method="GET" enctype="multipart/form-data">
+                                @csrf
+                                <label for="matricule" class="form-label" align="left">Matricule <strong style="color:#ff0000;">*</strong></label>
+                                <input autocomplete="off" required type="text" name="matricule" id="matricule" class="form-control" placeholder="Matricule" />
+                                <button type="submit" class="btn_creer mt-2">Recherche</button>
+                            </form>
                         </div>
-                        <div class="modal-body">
-                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
+                        <hr>
+                        <p>
+                            <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact" class="email_filtre">Recherche par E-mail <i class='bx icon_trie bxs-chevron-up'></i></a>
+                        </p>
+                        <div class="collapse multi-collapse" id="search_num_fact">
+                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('employes.liste.email')}}" enctype="multipart/form-data">
+                                @csrf
+                                <label for="email" class="form-label">E-mail<strong style="color:#ff0000;">*</strong></label>
+                                <input autocomplete="off" name="email" id="email" class="form-control" required type="email" aria-label="Search" placeholder="exemple@email.mg">
+                                <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
+                            </form>
                         </div>
+                        <hr>
 
-                        <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                            <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                        <p>
+                            <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp" class="activiter_filtre">Recherche par activité <i class='bx icon_trie bxs-chevron-up'></i></a>
+                        </p>
+                        <div class="collapse multi-collapse" id="detail_par_etp">
+                            <form class="mt-1 mb-2 form_colab" action=" {{ route('employes.liste.activiter')}}" method="GET" enctype="multipart/form-data">
+                                @csrf
+                                <label for="dte_debut" class="form-label" align="left">Employers<strong style="color:#ff0000;">*</strong></label>
+                                <br>
+                                <select class="form-select" name="activiter" autocomplete="on">
+                                    <option value="1">actif</option>
+                                    <option value="0">inactif</option>
+                                </select>
+                                <br>
+                                <button type="submit" class="btn_creer mt-2">Recherche</button>
+                            </form>
                         </div>
+                        <hr>
+
                     </div>
-                </div>
-
-            </div>
-            @endforeach
-            </tbody>
-            </table>
-        </div>
-
-
-        <div class="filtrer mt-3">
-            <div class="row">
-                <div class="col">
-                    <p class="m-0">Filtre</p>
-                </div>
-                <div class="col text-end">
-                    <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
-                </div>
-                <hr class="mt-2">
-                <div class="row mt-0">
-                    <p>
-                        <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique">Recherche par intervale de date de facturation</a>
-                    </p>
-                    <div class="collapse multi-collapse" id="detail_par_thematique">
-                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
-                            @csrf
-                            <label for="dte_debut" class="form-label" align="left"> Date de facturation <strong style="color:#ff0000;">*</strong></label>
-                            <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
-                            <br>
-                            <label for="dte_fin" class="form-label" align="left">Date de règlement <strong style="color:#ff0000;">*</strong></label>
-                            <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
-                            <button type="submit" class="btn_creer mt-2">Recherche</button>
-                        </form>
-                    </div>
-                    <hr>
-                    <p>
-                        <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par N° facture</a>
-                    </p>
-                    <div class="collapse multi-collapse" id="search_num_fact">
-                        <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
-                            @csrf
-                            <label for="num_fact" class="form-control-placeholder">N° facture<strong style="color:#ff0000;">*</strong></label>
-                            <input name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
-                            <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherce" />
-                        </form>
-                    </div>
-                    <hr>
-
-                    <p>
-                        <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" aria-controls="detail_par_etp">Recherche par activité</a>
-                    </p>
-                    <div class="collapse multi-collapse" id="detail_par_etp">
-                        <form class="mt-1 mb-2 form_colab" action="#" method="GET" enctype="multipart/form-data">
-                            @csrf
-                            <label for="dte_debut" class="form-label" align="left">Organisme de formation<strong style="color:#ff0000;">*</strong></label>
-                            <br>
-                            <select class="form-select" autocomplete="on">
-                                <option value="">actif</option>
-                                <option value="">inactif</option>
-                            </select>
-                            <br>
-                            <button type="submit" class="btn_creer mt-2">Recherche</button>
-                        </form>
-                    </div>
-                    <hr>
-
                 </div>
             </div>
-        </div>
 
 
 
-        <script src="{{ asset('assets/js/jquery.js') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
+            <script src="{{ asset('assets/js/jquery.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+            <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-        <script type="text/javascript">
-
-            /*============ stg =================*/
-            $(".desactiver_stg").on('click', function(e) {
-                var user_id = $(this).data("user-id");
-                var stg_id = $(this).val();
-                $.ajax({
-                    type: "GET"
-                    , url: "{{route('employes.liste.desactiver')}}"
-                    , data: {
-                        user_id: user_id
-                        , emp_id: stg_id
-                    }
-                    , success: function(response) {
-                        window.location.reload();
-                    }
-                    , error: function(error) {
-                        console.log(error)
+            <script type="text/javascript">
+                $(".matricule_filtre").on('click', function(e) {
+                    if (
+                        $(".matricule_filtre")
+                        .find(".icon_trie")
+                        .hasClass("bxs-chevron-down")
+                    ) {
+                        $(".matricule_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-down")
+                            .addClass("bxs-chevron-up");
+                    } else {
+                        $(".matricule_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-up")
+                            .addClass("bxs-chevron-down");
                     }
                 });
-            });
-            $(".activer_stg").on('click', function(e) {
-                var user_id = $(this).data("user-id");
-                var stg_id = $(this).val();
-                $.ajax({
-                    type: "GET"
-                    , url: "{{route('employes.liste.activer')}}"
-                    , data: {
-                        user_id: user_id
-                        , emp_id: stg_id
-                    }
-                    , success: function(response) {
-                        window.location.reload();
-                    }
-                    , error: function(error) {
-                        console.log(error)
+
+                $(".email_filtre").on('click', function(e) {
+                    if (
+                        $(".email_filtre")
+                        .find(".icon_trie")
+                        .hasClass("bxs-chevron-down")
+                    ) {
+                        $(".email_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-down")
+                            .addClass("bxs-chevron-up");
+                    } else {
+                        $(".email_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-up")
+                            .addClass("bxs-chevron-down");
                     }
                 });
-            });
+
+                $(".activiter_filtre").on('click', function(e) {
+                    if (
+                        $(".activiter_filtre")
+                        .find(".icon_trie")
+                        .hasClass("bxs-chevron-down")
+                    ) {
+                        $(".activiter_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-down")
+                            .addClass("bxs-chevron-up");
+                    } else {
+                        $(".activiter_filtre")
+                            .find(".icon_trie")
+                            .removeClass("bxs-chevron-up")
+                            .addClass("bxs-chevron-down");
+                    }
+                });
+
+                /*============ stg =================*/
+                $(".desactiver_stg").on('click', function(e) {
+                    var user_id = $(this).data("user-id");
+                    var stg_id = $(this).val();
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.liste.desactiver')}}"
+                        , data: {
+                            user_id: user_id
+                            , emp_id: stg_id
+                        }
+                        , success: function(response) {
+                            window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                });
+                $(".activer_stg").on('click', function(e) {
+                    var user_id = $(this).data("user-id");
+                    var stg_id = $(this).val();
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.liste.activer')}}"
+                        , data: {
+                            user_id: user_id
+                            , emp_id: stg_id
+                        }
+                        , success: function(response) {
+                            window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                });
 
 
-            // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (function() {
-                'use strict'
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                (function() {
+                    'use strict'
 
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.querySelectorAll('.needs-validation')
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.querySelectorAll('.needs-validation')
 
-                // Loop over them and prevent submission
-                Array.prototype.slice.call(forms)
-                    .forEach(function(form) {
-                        form.addEventListener('submit', function(event) {
-                            if (!form.checkValidity()) {
-                                event.preventDefault()
-                                event.stopPropagation()
-                            }
+                    // Loop over them and prevent submission
+                    Array.prototype.slice.call(forms)
+                        .forEach(function(form) {
+                            form.addEventListener('submit', function(event) {
+                                if (!form.checkValidity()) {
+                                    event.preventDefault()
+                                    event.stopPropagation()
+                                }
 
-                            form.classList.add('was-validated')
-                        }, false)
-                    })
-            })()
+                                form.classList.add('was-validated')
+                            }, false)
+                        })
+                })()
 
-        </script>
+            </script>
 
 
-        @endsection
+            @endsection

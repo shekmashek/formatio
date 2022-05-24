@@ -150,19 +150,19 @@ class AuthServiceProvider extends ServiceProvider
 
         //access principal
         Gate::define('isAdminPrincipale',function($users_roles){
-            $rqt =  DB::select('select * from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select * from role_users  where user_id = ?  and activiter=true  and prioriter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 1)
                     return "isAdminPrincipale";
         });
         Gate::define('isReferentPrincipale',function($users_roles){
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true and prioriter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 2)
                     return "referentPrincipale";
         });
         Gate::define('isStagiairePrincipale',function($users_roles){
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true  limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 3)
                     return "stagiairePrincipale";
@@ -170,21 +170,21 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('isFormateurPrincipale',function($users_roles){
             // return $users_roles->role_id == 4;
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true  and prioriter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 4)
                     return "formateurPrincipale";
         });
         Gate::define('isManagerPrincipale',function($users_roles){
             // return $users_roles->role_id == 5;
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true  and prioriter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 5)
                     return "managerPrincipale";
         });
         Gate::define('isSuperAdminPrincipale',function($users_roles){
             // return $users_roles->role_id == 6;
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true  and prioriter=true limit 1',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 6)
                     return "superAdminPrincipale";
@@ -192,7 +192,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isCFPPrincipale',function($users){
             // return $users_roles->role_id == 7;
-            $rqt =  DB::select('select * from role_users  where user_id = ?  and activiter=true limit 1',[Auth::id()]);
+            $rqt =  DB::select('select * from role_users  where user_id = ?  and activiter=true  and prioriter=true limit 1',[Auth::id()]);
            if($rqt!=null)
                 if( $rqt[0]->role_id == 7)
                     return  "cfpPrincipale";

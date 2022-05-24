@@ -78,15 +78,15 @@ class RoleUser extends Model
             DB::rollback();
             echo $e->getMessage();
         }
-        if ($role_id == 3) // stagiaire
-        {
-            return redirect()->route('calendrier');
-        } elseif ($role_id == 2) { // RH
+        // if ($role_id == 3) // stagiaire
+        // {
             return redirect()->route('home');
-        } elseif ($role_id == 5) { // Manager
-            return redirect()->route('calendrier');
-        } else {
-            return redirect()->route('home');
-        }
+        // } elseif ($role_id == 2) { // RH
+        //     return redirect()->route('home');
+        // } elseif ($role_id == 5) { // Manager
+        //     return redirect()->route('home');
+        // } else {
+        //     return redirect()->route('home');
+        // }
     }
 }

@@ -3,7 +3,7 @@
 <p class="text_header m-0 mt-1">employés</p>
 @endsection
 @section('content')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
 <style>
     table,
@@ -267,21 +267,24 @@
 
         <div class="row">
             <div class="col-12">
+                @if(Session::has('success'))
+                <div class="alert alert-success">
+                    <strong>{{Session::get('success')}}</strong>
+                </div>
 
+                @endif
+                @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    {{Session::get('error')}}
+                </div>
+                @endif
                 <table class="table  table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Photo</th>
-                            <th scope="col">Matricule
-                            </th>
-                            <th scope="col">Nom
-                            </th>
-                            <th scope="col">Prénom</th>
-                            <th scope="col">E-mail
-                            </th>
-                            <th scope="col">Télephone
-                            </th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Noms</th>
+                            <th scope="col">Contact </th>
+                            <th scope="col">Statut</th>
                         </tr>
                     </thead>
                     <tbody id="list_data_trie_valider">
@@ -289,7 +292,7 @@
                         @foreach ($responsables as $emp)
                         <tr>
                             <td>
-                                <a href="#">
+                                <a href="{{route('profile_stagiaire',$emp->id)}}">
                                     @if($emp->photos == null)
                                     <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
                                         <span class="" style="position:relative; top: .5rem;"><b>{{$emp->sub_nom_resp}}{{$emp->sub_prenom_resp}}</b></span>
@@ -300,125 +303,94 @@
                                 </a>
                             </td>
                             <td>
-                                @if ($emp->activiter==1)
-                                <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
-
-                                @else
-                                <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
-
-                                @endif
+                                <a href="{{route('profile_stagiaire',$emp->id)}}">
+                                    <p>{{$emp->nom_resp." ".$emp->prenom_resp}}</p>
+                                    <p> @if ($emp->activiter==1)
+                                        <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
+                                        @else
+                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
+                                        @endif</p>
+                                </a>
                             </td>
-                            <th>
-                                {{$emp->nom_resp}}
-                            </th>
+
                             <td>
-                                {{$emp->prenom_resp}}
-                            </td>
-                            <td>
-                                {{$emp->email_resp}}
-                            </td>
-                            <td>
-                                @if($emp->telephone_resp==null)
-                                ----
-                                @else
-                                {{$emp->telephone_resp}}
-                                @endif
-                            </td>
-                            <td style="vertical-align:middle" class="text-center">
-                                {{-- @if($emp->prioriter == 1 && $responsables_cfp->id == $resp_connecte->id)
-                                    <span data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class='bx bxs-star'></i></span>
-                                @else
-                                    <span desabled title="Résponsable" role="button"  class="td_hover" @if($responsables_cfp->prioriter == 0) style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" @elseif($responsables_cfp->prioriter == 1) style="vertical-align: middle; font-size:23px; color:gold" @endif align="center">
-                                        <i desabled @if($resp_connecte->prioriter == 1) data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$responsables_cfp->id }}" @endif class='bx bxs-star'></i>
-                                    </span>
-                                @endif --}}
-
-
-                                {{-- {{dd($emp)}} --}}
-
-                                {{-- @if ($connected->prioriter==1) --}}
-                                    @if($emp->prioriter == 1 && $emp->user_id == $connected->user_id)
-                                        <a href="#"> <i style="vertical-align: middle; font-size:23px;  color:gold" class='bx bxs-star'></i></a>
-                                    {{-- @else
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#change_role_{{$emp->id}}_{{$emp->user_id}}">
-                                            <i style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168);" class='bx bxs-star'></i>
-                                        </a> --}}
+                                <a href="{{route('profile_stagiaire',$emp->id)}}">
+                                    <p> {{$emp->email_resp}} </p>
+                                    @if($emp->telephone_resp==null)
+                                    <p> ----</p>
+                                    @else
+                                    <p> {{$emp->telephone_resp}}</p>
                                     @endif
+                                </a>
+                            </td>
 
-                                {{-- @endif --}}
-
-
-{{--
-                                @if($emp->user_id == $connected->user_id && $emp->prioriter==1)
-                                <a href="#"> <i style="vertical-align: middle; font-size:23px;  color:gold" class='bx bxs-star'></i></a>
+                            <td>
+                                @if($emp->prioriter == 1)
+                                <i style="vertical-align: middle; font-size:23px;  color:gold" class='bx bxs-star'></i>
                                 @else
+                                @canany(['isReferentPrincipale'])
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#change_role_{{$emp->id}}_{{$emp->user_id}}">
-                                    <i style="vertical-align: middle; font-size:23px;" class='bx bxs-star'></i>
+                                    @endcanany
+                                    <i style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168);" class='bx bxs-star'></i>
+
+                                    @canany(['isReferentPrincipale'])
                                 </a>
+                                @endcanany
                                 @endif
-
-                                @endif --}}
-
-                                {{-- @if ($emp->prioriter==1) --}}
-                                {{-- @if($emp->prioriter == 1 && $emp->activiter == 1)
-                                <a href="#"> <i style="vertical-align: middle; font-size:23px;  color:gold" class='bx bxs-star'></i></a>
-                               @else
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#change_role_{{$emp->id}}_{{$emp->user_id}}">
-                                    <i style="vertical-align: middle; font-size:23px;" class='bx bxs-star'></i>
-                                </a>
-                                @endif --}}
-
-
                             </td>
 
                         </tr>
 
                         {{-- <div class="modal fade mt-5" id="staticBackdrop_{{$emp->entreprise_id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="change_role_principale" method="Post">
-                                        @csrf
-                                        <div class="modal-header">
-                                            <span style="font-size: 16px;" class="modal-title" id="staticBackdropLabel"></span>
-                                            <button style="font-size: 13px;" type="button" class="btn-close" data-bs-dismiss="odal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body mt-3">
-                                            <span>Vous êtes sur de designer cette personne comme referent principale ?</span>
-                                            <input type="hidden" name="id_ref" class="referent_cible" value="{{$emp->id}}">
-                                        </div>
-                                        <div class="modal-footer mt-5">
-                                            <button style="border-radius:25px" type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">Fermer</button>
-                                            <button style="border-radius:25px" type="submit" class="btn btn-outline-success btn-sm" data-bs-dismiss="modal">Change rôle</button>
-                                        </div>
-                                    </form>
-                                </div>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="change_role_principale" method="Post">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <span style="font-size: 16px;" class="modal-title" id="staticBackdropLabel"></span>
+                                        <button style="font-size: 13px;" type="button" class="btn-close" data-bs-dismiss="odal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body mt-3">
+                                        <span>Vous êtes sur de designer cette personne comme referent principale ?</span>
+                                        <input type="hidden" name="id_ref" class="referent_cible" value="{{$emp->id}}">
+                                    </div>
+                                    <div class="modal-footer mt-5">
+                                        <button style="border-radius:25px" type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                        <button style="border-radius:25px" type="submit" class="btn btn-outline-success btn-sm" data-bs-dismiss="modal">Change rôle</button>
+                                    </div>
+                                </form>
                             </div>
-                        </div> --}}
-                        <div class="modal fade" id="change_role_{{$emp->id}}_{{$emp->user_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                                        <h4 class="modal-title text-white">Avertissement !</h4>
+                        </div>
+            </div> --}}
 
-                                    </div>
-                                    <div class="modal-body">
-                                        <span>Vous êtes sur de designer cette personne comme referent principale?</span>
-                                    </div>
-
-                                    <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                        <a href="{{route('employeur.change_role_principale',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Change role</button></a>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="modal fade" id="change_role_{{$emp->id}}_{{$emp->user_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                            <h4 class="modal-title text-white">Avertissement !</h4>
 
                         </div>
-                        @endforeach
-                    </tbody>
-                </table>
+                        <div class="modal-body">
+                            <div class="text-center my-2">
+                                <i class="fa-solid fa-circle-exclamation warning"></i>
+                            </div>
+                            <span>Vous êtes sur de designer cette personne comme nouveau referent principale</span>
+                        </div>
+
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                            <a href="{{route('employeur.change_role_principale',$emp->user_id)}}"> <button type="button" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Oui</button></a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            @endforeach
+            </tbody>
+            </table>
+        </div>
 
 
 
 
-            @endsection
+        @endsection

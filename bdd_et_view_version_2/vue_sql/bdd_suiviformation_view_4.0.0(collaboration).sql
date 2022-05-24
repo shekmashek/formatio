@@ -286,6 +286,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_etp AS SELECT
     r.email_resp AS email_responsable,
     r.photos AS photos_resp,
     rc.id AS responsable_cfp_id,
+    rc.email_resp_cfp,
     rc.nom_resp_cfp,
     rc.prenom_resp_cfp,
     rc.photos_resp_cfp,
@@ -347,6 +348,7 @@ CREATE OR REPLACE VIEW v_demmande_etp_cfp AS SELECT
     r.email_resp AS email_responsable,
     r.photos AS photos_resp,
     rc.id AS responsable_cfp_id,
+    rc.email_resp_cfp,
     rc.nom_resp_cfp,
     rc.prenom_resp_cfp,
     rc.photos_resp_cfp,
@@ -373,6 +375,29 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_formateur AS SELECT
     demmande_cfp_formateur.id,
     demmandeur_cfp_id,
     inviter_formateur_id,
+    resp_cfp_id,
+    responsables_cfp.id AS responsable_cfp_id,
+    responsables_cfp.email_resp_cfp,
+    responsables_cfp.nom_resp_cfp,
+    responsables_cfp.prenom_resp_cfp,
+    responsables_cfp.photos_resp_cfp,
+    cfps.id AS cfp_id,
+    cfps.nom,
+    cfps.adresse_lot,
+    cfps.adresse_ville,
+    cfps.adresse_region,
+    cfps.email,
+    cfps.telephone,
+    cfps.slogan,
+    cfps.nif AS nif_cfp,
+    cfps.stat AS stat_cfp,
+    cfps.rcs AS rcs_cfp,
+    cfps.cif AS cif_cfp,
+    cfps.logo AS logo_cfp,
+    cfps.specialisation AS specialisation,
+    cfps.presentation AS presentation,
+    cfps.activiter AS activiter_cfp,
+    cfps.site_web,
     formateurs.nom_formateur,
     formateurs.prenom_formateur,
     formateurs.mail_formateur,
@@ -400,53 +425,28 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_formateur AS SELECT
                 demmande_cfp_formateur.created_at
             ) date_demmande
         FROM
-            demmande_cfp_formateur,
+            demmande_cfp_formateur,responsables_cfp,cfps,
             formateurs
         WHERE
-            inviter_formateur_id = formateurs.id  and  demmande_cfp_formateur.activiter = 0;
+            demmandeur_cfp_id = cfps.id and inviter_formateur_id = formateurs.id  and
+resp_cfp_id =responsables_cfp.id and demmandeur_cfp_id =responsables_cfp.cfp_id
+            and  demmande_cfp_formateur.activiter = 0;
 
-
-CREATE OR REPLACE VIEW v_invitation_cfp_pour_formateur AS SELECT
-    demmande_formateur_cfp.id,
-    inviter_cfp_id,
-    demmandeur_formateur_id,
-    formateurs.nom_formateur,
-    formateurs.prenom_formateur,
-    formateurs.mail_formateur,
-    (formateurs.photos) photo_formateur,
-    (formateurs.adresse) adresse_formateur,
-    (formateurs.cin) cin_formateur,
-    (formateurs.specialite) specialite_formateur,
-    (formateurs.niveau) niveau_formateur,
-    formateurs.numero_formateur,
-    (
-        DATEDIFF(
-            demmande_formateur_cfp.created_at,
-            NOW())
-        ) jours,
-        (
-            CASE WHEN DATEDIFF(
-                NOW(), demmande_formateur_cfp.created_at) > 0 THEN CONCAT(
-                    DATEDIFF(
-                        NOW(), demmande_formateur_cfp.created_at),
-                        ' jour(s)'
-                    ) ELSE "aujourd'huit"
-                END
-            ) attente,
-            (
-                demmande_formateur_cfp.created_at
-            ) date_demmande
-        FROM
-            demmande_formateur_cfp,
-            formateurs
-        WHERE
-            demmandeur_formateur_id = formateurs.id and  demmande_formateur_cfp.activiter = 0;
 
 
 CREATE OR REPLACE VIEW v_demmande_formateur_pour_cfp AS SELECT
     demmande_formateur_cfp.id,
     demmandeur_formateur_id,
     inviter_cfp_id,
+    resp_cfp_id,
+    responsables_cfp.id AS responsable_cfp_id,
+    responsables_cfp.email_resp_cfp,
+    responsables_cfp.nom_resp_cfp,
+    responsables_cfp.prenom_resp_cfp,
+    responsables_cfp.photos_resp_cfp,
+    cfps.id AS cfp_id,
+    cfps.activiter AS activiter_cfp,
+    cfps.site_web,
     (cfps.nom) nom_cfp,
     (cfps.adresse_lot) adresse_lot_cfp,
     (cfps.adresse_ville) adresse_ville_cfp,
@@ -479,30 +479,114 @@ CREATE OR REPLACE VIEW v_demmande_formateur_pour_cfp AS SELECT
                 demmande_formateur_cfp.created_at
             ) date_demmande
         FROM
-            demmande_formateur_cfp,
+            demmande_formateur_cfp,responsables_cfp,formateurs,
             cfps
         WHERE
-            inviter_cfp_id = cfps.id  and  demmande_formateur_cfp.activiter = 0;
+            inviter_cfp_id = cfps.id and demmandeur_formateur_id = formateurs.id  and
+            resp_cfp_id =responsables_cfp.id and inviter_cfp_id =responsables_cfp.cfp_id
+            and  demmande_formateur_cfp.activiter = 0;
+
+
+
+
+CREATE OR REPLACE VIEW v_invitation_cfp_pour_formateur AS SELECT
+    demmande_formateur_cfp.id,
+    inviter_cfp_id,
+    demmandeur_formateur_id,
+    resp_cfp_id,
+    responsables_cfp.id AS responsable_cfp_id,
+    responsables_cfp.email_resp_cfp,
+    responsables_cfp.nom_resp_cfp,
+    responsables_cfp.prenom_resp_cfp,
+    responsables_cfp.photos_resp_cfp,
+    cfps.id AS cfp_id,
+    cfps.nom,
+    cfps.adresse_lot,
+    cfps.adresse_ville,
+    cfps.adresse_region,
+    cfps.email,
+    cfps.telephone,
+    cfps.slogan,
+    cfps.nif AS nif_cfp,
+    cfps.stat AS stat_cfp,
+    cfps.rcs AS rcs_cfp,
+    cfps.cif AS cif_cfp,
+    cfps.logo AS logo_cfp,
+    cfps.specialisation AS specialisation,
+    cfps.presentation AS presentation,
+    cfps.activiter AS activiter_cfp,
+    cfps.site_web,
+    formateurs.nom_formateur,
+    formateurs.prenom_formateur,
+    formateurs.mail_formateur,
+    (formateurs.photos) photo_formateur,
+    (formateurs.adresse) adresse_formateur,
+    (formateurs.cin) cin_formateur,
+    (formateurs.specialite) specialite_formateur,
+    (formateurs.niveau) niveau_formateur,
+    formateurs.numero_formateur,
+    (
+        DATEDIFF(
+            demmande_formateur_cfp.created_at,
+            NOW())
+        ) jours,
+        (
+            CASE WHEN DATEDIFF(
+                NOW(), demmande_formateur_cfp.created_at) > 0 THEN CONCAT(
+                    DATEDIFF(
+                        NOW(), demmande_formateur_cfp.created_at),
+                        ' jour(s)'
+                    ) ELSE "aujourd'huit"
+                END
+            ) attente,
+            (
+                demmande_formateur_cfp.created_at
+            ) date_demmande
+        FROM
+            demmande_formateur_cfp,responsables_cfp,cfps,
+            formateurs
+        WHERE
+            inviter_cfp_id = cfps.id and demmandeur_formateur_id = formateurs.id
+            and resp_cfp_id =responsables_cfp.id and inviter_cfp_id =responsables_cfp.cfp_id
+            and  demmande_formateur_cfp.activiter = 0;
 
 
 CREATE OR REPLACE VIEW v_invitation_formateur_pour_cfp AS SELECT
     demmande_cfp_formateur.id,
     inviter_formateur_id,
     demmandeur_cfp_id,
-    (cfps.nom) nom_cfp,
-    (cfps.adresse_lot) adresse_lot_cfp,
-    (cfps.adresse_ville) adresse_ville_cfp,
-    (cfps.adresse_region) adresse_region_cfp,
-    (cfps.email) mail_cfp,
-    (cfps.telephone) tel_cfp,
+    resp_cfp_id,
+    responsables_cfp.id AS responsable_cfp_id,
+    responsables_cfp.email_resp_cfp,
+    responsables_cfp.nom_resp_cfp,
+    responsables_cfp.prenom_resp_cfp,
+    responsables_cfp.photos_resp_cfp,
+    cfps.id AS cfp_id,
+    cfps.nom,
+    cfps.adresse_lot,
+    cfps.adresse_ville,
+    cfps.adresse_region,
+    cfps.email,
+    cfps.telephone,
     cfps.slogan,
-    (cfps.nif) nif_cfp,
-    (cfps.stat) stat_cfp,
-    (cfps.rcs) rcs_cfp,
-    (cfps.cif) cif_cfp,
-    (cfps.logo) logo_cfp,
-    (cfps.specialisation) specialisation,
-    (cfps.presentation) presentation,
+    cfps.nif AS nif_cfp,
+    cfps.stat AS stat_cfp,
+    cfps.rcs AS rcs_cfp,
+    cfps.cif AS cif_cfp,
+    cfps.logo AS logo_cfp,
+    cfps.specialisation AS specialisation,
+    cfps.presentation AS presentation,
+    cfps.activiter AS activiter_cfp,
+    cfps.site_web,
+    formateurs.nom_formateur,
+    formateurs.prenom_formateur,
+    formateurs.mail_formateur,
+    (formateurs.photos) photo_formateur,
+    (formateurs.adresse) adresse_formateur,
+    (formateurs.cin) cin_formateur,
+    (formateurs.specialite) specialite_formateur,
+    (formateurs.niveau) niveau_formateur,
+    formateurs.numero_formateur,
     (
         DATEDIFF(
             demmande_cfp_formateur.created_at,
@@ -521,14 +605,23 @@ CREATE OR REPLACE VIEW v_invitation_formateur_pour_cfp AS SELECT
                 demmande_cfp_formateur.created_at
             ) date_demmande
         FROM
-            demmande_cfp_formateur,
-            cfps
+            demmande_cfp_formateur,responsables_cfp,cfps,
+            formateurs
         WHERE
-            demmandeur_cfp_id = cfps.id and  demmande_cfp_formateur.activiter = 0;
+            demmandeur_cfp_id = cfps.id  and inviter_formateur_id = formateurs.id
+            and resp_cfp_id =responsables_cfp.id and demmandeur_cfp_id =responsables_cfp.cfp_id
+            and  demmande_cfp_formateur.activiter = 0;
+
+
 
 
 CREATE OR REPLACE VIEW v_demmande_formateur_cfp AS SELECT
     d.activiter AS activiter_demande,
+    rsp.email_resp_cfp,
+    rsp.nom_resp_cfp,
+    rsp.prenom_resp_cfp,
+    rsp.photos_resp_cfp,
+    d.resp_cfp_id,
     c.id AS cfp_id,
     c.nom,
     c.adresse_lot,
@@ -564,11 +657,19 @@ JOIN cfps c ON
     c.id = d.inviter_cfp_id
 JOIN formateurs f ON
     f.id = d.demmandeur_formateur_id
+JOIN responsables_cfp rsp ON
+    d.resp_cfp_id =rsp.id
 WHERE
     d.activiter = 1;
 
+
 CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     d.activiter AS activiter_demande,
+    rsp.email_resp_cfp,
+    rsp.nom_resp_cfp,
+    rsp.prenom_resp_cfp,
+    rsp.photos_resp_cfp,
+    d.resp_cfp_id,
     c.id AS cfp_id,
     c.nom,
     c.adresse_lot,
@@ -601,10 +702,10 @@ CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     f.activiter AS activiter_formateur,
     f.user_id AS user_id_formateur
 FROM
-    demmande_cfp_formateur d,cfps c,formateurs f,genre g
+    demmande_cfp_formateur d,cfps c,formateurs f,genre g,responsables_cfp rsp
 WHERE
     c.id = d.demmandeur_cfp_id AND
-    f.id = d.inviter_formateur_id AND
+    f.id = d.inviter_formateur_id AND d.resp_cfp_id = rsp.id AND
     g.id = IFNULL(f.genre_id,1) AND d.activiter = 1;
 
 

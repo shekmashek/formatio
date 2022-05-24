@@ -184,13 +184,16 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
-        if (Gate::allows('isFormateurPrincipale')) {
+        // if (Gate::allows('isFormateurPrincipale')) {
+            if (Gate::allows('isFormateur')) {
             return redirect()->route('calendrier');
         }
-        if (Gate::allows('isManagerPrincipale')) {
+        // if (Gate::allows('isManagerPrincipale')) {
+            if (Gate::allows('isManager')) {
             return redirect()->route('calendrier');
         }
-        if (Gate::allows('isStagiairePrincipale')) {
+        // if (Gate::allows('isStagiairePrincipale')) {
+            if (Gate::allows('isStagiaire')) {
             //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
             $testNull = DB::select('select * from stagiaires where user_id  = ? ', [Auth::user()->id]);
@@ -247,7 +250,8 @@ class HomeController extends Controller
             }
         }
 
-        if (Gate::allows('isCFPPrincipale')) {
+        // if (Gate::allows('isCFPPrincipale')) {
+            if (Gate::allows('isCFP')) {
 
             $fonct = new FonctionGenerique();
 
@@ -356,9 +360,7 @@ class HomeController extends Controller
         if (Gate::allows('isAdminPrincipale')) {
             return view('layouts.accueil_admin');
         }
-        if (Gate::allows('isSuperAdmin')) {
-            return view('layouts.accueil_admin');
-        }
+
         // if(Gate::allows('isSuperAdminPrincipale')) {
         //     return view('layouts.accueil_admin', compact('totale_invitation'));
         // }
@@ -366,7 +368,8 @@ class HomeController extends Controller
         //     return view('layouts.accueil_admin', compact('totale_invitation'));
         // }
 
-        if (Gate::allows('isReferentPrincipale')) {
+        // if (Gate::allows('isReferentPrincipale')) {
+            if (Gate::allows('isReferent')) {
 
 
             $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
@@ -388,7 +391,6 @@ class HomeController extends Controller
             //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
 
             if ($nb > 0) {
-
                 return view('formulaire', compact('testNull', 'entreprise', 'departement'));
             } else {
 

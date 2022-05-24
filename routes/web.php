@@ -714,6 +714,10 @@ Route::get('employes.equipe','ParticipantController@equipe')->name('employes.equ
 Route::get('employeur.change_role_principale/{id_new?}','ParticipantController@change_role_principale')->name('employeur.change_role_principale');
 // Route::post('change_role_principale','ParticipantController@change_role_principale')->name('change_role_principale');
 
+Route::get('employes.liste.matricule/{nbPag?}/{matricule?}','ParticipantController@search_matricule_employer')->name('employes.liste.matricule');
+Route::get('employes.liste.email/{nbPag?}/{email?}','ParticipantController@search_email_employer')->name('employes.liste.email');
+Route::get('employes.liste.activiter/{nbPag?}/{activiter?}','ParticipantController@search_actif_employer')->name('employes.liste.activiter');
+
 
 Route::get('employes.export.nouveau','ParticipantController@export_excel_new_participant')->name('employes.export.nouveau');
 Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');

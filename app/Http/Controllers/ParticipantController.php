@@ -123,22 +123,86 @@ class ParticipantController extends Controller
                 $paginations = 1;
             }
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
-            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-
-            // $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-            // $employers = $role->getEmployerReferent($employers_tmp);
+            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
         } else {
             if ($paginations <= 0) {
                 $paginations = 1;
             }
-            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
-
-            // $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            $employers = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
-            // $employers = $role->getEmployerReferent($employers_tmp);
         }
-        return view("admin.entreprise.employer.liste_employer", compact('connected', 'employers', 'pagination'));
+        return view("admin.entreprise.employer.liste_employer", compact('employers', 'pagination'));
     }
+
+    //====================================================== FILTRE ======================================
+    public function search_matricule_employer(Request $req,$nb_pag=null, $matricule_pa = null)
+    {
+        $matricule = null;
+        $nb_pagination=0;
+        $nb_limit = 10;
+        $user_id = Auth::user()->id;
+
+        $entreprise_id = $this->fonct->findWhereMulitOne("employers", ["user_id"], [Auth::user()->id])->entreprise_id;
+        if (isset($matricule_pa)) {
+            $matricule =$matricule_pa;
+        } else {
+            $matricule =$req->matricule;
+        }
+        if ($nb_pag <= 0 || $nb_pag == null) {
+            $nb_pagination = 1;
+        }
+        $totale_pag = $this->fonct->getNbrePagination("employers", "matricule_emp", ["matricule_emp", "entreprise_id"], ["LIKE", "="], ["%" . $matricule . "%", $entreprise_id], "AND");
+        $pagination = $this->fonct->nb_liste_pagination($totale_pag, $nb_pagination, $nb_limit);
+        $employers =  DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE matricule_emp LIKE '%".$matricule."%' AND entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET " . ($nb_pagination - 1), [$entreprise_id]);
+
+        return view("admin.entreprise.employer.liste_employer", compact('employers', 'pagination','matricule'));
+    }
+
+    public function search_email_employer(Request $req,$nb_pag=null, $email_pa = null)
+    {
+        $email = null;
+        $nb_pagination=0;
+        $nb_limit = 10;
+        $user_id = Auth::user()->id;
+
+        $entreprise_id = $this->fonct->findWhereMulitOne("employers", ["user_id"], [Auth::user()->id])->entreprise_id;
+        if (isset($email_pa)) {
+            $email =$email_pa;
+        } else {
+            $email =$req->email;
+        }
+        if ($nb_pag <= 0 || $nb_pag == null) {
+            $nb_pagination = 1;
+        }
+        $totale_pag = $this->fonct->getNbrePagination("employers", "matricule_emp", ["email_emp", "entreprise_id"], ["=", "="], [$email, $entreprise_id], "AND");
+        $pagination = $this->fonct->nb_liste_pagination($totale_pag, $nb_pagination, $nb_limit);
+        $employers =  DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE email_emp='".$email."' AND entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET " . ($nb_pagination - 1), [$entreprise_id]);
+        return view("admin.entreprise.employer.liste_employer", compact('employers', 'pagination','email'));
+    }
+
+    public function search_actif_employer(Request $req,$nb_pag=null, $activiter_pa = null)
+    {
+        $activiter = null;
+        $nb_pagination=0;
+        $nb_limit = 10;
+        $user_id = Auth::user()->id;
+
+        $entreprise_id = $this->fonct->findWhereMulitOne("employers", ["user_id"], [Auth::user()->id])->entreprise_id;
+        if (isset($activiter_pa)) {
+            $activiter =$activiter_pa;
+        } else {
+            $activiter =$req->activiter;
+        }
+        if ($nb_pag <= 0 || $nb_pag == null) {
+            $nb_pagination = 1;
+        }
+        $totale_pag = $this->fonct->getNbrePagination("employers", "matricule_emp", ["activiter", "entreprise_id"], ["=", "="], [$activiter, $entreprise_id], "AND");
+        $pagination = $this->fonct->nb_liste_pagination($totale_pag, $nb_pagination, $nb_limit);
+        $employers =  DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE activiter='".$activiter."' AND entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET " . ($nb_pagination - 1), [$entreprise_id]);
+        return view("admin.entreprise.employer.liste_employer", compact('employers', 'pagination','activiter'));
+    }
+
+//======================================================
 
     public function equipe()
     {
@@ -152,14 +216,7 @@ class ParticipantController extends Controller
 
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
             $responsables = DB::select($sql, [$entreprise_id]);
-            $connected_tmp = DB::select($sql, [$entreprise_id,$user_id]);
-
-            $connected = $connected_tmp[0];
-            // dd($responsables);
-            // $prioriter = $this->fonct->findWhereMulitOne("role_users", [""], [$user_id]);
-// dd($responsables);
-            return view("admin.entreprise.employer.equipe_administratif", compact('connected', 'responsables'));
-
+            return view("admin.entreprise.employer.equipe_administratif", compact('responsables'));
             // $responsables = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id]);
         } else {
             return back();
@@ -170,20 +227,26 @@ class ParticipantController extends Controller
         $user_id = Auth::user()->id;
 
 
-        // dd($id_user_new);
+        if (Gate::allows('isReferentPrincipale')) {
+            // dd("tonga");
+            $resp_new = $this->fonct->findWhereMulitOne("users", ["id"], [$id_user_new]);
+            DB::beginTransaction();
+            try {
+                DB::update("UPDATE role_users SET prioriter=true WHERE user_id=? AND role_id=?", [$id_user_new, 2]); // new referent
+                DB::update("UPDATE role_users SET prioriter=false WHERE user_id=? AND role_id=?", [$id_user_new, 3]); // new referent Stagiaire
 
-        DB::beginTransaction();
-        try {
-            DB::update("UPDATE role_users SET prioriter=False WHERE user_id=? AND role_id=?", [$user_id, 2]); // new referent
-            // $sql = "UPDATE role_users SET prioriter=1 WHERE user_id=".$id_user_new." AND role_id=2";
-            // echo $sql;
-            DB::update("UPDATE role_users SET prioriter=1 WHERE user_id=? AND role_id=?", [$id_user_new, 2]); // ancien
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
+                // $sql = "UPDATE role_users SET prioriter=1 WHERE user_id=".$id_user_new." AND role_id=2";
+                // echo $sql;
+                DB::update("UPDATE role_users SET prioriter=false WHERE user_id=? AND role_id=?", [$user_id, 2]); // ancien
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+            return back()->with('success', 'le role principale a été attribuer à ' . $resp_new->name);
+        } else {
+            return back()->with('error', 'désolé, seule le responsable principale à le droit de changer le role principale');
         }
-       return back();
     }
 
     // public function change_role_principale(Request $request){
@@ -1230,7 +1293,7 @@ class ParticipantController extends Controller
                             $etp = $fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
 
                             $stg->insert_multi($doner, $user_stg_id, $entreprise_id);
-                            $fonct->insert_role_user($user_stg_id, "3", false, true); // STG (user_id, role_id, prioriter, activiter)
+                            $fonct->insert_role_user($user_stg_id, "3", true, true); // STG (user_id, role_id, prioriter, activiter)
 
 
                             Mail::to($doner['email'])->send(new save_new_compte_stagiaire_Mail($doner["nom"] . ' ' . $doner["prenom"], $doner['email'], $etp->nom_etp));

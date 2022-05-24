@@ -153,9 +153,9 @@
                 <form name="formInsert" id="formInsert" action="{{route('save_multi_stagiaire_exproter_excel')}}" method="POST" enctype="multipart/form-data" class="form_insert_formateur form_colab  needs-validation" novalidate>
                     @csrf
                     @if(Session::has('success'))
-            <div class="alert alert-success">
-                <strong>{{Session::get('success')}}</strong>
-            </div>
+                    <div class="alert alert-success">
+                        <strong>{{Session::get('success')}}</strong>
+                    </div>
 
                     @endif
                     @if(Session::has('error'))
@@ -165,7 +165,7 @@
                     @endif
 
                     <div class="form-group mb-2" align="center">
-                        <button type="submit" class="btn btn_enregistrer" id="saver_multi_stg">sauvegarder</button>
+                        <button type="submit" class="btn btn_creer" id="saver_multi_stg">sauvegarder</button>
                     </div>
 
                     <table id="example" class="table table-bordered">
@@ -261,6 +261,15 @@
         return result;
     }
 
+
+    $(function() {
+        for (let i = 1; i <= 30; i += 1) {
+            $("input[name='cin_" + i + "']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            });
+        }
+    });
+
     /*================================ verify champ inscription =====================================*/
 
     $(document).ready(function() {
@@ -273,7 +282,7 @@
 
                 if ($("#matricule_" + i).val() != null) {
                     var matricule = $("#matricule_" + i).val();
-                    if($("#matricule_" + i).val()!="" && $("#matricule_" + i).val().length<1 && $("#email_" + i).val()!=""){
+                    if ($("#matricule_" + i).val() != "" && $("#matricule_" + i).val().length < 1 && $("#email_" + i).val() != "") {
                         document.getElementById("matricule_err_" + i).innerHTML = 'invalid';
                     } else {
                         document.getElementById("matricule_err_" + i).innerHTML = '';
