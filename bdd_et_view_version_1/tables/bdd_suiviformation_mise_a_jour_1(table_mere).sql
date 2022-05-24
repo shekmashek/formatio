@@ -263,4 +263,6 @@ alter table stagiaires drop column niveau_etude;
 alter table stagiaires
   add column niveau_etude_id bigint(20) UNSIGNED NOT NULL REFERENCES niveau_etude(id) ON DELETE CASCADE;
 
+UPDATE stagiaires set niveau_etude_id = 1;
+
 
