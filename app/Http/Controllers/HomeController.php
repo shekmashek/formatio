@@ -347,7 +347,9 @@ class HomeController extends Controller
                 $j1 = strftime('%d', strtotime($cfp_ab[0]->due_date));
                 $j2 = strftime('%d', strtotime($dtNow));
                 $jour_restant = $j2 - $j1;
-                $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                // $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
+                $message = "Vous êtes en mode ".$statut_compte->nom_statut;
                 $test = 1;
             } else {
                 $test = 0;
@@ -423,7 +425,9 @@ class HomeController extends Controller
                     $j1 = strftime('%d', strtotime($etp_ab[0]->due_date));
                     $j2 = strftime('%d', strtotime($dtNow));
                     $jour_restant = $j2 - $j1;
-                    $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                    // $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                    $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
+                    $message = "Vous êtes en mode ".$statut_compte->nom_statut;
                     $test = 1;
                 } else {
                     $test = 0;
