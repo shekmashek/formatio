@@ -602,7 +602,6 @@ create or replace view v_detail_presence_stagiaire as
         stg.photos,
         stg.cin,
         stg.date_naissance,
-        stg.niveau_etude,
         stg.activiter,
         stg.branche_id,
         stg.quartier,
@@ -714,7 +713,6 @@ create or replace view v_formateur_projet as
         f.adresse,
         f.cin,
         f.specialite,
-        f.niveau,
         d.groupe_id
     from
         v_demmande_cfp_formateur f join details d on f.formateur_id = d.formateur_id
@@ -730,7 +728,6 @@ create or replace view v_formateur_projet as
         f.adresse,
         f.cin,
         f.specialite,
-        f.niveau,
         d.groupe_id;
 
 

@@ -237,9 +237,10 @@ Route::get('/editer_fonction/{id}', 'ProfController@editer_fonction')->name('edi
 // });
 
 Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
-Route::get('/nouveau_formateur', function () {
-    return view('admin.formateur.nouveauFormateur');
-})->name('nouveau_formateur');
+Route::get('/nouveau_formateur','ProfController@nouveau_formateur')->name('nouveau_formateur');
+// Route::get('/nouveau_formateur', function () {
+//     return view('admin.formateur.nouveauFormateur');
+// })->name('nouveau_formateur');
 Route::get('/edit_formateur', 'ProfController@edit')->name('edit_formateur');
 Route::post('/update_formateur', 'ProfController@update')->name('update_formateur');
 Route::get('/destroy_formateur', 'ProfController@destroy')->name('destroy_formateur');

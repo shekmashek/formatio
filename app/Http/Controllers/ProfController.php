@@ -160,6 +160,11 @@ class ProfController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function  nouveau_formateur(){
+        $fonct = new FonctionGenerique();
+        $niveau = $fonct->findAll('niveau_etude');
+        return view('admin.formateur.nouveauFormateur',compact('niveau'));
+    }
     public function store(Request $request)
     {
         $fonct = new FonctionGenerique();
@@ -293,7 +298,8 @@ class ProfController extends Controller
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur =DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
-        return view('admin.formateur.edit_photos', compact('formateur'));
+        $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
+        return view('admin.formateur.edit_photos', compact('formateur','niveau'));
     }
     public function editer_nom($id, Request $request)
     {
@@ -633,7 +639,6 @@ class ProfController extends Controller
                     'date_naissance' => $datenais,
                     'adresse' => $request->adresse,
                     'specialite' => $splt,
-                    'niveau' => $nv,
                     'photos' => $input,
                 ]);
             }
@@ -649,8 +654,6 @@ class ProfController extends Controller
                     'date_naissance' => $datenais,
                     'adresse' => $request->adresse,
                     'specialite' => $splt,
-                    'niveau' => $nv,
-
                 ]);
         }
         // $password = $request->password;

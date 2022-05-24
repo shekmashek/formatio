@@ -26,19 +26,19 @@
   @endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Photos de profile 
-          <strong>Taille du fichier: (1.7 MB max)</strong> 
+        <p style="text-align: left">Photos de profile
+          <strong>Taille du fichier: (1.7 MB max)</strong>
         </p>
         <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
-                    <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test"  name="nom">
+                    <input type="hidden" value="{{ $formateur->nom_formateur }}" class="form-control test"  name="nom">
 
 
-                        <input type="hidden" class="form-control test" value="   {{ $formateur->prenom_formateur }}"  name="prenom">
+                        <input type="hidden" class="form-control test" value="{{ $formateur->prenom_formateur }}"  name="prenom">
                         <input type="hidden" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse">
 
-                        <input type="hidden" class="form-control test"  name="niveau" value="  {{ $formateur->niveau}}">
+                        <input type="hidden" class="form-control test"  name="niveau" value="{{$niveau->niveau_etude}}">
 
             <div class="row px-3 mt-4">
             <div class="form-group mt-1 mb-1">
@@ -51,18 +51,21 @@
                           <div style="display: grid; place-content: center">
                               <div class='randomColor photo_users' style="color:white; font-size:20px; border: none; border-radius: 100%; height:70px; width:70px ; display: grid; place-content: center">
                                 <img src="" alt="" id = "photo_stg" class="image-ronde" style="display: none">
-                              
+
                               </div>
                           </div>
                       </span>
                   @else
                         <img src="{{asset('images/formateurs/'.$formateur->photos)}}" id = "photo_stg"  class="image-ronde">
                       {{-- <input type="text" id = 'vartemp'> --}}
-                       
+
                       @endif
-              </div>
+                </div>
                   </label>
+                  <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
                   </div>
+
+
             </center>
         </div>
     </div>
@@ -91,7 +94,7 @@
 
 
 
-                  <input id="file-input" type="file" name="image" value="{{$formateur->photos}}"/>
+
 
 <button  class="btn_enregistrer mt-1 btn modification "> Enregister</button>
 </form>
