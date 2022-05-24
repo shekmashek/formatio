@@ -430,7 +430,8 @@ WHERE
 
 
 
-CREATE OR REPLACE VIEW v_demmande_cfp_etp AS SELECT
+CREATE OR REPLACE VIEW v_demmande_cfp_etp AS 
+SELECT
     d.activiter AS activiter_demande,
     c.id AS cfp_id,
     c.nom,

@@ -89,17 +89,17 @@
     @if (count($stagiaire) <= 0)
         <table class="table table-hover table-borderless" id="test_table">
             <thead style="border-bottom: 1px solid black; line-height: 20px">
-                <th>Photo</th>
-                <th>Matricule</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Téléphone</th>
-                <th>E-mail</th>
-                <th>Fonction</th>
-                {{-- <th>Département</th>
-                <th>Service</th> --}}
+                <td></td>
+                <td>Matricule</td>
+                <td>Nom</td>
+                <td>Prénom</td>
+                <td>Téléphone</td>
+                <td>E-mail</td>
+                <td>Fonction</td>
+                {{-- <td>Département</td>
+                <td>Service</td> --}}
                 @can('isCFP')
-                    <th></th>
+                    <td></td>
                 @endcan
             </thead>
             <tbody id="participant_groupe">
@@ -111,21 +111,21 @@
     @else
         <table class="table table-hover table-borderless" id="test_table">
             <thead style="border-bottom: 1px solid black; line-height: 20px">
-                <th>Photo</th>
-                <th>Matricule</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Téléphone</th>
-                <th>E-mail</th>
-                <th>Fonction</th>
-                {{-- <th>Département</th>
-                <th>Service</th> --}}
+                <td></td>
+                <td>Matricule</td>
+                <td>Nom</td>
+                <td>Prénom</td>
+                <td>Téléphone</td>
+                <td>E-mail</td>
+                <td>Fonction</td>
+                {{-- <td>Département</td>
+                <td>Service</td> --}}
                 @can('isCFP')
-                     <th></th>
+                     <td></td>
                 @endcan
                 @if ($type_formation_id == 2)
                     @can('isReferent')
-                        <th></th>
+                        <td></td>
                     @endcan
                 @endif
             </thead>

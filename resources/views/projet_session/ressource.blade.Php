@@ -87,11 +87,11 @@
                         <option value="Stagiaire">Stagiaire</option>
                     </select>
                 </div>
-                <div class="col-md-4  py-0 px-1">
+                <div class="col-md-5  py-0 px-1">
                     <input type="text" id="note" class="form-control ajout_form" placeholder="Votre note" required>
                 </div>
-                <div class="col-md-1 p-0">
-                    <button type="button" id="ajouter_ressource" class="btn inserer_emargement p-2"> Ajouter </button>
+                <div class="col-md-1 p-0 ms-1">
+                    <button type="button" id="ajouter_ressource" class="btn btn_nouveau"><i class="bx bx-plus-medical me-1"> </i>Ajouter </button>
                 </div>
             </section>
         </form>

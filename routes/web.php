@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
+use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -999,6 +1000,7 @@ Route::get('download_file', 'DocumentController@download_file')->name('download_
 Route::post('delete_folder', 'DocumentController@delete_folder')->name('delete_folder');
 
 
+
 Route::get('liste+responsable+cfp', 'ResponsableCfpController@index')->name('liste+responsable+cfp');
 Route::get('liste+responsable+entreprise', 'ResponsableController@show_responsable')->name('liste+responsable+entreprise');
 
@@ -1335,3 +1337,5 @@ Route::post('modifier_frais/{id}','FraisAnnexesController@update')->name('modifi
 Route::get('supprimer_frais/{id}','FraisAnnexesController@destroy')->name('supprimer_frais');
 
 Route::get('supprimer_frais_annexes/{id}','SessionController@supprimer_frais')->name('supprimer_frais_annexes');
+
+Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagiaire')->name('resultat_stagiaire');

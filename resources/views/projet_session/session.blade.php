@@ -1,7 +1,6 @@
 @extends('./layouts/admin')
 @inject('groupe', 'App\groupe')
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
 <style>
     .corps_planning .nav-link {
         color: #637381;
@@ -431,10 +430,50 @@
                         <i class='bx bx-group ms-3' style="font-size: 1rem;"></i>
                         <span class="m-0 ms-1"> apprenant inscrit : </span>
                         <span class="text-dark ms-1"> {{ $nombre_stg }} </span>
-                        <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
-                        <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
-                        <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i>
-                        <span class="m-0 ms-1">{{ $lieu_formation[1] }}</span>
+                        @if(count($lieu_formation)>0)
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
+                            <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
+                            <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i>
+                            <span class="m-0 ms-1">{{ $lieu_formation[1] }}</span>
+                        @endif
+                        
+                    </div>
+                    <div class="d-flex height_default m-0 mt-2 p-0">
+                        @if ($type_formation_id == 1)
+                            <div class="chiffre_d_affaire m-0 p-0 me-3">
+    
+                                <div class="d-flex flex-row">
+                                    <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>
+                                    &nbsp;&nbsp;
+                                    <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
+                                        class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                                </div>
+                            </div>
+                        @endif
+                        <div class="chiffre_d_affaire me-2">
+    
+                            <div class="d-flex flex-row">
+                                <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
+                                    {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
+                                <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
+                                    height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                            </div>
+                        </div>
+                        @canany(['isCFP'])
+                            <div class="chiffre_d_affaire">
+                                <div class="d-flex flex-row">
+                                    @if(count($formateur_cfp)>0)
+                                        <p class="p-0 me-2 text-center" style="margin-top: 1.9rem !important"> Formateur(s) :&nbsp;</p>
+                                    @endif
+                                    @foreach ($formateur_cfp as $form)
+                                        <img src="{{ asset('images/formateurs/' . $form->photos) }}" alt=""
+                                            class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%;margin-top: 1.6rem !important">
+                                    @endforeach()
+                                </div>
+                                </strong></p>
+                            </div>
+                        @endcanany
+    
                     </div>
                 </div>
                 <div class="col-lg-4 d-flex justify-content-end">
@@ -482,7 +521,7 @@
                 </div>
             </div>
         </nav>
-        <section class="bg-light py-1">
+        {{-- <section class="bg-light py-1">
             <div class="m-0 p-0">
                 <div class="d-flex justify-content-between">
                     @if ($type_formation_id == 1)
@@ -508,7 +547,9 @@
                     @canany(['isCFP'])
                         <div class="chiffre_d_affaire">
                             <div class="d-flex flex-row">
-                                <p class="p-0 mt-3 me-2 text-center"> Formateur(s) :&nbsp;</p>
+                                @if(count($formateur_cfp)>0)
+                                    <p class="p-0 mt-3 me-2 text-center"> Formateur(s) :&nbsp;</p>
+                                @endif
                                 @foreach ($formateur_cfp as $form)
                                     <img src="{{ asset('images/formateurs/' . $form->photos) }}" alt=""
                                         class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%;">
@@ -520,7 +561,7 @@
 
                 </div>
             </div>
-        </section>
+        </section> --}}
         <section>
             <div class="row p-0 d-flex flex-row" role="tabpanel">
                 <div class="col-md-2 nav_session">

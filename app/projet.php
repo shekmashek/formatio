@@ -20,7 +20,7 @@ class Projet extends Model
         if($num_projet[0]->num_projet==NULL){
             $num_projet[0]->num_projet=1;
         }
-        return "Projet-".$num_projet[0]->num_projet;
+        return "Proj-".$num_projet[0]->num_projet;
     }
 
     //====================== fonction ajouter suplementaire

@@ -93,7 +93,6 @@
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: capitalize;
     cursor: pointer;
 }
 
@@ -128,7 +127,6 @@
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: capitalize;
     cursor: pointer;
 }
 
@@ -168,7 +166,6 @@
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: capitalize;
     cursor: pointer;
 }
 
@@ -204,7 +201,6 @@
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: capitalize;
     cursor: pointer;
 }
 
@@ -240,7 +236,6 @@
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: capitalize;
     cursor: pointer;
 }
 
@@ -276,7 +271,6 @@
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
-    text-transform: capitalize;
     cursor: pointer;
 }
 

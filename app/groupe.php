@@ -21,10 +21,10 @@ class Groupe extends Model
         if($num_projet[0]->nom_groupe==NULL){
             $num_session=1;
         } else{
-            $str = explode(" ",$num_projet[0]->nom_groupe);
+            $str = explode("-",$num_projet[0]->nom_groupe);
             $num_session=intval($str[1])+1;
         }
-            $nom_session ="Session ".$num_session;
+            $nom_session ="Sess-".$num_session;
             return $nom_session;
     }
 
@@ -49,14 +49,20 @@ class Groupe extends Model
         $nb_participant = DB::select('select ifnull(count(groupe_id),0) as nombre_participant from participant_groupe where groupe_id = ?',[$groupe_id])[0]->nombre_participant;
         $module = DB::select('select module_id from groupes where id = ?',[$groupe_id])[0]->module_id;
         $nb_competence = DB::select('select ifnull(count(id),0) as nombre_comp from competence_a_evaluers where module_id = ?', [$module])[0]->nombre_comp;
-        $nombre_eval = DB::select('select ifnull(count(note_apres),0) as nombre_note from evaluation_stagiaires where groupe_id = ? and note_apres < 0',[$groupe_id])[0]->nombre_note;
+        $nombre_eval = DB::select('select ifnull(count(note_apres),0) as nombre_note from evaluation_stagiaires where groupe_id = ? and note_apres > 0',[$groupe_id])[0]->nombre_note;
         // dd($nb_participant * $nb_competence,$nombre_eval);
-        if($nb_participant * $nb_competence == $nombre_eval){
-            return 1;
-        }
-        elseif($nombre_eval < $nb_participant * $nb_competence){
+        if($nb_participant == 0){
             return 0;
         }
+        else{
+            if($nb_participant * $nb_competence == $nombre_eval){
+                return 1;
+            }
+            elseif($nombre_eval < $nb_participant * $nb_competence){
+                return 0;
+            }
+        }
+        
     }
 
     public function statut_evaluation_apres($groupe_id,$stg_id){
@@ -72,6 +78,17 @@ class Groupe extends Model
     public function infos_session($groupe_id){
         $info = DB::select('select count(id) as nb_detail,sum(TIME_TO_SEC(h_fin) - TIME_TO_SEC(h_debut)) as difference from details where groupe_id = ?',[$groupe_id])[0];
         return $info;
+    }
+
+    public function resultat_eval($groupe_id){
+        $users = Auth::user()->id;
+        $stg_id= stagiaire::where('user_id',$users)->value('id');
+        $result = DB::select('select count(id) as nombre from evaluation_stagiaires where groupe_id = ? and stagiaire_id = ?',[$groupe_id,$stg_id]);
+        if(count($result)>0){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     public function inscrit_session_inter($groupe_id){

@@ -397,8 +397,8 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-arround">
-                    <div class="d-grid gap-2 col-6 mx-auto mt-3">
-                        <button class="btn inserer_emargement" id="boutton_save_eval" type="submit">Sauvegarder</button>
+                    <div class="d-grid gap-2 col-2 mx-auto mt-3">
+                        <button class="btn btn_enregistrer" id="boutton_save_eval" type="submit"><i class="bx bx-check me-1"></i>Enregistrer</button>
                     </div>
                 </div>
             </form>
