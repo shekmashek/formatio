@@ -110,25 +110,36 @@ public function new_emp(){
         if (Gate::allows('isManager')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
         }
-        $totale_pag = $this->fonct->getNbrePagination("stagiaires", "id",["entreprise_id"],["="], [$entreprise_id],"AND");
+        // $totale_pag = $this->fonct->getNbrePagination("stagiaires", "id",["entreprise_id"],["="], [$entreprise_id],"AND");
 
-        if($paginations!=null){
+        // if($paginations!=null){
 
-            if($paginations<=0){
-                $paginations=1;
-            }
-            $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations,$nb_limit);
-            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET ".($paginations-1),[$entreprise_id]);
+        //     if($paginations<=0){
+        //         $paginations=1;
+        //     }
+        //     $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations,$nb_limit);
+        //     $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET ".($paginations-1),[$entreprise_id]);
 
-        } else {
-            if($paginations<=0){
-                $paginations=1;
-            }
-            $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET 0",[$entreprise_id]);
-            $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0,$nb_limit);
+        // } else {
+        //     if($paginations<=0){
+        //         $paginations=1;
+        //     }
+        //     $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET 0",[$entreprise_id]);
+        //     $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0,$nb_limit);
 
-        }
-        return view("admin.entreprise.employer.liste_employer",compact('employers','pagination'));
+        // }
+
+        // getting the $employers from the database table stagiaires add paginate them by 5
+        // $employers = DB::table('stagiaires')
+        //     ->where('entreprise_id', $entreprise_id)
+        //     ->paginate(5);
+        
+        $employers = Stagiaire::all();
+            // dd($employers);
+            $entreprise = Entreprise::find($entreprise_id);
+
+
+        return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise'));
     }
 
     public function index()

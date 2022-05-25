@@ -281,7 +281,7 @@ class NouveauCompteController extends Controller
                                         $resize_image->resize(256, 128, function($constraint){
                                             $constraint->aspectRatio();
                                         })->save($destinationPath . '/' .  $image_name);
-                                    Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
+                                    //Mail::to($req->email_resp_etp)->send(new save_new_compte_etp_Mail($name, $req->email_resp_etp, $etp->nom_etp));
                                     // $req->logo_etp->move(public_path('images/entreprises'), $data["logo_etp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {

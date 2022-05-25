@@ -1,244 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+
+
     {{-- Lien font awesome icons --}}
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{{asset('../assets/css/smooth_page.css')}}">
-    <link rel="stylesheet" href="{{ asset('maquette/style_maquette.css') }}">
-    <script src="{{ asset('maquette/javascript.js') }}"></script>
-    <link rel="shortcut icon" href="{{  asset('maquette/real_logo.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link rel="shortcut icon" href="{{ asset('maquette/real_logo.ico') }}" type="image/x-icon">
     <title> Formation.mg </title>
 
+
     <style>
-        body {
-            height: 100vh;
+        .form-control:focus, .adresse:focus {
+        border-color: #7a27d894;
+        box-shadow: 0 0 0 0.2rem rgba(122, 28, 185, 0.459);
+        outline-style: none;
+        }
+        
+        .form-control::placeholder {     
+            transition: 0.3s;
+        }
+        .form-control:focus::placeholder {
+        color: #7a27d8c4;
+        transform: translateX(75%);
+        /* float: right; */
+
         }
 
-        .image-ronde {
-            width: 30px;
-            height: 30px;
-            border: none;
-            -moz-border-radius: 75px;
-            -webkit-border-radius: 75px;
-            border-radius: 75px;
+        .adresse_container{
+            justify-content: space-between;
         }
 
-        .hover:hover {
-            background-color: rgb(233, 220, 220);
-            cursor: pointer;
-        }
-
-        .dashboard {
-            position: absolute;
-            top: 25%;
+        @media (max-width: 576px) {
+            .adresse {
             width: 100%;
-            align-items: center
+
         }
+        }
+        .adresse::placeholder{
+            transition: 0.3s;
+        }
+
+        .adresse:focus::placeholder{
+            color: #7a27d8c4;
+            float: right;
+        }
+        .form-select:focus {
+            box-shadow: 0 0 0 0.2rem rgba(122, 28, 185, 0.459);
+            border-color: #7a27d894;
+        }
+
+
+
 
     </style>
+
 </head>
-<body>
-    <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
-        <i class="far fa-arrow-up"></i>
-    </button>
+
+
+{{-- <div>
     <header>
         <nav class="navbar_accueil fixed-top d-flex justify-content-between mb-5">
             <div class="left_menu ms-2">
-                <p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}" width="60px" height="60px"> Formation.mg</p>
+                <p class="titre_text m-2 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg54Ko.png') }}"
+                        width="60px" height="60px"> Formation.mg</p>
             </div>
             <div class="right_menu d-flex justify-content-end align-items-center">
                 <div class="child_right_menu">
-                    <a href="{{url('contact')}}"><button class="btn_bordure_violet mx-2"><i class="fa fa-phone-alt"></i>&nbsp; Contactez-nous</button></a>
+                    <a href="{{ url('contact') }}"><button class="btn_bordure_violet mx-2"><i
+                                class="fa fa-phone-alt"></i>&nbsp; Contactez-nous</button></a>
                 </div>
                 <div class="child_right_menu">
-                    <a href="{{route('create+compte+client')}}"><button class="btn_bordure_violet mx-2"><i class="fa fa-layer-plus"></i>&nbsp; Créer un compte</button></a>
+                    <a href="{{ route('create+compte+client') }}"><button class="btn_bordure_violet mx-2"><i
+                                class="fa fa-layer-plus"></i>&nbsp; Créer un compte</button></a>
                 </div>
                 <div class="child_right_menu">
-                    <button class="btn bouton_violet mx-2"><a href="{{ route('logout') }}"><i class="fa fa-sign-in-alt"></i>&nbsp; Déconnexion </a></button>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button class="btn_bordure_violet mx-2"><i class="fa fa-sign-out-alt"></i>&nbsp;
+                            Déconnexion</button>
+                    </form>
                 </div>
             </div>
         </nav>
     </header>
+</div> --}}
 
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-3 mb-5 bg-body rounded">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('maquette/logo_fmg54Ko.png') }}" alt="" width="50" height="50">
+        </a>
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="#">Pricing</a>
+          <form action="{{ route('logout') }}" method="post">
+            @csrf
+            <button class="btn btn-secondary" type="submit">&nbsp;Deconnexion</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </nav>
 
 
-    <main>
 
-        <div class="row dashboard">
-            <div class="row">
-                <h2 class="text-center">Remplissez les informations manquantes</h2>
-                @if (\Session::has('error'))
-                    <div class="alert alert-danger">
-                        <ul>
-                            <li>{!! \Session::get('error') !!}</li>
-                        </ul>
-                    </div>
-                @endif
+<body class="m-50">
+
+<div class="container align-middle mt-5">
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('remplir_info_resp') }}" class="row g-3" method="POST">
+        @csrf
+
+        <div class="col-12">
+            <input type="text" name="id_resp" value="{{ $testNull[0]->id }}" hidden>
+        </div>
+
+        @if ($testNull[0]->nom_resp != null)
+
+        <div class="col-12 text-center">
+            <label for="nom_prenom"  class="form-label text-center">Nom Prenom</label>
+            <input readonly 
+            name="nom_prenom" class="form-control bg-light p-2 m-auto text-center" 
+            value="{{ $testNull[0]->nom_resp }} {{ $testNull[0]->prenom_resp }}"
+            type="text" id="nom_prenom" style="border:1px solid #7a27d894; display:flex; width:auto;">
+        </div>
+        @else
+
+        <div class="col-md-6">
+          <label for="nom_resp" class="form-label">Nom</label>
+          <input name="nom_resp" type="email" class="form-control" id="nom_resp">
+        </div>
+        <div class="col-md-6">
+          <label for="prenom_resp" class="form-label">Prenom</label>
+          <input name="prenom_resp" type="text" class="form-control" id="prenom_resp">
+        </div>
+
+        @endif
+
+
+
+        <div class="col-6" id="datepicker">
+          <label for="date_naissance_resp" class="form-label">Date de naissance</label>
+
+            @if (date('d F Y', strtotime($testNull[0]->date_naissance_resp)) != null)
+            <span class="form-control">{{ date('d M Y',strtotime($testNull[0]->date_naissance_resp)) }}</span>
+
+            {{-- {{ dd(date('d F Y', strtotime($testNull[0]->date_naissance_resp)) ) }} --}}
+            @else
+
+            <input class="form-control" type="date" 
+            id="datepicker" name="date_naissance_resp"
+            onfocus="{{ date('d/m/Y',strtotime($testNull[0]->date_naissance_resp)) }}">
+            
+            @endif
+            {{-- <input class="form-control" type="date" 
+            id="datepicker" name="date_naissance_resp"
+            onfocus="{{ date('d/m/Y',strtotime($testNull[0]->date_naissance_resp)) }}"> --}}
+
+        </div>
+
+        <div class="col-6">
+            <label for="genre" class="form-label">Sexe</label>
+
+            @if ($testNull[0]->sexe_resp != null && $testNull[0]->sexe_resp == "Homme")
+            <select class="form-select" value="" id="genre" name="genre" aria-label="select">
+                <option value="{{ $testNull[0]->sexe_resp }}" selected>{{ $testNull[0]->sexe_resp }}</option>
+                <option value="Femme">Femme</option>
+
+            </select>
+            @elseif ($testNull[0]->sexe_resp != null && $testNull[0]->sexe_resp == "Femme")
+            <select class="form-select" value="" id="genre" name="genre" aria-label="select">
+                <option value="{{ $testNull[0]->sexe_resp }}" selected>{{ $testNull[0]->sexe_resp }}</option>
+                <option value="Homme">Homme</option>
+
+            </select>
+
+            @else
+            <select class=" form-select form-control " value="" id="genre" name="genre" aria-label="select">
+                <option selected>Sexe</option>
+                <option class="form-control" value="Homme">Homme</option>
+                <option class="form-control" value="Femme">Femme</option>
+    
+            </select>
+            @endif
+
+        </div>
+
+        <div class="col-md-6">
+            <label for="email_resp" class="form-label">Email</label>
+            
+            @if ($testNull[0]->email_resp != null)
+            <input class="form-control" id="email_resp" name="email_resp" type="email" value="{{ $testNull[0]->email_resp }}" placeholder="Entrez votre email" class="form-control" inputmode="email">
+            @else
+            <input class="form-control" id="email_resp" name="email_resp" type="email" placeholder="Entrez votre email" value="" class="form-control" inputmode="email">
+            @endif
+        
+        
+        </div>
+  
+          
+          <div class="col-md-6">
+            
+            <label for="telephone_resp" class="form-label">N° téléphone</label>
+
+            @if ($testNull[0]->telephone_resp != null)
+            <input value="{{ $testNull[0]->telephone_resp }}" id="telephone_resp" name="telephone_resp" class="form-control" type="text" inputmode="numeric" >
+
+            @else
+            <input value="" placeholder="Telephone" id="telephone_resp" name="telephone_resp" class="form-control" type="text" inputmode="numeric" >
+
+            @endif
+          </div>
+
+        <div class="col-md-6">
+            <label for="cin_resp" class="form-label">CIN</label>
+            
+            @if ($testNull[0]->cin_resp != null)
+            <input value="{{ $testNull[0]->cin_resp}}" id="cin_resp" 
+            name="cin_resp" class="form-control" type="text" 
+            placeholder="CIN" inputmode="numeric" >
+            @else
+          
+            <input value="" placeholder="CIN" id="cin_resp" name="cin_resp" class="form-control" type="text" inputmode="numeric" >
+            
+            @endif
+
+        </div>
+
+        <div class="col-12">
+          <label for="inputAddress2" class="">Address</label>
+          
+          @if ($testNull[0]->adresse_lot != null and $testNull[0]->adresse_quartier != null and $testNull[0]->adresse_ville != null and $testNull[0]->adresse_code_postal != null and $testNull[0]->adresse_region != null)
+          <input name="adresse" type="text" class="form-control"
+          value="{{ $testNull[0]->adresse_lot }} &nbsp;{{ $testNull[0]->adresse_quartier }} &nbsp;{{ $testNull[0]->adresse_ville }} &nbsp;{{ $testNull[0]->adresse_code_postal }}&nbsp;{{ $testNull[0]->adresse_region }}&nbsp;"
+            id="inputAddress2" placeholder="">
+          
+            @endif
+
+        <div class="container col-md-12">
+            <div class="row row-cols-6 adresse_container">
+                    
+                {{-- <label for="lot" class="form-label">Lot</label> --}}
+                <input type="text" placeholder="Lot" class="p-1 m-1 border rounded adresse" name="lot" id="lot">
+                
+                {{-- <label for="quartier" class="form-label">Quartier</label> --}}
+                <input type="text" placeholder="Quartier" class="p-1 m-1 border rounded adresse" name="quartier" id="quartier">
+                
+                {{-- <label for="ville" class="form-label">Ville</label> --}}
+                <input type="text" placeholder="Ville" class="p-1 m-1 border rounded adresse" name="ville" id="ville">
+                
+                {{-- <label for="code_postal" class="form-label">Ville</label> --}}
+                <input type="text" placeholder="code postale" class="p-1 m-1 border rounded adresse" name="code_postal" id="code_postal">
+                
+                {{-- <label for="region" class="form-label">Région</label> --}}
+                <input type="text" placeholder="Région" class="p-1 m-1 border rounded adresse" name="region" id="region">
+                
             </div>
-            <br>
-            <div class="row ">
-                <div class="container">
-                    <div class="col-12">
-                        <form action="{{route('remplir_info_resp')}}" method="POST" class="w-50" style="margin-left: auto; margin-right: auto">
-                            @csrf
-                            <div class="form-control mb-5">
-                                <p class="text-center">Informations générales</p>
-                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    <input type="text" name="id_resp" style="float: right;" value="{{$testNull[0]->id}}" hidden>
-                                    @if ($testNull[0]->nom_resp!=null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">NOM<span style="float: right;">{{$testNull[0]->nom_resp}} {{$testNull[0]->prenom_resp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-                                    </p>
-                                    @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">NOM<input type="text" name="nom_resp" style="float: right;"></p>
-                                    @endif
 
-
-
-                                </div>
-                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    @if ($testNull[0]->date_naissance_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<span style="float: right;">{{date('j \\ F Y', strtotime($testNull[0]->date_naissance_resp))}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                    </p>
-                                    @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">DATE DE NAISSANCE<input type="date" name="date_naissance_resp" style="float: right;"></p>
-                                    @endif
-
-
-                                </div>
-                                <div class="hover" style="border-bottom: solid 1px #d399c2;">
-                                    @if ($testNull[0]->sexe_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">GENRE<span style="float: right;">{{$testNull[0]->sexe_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                        </p>
-                                    @else
-                                        <select  value="" name="genre" class="form-select test input" id="genre"  >
-                                            <option value="Homme"  >Homme</option>
-                                            <option value="Femme">Femme</option>
-                                        </select>
-                                    @endif
-                                </div>
-
-                                <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-                            </div>
-
-                            <div class="form-control mb-5">
-                                <p class="text-center">Coordonnées</p>
-
-
-                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->email_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<span style="float: right;">{{$testNull[0]->email_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                        </p>
-                                    @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">ADRESSE E-MAIL<input type="text" name="email_resp" style="float: right;"></p>
-                                    @endif
-                                </div>
-                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->telephone_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<span style="float: right;">{{$testNull[0]->telephone_resp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
-
-                                        </p>
-                                    @else
-                                    <p class="p-1 m-0" style="font-size: 10px;">TELEPHONE<input type="text" name="tel_resp" style="float: right;"></p>
-                                    @endif
-                                </div>
-
-                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->cin_resp!=null)
-                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<span style="float: right;">{{$testNull[0]->cin_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                        </p>
-                                    @else
-                                        <p class="p-1 m-0" style="font-size: 10px;">CIN<input type="text" name="cin_resp" style="float: right;"></p>
-                                    @endif
-                                </div>
-                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if ($testNull[0]->adresse_lot!=null and $testNull[0]->adresse_quartier!=null and $testNull[0]->adresse_ville!=null and $testNull[0]->adresse_code_postal!=null and $testNull[0]->adresse_region!=null )
-                                    <p class="p-1 m-0" style="font-size: 10px;">ADRESSE<span style="float: right;">{{$testNull[0]->adresse_lot}} &nbsp;{{$testNull[0]->adresse_quartier}} &nbsp;{{$testNull[0]->adresse_ville}} &nbsp;{{$testNull[0]->adresse_code_postal}}&nbsp;{{$testNull[0]->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span>
-
-                                    </p>
-                                    @else
-                                    @if($testNull[0]->adresse_lot==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">LOT<input type="text" name="lot" style="float: right;"></p>
-                                    @endif
-                                    @if($testNull[0]->adresse_quartier==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">QUARTIER<input type="text" name="quartier" style="float: right;"></p>
-                                    @endif
-                                    @if($testNull[0]->adresse_ville==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">VILLE<input type="text" name="ville" style="float: right;"></p>
-                                    @endif
-                                    @if($testNull[0]->adresse_code_postal==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">CODE POSTAL<input type="text" name="code_postal" style="float: right;"></p>
-                                    @endif
-                                    @if($testNull[0]->adresse_region==null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">REGION<input type="text" name="region" style="float: right;"></p>
-                                    @endif
-                                    @endif
-
-                                </div>
-
-
-
-                                <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-                            </div>
-
-
-
-                            <div class="form-control">
-                                <p class="text-center">Informations professionnelles</p>
-
-
-                                <div style="border-bottom: solid 1px #d399c2;" class="">
-
-                                    <p class="p-1 m-0" style="font-size: 10px;">ENTREPRISE<span style="float: right;">{{$entreprise[0]->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-
-                                    </p>
-
-                                </div>
-                                <div style="border-bottom: solid 1px #d399c2;" class="hover">
-
-                                    <p class="p-1 m-0" style="font-size: 10px;">FONCTION<span style="float: right;">{{$testNull[0]->fonction_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                                    </p>
-
-                                </div>
-
-
-                                <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
-                            </div><br>
-                            <button type="submit" class="btn btn-primary">Envoyer</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
 
 
+        
+        <div class="col-md-6">
+            <label for="cin_resp" class="form-label">Entreprise</label>
+            
+            <input readonly value="{{ $entreprise[0]->nom_etp}}" id="nom_etp" 
+            name="nom_etp" class="form-control" type="text" 
+            placeholder="Entreprise">
 
-    </main>
 
-
-    {{-- <footer class="footer_container" style="position:fixed; bottom:0; width:100%">
-        <div class="container-fluid d-flex justify-content-center pt-3">
-            <div class="bordure">&copy; Copyright 2022</div>
-            <div class="bordure"><a href="{{url('info_legale')}}" style="color:#801D68 !important" target="_blank">Informations légales</a></div>
-            <div><a href="{{url('contact')}}" class="bordure" style="color: #801D62;text-decoration:none" target="_blank">Contactez-nous</a></div>
-            <div class="bordure">Politique de confidentialités</div>
-            <div class="bordure"> <a href="{{route('condition_generale_de_vente')}}" style="color:#801D68 !important" target="_blank"> Condition d'utilisation</a> </div>
-            <div class="bordure"> <a href="{{url('tarifs')}}" style="color:#801D68 !important" target="_blank"> Tarifs</a></div>
-            <div class="bordure">Crédits</div>
-            <div> &nbsp; Version 0.9</div>
         </div>
-    </footer> --}}
+
+                
+        <div class="col-md-6">
+            <label for="cin_resp" class="form-label">Fonction</label>
+            
+            <input readonly value="{{ $testNull[0]->fonction_resp}}" id="nom_etp" 
+            name="nom_etp" class="form-control" type="text" 
+            placeholder="Entreprise">
+
+
+        </div>
+
+{{-- 
+          <div class="col-md-4">
+            <label for="inputState" class="form-label">State</label>
+            <select id="inputState" class="form-select">
+              <option selected>Choose...</option>
+              <option>...</option>
+            </select>
+          </div> --}}
+
+          {{-- <div class="col-md-2">
+            <label for="inputZip" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="inputZip">
+          </div> --}}
+
+          
+
+        </div>
+
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck">
+            <label class="form-check-label" for="gridCheck">
+              Check me out
+            </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+      </form>
 
 </div>
-</div>
-</div>
-</body>
+
+</body> 
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- JavaScript Bundle with Popper -->
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> --}}
+
+<script>
+    $(function(){
+  $('#datepicker').datepicker();
+}); 
+</script>
+
+</html>

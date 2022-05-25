@@ -2,44 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-
-use App\abonnement_cfp;
-use App\abonnement;
-use App\offre_gratuit;
-use App\type_abonnement;
-use App\tarif_categorie;
-use App\type_abonne;
-use App\type_abonnement_role;
-use App\Facture;
-use App\detail;
-use App\entreprise;
-use App\formation;
-use App\module;
-use App\projet;
-use App\responsable;
-use App\ResponsableCfpModel;
-use App\stagiaire;
-use App\User;
-use App\taux_devises;
-use Illuminate\Support\Facades\Gate;
-use App\Models\FonctionGenerique;
 use App\cfp;
 use App\tva;
-use App\Devise;
-use App\chefDepartement;
-use App\formateur;
-use App\Collaboration;
-use App\EvaluationChaud;
-use App\Groupe;
-use App\Models\getImageModel;
-use Carbon\Carbon;
-use Illuminate\Pagination\Paginator;
-use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
+use App\User;
 
+use App\detail;
+use App\Devise;
+use App\Groupe;
+use App\module;
+use App\projet;
+use App\Facture;
+use App\formateur;
+use App\formation;
+use App\stagiaire;
+use Carbon\Carbon;
+use App\abonnement;
+use App\entreprise;
+use App\responsable;
+use App\type_abonne;
+use App\taux_devises;
+use App\Collaboration;
+use App\offre_gratuit;
+use App\abonnement_cfp;
+use App\chefDepartement;
+use App\EvaluationChaud;
+use App\tarif_categorie;
+use App\type_abonnement;
+use App\ResponsableCfpModel;
 use function Ramsey\Uuid\v1;
+use Illuminate\Http\Request;
+use App\Models\getImageModel;
+use App\type_abonnement_role;
+use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
 
 class HomeController extends Controller
 {
@@ -152,6 +154,36 @@ class HomeController extends Controller
     {
         $id_resp = $request->input('id_resp');
 
+
+        // validation des données
+        // $validator = $request->validate([
+        //     'nom_resp' => 'required|string|max:255',
+        //     'prenom_resp' => 'required|string|max:255',
+
+        // ]);
+
+        // test de la validité des données
+        // if ($validator->fails()) {
+        //     return redirect()->back()->with('error', 'Remplissez les champs vides');
+        //     // return redirect()->back()->withErrors($validator)->withInput();
+        // } else {
+        //     DB::update('update responsables set nom_resp = ? where id = ?', [$request->input('nom_resp'), $id_resp]);
+        //     DB::update('update responsables set prenom_resp = ? where id = ?', [$request->input('prenom_resp'), $id_resp]);
+        //     DB::update('update responsables set genre= ? where id = ?', [$request->input('genre'), $id_resp]);
+        //     DB::update('update responsables set telephone_resp = ? where id = ?', [$request->input('tel_resp'), $id_resp]);
+        //     DB::update('update responsables set cin_resp = ? where id = ?', [$request->input('cin_resp'), $id_resp]);
+        //     DB::update('update responsables set email_resp = ? where id = ?', [$request->input('email_resp'), $id_resp]);
+        //     DB::update('update responsables set password_resp = ? where id = ?', [$request->input('password_resp'), $id_resp]);
+        //     if ($request->input('genre') == 'Femme') $genre = 1;
+        //     if ($request->input('genre') == 'Homme') $genre = 2;
+        //     DB::update('update responsables set genre_resp = ? where id = ?', [$genre, $id_resp]);
+
+
+        //     dd('here');
+        //         return view('', compact('totale_invitation'));
+
+        // }
+
         if ($request->input('nom_resp') != null) {
             DB::update('update responsables set nom_resp = ? where id = ?', [$request->input('nom_resp'), $id_resp]);
         }
@@ -184,15 +216,22 @@ class HomeController extends Controller
         if ($request->input('region') != null) {
             DB::update('update responsables set adresse_region = ? where id = ?', [$request->input('region'), $id_resp]);
         }
-        if (count($request->input()) > 2) {
-            return redirect()->back()->with('error', 'Remplissez les champs vides');
-        } else {
-            $user_id = User::where('id', Auth::user()->id)->value('id');
-            return view('layouts.dashboard_referent');
-        }
+
+
+        $user_id = User::where('id', Auth::user()->id)->value('id');
+        return view('layouts.dashboard_referent');
+
+
+        // if (count($request->input()) > 2) {
+        //     return redirect()->back()->with('error', 'Remplissez les champs vides');
+        // } else {
+        //     $user_id = User::where('id', Auth::user()->id)->value('id');
+        //     return view('layouts.dashboard_referent');
+        // }
     }
     public function index(Request $request, $id = null)
     {
+      
         if (Gate::allows('isFormateurPrincipale')) {
             return redirect()->route('calendrier');
         }
@@ -218,6 +257,7 @@ class HomeController extends Controller
             }
             //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
             if ($nb > 0) {
+
                 return view('formulaire_stagiaire', compact('testNull', 'entreprise'));
             }
 
@@ -258,7 +298,7 @@ class HomeController extends Controller
         }
 
         if (Gate::allows('isCFPPrincipale')) {
-
+            
             $fonct = new FonctionGenerique();
 
             $user_id = Auth::user()->id;
@@ -371,7 +411,7 @@ class HomeController extends Controller
         // }
 
         if (Gate::allows('isReferentPrincipale')) {
-
+          
 
             $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
 

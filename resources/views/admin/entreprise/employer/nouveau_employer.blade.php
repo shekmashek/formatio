@@ -36,6 +36,8 @@
 </style>
 
 
+{{-- à transformer en tabs --}}
+
 <div class="container-fluid">
 
     <div class="m-4">

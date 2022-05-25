@@ -63,7 +63,11 @@ class EmployeurController extends Controller
             'fonction' => 'required',
             'phone' => 'required'
         ];
+        
         $request->validate($critereForm, $rules);
+
+
+
 
         $user = new User();
         // dd($request->input());
@@ -74,7 +78,7 @@ class EmployeurController extends Controller
         $fonction = $request->fonction;
         $mail = $request->mail;
         $phone = $request->phone;
-       $fonction_employer=null;
+        $fonction_employer=null;
         if (Gate::allows('isReferent')) {
 
             $user->name = $request->nom . " " . $request->prenom;
@@ -83,29 +87,71 @@ class EmployeurController extends Controller
             // $user->telephone =  $request->phone;
             $ch1 = "0000";
             $user->password = Hash::make($ch1);
+            // enregistrement de l'utilisateur
+
+            // getting all from users table and check if the the email is already exist
+            $users = DB::table('users')->get();
+            foreach ($users as $u) {
+                if ($u->email == $mail) {
+                    dd("email existe déjà");
+                    return redirect()->back()->with('error', 'email existe déjà');
+                } 
+            }
+
             $user->save();
+
+
             // $nom_img = "images/users/user.png";
+
+            // getting the user from database responsables table where user_id = Auth::user()->id
+            // $user_id = Auth::user()->id;
+            // $user_responsable = DB::table('responsables')->where('user_id', $user_id)->first();
+
+            // obtenir l'utilisateur dans la base de donnée de la table responsables qui a le meme id que l'utilisateur connecté
+            // $user_responsable = DB::table('responsables')->where('user_id', Auth::user()->id)->first();
 
             $resp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$resp->entreprise_id]);
             $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
+            
+            
+            
 
 
             if ($request->type_enregistrement == "STAGIAIRE") {
-                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
 
+                $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
+                
                 DB::beginTransaction();
                 try {
-                    $this->fonct->insert_role_user($user_id, "3",true); // EMPLOYEUR
+
+                    // insert into role_users (user_id, role_id,activiter) values (?, ?,?)
+                    // DB::table('role_users')->insert([
+                    //     'user_id' => $user_id,
+                    //     'role_id' => 3,
+                    //     'activiter' => true
+                    // ]);
+
+                    $this->fonct->insert_role_user($user_id, 3,true); // EMPLOYEUR
+
                     DB::commit();
                 } catch (Exception $e) {
                     DB::rollback();
                     echo $e->getMessage();
                 }
-                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
+                // generer un chiffre aleatoire entre 1 et 5 pour un id temporaire
+                $temp_service_id = rand(1, 5);
+                
+
+                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id, $temp_service_id];
                 DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
-                entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+                entreprise_id,user_id,service_id, activiter,created_at) values(?,?,?,?,?,?,?,?,?, ?,1,NOW())", $data);
+
+                
+
             }
+
+            
             if ($request->type_enregistrement == "REFERENT") {
                 $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["2"])->role_description;
 
@@ -121,7 +167,11 @@ class EmployeurController extends Controller
                 $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
                 DB::insert("insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp,telephone_resp,fonction_resp
                 ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+
+
             }
+
+
             if ($request->type_enregistrement == "MANAGER") {
                 $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["5"])->role_description;
 
@@ -135,10 +185,17 @@ class EmployeurController extends Controller
                     echo $e->getMessage();
                 }
                 $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id,$user_id];
+
                 DB::insert("insert into chef_departements(matricule,nom_chef,prenom_chef,cin_chef,mail_chef,telephone_chef,fonction_chef
                 ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+
+
+
             }
-            Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
+
+            // cause une swift exception error
+            // Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
+            
             return back()->with('success',"Terminé !");
         }
 

@@ -86,7 +86,7 @@
                         <form action="{{route('remplir_info_stagiaire')}}" method="POST" class="w-50" style="margin-left: auto; margin-right: auto">
                             @csrf
                             <div class="form-control mb-5">
-                                <p class="text-center">Informations générales</p>
+                                <p class="text-center">Informations (compte stagiaire)</p>
                                 <div class="hover" style="border-bottom: solid 1px #d399c2;">
                                     <input type="text" name="id_stg" style="float: right;" value="{{$testNull[0]->id}}" hidden>
                                     @if ($testNull[0]->nom_stagiaire!=null)

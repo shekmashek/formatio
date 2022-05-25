@@ -63,7 +63,7 @@ class FonctionGenerique extends Model
     {
         $query = "SELECT * FROM " . $nomTab . " WHERE ";
         if (count($para) != count($val)) {
-            return "ERROR: tail des onnees parametre et value est different";
+            return "ERROR: tail des donnees parametre et value est different";
         } else {
             for ($i = 0; $i < count($para); $i++) {
                 $query .= "" . $para[$i] . "= ?";

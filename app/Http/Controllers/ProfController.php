@@ -134,6 +134,7 @@ class ProfController extends Controller
         return json_encode($formateur);
     }
 
+    
     public function create()
     {
     }
