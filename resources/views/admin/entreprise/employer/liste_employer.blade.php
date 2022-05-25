@@ -430,12 +430,12 @@
             <div class="col-12">
                 <div class="my-2">
                     @if (Session::has('success'))
-                    <span style="color: green">
+                    <span style="color: #2ebf91">
                         {{Session::get('success') }}
                     </span>
                     @endif
                     @if (Session::has('error'))
-                    <span style="color: red">
+                    <span style="color: #ee0707">
                         {{Session::get('error') }}
                     </span>
                     @endif
@@ -476,9 +476,9 @@
                                 <a href="{{route('profile_stagiaire',$emp->id)}}">
                                     <p> {{$emp->nom_emp." ".$emp->prenom_emp}} </p>
                                     <p> @if ($emp->activiter==1)
-                                        <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
+                                        <span style="color:#2ebf91; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
                                         @else
-                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
+                                        <span style="color:#ee0707; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule_emp}}
                                         @endif</p>
                                 </a>
                             </td>
@@ -508,23 +508,23 @@
 
                                 @if ($emp->id == $connected->id) {{-- debut if 1 --}}
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked disabled>
+                                    <input class="form-check-input activ_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked disabled>
                                 </div>
                                 @else {{-- else if 1 --}}
 
                                 @if($emp->role_referent_exist==true) {{-- debut if 2 --}}
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked data-bs-toggle="modal" data-bs-target="#desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                    <input class="form-check-input activ_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}"data-bs-toggle="modal" data-bs-target="#desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}"  checked >
                                 </div>
                                 @else {{-- else if 2 --}}
 
                                 @if ($emp->role_referent_prioriter==true)
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                    <input class="form-check-input desactiv_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
                                 </div>
                                 @else
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                    <input class="form-check-input desactiv_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
                                 </div>
                                 @endif
 
@@ -540,7 +540,7 @@
 
                                 @if ($emp->id == $connected->id) {{-- debut if 1 --}}
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked disabled>
+                                    <input class="form-check-input activ_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked disabled>
                                 </div>
                                 @else {{-- else if 1 --}}
 
@@ -548,11 +548,11 @@
 
                                 @if($emp->role_referent_exist==true) {{-- debut if 2 --}}
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked data-bs-toggle="modal" data-bs-target="#desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}" disabled>
+                                    <input class="form-check-input activ_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}" checked disabled>
                                 </div>
                                 @else {{-- else if 2 --}}
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                    <input class="form-check-input desactiv_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
                                 </div>
                                 @endif {{-- fin if 2 --}}
 
@@ -560,17 +560,17 @@
 
                                 @if($emp->role_referent_exist==true) {{-- debut if 2 --}}
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked data-bs-toggle="modal" data-bs-target="#desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                    <input class="form-check-input activ_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}"  data-bs-toggle="modal" data-bs-target="#desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}" checked>
                                 </div>
                                 @else {{-- else if 2 --}}
 
                                 @if ($emp->role_referent_prioriter==true)
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                    <input class="form-check-input desactiv_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
                                 </div>
                                 @else
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}" disabled>
+                                    <input class="form-check-input desactiv_ref_switch" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}" disabled>
                                 </div>
                                 @endif
 
@@ -594,7 +594,7 @@
                             @canany(['isReferentPrincipale'])
                             <td>
                                 @if ($emp->id == $connected->id)
-                                <span style="color:green">moi</span>
+                                <span style="color:#2ebf91">moi</span>
                                 @else
                                 @if ($emp->activiter==1)
                                 <div class="form-check form-switch">
@@ -610,7 +610,7 @@
                             </td>
                             <td>
                                 @if ($emp->id != $connected->id)
-                                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
+                                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><i class="bx bx-trash bx_supprimer" ></i></button>
                                 @endif
                             </td>
                             @endcanany
@@ -621,7 +621,7 @@
                         <div class="modal fade" id="desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header d-flex justify-content-center" style="background-color:red;">
+                                    <div class="modal-header d-flex justify-content-center" style="background-color:#ee0707;">
                                         <h4 class="modal-title text-white">Avertissement !</h4>
 
                                     </div>
@@ -629,11 +629,11 @@
                                         <div class="text-center my-2">
                                             <i class="fa-solid fa-circle-exclamation warning"></i>
                                         </div>
-                                        <small>Vous <span style="color: red"> êtes </span>sur le point de retirer "{{$emp->nom_emp." ".$emp->prenom_emp}}" en tant que réferent</small>
+                                        <small>Vous <span style="color: #ee0707"> êtes </span>sur le point de retirer "{{$emp->nom_emp." ".$emp->prenom_emp}}" en tant que réferent</small>
                                     </div>
 
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i> Non </button>
+                                        <button type="button" class="btn btn_annuler activ_ref" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i> Non </button>
                                         <form action="{{route('delete_role_user')}}" method="GET">
                                             @csrf
                                             <input type="text" hidden name="user_id" value="{{$emp->user_id}}">
@@ -651,19 +651,19 @@
                         <div class="modal fade" id="activer_role_ref_{{$emp->id}}_{{$emp->user_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header d-flex justify-content-center" style="background-color:green;">
+                                    <div class="modal-header d-flex justify-content-center" style="background-color:#2ebf91;">
                                         <h4 class="modal-title text-white">Avertissement !</h4>
 
                                     </div>
                                     <div class="modal-body">
                                         <div class="text-center my-2">
-                                            <i class="fa-solid fa-circle-exclamation warning" style="color: green"></i>
+                                            <i class="fa-solid fa-circle-exclamation warning" style="color: #2ebf91"></i>
                                         </div>
-                                        <small>Vous <span style="color: green"> êtes </span>sur le point de nommer "{{$emp->nom_emp." ".$emp->prenom_emp}}" en tant que nouveau réferent</small>
+                                        <small>Vous <span style="color: #2ebf91"> êtes </span>sur le point de nommer "{{$emp->nom_emp." ".$emp->prenom_emp}}" en tant que nouveau réferent</small>
                                     </div>
 
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i> Non </button>
+                                        <button type="button" class="btn btn_annuler desactiv_ref" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i> Non </button>
                                         <form action="{{route('add_role_user')}}" method="GET">
                                             @csrf
                                             <input type="text" hidden name="user_id" value="{{$emp->user_id}}">
@@ -681,7 +681,7 @@
                         <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                    <div class="modal-header d-flex justify-content-center" style="background-color:#ee0707;">
                                         <h4 class="modal-title text-white">Avertissement !</h4>
 
                                     </div>
@@ -689,7 +689,7 @@
                                         <div class="text-center my-2">
                                             <i class="fa-solid fa-circle-exclamation warning"></i>
                                         </div>
-                                        <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
+                                        <small>Vous <span style="color: #ee0707"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
                                     </div>
 
                                     <div class="modal-footer justify-content-center">

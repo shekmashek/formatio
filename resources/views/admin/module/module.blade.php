@@ -4,9 +4,7 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
-    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid pb-1">
@@ -49,14 +47,12 @@
                                 @if($mod_en_cours == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button" ><i
-                                            class='bx bx-layer-plus icon_vide' title="ajouter un nouveau module"></i></a>
+                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i class='bx bx-layer-plus icon_vide' title="ajouter un nouveau module"></i></a>
                                 </div>
                                 @else
                                 @foreach($mod_en_cours as $mod)
                                 <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light mb-3"
-                                        id="border_premier">
+                                    <div class="row detail__formation__result new_card_module bg-light mb-3" id="border_premier">
                                         <div class=" detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-3 ">
@@ -64,10 +60,8 @@
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
                                                     </span>
                                                 </h4>
-                                                <span id="preview_categ"><span class=" acf-categorie"
-                                                        style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
-                                                <p id="preview_descript"><span class="acf-description"
-                                                        style="font-size: 0.850rem">{{$mod->description}}</span></p>
+                                                <span id="preview_categ"><span class=" acf-categorie" style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
+                                                <p id="preview_descript"><span class="acf-description" style="font-size: 0.850rem">{{$mod->description}}</span></p>
                                                 <div class="d-flex ">
                                                     <div class="col-6 detail__formation__result__avis">
                                                         <div style="--note: 4.5;">
@@ -79,8 +73,7 @@
                                                         </div>
                                                         <span><strong>0.0</strong>/5 (aucun avis)</span>
                                                         @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                        <span
-                                                            class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                        <span class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
                                                         @endif
                                                     </div>
                                                     <div class="col-6 w-100">
@@ -106,11 +99,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div
-                                            class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
-                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon"
-                                                    style="color: #7635dc !important; font-size: 0.800rem"></i>
+                                        <div class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
+                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i class="bx bxs-alarm bx_icon" style="color: #7635dc !important; font-size: 0.800rem"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
                                                     </span>j</span>
@@ -118,46 +108,31 @@
                                                         {{$mod->duree}}
                                                     </span>h</span>
                                             </div>
-                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                                    class="bx bxs-devices bx_icon"
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
+                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i class="bx bxs-devices bx_icon" style="color: #7635dc !important;"></i>&nbsp;<span class="acf-modalite">{{$mod->modalite_formation}}</span>
                                             </div>
                                             <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                                <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-niveau">{{$mod->niveau}}</span>
+                                                <i class='bx bx-equalizer bx_icon' style="color: #7635dc !important;"></i>&nbsp;<span class="acf-niveau">{{$mod->niveau}}</span>
                                             </div>
 
                                         </div>
                                         <div class="d-flex flex-row justify-content-center">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="" id="preview_niveau">
-                                                <button class="btn modifier pt-0"><a
-                                                        href="{{route('modifier_module',$mod->module_id)}}"><i
-                                                            class='bx bx-edit bx_modifier'
-                                                            title="modifier les informations"></i></a></button>
+                                                <button class="btn modifier pt-0"><a href="{{route('modifier_module',$mod->module_id)}}"><i class='bx bx-edit bx_modifier' title="modifier les informations"></i></a></button>
                                             </div>
                                             <div class="" id="preview_niveau">
-                                                <button class="btn supprimer pt-0" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash bx_supprimer"
-                                                        title="supprimer le module"></i></button>
+                                                <button class="btn supprimer pt-0" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$mod->module_id}}"><i class="bx bx-trash bx_supprimer" title="supprimer le module"></i></button>
                                             </div>
                                             <div class="mt-1">
-                                                <a href="{{route('ajout_programme',$mod->module_id)}}"
-                                                    class="btn_completer"
-                                                    role="button">Completer&nbsp;votre&nbsp;programme</a>
+                                                <a href="{{route('ajout_programme',$mod->module_id)}}" class="btn_completer" role="button">Completer&nbsp;votre&nbsp;programme</a>
                                             </div>
                                         </div>
 
                                         <div>
-                                            <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
-                                                        <div class="modal-header .avertissement  d-flex justify-content-center"
-                                                            style="background-color:#ee0707; color: white">
+                                                        <div class="modal-header .avertissement  d-flex justify-content-center" style="background-color:#ee0707; color: white">
                                                             <h6 class="modal-title">Avertissement !</h6>
                                                         </div>
                                                         <div class="modal-body">
@@ -205,24 +180,19 @@
                                 @if($mod_non_publies == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
-                                            class='bx bx-layer-plus icon_vide'></i></a>
+                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
                                 @foreach($mod_non_publies as $mod)
                                 <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light mb-3"
-                                        id="border_premier">
+                                    <div class="row detail__formation__result new_card_module bg-light mb-3" id="border_premier">
                                         <div class=" detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-3">
-                                                    <span id="preview_module"><span
-                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
+                                                    <span id="preview_module"><span class="acf-nom_module">{{$mod->nom_module}}</span></span>
                                                 </h4>
-                                                <span id="preview_categ"><span class=" acf-categorie"
-                                                        style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
-                                                <p id="preview_descript"><span class="acf-description"
-                                                        style="font-size: 0.850rem">{{$mod->description}}</span></p>
+                                                <span id="preview_categ"><span class=" acf-categorie" style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
+                                                <p id="preview_descript"><span class="acf-description" style="font-size: 0.850rem">{{$mod->description}}</span></p>
                                                 <div class="d-flex ">
                                                     <div class="col-6 detail__formation__result__avis">
                                                         <div style="--note: 4.5;">
@@ -234,8 +204,7 @@
                                                         </div>
                                                         <span><strong>0.0</strong>/5 (aucun avis)</span>
                                                         @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                        <span
-                                                            class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                        <span class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
                                                         @endif
                                                     </div>
                                                     <div class="col-6 w-100">
@@ -261,11 +230,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div
-                                            class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
-                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon"
-                                                    style="color: #7635dc !important; font-size: 0.800rem"></i>
+                                        <div class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
+                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i class="bx bxs-alarm bx_icon" style="color: #7635dc !important; font-size: 0.800rem"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
                                                     </span>j</span>
@@ -273,45 +239,29 @@
                                                         {{$mod->duree}}
                                                     </span>h</span>
                                             </div>
-                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                                    class="bx bxs-devices bx_icon"
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
+                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i class="bx bxs-devices bx_icon" style="color: #7635dc !important;"></i>&nbsp;<span class="acf-modalite">{{$mod->modalite_formation}}</span>
                                             </div>
                                             <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                                <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-niveau">{{$mod->niveau}}</span>
+                                                <i class='bx bx-equalizer bx_icon' style="color: #7635dc !important;"></i>&nbsp;<span class="acf-niveau">{{$mod->niveau}}</span>
                                             </div>
 
                                         </div>
                                         <div class="d-flex flex-row justify-content-center">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="" id="preview_niveau">
-                                                <button class="btn modifier pt-0"><a
-                                                        href="{{route('modif_programmes',$mod->module_id)}}"><i
-                                                            class='bx bx-edit bx_modifier'
-                                                            title="modifier les informations"></i></a></button>
+                                                <button class="btn modifier pt-0"><a href="{{route('modif_programmes',$mod->module_id)}}"><i class='bx bx-edit bx_modifier' title="modifier les informations"></i></a></button>
                                             </div>
                                             <div class="" id="preview_niveau">
-                                                <button class="btn supprimer pt-0" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash bx_supprimer"
-                                                        title="supprimer le module"></i></button>
+                                                <button class="btn supprimer pt-0" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$mod->module_id}}"><i class="bx bx-trash bx_supprimer" title="supprimer le module"></i></button>
                                             </div>
                                             <div class="mt-2">
-                                                <button type="button" class="btn btn_competence mt-1"
-                                                    data-id="{{$mod->module_id}}" data-bs-toggle="modal"
-                                                    data-bs-target="#ModalCompetence"
-                                                    id="{{$mod->module_id}}">Compétences&nbsp;professionnelles</button>
+                                                <button type="button" class="btn btn_competence mt-1" data-id="{{$mod->module_id}}" data-bs-toggle="modal" data-bs-target="#ModalCompetence" id="{{$mod->module_id}}">Compétences&nbsp;professionnelles</button>
                                             </div>
                                             <div>
-                                                <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
-                                                            <div class="modal-header .avertissement  d-flex justify-content-center"
-                                                                style="background-color:#ee0707; color: white">
+                                                            <div class="modal-header .avertissement  d-flex justify-content-center" style="background-color:#ee0707; color: white">
                                                                 <h6 class="modal-title">Avertissement !</h6>
                                                             </div>
                                                             <div class="modal-body">
@@ -350,9 +300,7 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="mt-2 text-center">
-                                                                <button id="addRow" type="button"
-                                                                    class="btn_creer text-center mb-4 pb-2"
-                                                                    onclick="competence();">
+                                                                <button id="addRow" type="button" class="btn_creer text-center mb-4 pb-2" onclick="competence();">
                                                                     <i class='bx bx-plus-medical icon_creer'></i>Ajouter
                                                                     une nouvelle ligne
                                                                 </button>
@@ -363,25 +311,16 @@
                                                             <div class="col-8">
                                                                 <div class="form-group">
                                                                     <div class="form-row">
-                                                                        <input type="text" name="titre_competence[]"
-                                                                            id="titre_competence"
-                                                                            class="form-control input"
-                                                                            placeholder="Compétences" required>
-                                                                        <label for="titre_competence"
-                                                                            class="form-control-placeholder">Compétences</label>
+                                                                        <input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>
+                                                                        <label for="titre_competence" class="form-control-placeholder">Compétences</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-4">
                                                                 <div class="form-group ms-1">
                                                                     <div class="form-row">
-                                                                        <input type="text" name="notes[]" id="notes"
-                                                                            min="1" max="10"
-                                                                            onfocus="(this.type='number')"
-                                                                            class="form-control input"
-                                                                            placeholder="Notes" required>
-                                                                        <label for="notes"
-                                                                            class="form-control-placeholder">Notes</label>
+                                                                        <input type="text" name="notes[]" id="notes" min="1" max="10" onfocus="(this.type='number')" class="form-control input" placeholder="Notes" required>
+                                                                        <label for="notes" class="form-control-placeholder">Notes</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -421,25 +360,20 @@
                                 @if($mod_hors_ligne == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
-                                            class='bx bx-layer-plus icon_vide'></i></a>
+                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
                                 @foreach($mod_hors_ligne as $mod)
                                 <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
-                                        id="border_premier">
+                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2" id="border_premier">
                                         <div class="col-lg-12 col-md-12 detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-2">
-                                                    <span id="preview_module"><span
-                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
+                                                    <span id="preview_module"><span class="acf-nom_module">{{$mod->nom_module}}</span></span>
 
                                                 </h4>
-                                                <span id="preview_categ"><span class=" acf-categorie"
-                                                        style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
-                                                <p id="preview_descript"><span
-                                                        class="acf-description">{{$mod->description}}</span></p>
+                                                <span id="preview_categ"><span class=" acf-categorie" style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
+                                                <p id="preview_descript"><span class="acf-description">{{$mod->description}}</span></p>
                                             </div>
                                             <div class="d-flex ">
                                                 <div class="col-6 detail__formation__result__avis">
@@ -452,8 +386,7 @@
                                                     </div>
                                                     <span><strong>0.0</strong>/5 (aucun avis)</span>
                                                     @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                    <span
-                                                        class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                    <span class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-6 w-100">
@@ -480,8 +413,7 @@
                                         </div>
 
                                         <div class="row g-0 row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
+                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
                                                     </span>j</span>
@@ -489,31 +421,20 @@
                                                         {{$mod->duree}}
                                                     </span>h</span>
                                             </div>
-                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                                    class="bx bxs-devices bx_icon"
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
+                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i class="bx bxs-devices bx_icon" style="color: #7635dc !important;"></i>&nbsp;<span class="acf-modalite">{{$mod->modalite_formation}}</span>
                                             </div>
                                             <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                                <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-niveau">{{$mod->niveau}}</span>
+                                                <i class='bx bx-equalizer bx_icon' style="color: #7635dc !important;"></i>&nbsp;<span class="acf-niveau">{{$mod->niveau}}</span>
                                             </div>
                                         </div>
                                         <div class="row g-0">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="col-4 d-flex flex-row">
                                                 <div class="col" id="preview_niveau">
-                                                    <button class="btn modifier pt-0"><a
-                                                            href="{{route('modif_programmes',$mod->module_id)}}"><i
-                                                                class='bx bx-edit bx_modifier'
-                                                                title="modifier les informations"></i></a></button>
+                                                    <button class="btn modifier pt-0"><a href="{{route('modif_programmes',$mod->module_id)}}"><i class='bx bx-edit bx_modifier' title="modifier les informations"></i></a></button>
                                                 </div>
                                                 <div class="col" id="preview_niveau">
-                                                    <button class="btn supprimer pt-0" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                            class="bx bx-trash bx_supprimer"
-                                                            title="supprimer le module"></i></button>
+                                                    <button class="btn supprimer pt-0" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$mod->module_id}}"><i class="bx bx-trash bx_supprimer" title="supprimer le module"></i></button>
                                                 </div>
                                             </div>
                                             <div class="col-8">
@@ -530,12 +451,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header .avertissement  d-flex justify-content-center"
-                                                        style="background-color:#ee0707; color: white">
+                                                    <div class="modal-header .avertissement  d-flex justify-content-center" style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
                                                     <div class="modal-body">
@@ -549,17 +468,15 @@
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
                                                         <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
-                                                        <button type="button" class="btn btn_enregistrer suppression_module" ><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_enregistrer suppression_module"><i class='bx bx-check me-1'></i>Oui</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal fade" id="en_ligne_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="en_ligne_{{$mod->module_id}}" aria-hidden="true">
+                                        <div class="modal fade" id="en_ligne_{{$mod->module_id}}" tabindex="-1" role="dialog" aria-labelledby="en_ligne_{{$mod->module_id}}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header .avertissement  d-flex justify-content-center"
-                                                        style="background-color:#ee0707; color: white">
+                                                    <div class="modal-header .avertissement  d-flex justify-content-center" style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
                                                     <div class="modal-body">
@@ -602,25 +519,20 @@
                                 @if($mod_publies == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
-                                            class='bx bx-layer-plus icon_vide'></i></a>
+                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
                                 @foreach($mod_publies as $mod)
                                 <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
-                                        id="border_premier">
+                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2" id="border_premier">
                                         <div class="col-lg-12 col-md-12 detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-2">
-                                                    <span id="preview_module"><span
-                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
+                                                    <span id="preview_module"><span class="acf-nom_module">{{$mod->nom_module}}</span></span>
 
                                                 </h4>
-                                                <span id="preview_categ"><span class=" acf-categorie"
-                                                        style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
-                                                <p id="preview_descript"><span
-                                                        class="acf-description">{{$mod->description}}</span></p>
+                                                <span id="preview_categ"><span class=" acf-categorie" style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
+                                                <p id="preview_descript"><span class="acf-description">{{$mod->description}}</span></p>
                                             </div>
                                             <div class="d-flex ">
                                                 <div class="col-6 detail__formation__result__avis">
@@ -633,8 +545,7 @@
                                                     </div>
                                                     <span><strong>0.0</strong>/5 (aucun avis)</span>
                                                     @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                    <span
-                                                        class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                    <span class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-6 w-100">
@@ -660,10 +571,8 @@
                                             </div>
                                         </div>
 
-                                        <div
-                                            class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
+                                        <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
+                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
                                                 <span id="preview_jour"><span class="acf-jour">
                                                         {{$mod->duree_jour}}
                                                     </span>j</span>
@@ -671,31 +580,20 @@
                                                         {{$mod->duree}}
                                                     </span>h</span>
                                             </div>
-                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                                    class="bx bxs-devices bx_icon"
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
+                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i class="bx bxs-devices bx_icon" style="color: #7635dc !important;"></i>&nbsp;<span class="acf-modalite">{{$mod->modalite_formation}}</span>
                                             </div>
                                             <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                                <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-niveau">{{$mod->niveau}}</span>
+                                                <i class='bx bx-equalizer bx_icon' style="color: #7635dc !important;"></i>&nbsp;<span class="acf-niveau">{{$mod->niveau}}</span>
                                             </div>
                                         </div>
                                         <div class="row">
                                             @canany(['isCFP','isAdmin','isSuperAdmin'])
                                             <div class="col-4 d-flex flex-row">
                                                 <div class="col" id="preview_niveau">
-                                                    <button class="btn modifier pt-0"><a
-                                                            href="{{route('modif_programmes',$mod->module_id)}}"><i
-                                                                class='bx bx-edit bx_modifier'
-                                                                title="modifier les informations"></i></a></button>
+                                                    <button class="btn modifier pt-0"><a href="{{route('modif_programmes',$mod->module_id)}}"><i class='bx bx-edit bx_modifier' title="modifier les informations"></i></a></button>
                                                 </div>
                                                 <div class="col" id="preview_niveau">
-                                                    <button class="btn supprimer pt-0" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                            class="bx bx-trash bx_supprimer"
-                                                            title="supprimer le module"></i></button>
+                                                    <button class="btn supprimer pt-0" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$mod->module_id}}"><i class="bx bx-trash bx_supprimer" title="supprimer le module"></i></button>
                                                 </div>
 
                                             </div>
@@ -705,19 +603,17 @@
                                                         @if ($mod->etat_id == 1)
                                                         <div class="form-check form-switch d-flex flex-row">
                                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;Ligne</span></label>
-                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch2_{{$mod->module_id}}" data-bs-target="#hors_ligne_{{$mod->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked >
+                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch2_{{$mod->module_id}}" data-bs-target="#hors_ligne_{{$mod->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked>
                                                         </div>
                                                         @endif
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header .avertissement  d-flex justify-content-center"
-                                                        style="background-color:#ee0707; color: white">
+                                                    <div class="modal-header .avertissement  d-flex justify-content-center" style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
                                                     <div class="modal-body">
@@ -736,12 +632,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal fade" id="hors_ligne_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="hors_ligne_{{$mod->module_id}}" aria-hidden="true">
+                                        <div class="modal fade" id="hors_ligne_{{$mod->module_id}}" tabindex="-1" role="dialog" aria-labelledby="hors_ligne_{{$mod->module_id}}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header .avertissement  d-flex justify-content-center"
-                                                        style="background-color:#ee0707; color: white">
+                                                    <div class="modal-header .avertissement  d-flex justify-content-center" style="background-color:#ee0707; color: white">
                                                         <h6 class="modal-title">Avertissement !</h6>
                                                     </div>
                                                     <div class="modal-body">
@@ -782,13 +676,11 @@
                         <div class="accordion" id="accordionExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         PROGRAMME À COMPLÉTER
                                     </button>
                                 </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <form action="">
                                             <div class="form-row d-flex flex-row">
@@ -850,14 +742,14 @@
                                                     <label>Durée en Heure</label>
                                                     <div class="d-flex flex-row">
                                                         <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour.value=value" class="slide_range slide_hour">
-                                                        <input type="text" id="rangeHour" class="prix_range prix_slide" readonly/>
+                                                        <input type="text" id="rangeHour" class="prix_range prix_slide" readonly />
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <label>Durée en Jours</label>
                                                     <div class="d-flex flex-row">
                                                         <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay.value=value" class="slide_range slider_day">
-                                                        <input type="text" id="rangeDay" class="prix_range prix_slide" readonly/>
+                                                        <input type="text" id="rangeDay" class="prix_range prix_slide" readonly />
                                                     </div>
                                                 </div>
                                             </div>
@@ -865,11 +757,11 @@
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
                                                     <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers">
+                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value="" class="slide_range w-100" id="prix_pers">
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <input type="text" id="rangePrimary" class="prix_range" readonly/>
+                                                    <input type="text" id="rangePrimary" class="prix_range" readonly />
                                                 </div>
                                             </div>
                                             <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
@@ -880,7 +772,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <input type="text" id="rangePrimary1" class="prix_range" readonly/>
+                                                    <input type="text" id="rangePrimary1" class="prix_range" readonly />
                                                 </div>
                                             </div>
                                             <div class="text-center mt-1">
@@ -893,13 +785,11 @@
 
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         COMPETENCE À COMPLÉTER
                                     </button>
                                 </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                    data-bs-parent="#accordionExample">
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <form action="">
                                             <div class="form-row d-flex flex-row">
@@ -961,14 +851,14 @@
                                                     <label>Durée en Heure</label>
                                                     <div class="d-flex flex-row">
                                                         <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour1.value=value" class="slide_range slide_hour">
-                                                        <input type="text" id="rangeHour1" class="prix_range prix_slide" readonly/>
+                                                        <input type="text" id="rangeHour1" class="prix_range prix_slide" readonly />
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <label>Durée en Jours</label>
                                                     <div class="d-flex flex-row">
                                                         <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay1.value=value" class="slide_range slider_day">
-                                                        <input type="text" id="rangeDay1" class="prix_range prix_slide" readonly/>
+                                                        <input type="text" id="rangeDay1" class="prix_range prix_slide" readonly />
                                                     </div>
                                                 </div>
                                             </div>
@@ -976,11 +866,11 @@
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
                                                     <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers1">
+                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value="" class="slide_range w-100" id="prix_pers1">
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <input type="text" id="rangeSecondary" class="prix_range" readonly/>
+                                                    <input type="text" id="rangeSecondary" class="prix_range" readonly />
                                                 </div>
                                             </div>
                                             <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
@@ -991,7 +881,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <input type="text" id="rangeSecondary1" class="prix_range" readonly/>
+                                                    <input type="text" id="rangeSecondary1" class="prix_range" readonly />
                                                 </div>
                                             </div>
                                             <div class="text-center mt-1">
@@ -1003,14 +893,11 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree" aria-expanded="false"
-                                        aria-controls="collapseThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                         VOTRE CATALOGUE
                                     </button>
                                 </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse"
-                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <form action="">
                                             <div class="form-row d-flex flex-row">
@@ -1072,14 +959,14 @@
                                                     <label>Durée en Heure</label>
                                                     <div class="d-flex flex-row">
                                                         <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour2.value=value" class="slide_range slide_hour">
-                                                        <input type="text" id="rangeHour2" class="prix_range prix_slide" readonly/>
+                                                        <input type="text" id="rangeHour2" class="prix_range prix_slide" readonly />
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <label>Durée en Jours</label>
                                                     <div class="d-flex flex-row">
                                                         <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay2.value=value" class="slide_range slider_day">
-                                                        <input type="text" id="rangeDay2" class="prix_range prix_slide" readonly/>
+                                                        <input type="text" id="rangeDay2" class="prix_range prix_slide" readonly />
                                                     </div>
                                                 </div>
                                             </div>
@@ -1087,11 +974,11 @@
                                             <div class="form-row d-flex flex-row">
                                                 <div class="col-8">
                                                     <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers2">
+                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value="" class="slide_range w-100" id="prix_pers2">
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <input type="text" id="rangeThird" class="prix_range" readonly/>
+                                                    <input type="text" id="rangeThird" class="prix_range" readonly />
                                                 </div>
                                             </div>
                                             <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
@@ -1102,7 +989,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <input type="text" id="rangeThird1" class="prix_range" readonly/>
+                                                    <input type="text" id="rangeThird1" class="prix_range" readonly />
                                                 </div>
                                             </div>
                                             <div class="text-center mt-1">
@@ -1121,36 +1008,36 @@
 </div>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{asset('js/modules.js')}}"></script>
-<script >
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
         let lien = ($(e.target).attr('href'));
         localStorage.setItem('Tabactive', lien);
     });
     let Tabactive = localStorage.getItem('Tabactive');
-    if(Tabactive){
+    if (Tabactive) {
         $('#myTab a[href="' + Tabactive + '"]').tab('show');
     }
-    document.getElementById('prix_pers').addEventListener('input', function (e) {
+    document.getElementById('prix_pers').addEventListener('input', function(e) {
         let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
         rangePrimary.value = valeur;
     });
-    document.getElementById('prix_groupe').addEventListener('input', function (e) {
+    document.getElementById('prix_groupe').addEventListener('input', function(e) {
         let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
         rangePrimary1.value = valeur;
     });
-    document.getElementById('prix_pers1').addEventListener('input', function (e) {
+    document.getElementById('prix_pers1').addEventListener('input', function(e) {
         let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
         rangeSecondary.value = valeur;
     });
-    document.getElementById('prix_groupe1').addEventListener('input', function (e) {
+    document.getElementById('prix_groupe1').addEventListener('input', function(e) {
         let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
         rangeSecondary1.value = valeur;
     });
-    document.getElementById('prix_pers2').addEventListener('input', function (e) {
+    document.getElementById('prix_pers2').addEventListener('input', function(e) {
         let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
         rangeThird.value = valeur;
     });
-    document.getElementById('prix_groupe2').addEventListener('input', function (e) {
+    document.getElementById('prix_groupe2').addEventListener('input', function(e) {
         let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
         rangeThird1.value = valeur;
     });
@@ -1160,7 +1047,9 @@
         $.ajax({
             method: "GET"
             , url: "{{route('mettre_en_ligne')}}"
-            , data: {Id : id}
+            , data: {
+                Id: id
+            }
             , success: function(response) {
                 window.location.reload();
             }
@@ -1168,7 +1057,7 @@
                 console.log(error)
             }
         });
-     });
+    });
 
     //  (".non_en_ligne").on('click', function(e) {
     //     let id = $(e.target).closest('.non_en_ligne').attr("id");
@@ -1176,15 +1065,15 @@
     //     // $("#switch_"+id).prop('checked',false);
     //  });
 
-     $(".non_en_ligne").on('click', function(e) {
+    $(".non_en_ligne").on('click', function(e) {
         let id = $(e.target).closest('.non_en_ligne').attr("id");
-        $("#switch_"+id).prop('checked',false);
-     });
+        $("#switch_" + id).prop('checked', false);
+    });
 
-     $(".non_hors_ligne").on('click', function(e) {
+    $(".non_hors_ligne").on('click', function(e) {
         let id = $(e.target).closest('.non_hors_ligne').attr("id");
-        $("#switch2_"+id).prop('checked',true);
-     });
+        $("#switch2_" + id).prop('checked', true);
+    });
 
     //  $(".non_hors_ligne").on('click', function(e) {
     //     $(".form-check-input").prop('checked',true);
@@ -1194,12 +1083,14 @@
     //     $(".form-check-input").prop('checked',false);
     //  });
 
-     $(".mettre_hors_ligne").on('click', function(e) {
+    $(".mettre_hors_ligne").on('click', function(e) {
         let id = e.target.id;
         $.ajax({
             method: "GET"
             , url: "{{route('mettre_hors_ligne')}}"
-            , data: {Id : id}
+            , data: {
+                Id: id
+            }
             , success: function(response) {
                 window.location.reload();
             }
@@ -1207,9 +1098,7 @@
                 console.log(error)
             }
         });
-     });
-
-
+    });
 
 </script>
 @endsection
