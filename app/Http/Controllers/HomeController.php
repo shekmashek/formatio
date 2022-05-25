@@ -155,16 +155,20 @@ class HomeController extends Controller
         if ($request->input('nom_resp') != null) {
             DB::update('update responsables set nom_resp = ? where id = ?', [$request->input('nom_resp'), $id_resp]);
         }
+        if ($request->input('prenom_resp') != null) {
+            DB::update('update responsables set prenom_resp = ? where id = ?', [$request->input('prenom_resp'), $id_resp]);
+        }
         if ($request->input('date_naissance_resp') != null) {
             DB::update('update responsables set date_naissance_resp = ? where id = ?', [$request->input('date_naissance_resp'), $id_resp]);
         }
-        if ($request->input('genre') != null) {
-            if ($request->input('genre') == "Homme") $genre = 2;
+        if ($request->input('sexe_resp') != null) {
+            if ($request->input('sexe_resp') == "Homme")
+                $genre = 2;
             else $genre = 1;
             DB::update('update responsables set genre_id = ? where id = ?', [$genre, $id_resp]);
         }
-        if ($request->input('tel_resp') != null) {
-            DB::update('update responsables set telephone_resp = ? where id = ?', [$request->input('tel_resp'), $id_resp]);
+        if ($request->input('telephone_resp') != null) {
+            DB::update('update responsables set telephone_resp = ? where id = ?', [$request->input('telephone_resp'), $id_resp]);
         }
         if ($request->input('cin_resp') != null) {
             DB::update('update responsables set cin_resp = ? where id = ?', [$request->input('cin_resp'), $id_resp]);

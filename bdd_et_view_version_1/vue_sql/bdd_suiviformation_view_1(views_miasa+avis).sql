@@ -527,7 +527,7 @@ CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
     stg.cin,
     stg.date_naissance,
     (stg.lot) adresse,
-    stg.niveau_etude,
+    stg.niveau_etude_id,
     stg.activiter,
     etp.nom_etp,
     historique.stagiaire_id AS histo_stagiaire_id,

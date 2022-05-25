@@ -114,7 +114,7 @@
             <li>
                 <a href="{{route('categorie')}}" class="d-flex nav_linke">
                     <i class='bx bxs-doughnut-chart'></i>
-                    <span class="links_name">Categories de formation</span>
+                    <span class="links_name">Categories</span>
                 </a>
 
             </li>
@@ -827,9 +827,6 @@
                                             {{-- <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
                                                     <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
                                                 </a></li> --}}
-                                            <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
-                                                    <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
-                                                </a></li>
                                             <li><a class="dropdown-item" href="{{route('parametrage_frais_annexe')}}">
                                                     <i class='bx bx-money-withdraw icon_plus'></i>&nbsp;Frais annexes
                                                 </a></li>
@@ -934,8 +931,7 @@
                                             <div class="col-12 pt-3">
                                                 <span>
                                                     <div style="display: grid; place-content: center">
-                                                        <div class='randomColor photo_users'
-                                                            style="color:white; font-size: 20px; border: none; border-radius: 100%; height:65px; width:65px ; display: grid; place-content: center">
+                                                        <div class='randomColor photo_users' style="color:white; font-size: 20px; border: none; border-radius: 100%; height: 65px; width: 65px ; display: grid; place-content: center">
                                                         </div>
                                                     </div>
                                                 </span>
@@ -1290,7 +1286,7 @@
                     var userData = response;
 
                     if(userData['photo'] == 'oui'){
-                        var html = '<img src="{{asset(":?")}}" class="img-fluid" alt="user_profile" style="width : 65px; height : 65px;border-radius : 100%; margin-top:6px; cursor: pointer; position:relative; bottom:3px;">';
+                        var html = '<img src="{{asset(":?")}}" alt="user_profile" style="width : 70px; height : 70px; border: none; border-radius : 100%; display: grid; place-content: center">';
                         html = html.replace(":?", userData['user']);
                         // alert(JSON.stringify(userData));
                         $('.photo_users').append(html);
@@ -1313,7 +1309,7 @@
                 , type: 'get'
                 , success: function(response) {
                     var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" class="img-fluid" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
+                    var html = '<img src="{{asset("images/:?")}}" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
                     html = html.replace(":?", userData);
 
                     $('.logo_etp_user').append(html);

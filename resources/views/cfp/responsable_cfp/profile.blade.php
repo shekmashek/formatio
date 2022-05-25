@@ -1,223 +1,214 @@
+
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Profil du compte</h3>
+    <h3 class="text_header m-0 mt-1">Parametres</h3>
 @endsection
 @inject('groupe', 'App\groupe')
 @section('content')
-
-<style>
-    .image-ronde {
-        width: 30px;
-        height: 30px;
-        border: none;
-        -moz-border-radius: 75px;
-        -webkit-border-radius: 75px;
-        border-radius: 75px;
-    }
-
-    .none:hover{
-        cursor:default;
-    }
-</style>
-<div class="row">
-    <div class="row mt-2">
-
-        <div class="col-lg-4">
-
-            <div class="form-control">
-                <p class="text-center">Informations générales</p>
-
-                <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #e8dfe5;">
-                    <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-image-alt'></i>&nbsp; PHOTO
-                    </p>
+<link rel="stylesheet" href="{{asset('assets/css/parametres.css')}}">
+<div class="container mt-5">
+    <div class="row head_content mb-5">
+        <div class="col-3 first_col">
+            <div class="row">
+                <div class="col-4 logo">
                     <a href="{{route('modification_photo',$refs->id)}}">
-
-                        @if($refs->photos_resp_cfp==null)
-                            <span>
-                                <div style="display: grid; place-content: center">
-                                    <div class='randomColor photo_users' style="color:white; font-size: 12px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center">
-                                    </div>
+                        @if($refs->photos_resp_cfp == NULL )
+                        <span>
+                            <div style="display: grid; place-content: center">
+                                <div class='randomColor photo_users '>
                                 </div>
-                            </span>
+                            </div>
+                        </span>
                         @else
-                            <img src="{{asset('images/responsables/'.$refs->photos_resp_cfp)}}" class="image-ronde">
+                            <span class="text-end">
+                                <img src="{{asset('images/responsables/'.$refs->photos_resp_cfp)}}" alt="image du responsable" class="img-fluid rounded-circle">
+                            </span>
                         @endif
                     </a>
                 </div>
-                <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
-                    <a href="{{route('modification_nom',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-user'></i>&nbsp; NOM<span style="float: right;">{{$refs->nom_resp_cfp}} {{$refs->prenom_resp_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-
-                        </p>
-                    </a>
-
-                </div>
-                <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
-                    <a href="{{route('modification_date_de_naissance',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-calendar'></i>&nbsp; DATE DE NAISSANCE
-                        @if ($refs->date_naissance_resp_cfp==null)
-                        <span style="float: right; color:red">incomplète&nbsp;
+                <div class="col-8">
+                    <div>
+                        @if($refs->nom_resp_cfp == NULL )
+                            <a href="{{route('modification_nom',$refs->id)}}" class="action_name">Ajouter Nom</a>
                         @else
-                        <span style="float: right;">{{date('j \\ F Y', strtotime($refs->date_naissance_resp_cfp))}}&nbsp;
+                            <p class="nom_org">{{$refs->nom_resp_cfp}}</p>
+                            <p class="">{{$refs->prenom_resp_cfp}}</p>
                         @endif
-                        <i class="fas fa-angle-right"></i></span>
-                        </p>
-                    </a>
-
+                        <a href="{{route('modification_nom',$refs->id)}}" class="action_name">Modifier</a>
+                    </div>
                 </div>
-                <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
-                    <a href="{{route('modification_genre',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-male-female' style="color: rgb(116, 116, 116)"></i>&nbsp; GENRE
-                            <span style="float: right;">
-                            @if ($refs->sexe_resp_cfp==null)
-                            <strong  style="color:red">
-                            incomplète</strong>&nbsp;
-                            @else
-                           {{$refs->genre}}&nbsp;
-                            @endif
-                            <i class="fas fa-angle-right"></i></span>
-                        </p>
-                    </a>
-                </div>
-                <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
-                    <a href="{{route('modification_mdp',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-key'></i>&nbsp; Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
-                        </p>
-                    </a>
-                </div>
-                <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
             </div>
+
         </div>
-
-
-        <div class="col-lg-4">
-
-            <div class="form-control">
-                <p class="text-center">Coordonnées</p>
-
-                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('modification_adresse_email',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;"> <i class='bx bx-envelope'></i>&nbsp; ADRESSE E-MAIL<span style="float: right;">{{$refs->email_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-
-                        </p>
-                    </a>
+        <div class="col-3 second_col">
+            <a href="{{route('liste_module')}}">
+                <div class="row text-end p-0">
+                    <i class='bx bxs-customize icon_infos p-0'></i>
                 </div>
-                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('modification_numero_telephone',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone'></i>&nbsp; TELEPHONE<span style="float: right;">
-                            @php
-                                echo $groupe->formatting_phone($refs->telephone_resp_cfp);
-                            @endphp
-                            <i class="fas fa-angle-right"></i> </span>
-                        </p>
-                    </a>
+                <div class="row ps-2 ">
+                    <p class="nb_modules m-0 p-0">{{count($modules_counts)}}</p>
+                    <p class="text-muted borderBotom_color p-0 pb-2 text-uppercase">Modules</p>
                 </div>
-                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('modification_cin',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bxs-user-badge' style='color:rgba(0,0,0,0.41)'  ></i>&nbsp; CIN<span style="float: right;">{{$refs->cin_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                        </p>
-                    </a>
-                </div>
-                <div style="" class="hover">
-                    <a href="{{route('modificationn_adresse',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-map-pin' ></i>&nbsp; ADRESSE <span style="float: right;">
-                            <span style="float: right">
-                                @if ($refs->adresse_lot == NULL || $refs->adresse_quartier == NULL || $refs->adresse_quartier == NULL || $refs->adresse_ville == NULL || $refs->adresse_region == NULL || $refs->adresse_code_postal == NULL)
-                                    <strong style="color: red">incomplète</strong>&nbsp;
-                                @else
-                                    Lot/Rue: {{$refs->adresse_lot}}
-                                    Qter: {{$refs->adresse_quartier}}
-                                    Vlle: {{$refs->adresse_ville}}
-                                    <br>
-                                    Region: {{$refs->adresse_region}}
-                                    CP: {{$refs->adresse_code_postal}}
-                                @endif
-                            <i class="fas fa-angle-right"></i>
-                            </span>
-                            {{-- <span style="float: right;">{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span> --}}
-{{--
-                            <span style="float: right">
-                                @if($refs->adresse_quartier==null)
-                                Qter: <strong style="color: red">incomplète</strong>&nbsp;
-                                @else
-                                Qter: {{$refs->adresse_quartier}} &nbsp;
-                                @endif --}}
-                            {{-- <i class="fas fa-angle-right"></i> --}}
-                            {{-- </span> --}}
-                            {{-- <br> --}}
-                            {{-- <span style="float: right;">{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span> --}}
-                            {{-- <span style="float: right">
-                                @if($refs->adresse_ville==null)
-                                Vlle: <strong></strong>&nbsp;
-                                @else
-                                Vlle: {{$refs->adresse_ville}} &nbsp;
-                                @endif --}}
-                            {{-- <i class="fas fa-angle-right"></i> --}}
-                            {{-- </span> --}}
-                            {{-- <span style="float: right;">{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span> --}}
-                            {{-- <span style="float: right">
-                                @if($refs->adresse_region==null)
-                                Region: <strong style="color: red">incomplète</strong>&nbsp;
-                                @else
-                                Region: {{$refs->adresse_region}} &nbsp;
-                                @endif --}}
-                            {{-- <i class="fas fa-angle-right"></i> --}}
-                            {{-- </span> --}}
-                            {{-- <span style="float: right;">{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span> --}}
-                            {{-- <span style="float: right">
-                                @if($refs->adresse_code_postal==null)
-                                CP: <strong style="color: red">incomplète</strong>&nbsp;
-                                @else
-                                CP: {{$refs->adresse_code_postal}} &nbsp;
-                                @endif --}}
-
-                            {{-- <i class="fas fa-angle-right"></i> --}}
-                            {{-- </span> --}}
-                            {{-- <span style="float: right;">{{$refs->adresse_ville}} &nbsp;{{$refs->adresse_code_postal}}&nbsp;{{$refs->adresse_region}}&nbsp;<i class="fas fa-angle-right"></i></span> --}}
-                        </p>
-                    </a>
-                </div>
-
-                <div id="columnchart_material_12" style="width: 200px; height: 62px;"></div>
-            </div>
+            </a>
         </div>
-        <div class="col-lg-4">
-
-            <div class="form-control">
-                <p class="text-center">Informations professionnelles</p>
-
-                {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    <a hrefs="#">
-                        <p class="p-1 m-0" style="font-size: 12px;">Poste responsable<span style="float: right;">{{$refs->poste_resp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-
-                        </p>
-                    </a>
-                </div> --}}
-
-                <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    {{-- <a href="{{route('profil_of',$refs->cfp_id)}}"> --}}
-                    <a class="none" href="">
-                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-building'></i>&nbsp; ORGANISME DE FORMATION<span style="float: right;">{{$refs->nom_cfp}} &nbsp;<i class="fas fa-angle-right"></i></span>
-                        </p>
-                    </a>
+        <div class="col-3 second_col">
+            <a href="{{route('liste_projet')}}">
+                <div class="row text-end p-0">
+                    <i class='bx bxs-component icon_infos2 p-0'></i>
                 </div>
-                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('modification_fonction',$refs->id)}} ">
-                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-list-minus'></i>&nbsp; FONCTION<span style="float: right;">{{$refs->fonction_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
-                        </p>
-                    </a>
+                <div class="row ps-2 ">
+                    <p class="nb_modules m-0 p-0">{{count($projets_counts)}}</p>
+                    <p class="text-muted borderBotom_color2 p-0 pb-2 text-uppercase">Projets</p>
                 </div>
-                {{-- <div style="border-bottom: solid 1px #e8dfe5;" class="">
-                    <a hrefs="#">
-                        <p class="p-1 m-0" style="font-size: 12px;">DEPARTEMENT<span style="float: right;">{{optional(optional($refs)->departement)->nom_departement}}&nbsp;<i class="fas fa-angle-right"></i></span>
-
-                        </p>
-                    </a>
-                </div> --}}
-
-                <div id="columnchart_material_12" style="width: 200px; height: 114px; "></div>
+            </a>
+        </div>
+        <div class="col-3 second_col">
+            <a href="{{route('liste_facture')}}">
+                <div class="row text-end p-0">
+                    <i class='bx bxs-receipt icon_infos3 p-0'></i>
+                </div>
+                <div class="row ps-2 ">
+                    <p class="nb_modules m-0 p-0">{{count($factures_counts)}}</p>
+                    <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Factures</p>
+                </div>
+            </a>
+        </div>
+        <div class="row row_bas g-0">
+            <div class="col third_col py-2">
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Sessions</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($sessions_counts)}}</p>
+                </a>
+                </div>
+            <div class="col third_col py-2">
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Projets Intra</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projetIntra_counts)}}</p>
+                </a>
+                </div>
+            <div class="col third_col py-2">
+                <a href="{{route('liste_projet')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Projets inter</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($projetInter_counts)}}</p>
+                </a>
+                </div>
+            <div class="col third_col py-2">
+                <a href="{{route('liste_formateur')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Formateurs Collaborés</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($formateurs_counts)}}</p>
+                </a>
+                </div>
+            <div class="col third_col py-2">
+                <a href="{{route('liste_entreprise')}}">
+                    <p class="text-muted text-center m-1 txt_row_bas">Entreprises Collaborés</p>
+                    <p class="text-center nb_modules text-muted txt_row_bas m-0">{{count($entreprises_counts)}}</p>
+                </a>
             </div>
         </div>
     </div>
 
-    @endsection
+    <div class="row justify-content-between">
+        <div class="col-5 info_plus2 p-5 pt-4">
+            <h5 class="text-center mb-5">Information Générale</h5>
+            <div class="row border_bas">
+                <div class="col">
+                    @if($refs->date_naissance_resp_cfp == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calendar-alt icon_sociaux1'></i>&nbsp;Date de naissance</p><p class="text-end"><a href="{{route('modification_date_de_naissance',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-calendar-alt icon_sociaux2'></i>Date de naissance :&nbsp;{{$refs->date_naissance_resp_cfp}}</p><p class="text-end"><a href="{{route('modification_date_de_naissance',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row border_bas">
+                <div class="col">
+                    @if($refs->genre == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-user-pin icon_sociaux1'></i>&nbsp;Genre</p><p class="text-end"><a href="{{route('modification_genre',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-user-pin icon_sociaux1'></i>Genre :&nbsp;{{$refs->genre}}</p><p class="text-end"><a href="{{route('modification_genre',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row border_bas">
+                <div class="col">
+                    @if($refs->email_resp_cfp == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-gmail icon_sociaux1'></i>&nbsp;Email</p><p class="text-end"><a href="{{route('modification_email',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxl-gmail icon_sociaux1'></i>Email :&nbsp;{{$refs->email_resp_cfp}}</p><p class="text-end"><a href="{{route('modification_email',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row border_bas">
+                <div class="col">
+                    @if($refs->telephone_resp_cfp == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-phone icon_sociaux1'></i>&nbsp;Téléphone</p><p class="text-end"><a href="{{route('modification_telephone',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-phone icon_sociaux1'></i>Téléphone :&nbsp;{{$refs->telephone_resp_cfp}}</p><p class="text-end"><a href="{{route('modification_telephone',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-lock icon_sociaux1'></i>Mot de passe :  **************</p><p class="text-end"><a href="{{route('modification_mdp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 info_plus2 p-5 pt-4">
+            <h5 class="text-center mb-5">Coordonnées</h5>
+            <div class="row border_bas">
+                <div class="col">
+                    @if($refs->cin_resp_cfp == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-grid-vertical icon_sociaux3'></i>&nbsp;CIN</p><p class="text-end"><a href="{{route('modification_cin',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-grid-vertical icon_sociaux3'></i>CIN :&nbsp;{{$refs->cin_resp_cfp}}</p><p class="text-end"><a href="{{route('modification_cin',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row border_bas">
+                <div class="col">
+                    @if($refs->adresse_quartier == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;Adresse Quartier</p><p class="text-end"><a href="{{route('modificationn_adresse',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;{{$refs->adresse_lot}}&nbsp;{{$refs->adresse_quartier}}</p><p class="text-end"><a href="{{route('modificationn_adresse',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row border_bas mt-3">
+                <div class="col">
+                    @if($refs->adresse_ville == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map-pin icon_sociaux2'></i>&nbsp;Adresse Ville</p><p class="text-end"><a href="{{route('modificationn_adresse',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map-pin icon_sociaux2'></i>&nbsp;{{$refs->adresse_ville}}&nbsp;{{$refs->adresse_code_postal}}</p><p class="text-end"><a href="{{route('modificationn_adresse',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                    @endif
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    @if($refs->adresse_region == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-map-alt icon_sociaux2'></i>&nbsp;Adresse Region</p><p class="text-end"><a href="{{route('modificationn_adresse',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
+                    @else
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-map-alt icon_sociaux2'></i>&nbsp;{{$refs->adresse_region}}</p><p class="text-end"><a href="{{route('modificationn_adresse',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                    @endif
+                </div>
+            </div>
+
+        </div>
+        <div class="col-2 info_plus5  pt-4">
+            <h5 class="text-center mb-4">Oganisme de formation</h5>
+            <div class="row ">
+                <div class="col text-center ">
+                    @if($cfps->logo == NULL )
+                        <span class="text-end">
+                            <img src="" alt="Logo centre de formation professionnel" >
+                        </span>
+                    @else
+                        <span class="text-end">
+                            <img src="{{asset('images/CFP/'.$cfps->logo)}}" alt="Logo de l'entreprise" class="img-fluid">
+                        </span>
+                    @endif
+                    <p class="mt-4">{{$refs->nom_cfp}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

@@ -98,7 +98,7 @@
     </div>
 
     <div class="row justify-content-between">
-        <div class="col-5 info_plus2 p-5 pt-4">
+        <div class="col-5 info_plus4 p-5 pt-4">
             <h5 class="text-center mb-5">Information Professionnelles</h5>
             <div class="row border_bas">
                 <div class="col">
@@ -137,7 +137,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4 info_plus p-5 pt-4">
+        <div class="col-4 info_plus2 p-5 pt-4">
             <h5 class="text-center mb-5">Facturations</h5>
             <div class="row border_bas">
                 <div class="col">
@@ -212,7 +212,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-2 info_plus4  pt-4">
+        <div class="col-2 info_plus6  pt-4">
             <h5 class="text-center mb-4">Taxation</h5>
             <div class="row border_bas">
                 <div class="col text-center afficher_icon_modif">
