@@ -62,7 +62,7 @@ class Groupe extends Model
                 return 0;
             }
         }
-        
+
     }
 
     public function statut_evaluation_apres($groupe_id,$stg_id){
@@ -122,4 +122,6 @@ class Groupe extends Model
         }
         return $format;
     }
+
 }
+?>
