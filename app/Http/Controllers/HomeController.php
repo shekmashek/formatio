@@ -1248,7 +1248,7 @@ class HomeController extends Controller
     }
     public function update_devise(Request $request)
     {
-        DB::update('update devise set devise=? where id=?',[$request->devise,$request->id]);
+        DB::update('update devise set devise=?,reference=? where id=?',[$request->devise,$request->reference,$request->id]);
         return back();
     }
     public function delete_devise($id)
