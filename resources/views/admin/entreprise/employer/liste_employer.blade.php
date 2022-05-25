@@ -440,6 +440,7 @@
                             <th scope="col">Noms</th>
                             <th scope="col">Contact </th>
                             <th scope="col"> Dept et Se</th>
+                            <th scope="col"> Role Referent</th>
                             @canany(['isReferentPrincipale'])
                             <th scope="col" colspan="2">Action</th>
                             @endcanany
@@ -492,6 +493,96 @@
                                 <p>------</p>
                                 @endif
                             </td>
+                            <td>
+
+                                @if($connected->role_referent_prioriter==true) {{-- debut if Generale --}}
+
+
+                                @if ($emp->id == $connected->id) {{-- debut if 1 --}}
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked disabled>
+                                </div>
+                                @else {{-- else if 1 --}}
+
+                                @if($emp->role_referent_exist==true) {{-- debut if 2 --}}
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked data-bs-toggle="modal" data-bs-target="#desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                </div>
+                                @else {{-- else if 2 --}}
+
+                                @if ($emp->role_referent_prioriter==true)
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                </div>
+                                @else
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}" >
+                                </div>
+                                @endif
+
+
+                                @endif {{-- fin if 2 --}}
+
+                                @endif {{-- fin if 1 --}}
+
+
+
+                                @else {{-- else if Generale --}}
+
+
+                                @if ($emp->id == $connected->id) {{-- debut if 1 --}}
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked disabled>
+                                </div>
+                                @else {{-- else if 1 --}}
+
+                                @if($emp->role_referent_prioriter==true) {{-- debut if 2.0 --}}
+
+                                @if($emp->role_referent_exist==true) {{-- debut if 2 --}}
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked data-bs-toggle="modal" data-bs-target="#desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}" disabled>
+                                </div>
+                                @else {{-- else if 2 --}}
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                </div>
+                                @endif {{-- fin if 2 --}}
+
+                                @else {{-- else if 2.0 --}}
+
+                                @if($emp->role_referent_exist==true) {{-- debut if 2 --}}
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked data-bs-toggle="modal" data-bs-target="#desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                </div>
+                                @else {{-- else if 2 --}}
+
+                                @if ($emp->role_referent_prioriter==true)
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
+                                </div>
+                                @else
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}" disabled>
+                                </div>
+                                @endif
+
+                                @endif {{-- fin if 2 --}}
+
+                                @endif {{-- fin if 2.0 --}}
+
+
+
+                                @endif {{-- fin if 1 --}}
+
+
+
+                                @endif {{-- fin if Generale --}}
+
+
+
+
+                            </td>
+
                             @canany(['isReferentPrincipale'])
                             <td>
                                 @if ($emp->id == $connected->id)
@@ -517,6 +608,48 @@
                             @endcanany
                         </tr>
 
+
+                        {{-- ====================  modal desactiver ref employers ===================================== --}}
+                        <div class="modal fade" id="desactiver_role_ref_{{$emp->id}}_{{$emp->user_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header d-flex justify-content-center" style="background-color:red;">
+                                        <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                    </div>
+                                    <div class="modal-body">
+                                        <small>Vous <span style="color: red"> êtes </span>sur le point de retirer "{{$emp->nom_emp." ".$emp->prenom_emp}}" en tant que réferent</small>
+                                    </div>
+
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- ====================  modal activiter ref employers ===================================== --}}
+                        <div class="modal fade" id="activer_role_ref_{{$emp->id}}_{{$emp->user_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header d-flex justify-content-center" style="background-color:green;">
+                                        <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                    </div>
+                                    <div class="modal-body">
+                                        <small>Vous <span style="color: green"> êtes </span>sur le point de nommer "{{$emp->nom_emp." ".$emp->prenom_emp}}" en tant que nouveau réferent</small>
+                                    </div>
+
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- ====================  modal delete employers ===================================== --}}
                         <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -534,8 +667,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
                         @endforeach
                     </tbody>
                 </table>

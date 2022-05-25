@@ -75,4 +75,26 @@ class Stagiaire extends Model
         DB::update("UPDATE employers SET activiter=TRUE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
         return ["status" =>"desactiver"];
     }
+
+    //========================= liste des employer
+
+    public function getEmployer($employers){
+        $fonct = new FonctionGenerique();
+        $ep_avec_role_ref_connected = $fonct->findWhere("v_employers_as_role_referent", ["entreprise_id", "id"], [$employers->entreprise_id, $employers->id]);
+        if (count($ep_avec_role_ref_connected) > 0) {
+            if ($ep_avec_role_ref_connected[0]->prioriter_role_user == true) {
+                $employers->role_referent_prioriter = true;
+            } else {
+                $employers->role_referent_prioriter = false;
+            }
+            $employers->role_referent_activiter = $ep_avec_role_ref_connected[0]->activiter_role_user;
+            $employers->role_referent_exist = true;
+        } else {
+            $employers->role_referent_prioriter = false;
+            $employers->role_referent_exist = false;
+            $employers->role_referent_activiter = false;
+        }
+
+        return $employers;
+    }
 }

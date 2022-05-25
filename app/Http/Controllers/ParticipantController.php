@@ -104,10 +104,11 @@ class ParticipantController extends Controller
 
     public function liste_employer($nb_pag = null)
     {
+        $stg = new stagiaire();
         $entreprise_id = 0;
         $nb_limit = 10;
         $paginations = 0;
-        $employers=[];
+        $employers = [];
         $user_id = Auth::user()->id;
         $role = new Role();
         if (Gate::allows('isReferent')) {
@@ -128,25 +129,30 @@ class ParticipantController extends Controller
         $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
         $role_ref = $this->fonct->findWhereMulitOne("v_role_etp", ["id"], [2]);
 
-        $ep_avec_role_ref = $this->fonct->findWhere("v_employers_as_role_referent", ["entreprise_id"], [$entreprise_id]);
+        $connected=$stg->getEmployer($connected);
 
         for ($i = 0; $i < count($employers_tmp); $i += 1) {
 
+           /* $ep_avec_role_ref = $this->fonct->findWhere("v_employers_as_role_referent", ["entreprise_id", "id"], [$entreprise_id, $employers_tmp[$i]->id]);
+
             if (count($ep_avec_role_ref) > 0) {
-                for ($j = 0; $j < count($ep_avec_role_ref); $j += 1) {
-                    if ($employers_tmp[$i]->id == $ep_avec_role_ref[$j]->id) {
-                        $employers_tmp[$i]->role_referent_exist = true;
-                    } else {
-                        $employers_tmp[$i]->role_referent_exist = false;
-                    }
+                if ($ep_avec_role_ref[0]->prioriter_role_user == true) {
+                    $employers_tmp[$i]->role_referent_prioriter = true;
+                } else {
+                    $employers_tmp[$i]->role_referent_prioriter = false;
                 }
+                $employers_tmp[$i]->role_referent_activiter = $ep_avec_role_ref[0]->activiter_role_user;
+                $employers_tmp[$i]->role_referent_exist = true;
             } else {
+                $employers_tmp[$i]->role_referent_prioriter = false;
                 $employers_tmp[$i]->role_referent_exist = false;
-            }
-            $employers[] =$employers_tmp[$i];
+                $employers_tmp[$i]->role_referent_activiter = false;
+            } */
+            $employers[] = $stg->getEmployer($employers_tmp[$i]);
         }
 
-        dd($employers);
+        // dd($connected);
+
         return view("admin.entreprise.employer.liste_employer", compact('connected', 'employers', 'pagination'));
     }
 
