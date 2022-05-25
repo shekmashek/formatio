@@ -227,7 +227,7 @@
                                                     style="color:#ff0000;">*</strong></label>
 
 
-
+                                            <span style="color:#ff0000;" id="cin_err"></span>
                                             @error('cin')
                                                 <div class="col-sm-6">
                                                     <span style="color:#ff0000;"> {{ $message }} </span>
@@ -243,7 +243,7 @@
 
                                         <div class="input-group">
                                             <div class="input-group-text border-0 border-bottom bg-light">
-                                                <i class='bx bx-phone form-icon' ></i>
+                                                <i class='bx bx-phone form-icon'></i>
                                             </div>
 
                                             <input type="text" autocomplete="off" required name="phone"
@@ -251,10 +251,10 @@
                                                 inputmode="numeric" required>
 
 
-                                            <label for="phone" class="input-placeholder">Téléphone<strong
+                                            <label for="phone" class="input-placeholder" id="">Téléphone<strong
                                                     style="color:#ff0000;">*</strong></label>
 
-
+                                            <span id="phone_err" style="color:#ff0000;"></span>
 
                                             @error('phone')
                                                 <div class="col-sm-6">
@@ -275,7 +275,7 @@
 
                                         <div class="input-group">
                                             <div class="input-group-text border-0 border-bottom bg-light">
-                                                <i class='bx bx-envelope form-icon' ></i>
+                                                <i class='bx bx-envelope form-icon'></i>
                                             </div>
 
                                             <input type="text" autocomplete="off" required name="mail"
@@ -286,8 +286,8 @@
                                             <label for="mail" class="input-placeholder">Email<strong
                                                     style="color:#ff0000;">*</strong></label>
 
-
-
+        
+                                            <span id="mail_err"></span>
                                             @error('mail')
                                                 <div class="col-sm-6">
                                                     <span style="color:#ff0000;"> {{ $message }} </span>
@@ -304,7 +304,7 @@
 
                                         <div class="input-group">
                                             <div class="input-group-text border-0 border-bottom bg-light">
-                                                <i class='bx bx-briefcase form-icon' ></i>
+                                                <i class='bx bx-briefcase form-icon'></i>
                                             </div>
 
                                             <input type="text" autocomplete="off" required name="fonction"
@@ -371,7 +371,7 @@
                                 <td class="align-middle id">
 
                                     @if ($employe->activiter == 1)
-                                        <span style="color:green; "> <i class="bx bxs-circle"></i> </span>
+                                        <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
                                     @else
                                         <span style="color:red; "> <i class="bx bxs-circle"></i> </span>
                                     @endif
@@ -385,7 +385,15 @@
                                             {{-- <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Image non chargée"
                                                 style="width: 45px; height: 45px" class="rounded-circle" /> --}}
 
-                                                <i class='bx bx-user-circle profile-holder' style="width: 45px; height: 45px" ></i>
+                                            {{-- <i class='bx bx-user-circle profile-holder'
+                                                style="width: 45px; height: 45px"></i> --}}
+                                                <i class='bx bx-user-circle' style='width: 45px; height: 45px;
+                                                @if ($employe->activiter == 1)
+                                                color:#00b900;'
+                                                @else
+                                                color:#e21717;'
+                                                @endif
+                                                ></i>
                                         @else
                                             <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
                                                 alt="Image non chargée" style="width: 45px; height: 45px"
@@ -418,8 +426,8 @@
 
                                     @if ($employe->activiter == 1)
                                         <div class="form-check form-switch">
-                                            <label class="form-check-label"
-                                                for="flexSwitchCheckChecked"><span class="badge bg-success">actif</span></label>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                                    class="badge bg-success">actif</span></label>
                                             <input class="form-check-input desactiver_stg" type="checkbox"
                                                 data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
                                                 checked>
@@ -435,39 +443,44 @@
 
                                 </td>
                                 <td class="align-middle text-center text-secondary">
-                                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$employe->id}}">
-                                        <i class='bx bxs-trash' style='color:#e21717'  ></i>
+                                    <button type="button" class="btn " data-bs-toggle="modal"
+                                        data-bs-target="#delete_emp_{{ $employe->id }}">
+                                        <i class='bx bxs-trash' style='color:#e21717'></i>
                                     </button>
                                 </td>
 
                             </tr>
 
-                            <div class="modal fade" id="delete_emp_{{$employe->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
+                            <div class="modal fade" id="delete_emp_{{ $employe->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <form action="{{ route('mettre_fin_cfp_etp') }}" method="POST">
                                     @csrf
-    
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                                            <h4 class="modal-title text-white">Avertissement !</h4>
-    
-                                        </div>
-                                        <div class="modal-body">
-                                            <small>Vous êtes sur le point d'enlever l'employé 
-                                                {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }} - 
-                                                id : {{ $employe->id }}, utilisateur {{ $employe->user_id }}
-                                                sur le plateforme, cette action est irréversible. Continuer ?</small>
-                                        </div>
-    
-                                        <div class="modal-footer justify-content-center">
-                                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                            
-                                            <a href="{{route('employeur.destroy',$employe->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header d-flex justify-content-center"
+                                                style="background-color:rgb(235, 20, 45);">
+                                                <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <small>Vous êtes sur le point d'enlever l'employé
+                                                    {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }} -
+                                                    id : {{ $employe->id }}, utilisateur {{ $employe->user_id }}
+                                                    sur le plateforme, cette action est irréversible. Continuer ?</small>
+                                            </div>
+
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non
+                                                </button>
+
+                                                <a href="{{ route('employeur.destroy', $employe->user_id) }}"> <button
+                                                        type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-    
+                                </form>
+
                             </div>
                         @empty
                             <h3 class="text-center">Aucun employé</h3>
@@ -551,12 +564,30 @@
             // modal form 
 
             // verification à l'ajout 
+
+
+            // Valeur numerique cin/tel
+            $(function() {
+                $("input[name='phone']").on('input', function(e) {
+
+                    //   bolck the input to accept only numbers     
+                    this.value = this.value.replace(/[^+0-9]/g, '');
+
+                    // $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                });
+                $("input[name='cin']").on('input', function(e) {
+                    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                });
+            });
+
+
             $(document).on('change', '#cin', function() {
                 document.getElementById("cin_err").innerHTML = "";
 
                 var result = $(this).val();
                 if ($(this).val().length < 5) {
-                    document.getElementById("cin_err").innerHTML = "Le CIN est invalid";
+                    console.log('cin trop court');
+                    document.getElementById("cin_err").innerHTML = "n°CIN invalid";
 
                 } else {
                     document.getElementById("cin_err").innerHTML = "";
@@ -595,7 +626,7 @@
                         var userData = response;
 
                         if (userData.length > 0) {
-                            document.getElementById("mail_err").innerHTML = "mail existe déjà";
+                            document.getElementById("mail_err").innerHTML = "l'email est déjà associé à un compte";
                         } else {
                             document.getElementById("mail_err").innerHTML = "";
                         }
@@ -609,8 +640,8 @@
             $(document).on('change', '#phone', function() {
                 var result = $(this).val();
 
-                if ($(this).val().length < 7) {
-                    document.getElementById("phone_err").innerHTML = "le numéro du télephone n'est pas correct";
+                if ($(this).val().length < 7) { 
+                    document.getElementById("phone_err").innerHTML = "numéro télephone invalide";
                 } else {
                     document.getElementById("phone_err").innerHTML = '';
                     /*  $.ajax({
