@@ -1,6 +1,11 @@
 
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css");
 
+
+/* Styles d'ajout d'employe */
+
+
+
 .input {
     padding: 2px 1rem;
     border-radius: 5px;
@@ -14,7 +19,7 @@
     
 }
 
-/* Styles d'ajout d'employe */
+
 @media (max-width: 700px) {
     .m-5{
         margin: 0 !important;
@@ -22,6 +27,10 @@
     .id{
         display: none !important;
     }
+}
+
+.modal-header {
+    margin: 0 1%;
 }
 
 .input-group {
@@ -66,7 +75,7 @@
     color: #028002;
 }
 
-/* Syele d'ajout d'employe */
+/* Style d'ajout d'employe */
 
 
 
