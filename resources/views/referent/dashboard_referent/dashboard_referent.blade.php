@@ -21,8 +21,8 @@
              </div>
             @if(count($cfps) == null or count($cfps) =='')
             <div id="in" class="p-2 mt-1 alert alert-danger text-center" role="alert">
-                <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez collaborer au moins avec une entreprise ! </span> &nbsp;
-                <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('collaboration')}}">Collaborez-vous maintenant</a>
+                <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez collaborer au moins avec une organisme de formation ! </span> &nbsp;
+                <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('list_cfp')}}">Collaborez-vous maintenant</a>
             </div>
             @else
 
@@ -37,14 +37,14 @@
 
             @endif
 
-            @if(count($formateur_referent) == null or count($formateur_referent) =='')
+            {{-- @if(count($formateur_referent) == null or count($formateur_referent) =='')
             <div id="in2" class="p-2 mt-1 alert alert-danger text-center" role="alert">
                 <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez collaborer au moins avec un formateur ! </span> &nbsp;
-                <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('collaboration')}}">Collaborez-vous maintenant</a>
+                <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('liste_formateur')}}">Collaborez-vous maintenant</a>
             </div>
             @else
 
-            @endif
+            @endif --}}
 
             {{-- cfp ty <div id="in2" class="p-2 mt-1 alert alert-danger text-center" role="alert">
             <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez créer un module pour avoir commencercommencé ! </span> &nbsp;
