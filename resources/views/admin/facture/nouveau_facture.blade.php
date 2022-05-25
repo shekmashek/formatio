@@ -153,7 +153,7 @@
                 </section>
                 <section class="section4 mb-4">
                     <div class="row services_factures">
-                        <div class="col-12 pb-4 element">
+                        <div class="col-12 pb-4 ">
                             <div class="row titres_services">
                                 <div class="col-2">
                                     <h6 class="m-0">Projet</h6>
@@ -168,10 +168,10 @@
                                     <h6 class="m-0">Unité</h6>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Totale HT ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1">
                                     <h6 class="m-0"></h6>
@@ -217,7 +217,7 @@
                             <p><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></p>
                         </div>
 
-                        <div class="col-12 pb-4 element">
+                        <div class="col-12 pb-4 ">
                             <div class="row  titres_services" style="display: none" id="titres_services_annexe">
                                 <div class="col-3">
                                     <h6 class="m-0">Frais annexes</h6>
@@ -229,10 +229,10 @@
                                     <h6 class="m-0">Quantité</h6>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1" align="right">
-                                    <h6 class="m-0">Totale HT ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>
