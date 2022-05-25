@@ -104,6 +104,15 @@ th{
     font-weight: 300;
     font-size: 14px
 }
+
+.form-check-input:disabled{
+    opacity: 1 !important;
+}
+
+.form-switch .form-check-input:not(checked){
+    border-color: #939393;
+    color: #0d6efd
+}
 </style>
 
 
@@ -116,11 +125,11 @@ th{
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item ">
-                <a href="#vosReferent" class="nav-link active" data-bs-toggle="tab">Vos réferents&nbsp;&nbsp;&nbsp;</a>
+                <a href="#vosReferent" class="nav-link active mt-2" data-bs-toggle="tab">Vos réferents&nbsp;&nbsp;&nbsp;</a>
             </li>
         @if($resp_connecte->prioriter == 1)
-            <li class="nav-item mt-1 ms-0" id="tabDynamique">
-                <a href="{{route('liste+responsable+cfp')}}" class="btn_nouveau btn" role="button"><i class="bx bx-plus-medical me-1"></i>nouveau referent</a>
+            <li class="nav-item" id="">
+                <a href="{{route('liste+responsable+cfp')}}" class="btn_nouveau btn my-1" role="button"><i class="bx bx-plus-medical me-1"></i>nouveau referent</a>
             </li>
         @endif
 
@@ -164,8 +173,12 @@ th{
                                             <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
                                             
                                             <td style="vertical-align: middle" class="text-center">
-                                                @if($responsables_cfp->prioriter == 1 && $responsables_cfp->id == $resp_connecte->id)
+                                                @if($responsables_cfp->prioriter == 1 && $responsables_cfp->activiter == 1 && $responsables_cfp->id == $resp_connecte->id)
                                                     <span data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class='bx bxs-star'></i></span>
+                                                @elseif($responsables_cfp->prioriter == 0 && $responsables_cfp->activiter == 0 && $responsables_cfp->id != $resp_connecte->id)
+                                                    <span desabled title="Résponsable" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
+                                                        <i desabled class='bx bxs-star'></i>
+                                                    </span>
                                                 @else
                                                     <span desabled title="Résponsable" role="button"  class="td_hover" @if($responsables_cfp->prioriter == 0) style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" @elseif($responsables_cfp->prioriter == 1) style="vertical-align: middle; font-size:23px; color:gold" @endif align="center">
                                                         <i desabled @if($resp_connecte->prioriter == 1) data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$responsables_cfp->id }}" @endif class='bx bxs-star'></i>

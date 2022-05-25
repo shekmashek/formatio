@@ -2,6 +2,7 @@
 @section('title')
     <h3 class="text_header m-0 mt-1">Manager</h3>
 @endsection
+@inject('groupe','App\groupe')
 @section('content')
 <style>
     .bgTest {
@@ -13,7 +14,7 @@
 <div class="container-fluid px-5">
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12 mt-2">
             <div class="panel panel-default">
                 {{-- <div class="panel-heading d-flex justify-content-end">
                     <button type="button" class="btn_enregistrer"><a href="{{route('departement.create')}}">Nouveau
@@ -70,10 +71,9 @@
                                 <table class="table table-striped table-hover" id="dataTables-example">
                                     <thead>
                                         <tr class="text-center titre_table">
-                                            <th>Photo</th>
-                                            <th>Matricule</th>
+                                            <th></th>
                                             <th>Nom</th>
-                                            <th>Prénom</th>
+                                            <th>Matricule</th>
                                             <th>Fonction</th>
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
@@ -99,13 +99,19 @@
                                                         style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
                                                 @endif
                                             </td>
+                                            <td>
+                                                {{$referent[$i]->nom_resp}}
+                                                {{$referent[$i]->prenom_resp}}
+                                            </td>
                                             <td class="">{{$referent[$i]->matricule}}</td>
-                                            <td class="">{{$referent[$i]->nom_resp}}</td>
-                                            <td class="">{{$referent[$i]->prenom_resp}}</td>
-
                                             <td class="">{{$referent[$i]->fonction_resp}}</td>
                                             <td class="">{{$referent[$i]->email_resp}}</td>
-                                            <td class="">{{$referent[$i]->telephone_resp}}</td>
+                                            <td class="">
+                                                @php
+                                                    echo $groupe->formatting_phone($referent[$i]->telephone_resp);
+                                                @endphp
+                                                {{-- {{$referent[$i]->telephone_resp}} --}}
+                                            </td>
 
                                             <td>
                                                 <div align="left">
@@ -281,10 +287,9 @@
                                 <table class="table table-striped" id="dataTables-example">
                                     <thead>
                                         <tr class="text-center titre_table">
-                                            <th>Photo</th>
-                                            <th>Matricule</th>
+                                            <th></th>
                                             <th>Nom</th>
-                                            <th>Prénom</th>
+                                            <th>Matricule</th>
                                             <th>Fonction</th>
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
@@ -311,17 +316,22 @@
                                                         title="clicker pour voir l'image"
                                                         src="{{asset('images/stagiaires/'.$stagiaires[$i]->photos)}}"
                                                         style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
-                                                {{-- <img src="/stagiaire-image/{{$stagiaires[$i]->photos}}" width="50"
-                                                    height="50">
-                                                </td> --}}
+                                                
                                                 @endif
                                             </td>
+                                            <td>
+                                                {{$stagiaires[$i]->nom_stagiaire}}
+                                                {{$stagiaires[$i]->prenom_stagiaire}}
+                                            </td>
                                             <td>{{$stagiaires[$i]->matricule}}</td>
-                                            <td>{{$stagiaires[$i]->nom_stagiaire}}</td>
-                                            <td>{{$stagiaires[$i]->prenom_stagiaire}}</td>
                                             <td>{{$stagiaires[$i]->fonction_stagiaire}}</td>
                                             <td>{{$stagiaires[$i]->mail_stagiaire}}</td>
-                                            <td>{{$stagiaires[$i]->telephone_stagiaire}}</td>
+                                            <td>
+                                                @php
+                                                    echo $groupe->formatting_phone($stagiaires[$i]->telephone_stagiaire);
+                                                @endphp
+                                                {{-- {{$stagiaires[$i]->telephone_stagiaire}} --}}
+                                            </td>
                                             <td>
                                                 <div align="left">
                                                     @foreach ($roles_actif_stg as $role_asigner_stg)
@@ -457,10 +467,9 @@
                                 <table class="table table-striped" id="dataTables-example">
                                     <thead>
                                         <tr class="text-center titre_table">
-                                            <th>Photo</th>
-                                            <th>Matricule</th>
+                                            <th></th>
                                             <th>Nom</th>
-                                            <th>Prénom</th>
+                                            <th>Matricule</th>
                                             <th>Fonction</th>
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
@@ -488,13 +497,19 @@
                                                         style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
                                             </td>
                                             @endif
+                                            <td>
+                                                {{$chef[$i]->nom_chef}}
+                                                {{$chef[$i]->prenom_chef}}
                                             </td>
                                             <td>{{$chef[$i]->matricule}}</td>
-                                            <td>{{$chef[$i]->nom_chef}}</td>
-                                            <td>{{$chef[$i]->prenom_chef}}</td>
                                             <td>{{$chef[$i]->fonction_chef}}</td>
                                             <td>{{$chef[$i]->mail_chef}}</td>
-                                            <td>{{$chef[$i]->telephone_chef}}</td>
+                                            <td>
+                                                @php
+                                                    echo $groupe->formatting_phone(chef[$i]->telephone_chef);
+                                                @endphp
+                                                {{-- {{$chef[$i]->telephone_chef}} --}}
+                                            </td>
                                             <td>
                                                 <div align="left">
                                                     @foreach ($roles_actif_manager as $role_asigner_manager)
