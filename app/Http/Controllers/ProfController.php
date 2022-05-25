@@ -80,7 +80,7 @@ class ProfController extends Controller
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
             // $formateur = $forma->getFormateur($formateur1, $formateur2);
             // $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
-            $formateur = DB::select('select SUBSTRING(nom_formateur, 1, 1) AS n,  SUBSTRING(prenom_formateur, 1, 1) AS p, activiter_demande,cfp_id, nom, adresse_lot, adresse_ville, 
+            $formateur = DB::select('select SUBSTRING(nom_formateur, 1, 1) AS n,  SUBSTRING(prenom_formateur, 1, 1) AS p, activiter_demande,cfp_id, nom, adresse_lot, adresse_ville,
             adresse_region, email, telephone, slogan, nif, stat, rcs, cif, logo, activiter_cfp, site_web, user_id, formateur_id, nom_formateur, prenom_formateur,mail_formateur,activiter_formateur,numero_formateur,photos from v_demmande_cfp_formateur where cfp_id = ?', [$cfp_id]);
             // dd($formateur);
             // $formateurs=formateur::findorFail($cfp_id);
@@ -174,8 +174,9 @@ class ProfController extends Controller
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::id()])->cfp_id;
         $nb_formateur = $this->fonct->findWhere("demmande_cfp_formateur",["demmandeur_cfp_id"],[$cfp_id]);
         $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
-
-        if($abonnement_cfp[0]->nb_formateur == count($nb_formateur) && $abonnement_cfp[0]->illimite == 0)  return back()->with('error', "Vous avez atteint le nombre maximum de formateur, veuillez upgrader votre compte pour ajouter plus de formateur");
+        if($abonnement_cfp != null){
+            if($abonnement_cfp[0]->nb_formateur == count($nb_formateur) && $abonnement_cfp[0]->illimite == 0)  return back()->with('error', "Vous avez atteint le nombre maximum de formateur, veuillez upgrader votre compte pour ajouter plus de formateur");
+        }
         else{
             $image = $request->file('image');
             if($image != null){
@@ -198,7 +199,7 @@ class ProfController extends Controller
                     $frm->adresse = $request->adresse;
                     $frm->CIN = $request->cin;
                     $frm->specialite = $request->specialite;
-                    $frm->niveau = $request->niveau;
+                    $frm->niveau_etude_id = $request->niveau;
 
                     $date = date('d-m-Y');
                     $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');
@@ -236,7 +237,7 @@ class ProfController extends Controller
                     $user_id = $fonct->findWhereMulitOne("users", ["email"], [$request->mail])->id;
                     DB::beginTransaction();
                     try {
-                        $fonct->insert_role_user($user_id, "4",true); // formateur
+                        $fonct->insert_role_user($user_id, "4",false,true); // formateur
                         DB::commit();
                     } catch (Exception $e) {
                         DB::rollback();

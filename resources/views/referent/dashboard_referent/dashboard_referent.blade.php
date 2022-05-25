@@ -31,7 +31,7 @@
             @if($refs->nif==null or $refs->stat==null or $refs->rcs==null)
             <div id="in1" class="p-2 mt-1 alert alert-danger text-center" role="alert">
                 <span style="color: rgb(233, 113, 113)"><i class="fas fa-exclamation-triangle"></i> &nbsp; Veuillez vous complétez vos informations professionnel ! </span> &nbsp;
-                <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('profile_entreprise',$referent->entreprise_id)}}">Modifier vos infos légales</a>
+                <a style="color: rgb(233, 113, 113); text-decoration: underline;" href="{{route('aff_parametre_referent')}}">Modifier vos infos légales</a>
             </div>
             @else
 

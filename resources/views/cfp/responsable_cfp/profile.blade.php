@@ -96,14 +96,14 @@
                 <p class="text-center">Coordonnées</p>
 
                 <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('modification_email',$refs->id)}} ">
+                    <a href="{{route('modification_adresse_email',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 12px;"> <i class='bx bx-envelope'></i>&nbsp; ADRESSE E-MAIL<span style="float: right;">{{$refs->email_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                         </p>
                     </a>
                 </div>
                 <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                    <a href="{{route('modification_telephone',$refs->id)}} ">
+                    <a href="{{route('modification_numero_telephone',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone'></i>&nbsp; TELEPHONE<span style="float: right;">
                             @php
                                 echo $groupe->formatting_phone($refs->telephone_resp_cfp);

@@ -455,7 +455,16 @@ $(document).on('change', '#cin', function() {
     $(document).on('click', '#removeRow2', function() {
         $(this).closest('#inputFormRow2').remove();
     });
-
+    $(function() {
+        $("input[name='phone']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
+    $(function() {
+        $("input[name='cin']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
 
 </script>
 @endsection
