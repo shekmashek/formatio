@@ -615,29 +615,11 @@ class ProfController extends Controller
         DB::update('update formateurs set numero_formateur = ? where id = ?', [$request->phone,$id]);
         return redirect()->route('profile_formateur');
     }
-    public function misajourFormateur(Request $request, $id)
-    {
-
-        // $fonct = new FonctionGenerique();
-
-        // $resp_etp = $fonct->findWhereMulitOne("formateurs",["user_id"],[ Auth::user()->id]);
-        // dd( $resp_etp );
-
-        $nom = $request->nom;
-
-        $phone =  $request->phone;
-        $mail = $request->mail;
-        $cin = $request->cin;
-        $datenais = $request->dateNais;
-        $input = $request->image;
-        $splt = $request->specialite;
-        $nv = $request->niveau;
+    public function update_photos_prof(Request $request,$id){
         $image = $request->file('image');
-        if($image == null) return back()->with('error','Choisissez une photo avant de cliquer sur enregistrer');
-        elseif($request->nom == null) return back()->with('error_nom','Entrez votre nom');
-        elseif($request->prenom == null) return back()->with('error_prenom','Entrez votre prenom avant de cliquer sur enregistrer');
+        $input = $request->image;
+        if($request->image == null) return back()->with('error','Choisissez une photo avant de cliquer sur enregistrer');
         else{
-
             if($image->getSize() > 1692728 or $image->getSize() == false){
                 return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
             }
@@ -657,28 +639,36 @@ class ProfController extends Controller
                     $constraint->aspectRatio();
                 })->save($destinationPath . '/' .  $image_name);
                 $input = "$profileImage";
-            }
-        }
-
-
-        if ($input != null) {
-
-            formateur::where('id',  $id)
+                formateur::where('id',  $id)
                 ->update([
-                    'nom_formateur' => $nom,
-                    'prenom_formateur' => $request->prenom,
-                    'numero_formateur' => $phone,
-                    'mail_formateur' => $mail,
-                    'cin' => $cin,
-                    'genre_id' =>  $request->genre,
-                    'date_naissance' => $datenais,
-                    'adresse' => $request->adresse,
-                    'specialite' => $splt,
                     'photos' => $input,
                 ]);
+                return redirect()->route('profile_formateur', $id);
             }
-         else {
+        }
+    }
+    public function misajourFormateur(Request $request, $id)
+    {
 
+        // $fonct = new FonctionGenerique();
+
+        // $resp_etp = $fonct->findWhereMulitOne("formateurs",["user_id"],[ Auth::user()->id]);
+        // dd( $resp_etp );
+
+        $nom = $request->nom;
+
+        $phone =  $request->phone;
+        $mail = $request->mail;
+        $cin = $request->cin;
+        $datenais = $request->dateNais;
+
+        $splt = $request->specialite;
+        $nv = $request->niveau;
+
+
+        if($request->nom == null) return back()->with('error_nom','Entrez votre nom');
+        elseif($request->prenom == null) return back()->with('error_prenom','Entrez votre prenom avant de cliquer sur enregistrer');
+        else{
             formateur::where('id',  $id)
                 ->update([
                     'nom_formateur' => $nom,
@@ -691,14 +681,8 @@ class ProfController extends Controller
                     'adresse' => $request->adresse,
                     'specialite' => $splt,
                 ]);
+            return redirect()->route('profile_formateur', $id);
         }
-        // $password = $request->password;
-        // $hashedPwd = Hash::make($password);
-        // $user = User::where('id', Auth::user()->id)->update([
-        //     'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
-        // ]);
-
-        return redirect()->route('profile_formateur', $id);
     }
 
 

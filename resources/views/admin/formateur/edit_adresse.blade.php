@@ -62,7 +62,7 @@
 
                         <input type="hidden" class="form-control test"  name="phone" value="{{ $formateur->numero_formateur }}">
                                        <input type="hidden" class="form-control test" value=""  name="password" placeholder="">
-                        <input type="hidden" class="form-control test"  name="niveau" value="{{ $niveau->niveau_etude}}">
+                        <input type="hidden" class="form-control test"  name="niveau" value="{{ $formateur->niveau_etude_id}}">
 
 
 

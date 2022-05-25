@@ -66,6 +66,7 @@
 
 
         <input type="hidden" class="form-control test" name="genre" value="{{ $formateur->genre_id }}">
+        <input type="hidden" class="form-control test" name="image" value="{{ $formateur->photos }}">
         <input type="hidden" class="form-control test" name="dateNais" value="{{ $formateur->date_naissance }}">
 
         <input type="hidden" value="{{ $formateur->cin}}" class="form-control test" name="cin">

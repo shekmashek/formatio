@@ -29,7 +29,7 @@
         <p style="text-align: left">Photos de profile
           <strong>Taille du fichier: (1.7 MB max)</strong>
         </p>
-        <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_photos_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
                     <input type="hidden" value="{{ $formateur->nom_formateur }}" class="form-control test"  name="nom">

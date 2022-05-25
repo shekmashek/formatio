@@ -397,7 +397,7 @@
                         @foreach ($responsables as $resp)
                         <tr>
                             <td>
-                                <a href="{{route('profile_resp',$resp->id)}}">
+                                {{-- <a href="{{route('profile_resp',$resp->id)}}"> --}}
                                     @if($resp->photos == null)
                                     <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
                                         <span class="" style="position:relative; top: .5rem;"><b>{{$resp->nom_rsp}}{{$resp->prenom_rsp}}</b></span>
@@ -405,27 +405,27 @@
                                     @else
                                     <a href="{{asset('images/responsables/'.$resp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/responsables/'.$resp->photos)}}" style="width:30px; height:30px; border-radius:100%; font-size:15px; border: 1px solid black;"></a>
                                     @endif
-                                </a>
+                                {{-- </a> --}}
                             </td>
                             <td>
-                                <a href="{{route('profile_stagiaire',$resp->id)}}">
+                                {{-- <a href="{{route('profile_stagiaire',$resp->id)}}"> --}}
                                     <p> {{$resp->nom_resp." ".$resp->prenom_resp}} </p>
                                     <p> @if ($resp->activiter==1)
                                         <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$resp->matricule}}
                                         @else
                                         <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$resp->matricule}}
                                         @endif</p>
-                                </a>
+                                {{-- </a> --}}
                             </td>
                             <td>
-                                <a href="{{route('profile_stagiaire',$resp->id)}}">
+                                {{-- <a href="{{route('profile_stagiaire',$resp->id)}}"> --}}
                                     <p> {{$resp->email_resp}} </p>
                                     @if($resp->telephone_resp==null)
                                     <p> ----</p>
                                     @else
                                     <p> {{$resp->telephone_resp}}</p>
                                     @endif
-                                </a>
+                                {{-- </a> --}}
                             </td>
                             <td>
                                 @if($resp->service_id!=null)

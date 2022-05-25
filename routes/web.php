@@ -200,6 +200,7 @@ Route::post('/update_mdp_formateur/{id?}', 'ProfController@update_mdp_formateur'
 Route::post('/update_email_formateur/{id}', 'ProfController@update_email_formateur')->name('update_email_formateur');
 Route::post('/update_telephone_prof/{id}','ProfController@update_telephone_prof')->name('update_telephone_prof');
 Route::post('/update_niveau_prof/{id}','ProfController@update_niveau_prof')->name('update_niveau_prof');
+Route::post('/update_photos_prof/{id}','ProfController@update_photos_prof')->name('update_photos_prof');
 //collabforfateur
 Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur');
 //route formateur profil

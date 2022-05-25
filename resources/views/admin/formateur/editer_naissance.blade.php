@@ -16,6 +16,7 @@
             <form class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
 
+                <input type="hidden" value="   {{ $formateur->photos }}" class="form-control test input" name="image">
                 <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input" name="nom">
                 {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
 
@@ -63,7 +64,7 @@
 
         <input type="hidden" class="form-control test" name="phone" value="{{$formateur->numero_formateur }}">
         <input type="hidden" class="form-control test" value="" name="password" placeholder="">
-        <input type="hidden" class="form-control test" name="niveau" value="{{$niveau->niveau_etude}}">
+        <input type="hidden" class="form-control test" name="niveau" value="{{$formateur->niveau_etude_id}}">
 
 
 

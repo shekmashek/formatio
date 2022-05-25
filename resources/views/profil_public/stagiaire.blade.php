@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="text-end ">
-                                <a href="{{route('calendrier_formation')}}" class="btn boutonretour text-white"><i class="fa-solid fa-circle-left fa-2xl"></i></a>
+                                <a href="{{url()->previous()}}" class="btn boutonretour text-white"><i class="fa-solid fa-circle-left fa-2xl"></i></a>
                             </div>
                         </div>
                     </div>
