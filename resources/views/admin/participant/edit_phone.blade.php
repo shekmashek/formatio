@@ -5,7 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('profile_stagiaire')}}" role="button" class="btn btn_precedent me-1 my-2">  Retour</a>
+  <a href="{{route('profile_stagiaire')}}" role="button" class="btn btn_precedent me-1 my-2"><i class="bx bxs-chevron-left me-1"></i>   Retour</a>
 </div>
 <center>
 @if (\Session::has('error_phone'))
