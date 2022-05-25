@@ -127,9 +127,10 @@ class ParticipantController extends Controller
         }
         $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
         $employers_tmp = DB::select("SELECT *, SUBSTRING(nom_emp,1,1) AS nom_stg,SUBSTRING(prenom_emp,1,1) AS prenom_stg FROM employers WHERE entreprise_id=? ORDER BY id DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-        $role_ref = $this->fonct->findWhereMulitOne("v_role_etp", ["id"], [2]);
+        $role_referent = $this->fonct->findWhereMulitOne("v_role_etp", ["id"], [2]);
 
         $connected=$stg->getEmployer($connected);
+
 
         for ($i = 0; $i < count($employers_tmp); $i += 1) {
 
@@ -153,7 +154,7 @@ class ParticipantController extends Controller
 
         // dd($connected);
 
-        return view("admin.entreprise.employer.liste_employer", compact('connected', 'employers', 'pagination'));
+        return view("admin.entreprise.employer.liste_employer", compact('role_referent','connected', 'employers', 'pagination'));
     }
 
     //====================================================== FILTRE ======================================

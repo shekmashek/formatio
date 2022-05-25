@@ -3,7 +3,7 @@
 <p class="text_header m-0 mt-1">employés</p>
 @endsection
 @section('content')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
+<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
 <style>
     table,
@@ -428,11 +428,19 @@
 
         <div class="row">
             <div class="col-12">
-                @if (Session::has('success'))
-                <span class="alert alert-success">
-                    {{Session::get('success') }}
-                </span>
-                @endif
+                <div class="my-2">
+                    @if (Session::has('success'))
+                    <span style="color: green">
+                        {{Session::get('success') }}
+                    </span>
+                    @endif
+                    @if (Session::has('error'))
+                    <span style="color: red">
+                        {{Session::get('error') }}
+                    </span>
+                    @endif
+                </div>
+
                 <table class="table  table-hover">
                     <thead>
                         <tr>
@@ -516,7 +524,7 @@
                                 </div>
                                 @else
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}" >
+                                    <input class="form-check-input" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" data-bs-toggle="modal" data-bs-target="#activer_role_ref_{{$emp->id}}_{{$emp->user_id}}">
                                 </div>
                                 @endif
 
@@ -618,16 +626,26 @@
 
                                     </div>
                                     <div class="modal-body">
+                                        <div class="text-center my-2">
+                                            <i class="fa-solid fa-circle-exclamation warning"></i>
+                                        </div>
                                         <small>Vous <span style="color: red"> êtes </span>sur le point de retirer "{{$emp->nom_emp." ".$emp->prenom_emp}}" en tant que réferent</small>
                                     </div>
 
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i> Non </button>
+                                        <form action="{{route('delete_role_user')}}" method="GET">
+                                            @csrf
+                                            <input type="text" hidden name="user_id" value="{{$emp->user_id}}">
+                                            <input type="text" hidden name="role_id" value="{{$role_referent->id}}">
+                                            <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Oui</button>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                         {{-- ====================  modal activiter ref employers ===================================== --}}
                         <div class="modal fade" id="activer_role_ref_{{$emp->id}}_{{$emp->user_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -638,12 +656,22 @@
 
                                     </div>
                                     <div class="modal-body">
+                                        <div class="text-center my-2">
+                                            <i class="fa-solid fa-circle-exclamation warning" style="color: green"></i>
+                                        </div>
                                         <small>Vous <span style="color: green"> êtes </span>sur le point de nommer "{{$emp->nom_emp." ".$emp->prenom_emp}}" en tant que nouveau réferent</small>
                                     </div>
 
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i> Non </button>
+                                        <form action="{{route('add_role_user')}}" method="GET">
+                                            @csrf
+                                            <input type="text" hidden name="user_id" value="{{$emp->user_id}}">
+                                            <input type="text" hidden name="role_id" value="{{$role_referent->id}}">
+                                            <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Oui</button>
+                                        </form>
+
+                                        {{-- <a href="{{route('add_role_user',[$emp->user_id,$role_referent->id])}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -658,12 +686,15 @@
 
                                     </div>
                                     <div class="modal-body">
+                                        <div class="text-center my-2">
+                                            <i class="fa-solid fa-circle-exclamation warning"></i>
+                                        </div>
                                         <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
                                     </div>
 
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i> Non </button>
+                                        <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Oui</button></a>
                                     </div>
                                 </div>
                             </div>

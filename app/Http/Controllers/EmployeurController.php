@@ -88,10 +88,23 @@ class EmployeurController extends Controller
      */
     public function destroy($id)
     {
-        DB::delete('delete from users where id = ?', [$id]);
-        DB::delete("delete from role_users where user_id=?", [$id]);
-        DB::delete("delete from employers where user_id=?", [$id]);
-        return back();
+        $employers = $this->fonct->findWhere("employers", ["user_id"], [$id]);
+
+        if (Gate::allows('isReferent')) {
+            DB::beginTransaction();
+            try {
+                DB::delete('delete from users where id = ?', [$employers->user_id]);
+                DB::delete("delete from role_users where user_id=?", [$employers->user_id]);
+                DB::delete("delete from employers where id=?", [$employers->id]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+            }
+            return back()->with('success', $employers->nom_emp . " " . $employers->prenom_emp . " a été bien rétirer de la plateforme");
+        } else {
+            return back()->with('error', 'seul les responsables on le droit de rétiré un employer de votre organisation');
+        }
     }
 
     public function store(Request $request)
@@ -121,16 +134,17 @@ class EmployeurController extends Controller
         $phone = $request->phone;
         $fonction_employer = $request->fonction;
 
-        $verify_mail = $this->fonct->findWhere("users", ["email"], [$mail]);
-        $verify_cin = $this->fonct->findWhere("employers", ["cin"], [$cin]);
+        $verify_mail = $this->fonct->findWhere("employers", ["email_emp"], [$mail]);
+        $verify_cin = $this->fonct->findWhere("employers", ["cin_emp"], [$cin]);
 
-        if (count($verify_mail) < 0) {
-            if (count($verify_cin) < 0) {
+        if (count($verify_mail) <= 0) {
+            if (count($verify_cin) <= 0) {
+
                 if (Gate::allows('isReferent')) {
                     $entreprise_id = $this->fonct->findWhere("responsables", ["user_id"], [Auth::user()->id]);
-
+                    $etp = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id[0]->entreprise_id]);
+                    // dd($etp);
                     /**On doit verifier le dernier abonnement de l'entreprise pour pouvoir limité le referent à ajouter */
-                    $nb_referent = $this->fonct->findWhere("responsables", ["entreprise_id"], [$entreprise_id[0]->entreprise_id]);
                     $nb_stagiaire = $this->fonct->findWhere("stagiaires", ["entreprise_id"], [$entreprise_id[0]->entreprise_id]);
 
                     $abonnement_etp =  DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id[0]->entreprise_id]);
@@ -157,23 +171,26 @@ class EmployeurController extends Controller
                         $this->fonct->insert_role_user($user_id, "3", true, true); // EMPLOYEUR
                         $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $resp->entreprise_id, $user_id, $fonction_employer];
                         DB::insert("insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp,telephone_emp,
-                    entreprise_id,user_id,activiter,created_at,fonction_emp) values(?,?,?,?,?,?,?,?,1,NOW(),?)", $data);
+                    entreprise_id,user_id,activiter,created_at,fonction_emp,genre_id) values(?,?,?,?,?,?,?,?,1,NOW(),?,1)", $data);
 
-                        //    Mail::to($resp->email_resp)->send(new save_new_compte_stagiaire_Mail($nom . ' ' . $prenom, $email, $etp->nom_etp));
+                        Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail( $etp->nom_etp,$resp,$nom . ' ' . $prenom, $mail,$fonction_employer));
+                        // public function __construct($nom_etp,$responsable_etp,$nom_employer,$email_employer,$fonction_user)
 
                         DB::commit();
                     } catch (Exception $e) {
                         DB::rollback();
                         echo $e->getMessage();
                     }
-                    return back()->with('success',"l'employer a été bien rétirer de la plateforme");
+                    return back()->with('success', "l'employer a été bien rétirer de la plateforme");
                     // return redirect()->route('employes.liste');
                 } else {
-                    return back()->with('error', 'CIN déjà utilisé');
+                    return back()->with('error', 'seul les responsables on le droit de rétiré un employer de votre organisation');
                 }
             } else {
                 return back()->with('error', 'E-mail est déjà utilisé');
             }
+        } else {
+            // return back()->with('error', 'CIN déjà utilisé');
         }
     }
 }
