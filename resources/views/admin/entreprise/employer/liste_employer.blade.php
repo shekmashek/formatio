@@ -453,11 +453,15 @@
     
                                         </div>
                                         <div class="modal-body">
-                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
+                                            <small>Vous êtes sur le point d'enlever l'employé 
+                                                {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }} - 
+                                                id : {{ $employe->id }}, utilisateur {{ $employe->user_id }}
+                                                sur le plateforme, cette action est irréversible. Continuer ?</small>
                                         </div>
     
                                         <div class="modal-footer justify-content-center">
                                             <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                            
                                             <a href="{{route('employeur.destroy',$employe->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
                                         </div>
                                     </div>

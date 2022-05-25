@@ -196,6 +196,10 @@ class EmployeurController extends Controller
             // cause une swift exception error
             // Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
             
+
+            // return back with success message only for 2 seconds 
+            return redirect()->back()->with('success', 'Enregistrement réussi');
+
             return back()->with('success',"Terminé !");
         }
 
