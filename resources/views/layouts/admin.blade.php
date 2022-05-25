@@ -559,7 +559,7 @@
                         </div>
                     </div>
                     @endcanany
-                    @canany(['isReferent','isStagiaire','isManager'])
+                    @canany(['isReferent','isManager'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
                             <div class="btn_racourcis me-4">
@@ -581,6 +581,7 @@
                         </div>
                     </div>
                     @endcan
+
                     {{-- @canany(['isCFP','isFormateur'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
