@@ -18,7 +18,6 @@ SELECT
     employers.photos,
     (employers.cin_emp) cin,
     (employers.date_naissance_emp) date_naissance,
-    employers.niveau_etude,
     employers.activiter,
     (employers.adresse_quartier) quartier,
     (employers.adresse_code_postal) code_postal,
@@ -28,11 +27,13 @@ SELECT
     role_users.role_id,
     role_users.prioriter,
 employers.created_at,
-employers.updated_at
+employers.updated_at,
+niveau_etude_id,
+niveau_etude.niveau_etude
 FROM
-employers, role_users, genre
+employers, role_users, genre,niveau_etude
 WHERE
-    employers.user_id = role_users.user_id and employers.genre_id = genre.id and role_users.role_id=3;
+    employers.user_id = role_users.user_id and employers.genre_id = genre.id and niveau_etude_id=niveau_etude.id and role_users.role_id=3;
 
 CREATE OR REPLACE view responsables as
 SELECT
@@ -54,7 +55,6 @@ SELECT
     employers.photos,
     (employers.cin_emp) cin_resp,
     (employers.date_naissance_emp) date_naissance_resp,
-    employers.niveau_etude,
     employers.activiter,
     employers.adresse_quartier,
     employers.adresse_code_postal,
@@ -64,24 +64,13 @@ SELECT
     role_users.role_id,
     role_users.prioriter,
 employers.created_at,
-employers.updated_at
+employers.updated_at,
+niveau_etude_id,
+niveau_etude.niveau_etude
 FROM
-employers, role_users , genre
+employers, role_users , genre,niveau_etude
 WHERE
-    employers.user_id = role_users.user_id and employers.genre_id = genre.id  and role_users.role_id=2;
-
-
-create or replace  view v_employers_as_role_referent as SELECT
-    employers.*,
-    role_users.role_id,
-     (role_users.prioriter) prioriter_role_user,
-    (role_users.activiter) activiter_role_user,
-    v_role_etp.role_name,
-    v_role_etp.role_description
-FROM
-    employers,role_users,v_role_etp
-WHERE
-employers.user_id = role_users.user_id AND role_users.role_id=v_role_etp.id AND role_users.role_id=2;
+    employers.user_id = role_users.user_id and employers.genre_id = genre.id and niveau_etude_id=niveau_etude.id  and role_users.role_id=2;
 
 CREATE OR REPLACE view chef_departements as
 SELECT
@@ -102,7 +91,6 @@ SELECT
     employers.photos,
     (employers.cin_emp) cin_chef,
     (employers.date_naissance_emp) date_naissance_chef,
-    employers.niveau_etude,
     employers.activiter,
     employers.adresse_quartier,
     employers.adresse_code_postal,
@@ -112,8 +100,25 @@ SELECT
     role_users.role_id,
     role_users.prioriter,
 employers.created_at,
-employers.updated_at
+employers.updated_at,
+niveau_etude_id,
+niveau_etude.niveau_etude
 FROM
-employers, role_users, genre
+employers, role_users, genre,niveau_etude
 WHERE
-    employers.user_id = role_users.user_id and employers.genre_id =genre.id and role_users.role_id=5;
+    employers.user_id = role_users.user_id and employers.genre_id =genre.id and niveau_etude_id=niveau_etude.id and role_users.role_id=5;
+
+
+
+
+create or replace  view v_employers_as_role_referent as SELECT
+    employers.*,
+    role_users.role_id,
+     (role_users.prioriter) prioriter_role_user,
+    (role_users.activiter) activiter_role_user,
+    v_role_etp.role_name,
+    v_role_etp.role_description
+FROM
+    employers,role_users,v_role_etp
+WHERE
+employers.user_id = role_users.user_id AND role_users.role_id=v_role_etp.id AND role_users.role_id=2;

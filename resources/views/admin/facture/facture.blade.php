@@ -436,8 +436,22 @@
                                                         @if($actif->dernier_montant_ouvert<=0) <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
                                                             payé
                                 </div>
+
+                                @elseif($actif->activiter==false)
+
+                                @if ($actif->jour_restant >0)
+                                <div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">
+                                    nom envoyé
+                                </div>
+                                @else
+                                <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                    en retard
+                                </div>
+                                @endif
+
                                 @else
                                 @if($actif->facture_encour =="valider")
+
                                 @if ($actif->jour_restant >0)
                                 <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
                                     envoyé
@@ -447,6 +461,7 @@
                                     en retard
                                 </div>
                                 @endif
+
                                 @elseif($actif->facture_encour =="en_cour")
                                 @if ($actif->jour_restant >0)
                                 <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
@@ -457,6 +472,8 @@
                                     en retard
                                 </div>
                                 @endif
+
+
                                 @endif
                                 @endif
 
@@ -684,13 +701,15 @@
                                                     <th scope="col">Date de facturation</th>
                                                     <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                     </th>
-                                                    <th scope="col">  <div align="right">
-                                                        Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                   </div>
+                                                    <th scope="col">
+                                                        <div align="right">
+                                                            Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </div>
                                                     </th>
-                                                    <th scope="col">  <div align="right">
-                                                        Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                   </div>
+                                                    <th scope="col">
+                                                        <div align="right">
+                                                            Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </div>
                                                     </th>
                                                     <th scope="col">Statut</th>
                                                     @canany(['isCFP'])
@@ -748,15 +767,15 @@
                                                         </a>
                                                     </td>
                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                        <div align="right">
-                                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                                        </div>
+                                                            <div align="right">
+                                                                {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                            </div>
                                                         </a>
                                                     </td>
                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                        <div align="right">
-                                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
-                                                        </div>
+                                                            <div align="right">
+                                                                {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                            </div>
                                                         </a>
                                                     </td>
                                                     <td>
@@ -859,13 +878,15 @@
                                                         <th scope="col">Date de facturation</th>
                                                         <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                         </th>
-                                                        <th scope="col">  <div align="right">
-                                                            Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                       </div>
+                                                        <th scope="col">
+                                                            <div align="right">
+                                                                Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                            </div>
                                                         </th>
-                                                        <th scope="col">  <div align="right">
-                                                            Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                      </div>
+                                                        <th scope="col">
+                                                            <div align="right">
+                                                                Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                            </div>
                                                         </th>
                                                         <th scope="col">Statut</th>
                                                         @canany(['isCFP'])
@@ -918,15 +939,15 @@
                                                                 </a>
                                                             </td>
                                                             <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                                <div align="right">
-                                                                    {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                                                </div>
+                                                                    <div align="right">
+                                                                        {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                                    </div>
                                                                 </a>
                                                             </td>
                                                             <td>
                                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                     <div align="right">
-                                                                    {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                                        {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
                                                                     </div>
                                                                 </a>
                                                             </td>
@@ -1108,13 +1129,15 @@
                                                                 <th scope="col">Date de facturation</th>
                                                                 <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                                 </th>
-                                                                <th scope="col">  <div align="right">
-                                                                    Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                                </div>
+                                                                <th scope="col">
+                                                                    <div align="right">
+                                                                        Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                    </div>
                                                                 </th>
-                                                                <th scope="col">  <div align="right">
-                                                                    Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                               </div>
+                                                                <th scope="col">
+                                                                    <div align="right">
+                                                                        Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                    </div>
                                                                 </th>
                                                                 <th scope="col">Statut</th>
                                                                 @canany(['isCFP'])
@@ -1165,15 +1188,15 @@
                                                                         </a>
                                                                     </td>
                                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                                        <div align="right">
-                                                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                                                        </div>
+                                                                            <div align="right">
+                                                                                {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                                            </div>
                                                                         </a>
                                                                     </td>
                                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                                        <div align="right">
-                                                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
-                                                                        </div>
+                                                                            <div align="right">
+                                                                                {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                                            </div>
                                                                         </a>
                                                                     </td>
                                                                     <td>

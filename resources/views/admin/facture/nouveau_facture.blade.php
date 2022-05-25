@@ -31,7 +31,7 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             {{-- <li></li> --}}
             <li class="nav-item">
-                <a href="{{route('liste_facture')}}" class="nav-link">
+                <a href="{{url()->previous()}}" class="nav-link">
                     Retour à la liste des factures
                 </a>
             </li>
@@ -46,7 +46,7 @@
                             <h2>Nouvelle facture</h2>
                         </div>
                         <div class="col-6 text-end">
-                            <input type="submit" class="btn btn_submit " id="enregristrer_facture" value="Enregistrer et continuer">
+                            <button type="submit" class="btn btn_enregistrer " id="enregristrer_facture" > <i class="bx bx-check me-1"></i> Enregistrer</button>
                         </div>
                     </div>
                 </section>
@@ -122,7 +122,7 @@
                                 <div class="col-12 d-flex flex-row justify-content-end">
                                     {{-- <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" autocomplete="off" placeholder="N° facture" class="form-control input_simple" name="num_facture" id="num_facture" required> --}}
 
-                                    <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" autocomplete="off" placeholder="N°" class="text-end titre_facture form-select  mb-2 m-0 " name="num_facture" id="num_facture" required>
+                                    <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" autocomplete="off" placeholder="N°" class="text-end titre_facture   mb-2 m-0 " name="num_facture" id="num_facture" required>
                                     @error('num_facture')
                                     <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                     @enderror
@@ -132,7 +132,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-12 d-flex flex-row justify-content-end">
-                                    <p class="m-0 pt-3 text-end me-3">N° BC</p> <input type="text" autocomplete="off" class="text-end titre_facture form-select  mb-2 m-0 " name="reference_bc" id="reference_bc" required placeholder="bon de commande">
+                                    <p class="m-0 pt-3 text-end me-3">N° BC</p> <input type="text" autocomplete="off" class="text-end titre_facture   mb-2 m-0 " name="reference_bc" id="reference_bc" required placeholder="bon de commande">
                                     @error('reference_bc')
                                     <p> <span style="color:#ff0000;"> {{$message}} </span></p>
                                     @enderror
@@ -142,14 +142,14 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-12 d-flex flex-row justify-content-end">
-                                    <p class="m-0 pt-3 text-end me-3">Date de facturation</p> <input type="date" class="text-end titre_facture form-select  mb-2 m-0 " name="invoice_date" id="invoice_date" required>
+                                    <p class="m-0 pt-3 text-end me-3">Date de facturation</p> <input type="date" class="text-end titre_facture   mb-2 m-0 " name="invoice_date" id="invoice_date" required>
                                 </div>
                             </div>
                             <div class="row">
 
 
                                 <div class="col-12 d-flex flex-row justify-content-end">
-                                    <p class="m-0 pt-3 text-end me-3">Date de règlement</p> <input type="date" class="text-end titre_facture form-select  mb-2 m-0 " name="due_date" id="due_date" required>
+                                    <p class="m-0 pt-3 text-end me-3">Date de règlement</p> <input type="date" class="text-end titre_facture   mb-2 m-0 " name="due_date" id="due_date" required>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                 </section>
                 <section class="section4 mb-4">
                     <div class="row services_factures">
-                        <div class="col-12 pb-4 element">
+                        <div class="col-12 pb-4 ">
                             <div class="row titres_services">
                                 <div class="col-2">
                                     <h6 class="m-0">Projet</h6>
@@ -172,10 +172,10 @@
                                     <h6 class="m-0">Unité</h6>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Totale HT ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1">
                                     <h6 class="m-0"></h6>
@@ -221,7 +221,7 @@
                             <p><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></p>
                         </div>
 
-                        <div class="col-12 pb-4 element">
+                        <div class="col-12 pb-4 ">
                             <div class="row  titres_services" style="display: none" id="titres_services_annexe">
                                 <div class="col-3">
                                     <h6 class="m-0">Frais annexes</h6>
@@ -233,10 +233,10 @@
                                     <h6 class="m-0">Quantité</h6>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Totale HT ({{$devise->devise}})</h6>
+                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>

@@ -2,7 +2,7 @@
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
- /*   $(document).ready(function() {
+    /*   $(document).ready(function() {
         $("#myModal").modal('show');
 
     });
@@ -141,6 +141,14 @@
 
                 if (full_facture[i_act].dernier_montant_ouvert <= 0) {
                     html_tous += '<div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">  payé </div>';
+                } else if (full_facture[i_act].activiter == false) {
+
+                    if (full_facture[i_act].jour_restant > 0) {
+                        html_tous += '<div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">nom envoyé</div>';
+                    } else {
+                        html_tous += '<div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">en retard</div>';
+                    }
+
                 } else {
                     if (full_facture[i_act].facture_encour == "valider") {
                         if (full_facture[i_act].jour_restant > 0) {

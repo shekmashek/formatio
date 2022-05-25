@@ -88,15 +88,13 @@ CREATE TABLE employers (
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   photos varchar(255) COLLATE utf8mb4_unicode_ci,
   entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
-  niveau_etude varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+ niveau_etude_id bigint(20) UNSIGNED NOT NULL DEFAULT 1 REFERENCES niveau_etude(id) ON DELETE CASCADE,
   activiter boolean not null default true,
   prioriter boolean not null default false,
   url_photo VARCHAR(155),
   created_at timestamp  DEFAULT current_timestamp(),
   updated_at timestamp  DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
 
 
 CREATE TABLE historique_stagiaires (

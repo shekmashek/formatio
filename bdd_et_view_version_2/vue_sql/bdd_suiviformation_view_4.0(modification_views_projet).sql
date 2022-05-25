@@ -67,7 +67,7 @@ create or replace view v_groupe_entreprise as
             when g.status = 2 then
                 case
                     when (g.date_fin - curdate()) < 0 then 'Terminé'
-                    when (g.date_debut - curdate()) < 0 then 'En cours'
+                    when (g.date_debut - curdate()) <= 0 then 'En cours'
                     else 'A venir' end
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
@@ -161,7 +161,7 @@ create or replace view v_groupe_projet_module as
             when g.status = 2 then
                 case
                     when (g.date_fin - curdate()) < 0 then 'Terminé'
-                    when (g.date_debut - curdate()) < 0 then 'En cours'
+                    when (g.date_debut - curdate()) <= 0 then 'En cours'
                     else 'A venir' end
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
@@ -208,7 +208,7 @@ create or replace view v_groupe_projet_module as
     join type_formations tf on p.type_formation_id = tf.id
     join cfps on cfps.id = p.cfp_id
     join type_payement tp on tp.id = g.type_payement_id
-    join groupe_entreprises g_etp on g.id = g_etp.groupe_id;
+    left join groupe_entreprises g_etp on g.id = g_etp.groupe_id;
 
 
 create or replace view v_groupe_projet_entreprise_module as
@@ -482,9 +482,10 @@ select
         concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photos,
         (s.service_id) departement_id,
         s.cin,
+        niveau.id as niveau_etude_id,
+        niveau.niveau_etude,
         s.date_naissance,
         (s.lot) adresse,
-        s.niveau_etude,
         s.activiter as activiter_stagiaire,
         s.branche_id,
         ifnull(d.nom_departement,' ') as nom_departement,
@@ -505,7 +506,9 @@ select
     left join v_departement_service_entreprise d
         on s.service_id = d.service_id
     join moduleformation mf
-        on mf.module_id = g.module_id;
+        on mf.module_id = g.module_id
+    join niveau_etude niveau
+        on niveau.id = s.niveau_etude_id;
 
 
 create or replace view v_detail_presence as
@@ -597,7 +600,6 @@ create or replace view v_detail_presence_stagiaire as
         stg.photos,
         stg.cin,
         stg.date_naissance,
-        stg.niveau_etude,
         stg.activiter,
         stg.branche_id,
         stg.quartier,
@@ -662,7 +664,7 @@ create or replace view v_projet_session_inter as
             when g.status = 2 then
                 case
                     when (g.date_fin - curdate()) < 0 then 'Terminé'
-                    when (g.date_debut - curdate()) < 0 then 'En cours'
+                    when (g.date_debut - curdate()) <= 0 then 'En cours'
                     else 'A venir' end
             when g.status = 1 then 'Prévisionnel'
             when g.status = 0 then 'Créer'end item_status_groupe,
@@ -709,7 +711,6 @@ create or replace view v_formateur_projet as
         f.adresse,
         f.cin,
         f.specialite,
-        f.niveau,
         d.groupe_id
     from
         v_demmande_cfp_formateur f join details d on f.formateur_id = d.formateur_id
@@ -725,7 +726,6 @@ create or replace view v_formateur_projet as
         f.adresse,
         f.cin,
         f.specialite,
-        f.niveau,
         d.groupe_id;
 
 
@@ -811,16 +811,21 @@ create or replace view v_projet_formation as
         nom_formation,
         cfp_id;
 
-
-create or replace view v_presence_groupe as
-    select
-        p.detail_id,
-        p.stagiaire_id,
-        p.status,
-        d.groupe_id
-    from presences p
-    join details d on d.id = p.detail_id;
-
+-- select
+--     g.projet_id,
+--     p.nom_projet,
+--     mf.formation_id,
+--     mf.nom_formation,
+--     p.cfp_id
+-- from groupes g
+-- join projets p on p.id = g.projet_id
+-- join moduleformation mf on g.module_id = mf.module_id
+-- group by
+--     g.projet_id,
+--     p.nom_projet,
+--     mf.formation_id,
+--     mf.nom_formation,
+--     p.cfp_id;
 
 
 
@@ -834,3 +839,12 @@ group by
     d.groupe_id,
     d.formateur_id,
     f.photos;
+
+create or replace view v_presence_groupe as
+    select
+        p.detail_id,
+        p.stagiaire_id,
+        p.status,
+        d.groupe_id
+    from presences p
+    join details d on d.id = p.detail_id;
