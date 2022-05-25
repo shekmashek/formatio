@@ -361,7 +361,7 @@
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Start date</th>
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Extn.</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
 
                         </tr>
                     </thead>
@@ -434,9 +434,37 @@
                                     @endif
 
                                 </td>
-                                <td class="align-middle text-center text-secondary">5421</td>
+                                <td class="align-middle text-center text-secondary">
+                                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$employe->id}}">
+                                        <i class='bx bxs-trash' style='color:#e21717'  ></i>
+                                    </button>
+                                </td>
 
                             </tr>
+
+                            <div class="modal fade" id="delete_emp_{{$employe->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
+                                    @csrf
+    
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                            <h4 class="modal-title text-white">Avertissement !</h4>
+    
+                                        </div>
+                                        <div class="modal-body">
+                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
+                                        </div>
+    
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                            <a href="{{route('employeur.destroy',$employe->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+    
+                            </div>
                         @empty
                             <h3 class="text-center">Aucun employé</h3>
                         @endforelse
