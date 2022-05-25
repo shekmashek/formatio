@@ -1,11 +1,11 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Modification niveau</h3>
+    <h3 class="text_header m-0 mt-1">Modification niveau d'étude</h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+  <a href="{{route('profile_stagiaire')}}" role="button" class="btn btn_precedent me-1 my-2">  Retour</a>
 </div>
 <center>
 
@@ -101,7 +101,7 @@
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>
 
-<button  class="btn_enregistrer  mt-1 btn modification "> Enregister</button>
+                    <button class="btn btn_enregistrer mt-1"><i class="bx bx-check me-1"></i> Enregistrer</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

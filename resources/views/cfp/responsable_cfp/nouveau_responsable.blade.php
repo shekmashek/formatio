@@ -5,6 +5,7 @@
 @section('content')
 <div class="container justify-content-center mt-3">
 
+<link rel="stylesheet" href="{{ asset('assets/css/inputcontrol.css') }}">
     <style type="text/css">
         button,
         value {
@@ -240,47 +241,108 @@
             <form class="form form_colab " action="{{ route('save+nouveau+responsable+cfp') }}" method="POST">
                 @csrf
                 {{-- <div class="form-row d-flex"> --}}
-                      <div class="mb-3 row text-end">
+                    <div class="input-group">
+                        <div class="input-group-text bg-light border-0 border-bottom">
+                            <i class="bx bx-user form-icon"></i>
+                        </div>
+                        <input type="text" class="form-control input border-0 border-bottom" name="nom" id="nom" autocomplete="off" required>
+                        <label for="nom" class="input-placeholder in-non-modal">
+                            <span > Nom </span><strong style="color: #ff0000">*</strong>
+                        </label>
+                    </div>
+
+
+                    <div class="input-group mt-3">
+                        <div class="input-group-text bg-light border-0 border-bottom">
+                            <i class="bx bx-user form-icon visually-hidden border-0"></i>
+                        </div>
+                        <input type="text" class="form-control input border-0 border-bottom" name="prenom" id="prenom" autocomplete="off" required>
+                        <label for="prenom" class="input-placeholder in-non-modal">
+                            <span > Prénom </span><strong style="color: #ff0000">*</strong>
+                        </label>
+                    </div>
+
+                    <div class="input-group mt-4">
+                        <div class="input-group-text bg-light border-0 border-bottom">
+                            <i class='bx bx-envelope'></i>
+                        </div>
+                        <input type="email" class="form-control input border-0 border-bottom" name="email" id="email" autocomplete="off" required>
+                        <label for="email" class="input-placeholder in-non-modal">
+                            <span > Email </span><strong style="color: #ff0000">*</strong>
+                        </label>
+                    </div>
+
+                    <div class="input-group mt-4">
+                        <div class="input-group-text bg-light border-0 border-bottom">
+                            <i class='bx bx-phone'></i>
+                        </div>
+                        <input type="text" class="form-control input border-0 border-bottom" name="phone" id="phone" autocomplete="off" required>
+                        <label for="phone" class="input-placeholder in-non-modal">
+                            <span > Télephone </span><strong style="color: #ff0000">*</strong>
+                        </label>
+                    </div>
+
+                    <div class="input-group mt-4">
+                        <div class="input-group-text bg-light border-0 border-bottom">
+                            <i class='bx bxs-user-badge' style='color:rgba(0,0,0,0.57)'  ></i>
+                        </div>
+                        <input type="text" class="form-control input border-0 border-bottom" name="cin" id="cin" autocomplete="off" required>
+                        <label for="cin" class="input-placeholder in-non-modal">
+                            <span > CIN </span><strong style="color: #ff0000">*</strong>
+                        </label>
+                    </div>
+
+
+                    <div class="input-group mt-4">
+                        <div class="input-group-text bg-light border-0 border-bottom">
+                            <i class='bx bx-briefcase'></i>
+                        </div>
+                        <input type="text" class="form-control input border-0 border-bottom" name="fonction" id="fonction" autocomplete="off" required>
+                        <label for="fonction" class="input-placeholder in-non-modal">
+                            <span > Fonction </span><strong style="color: #ff0000">*</strong>
+                        </label>
+                    </div>
+                      {{-- <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Nom <span style="color: red">*</span></label>
                         <div class="col-sm-8">
                             <input autocomplete="off" required type="text" class="form-control" id="inlineFormInput" name="nom" placeholder="" required />
                         </div>
-                      </div>
+                      </div> --}}
 
-                      <div class="mb-3 row text-end">
+                      {{-- <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Prénom <span style="color: red">*</span></label>
                         <div class="col-sm-8">
                             <input autocomplete="off" type="text" class="form-control " id="inlineFormInput" name="prenom" placeholder="" />
                         </div>
-                      </div>
+                      </div> --}}
 
-                      <div class="mb-3 row text-end">
+                      {{-- <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Email <span style="color: red">*</span></label>
                         <div class="col-sm-8">
                             <input autocomplete="off" required type="email" class="form-control mb-2" id="email" name="email" placeholder="" />
                         </div>
-                      </div>
+                      </div> --}}
 
-                      <div class="mb-3 row text-end">
+                      {{-- <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Télephone <span style="color: red">*</span></label>
                         <div class="col-sm-4">
                             <input autocomplete="off" required type="text" class="form-control  mb-2" id="phone" name="phone" placeholder="" />
                         </div>
-                      </div>
+                      </div> --}}
 
-                      <div class="mb-3 row text-end">
+                      {{-- <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">CIN <span style="color: red">*</span></label>
                         <div class="col-sm-4">
                             <input autocomplete="off" required type="text" maxlength="20" class="form-control " id="inlineFormInput" name="cin"/>
                         </div>
-                      </div>
+                      </div> --}}
 
-                      <div class="mb-3 row text-end">
+                      {{-- <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Fonction <span style="color: red">*</span></label>
                         <div class="col-sm-4">
                             <input autocomplete="off" required type="text" class="form-control " id="inlineFormInput" name="fonction" placeholder=""  />
                         </div>
-                      </div>
+                      </div> --}}
 
                       
 

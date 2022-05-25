@@ -5,7 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('profile_stagiaire')}}" role="button" class="btn btn_precedent me-1 my-2">  Retour</a>
   </div>
 <center>
  {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
@@ -68,7 +68,7 @@
                 </div>
                 </label>
                     <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
-                    <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                    <button class="btn btn_enregistrer mt-1"><i class="bx bx-check me-1"></i> Enregistrer</button>
                 </div>
             </center>
         </div>

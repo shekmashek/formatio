@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Profil participant</h3>
+    <h3 class="text_header m-0 mt-1">Profil stagiaire</h3>
 @endsection
 @section('content')
     <style>
@@ -104,7 +104,7 @@
 
                     <div class="d-flex align-items-center justify-content-between hover"
                         style="border-bottom: solid 1px  #e8dfe5;">
-                        <p class="p-1 m-0" style="font-size: 12px">PHOTO
+                        <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-image-alt'></i>&nbsp; PHOTO
 
                         </p>
                         <a href="{{ route('edit_photos', $stagiaire->stagiaire_id) }} ">
@@ -132,7 +132,7 @@
                     </div>
                     <div class="hover" style="border-bottom: solid 1px  #e8dfe5;">
                         <a href="{{ route('edit_naissance', $stagiaire->stagiaire_id) }} ">
-                            <p class="p-1 m-0" style="font-size: 12px">ANNIVERSAIRE<span
+                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-calendar'></i>&nbsp; ANNIVERSAIRE<span
                                     style="float: right;">{{ date('j \\ F Y', strtotime($stagiaire->date_naissance)) }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
 
@@ -142,7 +142,7 @@
                     </div>
                     <div class="hover" style="border-bottom: solid 1px  #e8dfe5;">
                         <a href="{{ route('edit_genre', $stagiaire->stagiaire_id) }} ">
-                            <p class="p-1 m-0" style="font-size: 12px">GENRE<span
+                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-male-female' style='color:rgba(0,0,0,0.51)'  ></i>&nbsp; GENRE<span
                                     style="float: right;">{{ $stagiaire->genre }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
                             </p>
@@ -150,7 +150,7 @@
                     </div>
                     <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                         <a href="{{route('edit_pwd',$stagiaire->stagiaire_id)}} ">
-                            <p class="p-1 m-0" style="font-size: 12px;">Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
+                            <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-key'></i>&nbsp; Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
                             </p>
                         </a>
                     </div>
@@ -166,7 +166,7 @@
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         <a href="{{ route('edit_mail', $stagiaire->stagiaire_id) }} ">
-                            <p class="p-1 m-0" style="font-size: 12px">ADRESSE E-MAIL<span
+                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-envelope'></i>&nbsp; ADRESSE E-MAIL<span
                                     style="float: right;">{{ $stagiaire->mail_stagiaire }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
 
@@ -175,7 +175,7 @@
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         <a href="{{ route('edit_phone', $stagiaire->stagiaire_id) }} ">
-                            <p class="p-1 m-0" style="font-size: 12px">TELEPHONE<span
+                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-phone' ></i>&nbsp; TELEPHONE<span
                                     style="float: right;">{{ $stagiaire->telephone_stagiaire }}&nbsp;<i
                                         class="fas fa-angle-right"></i> </span>
 
@@ -185,7 +185,7 @@
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         <a href="{{ route('edit_cin', $stagiaire->stagiaire_id) }} ">
-                            <p class="p-1 m-0" style="font-size: 12px">CIN<span
+                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bxs-user-badge' style='color:rgba(0,0,0,0.61)'  ></i>&nbsp; CIN<span
                                     style="float: right;">{{ $stagiaire->cin }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
                             </p>
@@ -200,7 +200,7 @@
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         <a href="{{ route('edit_fonction', $stagiaire->stagiaire_id) }} ">
-                            <p class="p-1 m-0" style="font-size: 12px">FONCTION<span
+                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-list-ul'></i>&nbsp; FONCTION<span
                                     style="float: right;">{{ $stagiaire->fonction_stagiaire }}&nbsp;<i
                                         class="fas fa-angle-right"></i></span>
                             </p>
@@ -208,7 +208,7 @@
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         <a href="{{ route('edit_niveau', $stagiaire->stagiaire_id) }} ">
-                            <p class="p-1 m-0" style="font-size: 12px">NIVEAU D'ETUDE<span
+                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bxs-graduation' style='color:rgba(0,0,0,0.58)'  ></i>&nbsp; NIVEAU D'ETUDE<span
                                     style="float: right;">{{$stagiaire->niveau_etude}}&nbsp;<iclass="fas fa-angle-right"></iclass=></span>
                             </p>
                         </a>
@@ -224,7 +224,7 @@
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         @can('isStagiaire')
-                                <p class="p-1 m-0" style="font-size: 12px">MATRICULE<span
+                                <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-id-card' undefined ></i>&nbsp; MATRICULE<span
                                         style="float: right;">{{ $stagiaire->matricule }}&nbsp;<i
                                             class="fas fa-angle-right"></i></span>
 
@@ -232,7 +232,7 @@
                         @endcan
                         @can('isReferent')
                             <a href="{{ route('edit_matricule', $stagiaire->stagiaire_id) }} ">
-                                <p class="p-1 m-0" style="font-size: 12px">MATRICULE<span
+                                <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-id-card' undefined ></i>&nbsp; MATRICULE<span
                                         style="float: right;">{{ $stagiaire->matricule }}&nbsp;<i
                                             class="fas fa-angle-right"></i></span>
 
@@ -243,7 +243,7 @@
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         {{-- <a href="{{route('edit_entreprise',$stagiaire->stagiaire_id)}} " > --}}
-                        <p class="p-1 m-0" style="font-size: 12px">ENTREPRISE<span
+                        <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-buildings' ></i>&nbsp; ENTREPRISE<span
                                 style="float: right;">{{ $stagiaire->nom_etp }} &nbsp;<i
                                     class="fas fa-angle-right"></i></span>
 
@@ -254,7 +254,7 @@
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
 
-                        <p class="p-1 m-0" style="font-size: 12px">DEPARTEMENT<span style="float: right;">
+                        <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-building' ></i>&nbsp; DEPARTEMENT<span style="float: right;">
                                 @if ($stagiaire->nom_departement == null)
                                     <strong style="color: red">---</strong>&nbsp;
                                 @else
@@ -267,7 +267,7 @@
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         @can('isStagiaire')
-                            <p class="p-1 m-0" style="font-size: 12px">SERVICE<span style="float: right;">
+                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-list-minus' ></i>&nbsp; SERVICE<span style="float: right;">
                                 @if ($stagiaire->nom_service == null)
                                     <strong style="color: red">---</strong>&nbsp;
                                 @else
@@ -279,7 +279,7 @@
                         @endcan
                         @canany(['isReferent'])
                             <a href="{{ route('edit_departement', $stagiaire->stagiaire_id) }} ">
-                                <p class="p-1 m-0" style="font-size: 12px">SERVICE<span style="float: right;">
+                                <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-list-minus' ></i>&nbsp; SERVICE<span style="float: right;">
                                         @if ($service == null)
                                             <strong style="color: red">incomplète</strong>&nbsp;
                                         @else
@@ -294,7 +294,7 @@
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         @can('isStagiaire')
-                            <p class="p-1 m-0" style="font-size: 12px">BRANCHE<span style="float: right;">
+                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-list-ul' ></i>&nbsp; BRANCHE<span style="float: right;">
                                     @if ($stagiaire->nom_branche == null)
                                         <strong style="color: red">---</strong>&nbsp;
                                     @else
@@ -306,7 +306,7 @@
                         @endcan
                         @canany(['isReferent'])
                             <a href="{{ route('edit_branche', $stagiaire->stagiaire_id) }} ">
-                                <p class="p-1 m-0" style="font-size: 12px">BRANCHE<span style="float: right;">
+                                <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-list-ul' ></i>&nbsp; BRANCHE<span style="float: right;">
                                         @if ($branche == null)
                                             <strong style="color: red">incomplète</strong>&nbsp;
                                         @else
