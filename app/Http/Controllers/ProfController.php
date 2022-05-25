@@ -265,9 +265,15 @@ class ProfController extends Controller
     }
 
 
+
     public function show($id)
     {
         //
+    }
+    public function getDomains(){
+        $domaines = DB::select("select * from domaines");
+        // dd($domaines);
+        return response()->json($domaines);
     }
 
     public function edit(Request $request)

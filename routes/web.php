@@ -44,6 +44,8 @@ Route::get('all_formateurs', 'SessionController@getFormateur')->name('all_format
 // end
 
 
+Route::get('getDomains', 'ProfController@getDomains')->name('getDomains');
+
 Auth::routes();
 
 Route::get('/user', function () {
