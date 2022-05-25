@@ -637,6 +637,7 @@ class ProfController extends Controller
         elseif($request->nom == null) return back()->with('error_nom','Entrez votre nom');
         elseif($request->prenom == null) return back()->with('error_prenom','Entrez votre prenom avant de cliquer sur enregistrer');
         else{
+
             if($image->getSize() > 1692728 or $image->getSize() == false){
                 return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
             }
@@ -662,7 +663,6 @@ class ProfController extends Controller
 
         if ($input != null) {
 
-
             formateur::where('id',  $id)
                 ->update([
                     'nom_formateur' => $nom,
@@ -678,6 +678,7 @@ class ProfController extends Controller
                 ]);
             }
          else {
+
             formateur::where('id',  $id)
                 ->update([
                     'nom_formateur' => $nom,
@@ -696,6 +697,7 @@ class ProfController extends Controller
         // $user = User::where('id', Auth::user()->id)->update([
         //     'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
         // ]);
+
         return redirect()->route('profile_formateur', $id);
     }
 

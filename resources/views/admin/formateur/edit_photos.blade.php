@@ -38,7 +38,7 @@
                         <input type="hidden" class="form-control test" value="{{ $formateur->prenom_formateur }}"  name="prenom">
                         <input type="hidden" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse">
 
-                        <input type="hidden" class="form-control test"  name="niveau" value="{{$niveau->niveau_etude}}">
+                        <input type="hidden" class="form-control test"  name="niveau" value="{{$formateur->niveau_etude_id}}">
 
             <div class="row px-3 mt-4">
             <div class="form-group mt-1 mb-1">

@@ -479,8 +479,6 @@ class ParticipantController extends Controller
     public function edit_nom($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
-
-
         $fonct = new FonctionGenerique();
         $stagiaire = $fonct->findWhereMulitOne("stagiaires", ["id"], [$id]);
         $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
@@ -1139,7 +1137,7 @@ class ParticipantController extends Controller
                     'mail_stagiaire' => $request->mail,
                     'branche_id' => $request->lieu_travail,
                     'cin' => $request->cin,
-                    'niveau_etude' => $request->niveau,
+                    'niveau_etude_id' => $request->niveau,
                     'titre' => $request->titre,
                     'ville' => $request->ville,
                     'quartier' => $request->quartier,
