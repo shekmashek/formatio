@@ -184,7 +184,7 @@
                                         <div class="card detail_espece" style="width: 32rem;display: none">
                                             <div class="card-body">
                                                 <h5 class="card-title">Paiement par espèce</h5>
-                                                <span class="card-text">Veuillez contacter le responsable de UpSkills</span>
+                                                <span class="card-text">Veuillez contacter le responsable de UpSkill</span>
                                             </div>
                                         </div>
                                     </div>

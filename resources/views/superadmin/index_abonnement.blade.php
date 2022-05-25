@@ -43,12 +43,18 @@
                 </div>
             </div>
             <div class="col-lg-10">
-                @if(session()->has('message'))
+
+                <div class="p-5 mb-5 mx-auto bg-body w-50 mt-5" style="border-radius: 15px">
+                    @if(session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}
                     </div>
-                @endif
-                <div class="shadow p-5 mb-5 mx-auto bg-body w-50 mt-5" style="border-radius: 15px">
+                    @endif
+                    @if(session()->has('erreur'))
+                        <div class="alert alert-danger text-center">
+                            {{ session()->get('erreur') }}
+                        </div>
+                    @endif
                     <h3> Votre Compte actuel: {{$type_abonnement}}</h3>
 
                     <form action="{{route('enregistrer_abonnement')}}" method="POST">
@@ -186,7 +192,7 @@
 
                         <div class="d-flex flex-row justify-content-lg-evenly">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <input class="form-check-input" type="checkbox" value="accepter" id="flexCheckDefault" name="accepter">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     <small class="smalli">En envoyant cette demande d'abonnement, j'accepte les politiques de confidentialités,les Conditions générales d'utilisation,les conditions générales de vente </small>
                                 </label>
