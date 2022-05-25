@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
 
     <style>
+        .dropdown-item.active{ 
+            background-color: transparent !important;
+        }
+
+        .dropdown-item.active:hover{
+            background-color: #ececec !important;
+        }
         .status_grise {
             border-radius: 5px;
             background-color: #637381;
@@ -374,13 +381,13 @@
                                         <th> Modalité </th>
                                         <th> Date du projet</th>
                                         <th> Statut </th>
-                                        <th rowspan="2"></th>
-                                        @if ($prj->type_formation_id == 1)
+                                        {{-- <th rowspan="2"></th> --}}
+                                        {{-- @if ($prj->type_formation_id == 1)
                                             <th></th>
-                                        @endif
-                                        {{-- <th></th> --}}
+                                        @endif --}}
+                                        <th>Actions</th>
                                     </thead>
-                                    <tbody class="tbody_projet">
+                                    <tbody>
 
                                         @if ($prj->totale_session <= 0)
                                             <tr>
@@ -390,7 +397,7 @@
                                             @foreach ($data as $pj)
                                                 @if ($prj->projet_id == $pj->projet_id)
                                                     <tr>
-                                                        <td> <a
+                                                        <td class="tbody_projet"> <a
                                                                 href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                         </td>
                                                         <td class="text-start">{{ $pj->nom_module }}</td>
@@ -406,7 +413,7 @@
                                                                 @endif
                                                             @endforeach
                                                         </td>
-                                                        <td><span class="modalite">{{ $pj->modalite }}</span></td>
+                                                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
                                                         <td>
                                                             @php
                                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
@@ -417,7 +424,7 @@
                                                                 {{ $pj->item_status_groupe }}</p>
 
                                                         </td>
-                                                        <td class="p-0"><a
+                                                        {{-- <td class="p-0"><a
                                                                 href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}"
                                                                 class="m-0 ps-1 pe-1 pdf_download"><button
                                                                     class="btn"><i
@@ -437,8 +444,20 @@
                                                                     data-backdrop="static"><i class='bx bx-edit bx_modifier'
                                                                         style="font-size: 1.1rem !important;"></i>
                                                                 </button></td>
-                                                        @endcan
-
+                                                        @endcan --}}
+                                                        
+                                                        <td class="text-center">
+                                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                                @can('isCFP')
+                                                                    <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static" style="cursor: pointer;">Modifier</span></li>
+                                                                @endcan
+                                                                <li class="action_projet"><a class="dropdown-item" href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                                                @if ($prj->type_formation_id == 1)
+                                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank">Rapport</a></li>
+                                                                @endif
+                                                              </ul>
+                                                        </td>
                                                         {{-- <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td> --}}
 
                                                         {{-- debut supprimer session --}}
@@ -965,12 +984,13 @@
                                 <th> Module </th>
                                 <th>Date session</th>
                                 <th> Entreprise </th>
-                                <th> Date du projet</th>
+                                {{-- <th> Date du projet</th> --}}
                                 <th> Modalité</th>
                                 <th> Statut </th>
-                                <th rowspan="2"></th>
+                                <th></th>
+                                <th>Actions</th>
                             </thead>
-                            <tbody class="tbody_projet">
+                            <tbody>
                                 @foreach ($data as $pj)
                                     <tr class="m-0">
                                         <td>{{ $pj->nom_projet }}</td>
@@ -986,7 +1006,7 @@
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
-                                        <td>
+                                        <td class="tbody_projet">
                                             <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
@@ -1007,16 +1027,12 @@
                                                 @endif
                                             @endforeach
                                         </td>
-                                        <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
-                                        <td><span class="modalite">{{ $pj->modalite }}</span></td>
-                                        <td>
+                                        {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
+                                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
+                                        <td class="tbody_projet">
                                             <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
                                                 {{ $pj->item_status_groupe }}</p>
                                         </td>
-                                        <td class="p-0"><a
-                                                href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}"
-                                                class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i
-                                                        class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td align="left">
                                             <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
                                                 @php
@@ -1034,6 +1050,12 @@
                                                     }
                                                 @endphp
                                                 ></i>&nbsp;Evaluation</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                              </ul>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -1059,13 +1081,13 @@
                                 {{-- <th> Date du projet</th> --}}
                                 <th>Modalité</th>
                                 <th> Statut </th>
-                                <th></th>
+                                <th>Actions</th>
                             </thead>
-                            <tbody class="tbody_projet">
+                            <tbody>
                                 @foreach ($data as $pj)
                                     <tr>
                                         <td>{{ $pj->nom_projet }}</td>
-                                        <td style="vertical-align: middle">
+                                        <td class="tbody_projet" style="vertical-align: middle">
                                             @if ($pj->type_formation_id == 1)
                                                 <h6 class="m-0 "><button
                                                         class="type_intra ">{{ $pj->type_formation }}</button>
@@ -1073,11 +1095,11 @@
                                                 &nbsp;&nbsp;
                                             @elseif ($pj->type_formation_id == 2)
                                                 <h6 class="m-0"><button
-                                                        class="type_inter ">{{ $pj->type_formation }}</button></h6>
+                                                        class="type_inter">{{ $pj->type_formation }}</button></h6>
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
-                                        <td> <a
+                                        <td class="tbody_projet"> <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
                                         <td class="text-start">
@@ -1097,16 +1119,18 @@
                                         </td>
                                         <td class="text-start"> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
-                                        <td><span class="modalite">{{ $pj->modalite }}</span></td>
-                                        <td>
+                                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
+                                        <td class="tbody_projet">
                                             <p class="{{ $pj->class_status_groupe }} m-0">
                                                 {{ $pj->item_status_groupe }}
                                             </p>
                                         </td>
-                                        <td class="p-0"><a
-                                                href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}"
-                                                class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i
-                                                        class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                        <td class="text-center">
+                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                              </ul>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -1163,13 +1187,8 @@
 
                                         </td>
                                         <td>
-                                            <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}">
-                                            @php
-                                                $res = $groupe->resultat_eval($pj->groupe_id);
-                                                if ($res == 1) {
-                                                    echo '<button class="btn pb-2">Résultat</button>';
-                                                }
-                                            @endphp
+                                            <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn pb-2">Résultat</button>
+                                            
                                             </a>
                                         </td>
                                     </tr>

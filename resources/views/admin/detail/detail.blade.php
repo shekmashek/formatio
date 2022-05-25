@@ -129,10 +129,10 @@
     @endphp
     </span>
     @canany(['isCFP'])
-    <a class="btn btn_ajouter_detail" aria-current="page" data-bs-toggle="modal"
+    <a aria-current="page" data-bs-toggle="modal"
         data-bs-target="#modal_nouveau_detail">
-        <i class='bx bx-plus-medical icon_ajouter_detail'></i>
-        <small>Ajouter une séance</small></a>
+        <button class="btn btn_nouveau"><i class='bx bx-plus-medical'></i>
+        Ajouter une séance</button></a>
         @endcanany
 </nav>
 @if (count($datas) <= 0)

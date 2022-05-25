@@ -86,7 +86,8 @@ class Groupe extends Model
         $result = DB::select('select count(id) as nombre from evaluation_stagiaires where groupe_id = ? and stagiaire_id = ?',[$groupe_id,$stg_id]);
         if(count($result)>0){
             return 1;
-        }else{
+        }elseif($result == 0){
+            dd('eto0');
             return 0;
         }
     }
