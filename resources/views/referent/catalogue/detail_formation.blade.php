@@ -445,9 +445,7 @@
                                     </div>
                                     <div class="col-3 text-center">
                                         <span>
-                                            @php
-                                                echo $groupe->get_lieu_fromation($data->groupe_id);
-                                            @endphp
+                                            {{ $data->adresse_ville.' '.$data->adresse_lot }}
                                         </span>
                                     </div>
                                     <div class="col-3 text-center">

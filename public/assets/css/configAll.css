@@ -313,7 +313,9 @@
     text-transform: capitalize !important;
 }
 
-input:focus{
+input:focus,
+select:focus,
+textarea:focus{
     box-shadow: none !important;
     outline: none !important;
 }
@@ -342,4 +344,16 @@ tbody td{
 
 sup{
     color: red;
+}
+
+li a:focus{
+    background-color: transparent !important;
+}
+
+.form-check-input:disabled{
+    opacity: 1 !important;
+}
+
+@media screen {
+
 }

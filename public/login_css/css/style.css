@@ -198,4 +198,20 @@ hr{
     width: 50%;
 }
 
+input:focus,
+select:focus,
+textarea:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+button:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+a:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
 

@@ -112,7 +112,7 @@
             <div class="row border_bas">
                 <div class="col">
                     @if($cfps->email == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-gmail icon_sociaux1 icon_infos'></i>&nbsp;E-mail Incomplète</p><p class="text-end"><a href="{{route('modification_email',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-gmail icon_sociaux1 icon_infos'></i>&nbsp;E-mail</p><p class="text-end"><a href="{{route('modification_email',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxl-gmail icon_sociaux1'></i>&nbsp;{{$cfps->email}}</p><p class="text-end"><a href="{{route('modification_email',$cfps->id)}}" ><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -121,7 +121,7 @@
             <div class="row border_bas mt-3">
                 <div class="col">
                     @if($cfps->telephone == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux1'></i>&nbsp;Téléphone Incomplète</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux1'></i>&nbsp;Téléphone</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-calculator icon_sociaux1'></i>&nbsp;{{$cfps->telephone}}</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" ><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -131,12 +131,12 @@
                 <div class="col">
                     @if($reseaux_sociaux != null)
                         @if($reseaux_sociaux[0]->lien_facebook == NULL)
-                            <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-facebook-circle icon_sociauxf'></i>&nbsp;Facebook Incomplète</p><p class="text-end"><a href="{{route('lien_facebook',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-facebook-circle icon_sociauxf'></i>&nbsp;Facebook</p><p class="text-end"><a href="{{route('lien_facebook',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                         @else
                             <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxl-facebook-circle icon_sociauxf'></i>&nbsp;{{$reseaux_sociaux[0]->lien_facebook}}</p><p class="text-end"><a href="{{route('lien_facebook',$cfps->id)}}" ><i class='bx bx-edit bx_modifier'></i></a></p></div>
                         @endif
                     @else
-                    <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-facebook-circle icon_sociaux'></i>&nbsp;Réseaux sociaux Incomplète</p><p class="text-end"><a href="{{route('lien_facebook',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                    <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-facebook-circle icon_sociaux'></i>&nbsp;Réseaux sociaux</p><p class="text-end"><a href="{{route('lien_facebook',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @endif
                 </div>
             </div>
@@ -144,12 +144,12 @@
                 <div class="col">
                     @if($reseaux_sociaux != null)
                         @if($reseaux_sociaux[0]->lien_twitter == NULL)
-                            <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-twitter icon_sociauxtwt'></i>&nbsp;Twitter Incomplète</p><p class="text-end"><a href="{{route('lien_twitter',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-twitter icon_sociauxtwt'></i>&nbsp;Twitter</p><p class="text-end"><a href="{{route('lien_twitter',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                         @else
                             <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxl-twitter icon_sociauxtwt'></i>&nbsp;{{$reseaux_sociaux[0]->lien_twitter}}</p><p class="text-end"><a href="{{route('lien_twitter',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                         @endif
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-twitter icon_sociaux'></i>&nbsp;Réseaux sociaux Incomplète</p><p class="text-end"><a href="{{route('lien_twitter',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-twitter icon_sociaux'></i>&nbsp;Réseaux sociaux</p><p class="text-end"><a href="{{route('lien_twitter',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @endif
                 </div>
             </div>
@@ -157,12 +157,12 @@
                 <div class="col">
                     @if($reseaux_sociaux != null)
                         @if($reseaux_sociaux[0]->lien_instagram == NULL)
-                            <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-instagram-alt icon_sociauxist'></i>&nbsp;Instagram Incomplète</p><p class="text-end"><a href="{{route('lien_instagram',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-instagram-alt icon_sociauxist'></i>&nbsp;Instagram</p><p class="text-end"><a href="{{route('lien_instagram',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                         @else
                             <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxl-instagram-alt icon_sociauxist'></i>&nbsp;{{$reseaux_sociaux[0]->lien_instagram}}</p><p class="text-end"><a href="{{route('lien_instagram',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                         @endif
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-instagram-alt icon_sociaux'></i>&nbsp;Réseaux sociaux Incomplète</p><p class="text-end"><a href="{{route('lien_instagram',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-instagram-alt icon_sociaux'></i>&nbsp;Réseaux sociaux</p><p class="text-end"><a href="{{route('lien_instagram',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @endif
                 </div>
             </div>
@@ -170,22 +170,22 @@
                 <div class="col">
                     @if($reseaux_sociaux != null)
                         @if($reseaux_sociaux[0]->lien_linkedin == NULL)
-                            <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-linkedin-square icon_sociauxin'></i>&nbsp;Linkedin Incomplète</p><p class="text-end"><a href="{{route('lien_linkedin',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-linkedin-square icon_sociauxin'></i>&nbsp;Linkedin</p><p class="text-end"><a href="{{route('lien_linkedin',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                         @else
                             <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxl-linkedin-square icon_sociauxin'></i>&nbsp;{{$reseaux_sociaux[0]->lien_linkedin}}</p><p class="text-end"><a href="{{route('lien_linkedin',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                         @endif
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-linkedin-square icon_sociaux'></i>&nbsp;Réseaux sociaux Incomplète</p><p class="text-end"><a href="{{route('lien_linkedin',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-linkedin-square icon_sociaux'></i>&nbsp;Réseaux sociaux</p><p class="text-end"><a href="{{route('lien_linkedin',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @endif
                 </div>
             </div>
         </div>
-        <div class="col-4 info_plus p-5 pt-4">
+        <div class="col-4 info_plus2 p-5 pt-4">
             <h5 class="text-center mb-5">Facturations</h5>
             <div class="row border_bas">
                 <div class="col">
                     @if($cfps->adresse_quartier == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;Adresse Quartier Incomplète</p><p class="text-end"><a href="{{route('modification_adresse_organisme',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;Adresse Quartier</p><p class="text-end"><a href="{{route('modification_adresse_organisme',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;{{$cfps->adresse_lot}}&nbsp;{{$cfps->adresse_quartier}}</p><p class="text-end"><a href="{{route('modification_adresse_organisme',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -194,7 +194,7 @@
             <div class="row border_bas mt-3">
                 <div class="col">
                     @if($cfps->adresse_ville == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map-pin icon_sociaux2'></i>&nbsp;Adresse Ville Incomplète</p><p class="text-end"><a href="{{route('modification_adresse_organisme',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map-pin icon_sociaux2'></i>&nbsp;Adresse Ville</p><p class="text-end"><a href="{{route('modification_adresse_organisme',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map-pin icon_sociaux2'></i>&nbsp;{{$cfps->adresse_ville}}</p><p class="text-end"><a href="{{route('modification_adresse_organisme',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -203,7 +203,7 @@
             <div class="row border_bas mt-3">
                 <div class="col">
                     @if($cfps->adresse_region == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-map-alt icon_sociaux2'></i>&nbsp;Adresse Region Incomplète</p><p class="text-end"><a href="{{route('modification_adresse_organisme',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-map-alt icon_sociaux2'></i>&nbsp;Adresse Region</p><p class="text-end"><a href="{{route('modification_adresse_organisme',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-map-alt icon_sociaux2'></i>&nbsp;{{$cfps->adresse_region}}</p><p class="text-end"><a href="{{route('modification_adresse_organisme',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -212,7 +212,7 @@
             <div class="row mt-3">
                 <div class="col">
                     @if($cfps->site_web == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-globe icon_sociaux2'></i>&nbsp;Site Web Incomplète</p><p class="text-end"><a href="{{route('modification_site_web',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-globe icon_sociaux2'></i>&nbsp;Site Web</p><p class="text-end"><a href="{{route('modification_site_web',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-globe icon_sociaux2'></i>&nbsp;{{$cfps->site_web}}</p><p class="text-end"><a href="{{route('modification_site_web',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -221,7 +221,7 @@
             <div class="row mt-3">
                 <div class="col">
                     @if($cfps->nif == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-sitemap icon_sociaux3'></i>&nbsp;Numéro d'Identification Fiscale Incomplète (NIF)</p><p class="text-end"><a href="{{route('modification_nif',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-sitemap icon_sociaux3'></i>&nbsp;Numéro d'Identification Fiscale (NIF)</p><p class="text-end"><a href="{{route('modification_nif',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-sitemap icon_sociaux3'></i>NIF :&nbsp;{{$cfps->nif}}</p><p class="text-end"><a href="{{route('modification_nif',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -230,7 +230,7 @@
             <div class="row mt-3">
                 <div class="col">
                     @if($cfps->stat == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-align-justify icon_sociaux3'></i>&nbsp;Statistiques Incomplète (STAT)</p><p class="text-end"><a href="{{route('modification_stat',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-align-justify icon_sociaux3'></i>&nbsp;Statistiques (STAT)</p><p class="text-end"><a href="{{route('modification_stat',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-align-justify icon_sociaux3'></i>STAT :&nbsp;{{$cfps->stat}}</p><p class="text-end"><a href="{{route('modification_stat',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -239,7 +239,7 @@
             <div class="row mt-3">
                 <div class="col">
                     @if($cfps->rcs == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-check-shield icon_sociaux3'></i>&nbsp;Registre du Commerce et des Sociétés Incomplète (RCS)</p><p class="text-end"><a href="{{route('modification_rcs_cfps',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-check-shield icon_sociaux3'></i>&nbsp;Registre du Commerce et des Sociétés (RCS)</p><p class="text-end"><a href="{{route('modification_rcs_cfps',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-check-shield icon_sociaux3'></i>RCS :&nbsp;{{$cfps->rcs}}</p><p class="text-end"><a href="{{route('modification_rcs_cfps',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -248,7 +248,7 @@
             <div class="row mt-3">
                 <div class="col">
                     @if($cfps->cif == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-check-shield icon_sociaux3'></i>&nbsp;Cérticat d'Identification Fiscale Incomplète (CIF)</p><p class="text-end"><a href="{{route('modification_cif_cfps',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-check-shield icon_sociaux3'></i>&nbsp;Cérticat d'Identification Fiscale (CIF)</p><p class="text-end"><a href="{{route('modification_cif_cfps',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-check-shield icon_sociaux3'></i>CIF :&nbsp;{{$cfps->cif}}</p><p class="text-end"><a href="{{route('modification_cif_cfps',$cfps->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
@@ -260,7 +260,7 @@
             <div class="row border_bas">
                 <div class="col text-center afficher_icon_modif">
                     @if($cfps->assujetti_id == NULL)
-                        <div class="p-1 m-0"><p>Assujetti Incomplète</p></div>
+                        <div class="p-1 m-0"><p>Assujetti</p></div>
                         <div><p class="text-end"><a href="{{route('modification_assujetti_cfp',$cfps->id)}}" class="action_other_not">Compléter Assujetti</a></p></div>
                     @elseif($cfps->assujetti_id == 1)
                         <div class="p-1 m-0"><p>Assujetti</p></div>
@@ -280,7 +280,7 @@
             <div class="row">
                 <div class="col text-center afficher_icon_modif">
                     @if($horaire == NULL)
-                        <div class="p-1 m-0"><p>Heures Incomplète</p></div>
+                        <div class="p-1 m-0"><p>Heures</p></div>
                         <div><p ><a href="{{route('modification_horaire',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
                         @for($i = 0;$i < count($horaire);$i++)

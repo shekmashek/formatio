@@ -274,6 +274,8 @@ class ResponsableController extends Controller
     }
     public function affReferent()
     {
+        $fonct = new FonctionGenerique();
+
         $user_id = Auth::user()->id;
          if (Gate::allows('isReferentPrincipale')) {
 
@@ -291,10 +293,18 @@ class ResponsableController extends Controller
                 // $branche = branche::findorFail($id);
 
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-                $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
+                $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
+                $secteur = entreprise::with('Secteur')->findOrFail($id);
+                $projets_counts = $fonct->findWhere("groupe_entreprises",["entreprise_id"],[$refs->entreprise_id]);
+                $cfp_counts = $fonct->findWhere("demmande_etp_cfp",["demmandeur_etp_id","activiter"],[$refs->entreprise_id,1]);
+                $modulesInternes_counts = $fonct->findWhere("modules_interne",["etp_id"],[$refs->entreprise_id]);
+                $projetIntra_counts = DB::select('select grp.id from groupes as grp join groupe_entreprises as grp_etp on grp.id = grp_etp.groupe_id join projets as prj on prj.id = grp.projet_id where grp_etp.entreprise_id = ? and prj.type_formation_id = ?',[$refs->entreprise_id, 1]);
+                $projetInter_counts = DB::select('select grp.id from groupes as grp join groupe_entreprises as grp_etp on grp.id = grp_etp.groupe_id join projets as prj on prj.id = grp.projet_id where grp_etp.entreprise_id = ? and prj.type_formation_id = ?',[$refs->entreprise_id, 2]);
+                $stagiaires_counts = $fonct->findWhere("stagiaires",["entreprise_id"],[$refs->entreprise_id]);
+                $chef_departements_counts = $fonct->findWhere("chef_departements",["entreprise_id"],[$refs->entreprise_id]);
             // }
             // dd($refs);
-            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
+            return view('admin.responsable.profilResponsables', compact('refs','entreprise','secteur','projets_counts','cfp_counts','modulesInternes_counts','projetInter_counts','projetIntra_counts','stagiaires_counts','chef_departements_counts'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 
@@ -345,7 +355,7 @@ class ResponsableController extends Controller
 
             $responsables=responsable::where('entreprise_id',$refs->entreprise_id)->where('prioriter',0)->get();
 
-           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','responsables','abonnement'));
+           return view('admin.responsable.affichage_parametreReferent', compact('refs','entreprise','branche','responsables','abonnement'));
         }
     }
     public function show($id)
