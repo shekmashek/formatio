@@ -3,7 +3,7 @@
     <h3 class="text_header m-0 mt-1">Profil formateur</h3>
 @endsection
 @section('content')
-dfsfdsfdfd
+
             {{-- <div class="page-content page-container" id="page-content">
         <div class="padding">
             <div class="row container d-flex justify-content-center">
@@ -90,7 +90,7 @@ dfsfdsfdfd
 
                                  <div class="form-control">
                                      <p class="text-center">Informations générales</p>
-                                     
+
 
                                      <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #e8dfe5;">
                                      <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-image-alt'></i>&nbsp; PHOTO
@@ -127,7 +127,7 @@ dfsfdsfdfd
                                      <a href="{{route('editer_genre',$formateur->id)}}" >
                                      <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-male-female' style="color: rgb(116, 116, 116)"></i>&nbsp; GENRE
                                         <span style="float: right;">
-                                            
+
                                         {{optional(optional($formateur)->genre)->genre}}&nbsp;
                                         <i class="fas fa-angle-right"></i></span>
                                      </p>
