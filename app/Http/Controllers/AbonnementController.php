@@ -487,6 +487,7 @@ class AbonnementController extends Controller
         // $typeAbonnement = type_abonnement_role::with('type_abonnement')->where('id', $type_abonnement_role_id)->get();
 
         // $nb = abonnement::where('entreprise_id', $entreprise_id)->count();
+
         $user_id = Auth::user()->id;
         if (Gate::allows('isReferent')) {
             $typeAbonnement =$this->fonct->findWhereMulitOne('type_abonnements_etp',['id'],[$id]);
