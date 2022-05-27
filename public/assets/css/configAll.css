@@ -94,6 +94,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_nouveau:hover{
@@ -128,6 +129,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_annuler:hover{
@@ -167,6 +169,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_fermer:hover{
@@ -202,6 +205,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_enregistrer:hover{
@@ -237,6 +241,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_precedent:hover{
@@ -272,6 +277,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_suivant:hover{

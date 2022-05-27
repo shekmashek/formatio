@@ -1262,7 +1262,10 @@ Route::post('enregistrer_email_entreprise/{id}','EntrepriseController@enregistre
 Route::get('modification_nif_entreprise/{id}','EntrepriseController@modification_nif_entreprise')->name('modification_nif_entreprise');
 Route::post('enregistrer_nif_entreprise/{id}','EntrepriseController@enregistrer_nif_entreprise')->name('enregistrer_nif_entreprise');
 Route::get('modification_telephone_entreprise/{id}','EntrepriseController@modification_telephone_entreprise')->name('modification_telephone_entreprise');
+Route::get('modification_secteur_entreprise/{id}','EntrepriseController@modification_secteur_entreprise')->name('modification_secteur_entreprise');
 Route::post('enregistrer_telephone_entreprise/{id}','EntrepriseController@enregistrer_telephone_entreprise')->name('enregistrer_telephone_entreprise');
+Route::get('/get_secteur','EntrepriseController@get_secteur')->name('get_secteur');
+Route::post('enregistrer_secteur_entreprise/{id}','EntrepriseController@enregistrer_secteur_entreprise')->name('enregistrer_secteur_entreprise');
 Route::get('modification_stat_entreprise/{id}','EntrepriseController@modification_stat_entreprise')->name('modification_stat_entreprise');
 Route::post('enregistrer_stat_entreprise/{id}','EntrepriseController@enregistrer_stat_entreprise')->name('enregistrer_stat_entreprise');
 Route::get('modification_rcs_entreprise/{id}','EntrepriseController@modification_rcs_entreprise')->name('modification_rcs_entreprise');

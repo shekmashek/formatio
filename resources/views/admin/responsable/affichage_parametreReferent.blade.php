@@ -120,10 +120,10 @@
             </div>
             <div class="row border_bas mt-3">
                 <div class="col">
-                    @if($secteur->nom_secteur == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-intersect icon_sociaux1'></i>&nbsp;Secteur d'activiter Incomplète</p></div>
+                    @if($secteur[0]->nom_secteur == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-intersect icon_sociaux1'></i>&nbsp;Secteur d'activiter Incomplète</p><p class="text-end"><a href="{{route('modification_secteur_entreprise',$entreprise->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-intersect icon_sociaux1'></i>&nbsp;{{$secteur->nom_secteur}}</p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-intersect icon_sociaux1'></i>&nbsp;{{$secteur[0]->nom_secteur}}</p><p class="text-end"><a href="{{route('modification_secteur_entreprise',$entreprise->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>

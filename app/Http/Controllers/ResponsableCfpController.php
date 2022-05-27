@@ -59,7 +59,7 @@ class ResponsableCfpController extends Controller
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
             $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
-            return view('cfp.responsable_cfp.profiles', compact('refs'));
+            return view('cfp.responsable_cfp.profile', compact('refs'));
 
         }
 

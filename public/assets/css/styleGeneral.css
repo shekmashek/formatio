@@ -488,6 +488,7 @@ ul li a {
     background-color: white;
     border: 1px solid rgba(202, 202, 202, 0.618);
     margin-top: 15px;
+    padding: .5rem;
 }
 
 .deconnexion_text:hover {
@@ -611,7 +612,7 @@ ul li a {
     height: 35px;
     background-color: white;
     border: 1px solid rgb(157, 157, 157);
-    color: #333;
+    color: #333 !important;
 }
 
 .header-right .pdp_profil_card .card .profil_btn:hover {
