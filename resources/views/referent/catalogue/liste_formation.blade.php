@@ -158,35 +158,39 @@
                         </div>
 
                     </div>
-                        @if (count($datas)<=0)
+                        @foreach ($datas as $data)
+                            @if($info->module_id == $data->module_id)
+                                @if (count($datas) <= 0)
 
-                        @else
-                            <hr>
-                            <div class="row w-100 justify-content-end">
-                                <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates&nbsp;<i class="bx bx-caret-down caret-icon"></i>
-                                </h6>
-                            </div>
-                            <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
-                                <div class="row px-3 py-2">
-                                    <div class="col-3">
-                                        <p>Prochaines Sessions</p>
+                                @else
+                                    <hr>
+                                    <div class="row w-100 justify-content-end">
+                                        <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates&nbsp;<i class="bx bx-caret-down caret-icon"></i>
+                                        </h6>
                                     </div>
-                                    <div class="col-5 date">
-                                        @foreach ($datas as $data)
-                                            @if($info->module_id == $data->module_id)
-                                                <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
-                                            @endif
-                                        @endforeach
+                                    <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
+                                        <div class="row px-3 py-2">
+                                            <div class="col-3">
+                                                <p>Prochaines Sessions</p>
+                                            </div>
+                                            <div class="col-5 date">
+                                                @foreach ($datas as $data)
+                                                    @if($info->module_id == $data->module_id)
+                                                        <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                            <div class="col-4">
+                                                <p>Cette thématique vous intéresse ?
+                                                    Nos experts conçoivent votre formation
+                                                    sur-mesure ! Nous contacter</p>
+                                                    <button type="button" class="btn_next"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-4">
-                                        <p>Cette thématique vous intéresse ?
-                                            Nos experts conçoivent votre formation
-                                            sur-mesure ! Nous contacter</p>
-                                            <button type="button" class="btn_next"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
+                                @endif
+                            @endif
+                        @endforeach
                     </div>
                 @endforeach
                 @else

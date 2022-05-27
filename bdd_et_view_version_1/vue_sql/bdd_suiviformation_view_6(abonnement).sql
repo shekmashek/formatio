@@ -16,7 +16,8 @@ CREATE OR REPLACE VIEW v_type_abonnement_etp AS SELECT
     a.entreprise_id,
     e.nom_etp as nom_entreprise,
     a.activite,
-    a.created_at
+    a.created_at,
+    a.type_arret
 FROM
     type_abonnements_etp t
 JOIN abonnements a ON

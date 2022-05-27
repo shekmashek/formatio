@@ -229,7 +229,7 @@
                     <div class="row">
                         <div class="col-12 p-2 flex-wrap d-flex">
                     @foreach ($formation as $frm)
-                            <p class="text-capitalize my-4 mx-2"><a href="{{route("select_par_formation_par_cfp",[$frm->id,$cfp->id])}}" class="formations">{{$frm->nom_formation}}</a></p>
+                            <p class="text-capitalize my-4 mx-2"><a href="{{route("select_par_formation_par_cfp",[$frm->id,$frm->cfp_id])}}" class="formations">{{$frm->nom_formation}}</a></p>
                     @endforeach
                         </div>
                     </div>

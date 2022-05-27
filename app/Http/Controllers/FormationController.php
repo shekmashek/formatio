@@ -165,17 +165,21 @@ class FormationController extends Controller
         $domaine_col4 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*3).'');
         // $infos = DB::select('select * from moduleFormation where nom_formation like ("%' . $nom_formation .'%") and status = 2 and etat_id = 1 order by nom_formation desc');
         // dd($infos);
-        $datas = DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where type_formation_id = 2');
+        $datas = DB::select('select module_id,formation_id,date_debut,date_fin from v_groupe_projet_entreprise_module where type_formation_id = 2 group by module_id');
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         if ($nom_formation == null) {
             // $infos = DB::select('select * from moduleFormation');
             $infos = DB::select('select * from moduleformation where status = 2 and etat_id = 1');
+            // dd($infos, $datas);
             $liste_avis = DB::select('select * from v_liste_avis limit 5');
             return view('referent.catalogue.liste_formation', compact('infos', 'datas', 'liste_avis', 'categorie','devise','nom_formation','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         } else {
+
+            // dd($datas);
             $id_formation = formation::where('nom_formation',$nom_formation)->value('id');
             $infos = DB::select('select * from moduleformation where nom_formation like ("%' . $nom_formation .'%") and status = 2 and etat_id = 1 order by nom_formation desc');
             $liste_avis = DB::select('select * from v_liste_avis limit 5');
+            // dd($infos, $datas);
             return view('referent.catalogue.liste_formation', compact('infos', 'datas', 'liste_avis', 'categorie','devise','nom_formation','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
     }
@@ -544,20 +548,33 @@ class FormationController extends Controller
 
     public function detail_cfp($id)
     {
+
         $fonct = new FonctionGenerique();
         $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$id]);
         $horaire = DB::select('select * from v_horaire_cfp where cfp_id = ? ', [$id]);
 
         $reseau_sociaux = $fonct->findWhere("v_reseaux_sociaux_cfp", ["cfp_id"], [$id]);
-        $formation = DB::select('select nom_formation,id from v_formation where cfp_id = ?', [$id]);
+        $formation = DB::select('select nom_formation,id,cfp_id from v_formation where cfp_id = ?', [$id]);
         return view('referent.catalogue.detail_cfp', compact('cfp', 'formation', 'reseau_sociaux', 'horaire'));
     }
 
     public function affichageParFormationParcfp($id_formation, $id_cfp)
     {
-        $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2 and cfp_id = ?', [$id_formation, $id_cfp]);
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
+        $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2 and cfp_id = ? and etat_id = 1', [$id_formation, $id_cfp]);
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin from v_session_projet where formation_id = ? and type_formation_id = 2', [$id_formation]);
-        return view('referent.catalogue.liste_formation', compact('infos', 'datas'));
+        $test = 4;
+        $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
+        $offset = round($domaines_count[0]->nb_domaines / $test);
+        $domaine_col1 = DB::select('select * from domaines limit '.$offset.'');
+        $domaine_col2 = DB::select('select * from domaines limit '.$offset.' offset '.$offset.'');
+        $domaine_col3 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*2).'');
+        $domaine_col4 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*3).'');
+        $categorie = formation::orderBy('nom_formation')->get();
+        $nom_formation = formation::where('id',$id_formation)->value('nom_formation');
+
+        return view('referent.catalogue.liste_formation', compact('infos', 'datas','devise', 'nom_formation', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
     }
 
     public function domaine_vers_formation(Request $request)
