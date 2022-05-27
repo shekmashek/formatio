@@ -542,7 +542,7 @@
                     @canany('isReferent','isStagiaire','isManager')
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
-                            @can('isPremium')
+
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('liste_formation')}}" class="text-center " role="button"
                                     onclick="afficher_catalogue()"><span class="d-flex flex-column"><i
@@ -555,7 +555,7 @@
                                             class='bx bx-analyse mb-2 mt-1'></i><span
                                             class="text_racourcis">Annuaire</span></span></a>
                             </div>
-                            @endcan
+
                         </div>
                     </div>
                     @endcanany
