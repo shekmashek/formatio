@@ -302,7 +302,7 @@ th{
                                   </div>
                                 </div>
                             </div>
-                            @elseif($resp_connecte->prioriter == 0 || $resp_connecte->activiter == 0 )
+                            @elseif($resp_connecte->prioriter == 0)
                                 @foreach($cfpPrincipale as $prioriter)
                                     <div id="in2" class=" text-center p-2 mt-5 m-0  alert alert-danger text-center" role="alert">
                                         <h4 class="alert-heading animation_alert"><i class="fas fa-exclamation-triangle"></i></h4>
