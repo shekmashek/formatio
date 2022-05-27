@@ -503,7 +503,7 @@ class AbonnementController extends Controller
             if($etp_ab!=null){
 
                 //on teste d'abord si le dernier abonnement est gratuit,
-                if($etp_ab[0]->nom_type == "Invité") {
+                if($typeAbonnement->id == 1) {
                     return back()->with('erreur_abonnement','Vous ne pouvez plus choisir une deuxième fois cette offre');
 
                    // si l'utilisateur choisi encore l'offre gratuit, il n'a plus droit d'accéder une deuxieme fois à cette offre
