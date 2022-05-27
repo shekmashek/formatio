@@ -815,7 +815,7 @@
 
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
                                             <li><a class="dropdown-item" href="{{route('aff_parametre_referent')}}"><i
-                                                        class="bx bxs-info-circle icon_plus  "></i>&nbsp; Information
+                                                        class="bx bx-info-circle icon_plus  "></i>&nbsp; Information
                                                     légales</a></li>
                                             <li><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
                                                         class="bx bxl-sketch icon_plus"></i>&nbsp;Abonnement</a>
