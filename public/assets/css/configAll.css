@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300&display=swap");
 
 :root {
+<<<<<<< HEAD
     --padding_icon: 5px;
     --padding_button: 6px 5px 5px 5px !important;
+=======
+    --padding: 5px;
+>>>>>>> a0fd7fd1b (ok)
     --font_size: 1.3rem;
     --bgd_all: rgba(197, 197, 197, 0.232);
     --bgd_modifier_hover: #4A00E727;
