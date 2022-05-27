@@ -3,1493 +3,589 @@
 <p class="text_header m-0 mt-1">Modules</p>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
-    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
-<div class="container-fluid pb-1">
-
-    <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i
-            class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
-    <div class="m-4" role="tabpanel">
-        <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            <li class="nav-item active">
-                <a href="#enCours" class="nav-link active" data-toggle="tab">Configurer Programme&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
-            </li>
-            <li class="nav-item">
-                <a href="#nonPublies" class="nav-link" data-toggle="tab">Configurer Compétence&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>
-            </li>
-            <li class="nav-item">
-                <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
-            </li>
-            <li class="nav-item">
-                <a href="#publies" class="nav-link" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
-            </li>
-        </ul>
-
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="enCours">
-                <div class="container-fluid p-0 mt-3 me-3">
-                    <div class="row instruction mb-3">
-                        <div class="col-12">
-                            <p class="mb-0 ">L'onglet programme à completer regroupe tous les modules qui ne sont pas
-                                encore términés. <br>
-                                La première étape pour pouvoir publier votre module consiste à compléter votre programme
-                                de formation et vos cours.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="col-12 ps-3">
-                            <div class="row pading_bas">
-                                @if($mod_en_cours == null)
-                                <div class="si_vide row mt-4">
-                                    <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
-                                            class='bx bx-layer-plus icon_vide'></i></a>
-                                </div>
-                                @else
-                                @foreach($mod_en_cours as $mod)
-                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light mb-3"
-                                        id="border_premier">
-                                        <div class=" detail__formation__result__content">
-                                            <div class="detail__formation__result__item ">
-                                                <h4 class="mt-3 ">
-                                                    <span id="preview_module">
-                                                        <span class="acf-nom_module">{{$mod->nom_module}}</span>
-                                                    </span>
-                                                </h4>
-                                                <span id="preview_categ"><span class=" acf-categorie"
-                                                        style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
-                                                <p id="preview_descript"><span class="acf-description"
-                                                        style="font-size: 0.850rem">{{$mod->description}}</span></p>
-                                                <div class="d-flex ">
-                                                    <div class="col-6 detail__formation__result__avis">
-                                                        <div style="--note: 4.5;">
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star-half'></i>
-                                                        </div>
-                                                        <span><strong>0.0</strong>/5 (aucun avis)</span>
-                                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                        <span
-                                                            class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-6 w-100">
-                                                        <p class="m-0">
-                                                            <span class="new_module_prix">
-                                                                @php
-                                                                echo number_format($mod->prix, 0, ' ', ' ');
-                                                                @endphp
-                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
-                                                        </p>
-                                                        <p class="m-0 ">
-                                                            <span class="new_module_prix">
-                                                                @if($mod->prix_groupe == null)
-                                                                <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                                @else
-                                                                @php
-                                                                echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                                @endphp
-                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
-                                                            @endif
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
-                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon"
-                                                    style="color: #7635dc !important; font-size: 0.800rem"></i>
-                                                <span id="preview_jour"><span class="acf-jour">
-                                                        {{$mod->duree_jour}}
-                                                    </span>j</span>
-                                                <span id="preview_heur">/<span class="acf-heur">
-                                                        {{$mod->duree}}
-                                                    </span>h</span>
-                                            </div>
-                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                                    class="bx bxs-devices bx_icon"
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
-                                            </div>
-                                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                                <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-niveau">{{$mod->niveau}}</span>
-                                            </div>
-
-                                        </div>
-                                        <div class="d-flex flex-row">
-                                            @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="" id="preview_niveau">
-                                                <button class="btn modifier pt-0"><a
-                                                        href="{{route('modifier_module',$mod->module_id)}}"><i
-                                                            class='bx bx-edit background_grey'
-                                                            style="color: #0052D4 !important;font-size: 15px"
-                                                            title="modifier les informations"></i></a></button>
-                                            </div>
-                                            <div class="" id="preview_niveau">
-                                                <button class="btn supprimer pt-0" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash background_grey2"
-                                                        style="color: #ff0000 !important;font-size: 15px"
-                                                        title="supprimer le module"></i></button>
-                                            </div>
-                                            <div class="" id="preview_niveau">
-                                                <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
-                                                    data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i
-                                                        class='bx bx-low-vision background_grey3'
-                                                        style="color: #3b9f0c !important;font-size: 15px"
-                                                        title="afficher les informations"></i></a>
-
-                                                </button>
-                                            </div>
-                                            <div class=" new_btn_programme text-center">
-                                                <a href="{{route('ajout_programme',$mod->module_id)}}"
-                                                    class="btn_completer"
-                                                    role="button">Completer&nbsp;votre&nbsp;programme</a>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
-                                                        <h6 class="modal-title">Avertissement !</h6>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <small>Vous êtes sur le point d'effacer une donnée, cette
-                                                            action
-                                                            est irréversible. Continuer ?</small>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary suppression"
-                                                            id="{{$mod->module_id}}"> Oui</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endcanany
-                                    </div>
-                                </div>
-                                @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{asset('assets/css/moduleM.css')}}">
+    <div class="container shadow-sm mt-4 contenue" >
+        <div class="row">
+            <p>Liste des modules</p> 
+            
+                <button class="btn btn-outline but" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 200px;color:white;background:rgb(125, 38, 207);font-size:17px">Crée une nouvelle module</button>
+            
+            <div class="col-12 col-lg-12 " style="display: flex;margin-top:-40px">
+                    
+                    <input type="text" style="margin-left:80%" placeholder="recherche" class="form-control">
+                    <button type="submit"  class="btn btn" style="border:#5e5873 1px solid;color:#5e5873" ><i class="bi bi-search"></i></button>     
             </div>
-
-
-            <div class="tab-pane show fade" id="nonPublies">
-                <div class="container-fluid p-0 mt-3 me-3">
-                    <div class="row instruction mb-3">
-                        <div class="col-12">
-                            <p class="mb-0 ">L'onglet Non Publiés regroupe tous les modules qui doivent êtres activés.
-                                <br>
-                                La deuxième étape consiste à ajouter les compétences ou les cours qui seront évalués par
-                                le formateur, afin d'établir les évaluations des participants.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="col-12 ps-3">
-                            <div class="row pading_bas d-flex flex-wrap">
-                                @if($mod_non_publies == null)
-                                <div class="si_vide row mt-4">
-                                    <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
-                                            class='bx bx-layer-plus icon_vide'></i></a>
-                                </div>
-                                @else
-                                @foreach($mod_non_publies as $mod)
-                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light mb-3"
-                                        id="border_premier">
-                                        <div class=" detail__formation__result__content">
-                                            <div class="detail__formation__result__item ">
-                                                <h4 class="mt-3">
-                                                    <span id="preview_module"><span
-                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
-                                                </h4>
-                                                <span id="preview_categ"><span class=" acf-categorie"
-                                                        style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
-                                                <p id="preview_descript"><span class="acf-description"
-                                                        style="font-size: 0.850rem">{{$mod->description}}</span></p>
-                                                <div class="d-flex ">
-                                                    <div class="col-6 detail__formation__result__avis">
-                                                        <div style="--note: 4.5;">
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star-half'></i>
-                                                        </div>
-                                                        <span><strong>0.0</strong>/5 (aucun avis)</span>
-                                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                        <span
-                                                            class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-6 w-100">
-                                                        <p class="m-0">
-                                                            <span class="new_module_prix">
-                                                                @php
-                                                                echo number_format($mod->prix, 0, ' ', ' ');
-                                                                @endphp
-                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
-                                                        </p>
-                                                        <p class="m-0 ">
-                                                            <span class="new_module_prix">
-                                                                @if($mod->prix_groupe == null)
-                                                                <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                                @else
-                                                                @php
-                                                                echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                                @endphp
-                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
-                                                            @endif
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{-- <div class=" text-end">
-                                            <div>
-                                                @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                <span
-                                                    class="">{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                @endif
-                                            </div>
-                                        </div> --}}
-                                        <div
-                                            class="row row-cols-auto liste__formation__result__item3 justify-content-between py-1">
-                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon"
-                                                    style="color: #7635dc !important; font-size: 0.800rem"></i>
-                                                <span id="preview_jour"><span class="acf-jour">
-                                                        {{$mod->duree_jour}}
-                                                    </span>j</span>
-                                                <span id="preview_heur">/<span class="acf-heur">
-                                                        {{$mod->duree}}
-                                                    </span>h</span>
-                                            </div>
-                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                                    class="bx bxs-devices bx_icon"
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
-                                            </div>
-                                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                                <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-niveau">{{$mod->niveau}}</span>
-                                            </div>
-
-                                        </div>
-                                        <div class="row row-cols-auto liste__formation__result__item3 justify-content-center text-center py-1">
-                                            @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="col-3" id="preview_niveau">
-                                                <button class="btn modifier pt-0"><a
-                                                        href="{{route('modif_programmes',$mod->module_id)}}"><i
-                                                            class='bx bx-edit background_grey'
-                                                            style="color: #0052D4 !important;font-size: 15px"
-                                                            title="modifier les informations"></i></a></button>
-                                            </div>
-                                            {{-- <div class="" id="preview_niveau">
-                                                <button class="btn modifier_prog pt-0"><a
-                                                        href="{{route('modifier_module_prog',$mod->module_id)}}"><i
-                                                            class='bx bx-edit-alt background_grey4'
-                                                            style="color: #801d68 !important;font-size: 15px"
-                                                            title="modifier les programmes"></i></a></button>
-                                            </div> --}}
-                                            <div class="" id="preview_niveau">
-                                                <button class="btn supprimer pt-0" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                        class="bx bx-trash background_grey2"
-                                                        style="color: #ff0000 !important;font-size: 15px"
-                                                        title="supprimer le module"></i></button>
-                                            </div>
-                                            <div class="" id="preview_niveau">
-                                                <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
-                                                    data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i
-                                                        class='bx bx-low-vision background_grey3'
-                                                        style="color: #799F0C !important;font-size: 15px"
-                                                        title="afficher les informations"></i></button>
-                                            </div>
-                                            <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header  d-flex justify-content-center"
-                                                            style="background-color:rgb(224,182,187);">
-                                                            <h6 class="modal-title">Avertissement !</h6>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <small>Vous êtes sur le point d'effacer une donnée,
-                                                                cette
-                                                                action
-                                                                est irréversible. Continuer ?</small>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal"> Non
-                                                            </button>
-                                                            <button type="button" class="btn btn-secondary suppression"
-                                                                id="{{$mod->module_id}}"> Oui</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endcanany
-                                        </div>
-                                        <div class="new_btn_programme text-center">
-                                            <button type="button" class="btn btn_competence non_pub"
-                                                data-id="{{$mod->module_id}}" data-bs-toggle="modal"
-                                                data-bs-target="#ModalCompetence"
-                                                id="{{$mod->module_id}}">Compétences&nbsp;professionnelles</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="modal fade" id="ModalCompetence">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{route('publier_module')}}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="id" id="id" value="{{$mod->module_id}}">
-                                                <div class="modal-header">
-                                                    <h6>Compétences a évaluer</h6>
-                                                </div>
-                                                <div class="modal-body mt-2 mb-2">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            <div class="mt-2 text-center">
-                                                                <button id="addRow" type="button"
-                                                                    class="btn_creer text-center mb-4 pb-2"
-                                                                    onclick="competence();">
-                                                                    <i class='bx bx-plus-medical icon_creer'></i>Ajouter
-                                                                    une nouvelle ligne
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex">
-                                                            <div class="col-8">
-                                                                <div class="form-group">
-                                                                    <div class="form-row">
-                                                                        <input type="text" name="titre_competence[]"
-                                                                            id="titre_competence"
-                                                                            class="form-control input"
-                                                                            placeholder="Compétences" required>
-                                                                        <label for="titre_competence"
-                                                                            class="form-control-placeholder">Compétences</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <div class="form-group ms-1">
-                                                                    <div class="form-row">
-                                                                        <input type="text" name="notes[]" id="notes"
-                                                                            min="1" max="10"
-                                                                            onfocus="(this.type='number')"
-                                                                            class="form-control input"
-                                                                            placeholder="Notes" required>
-                                                                        <label for="notes"
-                                                                            class="form-control-placeholder">Notes</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="newRow"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer d-flex flex-row">
-                                                    <button type="button" class="btn btn_annuler " id="fermer"
-                                                        data-bs-dismiss="modal">Annuler</button>
-                                                    <button type="submit"
-                                                        class="btn btn_enregistrer non_pub">Enregistrer</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row">
+                
             </div>
+            <div class="col-12 col-lg-12 mt-4">
+                
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="2"><i class="bi bi-circle-fill" style="font-size:15px;color:rgb(156, 238, 156);"></i>&nbsp; En ligne (1)</th>
+                            <th colspan="2"><i class="bi bi-circle-fill" style="font-size:15px;color:rgb(226, 22, 14);"></i>&nbsp; Hors ligne (1)</th>
+                            <th colspan="2"><i class="bi bi-circle-fill" style="font-size:15px;color:rgb(11, 158, 202);"></i>&nbsp; En configuration programme</th>
+                            <th colspan="2"><i class="bi bi-circle-fill" style="font-size:15px;color:rgb(22, 38, 43);"></i>&nbsp; En configuration competence</th>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px" class="text-center"> <input type="checkbox"></td>
+                            <td style="width: 100px">Réference</td>
+                            <td>Nom</td>
+                            <td class="text-center">Durée</td>
+                            <td>Niveau</td>
+                            <td>Formation</td>
+                            <td class="text-center">Statut</td>
+                            <td class="text-center">Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($modules as $mod)
+                        
+                        @if($mod->status == 1)
+                        <tr class="">
+                            <td style="width: 50px" class="text-center align-middle"> <input type="checkbox"></td>
+                            <td class="align-middle">{{$mod->reference}}</td>
+                            <td class="align-middle">{{$mod->nom_module}}</td>
+                            <td class="text-center align-middle">{{$mod->duree_jour}}J</td>
+                            @if ($mod->niveau_id == 1)
+                                <td class="align-middle">Débutant</td>
+                            @elseif ($mod->niveau_id == 2)
+                                <td class="align-middle">Intermediaire</td>
+                            @else
+                                <td class="align-middle">Avancé</td>
+                            @endif
+                            <td class="align-middle">{{$mod->nom_formation}}</td>
+                            <td class="text-center align-middle"><span class="dan">Hors ligne</span></td>
+                            <td>
+                                <a href=""><i class="bi bi-pencil-square ma" ></i></a>
+                                <a href=""><i class="bi bi-trash ma"></i></a>
+                                {{-- <div class=" btn-group dropleft" >
+                                    <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v align-middle" ></i>
+                                    </button>
 
-            <div class="tab-pane show fade" id="hors_ligne">
-                <div class="container-fluid p-0 mt-3 me-3">
-                    <div class="row instruction mb-3">
-                        <div class="col-12">
-                            <p class="mb-0 ">L'onglet Publiés regroupe tous les modules qui sont déjá mises en ligne.
-                                <br>
-                                Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
-                                visibles publiquement.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="col-lg-12 ps-3">
-                            <div class="row pading_bas d-flex flex-wrap">
-                                @if($mod_hors_ligne == null)
-                                <div class="si_vide row mt-4">
-                                    <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
-                                            class='bx bx-layer-plus icon_vide'></i></a>
+                                    <div class="dropdown-menu" style="margin-right:-20px;">
+                                        <a class=" dropdown-item " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            voir
+                                        </a>
+                                        <a href="" class="dropdown-item" title="Voir Profile"><i class="bi bi-pencil-square"></i>&nbsp;</a>
+                                        <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bi bi-sliders2"></i>&nbsp;Configurer</a>
+                                        <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bi bi-trash3"></i>&nbsp;Suprimer</a>
+                                    </div>
+                                </div> --}}
+                            </td>
+                        </tr>
+                        @else
+                        <tr class="">
+                            <td style="width: 50px" class="text-center align-middle"> <input type="checkbox"></td>
+                            <td class="align-middle">{{$mod->reference}}</td>
+                            <td class="align-middle">{{$mod->nom_module}}</td>
+                            <td class="text-center align-middle">{{$mod->duree_jour}}J</td>
+                            @if ($mod->niveau_id == 1)
+                                <td class="align-middle">Débutant</td>
+                            @elseif ($mod->niveau_id == 2)
+                                <td class="align-middle">Intermediaire</td>
+                            @else
+                                <td class="align-middle">Avancé</td>
+                            @endif
+                            <td class="align-middle">{{$mod->nom_formation}}</td>
+                            <td class="text-center align-middle"><span class="badge ">En ligne</span></td>
+                            <td>
+                                        <a href=""><i class="bi bi-pencil-square ma" ></i></a>
+                                        <a href=""><i class="bi bi-trash ma"></i></a>
+                                    
+                                
+                                
+                                
+                                {{-- <div class=" btn-group dropleft" >
+                                    <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v align-middle" ></i>
+                                    </button>
+
+                                    <div class="dropdown-menu" style="margin-right:-20px;">
+                                        <a class=" dropdown-item " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            voir
+                                        </a>
+                                        <a href="" class="dropdown-item" title="Voir Profile"><i class="bi bi-vector-pen"></i>&nbsp;Modifier</a>
+                                        <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal_"><i class="bi bi-trash3"></i>&nbsp;Suprimer</a>
+                                    </div>
+                                </div> --}}
+                            </td>
+                        </tr>
+                        @endif
+                       
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- Button trigger modal -->
+                
+                
+                <!-- Modal -->
+                {{-- <div class="modal fade" id="staticBackdrop"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog " style="width: 900px;">
+                    <div class="modal-content" style="background-color: transparent;border:none;">
+                        <div class="modal-wrap" >
+                            <div class="modal-header">
+                              <span class="is-active"></span>
+                              <span></span>
+                              <span></span>
+                            </div>
+                            <div class="modal-bodies">
+                            <div class="modal-body modal1 is-showing">
+                              <div class="title" style="font-size:20px;">Excel To pro</div>
+                              <div class="description">
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>Dureé</th>
+                                                        <th>Niveaux</th>
+                                                        <th>Entreprise</th>
+                                                        <th>Modalité</th>
+                                                        <th>Prix</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    <tr>
+
+                                                        <td>4j </td>
+                                                        <td>Débutant</td>
+                                                        <td>Numerika Center</td>
+                                                        
+                                                        <td>Presentiel</td>
+                                                        <td>150 000ar</td>
+                                                    </tr>
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                              </div>
+                              
+                                <div class="text-center">
+                                  <div class="button" type="submit">Information suivante</div>
                                 </div>
-                                @else
-                                @foreach($mod_hors_ligne as $mod)
-                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
-                                        id="border_premier">
-                                        <div class="col-lg-12 col-md-12 detail__formation__result__content">
-                                            <div class="detail__formation__result__item ">
-                                                <h4 class="mt-2">
-                                                    <span id="preview_module"><span
-                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
-
-                                                </h4>
-                                                <span id="preview_categ"><span class=" acf-categorie"
-                                                        style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
-                                                <p id="preview_descript"><span
-                                                        class="acf-description">{{$mod->description}}</span></p>
-                                            </div>
-                                            <div class="d-flex ">
-                                                <div class="col-6 detail__formation__result__avis">
-                                                    <div style="--note: 4.5;">
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star-half'></i>
-                                                    </div>
-                                                    <span><strong>0.0</strong>/5 (aucun avis)</span>
-                                                    @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                    <span
-                                                        class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                    @endif
-                                                </div>
-                                                <div class="col-6 w-100">
-                                                    <p class="m-0">
-                                                        <span class="new_module_prix">
-                                                            @php
-                                                            echo number_format($mod->prix, 0, ' ', ' ');
-                                                            @endphp
-                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
-                                                    </p>
-                                                    <p class="m-0 ">
-                                                        <span class="new_module_prix">
-                                                            @if($mod->prix_groupe == null)
-                                                            <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                            @else
-                                                            @php
-                                                            echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                            @endphp
-                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row g-0 row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
-                                                <span id="preview_jour"><span class="acf-jour">
-                                                        {{$mod->duree_jour}}
-                                                    </span>j</span>
-                                                <span id="preview_heur">/<span class="acf-heur">
-                                                        {{$mod->duree}}
-                                                    </span>h</span>
-                                            </div>
-                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                                    class="bx bxs-devices bx_icon"
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
-                                            </div>
-                                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                                <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-niveau">{{$mod->niveau}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="row g-0">
-                                            @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="col-4 d-flex flex-row">
-                                                <div class="col" id="preview_niveau">
-                                                    <button class="btn modifier pt-0"><a
-                                                            href="{{route('modif_programmes',$mod->module_id)}}"><i
-                                                                class='bx bx-edit background_grey'
-                                                                style="color: #0052D4 !important;font-size: 15px"
-                                                                title="modifier les informations"></i></a></button>
-                                                </div>
-                                                {{-- <div class="col-3" id="preview_niveau">
-                                                    <button class="btn modifier_prog pt-0"><a
-                                                            href="{{route('modifier_module_prog',$mod->module_id)}}"><i
-                                                                class='bx bx-edit-alt background_grey4'
-                                                                style="color: #801d68 !important;font-size: 15px"
-                                                                title="modifier les programmes"></i></a></button>
-                                                </div> --}}
-                                                <div class="col" id="preview_niveau">
-                                                    <button class="btn supprimer pt-0" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                            class="bx bx-trash background_grey2"
-                                                            style="color: #ff0000 !important;font-size: 15px"
-                                                            title="supprimer le module"></i></button>
-                                                </div>
-                                                <div class="col" id="preview_niveau">
-                                                    <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
-                                                        data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                        id="{{$mod->module_id}}"><i
-                                                            class='bx bx-low-vision background_grey3'
-                                                            style="color: #799F0C !important;font-size: 15px"
-                                                            title="afficher les informations"></i></button>
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="new_btn_programme text-center">
-                                                    <div class="text-uppercase">
-                                                        @if ($mod->etat_id == 2)
-                                                        <div class="form-check form-switch d-flex flex-row">
-                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix_hors_ligne">Hors&nbsp;Ligne</span></label>
-                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" data-bs-target="#en_ligne_{{$mod->module_id}}" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne">
-                                                        </div>
-                                                        @endif
-                                                        {{-- <a href="{{route('mettre_')}}" role="button"><span class="btn py-1 button_choix active_mod">Hors Ligne</span></a>
-                                                        <a href="" role="button"><span class="btn py-1 button_choix">En ligne</span></a> --}}
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
-                                                        <h6 class="modal-title">Avertissement !</h6>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <small>Vous êtes sur le point d'effacer une donnée,
-                                                            cette
-                                                            action
-                                                            est irréversible. Continuer ?</small>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary suppression"
-                                                            id="{{$mod->module_id}}"> Oui</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal fade" id="en_ligne_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="en_ligne_{{$mod->module_id}}" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
-                                                        <h6 class="modal-title">Avertissement !</h6>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="text-center my-2">
-                                                            <i class="fa-solid fa-circle-exclamation warning"></i>
-                                                        </div>
-                                                        <p class="text-center">Vous allez mettre en ligne cette module. Êtes-vous sur?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary non_en_ligne"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary mettre_en_ligne"
-                                                            id="{{$mod->module_id}}"> Oui</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endcanany
+                              
+                            </div>
+                              
+                              <div class="modal-body modal2">
+                                <div class="title " style="font-size:20px;">Excel To Pro</div>
+                              <div class="description"><div class="description">
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <table class="table table-hover" >
+                                            <thead>
+                                                <tr>
+                                                    <th>Cible</th>
+                                                    <th>Objectif</th>
+                                                    <th>prerequis</th>
+                                                    <th>Materiel necessaire</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium suscipit, eos fugiat doloremque expedita corporis molestias impedit ad inventore atque?</td>
+                                                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure voluptas odit fuga repellendus assumenda quasi neque, atque possimus distinctio alias.</td>
+                                                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, consectetur?</td>
+                                                    <td>Ordinateur Portable,Cahier,Stylo</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                                @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane show fade" id="publies">
-                <div class="container-fluid p-0 mt-3 me-3">
-                    <div class="row instruction mb-3">
-                        <div class="col-12">
-                            <p class="mb-0 ">L'onglet Publiés regroupe tous les modules qui sont déjá mises en ligne.
-                                <br>
-                                Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
-                                visibles publiquement.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="col-lg-12 ps-3">
-                            <div class="row pading_bas d-flex flex-wrap">
-                                @if($mod_publies == null)
-                                <div class="si_vide row mt-4">
-                                    <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
-                                            class='bx bx-layer-plus icon_vide'></i></a>
-                                </div>
-                                @else
-                                @foreach($mod_publies as $mod)
-                                <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
-                                        id="border_premier">
-                                        <div class="col-lg-12 col-md-12 detail__formation__result__content">
-                                            <div class="detail__formation__result__item ">
-                                                <h4 class="mt-2">
-                                                    <span id="preview_module"><span
-                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
-
-                                                </h4>
-                                                <span id="preview_categ"><span class=" acf-categorie"
-                                                        style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
-                                                <p id="preview_descript"><span
-                                                        class="acf-description">{{$mod->description}}</span></p>
-                                            </div>
-                                            <div class="d-flex ">
-                                                <div class="col-6 detail__formation__result__avis">
-                                                    <div style="--note: 4.5;">
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star'></i>
-                                                        <i class='bx bxs-star-half'></i>
-                                                    </div>
-                                                    <span><strong>0.0</strong>/5 (aucun avis)</span>
-                                                    @if($mod->min_pers != 0 && $mod->max_pers != 0)
-                                                    <span
-                                                        class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
-                                                    @endif
-                                                </div>
-                                                <div class="col-6 w-100">
-                                                    <p class="m-0">
-                                                        <span class="new_module_prix">
-                                                            @php
-                                                            echo number_format($mod->prix, 0, ' ', ' ');
-                                                            @endphp
-                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
-                                                    </p>
-                                                    <p class="m-0 ">
-                                                        <span class="new_module_prix">
-                                                            @if($mod->prix_groupe == null)
-                                                            <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                            @else
-                                                            @php
-                                                            echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                            @endphp
-                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                            </div>
+                              </div>
+                              <div class="text-center">
+                                <div class="button" type="submit">Information suivante</div>
+                              </div>
+                           </div>
+                                
+                                
+                              </div>
+                              
+                              <div class="modal-body modal3">
+                                 <div class="title" style="font-size:20px;">Excel To Pro</div>
+                                 <div class="description"><div class="description">
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>Bon a savoir</th>
+                                                        <th>Nombre persone minimum</th>
+                                                        <th>Nombre persone maximum</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium suscipit, eos fugiat doloremque expedita corporis molestias impedit ad inventore atque?</td>
+                                                        <td>5</td>
+                                                        <td>6</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-
-                                        <div
-                                            class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                            <div class="col-3" style="font-size: 12px" id="preview_haut2"><i
-                                                    class="bx bxs-alarm bx_icon" style="color: #7635dc !important;"></i>
-                                                <span id="preview_jour"><span class="acf-jour">
-                                                        {{$mod->duree_jour}}
-                                                    </span>j</span>
-                                                <span id="preview_heur">/<span class="acf-heur">
-                                                        {{$mod->duree}}
-                                                    </span>h</span>
-                                            </div>
-                                            <div class="col-5" style="font-size: 12px" id="preview_modalite"><i
-                                                    class="bx bxs-devices bx_icon"
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-modalite">{{$mod->modalite_formation}}</span>
-                                            </div>
-                                            <div class="col-4" style="font-size: 12px" id="preview_niveau">
-                                                <i class='bx bx-equalizer bx_icon'
-                                                    style="color: #7635dc !important;"></i>&nbsp;<span
-                                                    class="acf-niveau">{{$mod->niveau}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            @canany(['isCFP','isAdmin','isSuperAdmin'])
-                                            <div class="col-4 d-flex flex-row">
-                                                <div class="col" id="preview_niveau">
-                                                    <button class="btn modifier pt-0"><a
-                                                            href="{{route('modif_programmes',$mod->module_id)}}"><i
-                                                                class='bx bx-edit background_grey'
-                                                                style="color: #0052D4 !important;font-size: 15px"
-                                                                title="modifier les informations"></i></a></button>
-                                                </div>
-                                                {{-- <div class="col-3" id="preview_niveau">
-                                                    <button class="btn modifier_prog pt-0"><a
-                                                            href="{{route('modifier_module_prog',$mod->module_id)}}"><i
-                                                                class='bx bx-edit-alt background_grey4'
-                                                                style="color: #801d68 !important;font-size: 15px"
-                                                                title="modifier les programmes"></i></a></button>
-                                                </div> --}}
-                                                <div class="col" id="preview_niveau">
-                                                    <button class="btn supprimer pt-0" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal_{{$mod->module_id}}"><i
-                                                            class="bx bx-trash background_grey2"
-                                                            style="color: #ff0000 !important;font-size: 15px"
-                                                            title="supprimer le module"></i></button>
-                                                </div>
-                                                <div class="col" id="preview_niveau">
-                                                    <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
-                                                        data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                        id="{{$mod->module_id}}"><i
-                                                            class='bx bx-low-vision background_grey3'
-                                                            style="color: #799F0C !important;font-size: 15px"
-                                                            title="afficher les informations"></i></button>
-                                                </div>
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="new_btn_programme text-center">
-                                                    <div class="text-uppercase">
-                                                        @if ($mod->etat_id == 1)
-                                                        <div class="form-check form-switch d-flex flex-row">
-                                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;Ligne</span></label>
-                                                            <input class="form-check-input  ms-3" data-bs-toggle="modal" data-bs-target="#hors_ligne_{{$mod->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked>
-                                                        </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal fade" id="exampleModal_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
-                                                        <h6 class="modal-title">Avertissement !</h6>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <small>Vous êtes sur le point d'effacer une donnée,
-                                                            cette
-                                                            action
-                                                            est irréversible. Continuer ?</small>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary suppression"
-                                                            id="{{$mod->module_id}}">Oui</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal fade" id="hors_ligne_{{$mod->module_id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="hors_ligne_{{$mod->module_id}}" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header  d-flex justify-content-center"
-                                                        style="background-color:rgb(224,182,187);">
-                                                        <h6 class="modal-title">Avertissement !</h6>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="text-center my-2">
-                                                            <i class="fa-solid fa-circle-exclamation warning"></i>
-                                                        </div>
-                                                        <p class="text-center">Vous allez mettre hors ligne cette module. Êtes-vous sur?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary non_hors_ligne"
-                                                            data-bs-dismiss="modal"> Non
-                                                        </button>
-                                                        <button type="button" class="btn btn-secondary mettre_hors_ligne"
-                                                            id="{{$mod->module_id}}"> Oui</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endcanany
                                     </div>
-                                </div>
-                                @endforeach
-                                @endif
+                                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" onclick="location.reload(true)" data-bs-dismiss="modal">Close</button>
+                                    
+                                  </div>
+                              </div>
                             </div>
-                        </div>
+                          </div>
+                          
                     </div>
-                </div>
-            </div>
+                    </div>
+                </div> --}}
 
-            <div>
-                {{-- <div class="modal" id="ModalAffichage">
+                {{-- modal ajout --}}
+            <form action="{{route('module.store')}}" method="POST" >
+                @csrf
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="test" aria-hidden="true">
                     <div class="modal-dialog">
-                        <div class="modal-content modal_grand">
-                            <div class="container-fluid">
-                                <div class="col-lg-12" id="preview_haut">
-                                    <div class="container py-4 bg-light">
-                                        <div class="row  bg-light justify-content-space-between py-3 px-5"
-                                            id="border_premier">
-                                            <div class="col-lg-6 col-md-6 new_back">
-                                                <div class="detail__formation__result__item ">
-                                                    <h4>
-                                                        <span id="preview_module">
-                                                            <span class="acf-nom_module" id="nom_module"></span>
-                                                        </span><br>
-                                                        <span id="preview_categ">
-                                                            <span class="py-4 acf-categorie" id="nom_formation"></span>
-                                                            <span>
-                                                    </h4>
-                                                    <p id="preview_descript"><span class="acf-description"
-                                                            id="description"></span></p>
-                                                    <div class="detail__formation__result__avis"
-                                                        style="color: black !important;">
-                                                        <div class="Stars" style="--note: 4.5;">
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star'></i>
-                                                            <i class='bx bxs-star-half'></i>
-                                                        </div>
-                                                        <span><strong>4.5</strong>/5 (250 avis)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 detail__formation__result__content">
-                                                <div class="detail__formation__result__item2">
-
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
-                                                <div class="col" id="preview_haut2"><i class="bx bxs-alarm bx_icon"
-                                                        style="color: black !important;"></i>
-                                                    <span id="preview_jour"><span class="acf-jour"
-                                                            id="jour"></span>j</span>
-                                                    <span id="preview_heur">/<span class="acf-heur"
-                                                            id="heure"></span>h</span>
-                                                </div>
-                                                <div class="col" id="preview_modalite"><i class="bx bxs-devices bx_icon"
-                                                        style="color: black !important;"></i>&nbsp;<span
-                                                        lass="acf-modalite" id="modalite"></span>
-                                                </div>
-                                                <div class="col" id="preview_niveau">
-                                                    <i class='bx bx-equalizer bx_icon'
-                                                        style="color: black !important;"></i>&nbsp;<span
-                                                        class="acf-niveau" id="niveau"></span>
-                                                </div>
+                      <div class="modal-content">
+                        <div class="modal-wrap" >
+                            <div class="modal-header">
+                              <span class="is-active"></span>
+                              <span onclick="testeB()"></span>
+                              <span onclick="testeC()"></span>
+                              
+                            </div>
+                            <div class="modal-bodies">
+                            {{-- setup tsirairay --}}
+                            <div class="modal-body modal1 is-showing">
+                              <div class="title" style="font-size:20px;">Module</div>
+                              <div class="description">
+                                <div class="formul " style="margin-top:-20px;">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-lg-6-4 col-xl-4">
+                                            <label for="" style="float: left">Domaine de formation :</label><br>
+                                            <div class="input-group " style="">
+                                                <select name="domaine" id="acf-domaine" name="domaine" class="form-control pe" id="" required>
+                                                    <option value="null" class="pe" disable selected hidden>Choisissez la domaine de formation ...</option>
+                                                    @foreach ($domaines as $domaine)
+                                                        <option value="{{$domaine->id}}">{{$domaine->nom_domaine}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
-                                        <div
-                                            class="row detail__formation__detail justify-content-space-between py-5 px-5">
-                                            <div class="col-lg-8 detail__formation__content">
+                                        <div class="col-lg-4 col-xl-4">
+                                            <label for="" style="float: left">Thematique par domaine :</label><br>
+                                            <div class="input-group " style="">
+                                                <select name="categorie" class="form-control categ" id="acf-categorie"  name="categorie"  required>
 
-                                                <div class="row detail__formation__item__left__objectif"
-                                                    id="border_objectif">
-                                                    <div class="col-lg-12" id="preview_objectif">
-                                                        <span class="adresse__text">
-                                                            <i
-                                                                class="bx bx-radio-circle-marked py-2 pb-3 adresse__icon"></i>&nbsp;Objectifs</span>
-                                                        <p><span>>&nbsp;</span><span class="acf-objectif"
-                                                                id="objectif"></span></p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row detail__formation__item__left__adresse"
-                                                    id="border_cible">
-                                                    <div class="col-lg-6 d-flex flex-row">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour
-                                                                qui ?</span>
-                                                            <div class="col-12 px-2" id="preview_cible">
-                                                                <p><span>>&nbsp;</span><span class="acf-cible"
-                                                                        id="cible"></span></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-6">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis</span>
-                                                            <div class="col-12" id="preview_prerequis">
-                                                                <p><span>>&nbsp;</span><span class="acf-prerequis"
-                                                                        id="prerequis"></span></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row detail__formation__item__left__adresse"
-                                                    id="border_equipement">
-                                                    <div class="col-lg-6 d-flex flex-row">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement
-                                                                necessaire</span>
-                                                            <div class="col-12" id="preview_materiel">
-                                                                <p><span>>&nbsp;</span><span class="acf-materiel"
-                                                                        id="materiel"></span></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-6">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon
-                                                                a savoir</span>
-                                                            <div class="col-12" id="preview_bon_a_savoir">
-                                                                <p><span>>&nbsp;</span><span class="acf-bon_a_savoir"
-                                                                        id="bon_a_savoir"></span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row detail__formation__item__left__adresse"
-                                                    id="border_prestation">
-                                                    <div class="col-lg-12 d-flex flex-row">
-                                                        <div class="row d-flex flex-row">
-                                                            <span class="adresse__text"><i
-                                                                    class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                                                pedagogiques</span>
-                                                            <div class="col-12" id="preview_prestation">
-                                                                <p><span>>&nbsp;</span><span class="acf-prestation"
-                                                                        id="prestation"></span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 detail__formation__item__right" id="border_reference">
-                                                <div class="row detail__formation__item__main__head align-items-center">
-                                                    <div class="detail__prix__head">
-                                                        <div class="detail__prix__text">
-                                                            <p class="pt-2"><b>INTRA</b></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="detail__prix__main__presentiel pt-3">
-                                                        <div>
-                                                            <p class="text-uppercase text-center" id="preview_modalite">
-                                                                <span class="acf-modalite" id="modalite2"></span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="col-lg-5 detail__prix__main__ref pt-2">
-                                                        <div>
-                                                            <p><i class="bx bx-clipboard"></i>&nbsp;Ref :</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-7 detail__prix__main__ref2 pt-2">
-                                                        <div id="preview_reference">
-                                                            <p class="acf-reference text-center" id="reference"></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr">
-                                                <div class="row detail__formation__item__main">
-                                                    <div class="col-lg-5 detail__prix__main__dure">
-                                                        <div>
-                                                            <p><i
-                                                                    class="bx bxs-alarm bx_icon"></i><span>&nbsp;Durée</span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-7 detail__prix__main__dure2">
-                                                        <div>
-                                                            <p class="text-center">
-                                                                <span id="preview_jour"><span class="acf-jour"
-                                                                        id="jour2"></span>j</span>
-                                                                <span id="preview_heur">/<span class="acf-heur"
-                                                                        id="heure2"></span>h</span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr">
-                                                <div class="row detail__formation__item__rmain">
-                                                    <div class="col-lg-5 detail__prix__main__prix">
-                                                        <div>
-                                                            <p><i class='bx bx-euro'></i>&nbsp;Prix</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-7 detail__prix__main__prix2">
-                                                        <div>
-                                                            <p id="preview_prix" class="text-center"><span
-                                                                    class="acf-prix" id="prix"></span>&nbsp;{{$devise->devise}}&nbsp;HT
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                                                </select>
                                             </div>
                                         </div>
+                                        <div class="col-lg-4 col-xl-4">
+                                            <label for="" style="float: left">Nom du module :</label><br>
+                                            <div class="input-group " style="">
+                                                <input type="text" name="nom_module" class="form-control " required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-xl-4">
+                                            <label for="" style="float: left">Description :</label><br>
+                                            <div class="input-group " style="">
+                                                <input type="text" name="description" class="form-control " required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-xl-4">
+                                            <label for="" style="float: left">Durée en jour :</label><br>
+                                            <div class="input-group " style="">
+                                                <input type="number" name="jour" class="form-control " required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-xl-4">
+                                            <label for="" style="float: left">Durée en heure :</label><br>
+                                            <div class="input-group " style="">
+                                                <input type="number" name="heure" class="form-control " required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-xl-4">
+                                            <label for="" style="float: left">Modalité du formation:</label><br>
+                                            <div class="input-group " style="">
+                                                <select name="modalite" id="" class="form-control" required>
+                                                    <option value="null" class="pe" disable selected hidden>Choisissez la
+                                                        modalite de formation ...</option>
+                                                    <option value="En ligne">En ligne</option>
+                                                    <option value="Presentiel">Présentiel</option>
+                                                    <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-xl-4">
+                                            <label for="" style="float: left">Niveau de formation :</label><br>
+                                            <div class="input-group " style="">
+                                                <select name="niveau" id="" class="form-control" required>
+                                                    <option value="null" class="pe" disable selected hidden>Choisissez le niveau de formation...</option>
+                                                    @foreach ($niveaux as $niveau)
+                                                        <option value="{{$niveau->id}}">{{$niveau->niveau}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>   
+                                    </div>  
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="title mt-2" style="font-size:20px;">Objectif</div> 
+                                            <div class="col-lg-12">
+                                                <input type="text" name="objectif" placeholder="objectif du module" style="height: 100px" class="form-control " required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   
+                              </div>
+                              <div class="text-center">
+                                  <div class="button" >Information suivante</div>
+                              </div>
+                            </div>
+                            {{-- setup fin --}}
+                            {{-- setup tsirairay --}}
+                            
+                              {{-- setup fin --}}
+                            {{-- setup tsirairay --}}
+                            <div class="modal-body modal2">
+                                
+                                <div class="description">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="title " style="font-size:20px;float: left;">Cible</div>
+                                            <div class="input-group" >
+                                                <input type="text" name="cible" placeholder="cible" class="form-control" style="margin-top:-20px;height:100px" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="title " style="font-size:20px;float: left;">Prerequis</div>
+                                            <div class="input-group" >
+                                                <input type="text" name="prerequis"  class="form-control" placeholder=" Les prérequis" style="margin-top:-20px;height:100px" required>
+                                            </div>
+                                        </div>     
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="title " style="font-size:20px;float: left;">Référence</div>
+                                            <div class="input-group" >
+                                                <input type="text" class="form-control" name="reference" placeholder="Référence" style="margin-top:-20px" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="title " style="font-size:20px;float: left;">Prix</div>
+                                            <div class="input-group" >
+                                                <input type="text" class="form-control" name="prix" placeholder="Prix en Ar" style="margin-top:-20px" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="title " style="font-size:20px;float: left;">Prix Groupe</div>
+                                            <div class="input-group" >
+                                                <input type="text" class="form-control" name="prix_groupe" placeholder="Prix du groupe en Ar" style="margin-top:-20px" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="text-center">
+                                <div class="prev btn btn-dark" >Precedent</div>
+                                <div class="button " >Information suivante</div>
+                            </div>
+                            
+                            </div>
+                            {{-- setup fin --}} 
+                              <div class="modal-body modal3">
+                                <div class="description">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="title " style="font-size:20px;float: left;">Equipement </div>
+                                            <div class="input-group" >
+                                                <input type="text" name="materiel" placeholder="Equipement necessaire" class="form-control" style="margin-top:-20px;height:100px" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="title " style="font-size:20px;float: left;">Bon à savoir</div>
+                                            <div class="input-group" >
+                                                <input type="text" class="form-control" name="bon_a_savoir" placeholder=" " style="margin-top:-20px;height:100px" required>
+                                            </div>
+                                        </div>     
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="title " style="font-size:20px;float: left;">Prestation</div>
+                                            <div class="input-group" >
+                                                <input type="text" placeholder="Prestation pédagogique" name="prestation" class="form-control" style="margin-top:-20px;height:100px" required>
+                                            </div>
+                                        </div>
+                                           
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="title " style="font-size:20px;float: left;">Nombre presonne min</div>
+                                            <div class="input-group" >
+                                                <input type="number" placeholder="" class="form-control" name="min_pers" style="margin-top:-20px;" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="title " style="font-size:20px;float: left;">Nombre presonne max</div>
+                                            <div class="input-group" >
+                                                <input type="number" placeholder="" name="max_pers" class="form-control" style="margin-top:-20px;" required>
+                                            </div>
+                                        </div>
+                                           
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn_next " id="fermer" data-bs-dismiss="modal">
-                                        Fermer </button>
+                                   <div class="prev btn btn-dark" type="submit">Precedent</div>
+                                    <button type="submit" class="btn btn-secondary"  style="background: blueviolet;color:white" >Enregistré</button>
+                                </form>
                                 </div>
                             </div>
-                        </div>
+                          </div>
+                      </div>
                     </div>
-                </div> --}}
+                  </div>
+                {{-- tapitra eto --}}
+                
             </div>
-        </div>
-        <div class="filtrer mt-3">
-            <div class="row">
-                <div class="col">
-                    <p class="m-0">Filter les modules</p>
-                </div>
-                <div class="col text-end">
-                    <i class="bx bx-x" role="button" onclick="afficherFiltre();"></i>
-                </div>
-                <hr class="mt-2 mb-0">
-                <div class="row gutter_none">
-                    <div class="col">
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        PROGRAMME À COMPLÉTER
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <form action="">
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6 me-1 justify-content-center">
-                                                    <select name="ref" id="ref" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Référence</option>
-                                                        @foreach($mod_en_cours as $mod_prog)
-                                                        <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-6 justify-content-center">
-                                                    <select name="niveau" id="niveau" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Niveau</option>
-                                                        @foreach($niveau as $niv)
-                                                        <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col justify-content-center">
-                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Nom de module</option>
-                                                        @foreach($mod_en_cours as $mod_prog)
-                                                        <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select name="thematique" id="thematique" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Thématique</option>
-                                                        @foreach($categorie as $categ)
-                                                        <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-5 me-1 justify-content-center">
-                                                    <div class="form-groupe">
-                                                        <select name="date_creation" id="date_creation" class="form-control mb-2 outline_none">
-                                                            <option value="null" disable selected hidden>Création</option>
-                                                            @foreach($date_creation as $date)
-                                                            <option value="{{$date->created_at}}">{{date('d/m/Y', strtotime($date->created_at,))}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-7 justify-content-center">
-                                                    <select name="modalites" id="modalites" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Modalité Formation</option>
-                                                        <option value="En ligne">En ligne</option>
-                                                        <option value="Presentiel">Présentiel</option>
-                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6">
-                                                    <label>Durée en Heure</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour.value=value" class="slide_range slide_hour">
-                                                        <input type="text" id="rangeHour" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label>Durée en Jours</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay.value=value" class="slide_range slider_day">
-                                                        <input type="text" id="rangeDay" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par personne en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangePrimary" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">1&sbquo;000&sbquo;000</span><input type="range" name="range" step="100000" min="1000000" max="5000000" value="" class="slide_range w-100" id="prix_groupe">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangePrimary1" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <div class="text-center mt-1">
-                                                <input type="submit" class="btn_enregistrer text-center" value="Appliquer">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        COMPETENCE À COMPLÉTER
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                    data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <form action="">
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6 me-1 justify-content-center">
-                                                    <select name="ref" id="ref" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Référence</option>
-                                                        @foreach($mod_non_publies as $mod_prog)
-                                                        <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-6 justify-content-center">
-                                                    <select name="niveau" id="niveau" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Niveau</option>
-                                                        @foreach($niveau as $niv)
-                                                        <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col justify-content-center">
-                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Nom de module</option>
-                                                        @foreach($mod_non_publies as $mod_prog)
-                                                        <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select name="thematique" id="thematique" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Thématique</option>
-                                                        @foreach($categorie as $categ)
-                                                        <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-5 me-1 justify-content-center">
-                                                    <div class="form-groupe">
-                                                        <select name="date_creation" id="date_creation" class="form-control mb-2 outline_none">
-                                                            <option value="null" disable selected hidden>Création</option>
-                                                            @foreach($date_creation as $date)
-                                                            <option value="{{$date->created_at}}">{{date('d/m/Y', strtotime($date->created_at,))}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-7 justify-content-center">
-                                                    <select name="modalites" id="modalites" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Modalité Formation</option>
-                                                        <option value="En ligne">En ligne</option>
-                                                        <option value="Presentiel">Présentiel</option>
-                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6">
-                                                    <label>Durée en Heure</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour1.value=value" class="slide_range slide_hour">
-                                                        <input type="text" id="rangeHour1" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label>Durée en Jours</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay1.value=value" class="slide_range slider_day">
-                                                        <input type="text" id="rangeDay1" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par personne en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers1">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangeSecondary" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">1&sbquo;000&sbquo;000</span><input type="range" name="range" step="100000" min="1000000" max="5000000" value="" class="slide_range w-100" id="prix_groupe1">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangeSecondary1" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <div class="text-center mt-1">
-                                                <input type="submit" class="btn_enregistrer text-center" value="Appliquer">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree" aria-expanded="false"
-                                        aria-controls="collapseThree">
-                                        VOTRE CATALOGUE
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse"
-                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <form action="">
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6 me-1 justify-content-center">
-                                                    <select name="ref" id="ref" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Référence</option>
-                                                        @foreach($mod_publies as $mod_prog)
-                                                        <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-6 justify-content-center">
-                                                    <select name="niveau" id="niveau" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Niveau</option>
-                                                        @foreach($niveau as $niv)
-                                                        <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col justify-content-center">
-                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Nom de module</option>
-                                                        @foreach($mod_publies as $mod_prog)
-                                                        <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select name="thematique" id="thematique" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Thématique</option>
-                                                        @foreach($categorie as $categ)
-                                                        <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-5 me-1 justify-content-center">
-                                                    <div class="form-groupe">
-                                                        <select name="date_creation" id="date_creation" class="form-control mb-2 outline_none">
-                                                            <option value="null" disable selected hidden>Création</option>
-                                                            @foreach($date_creation as $date)
-                                                            <option value="{{$date->created_at}}">{{date('d/m/Y', strtotime($date->created_at,))}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-7 justify-content-center">
-                                                    <select name="modalites" id="modalites" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Modalité Formation</option>
-                                                        <option value="En ligne">En ligne</option>
-                                                        <option value="Presentiel">Présentiel</option>
-                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6">
-                                                    <label>Durée en Heure</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour2.value=value" class="slide_range slide_hour">
-                                                        <input type="text" id="rangeHour2" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label>Durée en Jours</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay2.value=value" class="slide_range slider_day">
-                                                        <input type="text" id="rangeDay2" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par personne en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers2">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangeThird" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">1&sbquo;000&sbquo;000</span><input type="range" name="range" step="100000" min="1000000" max="5000000" value="" class="slide_range w-100" id="prix_groupe2">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangeThird1" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <div class="text-center mt-1">
-                                                <input type="submit" class="btn_enregistrer text-center" value="Appliquer">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            
+        </div>   
     </div>
-</div>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-<script src="{{asset('js/modules.js')}}"></script>
-<script >
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        let lien = ($(e.target).attr('href'));
-        localStorage.setItem('Tabactive', lien);
-    });
-    let Tabactive = localStorage.getItem('Tabactive');
-    if(Tabactive){
-        $('#myTab a[href="' + Tabactive + '"]').tab('show');
-    }
-    document.getElementById('prix_pers').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangePrimary.value = valeur;
-    });
-    document.getElementById('prix_groupe').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangePrimary1.value = valeur;
-    });
-    document.getElementById('prix_pers1').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeSecondary.value = valeur;
-    });
-    document.getElementById('prix_groupe1').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeSecondary1.value = valeur;
-    });
-    document.getElementById('prix_pers2').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeThird.value = valeur;
-    });
-    document.getElementById('prix_groupe2').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeThird1.value = valeur;
-    });
-
-    $(".mettre_en_ligne").on('click', function(e) {
-        let id = e.target.id;
-        $.ajax({
-            method: "GET"
-            , url: "{{route('mettre_en_ligne')}}"
-            , data: {Id : id}
-            , success: function(response) {
-                window.location.reload();
-            }
-            , error: function(error) {
-                console.log(error)
+ 
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.js"
+			  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $('.prev').click(function miverina(){
+            var $but = $(this);
+            var $ste = $but.parents('.modal-body');
+            var $cout = $ste.index() - 1;
+            var $page = $('.modal-header span').prev($cout)
+            
+            if($cout === 0 || $cout === 1 ){
+                miverina1($ste,$page);
+            }else{
+                miverina2($ste,$page);
             }
         });
-     });
 
-     $(".non_hors_ligne").on('click', function(e) {
-        $(".form-check-input").prop('checked',true);
-     });
+        function miverina1($ste,$page){
+            $ste.addClass('animateout');
+        
+            setTimeout(function(){
+                $ste.removeClass('is-showing animateout').prev().addClass('animatein');
+                $page.removeClass('is-active').prev().addClass('is-active');
+            }, 600);
+            
+            setTimeout(function(){
+                $ste.prev().removeClass('animatein').addClass('is-showing');
+            }, 1200);
+        }
+        function miverina2($ste,$pageE){
+            $ste.addClass('animateout');
+        
+            setTimeout(function(){
+                $ste.removeClass('is-showing animateout').prev().addClass('animatein');
+                $pageE.removeClass('is-active').prev().addClass('is-active');
+            }, 600);
+            
+            setTimeout(function(){
+                $ste.prev().removeClass('animatein').addClass('is-showing');
+            }, 1200);
+        }
 
-     $(".non_en_ligne").on('click', function(e) {
-        $(".form-check-input").prop('checked',false);
-     });
 
-     $(".mettre_hors_ligne").on('click', function(e) {
-        let id = e.target.id;
-        $.ajax({
-            method: "GET"
-            , url: "{{route('mettre_hors_ligne')}}"
-            , data: {Id : id}
-            , success: function(response) {
-                window.location.reload();
-            }
-            , error: function(error) {
-                console.log(error)
-            }
+        $('.button').click(function teste(){
+        var $btn = $(this);
+        //refers to the parent node modal-body
+        var $step = $btn.parents('.modal-body');
+        //get the element number of modal body
+        var $stepcount = $step.index();
+        //refers to the indent in header when pages go to next
+        var $page = $('.modal-header span').eq($stepcount);
+        
+        if($stepcount === 0 || $stepcount === 1 ){
+            step2($step, $page);
+        }else{
+            step3($step, $page);
+        }
         });
-     });
+
+        function step2($step, $page){
+        $step.addClass('animateout');
+        
+        setTimeout(function(){
+            $step.removeClass('is-showing animateout').next().addClass('animatein');
+            $page.removeClass('is-active').next().addClass('is-active');
+        }, 600);
+        
+        setTimeout(function(){
+            $step.next().removeClass('animatein').addClass('is-showing');
+        }, 1200);
+        }
+        // function step3($step, $page){
+        // $step.parents('.modal-wrap').addClass('animateright').delay(800).fadeOut(200);
+        
+        // setTimeout(function(){
+        //     $('.rerun-button').css('display', 'inline-block');
+        // }, 900);
+        // }
+
+        $('.btn-secondary').click(function(){
+         //$('.model-wrap').removeClass('animateright').find('.modal-body').addClass('is-showing').siblings().removeClass('is-showing');
+         return $stepcount = 0;
+        
+        });
 
 
+       
+        
 
-</script>
+
+        
+        $("#acf-domaine").change(function() {
+            var id = $(this).val();
+            $(".categ").empty();
+            $(".categ").append(
+                '<option value="null" class="pe" disable selected hidden>Choisissez la catégorie de formation ...</option>'
+            );
+
+            $.ajax({
+                url: "/get_formation",
+                type: "get",
+                data: {
+                    id: id,
+                },
+                success: function(response) {
+                    
+                    var userData = response;
+                    if (userData.length > 0) {
+                        for (var $i = 0; $i < userData.length; $i++) {
+                            
+                            $(".categ").append(
+                                '<option value="' +
+                                    userData[$i].id +
+                                    '" data-value="' +
+                                    userData[$i].nom_formation +
+                                    '" >' +
+                                    userData[$i].nom_formation +
+                                    "</option>"
+                            );
+                        }
+                    } else {
+                        document.getElementById("domaine_id_err").innerHTML =
+                            "choisir le type de domaine valide pour avoir ses formations";
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                },
+            });
+        });
+    </script>
 @endsection

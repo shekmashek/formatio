@@ -39,9 +39,9 @@ CREATE TABLE `type_abonnements_etp` (
 
 CREATE TABLE `abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date default current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
+  `date_demande` timestamp NULL DEFAULT current_timestamp(),
+  `date_debut` timestamp NULL DEFAULT current_timestamp(),
+  `date_fin` timestamp NULL DEFAULT current_timestamp(),
   `categorie_paiement_id` bigint(20) UNSIGNED NOT NULL  REFERENCES mode_financements(id) ON DELETE CASCADE,
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type_abonnement_id` bigint(20) UNSIGNED NOT NULL  REFERENCES type_abonnements_etp(id) ON DELETE CASCADE,
@@ -54,9 +54,9 @@ CREATE TABLE `abonnements` (
 
 CREATE TABLE `abonnement_cfps` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date DEFAULT current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
+  `date_demande` timestamp NULL DEFAULT current_timestamp(),
+  `date_debut` timestamp NULL DEFAULT current_timestamp(),
+  `date_fin` timestamp NULL DEFAULT current_timestamp(),
   `categorie_paiement_id` bigint(20) UNSIGNED NOT NULL REFERENCES mode_financements(id) ON DELETE CASCADE,
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type_abonnement_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnements_of(id) ON DELETE CASCADE,

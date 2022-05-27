@@ -275,33 +275,37 @@ class ResponsableController extends Controller
     public function affReferent()
     {
         $user_id = Auth::user()->id;
-         if (Gate::allows('isReferentPrincipale')) {
+        
+        $refs = DB::select('select * from responsables where user_id = ?', [$user_id]);
+        return view('admin.responsable.profilResponsables',compact('refs'));
+        // dd($ref);
+        //  if (Gate::allows('isReferentPrincipale')) {
 
 
-            // if ($id != null) {
+        //     // if ($id != null) {
 
-            //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+        //     //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
 
-            // } else {
+        //     // } else {
 
-                $id = responsable::where('user_id', Auth::user()->id)->value('id');
+        //         $id = responsable::where('user_id', Auth::user()->id)->value('id');
 
-                $entreprise = responsable::where('user_id',$user_id)->value('id');
+        //         $entreprise = responsable::where('user_id',$user_id)->value('id');
 
-                // $branche = branche::findorFail($id);
+        //         // $branche = branche::findorFail($id);
 
-                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-                $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
-            // }
-            // dd($refs);
-            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
-        }
-        if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
+        //         $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+        //         $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
+        //     // }
+        //     // dd($refs);
+        //     return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
+        // }
+        // if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 
-            $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+        //     $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
 
-            return view('admin.responsable.profilResponsable', compact('refs'));
-        }
+        //     return view('admin.responsable.profilResponsable', compact('refs'));
+        // }
     }
 
 
@@ -853,4 +857,67 @@ class ResponsableController extends Controller
         $etp = new getImageModel();
         return $etp->get_image($path, $dossier);
     }
+
+
+    //manomboka eto zah
+    public function editG(Request $request,$id)
+    {
+       $user_id = $request->user_id;
+        $nom    = $request->noms;
+        $prenom = $request->prenoms;
+        $cin    = $request->CIN;
+        $phone  = $request->phone;
+        $email  = $request->email;
+        $genre  = $request->genre;
+        $date   = $request->date;
+        responsable::where('id', $id)
+                    ->update([
+                        'nom_resp'       => $nom,
+                        'prenom_resp'    => $prenom,
+                        'email_resp'     => $email,
+                        'telephone_resp' => $phone,
+                        'sexe_resp'      => $genre,
+                        'cin_resp'       =>$cin
+                    ]);
+        User::where('id', $user_id)
+        ->update([
+            'name' => $nom,
+            'email' => $email
+        ]);
+        return redirect()->route('profil_referent');
+    }
+    public function editA(Request $request,$id)
+    {
+        $lot      = $request->lot;
+        $quartier = $request->quartier;
+        $ville    = $request->ville;
+        $region   = $request->region;
+        $cp       = $request->cp;
+        responsable::where('id',$id)
+                    ->update([
+                        'adresse_lot'        =>$lot,
+                        'adresse_quartier'   =>$quartier,
+                        'adresse_ville'      =>$ville,
+                        'adresse_region'     =>$region,
+                        'adresse_code_postal'=>$cp
+                    ]);
+        return redirect()->route('profil_referent');
+    }
+    public function editM(Request $request)
+    {
+        
+        $id = $request->user_id;
+        $users =  db::select('select * from users where id = ?', [$id]);
+        $pwd = $users[0]->password;
+        $new_password = Hash::make($request->nouveaux);
+        if (Hash::check($request->get('actuel'), $pwd)) {
+            DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
+            return redirect()->route('profil_referent');
+        } else {
+            return redirect()->back()->with('error', 'L\' ancien mot de passe est incorrect');
+        }
+    }
+
+
+    //mifarana eto
 }

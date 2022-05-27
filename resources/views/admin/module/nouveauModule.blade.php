@@ -5,7 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
-    <div class="container-fluid bg-light">
+    <div class="container-fluid bg-light mt-3">
         <div class="panel-body">
             <div class="row">
                 <form action="{{route('module.store')}}" method="POST" id="frm_new_module">
@@ -198,9 +198,9 @@
                                                     <textarea class="form-control cible cible text_area" id="acf-cible" name="cible" required placeholder="Public cible"></textarea>
                                                     <label for="acf-nom_module" class="form-control-placeholder-text_area">Public Cible</label>
                                                     @error('cible')
-                                                    <div class="col-sm-6">
-                                                        <span style="color:#ff0000;"> {{$message}} </span>
-                                                    </div>
+                                                        <div class="col-sm-6">
+                                                            <span style="color:#ff0000;"> {{$message}} </span>
+                                                        </div>
                                                     @enderror
                                                 </div>
                                             </div>

@@ -35,12 +35,28 @@ class ModuleController extends Controller
         });
     }
 
-    public function index($id = null, $page = null, $index = null)
+    public function index()
     {
+        //modification ako
+        $modules = DB::table('moduleformation')->get();
+        
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
-        $module_model = new module();
         $fonct = new FonctionGenerique();
+        $domaines = $fonct->findAll("domaines");
+        $liste = formation::orderBy('nom_formation')->get();
+        $niveaux = Niveau::all();
+
+
+        //return view('admin.module.module',compact('modules','domaines','niveaux'));
+        //tapitra eto
+        //trie table devise
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+        //$module_model = new module();
+
+        //maka an'le fonction rehetra ao anati le FonctionGenerique
+        $fonct = new FonctionGenerique();
+
+
         $infos =null;
         $categorie=null;
         $id_user = Auth::user()->id;
@@ -65,7 +81,7 @@ class ModuleController extends Controller
                 return view('admin.module.guide');
             } else {
                 // return view('admin.module.module', compact('devise','infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
-                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp', 'mod_hors_ligne'));
+                return view('admin.module.module', compact('modules','domaines','niveaux','devise','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp', 'mod_hors_ligne'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -230,10 +246,10 @@ class ModuleController extends Controller
         return view('admin.module.nouveauModule', compact('domaine', 'liste', 'niveau','devise'));
     }
 
-    public function get_formation(Request $req)
+    public function get_formation(Request $request)
     {
         $fonct = new FonctionGenerique();
-        $formation = $fonct->findWhere("formations", ["domaine_id"], [$req->id]);
+        $formation = $fonct->findWhere("formations", ["domaine_id"], [$request->id]);
         return response()->json($formation);
     }
 
@@ -290,12 +306,9 @@ class ModuleController extends Controller
             return redirect()->route('liste_module');
         }
     }
-
-
     public function show($id)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
         $categorie = formation::orderBy('nom_formation')->get();
         $module = module::where('formation_id', $id)->orderBy('Reference')->with('Formation')->get();
         return view('admin.module.module', compact('module', 'categorie'));
@@ -364,7 +377,6 @@ class ModuleController extends Controller
     public function modifier_mod_publies(Request $request)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
         $id = $request->id;
         if (Gate::allows('isCFP')) {
             $id_user = Auth::user()->id;
@@ -373,17 +385,13 @@ class ModuleController extends Controller
             $niveau = Niveau::all();
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         } else {
-
             $niveau = Niveau::all();
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         }
-
         return view('admin.module.modif_module_publies', compact('devise','module_en_modif', 'niveau'));
     }
-
     public function update(Request $request)
     {
-
         $validator = Validator::make(
             $request->all(),
                 [
@@ -443,10 +451,8 @@ class ModuleController extends Controller
             ]
         );
     }
-
     public function getModulesReference(Request $request)
     {
-
         $search = $request->search;
 
         if ($search == '') {
@@ -454,14 +460,12 @@ class ModuleController extends Controller
         } else {
             $modules = module::orderby('reference', 'asc')->select('id', 'reference')->where('reference', 'like', $search . '%')->limit(5)->get();
         }
-
         $response = array();
         foreach ($modules as $module) {
             $response[] = array("value" => $module->id, "label" => $module->reference);
         }
         return response()->json($response);
     }
-
     public function rechercheReference(Request $request)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
@@ -478,9 +482,7 @@ class ModuleController extends Controller
     public function recherchecategorie(Request $request)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
         $ctg = $request->categorie;
-
         if ($ctg == '') {
             $formation = formation::all();
         } else {
@@ -533,7 +535,6 @@ class ModuleController extends Controller
             }else{
                 $nb_avis = $nb[0]->nb_avis;
             }
-
             $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5',[$id]);
@@ -564,7 +565,6 @@ class ModuleController extends Controller
         $id = $request->id;
         $donnees = $request->all();
         $fonct = new FonctionGenerique();
-
         $competence = $fonct->findWhere('competence_a_evaluers', ['module_id'], [$id]);
         for ($i = 0; $i < count($competence); $i++) {
             $id_comp = $donnees['id_notes_' . $id . '_' . $competence[$i]->id];
@@ -650,14 +650,12 @@ class ModuleController extends Controller
         DB::update('update modules set prestation = ? where id = ?',[$prestation, $id]);
         return back();
     }
-
     public function mettre_en_ligne(Request $request){
         $id = $request->Id;
         $etat = 1;
         DB::update('update modules set etat_id = ? where id = ?',[$etat, $id]);
         return response()->json(['success' =>'ok']);
     }
-
     public function mettre_hors_ligne(Request $request){
         $id = $request->Id;
         $etat = 2;

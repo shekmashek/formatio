@@ -1309,3 +1309,9 @@ Route::get('/chefs/filtre/query/role', 'DepartementController@filtreChefRole')->
 Route::get('/formateurs/filtre/query/name', 'ProfController@filtreProfName')->name('prof.filter.name');
 
 
+//----Modification route Mahafaly---/////
+    Route::post('ModificationGenerale/{id}','ResponsableController@editG')->name('responsabe.editG');
+    Route::post('ModificationAdresse/{id}','ResponsableController@editA')->name('responsable.editA');
+    Route::post('ModificationSecurite/{id}','ResponsableController@editM')->name('responsable.editM');
+//----Fin des lignes-----/////
+

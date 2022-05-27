@@ -120,7 +120,6 @@
                                             <h4 class="modal-title text-white">Avertissement !</h4>
 
                                         </div>
-<<<<<<< HEAD
                                         <div class="modal-body">
                                             <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
                                         </div>
@@ -143,8 +142,7 @@
                         </tr>
 
                         @endforeach
-=======
-                                    </div> --}}
+                                    </div> 
                                 </td>
                                 {{-- modal delete  --}}
                                 <div>
@@ -174,8 +172,7 @@
                                 {{-- fin modal delete --}}
 
                             </tr>
-                            @endforeach
->>>>>>> origin/Super_Admins
+                            
                         @endif
 
                 </tbody>
