@@ -316,7 +316,7 @@
                                                         title="clicker pour voir l'image"
                                                         src="{{asset('images/stagiaires/'.$stagiaires[$i]->photos)}}"
                                                         style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
-                                                
+
                                                 @endif
                                             </td>
                                             <td>
@@ -479,7 +479,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="dynamic_rowC">
-                                        @for($i=0;$i<count($chef);$i+=1) <tr class="text-center content_table">
+                                        {{-- @for($i=0;$i<count($chef);$i+=1) <tr class="text-center content_table">
 
                                             <td>
                                                 @if($chef[$i]->photos == null)
@@ -509,7 +509,7 @@
                                                     echo $groupe->formatting_phone(chef[$i]->telephone_chef);
                                                 @endphp
                                                 {{-- {{$chef[$i]->telephone_chef}} --}}
-                                            </td>
+                                            {{-- </td>
                                             <td>
                                                 <div align="left">
                                                     @foreach ($roles_actif_manager as $role_asigner_manager)
@@ -521,7 +521,7 @@
                                                     @endforeach
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td> --}}
                                                 {{-- <div align="left">
                                                     @for($i = 0; $i <
                                                         count($roles_not_actif_manager[$i]["role_inactif"]); $i++)
@@ -539,7 +539,7 @@
                                                         @endif
                                                         @endfor
                                                 </div> --}}
-                                            </td>
+                                            {{-- </td>
                                             <td>
                                                 <div align="left">
                                                     @foreach ($roles_actif_manager as $role_asigner_manager)
@@ -578,7 +578,7 @@
                                                                 {{-- @php
                                                                 $a = 0;
                                                                 @endphp --}}
-                                                                @for($a = 0;$a < count($user_role);$a++) @if($chef[$i]->
+                                                                {{-- @for($a = 0;$a < count($user_role);$a++) @if($chef[$i]->
                                                                     user_id == $user_role[$a]->user_id)
                                                                     @php
                                                                     echo $user_role[$a]->role_id;
@@ -618,8 +618,8 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            @endfor
+                                            </div> --}}
+                                            {{-- @endfor --}}
                                     </tbody>
                                 </table>
                             </div>
