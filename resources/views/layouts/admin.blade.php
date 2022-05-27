@@ -966,10 +966,10 @@
                                                     @endcan
                                                 </div>
                                                 <hr>
-                                                <div class="text-center">
+                                                <div class="text-center d-flex justify-content-center">
                                                     <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
 
-                                                    <p class="text-muted">Connécté en tant que :
+                                                    <p class="text-muted me-3">Connécté en tant que :
                                                     <ul id="liste_role" class="d-flex flex-column"></ul>
                                                     </p>
 
@@ -982,7 +982,7 @@
                                                             </a></p>
                                                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                 document.getElementById('logout-form').submit();"
-                                                            class="deconnexion_text btn text-center">Se Déconnecter</a>
+                                                            class="deconnexion_text text-center">Se Déconnecter</a>
                                                         <form action="{{ route('logout') }}" id="logout-form"
                                                             method="POST" class="d-none">
                                                             @csrf
