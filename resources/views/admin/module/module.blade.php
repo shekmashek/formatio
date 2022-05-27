@@ -139,20 +139,7 @@
                                                         class="bx bx-trash bx_supprimer"
                                                         title="supprimer le module"></i></button>
                                             </div>
-<<<<<<< HEAD
                                             <div class="mt-1">
-=======
-                                            <div class="" id="preview_niveau">
-                                                <button class="btn afficher pt-0" data-id="{{$mod->module_id}}"
-                                                    data-bs-toggle="modal" data-bs-target="#ModalAffichage"
-                                                    id="{{$mod->module_id}}"><i
-                                                        class='bx bx-plus-medical bx_ajouter'
-                                                        title="afficher les informations"></i></a>
-
-                                                </button>
-                                            </div>
-                                            <div class=" new_btn_programme text-center">
->>>>>>> a0fd7fd1b (ok)
                                                 <a href="{{route('ajout_programme',$mod->module_id)}}"
                                                     class="btn_completer"
                                                     role="button">Completer&nbsp;votre&nbsp;programme</a>
