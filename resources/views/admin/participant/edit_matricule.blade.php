@@ -11,7 +11,7 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-       
+
         <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
@@ -77,7 +77,7 @@
                           <input type="hidden" class="form-control test" id="region" name="region" placeholder="Region" value="{{ $stagiaire->region}}">
 
 
-                  <input type="hidden" class="form-control test"  name="niveau" value="{{ $stagiaire->niveau_etude }}">
+                  <input type="hidden" class="form-control test"  name="niveau" value="{{ $stagiaire->niveau_etude_id }}">
                   <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
                     <input type="text" value="   {{ $stagiaire->matricule}}"  class="form-control test input"  name="matricule" placeholder="Matricule" >
