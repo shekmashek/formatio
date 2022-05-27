@@ -238,7 +238,7 @@ class AbonnementController extends Controller
 
             //liste facturation
             // $facture =$this->fonct->findWhere('v_abonnement_facture_entreprise',['entreprise_id'],[$responsable[0]->entreprise_id]);
-            $facture = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by date_demande desc ',[$responsable[0]->entreprise_id]);
+            $facture = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by created_at desc ',[$responsable[0]->entreprise_id]);
             // facture du mois suivant
             $facture_suivant = [];
             for ($i=0; $i < count($facture); $i++) {
