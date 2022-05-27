@@ -876,10 +876,11 @@
                                                                                         </div>
                                                                                         <div class="row mt-3">
                                                                                             <div class="col-lg-6 text-end"><button type="submit"
-                                                                                                    class="btn btn_enregistrer">Enregistrer</button></div>
+                                                                                                    class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Enregistrer</button></div>
                                                                                             <div class="col-lg-6">
-                                                                                                <button type="button" class="btn  btn_annuler"
-                                                                                                        data-dismiss="modal">Annuler</button>
+                                                                                                <button type="button" class="btn  btn_annuler" data-dismiss="modal">
+                                                                                                    <i class='bx bx-x me-1'></i> Annuler
+                                                                                                </button>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>

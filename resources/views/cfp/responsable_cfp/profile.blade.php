@@ -45,9 +45,19 @@
                 <div class="row text-end p-0">
                     <i class='bx bxs-customize icon_infos p-0'></i>
                 </div>
-                <div class="row ps-2 ">
-                    <p class="nb_modules m-0 p-0">{{count($modules_counts)}}</p>
-                    <p class="text-muted borderBotom_color p-0 pb-2 text-uppercase">Modules</p>
+                <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
+                    <a href="{{route('modification_genre',$refs->id)}} ">
+                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-male-female' style="color: rgb(116, 116, 116)"></i>&nbsp; GENRE
+                            <span style="float: right;">
+                            @if ($refs->sexe_resp_cfp == null)
+                            <strong  style="color:red">
+                            incomplète</strong>&nbsp;
+                            @else
+                            {{$refs->sexe_resp_cfp}}&nbsp;
+                            @endif
+                            <i class="fas fa-angle-right"></i></span>
+                        </p>
+                    </a>
                 </div>
             </a>
         </div>
@@ -118,14 +128,21 @@
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-calendar-alt icon_sociaux2'></i>Date de naissance :&nbsp;{{$refs->date_naissance_resp_cfp}}</p><p class="text-end"><a href="{{route('modification_date_de_naissance',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
                 </div>
-            </div>
-            <div class="row border_bas">
-                <div class="col">
-                    @if($refs->genre == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-user-pin icon_sociaux1'></i>&nbsp;Genre</p><p class="text-end"><a href="{{route('modification_genre',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
-                    @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-user-pin icon_sociaux1'></i>Genre :&nbsp;{{$refs->genre}}</p><p class="text-end"><a href="{{route('modification_genre',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
-                    @endif
+                <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
+                    <a href="{{route('modification_telephone',$refs->id)}} ">
+                        <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone'></i>&nbsp; TELEPHONE<span style="float: right;">
+                            @if ($refs->telephone_resp_cfp == null)
+                                <strong  style="color:red">
+                                incomplète</strong>&nbsp;
+                            @else
+                                {{$refs->telephone_resp_cfp}}&nbsp;
+                            @endif
+                            <!-- @php
+                                echo $groupe->formatting_phone($refs->telephone_resp_cfp);
+                            @endphp -->
+                            <i class="fas fa-angle-right"></i> </span>
+                        </p>
+                    </a>
                 </div>
             </div>
             <div class="row border_bas">

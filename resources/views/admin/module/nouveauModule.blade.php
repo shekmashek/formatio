@@ -373,7 +373,7 @@
                                             <div class="col">
                                                 <button type="button" class="btn w-100 btn_annuler" onclick="resetForm();">
                                                     <a class="new_list_nouvelle " href="{{route('liste_module')}}">
-                                                        <i class='bx bx-x me-1'></i>annuler
+                                                        <i class='bx bx-x me-1'></i> Annuler
                                                     </a>
                                                 </button>
                                             </div>

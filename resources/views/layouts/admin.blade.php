@@ -1085,7 +1085,7 @@
                     <div class="col">
                         <p class="m-0 titre_apprendre"> Apprendre</p>
                     </div>
-                    <div class="col text-end close">
+                    <div class="col text-end close" id="closeApprendre">
                         <!--<i class="bx bx-x " role="button" onclick="afficherTuto();"></i>-->
                         <i class="bx bx-x" role="button"></i>
                     </div>

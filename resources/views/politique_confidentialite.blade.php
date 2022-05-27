@@ -50,11 +50,14 @@
                 <li class="nav-item">
                     <a class="nav-link " href="#utilisation">Utilisation des informations du site web</a>
                 </li>
-                <li class="nav-item">
+                {{--<li class="nav-item">
                     <a class="nav-link " href="#balise">Balises Web</a>
-                </li>
+                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link" href="#données">Données d’adresse IP</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#information">Comment nous utilisons l’information collectée</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="#capacite">Votre capacité à choisir l’opt out</a>
@@ -101,7 +104,7 @@
             </ul>
         </div>
     <div class="col-8">
-        <span class="float-end">Dernière mise à jour : le 23 Avril 2022 <hr class="my-2"></span><br>
+        <span class="float-end">Dernière mise à jour : le 27 Avril 2022 <hr class="my-2"></span><br>
         <h1 class="mt-5">Politique de confidentialité de la plateforme <span id="politique">Formation.mg</span></h1>
         <div >
             <h2 >Politique de confidentialité</h2>
@@ -123,27 +126,21 @@
         <div>
             <h2 >Recueil d’information</h2>
            <h6 > Lorsque vous visitez notre site web, nous recueillerons des données personnelles à partir de votre poste de travail.
-                Ces informations nous permettent de déterminer comment vous avez trouvé notre site et nous permettent d’améliorer les fonctionnalités du site de celui-ci.
+                Ces informations nous permettent de déterminer comment vous avez trouvé notre site et nous permettent d’améliorer les fonctionnalités de celui-ci.
              </h6>
-            <h6 >Les informations que vous fournissez peuvent être classées en deux catégories, décrites plus en détail ci-après: les informations fournies par
-                 l’utilisateur et les informations sur :
-            </h6>
-
-              <ul>
-                <li style="font-weight: bold">-Les informations personnelles que vous choisissez de partager</li>
-                <h6 >
-                    Selon que vous remplissez un formulaire sur notre site, communiquez avec nous par e-mail, par téléphone ou autrement,
-                    les informations que vous nous fournissez et que nous allons collecter peuvent inclure votre nom, votre adresse email,
-                     votre numéro de téléphone, votre adresse email, votre entreprise, votre position, l’adresse de votre entreprise ainsi que
-                      le détail de votre requête. Nous pouvons également collecter des informations supplémentaires, telles que des enquêtes ou des événements marketing.
-
-                </h6>
-                <h6 id="collecte">Si vous nous fournissez des informations personnelles, il vous appartient de nous informer immédiatement de tout changement 
-                    apporté aux informations que vous avez fournies et mettre à jour vos données personnelles en envoyant un courrier électronique à contact-mg@upskill-sarl.com
-                </h6 >
-
+            <h6 >Les informations que vous fournissez peuvent être classées en deux catégories, décrites plus en détail ci-après:</h6>
+            <ul class="list-group ps-5">
+                <li>- les informations fournies par l’utilisateur </li>
+                <li>- les informations sur les informations personnelles que vous choisissez de partager</li>
             </ul>
-
+            <h6 >Selon que vous remplissez un formulaire sur notre site, communiquez avec nous par e-mail, par téléphone ou autrement,
+                les informations que vous nous fournissez et que nous allons collecter peuvent inclure votre nom, votre adresse email,
+                votre numéro de téléphone, votre adresse email, votre entreprise, votre position, l’adresse de votre entreprise ainsi que
+                le détail de votre requête. Nous pouvons également collecter des informations supplémentaires, telles que des enquêtes ou des
+                 événements marketing.</h6>
+            <h6 id="collecte">Si vous nous fournissez des informations personnelles, il vous appartient de nous informer immédiatement de tout changement 
+                apporté aux informations que vous avez fournies et mettre à jour vos données personnelles en envoyant un courrier électronique à contact-mg@upskill-sarl.com
+            </h6 >
         </div>
         <div>
             <h2 >Collecte d’information en provenance de site tiers</h2>
@@ -178,14 +175,14 @@
             et de déterminer si notre publicité est efficace ou non.
         </h6>
         <h6>Vous devriez pouvoir contrôler les spécifications des cookies via les paramètres de votre navigateur.</h6>
-        <h6 >Les options du navigateur et les instructions d’utilisation correspondantes se trouvent généralement dans le manuel du navigateur ou dans le 
-            <span id="balise" > fichier d’aide.</span></h6>
+        {{-- <h6 >Les options du navigateur et les instructions d’utilisation correspondantes se trouvent généralement dans le manuel du navigateur ou dans le 
+            <span id="balise" > fichier d’aide.</span></h6> --}}
         <h6 >Si vous refusez, bloquez ou désactivez les cookies, cela pourrait limiter la disponibilité des services proposés via le site Web. 
             De plus, certaines parties du site Web peuvent ne pas fonctionner correctement dans certaines circonstances.
         </h6>
     </div>
       <div>
-        <h2>Balises Web</h2>
+        {{--<h2>Balises Web</h2>
         <h6>Une balise Web est une image graphique souvent invisible qui est placée sur un site Web ou dans un courrier électronique et utilisée pour surveiller
              le comportement de l’utilisateur visitant le site Web ou l’émetteur – courrier électronique de suivi et marquage de page pour l’analyse Web. 
              Nous pouvons utiliser des balises Web (ou des pixels de suivi) seuls ou
@@ -194,7 +191,7 @@
             les balises Web peuvent être utilisées par nos analystes marketing dans des messages électroniques ou des lettres d’information pour déterminer 
             si le message a été ouvert ou pour nous permettre de compter les utilisateurs ayant visité certaines pages, générer des statistiques sur l’utilisation 
             de notre site.
-        </h6>
+        </h6>--}}
         <h6 id="données">Ils ne sont pas utilisés pour accéder à des informations personnellement identifiables.
         </h6>
         <h6 >Contrairement aux cookies, vous ne pouvez pas refuser les balises Web. Toutefois, si votre navigateur refuse les cookies ou vous invite à répondre, 
@@ -225,13 +222,13 @@
         <h6>Nous vous fournissons les informations que vous avez demandées en nous envoyant un courrier électronique ou en saisissant votre demande sur notre site Web.</h6>
         <h6>Nous pouvons également vous envoyer des informations et des offres de la part de la Société et de nos fournisseurs de services tiers. </h6>
         <h6>Vous avez le droit de nous demander de ne pas traiter vos données personnelles à des fins de marketing.</h6>
-        <h6 > Vous pouvez toujours choisir de ne pas recevoir nos courriels marketing en suivant le processus de désinscription au bas de chaque courriel 
-            que vous recevez de notre part. Vous pouvez également modifier vos préférences en ce qui concerne les types de courriels que vous recevez de notre 
-            part en nous envoyant un courrier électronique à l’adresse contact-mg@upskill-sarl.com.
-        </h6>
+        {{--<h6 > Vous pouvez toujours choisir de ne pas recevoir nos courriels marketing en suivant le processus de désinscription au bas de chaque courriel 
+            que vous recevez de notre part.</h6>--}} 
+            <h6> pouvez également modifier vos préférences en ce qui concerne les types de courriels que vous recevez de notre 
+            part en nous envoyant un courrier électronique à l’adresse contact-mg@upskill-sarl.com.</h6>
     </div>
 <div>
-    <h2 >Comment nous utilisons l’information collectée</h2>
+    <h2 id="information">Comment nous utilisons l’information collectée</h2>
     <h6>Nous utilisons les informations que nous recueillons à votre sujet conformément à la présente politique de confidentialité. Nous ne vendons jamais d’informations
          personnelles à des tiers.</h6>
     <h6>Nous pouvons utiliser vos informations personnelles afin de :</h6>
@@ -340,7 +337,7 @@
          ils ne pourront plus non plus voir votre profil,...</h6>
     <h6>Néanmoins, vous pouvez toujours accéder à votre compte pour voir vos données ainsi que ceux que vous avez partagé avec vos collaborateurs, 
         et ces derniers auront aussi cet accès. Ainsi pour cette raison la suppression de ce dernier ne pourrait pas être possible.</h6>
-    <h6>Nous conservons vos données personnelles le cas échéant pour vous fournir des Services et aussi longtemps que cela s’avère nécessaire pour les finalités définies 
+    <h6>Nous conservons vos données personnelles le cas échéant pour vous fournir des services et aussi longtemps que cela s’avère nécessaire pour les finalités définies 
         à l’origine ou pour toute période plus longue qui pourrait être requise à des fins juridiques, d’audit et de conformité.</h6>
     <h6 >Cela inclut les données que vous ou d’autres personnes nous avez fournies et les données générées ou déduites de votre utilisation de nos services.
          Toutes les informations conservées resteront soumises aux termes de cette politique.
