@@ -240,7 +240,7 @@
             {{-- <P style="font-size: 15px">Créer un nouveau responsable dans votre organisation pour travailler plus vite pour plus de productivié et gagner du temps.</P> --}}
             <form class="form form_colab " action="{{ route('save+nouveau+responsable+cfp') }}" method="POST">
                 @csrf
-                {{-- <div class="form-row d-flex"> --}}
+                {{-- <div class="form-row d-flex"> --
                     <div class="input-group">
                         <div class="input-group-text bg-light border-0 border-bottom">
                             <i class="bx bx-user form-icon"></i>
@@ -290,7 +290,7 @@
                         <label for="cin" class="input-placeholder in-non-modal">
                             <span > CIN </span><strong style="color: #ff0000">*</strong>
                         </label>
-                    </div>
+                    </div> 
 
 
                     <div class="input-group mt-4">
@@ -301,48 +301,50 @@
                         <label for="fonction" class="input-placeholder in-non-modal">
                             <span > Fonction </span><strong style="color: #ff0000">*</strong>
                         </label>
-                    </div>
-                      {{-- <div class="mb-3 row text-end">
+                    </div> --}}
+
+
+                      <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Nom <span style="color: red">*</span></label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-5">
                             <input autocomplete="off" required type="text" class="form-control" id="inlineFormInput" name="nom" placeholder="" required />
                         </div>
-                      </div> --}}
+                      </div>
 
-                      {{-- <div class="mb-3 row text-end">
+                      <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Prénom <span style="color: red">*</span></label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <input autocomplete="off" type="text" class="form-control " id="inlineFormInput" name="prenom" placeholder="" />
                         </div>
-                      </div> --}}
+                      </div>
 
-                      {{-- <div class="mb-3 row text-end">
+                      <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Email <span style="color: red">*</span></label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-5">
                             <input autocomplete="off" required type="email" class="form-control mb-2" id="email" name="email" placeholder="" />
                         </div>
-                      </div> --}}
+                      </div>
 
-                      {{-- <div class="mb-3 row text-end">
+                      <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Télephone <span style="color: red">*</span></label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <input autocomplete="off" required type="text" class="form-control  mb-2" id="phone" name="phone" placeholder="" />
                         </div>
-                      </div> --}}
+                      </div>
 
-                      {{-- <div class="mb-3 row text-end">
+                      <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">CIN <span style="color: red">*</span></label>
                         <div class="col-sm-4">
                             <input autocomplete="off" required type="text" maxlength="20" class="form-control " id="inlineFormInput" name="cin"/>
                         </div>
-                      </div> --}}
+                      </div>
 
-                      {{-- <div class="mb-3 row text-end">
+                      <div class="mb-3 row text-end">
                         <label for="" class="col-sm-2 col-form-label">Fonction <span style="color: red">*</span></label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <input autocomplete="off" required type="text" class="form-control " id="inlineFormInput" name="fonction" placeholder=""  />
                         </div>
-                      </div> --}}
+                      </div>
 
                       
 
@@ -505,6 +507,12 @@
 
 <script type="text/javascript">
     /*-----------------------------------------------*/
+    $(function() {
+        $("input[name='phone']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
+
 
     $(document).on('change', '#email', function() {
         var result = $(this).val();
