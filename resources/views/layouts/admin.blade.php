@@ -627,7 +627,6 @@
                     @canany('isStagiaire')
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
-                            @can('isPremium')
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('liste_projet')}}" class="text-center" role="button"><span
                                         class="d-flex flex-column"><i class='bx bx-library mb-2 mt-1'></i><span
@@ -638,7 +637,6 @@
                                         class="d-flex flex-column"><i class='bx bxs-calendar-week mb-2 mt-1'></i><span
                                             class="text_racourcis">Agenda</span></span></a>
                             </div>
-                            @endcan
                         </div>
                     </div>
                     @endcanany
