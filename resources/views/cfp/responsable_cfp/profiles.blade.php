@@ -72,7 +72,7 @@
                             <strong  style="color:red">
                             incomplète</strong>&nbsp;
                             @else
-                           {{$refs->genre}}&nbsp;
+                           {{$refs->sexe_resp_cfp}}&nbsp;
                             @endif
                             <i class="fas fa-angle-right"></i></span>
                         </p>
@@ -168,7 +168,13 @@
                 </div> --}}
                 <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                     {{-- <a href="{{route('modification_fonction',$refs->id)}} "> --}}
-                        <p class="p-1 m-0" style="font-size: 12px;">FONCTION<span style="float: right;">{{$refs->fonction_resp_cfp}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                        <p class="p-1 m-0" style="font-size: 12px;">FONCTION<span style="float: right;">
+                            @if ($refs->fonction_resp_cfp==null)
+                                <strong  style="color:red">
+                                incomplète</strong>&nbsp;
+                            @else
+                                {{$refs->fonction_resp_cfp}}&nbsp;
+                            @endif<i class="fas fa-angle-right"></i></span>
                         </p>
                     </a>
                 </div>

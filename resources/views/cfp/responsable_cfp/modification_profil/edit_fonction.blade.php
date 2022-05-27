@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" ><i class='bx bxs-chevron-left me-1'></i> Retour</button></a>
 </div>
 <center>
      {{-- si l'utiliisateur a cliqué sur enregistrer en laissant des champs vides--}}
@@ -29,7 +29,7 @@
                     </div>
                 </div>
 
-                <button  class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                <button  class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
             </form>
             <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

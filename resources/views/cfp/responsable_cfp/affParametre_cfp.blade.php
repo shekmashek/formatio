@@ -33,7 +33,7 @@
                         @else
                             <p>{{$cfps->slogan}}</p>
                         @endif
-                        <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name">Modifier</a>
+                        <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name text-white">Modifier</a>
                     </div>
                 </div>
             </div>

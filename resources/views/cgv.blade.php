@@ -86,45 +86,45 @@
         <div class="col-3">
             <ul class="nav flex-column navperso ps-3" >
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="#access">Accès aux Services</a>
+                  <a class="nav-link text-dark" aria-current="page" href="#access">Accès aux Services</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#inscription">Inscription</a>
+                  <a class="nav-link text-dark" href="#inscription">Inscription</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link " href="#usage">Usage strictement personnel, Comptes administrateurs et utilisateurs</a>
+                  <a class="nav-link text-dark" href="#usage">Usage strictement personnel, Comptes administrateurs et utilisateurs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#duree">Durée de l’abonnement, désinscription</a>
+                    <a class="nav-link text-dark" href="#duree">Durée de l’abonnement, désinscription</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link " href="#description">Description des Services</a>
+                <a class="nav-link text-dark" href="#description">Description des Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="#condition">Conditions financières</a>
+                    <a class="nav-link text-dark" href="#condition">Conditions financières</a>
                 </li>
                 {{-- <li class="nav-item">
-                    <a class="nav-link " href="#responsabilite">Responsabilités et garanties du Client
+                    <a class="nav-link text-dark" href="#responsabilite">Responsabilités et garanties du Client
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="#comportement">Comportements prohibés</a>
+                    <a class="nav-link text-dark" href="#comportement">Comportements prohibés</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="#obligation">Obligations et responsabilité du Formation.mg</a>
+                    <a class="nav-link text-dark" href="#obligation">Obligations et responsabilité du Formation.mg</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="#propriete">Propriété Intellectuelle
+                    <a class="nav-link text-dark" href="#propriete">Propriété Intellectuelle
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#donnees">Données à caractère personnel</a>
+                    <a class="nav-link text-dark" href="#donnees">Données à caractère personnel</a>
                 </li> --}}
 
             </ul>
         </div>
         <div class="col-8 mb-3">
-            <span class="float-end">Dernière mise à jour : le 23 Avril 2022 <hr class="my-2"></span><br>
+            <span class="float-end">Dernière mise à jour : le 27 Avril 2022 <hr class="my-2"></span><br>
             <div id = "access" class="mt-2"></div>
             <h1>Conditions générales de la plateforme </h1>
             <div>
@@ -194,7 +194,7 @@
                 <h2>Description des services</h2>
                 <h6>1. Licence(s) d’utilisation de l’application</h6>
                 <h6 style="margin-left: 10px">1.1 Objet de la licence</h6>
-                <h6>UPSKILL SARL  concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son application, dans sa version 
+                <h6>UPSKILL SARL  concède au client une licence non exclusive, personnelle et non transmissible d’utilisation de son application, dans sa version 
                     existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des services.</h6>
                 <h6>L’accès à l’application est fourni : </h6>
                 <ul class="list-group ps-3">

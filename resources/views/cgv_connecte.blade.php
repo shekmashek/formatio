@@ -86,7 +86,7 @@
             </ul>
         </div>
         <div class="col-8">
-        <span class="float-end">Dernière mise à jour : le 23 Avril 2022 <hr class="my-2"></span><br>
+        <span class="float-end">Dernière mise à jour : le 27 Avril 2022 <hr class="my-2"></span><br>
             <div id="access"></div>
             <h1>Conditions générales de la plateforme </h1>
             <div>
@@ -159,7 +159,7 @@
                 <h2>Description des services</h2>
                 <h6>1. Licence(s) d’utilisation de l’application</h6>
                 <h6 style="margin-left: 10px">1.1 Objet de la licence</h6>
-                <h6>UPSKILL SARL  concède au Client une licence non exclusive, personnelle et non transmissible d’utilisation de son application, 
+                <h6>UPSKILL SARL  concède au client une licence non exclusive, personnelle et non transmissible d’utilisation de son application, 
                     dans sa version existante à la date des présentes et dans toutes éventuelles versions à venir, aux seules fins de la fourniture des services.</h6>
                 <h6>L’accès à l’application est fourni : </h6>
                 <ul class="list-group">

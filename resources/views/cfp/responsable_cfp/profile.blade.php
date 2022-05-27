@@ -69,11 +69,11 @@
                     <a href="{{route('modification_genre',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-male-female' style="color: rgb(116, 116, 116)"></i>&nbsp; GENRE
                             <span style="float: right;">
-                            @if ($refs->sexe_resp_cfp==null)
+                            @if ($refs->sexe_resp_cfp == null)
                             <strong  style="color:red">
                             incomplète</strong>&nbsp;
                             @else
-                           {{$refs->genre}}&nbsp;
+                            {{$refs->sexe_resp_cfp}}&nbsp;
                             @endif
                             <i class="fas fa-angle-right"></i></span>
                         </p>
@@ -105,9 +105,15 @@
                 <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                     <a href="{{route('modification_telephone',$refs->id)}} ">
                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone'></i>&nbsp; TELEPHONE<span style="float: right;">
-                            @php
+                            @if ($refs->telephone_resp_cfp == null)
+                                <strong  style="color:red">
+                                incomplète</strong>&nbsp;
+                            @else
+                                {{$refs->telephone_resp_cfp}}&nbsp;
+                            @endif
+                            <!-- @php
                                 echo $groupe->formatting_phone($refs->telephone_resp_cfp);
-                            @endphp
+                            @endphp -->
                             <i class="fas fa-angle-right"></i> </span>
                         </p>
                     </a>
