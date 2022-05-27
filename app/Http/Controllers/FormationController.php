@@ -306,7 +306,7 @@ class FormationController extends Controller
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
             $competences = DB::select('select titre_competence from competence_a_evaluers where module_id = ?',[$id]);
             $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id,adresse_lot,adresse_ville from v_session_projet where module_id = ? and type_formation_id = 2', [$id]);
-            return view('referent.catalogue.detail_formtion', compact('devise','infos', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id','competences','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+            return view('referent.catalogue.detail_formation', compact('devise','infos', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id','competences','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         } else
             dd("eto");
         return redirect()->route('liste_formation');
