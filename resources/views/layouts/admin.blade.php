@@ -643,7 +643,6 @@
                     @canany('isFormateur')
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
-                            @can('isPremium')
                             <div class="d-flex flex-row">
                                 <div class="btn_racourcis me-4">
                                     <a href="{{route('liste_projet')}}" class="text-center" role="button"><span
@@ -657,7 +656,6 @@
                                                 class="text_racourcis">Agenda</span></span></a>
                                 </div>
                             </div>
-                            @endcan
                         </div>
                     </div>
                     @endcanany
