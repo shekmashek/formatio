@@ -118,6 +118,8 @@ class ProfController extends Controller
         return response()->json($formateur);
     }
 
+    
+
 
     //filter formateurs name
     public function filtreProfName(Request $request)

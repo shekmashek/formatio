@@ -382,18 +382,28 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         @if ($employe->photos == null)
+                                        {{-- image placeholder --}}
                                             {{-- <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Image non chargée"
                                                 style="width: 45px; height: 45px" class="rounded-circle" /> --}}
 
+                                                {{-- grey color --}}
                                             {{-- <i class='bx bx-user-circle profile-holder'
                                                 style="width: 45px; height: 45px"></i> --}}
-                                                <i class='bx bx-user-circle' style='width: 45px; height: 45px;
+
+                                                {{-- actif/inactif color --}}
+                                                {{-- <i class='bx bx-user-circle w-50 h1' style='
                                                 @if ($employe->activiter == 1)
-                                                color:#00b900;'
+                                                color:#25b900c9;'
                                                 @else
                                                 color:#e21717;'
                                                 @endif
-                                                ></i>
+                                                ></i> --}}
+
+
+                                                <div class="randomColor rounded-circle p-3 mb-2 " >
+                                                    <span class="align-middle text-center" style="position:relative;"><b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b></span>
+                                                </div>
+
                                         @else
                                             <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
                                                 alt="Image non chargée" style="width: 45px; height: 45px"
