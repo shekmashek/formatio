@@ -11,4 +11,5 @@ Recopier le view v_stagiaire_groupe/v_participant_groupe_detail dans bdd_suivifo
 Copier le script alter table dans bdd_suiviformation_mis_a_jour_2(formateurs)
 Recopier view dans collaboration v_demmande_cfp_formateur/v_demmande_cfp_pour_formateur/v_invitation_cfp_pour_formateur
 Recopier view dans bdd_suiviformation_view_4.0 :v_formateur_projet/ v_projet_formateur/v_detail_presence_stagiaire
+Recopier view abonnement
 
