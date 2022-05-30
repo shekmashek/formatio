@@ -350,13 +350,17 @@ $nbStg=30;
                     /*=============*/
                     if (email[i].value != null) {
                         var email_val = email[i].value;
-                        if (matricule[i].value != null && matricule[i].value != "") {
-                            if (email[i].value.indexOf('@') == -1) {
-                                email_err[i].innerHTML = 'E-mail invalid';
-                                $('#saver_multi_stg').prop('disabled', true);
-                            } else {
-                                email_err[i].innerHTML = '';
+                        if (matricule[i].value.length > 0) {
+                            if (matricule[i].value != null && matricule[i].value != "") {
+                                if (email[i].value.indexOf('@') == -1) {
+                                    email_err[i].innerHTML = 'E-mail invalid';
+                                    $('#saver_multi_stg').prop('disabled', true);
+                                } else {
+                                    email_err[i].innerHTML = '';
+                                }
                             }
+                        } else {
+                            email_err[i].innerHTML = '';
                         }
 
 
