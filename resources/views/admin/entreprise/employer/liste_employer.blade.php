@@ -395,7 +395,7 @@
 
                         {{-- ============================================================ --}}
                         @foreach ($responsables as $resp)
-                        <tr>
+                        <tr data-id={{ $resp->id }} onclick="afficherInfos();">
                             <td>
                                 {{-- <a href="{{route('profile_resp',$resp->id)}}"> --}}
                                     @if($resp->photos == null)
@@ -481,7 +481,7 @@
 
             {{-- ============================================================ --}}
             @foreach ($employers as $emp)
-            <tr>
+            <tr data-id={{$emp->user_id}} id={{$emp->user_id}} onclick="afficherInfos();" class="empNew">
                 <td>
                     <a href="{{route('profile_stagiaire',$emp->id)}}">
                         @if($emp->photos == null)
@@ -628,10 +628,122 @@
         </div>
 
 
+        {{--AfficheInfos--}}
+        <div class="infos mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0 text-center">INFORMATION</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                </div>
+                <hr class="mt-2">
+
+                <div class="mt-2" style="font-size:14px">
+                    {{-- <div class="mt-1">
+                            <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
+                </div> --}}
+                <div class="mt-1 text-center mb-3">
+                    <span id="donner"></span>
+                </div>
+        
+                <div class="mt-1 text-center">
+                    <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+                </div>
+                {{-- <div class="mt-1 mb-3 text-center">
+                    <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
+                </div> --}}
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                        <div class="col-md-3">Responsable</div>
+                        <div class="col-md">
+                            <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                        <div class="col-md-3">Tel</div>
+                        <div class="col-md"><span id="tel"></span></div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="col-md-3">Adresse</div>
+                        <div class="col-md">
+                            <span id="adrlot"></span>
+                            <span id="adrlot4"></span>
+                            <span></span><span id="adrlot2"></span>
+                            <span></span><span id="adrlot3"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="col-md-3">E-mail</div>
+                        <div class="col-md"><span id="mail"></span></div>
+                    </div>
+        
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                        <div class="col-md-3">Site web</div>
+                        <div class="col-md"><span id="donnerrrr"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <script src="{{ asset('assets/js/jquery.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <script>
+            $('.empNew').on('click', function(){
+                var user_id = $(this).data("id");
+                console.log(user_id);
+                $.ajax({
+                    method: "GET"
+                    , url: "/newAfficheInfo/employe/"+user_id
+                    , dataType: "html"
+                    , success: function(response) {
+                        let userData = JSON.parse(response);
+                        console.log(userData);
+                        for (let $i = 0; $i < userData.length; $i++) {
+                            let url_photo = '<img src="{{asset("images/stagiaires/:url_img")}}" style="height80px; width:80px;">';
+                            url_photo = url_photo.replace(":url_img", userData[$i].photos);
+                            $("#donner").html(" ");
+                            $("#donner").append(url_photo);
+                            $("#donnerrrr").text(': '+userData[$i].matricule);
+                            $("#nom").text(userData[$i].nom_stagiaire);
+                            $("#prenom").text(userData[$i].prenom_stagiaire);
+                            $("#tel").text(': '+userData[$i].telephone_stagiaire);
+                            $("#adrlot").text(': '+userData[$i].mail_stagiaire);
+                            $("#adrlot2").text(userData[$i].adresse);
+                            $("#adrlot3").text(userData[$i].code_postal);
+
+                            // $("#adrqurt").text(userData[$i].adresse_Quartier);
+                            // $("#adrv").text(userData[$i].adresse_ville);
+                            // $("#adrr").text(userData[$i].adresse_region);
+                            // $("#mail").text(': '+userData[$i].email);
+
+                            // $("#nomEtp").text(userData[$i].nom);
+                        }
+                    }
+                });
+            });
+        </script>
 
         <script type="text/javascript">
 

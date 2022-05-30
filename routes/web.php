@@ -1343,3 +1343,6 @@ Route::get('supprimer_frais/{id}','FraisAnnexesController@destroy')->name('suppr
 Route::get('supprimer_frais_annexes/{id}','SessionController@supprimer_frais')->name('supprimer_frais_annexes');
 
 Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagiaire')->name('resultat_stagiaire');
+
+//newAfficheInfo
+Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploye');

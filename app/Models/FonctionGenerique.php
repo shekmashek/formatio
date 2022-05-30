@@ -312,6 +312,19 @@ class FonctionGenerique extends Model
         return $emps;
     }
 
+    //filtre employes new
+    public function filtreEmployeNew($user_id){
+
+        $emps = DB::table('stagiaires')
+                ->select('*')
+                ->where('user_id', '=', $user_id)
+                // ->where('entreprise_id', '=', $etp_id)
+                ->get();
+
+        return $emps;
+    }
+
+
     //filtre Réferent
     public function filtreReferent($search_param_name, $input){
 
