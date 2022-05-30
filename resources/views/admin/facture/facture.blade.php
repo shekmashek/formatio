@@ -572,7 +572,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('encaisser') }} needs-validation" id="formPayement" method="POST" novalidate>
+                                                <form action="{{ route('encaisser') }} " id="formPayement" method="POST" novalidate>
                                                     @csrf
                                                     <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>
                                             </div>
@@ -1028,7 +1028,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form action="{{ route('encaisser') }} needs-validation" id="formPayement" method="POST" novalidate>
+                                                                        <form action="{{ route('encaisser') }} " id="formPayement" method="POST" novalidate>
                                                                             @csrf
                                                                             <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>
                                                                     </div>

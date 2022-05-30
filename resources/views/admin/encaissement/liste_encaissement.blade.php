@@ -3,9 +3,20 @@
 <p class="text_header m-0 mt-1">Encaissement</p>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 
 <style>
+
+.pdf_download{
+            background-color: #e73827 !important;
+        }
+        .pdf_download:hover{
+            background-color: #af3906 !important;
+        }
+        .pdf_download button{
+            color: #ffffff !important;
+        }
+
     table,
     th {
         font-size: 11px;
@@ -218,9 +229,10 @@
                 </a>
             </li>
             @canany(['isCFP'])
+
             <li class="nav-item ">
-                <a class="nav-link {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
-                    <i class="fa fa-download"></i> PDF</a>
+                <a class="nav-link pdf_download {{ Route::currentRouteNamed('pdf+liste+encaissement',$numero_fact) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$numero_fact)}}">
+                    <button class="btn"><i class="bx bxs-file-pdf"></i> PDF </button></a>
             </li>
             @endcanany
         </ul>
@@ -255,9 +267,9 @@
                                             <td> <a href="{{route('detail_facture',$info->num_facture)}}">
                                                     {{ $info->num_facture }}</a>
                                             </td>
-                                            <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
-                                            <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
-                                            <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                                            <td>{{$devise->reference." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                                            <td>{{$devise->reference." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                                            <td>{{$devise->reference." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
                                             <td>{{ $info->description }}</td>
                                             <td><button class="button_tail btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button>&nbsp;
                                                 <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_creer btn-block mb-2 supprimer" style="color: red"><span class="fa fa-trash"></span></button></a>

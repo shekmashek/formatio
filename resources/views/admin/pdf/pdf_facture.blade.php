@@ -227,12 +227,12 @@
                                 </td>
                                 <td>
                                     <div align="left">
-                                        {{$devise->devise." ".number_format($montant_facture->pu,0,","," ")}}
+                                        {{$devise->reference." ".number_format($montant_facture->pu,0,","," ")}}
                                     </div>
                                 </td>
                                 <th>
                                     <div align="right">
-                                        {{$devise->devise." ".number_format($montant_facture->hors_taxe,0,","," ")}}
+                                        {{$devise->reference." ".number_format($montant_facture->hors_taxe,0,","," ")}}
                                     </div>
                                 </th>
                             </tr>
@@ -252,7 +252,7 @@
                                 <td></td>
                                 <th>
                                     <div align="right">
-                                        {{$devise->devise." -".number_format($fa->dernier_montant_ouvert,0,","," ")}}
+                                        {{$devise->reference." -".number_format($fa->dernier_montant_ouvert,0,","," ")}}
                                     </div>
                                 </th>
                             </tr>
@@ -269,12 +269,12 @@
                                 <td></td>
                                 <td>
                                     <div align="left">
-                                        {{$devise->devise." ".number_format($frais_annexe->pu,0,","," ")}}
+                                        {{$devise->reference." ".number_format($frais_annexe->pu,0,","," ")}}
                                     </div>
                                 </td>
                                 <td>
                                     <div align="right">
-                                        {{$devise->devise." ".number_format($frais_annexe->hors_taxe,0,","," ")}}
+                                        {{$devise->reference." ".number_format($frais_annexe->hors_taxe,0,","," ")}}
                                     </div>
                                 </td>
                             </tr>
@@ -293,7 +293,7 @@
                                 <td>Montant Brut HT</td>
                                 <td>
                                     <div align="right">
-                                        {{$devise->devise." ".number_format($montant_totale->montant_brut_ht,0,","," ")}}
+                                        {{$devise->reference." ".number_format($montant_totale->montant_brut_ht,0,","," ")}}
                                     </div>
                                 </td>
                             </tr>
@@ -304,7 +304,7 @@
                                 <td>Remise</td>
                                 <td>
                                     <div align="right">
-                                        {{$devise->devise." -".number_format($montant_totale->remise,0,","," ")}}
+                                        {{$devise->reference." -".number_format($montant_totale->remise,0,","," ")}}
                                     </div>
                                 </td>
                             </tr>
@@ -338,7 +338,7 @@
                                 <td>Acompte</td>
                                 <td>
                                     <div align="right">
-                                        {{$devise->devise." -".number_format($montant_totale->sum_acompte,0,","," ")}}
+                                        {{$devise->reference." -".number_format($montant_totale->sum_acompte,0,","," ")}}
                                     </div>
                                 </td>
                             </tr>
@@ -351,7 +351,7 @@
                                 </td>
                                 <td>
                                     <div align="right">
-                                        {{$devise->devise." ".number_format($montant_totale->montant_total,0,","," ")}}
+                                        {{$devise->reference." ".number_format($montant_totale->montant_total,0,","," ")}}
                                     </div>
                                     <hr>
                                 </td>
