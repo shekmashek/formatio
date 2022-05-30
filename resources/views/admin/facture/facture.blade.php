@@ -436,8 +436,22 @@
                                                         @if($actif->dernier_montant_ouvert<=0) <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
                                                             payé
                                 </div>
+
+                                @elseif($actif->activiter==false)
+
+                                @if ($actif->jour_restant >0)
+                                <div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">
+                                    nom envoyé
+                                </div>
+                                @else
+                                <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                    en retard
+                                </div>
+                                @endif
+
                                 @else
                                 @if($actif->facture_encour =="valider")
+
                                 @if ($actif->jour_restant >0)
                                 <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
                                     envoyé
@@ -447,6 +461,7 @@
                                     en retard
                                 </div>
                                 @endif
+
                                 @elseif($actif->facture_encour =="en_cour")
                                 @if ($actif->jour_restant >0)
                                 <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
@@ -457,6 +472,8 @@
                                     en retard
                                 </div>
                                 @endif
+
+
                                 @endif
                                 @endif
 
@@ -555,7 +572,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('encaisser') }} needs-validation" id="formPayement" method="POST" novalidate>
+                                                <form action="{{ route('encaisser') }} " id="formPayement" method="POST" novalidate>
                                                     @csrf
                                                     <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>
                                             </div>
@@ -684,13 +701,15 @@
                                                     <th scope="col">Date de facturation</th>
                                                     <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                     </th>
-                                                    <th scope="col">  <div align="right">
-                                                        Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                   </div>
+                                                    <th scope="col">
+                                                        <div align="right">
+                                                            Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </div>
                                                     </th>
-                                                    <th scope="col">  <div align="right">
-                                                        Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                   </div>
+                                                    <th scope="col">
+                                                        <div align="right">
+                                                            Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </div>
                                                     </th>
                                                     <th scope="col">Statut</th>
                                                     @canany(['isCFP'])
@@ -748,15 +767,15 @@
                                                         </a>
                                                     </td>
                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                        <div align="right">
-                                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                                        </div>
+                                                            <div align="right">
+                                                                {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                            </div>
                                                         </a>
                                                     </td>
                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                        <div align="right">
-                                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
-                                                        </div>
+                                                            <div align="right">
+                                                                {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                            </div>
                                                         </a>
                                                     </td>
                                                     <td>
@@ -859,13 +878,15 @@
                                                         <th scope="col">Date de facturation</th>
                                                         <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                         </th>
-                                                        <th scope="col">  <div align="right">
-                                                            Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                       </div>
+                                                        <th scope="col">
+                                                            <div align="right">
+                                                                Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                            </div>
                                                         </th>
-                                                        <th scope="col">  <div align="right">
-                                                            Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                      </div>
+                                                        <th scope="col">
+                                                            <div align="right">
+                                                                Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                            </div>
                                                         </th>
                                                         <th scope="col">Statut</th>
                                                         @canany(['isCFP'])
@@ -918,15 +939,15 @@
                                                                 </a>
                                                             </td>
                                                             <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                                <div align="right">
-                                                                    {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                                                </div>
+                                                                    <div align="right">
+                                                                        {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                                    </div>
                                                                 </a>
                                                             </td>
                                                             <td>
                                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                     <div align="right">
-                                                                    {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                                        {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
                                                                     </div>
                                                                 </a>
                                                             </td>
@@ -1007,9 +1028,9 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form action="{{ route('encaisser') }} needs-validation" id="formPayement" method="POST" novalidate>
+                                                                        <form action="{{ route('encaisser') }} "  method="POST" enctype="multipart/form-data">
                                                                             @csrf
-                                                                            <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>
+                                                                            <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control " required hidden>
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-3  mx-1">
                                                                         <div class="row">
@@ -1017,10 +1038,7 @@
                                                                                 <span>Date de paiement<strong style="color:#ff0000;">*</strong></span>
                                                                             </div>
                                                                             <div class="col">
-                                                                                <input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;">
-                                                                                <div class="invalid-feedback">
-                                                                                    votre Date de paiement
-                                                                                </div>
+                                                                                <input type="date" name="date_encaissement" class="form-control " required style="height: 50px;">
                                                                             </div>
                                                                         </div>
 
@@ -1031,10 +1049,7 @@
                                                                                 <span>Montant à facturer<strong style="color:#ff0000;">*</strong></span>
                                                                             </div>
                                                                             <div class="col">
-                                                                                <input autocomplete="off" type="number" min="1" name="montant" class="form-control formPayement" required="required" style="height: 50px;">
-                                                                                <div class="invalid-feedback">
-                                                                                    votre montant à encaisser
-                                                                                </div>
+                                                                                <input autocomplete="off" type="number" min="1" name="montant" class="form-control " required style="height: 50px;">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1052,9 +1067,6 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="invalid-feedback">
-                                                                            votre mode de paiement
-                                                                        </div>
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-2  mx-1">
                                                                         <span>Memo/Notes</span>
@@ -1062,7 +1074,7 @@
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
                                                                     <div class="">
-                                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div>
+                                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit"  class="btn btn_creer btnP px-3">Encaisser</button> </div>
                                                                     </div>
                                                                     </form>
 
@@ -1108,13 +1120,15 @@
                                                                 <th scope="col">Date de facturation</th>
                                                                 <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                                 </th>
-                                                                <th scope="col">  <div align="right">
-                                                                    Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                                </div>
+                                                                <th scope="col">
+                                                                    <div align="right">
+                                                                        Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                    </div>
                                                                 </th>
-                                                                <th scope="col">  <div align="right">
-                                                                    Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                               </div>
+                                                                <th scope="col">
+                                                                    <div align="right">
+                                                                        Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                    </div>
                                                                 </th>
                                                                 <th scope="col">Statut</th>
                                                                 @canany(['isCFP'])
@@ -1165,15 +1179,15 @@
                                                                         </a>
                                                                     </td>
                                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                                        <div align="right">
-                                                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                                                        </div>
+                                                                            <div align="right">
+                                                                                {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                                            </div>
                                                                         </a>
                                                                     </td>
                                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                                        <div align="right">
-                                                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
-                                                                        </div>
+                                                                            <div align="right">
+                                                                                {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                                            </div>
                                                                         </a>
                                                                     </td>
                                                                     <td>

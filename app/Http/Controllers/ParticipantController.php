@@ -1327,7 +1327,10 @@ class ParticipantController extends Controller
     public function verify_cin_stg(Request $req)
     {
         $fonct = new FonctionGenerique();
-        $data = $fonct->findWhere("stagiaires", ["cin"], [$req->valiny]);
+        $user_id = Auth::user()->id;
+        $entreprise_id =$fonct->findWhereMulitOne("responsables",["user_id"],[$user_id])->entreprise_id;
+        $data = $fonct->findWhereParam("stagiaires", ["cin","activiter"],["=","="], [$req->valiny,true]);
+
         return response()->json($data);
     }
 }

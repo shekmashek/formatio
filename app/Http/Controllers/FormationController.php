@@ -389,12 +389,18 @@ class FormationController extends Controller
         }
     } */
 
-    public function annuaire($nbPagination = null)
+    public function annuaire($nbPagination_pag = null)
     {
-        $nb_limit = 10;
-        if ($nbPagination == null || $nbPagination <= 0) {
+        $nb_limit = 1;
+        $nbPagination=0;
+        if(isset($nbPagination_pag)){
+            $nbPagination = $nbPagination_pag;
+        } else {
             $nbPagination = 1;
         }
+        // if ($nbPagination_pag == null || $nbPagination_pag <= 0) {
+        //     $nbPagination = 1;
+        // }
 
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');

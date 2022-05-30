@@ -13,68 +13,123 @@
                 <h5>Les Organismes de Formations près de chez vous</h5>
             </div>
             <div class="d-flex flex-row ">
-                <div class="d-flex flex-row pt-1"><span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span></div>
+                <div class="d-flex flex-row "><span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span></div>
+
                 {{-- =============== condition pagination ==================== --}}
-                {{-- @if ($pagination["nb_limit"] >= $pagination["totale_pagination"])
+                @if ($pagination["nb_limit"] >= $pagination["totale_pagination"])
+                @if(isset($nom_entiter))
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
 
-                    @if(isset($nom_entiter))
-                        {{-- -------- --}}
-                        {{-- <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                        <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                @else
+                <a href="{{ route('annuaire',[($pagination["debut_aff"] - $pagination["nb_limit"]) ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire',[($pagination["debut_aff"] + $pagination["nb_limit"]) ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
 
-                    @if(isset($nom_entiter))
+                @endif
+                {{-- =============== condition pagination ==================== --}}
+                @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) >= $pagination["totale_pagination"])
+                @if(isset($nom_entiter))
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
-                    {{-- -------- --}}
-                    {{-- <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                    <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a> --}}
+                @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
 
-                        {{-- @elseif ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                            <a href="{{route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                            <a href="{{  route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-right pagination pt-1'></i></a>
-                        @else
-                            <a href="{{ route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                            <a href="{{ route('annuaire+recherche+par+entiter',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a>
-                        @endif
-                        </span>
+                @else
+                <a href="{{ route('annuaire',($pagination["debut_aff"] - $pagination["nb_limit"]) )}}" role="button"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire',($pagination["debut_aff"] + $pagination["nb_limit"]) ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
 
-                    @endif --}}
+                @endif
+                {{-- =============== condition pagination ==================== --}}
+                @elseif ($pagination["debut_aff"] == 1)
+                @if(isset($nom_entiter))
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
 
-                    {{-- @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+                @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-right pagination' ></i></a>
 
-                    @elseif (($pagination["debut_aff"]+$pagination["nb_limit"]) >= $pagination["totale_pagination"])
+                @else
+                <a href="{{ route('annuaire',($pagination["debut_aff"] - $pagination["nb_limit"]) )}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire',($pagination["debut_aff"] + $pagination["nb_limit"]) ) }}" role="button"><i class='bx bx-chevron-right pagination' ></i></a>
 
-                        @if ($pagination["debut_aff"] < $pagination["totale_pagination"] && $pagination["debut_aff"]> 1)
-                            <a href="{{route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                            <a href="{{  route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-right pagination pt-1'></i></a>
-                        @else
-                            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                            <a href="{{ route('annuaire+recherche+par+adresse',[($pagination[" debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a>
-                        @endif
-                        </span> --}}
-                        {{-- sinon --}}
+                @endif
+                {{-- =============== condition pagination ==================== --}}
+                @elseif ($pagination["debut_aff"] == $pagination["fin_aff"] || $pagination["debut_aff"]> $pagination["fin_aff"])
+                @if(isset($nom_entiter))
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
 
-                    {{-- @else --}}
+                @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
 
-                    {{-- -------- --}}
-                    {{-- <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination pt-1'></i></a>
-                    <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination pt-1'></i></a> --}}
+                @else
+                <a href="{{ route('annuaire',($pagination["debut_aff"] - $pagination["nb_limit"]) )}}" role="button"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire',($pagination["debut_aff"] + $pagination["nb_limit"]) ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
 
-                {{-- @endif --}}
-                {{-- <a href="#" class="btn_creer text-center filter mx-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>  --}}
+                @endif
+                {{-- =============== condition pagination ==================== --}}
+                @elseif ($pagination["debut_aff"] == $pagination["fin_aff"] || $pagination["debut_aff"]> $pagination["fin_aff"])
+                @if(isset($nom_entiter))
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+
+                @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
+
+                @else
+                <a href="{{ route('annuaire',($pagination["debut_aff"] - $pagination["nb_limit"]) )}}" role="button"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire',($pagination["debut_aff"] + $pagination["nb_limit"]) ) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
+
+                @endif
+                {{-- =============== condition pagination ==================== --}}
+                @else
+                @if(isset($nom_entiter))
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] - $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-left pagination'></i></a>
+                <a href="{{ route('annuaire+recherche+par+entiter',[($pagination["debut_aff"] + $pagination["nb_limit"]),$nom_entiter ]) }}" role="button"><i class='bx bx-chevron-right pagination'></i></a>
+
+                @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button"><i class='bx bx-chevron-right pagination' ></i></a>
+
+                @else
+                <a href="{{ route('annuaire',($pagination["debut_aff"] - $pagination["nb_limit"]) )}}" role="button"><i class='bx bx-chevron-left pagination '></i></a>
+                <a href="{{ route('annuaire',($pagination["debut_aff"] + $pagination["nb_limit"]) ) }}" role="button"><i class='bx bx-chevron-right pagination' ></i></a>
+
+                @endif
+                @endif
+
+                @if(isset($nom_entiter) )
+                <a href="{{route('annuaire')}}" class="btn_creer text-center filter" role="button">
+                    filtre activé <i class="fas fa-times"></i> </a>
+                @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
+                <a href="{{route('annuaire')}}"><span class="btn_creer  text-center filter"><span style="position: relative; bottom: -0.2rem">
+                        </span> filtre activé <i class="fas fa-times"></i></span>
+                </a>
+                @endif
+
+                        <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
             </div>
         </div>
     </div>
 </div>
 <section class="annuaire mb-5">
     <div class="container my-2">
-        <div class="row">
-            <div class="row mb-5 justify-content-center">
-                <div class="col-12 alphabet mb-5">
+        <div class="row justify-content-center">
+            <div class="row mb-5">
+                <div class="col-12 alphabet">
                     @foreach ($initial as $init)
-                    <span title="{{$init->initial}}" class="lien_filtre activer" id="{{$init->initial}}"
-                        role="button">{{$init->initial}}</span>
+                    <span title="{{$init->initial}}" class="lien_filtre activer" id="{{$init->initial}}" role="button">{{$init->initial}}</span>
                     @endforeach
                 </div>
+
                 <div class="col-9 justify-content-center px-5">
                     <div id="result">
                         @foreach ($cfps as $cfp)
@@ -194,7 +249,7 @@
                 </div>
             </div>
 
-    </section>
+</section>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
@@ -225,7 +280,7 @@
                 , nb_pagination: @php echo $pagination["debut_aff"];@endphp
                 , nom_entiter: "@php echo $nom_entiter;@endphp"
             };
-                @php
+            @php
         } else {
             @endphp
 
@@ -257,7 +312,7 @@
                 , dataType: "html"
                 , success: function(response) {
                     let userData = JSON.parse(response);
-console.log(JSON.stringify(response));
+                    console.log(JSON.stringify(response));
                     if (userData != null || undefined) {
                         let html = '';
 

@@ -184,31 +184,21 @@ $nbStg=30;
                                 <td>
                                     <input autocomplete="off" class="form-control mx-0 " id="matricule_{{$i}}" type="text" name="matricule_[]">
                                     <p class="m-0" style="color: red" name="matricule_err_[]" id="matricule_err_[]"></p>
-                                    {{-- <input autocomplete="off" class="form-control mx-0 " id="matricule_{{$i}}" type="text" name="matricule_{{$i}}"> --}}
-                                    {{-- <p class="m-0" style="color: red" id="matricule_err_{{$i}}"></p> --}}
                                 </td>
                                 <td>
                                     <input autocomplete="off" class="form-control" id="nom_" type="text" name="nom_[]">
                                     <p class="m-0" style="color: red" name="nom_err_[]" id="nom_err_[]"></p>
-
-                                    {{-- <input autocomplete="off" class="form-control" id="nom_{{$i}}" type="text" name="nom_{{$i}}"> --}}
                                 </td>
                                 <td>
                                     <input autocomplete="off" class="form-control" id="inlineFormInput" type="text" name="prenom_[]">
-                                    {{-- <input autocomplete="off" class="form-control" id="inlineFormInput" type="text" name="prenom_{{$i}}"> --}}
                                 </td>
                                 <td>
-                                    <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_[]">
+                                    <input autocomplete="off" class="form-control" id="cin_[]" type="text" name="cin_[]">
                                     <p class="m-0" style="color: red" name="cin_err_[]" id="cin_err_[]"></p>
-
-                                    {{-- <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_{{$i}}">
-                                    <p class="m-0" style="color: red" id="cin_err_{{$i}}"></p> --}}
                                 </td>
                                 <td>
                                     <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_[]">
                                     <p class="m-0" name="email_err_[]" style="color: red" id="email_err_[]"></p>
-                                    {{-- <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_{{$i}}">
-                                    <p class="m-0" name="email_err[]" style="color: red" id="email_err_{{$i}}"></p> --}}
                                 </td>
                                 </tr>
                                 @endfor
@@ -324,45 +314,40 @@ $nbStg=30;
                         matricule_err[i].innerHTML = 'matricule invalid';
                     } else {
                         matricule_err[i].innerHTML = '';
+                        verifyDuplicate(matricule, matricule_err);
                     }
 
-                    if (matricule[i].value != null && matricule[i].value != "") {
-                        /*=== verify duplication ===========*/
-                        verifyDuplicate(matricule, matricule_err);
-                    } else {
-                        $.ajax({
-                            url: "{{route('employes.export.verify_matricule_stg')}}"
-                            , type: 'get'
-                            , data: {
-                                valiny: matricule_val
-                            }
-                            , success: function(response) {
-                                var userData = response;
-                                if (userData.length > 0) {
-                                    matricule_err[i].innerHTML = 'matricule existe déjà';
-                                    $('#saver_multi_stg').prop('disabled', true);
-                                } else {
-                                    matricule_err[i].innerHTML = '';
-                                }
-                            }
-                            , error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                    }
-                    /*==============*/
-                        if (matricule[i].value.length > 0) {
-                            if (matricule[i].value != null && matricule[i].value != "") {
-                                if (nom[i].value.length < 1) {
-                                    nom_err[i].innerHTML = 'Nom ne doit pas être null';
-                                    $('#saver_multi_stg').prop('disabled', true);
-                                } else {
-                                    nom_err[i].innerHTML = '';
-                                }
-                            }
-                        } else {
-                            nom_err[i].innerHTML = '';
+
+                    $.ajax({
+                        url: "{{route('employes.export.verify_matricule_stg')}}"
+                        , type: 'get'
+                        , data: {
+                            valiny: matricule_val
                         }
+                        , success: function(response) {
+                            var userData = response;
+                            if (userData.length > 0) {
+                                matricule_err[i].innerHTML = 'matricule existe déjà';
+                                $('#saver_multi_stg').prop('disabled', true);
+                            }
+                        }
+                        , error: function(error) {
+                            console.log(error);
+                        }
+                    });
+
+                    /*==============*/
+                    if (matricule[i].value.length > 0) {
+                        if (matricule[i].value != null && matricule[i].value != "") {
+                            if (nom[i].value.length < 1) {
+                                nom_err[i].innerHTML = 'Nom ne doit pas être null';
+                                $('#saver_multi_stg').prop('disabled', true);
+                            }
+                        }
+                    } else {
+                        nom_err[i].innerHTML = '';
+
+                    }
 
                     /*=============*/
                     if (email[i].value != null) {
@@ -374,42 +359,36 @@ $nbStg=30;
                                     $('#saver_multi_stg').prop('disabled', true);
                                 } else {
                                     email_err[i].innerHTML = '';
+                                    verifyDuplicate(email, email_err);
                                 }
                             }
                         } else {
                             email_err[i].innerHTML = '';
+
                         }
 
+                        $.ajax({
+                            url: "{{route('employes.export.verify_email_stg')}}"
+                            , type: 'get'
+                            , data: {
+                                valiny: email_val
+                            }
+                            , success: function(response) {
+                                var userData = response;
+                                if (userData.length > 0) {
+                                    email_err[i].innerHTML = 'E-mail existe déjà';
+                                    $('#saver_multi_stg').prop('disabled', true);
+                                }
+                            }
+                            , error: function(error) {
+                                console.log(error);
+                            }
+                        });
 
-                        if (email[i].value != null && email[i].value != "") {
-                            /*=== verify duplication ===========*/
-                            verifyDuplicate(email, email_err);
-                        } else {
-                            $.ajax({
-                                url: "{{route('employes.export.verify_email_stg')}}"
-                                , type: 'get'
-                                , data: {
-                                    valiny: email_val
-                                }
-                                , success: function(response) {
-                                    var userData = response;
-                                    if (userData.length > 0) {
-                                        email_err[i].innerHTML = 'E-mail existe déjà';
-                                        $('#saver_multi_stg').prop('disabled', true);
-
-                                    }
-                                }
-                                , error: function(error) {
-                                    console.log(error);
-                                }
-                            });
-                        }
                     }
                     /*=============*/
                     if (cin[i].value != null) {
                         var cin_val = cin[i].value;
-                        cin_err[i].innerHTML = '';
-
                         if (matricule[i].value.length > 0) {
                             if (matricule[i].value != null && matricule[i].value != "") {
                                 if (cin[i].value.length < 5) {
@@ -417,36 +396,33 @@ $nbStg=30;
                                     $('#saver_multi_stg').prop('disabled', true);
                                 } else {
                                     cin_err[i].innerHTML = '';
+                                    verifyDuplicate(cin, cin_err);
                                 }
                             }
                         } else {
                             cin_err[i].innerHTML = '';
                         }
 
-                        if (cin[i].value != null && cin[i].value != "") {
-                            /*=== verify duplication ===========*/
-                            verifyDuplicate(cin, cin_err);
-                        } else {
-                            $.ajax({
-                                url: "{{route('employes.export.verify_cin_stg')}}"
-                                , type: 'get'
-                                , data: {
-                                    valiny: cin_val
+                        /*=== verify duplication ===========*/
+
+                        $.ajax({
+                            url: "{{route('employes.export.verify_cin_stg')}}"
+                            , type: 'get'
+                            , data: {
+                                valiny: cin[i].value
+                            }
+                            , success: function(response) {
+                                var userData = response;
+                                if (userData.length > 0) {
+                                    cin_err[i].innerHTML = "CIN existe déjà";
+                                    $('#saver_multi_stg').prop('disabled', true);
                                 }
-                                , success: function(response) {
-                                    var userData = response;
-                                    if (userData.length > 0) {
-                                        cin_err[i].innerHTML = "CIN existe déjà";
-                                        $('#saver_multi_stg').prop('disabled', true);
-                                    } else {
-                                        cin[i].innerHTML = '';
-                                    }
-                                }
-                                , error: function(error) {
-                                    console.log(error);
-                                }
-                            });
-                        }
+                            }
+                            , error: function(error) {
+                                console.log(error);
+                            }
+                        });
+
                     }
                 }
 
