@@ -727,6 +727,9 @@
                                     <li><a class="dropdown-item" href="{{route('nouveau_type')}}"> <i
                                                 class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouveau type
                                         </a></li>
+                                        <li><a class="dropdown-item" href="{{route('nouveau_coupon')}}"> <i
+                                            class='bx bx-money '></i>&nbsp;Nouveau coupon
+                                    </a></li>
                                 </ul>
                             </div>
                             @endcan

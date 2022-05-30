@@ -45,6 +45,8 @@
             <div class="col-lg-10">
 
                 <div class="p-5 mb-5 mx-auto bg-body w-50 mt-5" style="border-radius: 15px">
+                    <span>Si vous acceptez le changement de tarif, nous allons générer votre facture, payable par:virement bancaire,chèque,espèce</span><br><br>
+
                     @if(session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}

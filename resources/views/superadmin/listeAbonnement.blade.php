@@ -375,14 +375,17 @@
     </div> --}}
 
     <script>
+
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 let lien = ($(e.target).attr('href'));
                 localStorage.setItem('activeTab', lien);
-            });
-            let activeTab = localStorage.getItem('activeTab');
-            if(activeTab){
-                $('#myTab a[href="' + activeTab + '"]').tab('show');
-            }
+        });
+        let activeTab = localStorage.getItem('activeTab');
+        // console.log(activeTab);
+        if(activeTab){
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+
     </script>
 
 

@@ -42,6 +42,9 @@
             <li class="nav-item">
                 <a href="#of" class="nav-link " data-bs-toggle="tab">Organisme de formation</a>
             </li>
+            <li class="nav-item">
+                <a href="#coupon" class="nav-link " data-bs-toggle="tab">Coupon</a>
+            </li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="types">
@@ -197,7 +200,65 @@
                     </tbody>
                 </table>
             </div>
+            <div class="tab-pane fade show active" id="coupon">
+                <table class="table table-hover">
+                    <thead>
+                        <th>Coupon</th>
+                        <th>Valeur</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($liste_coupon as $coupon)
+                            <tr>
+                                <td>{{$coupon->coupon}}</td>
+                                <td>{{$coupon->valeur}}%</td>
+                                @if($coupon->utilise == 1)
+                                <td><span style="background-color: red;padding:5px;color:white;border-radius:10px"> expiré </span> </td>
+                                @else
+                                <td><span style="background: green;padding:5px;color:white;border-radius:10px"> disponible </span> </td>
+                                @endif
+                                <td>
+                                    <span role="button" data-bs-toggle="modal" data-bs-target="#modif_coupon">
+                                        <i class='bx bx-edit bx_modifier' title="modifier titre module"></i>
+                                    </span>
+                                <a href=""><i class='bx bx-trash bx_supprimer'></i></a></td>
+                            </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
+         {{-- modification modif_coupon --}}
+         <div>
+            <div class="modal" id="modif_coupon" aria-labelledby="modif_coupon" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form  method="post" action="{{route('modifier_coupon',$coupon->id)}}">
+                            @csrf
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center">Modification coupon</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input type="text" class="form-control module module input" name="coupon" required value="{{$coupon->coupon}}" placeholder="Coupon">
+                                    <label for="coupon" class="form-control-placeholder">Coupon</label>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <input type="text" class="form-control module module input" name="valeur" required value="{{$coupon->valeur}}" placeholder="Valeur(%)">
+                                    <label for="valeur" class="form-control-placeholder">Valeur(%)</label>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
 </div>
 

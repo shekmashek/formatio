@@ -614,6 +614,7 @@ class AbonnementController extends Controller
     public function enregistrer_abonnement(Request $request)
     {
 
+
         if($request->accepter == null) return back()->with('erreur','Veuillez accepter les politiques de confidentialités,les CGU et les CGV');
 
         else{
@@ -678,6 +679,8 @@ class AbonnementController extends Controller
             }
 
             return redirect()->route('ListeAbonnement')->withInput(['tab' => 'facture']);
+
+            // return redirect()->route('ListeAbonnement')->withInput(['tab' => 'facture']);
         }
     }
     //liste des demandes d'abonnement
@@ -696,8 +699,8 @@ class AbonnementController extends Controller
         //liste des types d'abonnements
         $typeAbonnement_etp =$this->fonct->findAll('type_abonnements_etp');
         $typeAbonnement_of =$this->fonct->findAll('type_abonnements_of');
-
-        return view('superadmin.activation-abonnement', compact('liste','cfpListe','typeAbonnement_etp','typeAbonnement_of'));
+        $liste_coupon = $this->fonct->findAll('coupon');
+        return view('superadmin.activation-abonnement', compact('liste_coupon','liste','cfpListe','typeAbonnement_etp','typeAbonnement_of'));
     }
     //activation de compte
     public function activation()
@@ -1090,5 +1093,19 @@ class AbonnementController extends Controller
         }
         DB::update('update type_abonnements_etp set nom_type = ?, description = ?,tarif = ?, nb_utilisateur = ?,nb_formateur = ?,min_emp = ?,max_emp = ?,illimite = ? where id = ?', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$min_emp,$max_emp,$illimite,$id]);
         return redirect()->route('listeAbonne');
+    }
+    //enregistrement coupon par le super admin
+    public function enregistrer_coupon(Request $request){
+        $coupon = $request->coupon;
+        $valeur = $request->valeur;
+        DB::insert('insert into coupon (coupon, valeur) values (?, ?)', [$coupon, $valeur]);
+        return redirect()->route('listeAbonne');
+    }
+    //modification du coupon
+    public function modifier_coupon(Request $request,$id){
+        $coupon = $request->coupon;
+        $valeur = $request->valeur;
+        DB::update('update coupon set coupon = ?, valeur = ? where id = ?', [$coupon,$valeur,$id]);
+        return back();
     }
 }

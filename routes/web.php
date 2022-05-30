@@ -775,6 +775,8 @@ Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne'
 Route::get('activer_compte','AbonnementController@activer')->name('activer_compte');
 Route::get('activer_compte_of','AbonnementController@activer_of')->name('activer_compte_of');
 Route::get('/impression_facture/{id}','AbonnementController@impression')->name('impression_facture');
+Route::post('enregistrer_coupon','AbonnementController@enregistrer_coupon')->name('enregistrer_coupon');
+Route::post('/modifier_coupon/{id}','AbonnementController@modifier_coupon')->name('modifier_coupon');
 
 Route::get('/', function () {
     return view('index_accueil');
@@ -783,6 +785,10 @@ Route::get('/', function () {
 Route::get('nouveau_type',function(){
     return view('superadmin.nouveau_type');
 })->name('nouveau_type');
+Route::get('nouveau_coupon',function(){
+    return view('superadmin.nouveau_coupon');
+})->name('nouveau_coupon');
+
 Route::get('modifier_abonnement_of/{id}','AbonnementController@modifier_abonnement_of')->name('modifier_abonnement_of');
 Route::post('enregistrer_modification_abonnement_of/{id}','AbonnementController@enregistrer_modification_abonnement_of')->name('enregistrer_modification_abonnement_of');
 Route::get('modifier_abonnement_entreprise/{id}','AbonnementController@modifier_abonnement_entreprise')->name('modifier_abonnement_entreprise');
