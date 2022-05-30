@@ -1112,8 +1112,6 @@ Route::get('/communication', function () {
 Route::get('/elearning', function () {
     return view('/elearning');
 });
-
-
 Route::get('/fonctionnalitea', function () {
     return view('/fonctionnalitea');
 });

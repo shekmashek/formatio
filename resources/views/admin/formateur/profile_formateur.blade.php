@@ -3,7 +3,6 @@
     <h3 class="text_header m-0 mt-1">Profil formateur</h3>
 @endsection
 @section('content')
-dfsfdsfdfd
             {{-- <div class="page-content page-container" id="page-content">
         <div class="padding">
             <div class="row container d-flex justify-content-center">
@@ -54,8 +53,6 @@ dfsfdsfdfd
 
                                         </div>
 
-
-
                 </div>
             </div>
         </div>
@@ -81,7 +78,6 @@ dfsfdsfdfd
      border: 25px;
  }
   */
-
      </style>
       <div class="row">
     <div class="row mt-2">
@@ -113,7 +109,6 @@ dfsfdsfdfd
                                         <p class="p-1 m-0" id="nom" style="font-size: 12px;"><i class='bx bx-user' ></i>&nbsp; NOM<span style="float: right;">{{$formateur->nom_formateur}} {{$formateur->prenom_formateur}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                         </p></a>
-
                                         </div>
                                         <div id="nom" style="border-bottom: solid 1px #e8dfe5;">
                                         <a href="{{route('editer_naissance',$formateur->id)}}" >

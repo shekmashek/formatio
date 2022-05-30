@@ -5,14 +5,12 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
-
 <div class="col" style="margin-left: 25px">
   <a href="{{route('affProfilChefDepartement')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i>Retour</button></a>
 </div>
 <center>
 <div class="col-lg-4">
     <div class="p-3 form-control">
-
         <form   class="btn-submit" action="{{route('update_chef',$chef->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
@@ -36,9 +34,6 @@
                     <input type="hidden" value="   {{ $chef->nom_chef }}" class="form-control test input"  name="nom_chef">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
 
-
-
-
                         <input type="hidden" class="form-control test input" value="   {{ $chef->prenom_chef }}"  name="prenom_chef">
 
                         {{-- <select hidden  value="{{$chef->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
@@ -46,7 +41,6 @@
                           <option value="Femme">Femme</option>
 
                         </select> --}}
-
 
                         <input type="hidden" class="form-control test" name="genre_chef" value="{{ $genre}}">
 

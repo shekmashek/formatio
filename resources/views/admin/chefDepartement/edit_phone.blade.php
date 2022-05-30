@@ -15,7 +15,6 @@
 
         <form   class="btn-submit" action="{{route('update_chef',$chef->id)}}" method="post" enctype="multipart/form-data">
             @csrf
-
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control  input test"  name="telephone_chef" value="{{ $chef->telephone_chef }}">
@@ -28,13 +27,8 @@
 
                       </select>
 
-
-
                     <input type="hidden" value="   {{ $chef->nom_chef }}" class="form-control test input"  name="nom_chef">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
-
-
-
 
                         <input type="hidden" class="form-control test input" value="   {{ $chef->prenom_chef }}"  name="prenom_chef">
 
@@ -43,9 +37,7 @@
                           <option value="Femme">Femme</option>
 
                         </select> --}}
-
-
-                        <input type="hidden" class="form-control test" name="genre_chef" value="{{ $genre}}">
+                     <input type="hidden" class="form-control test" name="genre_chef" value="{{ $genre}}">
 
                           <input type="hidden" value="{{ $chef->cin_chef}}" class="form-control test"  name="cin_chef" >
 
@@ -56,12 +48,9 @@
                         <input type="hidden" class="form-control test"  name="matricule_chef" value="{{ $chef->matricule}}" >
                         <input type="hidden" class="form-control test"  name="etpnom_etp">
 
-
-
-
-<button  class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
-</form>
-<div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
+      <button  class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
+    </form>
+    <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>
 </div>
 </div>
