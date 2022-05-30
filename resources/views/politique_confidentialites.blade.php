@@ -20,6 +20,7 @@
     h6 {
         text-align: justify;
         font-size: 1rem;
+        
     }
     h2 {
         color: #801D68;

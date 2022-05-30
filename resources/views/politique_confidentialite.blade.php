@@ -2,6 +2,7 @@
 <style>
     h6 {
         text-align: justify;
+        
     }
     ul {
         overflow: auto;

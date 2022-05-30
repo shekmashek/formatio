@@ -19,6 +19,7 @@
     <style>
         h6{
             text-align: justify;
+            line-height: 1.6rem;
         }
         .navperso{
             position: sticky;
