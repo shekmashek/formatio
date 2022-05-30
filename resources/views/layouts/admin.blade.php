@@ -391,7 +391,6 @@
             </li>
             @endcanany --}}
             @canany(['isCFP','isReferent'])
-            @can('isPremium')
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -399,7 +398,6 @@
                 </a>
 
             </li>
-            @endcan
             {{-- integrer dans la page
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
@@ -878,13 +876,12 @@
                                                 <i class="bx bx-library icon_plus"></i>&nbsp; Projet Intra
                                             </a>
                                         </li>
-                                        @can('isPremium')
                                         <li>
                                             <a class="dropdown-item" href="{{route('facture')}}">
                                                 <i class='bx bxs-bank icon_plus'></i>&nbsp;Nouvelle Facture
                                             </a>
                                         </li>
-                                        @endcan
+
                                     </ul>
                                 </div>
                                 @can('isCFPPrincipale','isPremium')
