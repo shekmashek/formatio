@@ -271,7 +271,7 @@ class EmployeurController extends Controller
 
         // Manualiser la suppression en cascade
         // DB::delete('delete from users where id = ?', [$id]);
-        DB::table('users')->where('id', $user->id)->delete();
+        $user->delete();
 
         // DB::delete("delete from role_users where user_id=?",[$id]);
         DB::table('role_users')->where('user_id', $user->id)->delete();

@@ -102,15 +102,14 @@
         <a class="navbar-brand" href="#">
             <img src="{{ asset('maquette/logo_fmg54Ko.png') }}" alt="" width="50" height="50">
         </a>
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Informations supplémentaires</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-          <a class="nav-link" href="#">Features</a>
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href="{{ url('contact') }}">Contact</a>
+          {{-- <a class="nav-link" href="{{ route('create+compte+client') }}">Inscription</a> --}}
           <form action="{{ route('logout') }}" method="post">
             @csrf
             <button class="btn btn-secondary" type="submit">&nbsp;Deconnexion</button>
@@ -170,7 +169,8 @@
         <div class="col-6" id="datepicker">
           <label for="date_naissance_resp" class="form-label">Date de naissance</label>
 
-            @if (date('d F Y', strtotime($testNull[0]->date_naissance_resp)) != null)
+            @if ($testNull[0]->date_naissance_resp != null)
+            {{-- {{ dd($testNull[0]->email_resp) }} --}}
             <span class="form-control">{{ date('d M Y',strtotime($testNull[0]->date_naissance_resp)) }}</span>
 
             {{-- {{ dd(date('d F Y', strtotime($testNull[0]->date_naissance_resp)) ) }} --}}
@@ -258,12 +258,12 @@
         <div class="col-12">
           <label for="inputAddress2" class="">Address</label>
           
-          @if ($testNull[0]->adresse_lot != null and $testNull[0]->adresse_quartier != null and $testNull[0]->adresse_ville != null and $testNull[0]->adresse_code_postal != null and $testNull[0]->adresse_region != null)
+          {{-- @if ($testNull[0]->adresse_lot != null and $testNull[0]->adresse_quartier != null and $testNull[0]->adresse_ville != null and $testNull[0]->adresse_code_postal != null and $testNull[0]->adresse_region != null)
           <input name="adresse" type="text" class="form-control"
           value="{{ $testNull[0]->adresse_lot }} &nbsp;{{ $testNull[0]->adresse_quartier }} &nbsp;{{ $testNull[0]->adresse_ville }} &nbsp;{{ $testNull[0]->adresse_code_postal }}&nbsp;{{ $testNull[0]->adresse_region }}&nbsp;"
             id="inputAddress2" placeholder="">
           
-            @endif
+            @endif --}}
 
         <div class="container col-md-12">
             <div class="row row-cols-6 adresse_container">
@@ -303,9 +303,9 @@
         <div class="col-md-6">
             <label for="cin_resp" class="form-label">Fonction</label>
             
-            <input readonly value="{{ $testNull[0]->fonction_resp}}" id="nom_etp" 
+            <input value="{{ $testNull[0]->fonction_resp}}" id="nom_etp" 
             name="nom_etp" class="form-control" type="text" 
-            placeholder="Entreprise">
+            placeholder="Fonction">
 
 
         </div>
@@ -328,14 +328,6 @@
 
         </div>
 
-        <div class="col-12">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-              Check me out
-            </label>
-          </div>
-        </div>
         <div class="col-12">
           <button type="submit" class="btn btn-primary">Sign in</button>
         </div>

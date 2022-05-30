@@ -10,4 +10,13 @@ class Departement extends Model
     protected $fillable = [
         'nom_departement'
     ];
+
+    public function Entreprise(){
+        return $this->belongsTo('App\Entreprise', 'departement_entreprise_id');
+    }
+
+    // public function service()
+    // {
+    //     return $this->hasMany('App\Service');
+    // }
 }

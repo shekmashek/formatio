@@ -10,7 +10,9 @@ use App\Niveau;
 use App\branche;
 use App\stagiaire;
 use Carbon\Carbon;
-use App\entreprise;
+// use App\entreprise;
+use App\Entreprise;
+use App\Service;
 use App\Departement;
 use App\responsable;
 use App\chefDepartement;
@@ -21,15 +23,15 @@ use App\Models\FonctionGenerique;
 use App\Exports\ParticipantExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Auth;
 
 /* ====================== Exportation Excel ============= */
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+// use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
 use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
 
 class ParticipantController extends Controller
@@ -115,37 +117,38 @@ public function new_emp(){
         if (Gate::allows('isManager')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
         }
-        // $totale_pag = $this->fonct->getNbrePagination("stagiaires", "id",["entreprise_id"],["="], [$entreprise_id],"AND");
 
-        // if($paginations!=null){
 
-        //     if($paginations<=0){
-        //         $paginations=1;
-        //     }
-        //     $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations,$nb_limit);
-        //     $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET ".($paginations-1),[$entreprise_id]);
-
-        // } else {
-        //     if($paginations<=0){
-        //         $paginations=1;
-        //     }
-        //     $employers = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? LIMIT ".$nb_limit." OFFSET 0",[$entreprise_id]);
-        //     $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0,$nb_limit);
-
-        // }
-
-        // getting the $employers from the database table stagiaires add paginate them by 5
         // $employers = DB::table('stagiaires')
         //     ->where('entreprise_id', $entreprise_id)
         //     ->paginate(5);
         
+        
         $employers = Stagiaire::all();
-            // dd($employers);
-            $entreprise = Entreprise::find($entreprise_id);
+        // $emp = Stagiaire::find(5);
 
+        // dd($employers);
+        $entreprise = Entreprise::find($entreprise_id); 
+            
+        // dd($entreprise);
+        
+        // dd($service);
+        // foreach ($employers as $emp) {
+        //     $service = $emp->service->nom_service;
+        //     dd($emp->mail_stagiaire, $service);
+        // }
+         
+        // $s = $emp->service->departement->id;
+        // $service = Service::find($s);
+        
+        // dd($s);
+
+        
+            
             $niveaux_etude = Niveau::all();
         return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise', 'niveaux_etude'));
     }
+
 
     public function index()
     {

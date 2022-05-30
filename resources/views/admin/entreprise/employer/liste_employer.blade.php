@@ -398,11 +398,11 @@
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Contacts</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">
-                                <span class="d-block">Entreprise</span>
-                                <span>Département</span>
+                                <span class="d-block">Département</span>
+                                <span>Service</span>
                             </th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Age</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Start date</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Ajout</th>
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
@@ -419,7 +419,7 @@
                                     @else
                                         <span style="color:red; "> <i class="bx bxs-circle"></i> </span>
                                     @endif
-                                    {{ $employe->id }}
+                                    {{ $employe->matricule }}
                                 </td>
 
 
@@ -431,19 +431,19 @@
                                                 style="width: 45px; height: 45px" class="rounded-circle" /> --}}
 
                                             {{-- grey color --}}
-                                            {{-- <i class='bx bx-user-circle profile-holder'
-                                                style="width: 45px; height: 45px"></i> --}}
+                                            <i class='bx bx-user-circle profile-holder'
+                                                style="width: 45px; height: 45px"></i>
 
                                             {{-- actif/inactif color --}}
-                                            <i class='bx bx-user-circle w-50 h1' style='
+                                                    {{-- <i class='bx bx-user-circle  h1' style='
                                                         @if ($employe->activiter == 1) color:#25b900c9;'
                                                             @else
                                                             color:#e21717;' 
                                                             @endif
-                                                            ></i>
+                                                            ></i> --}}
 
-
-                                                                        {{-- <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
+                                            {{-- initials --}}
+                                                            {{-- <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
                                                                 <span class="align-middle text-center profile-initial" style="position:relative;">
                                                                     <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
                                                                 </span>
@@ -454,9 +454,10 @@
                                                                 class="rounded-circle" />
                                                         @endif
                                                     <div class="ms-3">
-                                                        <p class="fw-bold mb-1 text-purple ">
+                                                        <p class="fw-normal mb-1 text-purple ">
+                                                        {{-- <p class="fw-bold mb-1 text-purple "> --}}
                                                             {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
-                                                        <p class="text-muted mb-0">#{{ $employe->matricule }}</p>
+                                                        <p class="text-muted mb-0">{{ $employe->fonction_stagiaire }}</p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -464,7 +465,8 @@
                                             <td class="align-middle text-start">
 
                                                 <div class="ms-3">
-                                                    <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
+                                                    <p class="mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
+                                                    {{-- <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p> --}}
                                                     <p class="text-muted mb-0">
                                                         {{ $employe->telephone_stagiaire != null ? $employe->telephone_stagiaire : '----' }}
                                                     </p>
@@ -473,7 +475,10 @@
                                                 </div>
 
                                             </td>
-                                            <td class="align-middle text-center text-secondary">{{ $entreprise->nom_etp }}</td>
+                                            <td class="align-middle text-center text-secondary">
+                                                <span class="d-block">{{ $employe->service->departement->nom_departement }}</span>
+                                                <span>{{ $employe->service != null ? $employe->service->nom_service : '----'  }}</span>
+                                            </td>
                                             <td class="align-middle text-center text-secondary">61</td>
                                             <td class="align-middle text-center text-secondary">2011-04-25</td>
                                             <td class="align-middle text-center text-secondary">
