@@ -490,7 +490,7 @@
                                                     <div class="form-check form-switch">
                                                         <label class="form-check-label"
                                                             for="flexSwitchCheckChecked">
-                                                            <span class="badge bg-secondary">
+                                                            <span class="badge bg-danger">
                                                                 inactif
                                                             </span>
                                                         </label>
