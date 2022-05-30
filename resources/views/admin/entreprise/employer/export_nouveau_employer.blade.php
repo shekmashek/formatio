@@ -188,7 +188,8 @@ $nbStg=30;
                                     {{-- <p class="m-0" style="color: red" id="matricule_err_{{$i}}"></p> --}}
                                 </td>
                                 <td>
-                                    <input autocomplete="off" class="form-control" id="nom_{{$i}}" type="text" name="nom_[]">
+                                    <input autocomplete="off" class="form-control" id="nom_" type="text" name="nom_[]">
+                                    <p class="m-0" style="color: red" name="nom_err_[]" id="nom_err_[]"></p>
 
                                     {{-- <input autocomplete="off" class="form-control" id="nom_{{$i}}" type="text" name="nom_{{$i}}"> --}}
                                 </td>
@@ -299,14 +300,16 @@ $nbStg=30;
     /*================================ verify champ inscription =====================================*/
 
     $(document).ready(function() {
-
+        $('#saver_multi_stg').prop('disabled', true);
         $('#formInsert input').keyup(function() {
             $('#saver_multi_stg').prop('disabled', false);
 
+            var nom_err = document.getElementsByName("nom_err_[]");
             var matricule_err = document.getElementsByName("matricule_err_[]");
             var email_err = document.getElementsByName("email_err_[]");
             var cin_err = document.getElementsByName("cin_err_[]");
 
+            var nom = document.getElementsByName("nom_[]");
             var matricule = document.getElementsByName("matricule_[]");
             var email = document.getElementsByName("email_[]");
             var cin = document.getElementsByName("cin_[]");
@@ -318,7 +321,7 @@ $nbStg=30;
                 if (matricule[i].value != null) {
 
                     if (matricule[i].value != "" && matricule[i].value.length < 1 && email[i].value != "") {
-                        matricule_err[i].innerHTML = 'invalid';
+                        matricule_err[i].innerHTML = 'matricule invalid';
                     } else {
                         matricule_err[i].innerHTML = '';
                     }
@@ -347,6 +350,20 @@ $nbStg=30;
                             }
                         });
                     }
+                    /*==============*/
+                        if (matricule[i].value.length > 0) {
+                            if (matricule[i].value != null && matricule[i].value != "") {
+                                if (nom[i].value.length < 1) {
+                                    nom_err[i].innerHTML = 'Nom ne doit pas être null';
+                                    $('#saver_multi_stg').prop('disabled', true);
+                                } else {
+                                    nom_err[i].innerHTML = '';
+                                }
+                            }
+                        } else {
+                            nom_err[i].innerHTML = '';
+                        }
+
                     /*=============*/
                     if (email[i].value != null) {
                         var email_val = email[i].value;
@@ -392,6 +409,19 @@ $nbStg=30;
                     if (cin[i].value != null) {
                         var cin_val = cin[i].value;
                         cin_err[i].innerHTML = '';
+
+                        if (matricule[i].value.length > 0) {
+                            if (matricule[i].value != null && matricule[i].value != "") {
+                                if (cin[i].value.length < 5) {
+                                    cin_err[i].innerHTML = 'CIN invalid';
+                                    $('#saver_multi_stg').prop('disabled', true);
+                                } else {
+                                    cin_err[i].innerHTML = '';
+                                }
+                            }
+                        } else {
+                            cin_err[i].innerHTML = '';
+                        }
 
                         if (cin[i].value != null && cin[i].value != "") {
                             /*=== verify duplication ===========*/
