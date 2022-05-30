@@ -10,6 +10,11 @@
 
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
+<?php
+$nbStg=30;
+?>
+
+
 <style type="text/css">
     button,
     value {
@@ -135,7 +140,7 @@
             <div class="col text-muted text-align-center">
                 <h6>Comment ajouter plusieurs stagiaires d'une seule coup?</h6>
                 <p>Tout d'abord, vous devrez avoir un fichier excel des listes des stagiaires avec des exception comportant seulement ses colonnes requis pour les informations minimum:</p>
-                <p>1°):<span> Maximum 30 personne(s) </span></p>
+                <p>1°):<span> Maximum {{$nbStg}} personne(s) </span></p>
                 <p>2°):Les champs neccéssaire: <span> "Matricule" , "Nom", "Prénom", "CIN", "email"</span></p>
                 <p>3°): Faire <span>copier coller </span> les données en sélectionnants la prémière ligne "Matricule N°1" ou utiliser la racourcie CRTL+A et CRTL+C (pour copier) et CRTL+V pour coller</p>
             </div>
@@ -175,24 +180,34 @@
                         </thead>
                         <tbody id="newRowMontant">
 
-                            @for($i = 1; $i <= 30; $i++) <tr align="center">
+                            @for($i = 1; $i <= $nbStg; $i++) <tr align="center">
                                 <td>
-                                    <input autocomplete="off" class="form-control mx-0 " id="matricule_{{$i}}" type="text" name="matricule_{{$i}}">
-                                    <p class="m-0" style="color: red" id="matricule_err_{{$i}}"></p>
+                                    <input autocomplete="off" class="form-control mx-0 " id="matricule_{{$i}}" type="text" name="matricule_[]">
+                                    <p class="m-0" style="color: red" name="matricule_err_[]" id="matricule_err_[]"></p>
+                                    {{-- <input autocomplete="off" class="form-control mx-0 " id="matricule_{{$i}}" type="text" name="matricule_{{$i}}"> --}}
+                                    {{-- <p class="m-0" style="color: red" id="matricule_err_{{$i}}"></p> --}}
                                 </td>
                                 <td>
-                                    <input autocomplete="off" class="form-control" id="nom_{{$i}}" type="text" name="nom_{{$i}}">
+                                    <input autocomplete="off" class="form-control" id="nom_{{$i}}" type="text" name="nom_[]">
+
+                                    {{-- <input autocomplete="off" class="form-control" id="nom_{{$i}}" type="text" name="nom_{{$i}}"> --}}
                                 </td>
                                 <td>
-                                    <input autocomplete="off" class="form-control" id="inlineFormInput" type="text" name="prenom_{{$i}}">
+                                    <input autocomplete="off" class="form-control" id="inlineFormInput" type="text" name="prenom_[]">
+                                    {{-- <input autocomplete="off" class="form-control" id="inlineFormInput" type="text" name="prenom_{{$i}}"> --}}
                                 </td>
                                 <td>
-                                    <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_{{$i}}">
-                                    <p class="m-0" style="color: red" id="cin_err_{{$i}}"></p>
+                                    <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_[]">
+                                    <p class="m-0" style="color: red" name="cin_err_[]" id="cin_err_[]"></p>
+
+                                    {{-- <input autocomplete="off" class="form-control" id="cin_{{$i}}" type="text" name="cin_{{$i}}">
+                                    <p class="m-0" style="color: red" id="cin_err_{{$i}}"></p> --}}
                                 </td>
                                 <td>
-                                    <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_{{$i}}">
-                                    <p class="m-0" name="email_err[]" style="color: red" id="email_err_{{$i}}"></p>
+                                    <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_[]">
+                                    <p class="m-0" name="email_err_[]" style="color: red" id="email_err_[]"></p>
+                                    {{-- <input autocomplete="off" class="form-control" type="email" id="email_{{$i}}" name="email_{{$i}}">
+                                    <p class="m-0" name="email_err[]" style="color: red" id="email_err_{{$i}}"></p> --}}
                                 </td>
                                 </tr>
                                 @endfor
@@ -239,7 +254,25 @@
         });
     });
 
-
+    function verifyDuplicate(table, error) {
+        var arryTab = [];
+        var test = 0;
+        for (var i = 0; i < table.length; i += 1) {
+            if (table[i].value != null && table[i].value != "" && table[i].value.length > 0) {
+                arryTab[i] = table[i].value;
+                test += 1;
+            }
+        }
+        for (var i = 0; i < arryTab.length; i += 1) {
+            for (var j = i + 1; j < arryTab.length; j += 1) {
+                if (arryTab[i] == arryTab[j] && arryTab[j] != null && arryTab[i] != null) {
+                    error[i].innerHTML = "donnée dupliqué";
+                    error[j].innerHTML = "donnée dupliqué";
+                    $('#saver_multi_stg').prop('disabled', true);
+                }
+            }
+        }
+    }
 
 
     function verify_email(mail_val) {
@@ -258,11 +291,9 @@
 
 
     $(function() {
-        for (let i = 1; i <= 30; i += 1) {
-            $("input[name='cin_" + i + "']").on('input', function(e) {
-                $(this).val($(this).val().replace(/[^0-9]/g, ''));
-            });
-        }
+        $("input[name='cin_[]']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
     });
 
     /*================================ verify champ inscription =====================================*/
@@ -272,99 +303,118 @@
         $('#formInsert input').keyup(function() {
             $('#saver_multi_stg').prop('disabled', false);
 
-            var mail_err = document.getElementsByName("email_err[]");
-            for (let i = 1; i <= 30; i += 1) {
+            var matricule_err = document.getElementsByName("matricule_err_[]");
+            var email_err = document.getElementsByName("email_err_[]");
+            var cin_err = document.getElementsByName("cin_err_[]");
 
-                if ($("#matricule_" + i).val() != null) {
-                    var matricule = $("#matricule_" + i).val();
-                    if ($("#matricule_" + i).val() != "" && $("#matricule_" + i).val().length < 1 && $("#email_" + i).val() != "") {
-                        document.getElementById("matricule_err_" + i).innerHTML = 'invalid';
+            var matricule = document.getElementsByName("matricule_[]");
+            var email = document.getElementsByName("email_[]");
+            var cin = document.getElementsByName("cin_[]");
+
+            for (let i = 0; i < matricule.length; i += 1) {
+                var matricule_val = matricule[i].value;
+
+
+                if (matricule[i].value != null) {
+
+                    if (matricule[i].value != "" && matricule[i].value.length < 1 && email[i].value != "") {
+                        matricule_err[i].innerHTML = 'invalid';
                     } else {
-                        document.getElementById("matricule_err_" + i).innerHTML = '';
-
+                        matricule_err[i].innerHTML = '';
                     }
 
-                    $.ajax({
-                        url: "{{route('employes.export.verify_matricule_stg')}}"
-                        , type: 'get'
-                        , data: {
-                            valiny: matricule
-                        }
-                        , success: function(response) {
-                            var userData = response;
-                            if (userData.length > 0) {
-                                document.getElementById("matricule_err_" + i).innerHTML = 'matricule existe déjà';
-                                $('#saver_multi_stg').prop('disabled', true);
-                            } else {
-                                document.getElementById("matricule_err_" + i).innerHTML = '';
-                            }
-                        }
-                        , error: function(error) {
-                            console.log(error);
-                        }
-                    });
-                    /*=============*/
-                    if ($("#email_" + i).val() != null) {
-                        var email = $("#email_" + i).val();
-
-                        if ($("#matricule_" + i).val() != null && $("#matricule_" + i).val() != "") {
-                            if (email.indexOf('@') == -1) {
-                                document.getElementById("email_err_" + i).innerHTML = 'E-mail invalid';
-                                $('#saver_multi_stg').prop('disabled', true);
-
-                            } else {
-                                document.getElementById("email_err_" + i).innerHTML = '';
-                            }
-                        }
-
+                    if (matricule[i].value != null && matricule[i].value != "") {
+                        /*=== verify duplication ===========*/
+                        verifyDuplicate(matricule, matricule_err);
+                    } else {
                         $.ajax({
-                            url: "{{route('employes.export.verify_email_stg')}}"
+                            url: "{{route('employes.export.verify_matricule_stg')}}"
                             , type: 'get'
                             , data: {
-                                valiny: email
+                                valiny: matricule_val
                             }
                             , success: function(response) {
                                 var userData = response;
                                 if (userData.length > 0) {
-                                    document.getElementById("email_err_" + i).innerHTML = 'E-mail existe déjà';
+                                    matricule_err[i].innerHTML = 'matricule existe déjà';
                                     $('#saver_multi_stg').prop('disabled', true);
-
-                                }
-                            }
-                            , error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                    }
-                    /*=============*/
-                    if ($("#cin_" + i).val() != null) {
-                        var cin = $("#cin_" + i).val();
-                        document.getElementById("cin_err_" + i).innerHTML = '';
-
-                        $.ajax({
-                            url: "{{route('employes.export.verify_cin_stg')}}"
-                            , type: 'get'
-                            , data: {
-                                valiny: cin
-                            }
-                            , success: function(response) {
-                                var userData = response;
-                                if (userData.length > 0) {
-                                    document.getElementById("cin_err_" + i).innerHTML = "CIN existe déjà";
-                                    $('#saver_multi_stg').prop('disabled', true);
-
-
                                 } else {
-                                    document.getElementById("cin_err_" + i).innerHTML = '';
+                                    matricule_err[i].innerHTML = '';
                                 }
                             }
                             , error: function(error) {
                                 console.log(error);
                             }
                         });
+                    }
+                    /*=============*/
+                    if (email[i].value != null) {
+                        var email_val = email[i].value;
+                        if (matricule[i].value != null && matricule[i].value != "") {
+                            if (email[i].value.indexOf('@') == -1) {
+                                email_err[i].innerHTML = 'E-mail invalid';
+                                $('#saver_multi_stg').prop('disabled', true);
+                            } else {
+                                email_err[i].innerHTML = '';
+                            }
+                        }
+
+
+                        if (email[i].value != null && email[i].value != "") {
+                            /*=== verify duplication ===========*/
+                            verifyDuplicate(email, email_err);
+                        } else {
+                            $.ajax({
+                                url: "{{route('employes.export.verify_email_stg')}}"
+                                , type: 'get'
+                                , data: {
+                                    valiny: email_val
+                                }
+                                , success: function(response) {
+                                    var userData = response;
+                                    if (userData.length > 0) {
+                                        email_err[i].innerHTML = 'E-mail existe déjà';
+                                        $('#saver_multi_stg').prop('disabled', true);
+
+                                    }
+                                }
+                                , error: function(error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    }
+                    /*=============*/
+                    if (cin[i].value != null) {
+                        var cin_val = cin[i].value;
+                        cin_err[i].innerHTML = '';
+
+                        if (cin[i].value != null && cin[i].value != "") {
+                            /*=== verify duplication ===========*/
+                            verifyDuplicate(cin, cin_err);
+                        } else {
+                            $.ajax({
+                                url: "{{route('employes.export.verify_cin_stg')}}"
+                                , type: 'get'
+                                , data: {
+                                    valiny: cin_val
+                                }
+                                , success: function(response) {
+                                    var userData = response;
+                                    if (userData.length > 0) {
+                                        cin_err[i].innerHTML = "CIN existe déjà";
+                                        $('#saver_multi_stg').prop('disabled', true);
+                                    } else {
+                                        cin[i].innerHTML = '';
+                                    }
+                                }
+                                , error: function(error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
                     }
                 }
-
 
 
 
