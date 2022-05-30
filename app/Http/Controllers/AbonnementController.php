@@ -348,7 +348,7 @@ class AbonnementController extends Controller
             // $typeAbonne_id = 2;
 
             /** on récupère l'abonnement actuel */
-            $abonnement_actuel = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
+            $abonnement_actuel = DB::select('select * from v_abonnement_facture where cfp_id = ?  order by created_at desc  limit 1', [$cfp_id]);
 
             // $typeAbonnement =$this->fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
             //on recupere les types d'abonnements
@@ -359,7 +359,7 @@ class AbonnementController extends Controller
 
                //liste facturation
             // $facture =$this->fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
-            $facture = DB::select('select * from v_abonnement_facture where cfp_id = ? order by date_demande desc',[$cfp_id] );
+            $facture = DB::select('select * from v_abonnement_facture where cfp_id = ?  order by created_at desc',[$cfp_id] );
             // facture du mois suivant
              $facture_suivant = [];
              for ($i=0; $i < count($facture); $i++) {
@@ -613,7 +613,9 @@ class AbonnementController extends Controller
     //enregistrer abonnement des utilisateurs;
     public function enregistrer_abonnement(Request $request)
     {
+
         if($request->accepter == null) return back()->with('erreur','Veuillez accepter les politiques de confidentialités,les CGU et les CGV');
+
         else{
             $abonnement = new abonnement();
             $abonnement_cfp = new abonnement_cfp();
@@ -675,7 +677,7 @@ class AbonnementController extends Controller
 
             }
 
-            return redirect()->route('ListeAbonnement');
+            return redirect()->route('ListeAbonnement')->withInput(['tab' => 'facture']);
         }
     }
     //liste des demandes d'abonnement

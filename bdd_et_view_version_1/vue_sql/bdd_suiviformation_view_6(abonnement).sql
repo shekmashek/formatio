@@ -42,6 +42,7 @@ CREATE OR REPLACE VIEW v_type_abonnement_cfp AS SELECT
     a.cfp_id,
     c.nom as nom_of,
     a.activite,
+     a.created_at,
      a.type_arret
 FROM
     type_abonnements_of t

@@ -161,7 +161,7 @@
                                     <td><a href="{{route('detail_facture_abonnement',$fact->facture_id)}}" style="text-decoration: underline">{{$fact->num_facture}}</a></td>
 
 
-                                    <td>{{$fact->nom_type}}</td>
+                                    <td>{{$fact->nom_type}}&nbsp,&nbspMensuel</td>
                                     <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
                                     <td>{{$fact->invoice_date}}</td>
                                     <td>{{$fact->due_date}}</td>
