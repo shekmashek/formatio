@@ -546,7 +546,7 @@
 
                             </div>
                         @empty
-                            <h3 class="text-center">Aucun employé</h3>
+                            
                         @endforelse
 
                     </tbody>

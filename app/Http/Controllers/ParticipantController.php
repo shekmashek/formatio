@@ -105,6 +105,12 @@ public function new_emp(){
     return view('admin.entreprise.employer.nouveau_employer', compact('niveaux_etude'));
 }
 
+
+public function getDepartments () {
+    $departments = Departement::all();
+    return response()->json($departments);
+}
+
     public function liste_employer($paginations=null)
     {
         $entreprise_id = 0;
@@ -124,12 +130,13 @@ public function new_emp(){
         //     ->paginate(5);
         
         
-        $employers = Stagiaire::all();
+        $employers = Stagiaire::where('entreprise_id', $entreprise_id)->get();
         // $emp = Stagiaire::find(5);
 
         // dd($employers);
         $entreprise = Entreprise::find($entreprise_id); 
             
+        $departements = DepartementEntreprise::where('entreprise_id', $entreprise_id)->get();
         // dd($entreprise);
         
         // dd($service);
@@ -143,10 +150,10 @@ public function new_emp(){
         
         // dd($s);
 
-        
+
             
             $niveaux_etude = Niveau::all();
-        return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise', 'niveaux_etude'));
+        return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise', 'niveaux_etude', 'departements'));
     }
 
 

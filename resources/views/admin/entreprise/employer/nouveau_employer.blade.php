@@ -12,7 +12,7 @@
 
             <div class="">
                 <div class="col-md-7 m-auto">
-                    <div class="input-group">
+                    <div class="input-group mb-0">
 
                         <div class="input-group">
                             <div class="input-group-text border-0 border-bottom bg-light">
@@ -54,7 +54,7 @@
                 <div class="col-md-7 m-auto">
 
 
-                    <div class="input-group">
+                    <div class="input-group mb-0">
 
                         <div class="input-group">
                             <div class="input-group-text border-0 border-bottom bg-light">
@@ -81,7 +81,7 @@
                 <div class="col-md-7 m-auto">
 
 
-                    <div class="input-group">
+                    <div class="input-group mb-0">
 
                         <div class="input-group">
                             <div class="input-group-text border-0 bg-light visually-hidden">
@@ -104,7 +104,7 @@
             <div class="">
                 <div class="col-md-7 m-auto">
 
-                    <div class="input-group">
+                    <div class="input-group mb-0">
 
                         <div class="input-group">
                             <div class="input-group-text border-0 border-bottom bg-light">
@@ -131,7 +131,7 @@
                 </div>
                 <div class="col-md-7 m-auto">
 
-                    <div class="input-group">
+                    <div class="input-group mb-0">
 
                         <div class="input-group">
                             <div class="input-group-text border-0 border-bottom bg-light">
@@ -163,7 +163,7 @@
             <div class="">
                 <div class="col-md-7 m-auto">
 
-                    <div class="input-group">
+                    <div class="input-group mb-0">
 
                         <div class="input-group">
                             <div class="input-group-text border-0 border-bottom bg-light">
@@ -192,7 +192,7 @@
                 </div>
 
                 <div class="col-md-7 m-auto">
-                    <div class="input-group">
+                    <div class="input-group mb-0">
                         <div class="input-group">
                             <div class="input-group-text border-0 border-bottom bg-light">
                                 <i class='bx bxs-graduation form-icon'></i>
@@ -212,12 +212,29 @@
 
                 <div class="col-md-7 m-auto">
 
-                    <div class="input-group">
+                    <div class="input-group mb-0">
+
+
+                        <div class="input-group">
+                            <div class="input-group-text border-0 border-bottom bg-light">
+                                <box-icon name='building form-icon'></box-icon>
+                            </div>
+                            <select name="departement" id="">
+                                <option value="">selectionner le département</option>
+                                @forelse ($departements as $departement)
+                                    <option value="{{ $departement->id }}">{{ $departement->nom_departement }}</option>
+                                @empty
+                                    <p>---</p>
+                                @endforelse
+                            </select>
+                            <input type="text" aria-label="Last name" class="form-control input border-bottom">
+                        </div>
 
                         <div class="input-group">
                             <div class="input-group-text border-0 border-bottom bg-light">
                                 <i class='bx bx-briefcase form-icon'></i>
                             </div>
+
 
                             <input type="text" autocomplete="off" required name="fonction"
                                 class="form-control input border-0 border-bottom" id="fonction" required>
