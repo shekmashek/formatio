@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use App\Niveau;
 use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 class Stagiaire extends Model
 {
@@ -24,6 +25,10 @@ class Stagiaire extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function niveau_etude(){
+        return $this->belongsTo(Niveau::class, 'niveau_etude_id');
     }
 
     public function checkEmail($email)

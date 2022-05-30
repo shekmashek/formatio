@@ -17,7 +17,7 @@
             }
 
             .text-purple {
-                color: #7f7fff;
+                color: #9359ff;
             }
 
             .form-select:focus,
@@ -33,9 +33,22 @@
 
             .nav-item a:hover {
                 outline: none;
-                color: #7f7fff;
+                color: #9359ff;
                 text-decoration: none;
             }
+        
+            .nav-tabs .nav-link {
+                border: none;
+                color:#535353c9;
+            }
+
+            .nav-tabs .nav-link.active{
+               
+                border-bottom: 2px solid #9359ff;
+                color: #9359ff;
+                
+            }
+
 
             .dataTables_length label,
             .dataTables_filter label {
@@ -50,10 +63,10 @@
 
             .page-item.active .page-link {
                 border-radius: 5rem;
-                border: 1px solid #7f7fff;
-                background-color: #7f7fff !important;
+                border: 1px solid #9359ff;
+                background-color: #9359ff !important;
                 padding: 0.3rem 0.7rem;
-                /* color: #7f7fff; */
+                /* color: #9359ff; */
                 margin: 0 0.5rem;
                 font-size: small;
                 transition: 0.3s;
@@ -65,6 +78,19 @@
 
             }
 
+            .profile-circle {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+
+            }
+
+            .profile-initial {
+                display: flex;
+                flex-wrap: nowrap;
+                font-size: 1rem;
+            }
+
         </style>
     @endpush
 
@@ -72,21 +98,40 @@
     <div class="row m-5">
         <ul class="nav nav-tabs mb-3 ml-3 col-md-10" id="ex1" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="ex1-tab-1" data-mdb-toggle="tab" data-bs-toggle="tab" href="#ex1-tabs-1"
-                    role="tab" aria-controls="ex1-tabs-1" aria-selected="true">Liste</a>
+                <a class="nav-link active" id="emps-list" data-mdb-toggle="tab" data-bs-toggle="tab" href="#emp-list"
+                    role="tab" aria-controls="emp-list" aria-selected="true">Liste</a>
+
             </li>
             <li class="nav-item" role="presentation">
-                <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#form-ajout">
+                <a class="nav-link" id="emps-add" data-mdb-toggle="tab" data-bs-toggle="tab" href="#emp-add"
+                    role="tab" aria-controls="emp-add" aria-selected="true">Nouveau</a>
+                {{-- <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#form-ajout">
                     Ajouter
-                </button>
+                </button> --}}
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="ex1-tab-3" data-mdb-toggle="tab" data-bs-toggle="tab" href="#ex1-tabs-3"
-                    role="tab" aria-controls="ex1-tabs-3" aria-selected="false">Tab 3</a>
+                <a class="nav-link" id="emps-export" data-mdb-toggle="tab" data-bs-toggle="tab" href="#emp-export"
+                    role="tab" aria-controls="emp-export" aria-selected="false">Exporter</a>
             </li>
         </ul>
         <!-- Tabs navs -->
 
+
+        @if (Session::has('success'))
+        <div class="alert alert-success h6 text-sm">
+            {{ Session::get('success') }}
+        </div>
+    @endif
+    @if (Session::has('error'))
+        <div class="alert alert-danger h6 text-sm">
+            {{ Session::get('error') }}
+        </div>
+    @endif
+    @if (Session::has('info'))
+        <div class="alert alert-info h6 text-sm">
+            {{ Session::get('info') }}
+        </div>
+    @endif
 
         {{-- form ajout --}}
 
@@ -113,7 +158,7 @@
                         </div>
                     @endif
                     {{-- <form action="{{route('create_compte_employeur')}}" method="POST" enctype="multipart/form-data"> --}}
-                    <form action="{{ route('employeur.store') }}" method="POST" enctype="multipart/form-data">
+                    {{-- <form action="{{ route('employeur.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
 
@@ -334,19 +379,18 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                         </div>
-                    </form>
+                    </form> --}}
 
                 </div>
             </div>
         </div>
 
-        {{-- form ajout --}}
-
+        {{-- modal --}}
 
         <!-- Tabs content -->
 
-        <div class="tab-content" id="ex1-content">
-            <div class="m-5 tab-pane fade show active" id="ex1-tabs-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+        <div class="tab-content">
+            <div class="m-5 tab-pane fade show active" id="emp-list" role="tabpanel" aria-labelledby="emp-list">
                 <table id="example" class="table " style="width:100%">
                     <thead>
                         <tr>
@@ -382,81 +426,85 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         @if ($employe->photos == null)
-                                        {{-- image placeholder --}}
+                                            {{-- image placeholder --}}
                                             {{-- <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Image non chargée"
                                                 style="width: 45px; height: 45px" class="rounded-circle" /> --}}
 
-                                                {{-- grey color --}}
+                                            {{-- grey color --}}
                                             {{-- <i class='bx bx-user-circle profile-holder'
                                                 style="width: 45px; height: 45px"></i> --}}
 
-                                                {{-- actif/inactif color --}}
-                                                {{-- <i class='bx bx-user-circle w-50 h1' style='
-                                                @if ($employe->activiter == 1)
-                                                color:#25b900c9;'
-                                                @else
-                                                color:#e21717;'
-                                                @endif
-                                                ></i> --}}
+                                            {{-- actif/inactif color --}}
+                                            <i class='bx bx-user-circle w-50 h1' style='
+                                                        @if ($employe->activiter == 1) color:#25b900c9;'
+                                                            @else
+                                                            color:#e21717;' 
+                                                            @endif
+                                                            ></i>
 
 
-                                                <div class="randomColor rounded-circle p-3 mb-2 " >
-                                                    <span class="align-middle text-center" style="position:relative;"><b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b></span>
+                                                                        {{-- <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
+                                                                <span class="align-middle text-center profile-initial" style="position:relative;">
+                                                                    <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
+                                                                </span>
+                                                            </div> --}}
+                                                        @else
+                                                                <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
+                                                                alt="Image non chargée" style="width: 45px; height: 45px"
+                                                                class="rounded-circle" />
+                                                        @endif
+                                                    <div class="ms-3">
+                                                        <p class="fw-bold mb-1 text-purple ">
+                                                            {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
+                                                        <p class="text-muted mb-0">#{{ $employe->matricule }}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td class="align-middle text-start">
+
+                                                <div class="ms-3">
+                                                    <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
+                                                    <p class="text-muted mb-0">
+                                                        {{ $employe->telephone_stagiaire != null ? $employe->telephone_stagiaire : '----' }}
+                                                    </p>
+
+
                                                 </div>
 
-                                        @else
-                                            <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
-                                                alt="Image non chargée" style="width: 45px; height: 45px"
-                                                class="rounded-circle" />
-                                        @endif
-                                        <div class="ms-3">
-                                            <p class="fw-bold mb-1 text-purple ">
-                                                {{ $employe->nom_stagiaire }}{{ $employe->prenom_stagiaire }}</p>
-                                            <p class="text-muted mb-0">#{{ $employe->matricule }}</p>
-                                        </div>
-                                    </div>
-                                </td>
+                                            </td>
+                                            <td class="align-middle text-center text-secondary">{{ $entreprise->nom_etp }}</td>
+                                            <td class="align-middle text-center text-secondary">61</td>
+                                            <td class="align-middle text-center text-secondary">2011-04-25</td>
+                                            <td class="align-middle text-center text-secondary">
 
-                                <td class="align-middle text-center">
+                                                @if ($employe->activiter == 1)
+                                                    <div class="form-check form-switch">
+                                                        <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                                                class="badge bg-success">actif</span></label>
+                                                        <input class="form-check-input desactiver_stg" type="checkbox"
+                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                            checked>
+                                                    </div>
+                                                        @else
+                                                    <div class="form-check form-switch">
+                                                        <label class="form-check-label"
+                                                            for="flexSwitchCheckChecked">
+                                                            <span class="badge bg-secondary">
+                                                                inactif
+                                                            </span>
+                                                        </label>
+                                                        <input class="form-check-input activer_stg" type="checkbox"
+                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                    </div>
+                                                        @endif
 
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
-                                        <p class="text-muted mb-0">
-                                            {{ $employe->telephone_stagiaire != null ? $employe->telephone_stagiaire : '----' }}
-                                        </p>
-
-
-                                    </div>
-
-                                </td>
-                                <td class="align-middle text-center text-secondary">{{ $entreprise->nom_etp }}</td>
-                                <td class="align-middle text-center text-secondary">61</td>
-                                <td class="align-middle text-center text-secondary">2011-04-25</td>
-                                <td class="align-middle text-center text-secondary">
-
-                                    @if ($employe->activiter == 1)
-                                        <div class="form-check form-switch">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span
-                                                    class="badge bg-success">actif</span></label>
-                                            <input class="form-check-input desactiver_stg" type="checkbox"
-                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
-                                                checked>
-                                        </div>
-                                    @else
-                                        <div class="form-check form-switch">
-                                            <label class="form-check-label"
-                                                for="flexSwitchCheckChecked"><span>inactif</span></label>
-                                            <input class="form-check-input activer_stg" type="checkbox"
-                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
-                                        </div>
-                                    @endif
-
-                                </td>
-                                <td class="align-middle text-center text-secondary">
-                                    <button type="button" class="btn " data-bs-toggle="modal"
-                                        data-bs-target="#delete_emp_{{ $employe->id }}">
-                                        <i class='bx bxs-trash' style='color:#e21717'></i>
-                                    </button>
+                                            </td>
+                                            <td class="align-middle text-center text-secondary">
+                                                <button type="button" class="btn " data-bs-toggle="modal"
+                                                    data-bs-target="#delete_emp_{{ $employe->id }}">
+                                                    <i class=' bx bxs-trash' style='color:#e21717'></i>
+                                            </button>
                                 </td>
 
                             </tr>
@@ -476,15 +524,15 @@
                                             <div class="modal-body">
                                                 <small>Vous êtes sur le point d'enlever l'employé
                                                     {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }} -
-                                                    id : {{ $employe->id }}, utilisateur {{ $employe->user_id }}
-                                                    sur le plateforme, cette action est irréversible. Continuer ?</small>
+                                                    id : {{ $employe->id }}, utilisateur {{ $employe->user_id }}, 
+                                                    cette action est irréversible. Continuer ?</small>
                                             </div>
 
                                             <div class="modal-footer justify-content-center">
                                                 <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non
                                                 </button>
 
-                                                <a href="{{ route('employeur.destroy', $employe->user_id) }}"> <button
+                                                <a href="{{ route('employeur.destroy', $employe->id) }}"> <button
                                                         type="button" class="btn btn_creer btnP px-3">Oui</button></a>
                                             </div>
                                         </div>
@@ -501,7 +549,257 @@
 
             </div>
 
-            <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+
+            {{-- form ajout --}}
+
+            {{-- <div class="tab-pane fade" id="emp-add" role="tabpanel" aria-labelledby="emp-add">
+
+                <form action="{{ route('employeur.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+
+
+                        <div class="">
+                            <div class="col-md-7 m-auto">
+                                <div class="input-group">
+
+                                    <div class="input-group">
+                                        <div class="input-group-text border-0 border-bottom bg-light">
+                                            <i class="bi bi-hash form-icon"></i>
+                                        </div>
+
+                                        <input type="text" autocomplete="off" required name="matricule"
+                                            class="form-control input border-0 border-bottom" id="matricule" required>
+
+
+                                        <label for="matricule" class="input-placeholder">Matricule<strong
+                                                style="color:#ff0000;">*</strong></label>
+
+
+
+                                        @error('matricule')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{ $message }} </span>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <select class="form-select selectP input visually-hidden" id="type_enregistrement"
+                            name="type_enregistrement" aria-label="Default select example">
+                            <option value="STAGIAIRE">Employé</option>
+                            <option value="REFERENT">Réferent</option>
+                            <option value="MANAGER">Chef de département</option>
+
+                        </select>
+
+
+                        <div class="">
+                            <div class="col-md-7 m-auto">
+
+
+                                <div class="input-group">
+
+                                    <div class="input-group">
+                                        <div class="input-group-text border-0 border-bottom bg-light">
+                                            <i class="bx bx-user form-icon"></i>
+                                        </div>
+
+                                        <input type="text" autocomplete="off" required name="nom"
+                                            class="form-control input border-0 border-bottom" id="nom" required>
+
+                                        <label for="nom" class="input-placeholder">Nom<strong
+                                                style="color:#ff0000;">*</strong></label>
+
+
+                                        @error('nom')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{ $message }} </span>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-7 m-auto">
+
+
+                                <div class="input-group">
+
+                                    <div class="input-group">
+                                        <div class="input-group-text border-0 bg-light visually-hidden">
+                                            <i class="bx bx-user form-icon"></i>
+                                        </div>
+
+                                        <input type="text" autocomplete="off" required name="prenom"
+                                            class="form-control input border-0 border-bottom" id="prenom" required>
+
+
+                                        <label for="prenom" class="input-placeholder">Prenom<strong
+                                                style="color:#ff0000;">*</strong></label>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="col-md-7 m-auto">
+
+                                <div class="input-group">
+
+                                    <div class="input-group">
+                                        <div class="input-group-text border-0 border-bottom bg-light">
+                                            <i class='bx bxs-id-card form-icon'></i>
+                                        </div>
+
+                                        <input type="text" autocomplete="off" required name="cin"
+                                            class="form-control input border-0 border-bottom" id="cin" required>
+
+
+                                        <label for="cin" class="input-placeholder">CIN<strong
+                                                style="color:#ff0000;">*</strong></label>
+
+
+                                        <span style="color:#ff0000;" id="cin_err"></span>
+                                        @error('cin')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{ $message }} </span>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-7 m-auto">
+
+                                <div class="input-group">
+
+                                    <div class="input-group">
+                                        <div class="input-group-text border-0 border-bottom bg-light">
+                                            <i class='bx bx-phone form-icon'></i>
+                                        </div>
+
+                                        <input type="text" autocomplete="off" required name="phone"
+                                            class="form-control input border-0 border-bottom" id="phone"
+                                            inputmode="numeric" required>
+
+
+                                        <label for="phone" class="input-placeholder" id="">Téléphone<strong
+                                                style="color:#ff0000;">*</strong></label>
+
+                                        <span id="phone_err" style="color:#ff0000;"></span>
+
+                                        @error('phone')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{ $message }} </span>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="">
+                            <div class="col-md-7 m-auto">
+
+                                <div class="input-group">
+
+                                    <div class="input-group">
+                                        <div class="input-group-text border-0 border-bottom bg-light">
+                                            <i class='bx bx-envelope form-icon'></i>
+                                        </div>
+
+                                        <input type="text" autocomplete="off" required name="mail"
+                                            class="form-control input border-0 border-bottom" id="mail" inputmode="email"
+                                            required>
+
+
+                                        <label for="mail" class="input-placeholder">Email<strong
+                                                style="color:#ff0000;">*</strong></label>
+
+
+                                        <span id="mail_err"></span>
+                                        @error('mail')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{ $message }} </span>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-7 m-auto">
+                                <div class="input-group">
+                                    <div class="input-group">
+                                        <div class="input-group-text border-0 border-bottom bg-light">
+                                            <i class='bx bxs-graduation form-icon'></i>
+                                        </div>
+
+                                        <select name="niveau_etude_id" id="niveau_etude_id" class="form-control input">
+                                            @forelse ($niveaux_etude as $niveau_etude)
+                                                <option value="{{ $niveau_etude->id }}">{{ $niveau_etude->niveau_etude }}</option>
+                                            @empty
+                                                <p>---</p>
+                                            @endforelse
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7 m-auto">
+
+                                <div class="input-group">
+
+                                    <div class="input-group">
+                                        <div class="input-group-text border-0 border-bottom bg-light">
+                                            <i class='bx bx-briefcase form-icon'></i>
+                                        </div>
+
+                                        <input type="text" autocomplete="off" required name="fonction"
+                                            class="form-control input border-0 border-bottom" id="fonction" required>
+
+
+                                        <label for="fonction" class="input-placeholder">Fonction<strong
+                                                style="color:#ff0000;">*</strong></label>
+
+
+
+                                        @error('fonction')
+                                            <div class="col-sm-6">
+                                                <span style="color:#ff0000;"> {{ $message }} </span>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div> --}}
+            @include('admin.entreprise.employer.nouveau_employer')
+
+
+            <div class="tab-pane fade" id="emp-export" role="tabpanel" aria-labelledby="emp-export">
                 export
             </div>
         </div>
@@ -636,7 +934,8 @@
                         var userData = response;
 
                         if (userData.length > 0) {
-                            document.getElementById("mail_err").innerHTML = "l'email est déjà associé à un compte";
+                            document.getElementById("mail_err").innerHTML =
+                                "l'email est déjà associé à un compte";
                         } else {
                             document.getElementById("mail_err").innerHTML = "";
                         }
@@ -650,11 +949,11 @@
             $(document).on('change', '#phone', function() {
                 var result = $(this).val();
 
-                if ($(this).val().length < 7) { 
+                if ($(this).val().length < 7) {
                     document.getElementById("phone_err").innerHTML = "numéro télephone invalide";
                 } else {
                     document.getElementById("phone_err").innerHTML = '';
-                    /*  $.ajax({
+                    $.ajax({
                           url: '{{ route('verify_tel_user') }}'
                           , type: 'get'
                           , data: {
@@ -672,7 +971,7 @@
                           , error: function(error) {
                               console.log(error);
                           }
-                      }); */
+                      });
                 }
 
 

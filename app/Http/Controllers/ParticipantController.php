@@ -2,34 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\branche;
-use App\chefDepartement;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 use PDF;
-use App\Departement;
-use App\DepartementEntreprise;
-use App\entreprise;
-use App\stagiaire;
-use App\User;
-use App\responsable;
-use App\Models\getImageModel;
-use Illuminate\Support\Facades\File;
-use App\Models\FonctionGenerique;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
+use Excel;
 use Image;
+use App\User;
+use App\Niveau;
+use App\branche;
+use App\stagiaire;
+use Carbon\Carbon;
+use App\entreprise;
+use App\Departement;
+use App\responsable;
+use App\chefDepartement;
+use Illuminate\Http\Request;
+use App\Models\getImageModel;
+use App\DepartementEntreprise;
+use App\Models\FonctionGenerique;
+use App\Exports\ParticipantExport;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 
 /* ====================== Exportation Excel ============= */
-use App\Exports\ParticipantExport;
-use Excel;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
 
 class ParticipantController extends Controller
 {
@@ -95,7 +96,11 @@ public function new_emp(){
     //     $liste_departement = db::select('select * from departement_entreprises where entreprise_id = ?', [$entreprise_id]);
     //     return view('admin.chefDepartement.chef', compact('liste_departement'));
     // }
-    return view('admin.entreprise.employer.nouveau_employer');
+
+    // $niveaux = DB::table('niveaux')->get();
+    $niveaux_etude = Niveau::all();
+
+    return view('admin.entreprise.employer.nouveau_employer', compact('niveaux_etude'));
 }
 
     public function liste_employer($paginations=null)
@@ -138,8 +143,8 @@ public function new_emp(){
             // dd($employers);
             $entreprise = Entreprise::find($entreprise_id);
 
-
-        return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise'));
+            $niveaux_etude = Niveau::all();
+        return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise', 'niveaux_etude'));
     }
 
     public function index()

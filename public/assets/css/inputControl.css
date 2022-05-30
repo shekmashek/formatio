@@ -83,9 +83,14 @@
 
 /* liste */
 .bg-success{
-    /* opacity: 0.7;
+    opacity: 0.7;
     background-color: rgba(93, 253, 19, 0.541)!important;
-    color: #028002; */
+    color: #028002;
+}
+.bg-secondary {
+    opacity: 0.7;
+    background-color: rgba(175, 175, 175, 0.5)!important;
+    color: #0e0e0e;
 }
 
 

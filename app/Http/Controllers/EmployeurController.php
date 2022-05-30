@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use App\stagiaire;
 use Illuminate\Http\Request;
 use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\new_employer\create_compte_new_employer_mail;
-use Illuminate\Support\Facades\Gate;
 
 class EmployeurController extends Controller
 {
@@ -66,7 +67,7 @@ class EmployeurController extends Controller
         
         $request->validate($critereForm, $rules);
 
-
+        
 
 
         $user = new User();
@@ -78,22 +79,25 @@ class EmployeurController extends Controller
         $fonction = $request->fonction;
         $mail = $request->mail;
         $phone = $request->phone;
-        $fonction_employer=null;
+        $fonction_employer=$request->fonction;
+        $niveau_etude_id = $request->niveau_etude_id;
+
         if (Gate::allows('isReferent')) {
 
             $user->name = $request->nom . " " . $request->prenom;
             $user->email = $request->mail;
             $user->cin = $cin;
-            // $user->telephone =  $request->phone;
+            $user->telephone = $phone;
+
             $ch1 = "0000";
             $user->password = Hash::make($ch1);
             // enregistrement de l'utilisateur
 
-            // getting all from users table and check if the the email is already exist
+            // getting all from users table and check if the the email is already exist (pas vraiment utile avec la validation)
             $users = DB::table('users')->get();
             foreach ($users as $u) {
                 if ($u->email == $mail) {
-                    dd("email existe déjà");
+                    // dd("email existe déjà");
                     return redirect()->back()->with('error', 'email existe déjà');
                 } 
             }
@@ -112,9 +116,8 @@ class EmployeurController extends Controller
 
             $resp = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$resp->entreprise_id]);
+
             $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
-            
-            
             
 
 
@@ -143,12 +146,25 @@ class EmployeurController extends Controller
                 $temp_service_id = rand(1, 5);
                 
 
-                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id, $temp_service_id];
-                DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
-                entreprise_id,user_id,service_id, activiter,created_at) values(?,?,?,?,?,?,?,?,?, ?,1,NOW())", $data);
+                $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $niveau_etude_id, $user_id, $temp_service_id];
+                // DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
+                // entreprise_id, niveau_etude_id,user_id,service_id, activiter) values(?,?,?,?,?,?,?,?,?, ?, ?,1)", $data);
 
+                DB::table('stagiaires')->insert([
+                    'matricule' => $matricule,
+                    'nom_stagiaire' => $nom,
+                    'prenom_stagiaire' => $prenom,
+                    'cin' => $cin,
+                    'mail_stagiaire' => $mail,
+                    'telephone_stagiaire' => $phone,
+                    'fonction_stagiaire' => $fonction,
+                    'entreprise_id' =>  $entreprise->id,
+                    'niveau_etude_id' => $niveau_etude_id,
+                    'user_id' => $user_id,
+                    'service_id' => $temp_service_id,
+                    'activiter' => true
+                ]);
                 
-
             }
 
             
@@ -197,10 +213,9 @@ class EmployeurController extends Controller
             // Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
             
 
-            // return back with success message only for 2 seconds 
-            return redirect()->back()->with('success', 'Enregistrement réussi');
+            // return back with success message only for 2 seconds         
+            return redirect()->route('employes.liste')->with('success', 'Enregistrement réussi : '.$nom.' '.$prenom);
 
-            return back()->with('success',"Terminé !");
         }
 
 
@@ -248,9 +263,21 @@ class EmployeurController extends Controller
      */
     public function destroy($id)
     {
-        DB::delete('delete from users where id = ?', [$id]);
-        DB::delete("delete from role_users where user_id=?",[$id]);
-        DB::delete("delete from stagiaires where user_id=?",[$id]);
-        return back();
+
+        $stagiaire = stagiaire::find($id);
+
+        $user = User::find($stagiaire->user_id);
+        // dd($user->id, $stagiaire);
+
+        // Manualiser la suppression en cascade
+        // DB::delete('delete from users where id = ?', [$id]);
+        DB::table('users')->where('id', $user->id)->delete();
+
+        // DB::delete("delete from role_users where user_id=?",[$id]);
+        DB::table('role_users')->where('user_id', $user->id)->delete();
+
+        // DB::delete("delete from stagiaires where user_id=?",[$id]);
+        DB::table('stagiaires')->where('id', $id)->delete();
+        return back()->with('info', 'Suppression réussie : '.$stagiaire->nom_stagiaire.' '.$stagiaire->prenom_stagiaire);
     }
 }

@@ -29,7 +29,6 @@ class NiveauController extends Controller
         //
     }
 
-
     public function store(Request $request)
     {
         $request->validate(
@@ -72,4 +71,12 @@ class NiveauController extends Controller
         DB::delete('delete from niveaux where id = ?', [$id]);
         return back();
     }
+
+    public function getNiveaux()
+    {
+        $niveaux = Niveau::all();
+        return response()->json($niveaux);
+    }
+
+
 }

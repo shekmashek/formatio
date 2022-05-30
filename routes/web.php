@@ -15,6 +15,13 @@ Route::get('/', function () {
     return view('index_accueil');
     // return view('page_travaux.plateforme_en_travaux');
 })->name('accueil_perso');
+
+
+// Routes JSON
+Route::get('getDomains', 'ProfController@getDomains')->name('getDomains');
+Route::get('getNiveaux', 'NiveauController@getNiveaux')->name('getNiveaux');
+
+
 // Route Bi
 Route::get('iframe_bi', 'HomeController@BI')->name('iframe_bi');
 
@@ -44,7 +51,6 @@ Route::get('all_formateurs', 'SessionController@getFormateur')->name('all_format
 // end
 
 
-Route::get('getDomains', 'ProfController@getDomains')->name('getDomains');
 
 Auth::routes();
 
