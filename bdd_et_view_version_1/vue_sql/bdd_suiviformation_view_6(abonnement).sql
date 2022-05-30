@@ -41,7 +41,8 @@ CREATE OR REPLACE VIEW v_type_abonnement_cfp AS SELECT
     a.status,
     a.cfp_id,
     c.nom as nom_of,
-    a.activite
+    a.activite,
+     a.type_arret
 FROM
     type_abonnements_of t
 JOIN abonnement_cfps a ON
