@@ -71,7 +71,7 @@ CREATE TABLE employers (
   nom_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_emp varchar(255) COLLATE utf8mb4_unicode_ci,
   date_naissance_emp date DEFAULT current_timestamp(),
-  cin_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
+  cin_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   email_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone_emp varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXX',
   fonction_emp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXX',

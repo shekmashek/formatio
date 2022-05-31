@@ -69,7 +69,7 @@ CREATE TABLE factures (
 CREATE TABLE encaissements (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   montant_facture decimal(15,2) DEFAULT 0.00,
-  libelle text COLLATE utf8mb4_unicode_ci NOT NULL,
+  libelle text COLLATE utf8mb4_unicode_ci,
   payement decimal(15,2) DEFAULT 0.00,
   montant_ouvert decimal(15,2) DEFAULT 0,
   date_encaissement DATE NOT NULL DEFAULT NOW(),
