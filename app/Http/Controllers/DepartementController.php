@@ -109,6 +109,15 @@ class DepartementController extends Controller
         return view('admin.chefDepartement.liste', compact('nom_chef','prenom_chef','roles_actif_stg', 'roles_not_actif_stg', 'roles_actif_referent', 'roles_not_actif_referent', 'roles_actif_manager', 'roles_not_actif_manager', 'chef', 'referent', 'stagiaires', 'user_role', 'roles'));
     }
 
+    //newAfficheInfo
+    public function newInfo($user_id){
+
+        $funct = new FonctionGenerique();
+        $emps = $funct->afficheInfoNewOne($user_id);
+        
+        return response()->json($emps);
+    }
+
 //start filtre
  // filtre Employes fonction
     public function filtreFonction(Request $request){

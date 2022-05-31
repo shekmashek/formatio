@@ -10,7 +10,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
-<div class="container-fluid pb-1">    
+<div class="container-fluid pb-1">
 <style>
     .navigation_module .nav-link {
     color: #637381;
@@ -32,7 +32,7 @@
 
 .nav-tabs .nav-link:hover {
     background-color: rgb(245, 243, 243);
-    
+
     border: none;
 }
 .nav-tabs .nav-item a{
@@ -74,10 +74,10 @@
             ><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;INVITATION</a
           >
         </li>
-        
+
       </ul>
       <!-- Tabs navs -->
-      
+
       <!-- Tabs content -->
       <div class="tab-content" id="ex1-content">
         <div
@@ -129,12 +129,12 @@
                                 <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
                             </div>
                         </td> --}}
-                       
+
                             <td class="align-middle" >
                                 <a href="{{route('tous_projets',$centre->cfp_id)}}" class="btn btn-info btn-sm text-light" >Voir tous les projets</a>
                                 <a  data-bs-toggle="modal" class="ms-3 mt-5"  data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i  class='bx bx-trash bx_supprimer align-middle'></i></a>
                             </td>
-                       
+
                     </tr>
                 {{-- modal delete  --}}
                 <div class="modal fade" id="exampleModal_{{$centre->cfp_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -166,7 +166,7 @@
                 @endif
             </tbody>
         </table>
-          
+
         </div>
         <div class="tab-pane show fade" id="invitation" role="tabpanel" aria-labelledby="ex1-tab-2">
           {{-- Tab 2 content --}}
@@ -218,10 +218,10 @@
 
                     <div class="tab-pane fade show active" id="invitation_attente" role="tabpanel" aria-labelledby="home-tab">
                         <div class="table-responsive text-center">
-    
+
                             <table class="table  table-hover table-sm mt-4" >
                                 <tbody id="data_collaboration" >
-    
+
                                     @if (count($invitation)<=0) <tr style="text-align:left">
                                         <td > Aucun invitations en attente</td>
                                         </tr>
@@ -237,9 +237,9 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('accept_etp_cfp',$invit_cfp->id) }}">
-                                                    
+
                                                         <h5 class="btn btn-info" style="color:white"><i class="bx bxs-check-circle actions align-middle" title="Accepter"></i> accepter</h5>
-                                                    
+
                                                 </a>
                                             </td>
                                             <td>
@@ -253,13 +253,13 @@
                                         @endif
                                 </tbody>
                             </table>
-    
+
                         </div>
-    
+
                     </div>
-    
+
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-    
+
                         <div class="table-responsive text-center">
                             <table class="table  table-borderless table-sm mt-4">
                                 <tbody>
@@ -283,10 +283,10 @@
                                 </tbody>
                             </table>
                         </div>
-    
-    
+
+
                     </div>
-    
+
                 </div>
             </div>
         </div>
@@ -420,7 +420,7 @@
                     // $("#adrqurt").text(userData[$i].adresse_Quartier);
                     // $("#adrv").text(userData[$i].adresse_ville);
                     // $("#adrr").text(userData[$i].adresse_region);
-                    $("#mail").text(': '+userData[$i].emai l);
+                    $("#mail").text(': '+userData[$i].email);
 
                     $("#nomEtp").text(userData[$i].nom);
                 }
@@ -436,7 +436,7 @@
     if(Tabactive){
         $('#myTab a[href="' + Tabactive + '"]').tab('show');
     }
-    
+
 
 </script>
 @endsection
