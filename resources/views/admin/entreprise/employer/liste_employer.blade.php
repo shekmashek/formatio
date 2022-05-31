@@ -305,7 +305,7 @@
                                 <span>Service</span>
                             </th>
                             {{-- <th scope="col" class="table-head font-weight-light align-middle text-center ">Age</th> --}}
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Ajout</th>
+
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
@@ -334,8 +334,8 @@
                                                 style="width: 45px; height: 45px" class="rounded-circle" /> --}}
 
                                             {{-- grey color --}}
-                                            <i class='bx bx-user-circle profile-holder'
-                                                style="width: 45px; height: 45px"></i>
+                                            {{-- <i class='bx bx-user-circle profile-holder'
+                                                style="width: 45px; height: 45px"></i> --}}
 
                                             {{-- actif/inactif color --}}
                                                     {{-- <i class='bx bx-user-circle  h1' style='
@@ -346,11 +346,11 @@
                                                             ></i> --}}
 
                                             {{-- initials --}}
-                                                            {{-- <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
+                                                            <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
                                                                 <span class="align-middle text-center profile-initial" style="position:relative;">
                                                                     <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
                                                                 </span>
-                                                            </div> --}}
+                                                            </div>
                                                         @else
                                                                 <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
                                                                 alt="Image non chargée" style="width: 45px; height: 45px"
