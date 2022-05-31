@@ -12,19 +12,29 @@ class Stagiaire extends Model
     protected $fillable = [
         'nom_stagiaire', 'prenom_stagiaire', 'genre_stagiaire', 'fonction_stagiaire', 'mail_stagiaire', 'telephone_stagiaire', 'entreprise_id', 'user_id', 'photos', 'service_id', 'cin', 'date_delivrance', 'date_naissance', 'adresse', 'niv_etude'
     ];
-    public function departement()
+
+
+    
+    public function service ()
     {
-        return $this->belongsTo('App\Departement');
+        return $this->belongsTo('App\Service', 'service_id');
     }
+
+
 
     public function entreprise()
     {
-        return $this->belongsTo('App\entreprise');
+        return $this->belongsTo('App\Entreprise', 'entreprise_id');
     }
     public function user()
     {
         return $this->belongsTo('App\User');
     }
+
+    public function niveau_etude(){
+        return $this->hasOne(Niveau::class, 'niveau_etude_id');
+    }
+
 
     public function checkEmail($email)
     {
