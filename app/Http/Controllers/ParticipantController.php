@@ -1330,16 +1330,30 @@ class ParticipantController extends Controller
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
         $entreprise_id = $fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
+        // $data = $fonct->findWhereParam("employers", ["cin_emp", "activiter", "entreprise_id"], ["=", "=", "!="], [$req->valiny, true, $entreprise_id]);
         $data = $fonct->findWhereParam("stagiaires", ["cin", "activiter", "entreprise_id"], ["=", "=", "!="], [$req->valiny, true, $entreprise_id]);
-        // if (count($data) > 0) { // verify cin dans autre etp si mbola actif
-        //     $msg = [
-        //         "error" => "CIN existe déjà"
-        //     ];
-        // } else {
-        //     $data2 = $fonct->findWhereParam("stagiaires", ["cin", "activiter", "entreprise_id"], ["=", "=", "!="], [$req->valiny, true, $entreprise_id]);
 
-        // }
-
-        return response()->json($data);
+        if (count($data) > 0) { // verify cin dans autre etp si mbola actif
+            $msg = [
+                "error" => "CIN existe déjà"
+            ];
+        } else {
+            // $data2 = $fonct->findWhereParam("employers", ["cin_emp", "entreprise_id"], ["=", "="], [$req->valiny, $entreprise_id]);
+            $data2 = $fonct->findWhereParam("stagiaires", ["cin", "entreprise_id"], ["=", "="], [$req->valiny, $entreprise_id]);
+            $msg = [
+                "success" => "CIN validé"
+            ];
+            if (count($data2) > 0) {
+                $msg = [
+                    "error" => "CIN existe déjà"
+                ];
+            } else {
+                $msg = [
+                    "success" => "CIN validé"
+                ];
+            }
+        }
+        return response()->json($msg);
+        // return response()->json($data);
     }
 }

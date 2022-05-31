@@ -160,6 +160,7 @@
                             }
                             , success: function(response) {
                                 var userData = response;
+
                                 if (userData.length > 0) {
                                     document.getElementById("cin_err_" + i).innerHTML = "CIN existe déjà";
                                     $('#saver_multi_stg').prop('disabled', true);

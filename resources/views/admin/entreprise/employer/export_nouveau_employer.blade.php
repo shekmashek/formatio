@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
 <?php
-$nbStg=30;
+$nbStg=3;
 ?>
 
 
@@ -413,10 +413,14 @@ $nbStg=30;
                             }
                             , success: function(response) {
                                 var userData = response;
-                                if (userData.length > 0) {
-                                    cin_err[i].innerHTML = "CIN existe déjà";
+                                if (response.error != null) {
+                                    cin_err[i].innerHTML = response.error;
                                     $('#saver_multi_stg').prop('disabled', true);
                                 }
+                                /*  if (userData.length > 0) {
+                                      cin_err[i].innerHTML = "CIN existe déjà";
+                                      $('#saver_multi_stg').prop('disabled', true);
+                                  } */
                             }
                             , error: function(error) {
                                 console.log(error);
