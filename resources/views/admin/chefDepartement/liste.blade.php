@@ -301,7 +301,7 @@
                                     </thead>
                                     <tbody id="dynamic_row">
                                         @for($i = 0; $i < count($stagiaires); $i++)
-                                        <tr class="text-center content_table">
+                                        <tr class="text-center content_table empNew" data-id={{$stagiaires[$i]->user_id}} id={{$stagiaires[$i]->user_id}} onclick="afficherInfos();">
                                             <td>
                                                 @if($stagiaires[$i]->photos == null)
                                                 <center>
@@ -811,11 +811,124 @@
     </div>
 </div>
 
+{{--AfficheInfos--}}
+<div class="infos mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0 text-center">INFORMATION</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+        </div>
+        <hr class="mt-2">
+
+        <div class="mt-2" style="font-size:14px">
+            {{-- <div class="mt-1">
+                    <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
+        </div> --}}
+        <div class="mt-1 text-center mb-3">
+            <span id="donner"></span>
+        </div>
+
+        <div class="mt-1 text-center">
+            <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+        </div>
+        {{-- <div class="mt-1 mb-3 text-center">
+            <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
+        </div> --}}
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-user'></i></div>
+                <div class="col-md-3">Nom_prénoms</div>
+                <div class="col-md">
+                    <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                    <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
+                <div class="col-md-3">Matricule</div>
+                <div class="col-md">
+                    <span id="matriculess" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                <div class="col-md-3">E-mail</div>
+                <div class="col-md"><span id="mail_stagiaire"></span></div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                <div class="col-md-3">Télephone</div>
+                <div class="col-md">
+                    <span></span><span id="telephone_stagiaire"></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                <div class="col-md-3">Adresse</div>
+                <div class="col-md"><span id="adresse"></span></div>
+            </div>
+
+        </div>
+        {{-- <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                <div class="col-md-3">Code postal</div>
+                <div class="col-md"><span id="code_postal"></span></div>
+            </div>
+        </div> --}}
+    </div>
+</div>
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+<script>
+    $('.empNew').on('click', function(){
+        var user_id = $(this).data("id");
+        console.log(user_id);
+        $.ajax({
+            method: "GET"
+            , url: "newAfficheInfo/employe/emp/"+user_id
+            , dataType: "html"
+            , success: function(response) {
+                let userData = JSON.parse(response);
+                console.log(userData);
+                for (let $i = 0; $i < userData.length; $i++) {
+                    let url_photo = '<img src="{{asset("images/stagiaires/:url_img")}}" style="height80px; width:80px;">';
+                    url_photo = url_photo.replace(":url_img", userData[$i].photos);
+                    $("#donner").html(" ");
+                    $("#donner").append(url_photo);
+                    // $("#matricule").text(': '+userData[$i].matricule);
+                    $("#matriculess").text(': '+userData[$i].matricule);
+                    $("#nom").text(': '+userData[$i].nom_stagiaire);
+                    $("#prenom").text(userData[$i].prenom_stagiaire);
+                    $("#mail_stagiaire").text(': '+userData[$i].mail_stagiaire);
+                    $("#telephone_stagiaire").text(': '+userData[$i].telephone_stagiaire);
+                    $("#adresse").text(': '+userData[$i].adresse);
+                    // $("#code_postal").text(': '+userData[$i].code_postal);
+                }
+            }
+        });
+    });
+</script>
+
 <script type="text/javascript">
     //Pour chaque div de classe randomColor
     $(".randomColor").each(function() {

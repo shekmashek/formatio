@@ -483,20 +483,18 @@
             @foreach ($employers as $emp)
             <tr data-id={{$emp->user_id}} id={{$emp->user_id}} onclick="afficherInfos();" class="empNew">
                 <td>
-                    <a href="{{route('profile_stagiaire',$emp->id)}}">
-                        @if($emp->photos == null)
-                        <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
-                            <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
-                        </p>
-                        @else
-                        <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
-                        @endif
-                    </a>
+                    @if($emp->photos == null)
+                    <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
+                        <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
+                    </p>
+                    @else
+                    <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
+                    @endif
                 </td>
                 <td>
                     <a href="{{route('profile_stagiaire',$emp->id)}}">
                         <p> {{$emp->nom_stagiaire." ".$emp->prenom_stagiaire}} </p>
-                        <p> @if ($emp->activiter==1)
+                           <p> @if ($emp->activiter==1)
                             <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
                             @else
                             <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
@@ -656,8 +654,8 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
-                        <div class="col-md-3">Responsable</div>
+                        <div class="col-md-1"><i class='bx bx-user'></i></div>
+                        <div class="col-md-3">Nom_prénoms</div>
                         <div class="col-md">
                             <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
                             <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
@@ -667,41 +665,48 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
-                        <div class="col-md-3">Tel</div>
-                        <div class="col-md"><span id="tel"></span></div>
-                    </div>
-                </div>
-                <div class="mt-1">
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
-                        <div class="col-md-3">Adresse</div>
+                        <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
+                        <div class="col-md-3">Matricule</div>
                         <div class="col-md">
-                            <span id="adrlot"></span>
-                            <span id="adrlot4"></span>
-                            <span></span><span id="adrlot2"></span>
-                            <span></span><span id="adrlot3"></span>
+                            <span id="matricule" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
                         </div>
                     </div>
                 </div>
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
                         <div class="col-md-3">E-mail</div>
-                        <div class="col-md"><span id="mail"></span></div>
+                        <div class="col-md"><span id="mail_stagiaire"></span></div>
                     </div>
-        
                 </div>
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
-                        <div class="col-md-3">Site web</div>
-                        <div class="col-md"><span id="donnerrrr"></span></div>
+                        <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                        <div class="col-md-3">Télephone</div>
+                        <div class="col-md">
+                            <span></span><span id="telephone_stagiaire"></span>
+                        </div>
                     </div>
                 </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                        <div class="col-md-3">Adresse</div>
+                        <div class="col-md"><span id="adresse"></span></div>
+                    </div>
+        
+                </div>
+                {{-- <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                        <div class="col-md-3">Code postal</div>
+                        <div class="col-md"><span id="code_postal"></span></div>
+                    </div>
+                </div> --}}
             </div>
         </div>
 
@@ -709,6 +714,7 @@
         <script src="{{ asset('assets/js/jquery.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}" />
+
         <script>
             $('.empNew').on('click', function(){
                 var user_id = $(this).data("id");
@@ -725,20 +731,13 @@
                             url_photo = url_photo.replace(":url_img", userData[$i].photos);
                             $("#donner").html(" ");
                             $("#donner").append(url_photo);
-                            $("#donnerrrr").text(': '+userData[$i].matricule);
-                            $("#nom").text(userData[$i].nom_stagiaire);
+                            $("#matricule").text(': '+userData[$i].matricule);
+                            $("#nom").text(': '+userData[$i].nom_stagiaire);
                             $("#prenom").text(userData[$i].prenom_stagiaire);
-                            $("#tel").text(': '+userData[$i].telephone_stagiaire);
-                            $("#adrlot").text(': '+userData[$i].mail_stagiaire);
-                            $("#adrlot2").text(userData[$i].adresse);
-                            $("#adrlot3").text(userData[$i].code_postal);
-
-                            // $("#adrqurt").text(userData[$i].adresse_Quartier);
-                            // $("#adrv").text(userData[$i].adresse_ville);
-                            // $("#adrr").text(userData[$i].adresse_region);
-                            // $("#mail").text(': '+userData[$i].email);
-
-                            // $("#nomEtp").text(userData[$i].nom);
+                            $("#mail_stagiaire").text(': '+userData[$i].mail_stagiaire);
+                            $("#telephone_stagiaire").text(': '+userData[$i].telephone_stagiaire);
+                            $("#adresse").text(': '+userData[$i].adresse);
+                            $("#code_postal").text(': '+userData[$i].code_postal);
                         }
                     }
                 });
