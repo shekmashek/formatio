@@ -415,7 +415,7 @@
 
 .nav-tabs .nav-link:hover {
     background-color: rgb(245, 243, 243);
-    transform: scale(1.1);
+    
     border: none;
 }
 .nav-tabs .nav-item a{
