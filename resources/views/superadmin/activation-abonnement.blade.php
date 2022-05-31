@@ -115,6 +115,7 @@
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client_etp" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
                         <th>Type d'abonnement &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th>Coupon &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Date d'inscription &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Début &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Fin &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
@@ -128,6 +129,9 @@
                                     <tr>
                                         <td class="th_color"> {{$listes->nom_entreprise}} </td>
                                         <td class="th_color"> {{$listes->nom_type}},&nbsp;Mensuel,&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td>
+                                        @if($listes->valeur!=null)  <td class="th_color">{{$listes->coupon}} ({{$listes->valeur}} %)</td>
+                                        @else <td class="th_color"> - </td>
+                                        @endif
                                         <td class="th_color">  {{$listes->date_demande}} </td>
                                         <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                         <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
@@ -158,7 +162,8 @@
                 <table class="table table-hover">
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
-                         <th>Type d'abonnement &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th>Type d'abonnement &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th>Coupon &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Date d'inscription &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Début &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Fin &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
@@ -172,6 +177,9 @@
                                 <tr>
                                     <td class="th_color"> {{$listes->nom_of}} </td>
                                     <td class="th_color"> {{$listes->nom_type}},&nbsp;Mensuel,&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td></td>
+                                    @if($listes->valeur!=null)  <td class="th_color">{{$listes->coupon}} ({{$listes->valeur}} %)</td>
+                                    @else <td class="th_color"> - </td>
+                                    @endif
                                     <td class="th_color">  {{$listes->date_demande}} </td>
                                     <td class="th_color"> <span id = "debut_of_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                     <td class="th_color"><span id = "fin_of_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
@@ -200,7 +208,18 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade show active" id="coupon">
+
+            <div class="tab-pane fade" id="coupon">
+                @if(session()->has('message'))
+                <div class="alert alert-danger">
+                    {{ session()->get('message') }}
+                </div>
+                @endif
+                @if(session()->has('message_modification'))
+                <div class="alert alert-danger">
+                    {{ session()->get('message_modification') }}
+                </div>
+                @endif
                 <table class="table table-hover">
                     <thead>
                         <th>Coupon</th>
@@ -220,9 +239,11 @@
                                 @endif
                                 <td>
                                     <span role="button" data-bs-toggle="modal" data-bs-target="#modif_coupon">
-                                        <i class='bx bx-edit bx_modifier' title="modifier titre module"></i>
+                                        <i class='bx bx-edit bx_modifier' title="Modifier coupon"></i>
                                     </span>
-                                <a href=""><i class='bx bx-trash bx_supprimer'></i></a></td>
+                                    <span role="button" data-bs-toggle="modal" data-bs-target="#supp_coupon">
+                                        <i class='bx bx-trash bx_supprimer' title="Supprimer coupon"></i>
+                                    </span></td>
                             </tr>
 
                     </tbody>
@@ -254,6 +275,36 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         {{-- suppression coupon --}}
+         <div>
+            <div class="modal fade" id="supp_coupon" tabindex="-1"
+                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header .avertissement  d-flex justify-content-center"
+                            style="background-color:#ee0707; color: white">
+                            <h6 class="modal-title">Avertissement !</h6>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center my-2">
+                                <i class="fa-solid fa-circle-exclamation warning"></i>
+                            </div>
+                            <small>Vous êtes sur le point d'effacer une donnée, cette
+                                action
+                                est irréversible. Continuer ?</small>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                            <form method="post" action="{{route('supprimer_coupon',$coupon->id)}}">
+                                @csrf
+                                <button type="submit" class="btn btn_enregistrer suppression_module" id=""><i class='bx bx-check me-1'></i>Oui</button>
+                            </form>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>

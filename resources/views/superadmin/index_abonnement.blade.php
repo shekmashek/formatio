@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-2">
@@ -45,22 +46,21 @@
             <div class="col-lg-10">
 
                 <div class="p-5 mb-5 mx-auto bg-body w-50 mt-5" style="border-radius: 15px">
-                    <span>Si vous acceptez le changement de tarif, nous allons générer votre facture, payable par:virement bancaire,chèque,espèce</span><br><br>
+                    <span>Si vous acceptez le changement de tarif, nous allons générer votre facture, payable par:virement bancaire,chèque,espèce.</span><br>
 
                     @if(session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}
                     </div>
                     @endif
-                    @if(session()->has('erreur'))
-                        <div class="alert alert-danger text-center">
-                            {{ session()->get('erreur') }}
-                        </div>
-                    @endif
+
                     <h3> Votre Compte actuel: {{$type_abonnement}}</h3>
 
                     <form action="{{route('enregistrer_abonnement')}}" method="POST">
                         @csrf
+                        @if(session()->has('id_coupon'))
+                            <input type="hidden" name="id_coupon" value="{{session()->get('id_coupon')}}">
+                        @endif
                         @if($entreprise!=null)
                             @foreach ($entreprise as $etp)
                             <div class="row">
