@@ -96,7 +96,9 @@
                     <p class="lien_formation"><a href="{{route('affichage_formation',$res->formation_id)}}">{{$res->nom_formation}}</a></p>
                     <p>{{$res->description}}</p>
                     <div class="detail__formation__result__avis">
-                        <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
+                        {{-- <div class="Stars" style="--note: {{ $res->pourcentage }};"></div> --}}
+                        {{-- <div class="Stars" style="--note: 2.5, --note1: 3, --note2: 4.5"></div> --}}
+                        <div id="grad"></div>
                         <span><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
                     </div>
                 </div>
@@ -454,7 +456,7 @@
                                     {{-- @canany(['isManager','isReferent','isStagiaire']) --}}
                                     @canany(['isReferent'])
                                         <div class="col-3 text-center">
-                                            <a href="{{route('inscriptionInter',[$data->type_formation_id,$data->groupe_id])}}" class="btn_inscription" role="button">
+                                            <a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="btn_inscription" role="button">
                                                 @php
                                                     $inscrit = $groupe->inscrit_session_inter($data->groupe_id);
                                                     if ($inscrit == 0) {

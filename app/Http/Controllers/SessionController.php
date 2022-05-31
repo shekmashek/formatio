@@ -154,7 +154,7 @@ class SessionController extends Controller
             $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
             // dd($formateur_cfp);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
-            $documents = $drive->file_list($cfp_nom,"Mes documents");
+            // $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
         if(Gate::allows('isReferent')){
@@ -558,7 +558,7 @@ class SessionController extends Controller
             $user_id = Auth::user()->id;
             $etp_id = responsable::where('user_id',$user_id)->value('entreprise_id');
             DB::insert('insert into groupe_entreprises (groupe_id, entreprise_id) values (?, ?)', [$request->id_groupe, $etp_id]);
-            return redirect()->route('detail_session',['id_session'=>$request->id_groupe]);
+            return redirect()->route('detail_session',[$request->id_groupe,2]);
         }catch(Exception $e){
             return redirect()->route('detail_session',[$request->id_groupe,2]);
         }

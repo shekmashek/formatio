@@ -232,12 +232,21 @@ a:focus {
 .liste__formation__item:hover .liste__formation {
     transform: scale(1.5s);
 }
-.liste__formation h4 {
+.liste__formation h5 {
     color: #7635dc;
 }
 
-.liste__formation .description {
+.liste__formation .description,
+.description {
     font-size: 0.85rem;
+}
+
+.lien_clique{
+    color: #4222c3;
+}
+
+.lien_clique:hover{
+    color: red;
 }
 
 .detail_inter {
@@ -396,7 +405,7 @@ a:focus {
     top: 4rem;
     background-color: white;
     z-index: 5;
-    padding: 0rem 1rem 1rem 1rem;
+    padding: 0rem 1rem 0rem 1rem;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     text-transform: uppercase;
 }
@@ -406,10 +415,10 @@ a:focus {
     top: 9.5rem;
     background-color: white;
     z-index: 1;
-    padding: 0rem 1rem 1rem 1rem;
+    /* padding: 0rem 1rem 1rem 1rem; */
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     text-transform: uppercase;
-    padding-top: 10px;
+    /* padding-top: 10px; */
 }
 
 .navigation_detail ul li a{
@@ -564,5 +573,51 @@ input{
     height: 150px;
 }
 
+:root {
+    --star-size: 50px;
+    --star-color: black;
+    --star-background: #fc0;
+    --star-background1: red;
+    --star-background2: blue;
+  }
 
+  #grad{
+    --poucentage: calc(var(--note) / 5 * 100%);
+    --poucentage1: calc(var(--note1) / 5 * 100%);
+    --poucentage2: calc(var(--note2) / 5 * 100%);
+    display: inline-block;
+    font-size: var(--star-size);
+    font-family: Times;
+    line-height: 1;
+    background-image: conic-gradient(var(--star-background) var(--poucentage), var(--star-background1) var(--poucentage1),var(--star-background2) var(--poucentage2));
+    border-radius: 50%;
+    color: black;
+    width: 100px;
+    height: 100px;
+    /* background-color: red; */
+}
+/* #grad {
+    width: 100px;
+    height: 100px;
+    background: conic-gradient(
+     red 6deg, orange 6deg 18deg, yellow 18deg 45deg,
+     green 45deg 110deg, blue 110deg 200deg, purple 200deg);
+    border-radius: 50%;
+  } */
 
+/* .Stars{
+    --poucentage: calc(var(--note) / 5 * 100%);
+    display: inline-block;
+    font-size: var(--star-size);
+    font-family: Times;
+    line-height: 1;
+
+} */
+/* .Stars::before {
+    content: '★★★★★';
+    letter-spacing: 3px;
+    background: conic-gradient(90deg, var(--star-background) var(--poucentage), var(--star-color) var(--poucentage));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+} */
