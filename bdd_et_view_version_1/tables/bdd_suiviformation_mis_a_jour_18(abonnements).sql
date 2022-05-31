@@ -181,9 +181,8 @@ CREATE TABLE `coupon` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 ALTER TABLE abonnements
-  add column coupon_id bigint(20) unsigned default 0,
-    ADD CONSTRAINT FOREIGN KEY(coupon_id) REFERENCES coupon(id);
+  add column coupon_id bigint(20) unsigned default 0;
 ALTER TABLE abonnement_cfps
-  add column coupon_id bigint(20) unsigned default 0,
-    ADD CONSTRAINT FOREIGN KEY(coupon_id) REFERENCES coupon(id);
+  add column coupon_id bigint(20) unsigned default 0;

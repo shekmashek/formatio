@@ -614,6 +614,7 @@ class AbonnementController extends Controller
     public function enregistrer_abonnement(Request $request)
     {
 
+        $id_coupon = $request->id_coupon;
 
         if($request->accepter == null) return back()->with('erreur','Veuillez accepter les politiques de confidentialités,les CGU et les CGV');
 
@@ -639,6 +640,7 @@ class AbonnementController extends Controller
                 $abonnement->entreprise_id = $entreprise_id;
                 $abonnement->activite = 0;
                 $abonnement->type_arret = "";
+
                 $abonnement->save();
 
                 /**générer une facture*/
@@ -669,6 +671,7 @@ class AbonnementController extends Controller
                 $abonnement_cfp_id = DB::select('select * from abonnement_cfps where cfp_id = ? and status = ? order by id desc limit 1', [$cfp_id,'En attente']);
                 // $montant =$this->fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
                 $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_cfp",['abonnement_id'],[$abonnement_cfp_id[0]->id]);
+
 
                 // //on change le statut compte id de l'organisme de formation
                 // DB::update('update cfps set statut_compte_id = 2 where id = ?', [$cfp_id]);
@@ -1103,9 +1106,11 @@ class AbonnementController extends Controller
     }
     //modification du coupon
     public function modifier_coupon(Request $request,$id){
+        $disponibilite = $this->fonct->findWhereMulitOne("coupon",["id"],[$id]);
         $coupon = $request->coupon;
         $valeur = $request->valeur;
-        DB::update('update coupon set coupon = ?, valeur = ? where id = ?', [$coupon,$valeur,$id]);
+        if($disponibilite->utilise == 1) return back()->with('message','Vous ne pouvez pas modifier ce coupon parce qu\'il a été déjà utilisé');
+        else DB::update('update coupon set coupon = ?, valeur = ? where id = ?', [$coupon,$valeur,$id]);
         return back();
     }
     //suppression de coupon
@@ -1118,11 +1123,22 @@ class AbonnementController extends Controller
     //test ajout de coupon par le client
     public function coupon_client(Request $request){
         $coupon = $request->coupon;
+        $abonnemet_id = $request->abonnemet_id;
+        $facture_id = $request->facture_id;
         $test = $this->fonct->findWhereMulitOne("coupon",["coupon"],[$coupon]);
         if($test == null) return back()->with('erreur_coupon','Désolé,le code de coupon que vous avez saisi n\'existe pas');
         elseif($test->utilise ==  1) return back()->with('erreur_coupon','Désolé,le code de coupon que vous avez saisi a été déjà utilisé');
         else{
-            return back()->with(['valeur' => $test->valeur,'coupon' => $test->coupon]);
+            DB::update('update coupon set utilise = 1 where id = ?', [$test->id]);
+            if(Gate::allows('isReferent')){
+                DB::update('update abonnements set coupon_id = ? where id = ?', [$test->id,$abonnemet_id]);
+                $factures = $this->fonct->findWhereMulitOne("factures_abonnements",["id"],[$facture_id]);
+
+                $mont_reduit = $factures->montant_facture - (($factures->montant_facture * $test->valeur)/100);
+                DB::update('update factures_abonnements set montant_facture = ? where id = ?', [$mont_reduit,$facture_id]);
+            }
+            if(Gate::allows('isCFP')) DB::update('update abonnement_cfps set coupon_id = ? where id = ?', [$test->id,$abonnemet_id]);
+            return back()->with(['valeur' => $test->valeur,'coupon' => $test->coupon,'id_coupon' => $test->id]);
         }
     }
 }

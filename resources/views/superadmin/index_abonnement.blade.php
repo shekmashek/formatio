@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-2">
@@ -46,58 +47,20 @@
 
                 <div class="p-5 mb-5 mx-auto bg-body w-50 mt-5" style="border-radius: 15px">
                     <span>Si vous acceptez le changement de tarif, nous allons générer votre facture, payable par:virement bancaire,chèque,espèce.</span><br>
-                    <span>Si vous avez un coupon, vous obtiendrez une réduction <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#coupon">J'ai un coupon</button></span><br><br>
-                    {{-- modal ajout coupon --}}
-                    <div>
-                        <div class="modal" id="coupon" aria-labelledby="coupon" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form  method="post" action="{{route('coupon_client')}}">
-                                        @csrf
-                                        <div class="modal-header">
-                                            <h5 class="modal-title text-center">Entrez le code</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control module module input" name="coupon" required  placeholder="Coupon">
-                                                <label for="coupon" class="form-control-placeholder">Coupon</label>
-                                            </div>
-                                            <div class="text-center">
-                                                <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                                <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     @if(session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}
                     </div>
                     @endif
-                    @if(session()->has('erreur'))
-                        <div class="alert alert-danger text-center">
-                            {{ session()->get('erreur') }}
-                        </div>
-                    @endif
-                    @if(session()->has('erreur_coupon'))
-                    <div class="alert alert-danger">
-                        {{ session()->get('erreur_coupon') }}
-                    </div>
-                    @endif
-                    @if(session()->has('valeur'))
-                    <div class="alert alert-success">
-                        Vous aurez une réduction de {{session()->get('valeur')}} %
-                        <input type="hidden" name="valeur" value="{{session()->get('valeur')}}">
-                        <input type="hidden" name = "coupon" value = "{{session()->get('coupon')}}">
-                    </div>
-                    @endif
+
                     <h3> Votre Compte actuel: {{$type_abonnement}}</h3>
 
                     <form action="{{route('enregistrer_abonnement')}}" method="POST">
                         @csrf
+                        @if(session()->has('id_coupon'))
+                            <input type="hidden" name="id_coupon" value="{{session()->get('id_coupon')}}">
+                        @endif
                         @if($entreprise!=null)
                             @foreach ($entreprise as $etp)
                             <div class="row">

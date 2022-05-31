@@ -19,6 +19,7 @@ CREATE OR REPLACE VIEW v_type_abonnement_etp AS SELECT
     a.created_at,
     a.type_arret,
     a.coupon_id,
+    cp.coupon,
     cp.valeur,
     cp.utilise
 FROM
@@ -51,6 +52,7 @@ CREATE OR REPLACE VIEW v_type_abonnement_cfp AS SELECT
     a.type_arret,
     a.coupon_id,
     cp.coupon,
+    cp.valeur,
     cp.utilise
 FROM
     type_abonnements_of t
