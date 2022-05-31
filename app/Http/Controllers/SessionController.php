@@ -221,9 +221,6 @@ class SessionController extends Controller
         $lieu_formation = DB::select('select lieu from details where groupe_id = ?', [$id]);
         if(count($lieu_formation)>0){
             $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
-        }else{
-            $lieu_formation[0]='';
-            $lieu_formation[1]='';
         }
 
         return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation','frais_annexe'));
@@ -461,12 +458,24 @@ class SessionController extends Controller
         $detail = DB::select('select * from v_evaluation_stagiaire_competence where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
         $globale = DB::select('select * from v_evaluation_globale where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
         $note_avant = DB::select('select * from evaluation_stagiaires where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
+        $module = DB::select('select * from v_groupe_projet_module where groupe_id = ?',[$request->groupe])[0];
         if(count($note_avant)>0){
             $note_avant = 1;
         }else{
             $note_avant = 0;
         }
-        return response()->json(['detail'=>$detail,'globale'=>$globale,'note_avant'=>$note_avant]);
+        return response()->json(['detail'=>$detail,'globale'=>$globale,'note_avant'=>$note_avant,'module'=>$module]);
+    }
+
+    public function competence_stagiaire(Request $request){
+        try{
+            $users = Auth::user()->id;
+            $stagiaire= stagiaire::where('user_id',$users)->value('id');
+            $groupe_id =$request->groupe_id;
+            return view('projet_session.resultat_stagiaire',compact('stagiaire','groupe_id'));
+        }catch(Exception $e){
+            return back();
+        }
     }
 
     public function acceptation_session(Request $request){

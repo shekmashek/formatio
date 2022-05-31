@@ -36,7 +36,7 @@ class EncaissementController extends Controller
             $datas = DB::select('select * from frais_annexes');
             $data = encaissement::getProjetEntreprise($id_etp, $id_projet);
             $infos = encaissement::getFactureEncaissement($id_projet, $id_facture[0]->id);
-            return view('admin.encaissement.encaissement', compact('devise','datas', 'data', 'id_facture', 'infos'));
+            return view('admin.encaissement.encaissement', compact('devise', 'datas', 'data', 'id_facture', 'infos'));
         } else {
             $projet = projet::get()->unique('nom_projet');
             $data = projet::orderBy('nom_projet')->with('entreprise')->take($id_projet)->get();
@@ -51,22 +51,24 @@ class EncaissementController extends Controller
 
     public function encaissement(Request $request)
     {
-        // dd($request->input());
+        // encaissement::validation($request);
+
 
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;
+
         DB::beginTransaction();
         try {
-            encaissement::validation($request);
+
             encaissement::insert($request, $cfp_id, $resp->id, $resp->nom_resp_cfp . " " . $resp->prenom_resp_cfp);
             DB::commit();
             // return back()->with('encaissement_ok', 'Paiement réussi');
-            return redirect()->route('liste_facture');
         } catch (Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Paiements échoué');
         }
+        return redirect()->route('liste_facture');
     }
 
     public function liste_encaissement(Request $request)
@@ -77,7 +79,7 @@ class EncaissementController extends Controller
 
         $numero_fact = $request->num_facture;
         $encaissement = DB::select('select * from v_encaissement where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
-        return view('admin.encaissement.liste_encaissement', compact('devise','encaissement', 'numero_fact'));
+        return view('admin.encaissement.liste_encaissement', compact('devise', 'encaissement', 'numero_fact'));
     }
 
     public function generatePDF($numero_fact, Request $request)
@@ -102,7 +104,7 @@ class EncaissementController extends Controller
         ]);
 
 
-        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('devise','encaissement', 'montant_totale','cfp','entreprise','facture'));
+        $pdf = PDF::loadView('admin.pdf.pdf_liste_encaissement', compact('devise', 'encaissement', 'montant_totale', 'cfp', 'entreprise', 'facture'));
         $pdf->getDomPDF()->setHttpContext(
             stream_context_create([
                 'ssl' => [
@@ -151,14 +153,13 @@ class EncaissementController extends Controller
         // return response()->json([intval($encaissement[0]->payement), $encaissement[0]->libelle, $encaissement[0]->num_facture, $encaissement[0]->date_encaissement]);
         // return response()->json([$data["userData"], $data["mode_finance_edit"], $data["mode_finance_list"]]);
         return response()->json([$data]);
-
     }
 
 
 
     public function modifier(Request $request)
     {
-        $numero_fact =null;
+        $numero_fact = null;
         DB::beginTransaction();
         try {
             encaissement::validation($request);
@@ -166,8 +167,13 @@ class EncaissementController extends Controller
             $montant = $request->montant;
             $libelle = $request->libelle;
             $numero_fact = $request->num_facture;
-            encaissement::modifierEncaissementNow($id_encaissement, $montant, $libelle,
-            $request->mode_payement, $request->date_encaissement);
+            encaissement::modifierEncaissementNow(
+                $id_encaissement,
+                $montant,
+                $libelle,
+                $request->mode_payement,
+                $request->date_encaissement
+            );
             encaissement::modifierAutres($id_encaissement);
             DB::commit();
             return redirect()->route('listeEncaissement', [$numero_fact]);
@@ -175,8 +181,6 @@ class EncaissementController extends Controller
             DB::rollBack();
             return redirect()->back();
         }
-
-
     }
 
 
@@ -198,6 +202,6 @@ class EncaissementController extends Controller
         $numero_fact = $request->num_facture;
         $dta = DB::select('select dernier_montant_ouvert,invoice_date from v_facture_actif where num_facture = ? and cfp_id=?', [$numero_fact, $cfp_id]);
         $montant_restant = number_format($dta[0]->dernier_montant_ouvert, 2, ",", " ");
-        return response()->json([$montant_restant, $numero_fact,$dta[0]->invoice_date]);
+        return response()->json([$montant_restant, $numero_fact, $dta[0]->invoice_date]);
     }
 }

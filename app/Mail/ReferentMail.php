@@ -31,7 +31,7 @@ class ReferentMail extends Mailable
     {
         $username = User::where('email',Auth::user()->email)->value('name');
 
-        return $this->from('contact@numerika.center')
+        return $this->from('contact-mg@upskill-sarl.com')
                     ->subject('Nouveau référent créée')
                     ->view('emails.referentNotif',compact('username'));
     }

@@ -1,15 +1,32 @@
-*{
-    font-family: 'Open Sans';
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300&display=swap");
+:root {
+    --body-font-color: black;
+}
+/* @media screen and (min-width: 960px) { */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    color: var(--body-font-color);
+    overflow: auto;
+    line-height :2rem;
 }
 .titre_text{
     font-family: 'Open Sans';
-    font-size: 24px;
+    font-size: 1.2rem;
     font-weight: bold;
 }
-body{
+/* body{
     margin-top: 50px;
     padding: 0;
-}
+} */
 .navbar_accueil{
     background-color: whitesmoke;
     width: 100%;
@@ -18,11 +35,11 @@ body{
 }
 li{
     list-style: none;
-    margin : 0 6px;
+    margin : 0 3px;
 }
 h2{
     color:rgb(130,33,100);
-    text-align: center;
+    
 }
 h4{
     text-align: center;

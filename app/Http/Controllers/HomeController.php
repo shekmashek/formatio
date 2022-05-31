@@ -146,16 +146,20 @@ class HomeController extends Controller
         if ($request->input('nom_resp') != null) {
             DB::update('update employers set nom_emp = ? where id = ?', [$request->input('nom_resp'), $id_resp]);
         }
+        if ($request->input('prenom_resp') != null) {
+            DB::update('update responsables set prenom_resp = ? where id = ?', [$request->input('prenom_resp'), $id_resp]);
+        }
         if ($request->input('date_naissance_resp') != null) {
             DB::update('update employers set date_naissance_emp = ? where id = ?', [$request->input('date_naissance_resp'), $id_resp]);
         }
-        if ($request->input('genre') != null) {
-            if ($request->input('genre') == "Homme") $genre = 2;
+        if ($request->input('sexe_resp') != null) {
+            if ($request->input('sexe_resp') == "Homme")
+                $genre = 2;
             else $genre = 1;
             DB::update('update responsables set genre_id = ? where id = ?', [$genre, $id_resp]);
         }
         if ($request->input('tel_resp') != null) {
-            DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_resp'), $id_resp]);
+            DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('telephone_resp'), $id_resp]);
         }
         if ($request->input('cin_resp') != null) {
             DB::update('update employers set cin_emp = ? where id = ?', [$request->input('cin_resp'), $id_resp]);
@@ -185,15 +189,15 @@ class HomeController extends Controller
     public function index(Request $request, $id = null)
     {
         // if (Gate::allows('isFormateurPrincipale')) {
-            if (Gate::allows('isFormateur')) {
+        if (Gate::allows('isFormateur')) {
             return redirect()->route('calendrier');
         }
         // if (Gate::allows('isManagerPrincipale')) {
-            if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager')) {
             return redirect()->route('calendrier');
         }
         // if (Gate::allows('isStagiairePrincipale')) {
-            if (Gate::allows('isStagiaire')) {
+        if (Gate::allows('isStagiaire')) {
             //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
             $testNull = DB::select('select * from stagiaires where user_id  = ? ', [Auth::user()->id]);
@@ -251,7 +255,7 @@ class HomeController extends Controller
         }
 
         // if (Gate::allows('isCFPPrincipale')) {
-            if (Gate::allows('isCFP')) {
+        if (Gate::allows('isCFP')) {
 
             $fonct = new FonctionGenerique();
 
@@ -261,9 +265,9 @@ class HomeController extends Controller
 
             $cfp = Cfp::where('id', $cfp_id)->value('nom');
 
-            $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
+            $cfps = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
 
-            if($cfps->statut_compte_id == 1) $vue = 1;
+            if ($cfps->statut_compte_id == 1) $vue = 1;
             else $vue = 2;
 
             $user_id = User::where('id', Auth::user()->id)->value('id');
@@ -340,15 +344,17 @@ class HomeController extends Controller
                 $j1 = strftime('%d', strtotime($cfp_ab[0]->due_date));
                 $j2 = strftime('%d', strtotime($dtNow));
                 $jour_restant = $j2 - $j1;
-                $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                // $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp", ["id"], [$cfp_id]);
+                $message = "Vous êtes en mode " . $statut_compte->nom_statut;
                 $test = 1;
             } else {
                 $test = 0;
-                $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
-                $message = "Vous êtes en mode ".$statut_compte->nom_statut;
+                $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp", ["id"], [$cfp_id]);
+                $message = "Vous êtes en mode " . $statut_compte->nom_statut;
             }
 
-            return view('cfp.dashboard_cfp.dashboard', compact('vue','test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler'));
+            return view('cfp.dashboard_cfp.dashboard', compact('vue', 'test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler'));
         }
         if (Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
@@ -369,7 +375,7 @@ class HomeController extends Controller
         // }
 
         // if (Gate::allows('isReferentPrincipale')) {
-            if (Gate::allows('isReferent')) {
+        if (Gate::allows('isReferent')) {
 
 
             $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
@@ -413,12 +419,14 @@ class HomeController extends Controller
                     $j1 = strftime('%d', strtotime($etp_ab[0]->due_date));
                     $j2 = strftime('%d', strtotime($dtNow));
                     $jour_restant = $j2 - $j1;
-                    $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                    // $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                    $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise", ["id"], [$etp_id]);
+                    $message = "Vous êtes en mode " . $statut_compte->nom_statut;
                     $test = 1;
                 } else {
                     $test = 0;
-                    $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
-                    $message = "Vous êtes en mode ".$statut_compte->nom_statut;
+                    $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise", ["id"], [$etp_id]);
+                    $message = "Vous êtes en mode " . $statut_compte->nom_statut;
                 }
 
 
@@ -473,7 +481,7 @@ class HomeController extends Controller
                     $referent = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
                 }
 
-                return view('referent.dashboard_referent.dashboard_referent', compact('test','message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
+                return view('referent.dashboard_referent.dashboard_referent', compact('test', 'message', 'etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler'));
             }
         }
 
@@ -616,7 +624,6 @@ class HomeController extends Controller
             $page = 1;
         }
         $fonct = new FonctionGenerique();
-
         $projet_model = new projet();
         $totale_invitation = 0;
         $entp = new entreprise();
@@ -624,7 +631,7 @@ class HomeController extends Controller
         $status = DB::select('select * from status');
         $type_formation_id = $request->type_formation;
         $responsable_id = responsable::where('user_id', $user_id)->value('id');
-        $cfp_id = ResponsableCfpModel::value('cfp_id');
+        $cfp_id = $request->id;
         if (Gate::allows('isReferent')) {
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ? and cfp_id=?', [$entreprise_id, $cfp_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
@@ -833,7 +840,7 @@ class HomeController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-            $data = DB::select('select * from v_projet_formateur where cfp_id = ? and formateur_id = ? order by date_projet desc limit ? offset ?',[$cfp_id,$formateur_id,$nb_par_page,$offset]);
+            $data = DB::select('select * from v_projet_formateur where cfp_id = ? and formateur_id = ? order by date_projet desc limit ? offset ?', [$cfp_id, $formateur_id, $nb_par_page, $offset]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
             $formation = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
             $module = $fonct->findAll("modules");
@@ -871,17 +878,17 @@ class HomeController extends Controller
             // fin pagination
             // dd($fin_page,$page,$stg_id);
             $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc limit ? offset ?', [$stg_id, $nb_par_page, $offset]);
-
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
     }
 
-    public function statut_presence_emargement(Request $req){
+    public function statut_presence_emargement(Request $req)
+    {
         $groupe_id = $req->groupe;
         $groupe = new Groupe();
         $statut_presence = $groupe->statut_presences($groupe_id);
         $statut_evaluation = $groupe->statut_evaluation($groupe_id);
-        return response()->json(['presence'=>$statut_presence,'evaluation'=>$statut_evaluation]);
+        return response()->json(['presence' => $statut_presence, 'evaluation' => $statut_evaluation]);
     }
 
     public function compte(Request $request)
@@ -1063,7 +1070,7 @@ class HomeController extends Controller
         $total_engage = DB::select('select ifnull(sum(montant_total),0) as engage from v_facture_actif where entreprise_id = ? and facture_encour =  ? and year(due_date) = ?', [$entreprise_id[0]->entreprise_id, "en_cour", $current_year]);
         //get total budget restant
         $total_restant = $total_budget[0]->total - ($total_realise[0]->realise + $total_engage[0]->engage);
-        return view('referent.dashboard_referent.dashboard_referent_budget_prev',compact('total_budget','total_realise','total_engage','total_restant'));
+        return view('referent.dashboard_referent.dashboard_referent_budget_prev', compact('total_budget', 'total_realise', 'total_engage', 'total_restant'));
     }
 
     //creation iframe
@@ -1108,7 +1115,7 @@ class HomeController extends Controller
 
         // $iframe_etp = $this->fonct->findAll("v_entreprise_iframe");
         // $iframe_of = $this->fonct->findAll("v_cfp_iframe");
-        return view('bi.iframe', compact('lien_invite','iframe_etp', 'iframe_of', 'pagination_cfp', 'pagination_etp', 'pour_list'));
+        return view('bi.iframe', compact('lien_invite', 'iframe_etp', 'iframe_of', 'pagination_cfp', 'pagination_etp', 'pour_list'));
     }
 
 
@@ -1135,13 +1142,13 @@ class HomeController extends Controller
             $nom_entiter_etp = $nom_entiter_etp_pag;
         }
 
-        if($nom_entiter_etp==null){
-            $nom_entiter_etp="";
-        } else{
+        if ($nom_entiter_etp == null) {
+            $nom_entiter_etp = "";
+        } else {
             $pour_list = "ETP";
         }
-        if($nom_entiter_of==null){
-            $nom_entiter_of="";
+        if ($nom_entiter_of == null) {
+            $nom_entiter_of = "";
         } else {
             $pour_list = "OF";
         }
@@ -1172,7 +1179,7 @@ class HomeController extends Controller
         $totaleData_cfp = $this->fonct->getNbrePagination("v_cfp_iframe", "nom", ["nom"], ["LIKE"], ["%" . $nom_entiter_of . "%"], "AND");
         $pagination_cfp = $this->fonct->nb_liste_pagination($totaleData_cfp, $nbPagination_cfp, $nb_limit);
 
-        return view('bi.iframe', compact('iframe_etp', 'iframe_of', 'pagination_cfp', 'pagination_etp', 'pour_list','nom_entiter_of','nom_entiter_etp'));
+        return view('bi.iframe', compact('iframe_etp', 'iframe_of', 'pagination_cfp', 'pagination_etp', 'pour_list', 'nom_entiter_of', 'nom_entiter_etp'));
     }
 
     // autocomplete IFrame
@@ -1191,21 +1198,22 @@ class HomeController extends Controller
 
 
     //taxe
-    public function taxe(){
+    public function taxe()
+    {
         // $tva=DB::select('select * from valeur_TVA ORDER BY id DESC LIMIT 1');
         // $id=tva::value('id');
-        $tva=DB::select('select * from taxes where id =?',[1]);
+        $tva = DB::select('select * from taxes where id =?', [1]);
         // $tva=DB::select('select * from valeur_TVA  ');
         // $taux=tva::findOrFail($request->id);
-    //     dd($taux);
-    //    dd($taux);
-        return view('layouts.taxe',compact('tva'));
+        //     dd($taux);
+        //    dd($taux);
+        return view('layouts.taxe', compact('tva'));
     }
     public function update_tva(Request $request)
     {
         // $tva=tva::where('id',$request->id)->update(['tva'=>$request->tva]);
-    DB::update('update taxes set pourcent=? where id=?',[$request->tva,$request->id]);
-    return back();
+        DB::update('update taxes set pourcent=? where id=?', [$request->tva, $request->id]);
+        return back();
     }
     // public function delete_tva($id)
     // {
@@ -1227,7 +1235,8 @@ class HomeController extends Controller
         return response()->json($data);
     }
 
-    public function devise(){
+    public function devise()
+    {
 
         // $liste=DB::select('select * from devises ');
         // $devises=DB::select('select * from v_devise order by created_at Desc ');
@@ -1235,19 +1244,19 @@ class HomeController extends Controller
         //       $dev = new Devise();
         // $devis_actuel =  $dev->getListDevise();
         // $devise=DB::select('select * from devise ORDER BY id DESC LIMIT 1');
-        $devise=DB::select('select * from devise');
+        $devise = DB::select('select * from devise');
 
         // $devise=DB::select('select * from devise  ');
-        return view('layouts.devis',compact('devise'));
+        return view('layouts.devis', compact('devise'));
     }
     public function update_devise(Request $request)
     {
-        DB::update('update devise set devise=? where id=?',[$request->devise,$request->id]);
+        DB::update('update devise set devise=?,reference=? where id=?', [$request->devise, $request->reference, $request->id]);
         return back();
     }
     public function delete_devise($id)
     {
-        DB::delete('delete devise from devise where id=?',[$id]);
+        DB::delete('delete devise from devise where id=?', [$id]);
         return back();
     }
     // public function edit($id)
@@ -1306,7 +1315,7 @@ class HomeController extends Controller
 
         //     }
         // }
-        $inserer = DB::update('update  devise set devise=? where  id=?', [$request->devis,8]);
+        $inserer = DB::update('update  devise set devise=? where  id=?', [$request->devis, 8]);
 
         return back();
     }
@@ -1330,7 +1339,8 @@ class HomeController extends Controller
     //     return back();
     // }
 
-    public function enregistrer_iframe_etp(Request $request){
+    public function enregistrer_iframe_etp(Request $request)
+    {
         $url_iframe = $request->iframe_url;
         $etp_id = $request->entreprise_id;
         $fonct = new FonctionGenerique();
@@ -1345,17 +1355,18 @@ class HomeController extends Controller
         $entreprise = $fonct->insert_iframe('iframe_cfp', 'cfp_id', $cfp_id, $url_iframe);
         return back();
     }
-    public function enregistrer_iframe_inviter(Request $request){
+    public function enregistrer_iframe_inviter(Request $request)
+    {
         $this->fonct->insert_iframe_invite($request->url_invite);
         // on va recuperer toutes les entreprises qui ont un statut compte = 1 (invité)
-        $entreprises = $this->fonct->findWhere("entreprises",["statut_compte_id"],[1]);
-        for ($i=0; $i < count($entreprises); $i++) {
-            $this->fonct->insert_iframe('iframe_entreprise','entreprise_id',$entreprises[$i]->id,$request->url_invite);
+        $entreprises = $this->fonct->findWhere("entreprises", ["statut_compte_id"], [1]);
+        for ($i = 0; $i < count($entreprises); $i++) {
+            $this->fonct->insert_iframe('iframe_entreprise', 'entreprise_id', $entreprises[$i]->id, $request->url_invite);
         }
-         // on va recuperer toutes les cfps qui ont un statut compte = 1 (invité)
-        $cfps = $this->fonct->findWhere("cfps",["statut_compte_id"],[1]);
-        for ($i=0; $i < count($cfps); $i++) {
-            $this->fonct->insert_iframe('iframe_cfp','cfp_id',$cfps[$i]->id,$request->url_invite);
+        // on va recuperer toutes les cfps qui ont un statut compte = 1 (invité)
+        $cfps = $this->fonct->findWhere("cfps", ["statut_compte_id"], [1]);
+        for ($i = 0; $i < count($cfps); $i++) {
+            $this->fonct->insert_iframe('iframe_cfp', 'cfp_id', $cfps[$i]->id, $request->url_invite);
         }
         return back();
     }
@@ -1374,12 +1385,12 @@ class HomeController extends Controller
         $fonct = new FonctionGenerique();
         $id_cfp = DB::select('select * from responsables_cfp where user_id = ?', [Auth::user()->id]);
 
-        $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$id_cfp[0]->cfp_id]);
-        if($cfps->statut_compte_id == 1) $vue = 1;
+        $cfps = $fonct->findWhereMulitOne("cfps", ["id"], [$id_cfp[0]->cfp_id]);
+        if ($cfps->statut_compte_id == 1) $vue = 1;
         else $vue = 2;
 
         $iframe_cfp = $fonct->findWhereMulitOne("v_cfp_iframe", ["cfp_id"], [$id_cfp[0]->cfp_id]);
-        return view('layouts.bi', compact('vue','iframe_cfp'));
+        return view('layouts.bi', compact('vue', 'iframe_cfp'));
     }
     public function BI()
     {
@@ -1395,17 +1406,18 @@ class HomeController extends Controller
         $modification->update_iframe('iframe_entreprise', 'iframe', 'entreprise_id', $entreprise, $iframe);
         return back();
     }
-    public function modifier_iframe_inviter(Request $request){
-        $this->fonct->update_iframe_invite($request->id_inviter,$request->n_iframe_invite);
+    public function modifier_iframe_inviter(Request $request)
+    {
+        $this->fonct->update_iframe_invite($request->id_inviter, $request->n_iframe_invite);
         // on va recuperer toutes les entreprises qui ont un statut compte = 1 (invité)
-        $entreprises = $this->fonct->findWhere("entreprises",["statut_compte_id"],[1]);
-        for ($i=0; $i < count($entreprises); $i++) {
-            DB::update('update iframe_entreprise set iframe = ? where entreprise_id = ?', [$request->n_iframe_invite,$entreprises[$i]->id]);
+        $entreprises = $this->fonct->findWhere("entreprises", ["statut_compte_id"], [1]);
+        for ($i = 0; $i < count($entreprises); $i++) {
+            DB::update('update iframe_entreprise set iframe = ? where entreprise_id = ?', [$request->n_iframe_invite, $entreprises[$i]->id]);
         }
-         // on va recuperer toutes les cfps qui ont un statut compte = 1 (invité)
-        $cfps = $this->fonct->findWhere("cfps",["statut_compte_id"],[1]);
-        for ($i=0; $i < count($cfps); $i++) {
-            DB::update('update iframe_cfp set iframe = ? where cfp_id = ?', [$request->n_iframe_invite,$cfps[$i]->id]);
+        // on va recuperer toutes les cfps qui ont un statut compte = 1 (invité)
+        $cfps = $this->fonct->findWhere("cfps", ["statut_compte_id"], [1]);
+        for ($i = 0; $i < count($cfps); $i++) {
+            DB::update('update iframe_cfp set iframe = ? where cfp_id = ?', [$request->n_iframe_invite, $cfps[$i]->id]);
         }
         return back();
     }
@@ -1417,16 +1429,17 @@ class HomeController extends Controller
         $suppression->supprimer_iframe('iframe_entreprise', 'entreprise_id', $id_etp);
         return back();
     }
-    public function supprimer_iframe_inviter(Request $request){
+    public function supprimer_iframe_inviter(Request $request)
+    {
         $this->fonct->supprimer_iframe_invite($request->id_invite);
-         // on va recuperer toutes les entreprises qui ont un statut compte = 1 (invité)
-        $entreprises = $this->fonct->findWhere("entreprises",["statut_compte_id"],[1]);
-        for ($i=0; $i < count($entreprises); $i++) {
+        // on va recuperer toutes les entreprises qui ont un statut compte = 1 (invité)
+        $entreprises = $this->fonct->findWhere("entreprises", ["statut_compte_id"], [1]);
+        for ($i = 0; $i < count($entreprises); $i++) {
             DB::delete('delete from iframe_entreprise where entreprise_id = ?', [$entreprises[$i]->id]);
         }
-          // on va recuperer toutes les cfps qui ont un statut compte = 1 (invité)
-        $cfps = $this->fonct->findWhere("cfps",["statut_compte_id"],[1]);
-        for ($i=0; $i < count($cfps); $i++) {
+        // on va recuperer toutes les cfps qui ont un statut compte = 1 (invité)
+        $cfps = $this->fonct->findWhere("cfps", ["statut_compte_id"], [1]);
+        for ($i = 0; $i < count($cfps); $i++) {
             DB::delete('delete from iframe_cfp where cfp_id = ?', [$cfps[$i]->id]);
         }
         return back();

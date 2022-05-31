@@ -81,7 +81,7 @@
         <div class="col-lg-4">
 
             <div class="form-control">
-                <p class="text-center">Informations générales</p>
+                <p class="text-center">Informations générales </p>
 
                 <div class="d-flex align-items-center justify-content-between hover" style="border-bottom: solid 1px #e8dfe5;">
                     <p class="p-1 m-0" style="font-size: 12px">PHOTO

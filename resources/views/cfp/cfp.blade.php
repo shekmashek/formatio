@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<p class="text_header m-0 mt-1">Organisme de formation collaboré</p>
+<p class="text_header m-0 mt-1">Organisme de formation </p>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
@@ -52,6 +52,9 @@
         tbody tr {
             vertical-align: middle;
         }
+        th{
+            font-weight: 300;
+        }
 
         td {
             vertical-align: center;
@@ -61,21 +64,25 @@
 
     <div class="row w-100 bg-none mt-5 font_text">
 
-        <div class="col-md-7">
+        <div class="col-md-8">
             {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
+                @if(session()->has('message'))
+                <div class="alert alert-danger">
+                    {{ session()->get('message') }}
+                </div>
+                 @endif
+                <h4>Les organismes de formation en collaboration avec vous</h4>
 
-            <h4>Centre de Formation Professionel déjà collaborer</h4>
+                {{-- <div class="table-responsive text-center"> --}}
 
-            {{-- <div class="table-responsive text-center"> --}}
-
-            <table class="table  table-borderless table-lg table-hover">
-                <thead style="font-size:12.5px; color:#676767; border-bottom: 0.5px solid rgb(103, 103, 103); line-hight:20px">
-                    <th>Organisme de Formation</th>
-                    {{-- <th>Téléphone</th> --}}
-                    <th>Réferent Principal</th>
-                    <th>Action</th>
-                </thead>
-                <tbody id="data_collaboration" style="font-size: 11.5px;">
+                    <table class="table  table-borderless table-lg table-hover">
+                        <thead style="font-size:12.5px; color:#676767; border-bottom: 0.5px solid rgb(103, 103, 103); line-hight:20px">
+                            <th>Organisme de Formation</th>
+                            {{-- <th>Téléphone</th> --}}
+                            <th>Réferent Principal</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody id="data_collaboration" style="font-size: 11.5px;">
 
                     @if (count($cfp)<=0) <tr>
                         <td> Aucun centre de formation collaborer</td>
@@ -103,8 +110,53 @@
                             {{-- <td>
                                         <div align="left">
                                             <strong>{{$centre->nom}}</strong>
-                            <p style="color: rgb(238, 150, 18)">{{$centre->email}}</p>
-                            <h6>{{$centre->slogan}}</h6>
+                                            <p style="color: rgb(238, 150, 18)">{{$centre->email}}</p>
+                                            <h6>{{$centre->slogan}}</h6>
+                                        </div>
+                                    <td>
+                                        <div align="rigth">
+                                            <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
+                                        </div>
+                                    </td> --}}
+
+                                        <td style="vertical-align: middle" >
+                                            <a href="{{route('tous_projets',$centre->cfp_id)}}" class="btn btn-info btn-sm " style="color: white;text-decoration:none">Voir tous les projets</a>
+                                            <a  data-bs-toggle="modal" class="ms-3 mt-5"  data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i  class='bx bx-trash bx_supprimer'></i></a>
+                                        </td>
+
+                                </tr>
+                            {{-- modal delete  --}}
+                            <div class="modal fade" id="exampleModal_{{$centre->cfp_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
+                                    @csrf
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
+                                            <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                        </div>
+                                        <div class="modal-body">
+                                            <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                        </div>
+
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
+                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                            <input name="cfp_id" type="text" value="{{$centre->cfp_id}}" hidden>
+                                        </div>
+                                </div>
+                                 </div>
+                                 </form>
+
+                            </div>
+
+                            {{-- fin  --}}
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
+            {{-- </div> --}}
+            {{-- </div> --}}
         </div>
         <td>
             <div align="rigth">
@@ -125,30 +177,33 @@
                     </li>
             </div>
 
-        </td>
-        </tr>
+        <div class="col-md-4 mt-2 ">
 
+            <h4>Inviter un organisme de formation</h4>
+            {{-- <p>
+                Pour travailler avec une Centre de Formation Professionel(CFP), il suffit simplement de se collaborer.
+                La procédure de collaboration ce qu'il faut avoir "<strong> le Nom et adresse mail vers son responsable</strong>".
+            </p> --}}
 
         {{-- modal delete  --}}
         <div class="modal fade" id="exampleModal_{{$centre->cfp_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <form action="{{route('mettre_fin_cfp_etp')}}" method="POST">
                 @csrf
-
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                            <h4 class="modal-title text-white">Avertissement !</h4>
-
+                <div>
+                    <div class="mb-3 row">
+                        <label for="nom" style="font-size: 13px" class="col-sm-2 col-form-label text-end">Nom <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                        <input type="text" autocomplete="off" class="form-control mb-2" id="inlineFormInput" name="nom_cfp"  required />
                         </div>
-                        <div class="modal-body">
-                            <small>Vous <span style="color: red"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                    </div>
+                    <div class="mb-3 row">
+                        <label style="font-size:13px" class="col-sm-2 col-form-label text-end">Email  <span style="color:red">*</span></label>
+                        <div class="col-sm-9">
+                        <input type="email" autocomplete="off" class="form-control  mb-2" id="inlineFormInput" name="email_cfp"  required />
                         </div>
-
-                        <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                            <input name="cfp_id" type="text" value="{{$centre->cfp_id}}" hidden>
-                        </div>
+                    </div>
+                    <div class="text-end mt-3 col-sm-11">
+                        <button type="submit" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Envoyer l'invitation</button>
                     </div>
                 </div>
             </form>

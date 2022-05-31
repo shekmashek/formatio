@@ -358,47 +358,54 @@
                         @endforeach
                     </div>
                     {{-- 1.563rem --}}
-                    <div class="col-lg-9 ms-5" id="validation_module">
+                    <div class="col-lg-9 ms-5">
                         <div class="row p-2">
-                            @foreach ($competences as $comp)
-                                <div class="col-lg-4 text-start p-1"><span class="mt-2">{{ $comp->titre_competence }}</span></div>
-                                <div class="col-lg-2"><input class="p-0 m-1 py-1" style="height: 1.98rem; width: 4rem; justify-content:center; text-align:right;" type="number" min="1" max="10" placeholder="  ../10" name="note[{{ $comp->id }}]" required></div>
-                                <div class="col-lg-6 d-flex justify-content-arround " >
-                                    <div class="mb_top">
-                                        <input type="radio" class="btn-check" name="status[{{ $comp->id }}]" id="danger-outlined_{{ $comp->id }}" data-id="{{ $comp->id }}" autocomplete="off" value="1" required>
-                                        <label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_{{ $comp->id }}">NON-ACQUIS</label>
-                                    </div>
-                                    <div class="mb_top">
-                                        <input type="radio" class="btn-check" name="status[{{ $comp->id }}]" id="warning-outlined_{{ $comp->id }}" data-id="{{ $comp->id }}" autocomplete="off" value="2" required>
-                                        <label class=" button_test mb-1 px-2 py-1 btn-outline-warning" role="button" for="warning-outlined_{{ $comp->id }}">EN COURS</label>
-                                    </div>
-                                    <div class="mb_top">
-                                        <input type="radio" class="btn-check" name="status[{{ $comp->id }}]" id="success-outlined_{{ $comp->id }}" data-id="{{ $comp->id }}" autocomplete="off" value="3" required>
-                                        <label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="success-outlined_{{ $comp->id }}">ACQUIS</label>
-                                    </div>
-                                </div>
-                            @endforeach
+                            <div class="col-lg-4 text-start">Compétence</div>
+                            <div class="col-lg-2">Note</div>
+                            <div class="col-lg-6 text-start">Validation</div>
                         </div>
-                        <div class="row mt-2 p-2">
-                            <div class="col-lg-4 py-1">
-                                <span class="me-4 mt-1">Validation globale pour le module :</span>
+                        <div id="validation_module">
+                            <div class="row p-2">
+                                @foreach ($competences as $comp)
+                                    <div class="col-lg-4 text-start p-1"><span class="mt-2">{{ $comp->titre_competence }}</span></div>
+                                    <div class="col-lg-2"><input class="p-0 m-1 py-1" style="height: 1.98rem; width: 4rem; justify-content:center; text-align:right;" type="number" min="1" max="10" placeholder="  ../10" name="note[{{ $comp->id }}]" required></div>
+                                    <div class="col-lg-6 d-flex justify-content-arround " >
+                                        <div class="mb_top">
+                                            <input type="radio" class="btn-check" name="status[{{ $comp->id }}]" id="danger-outlined_{{ $comp->id }}" data-id="{{ $comp->id }}" autocomplete="off" value="1" required>
+                                            <label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_{{ $comp->id }}">NON-ACQUIS</label>
+                                        </div>
+                                        <div class="mb_top">
+                                            <input type="radio" class="btn-check" name="status[{{ $comp->id }}]" id="warning-outlined_{{ $comp->id }}" data-id="{{ $comp->id }}" autocomplete="off" value="2" required>
+                                            <label class=" button_test mb-1 px-2 py-1 btn-outline-warning" role="button" for="warning-outlined_{{ $comp->id }}">EN COURS</label>
+                                        </div>
+                                        <div class="mb_top">
+                                            <input type="radio" class="btn-check" name="status[{{ $comp->id }}]" id="success-outlined_{{ $comp->id }}" data-id="{{ $comp->id }}" autocomplete="off" value="3" required>
+                                            <label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="success-outlined_{{ $comp->id }}">ACQUIS</label>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                            <div class="col-lg-8 d-flex justify-content-arround">
-                                <div class="">
-                                    <input type="radio" class="btn-check" name="note_globale" id="danger-outlined_nv"  autocomplete="off" value="1" required>
-                                    <label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_nv">NON-VALIDÉ</label>
+                            <div class="row mt-2 p-2">
+                                <div class="col-lg-4 py-1">
+                                    <span class="me-4 mt-1">Validation globale pour le module :</span>
                                 </div>
-                                <div class="">
-                                    <input type="radio" class="btn-check" name="note_globale" id="danger-outlined_v"  autocomplete="off" value="2" required>
-                                    <label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="danger-outlined_v">VALIDÉ</label>
+                                <div class="col-lg-8 d-flex justify-content-arround">
+                                    <div class="">
+                                        <input type="radio" class="btn-check" name="note_globale" id="danger-outlined_nv"  autocomplete="off" value="1" required>
+                                        <label class=" mb-1 button_test border_rad_1 py-1 px-2 btn-outline-danger" role="button" for="danger-outlined_nv">NON-VALIDÉ</label>
+                                    </div>
+                                    <div class="">
+                                        <input type="radio" class="btn-check" name="note_globale" id="danger-outlined_v"  autocomplete="off" value="2" required>
+                                        <label class="button_test mb-1 px-2 py-1 pt_top border_rad_2 btn-outline-primary" role="button" for="danger-outlined_v">VALIDÉ</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-arround">
-                    <div class="d-grid gap-2 col-6 mx-auto mt-3">
-                        <button class="btn inserer_emargement" id="boutton_save_eval" type="submit">Sauvegarder</button>
+                    <div class="d-grid gap-2 col-2 mx-auto mt-3">
+                        <button class="btn btn_enregistrer" id="boutton_save_eval" type="submit"><i class="bx bx-check me-1"></i>Enregistrer</button>
                     </div>
                 </div>
             </form>

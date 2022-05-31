@@ -12,6 +12,7 @@
    border-radius : 75px;
  }
 </style>
+
     <div class="page-content page-container" id="page-content">
         <div class="padding">
             <div class="row container d-flex justify-content-center">
@@ -48,7 +49,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                         <h6 class="m-b-20  f-w-600">Information professionnelle</h6>
-                                    <hr>
+                                    <hr
                                             <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp;Niveau d'Etude</p>
                                             <h6 class="text-muted f-w-400">{{$formateur->niveau}}</h6>
                                             <p class="m-b-10 f-w-600"><i class="bx bxs-graduation"></i>&nbsp;Spécialité</p>

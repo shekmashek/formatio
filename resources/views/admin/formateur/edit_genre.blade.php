@@ -6,21 +6,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('profile_formateur')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+  <a href="{{route('profile_formateur')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
 </div>
 <center>
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
 
-        <form   class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
+        <form class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
-                    <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input"  name="nom">
+                    <input type="hidden" value="{{$formateur->nom_formateur }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
 
 
-                        <input type="hidden" class="form-control test input" value="   {{ $formateur->prenom_formateur }}"  name="prenom">
+                        <input type="hidden" class="form-control test input" value="{{ $formateur->prenom_formateur }}"  name="prenom">
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Prénom</label> --}}
 
                    <input type="hidden" class="form-control test input" value="{{ $formateur->adresse }}"  name="adresse">
@@ -55,20 +55,20 @@
 
                           <input type="hidden" value="{{ $formateur->cin}}" class="form-control test"  name="cin" >
 
-                        <input type="hidden" class="form-control test"  name="mail" value="   {{ $formateur->mail_formateur }}" >
+                        <input type="hidden" class="form-control test"  name="mail" value="{{ $formateur->mail_formateur }}" >
 
 
-                        <input type="hidden" class="form-control test"  name="phone" value="  {{ $formateur->numero_formateur }}">
-                        <input type="hidden" class="form-control test"  name="niveau" value="  {{ $formateur->niveau}}">
-
-
-
-                  <input type="hidden" class="form-control test"  name="specialite" value="   {{ $formateur->specialite }}">
+                        <input type="hidden" class="form-control test"  name="phone" value="{{ $formateur->numero_formateur }}">
+                        <input type="hidden" class="form-control test"  name="niveau" value="{{$niveau->niveau_etude}}">
 
 
 
+                  <input type="hidden" class="form-control test"  name="specialite" value="{{ $formateur->specialite }}">
 
-<button class="btn_enregistrer  mt-1 btn modification "> Enregister</button>
+
+
+
+<button class="btn_enregistrer  mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

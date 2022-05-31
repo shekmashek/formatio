@@ -8,7 +8,8 @@ $(document).ready(function(){
             tutoApprendre();
         });
 
-        $('.close').on('click',function(event){
+        $('#closeApprendre').on('click',function(event){
+            
             event.preventDefault();
             $('.apprendre').toggleClass('afficher');
         });
@@ -186,7 +187,7 @@ $(document).ready(function(){
             // $('.tutorielApprendre').html('<h6 class="title_apprendre"><u>'+titre+'</u><p class="m-0"><span>.</span></p><p></p></h6>');
             // break;
 
-            case "Nouveau Projet Intra":
+            case "Nouveau session de projet Intra":
                 $('.tutorielApprendreCfp').addClass('collapse');
                 var data = '';
                 data += '<h6>Création de projet de formation Intra entreprise</h6>';

@@ -6,9 +6,31 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profile_formateur')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp"> Page précédente</button></a>
+    <a href="{{route('profile_formateur')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp"><i class="bx bxs-chevron-left me-1"></i>Retour</button></a>
 </div>
 <center>
+    @if (\Session::has('error_ancien_pwd'))
+        <div class="alert alert-danger col-md-4">
+            <ul>
+                <li>{!! \Session::get('error_ancien_pwd') !!}</li>
+            </ul>
+        </div>
+    @endif
+    @if (\Session::has('error_new_pwd'))
+    <div class="alert alert-danger col-md-4">
+        <ul>
+            <li>{!! \Session::get('error_new_pwd') !!}</li>
+        </ul>
+    </div>
+    @endif
+      {{-- si l'ancien mot de passe est incorrect --}}
+    @if (\Session::has('error'))
+    <div class="alert alert-danger col-md-4">
+        <ul>
+            <li>{!! \Session::get('error') !!}</li>
+        </ul>
+    </div>
+    @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
 
@@ -18,14 +40,8 @@
                     <div class="form-group mt-1 mb-1">
                         <input type="password" class="form-control test input" value="" name="ancien_password" placeholder="" required>
                         <label class="ml-3 form-control-placeholder" style="">Ancien mot de passe</label>
-                        {{-- si l'ancien mot de passe est incorrect --}}
-                        @if (\Session::has('error'))
-                        <div class="alert alert-danger">
-                            <ul>
-                                <li>{!! \Session::get('error') !!}</li>
-                            </ul>
-                        </div>
-                        @endif
+
+
                         {{-- nouveau mot de passe --}}
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
@@ -73,12 +89,12 @@
 
                     <input type="hidden" value="{{ $formateur->cin}}" class="form-control test" name="cin">
 
-                    <input type="hidden" class="form-control test" name="mail" value="   {{ $formateur->mail_formateur }}">
+                    <input type="hidden" class="form-control test" name="mail" value="{{ $formateur->mail_formateur }}">
 
 
-                    <input type="hidden" class="form-control test" name="phone" value="  {{ $formateur->numero_formateur }}">
+                    <input type="hidden" class="form-control test" name="phone" value="{{ $formateur->numero_formateur }}">
                     <input type="hidden" class="form-control test" value="" name="password" placeholder="">
-                    <input type="hidden" class="form-control test" name="niveau" value="  {{ $formateur->niveau}}">
+                    <input type="hidden" class="form-control test" name="niveau" value="{{{$niveau->niveau_etude}}}}">
 
 
 
@@ -86,7 +102,7 @@
 
 
 
-                    <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                    <button class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
             </form>
             <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

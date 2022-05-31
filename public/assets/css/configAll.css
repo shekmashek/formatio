@@ -94,6 +94,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_nouveau:hover{
@@ -128,6 +129,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_annuler:hover{
@@ -167,6 +169,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_fermer:hover{
@@ -197,18 +200,19 @@
 .btn_enregistrer{
     padding: var(--padding_button);
     color: var(--txt_color) !important;
-    background: var(--bg_color_enregistrer);
+    background: var(--bg_color_enregistrer) !important;
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_enregistrer:hover{
     text-decoration: none;
     color: var(--bg_color_enregistrer) !important;
-    border: 1px solid var(--bg_color_enregistrer);
-    background-color: var(--txt_color);
+    border: 1px solid var(--bg_color_enregistrer) !important;
+    background-color: var(--txt_color) !important;
 }
 
 .btn_enregistrer .bx{
@@ -237,6 +241,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_precedent:hover{
@@ -272,6 +277,7 @@
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 .btn_suivant:hover{
@@ -307,7 +313,9 @@
     text-transform: capitalize !important;
 }
 
-input:focus{
+input:focus,
+select:focus,
+textarea:focus{
     box-shadow: none !important;
     outline: none !important;
 }
@@ -336,4 +344,16 @@ tbody td{
 
 sup{
     color: red;
+}
+
+li a:focus{
+    background-color: transparent !important;
+}
+
+.form-check-input:disabled{
+    opacity: 1 !important;
+}
+
+@media screen {
+
 }

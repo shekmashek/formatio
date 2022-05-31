@@ -45,7 +45,6 @@ class EmployeurController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
     /**
      * Display the specified resource.
      *

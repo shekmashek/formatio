@@ -67,7 +67,7 @@
         <div class="row mt-3">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <div  style="border-radius: 1px">
+                <div style="border-radius: 1px">
                     {{-- <h2 class="text-center mb-5" style="color: var(--font-sidebar-color); font-size: 1.5rem">Nouveau Employé</h2> --}}
                     @if (Session::has('success'))
                     <div class="alert alert-success">
@@ -94,7 +94,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" required name="matricule" class="form-control input w-50" id="matricule" placeholder="Matricule"/>
+                                    <input type="text" autocomplete="off" required name="matricule" class="form-control input w-50" id="matricule" placeholder="Matricule" />
                                     @error('matricule')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -111,7 +111,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" required name="nom" class="form-control input" id="nom" required  placeholder="Nom"/>
+                                    <input type="text" autocomplete="off" required name="nom" class="form-control input" id="nom" required placeholder="Nom" />
                                     @error('nom')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -123,22 +123,22 @@
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="prenom"  class="mt-2">Prénom</label>
+                                <label for="prenom" class="mt-2">Prénom</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" name="prenom" class="form-control input" id="prenom" required  placeholder="Prénom"/>
+                                    <input type="text" autocomplete="off" name="prenom" class="form-control input" id="prenom" required placeholder="Prénom" />
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="cin"  class="mt-2">CIN<strong style="color:#ff0000;">*</strong></label>
+                                <label for="cin" class="mt-2">CIN<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" required autocomplete="off" name="cin" class="form-control input" id="cin" required  placeholder="Carte d'Identité Nationale"/>
+                                    <input type="text" required autocomplete="off" name="cin" class="form-control input" id="cin" required placeholder="Carte d'Identité Nationale" />
                                     <span style="color:#ff0000;" id="cin_err"></span>
                                     @error('cin')
                                     <div class="col-sm-6">
@@ -151,11 +151,11 @@
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="phone"  class="mt-2">Téléphone<strong style="color:#ff0000;">*</strong></label>
+                                <label for="phone" class="mt-2">Téléphone<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input oninput="return onlynumero()" type="text" autocomplete="off" min=6 required name="phone" class="form-control input" id="phone" required  placeholder="Télephone"/>
+                                    <input type="text" autocomplete="off" min=6 required name="phone" class="form-control input" id="phone" required placeholder="Télephone" />
                                     <span style="color:#ff0000;" id="phone_err"></span>
                                     @error('phone')
                                     <div class="col-sm-6">
@@ -172,7 +172,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="email" autocomplete="off" required name="mail" class="form-control input" id="mail" required  placeholder="E-mail"/>
+                                    <input type="email" autocomplete="off" required name="mail" class="form-control input" id="mail" required placeholder="E-mail" />
                                     <span style="color:#ff0000;" id="mail_err"></span>
                                     @error('mail')
                                     <div class="col-sm-6">
@@ -185,11 +185,11 @@
 
                         <div class="row mt-1">
                             <div class="col-md-4 text-end">
-                                <label for="fonction"  class="mt-2">Fonction<strong style="color:#ff0000;">*</strong></label>
+                                <label for="fonction" class="mt-2">Fonction<strong style="color:#ff0000;">*</strong></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" autocomplete="off" required name="fonction" class="form-control input" id="fonction" required  placeholder="Fonction"/>
+                                    <input type="text" autocomplete="off" required name="fonction" class="form-control input" id="fonction" required placeholder="Fonction" />
                                     @error('fonction')
                                     <div class="col-sm-6">
                                         <span style="color:#ff0000;"> {{$message}} </span>
@@ -234,7 +234,7 @@
 
 
 
-$(function() {
+    $(function() {
         $("input[name='phone']").on('input', function(e) {
             $(this).val($(this).val().replace(/[^0-9]/g, ''));
         });
@@ -250,7 +250,7 @@ $(function() {
                         oninput="return onlynum()"
                         minlength="2">
     */
-function onlynum() {
+    function onlynum() {
         var fm = document.getElementById("formInsert");
         var ip = document.getElementById("num");
         var tag = document.getElementById("value");
@@ -341,7 +341,21 @@ function onlynum() {
                 /*=============*/
                 if ($("#cin").val() != null) {
                     var cin = $("#cin").val();
-                    document.getElementById("cin_err").innerHTML = '';
+                    /*                  document.getElementById("cin_err").innerHTML = '';
+                     */
+                    if ($("#matricule").val().length > 0) {
+                        if ($("#matricule").val() != null && $("#matricule").val() != "") {
+                            if ($("#cin").val().length < 5) {
+                                document.getElementById("cin_err").innerHTML = 'CIN invalid';
+                                $('#saver_multi_stg').prop('disabled', true);
+                            } else {
+                                document.getElementById("cin_err").innerHTML = '';
+                                verifyDuplicate(cin, cin_err);
+                            }
+                        }
+                    } else {
+                        document.getElementById("cin_err").innerHTML = '';
+                    }
 
                     $.ajax({
                         url: "{{route('employes.export.verify_cin_stg')}}"
@@ -351,14 +365,16 @@ function onlynum() {
                         }
                         , success: function(response) {
                             var userData = response;
-                            if (userData.length > 0) {
-                                document.getElementById("cin_err").innerHTML = "CIN existe déjà";
+                            if (response.error != null) {
+                                document.getElementById("cin_err").innerHTML = response.error;
                                 $('#saver_stg').prop('disabled', true);
-
-
-                            } else {
-                                document.getElementById("cin_err").innerHTML = '';
                             }
+                            /*  if (userData.length > 0) {
+                                  document.getElementById("cin_err").innerHTML = "CIN existe déjà";
+                                  $('#saver_stg').prop('disabled', true);
+                              } else {
+                                  document.getElementById("cin_err").innerHTML = '';
+                              } */
                         }
                         , error: function(error) {
                             console.log(error);

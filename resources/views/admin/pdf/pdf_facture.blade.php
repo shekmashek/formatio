@@ -315,7 +315,7 @@
                                 <td>Net Commercial HT</td>
                                 <td>
                                     <div align="right">
-                                        {{$devise->devise." ".number_format($montant_totale->net_commercial,0,","," ")}}
+                                        {{$devise->reference." ".number_format($montant_totale->net_commercial,0,","," ")}}
                                     </div>
                                 </td>
                             </tr>
@@ -326,7 +326,7 @@
                                 <td>TVA({{$facture[0]->pourcent}} %)</td>
                                 <td>
                                     <div align="right">
-                                        {{$devise->devise." ".number_format($montant_totale->tva,0,","," ")}}
+                                        {{$devise->reference." ".number_format($montant_totale->tva,0,","," ")}}
                                     </div>
                                 </td>
                             </tr>

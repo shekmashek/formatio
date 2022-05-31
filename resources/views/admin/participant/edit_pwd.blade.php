@@ -5,20 +5,41 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+  <a href="{{route('profile_stagiaire')}}" role="button" class="btn btn_precedent me-1 my-2"><i class="bx bxs-chevron-left me-1"></i>   Retour</a>
 </div>
 <center>
-
+@if (\Session::has('error_ancien_pwd'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_ancien_pwd') !!}</li>
+      </ul>
+  </div>
+@endif
+@if (\Session::has('error_new_pwd'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_new_pwd') !!}</li>
+      </ul>
+  </div>
+@endif
+ {{-- si l'ancien mot de passe est incorrect --}}
+ @if (\Session::has('error'))
+ <div class="alert alert-danger col-md-4">
+     <ul>
+         <li>{!! \Session::get('error') !!}</li>
+     </ul>
+ </div>
+@endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-    
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->stagiaire_id)}}" method="post" enctype="multipart/form-data" >
+
+        <form   class="btn-submit" action="{{route('update_mot_de_passe_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
             @csrf
 
-                    <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
+                    <input type="hidden" value="{{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
 
 
-                        <input type="hidden" class="form-control test" value="   {{ $stagiaire->prenom_stagiaire }}"  name="prenom">
+                        <input type="hidden" class="form-control test" value="{{ $stagiaire->prenom_stagiaire }}"  name="prenom">
 
 
   {{-- hidden --}}
@@ -65,14 +86,7 @@
 
                       <input type="password" class="form-control test input" value=""  name="ancien_password" placeholder="">
                       <label class="ml-3 form-control-placeholder" >Ancien mot de passe</label>
-                      {{-- si l'ancien mot de passe est incorrect --}}
-                      @if (\Session::has('error'))
-                        <div class="alert alert-danger">
-                            <ul>
-                                <li>{!! \Session::get('error') !!}</li>
-                            </ul>
-                        </div>
-                      @endif
+
                           {{-- nouveau mot de passe --}}
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
@@ -99,7 +113,7 @@
                           <input type="hidden" class="form-control test" id="region" name="region" placeholder="Region" value="{{ $stagiaire->region}}">
 
 
-                  <input type="hidden" class="form-control test"  name="niveau" value="{{ $stagiaire->niveau_etude }}">
+                  <input type="hidden" class="form-control test"  name="niveau" value="{{ $stagiaire->niveau_etude_id }}">
                     <input type="hidden" value="{{ $stagiaire->matricule}}"  class="form-control"  name="matricule" placeholder="Matricule" readonly>
 
                     <input type="hidden" class="form-control"  name="fonction" placeholder="Fonction" value="{{ $stagiaire->fonction_stagiaire }}" readonly>
@@ -107,14 +121,14 @@
 
                     <input type="hidden" class="form-control"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}" readonly>
 
-                    <input type="hidden" value="{{ $stagiaire->lieu_travail }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
+                    <input type="hidden" value=""  class="form-control"  name="lieu" placeholder="Matricule" readonly>
 
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>
 
 
 
-<button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                    <button class="btn btn_enregistrer mt-1"><i class="bx bx-check me-1"></i> Enregistrer</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

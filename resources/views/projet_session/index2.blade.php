@@ -7,9 +7,16 @@
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
-    <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
 
     <style>
+        .dropdown-item.active{ 
+            background-color: transparent !important;
+        }
+
+        .dropdown-item.active:hover{
+            background-color: #ececec !important;
+        }
         .status_grise {
             border-radius: 5px;
             background-color: #637381;
@@ -17,7 +24,7 @@
             align-items: center margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
-            position:relative;
+            position: relative;
             bottom: 1px;
         }
 
@@ -28,7 +35,7 @@
             align-items: center margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
-            position:relative;
+            position: relative;
             bottom: 1px;
         }
 
@@ -39,7 +46,7 @@
             align-items: center margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
-            position:relative;
+            position: relative;
             bottom: 1px;
         }
 
@@ -50,7 +57,7 @@
             align-items: center margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
-            position:relative;
+            position: relative;
             bottom: 1px;
         }
 
@@ -61,7 +68,7 @@
             align-items: center margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
-            position:relative;
+            position: relative;
             bottom: 1px;
         }
 
@@ -72,7 +79,7 @@
             align-items: center margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
-            position:relative;
+            position: relative;
             bottom: 1px;
         }
 
@@ -81,10 +88,10 @@
             background-color: #2B32B2;
             color: white;
             align-items: center margin: 0 auto;
-            padding-end:1rem;
+            padding-end: 1rem;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
-            position:relative;
+            position: relative;
             bottom: 1px;
         }
 
@@ -95,7 +102,7 @@
             align-items: center margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
-            position:relative;
+            position: relative;
             bottom: 1px;
         }
 
@@ -108,11 +115,12 @@
 
             padding: 0.3rem 0.5rem !important;
         }
+
         /* .filter{
-        position: relative;
-        bottom: .5rem;
-        float: right;
-    } */
+            position: relative;
+            bottom: .5rem;
+            float: right;
+        } */
         .btn_creer {
             background-color: white;
             border: none;
@@ -168,26 +176,37 @@
 
         }
 
-        .rapport_finale{
+        .rapport_finale {
             background-color: #F16529 !important;
         }
-        .rapport_finale button{
-            color: #ffffff !important;
-        }
-        .rapport_finale:hover{
-            background-color: #af3906 !important;
-        }
-        .pdf_download{
-            background-color: #e73827 !important;
-        }
-        .pdf_download:hover{
-            background-color: #af3906 !important;
-        }
-        .pdf_download button{
+
+        .rapport_finale button {
             color: #ffffff !important;
         }
 
-        tbody tr{
+        .rapport_finale:hover {
+            background-color: #af3906 !important;
+        }
+
+        .pdf_download {
+            background-color: #e73827 !important;
+            padding: 0.3rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .5ms ease;
+            color: white !important;
+            position: relative;
+        }
+
+        .pdf_download:hover {
+            background-color: #af3906 !important;
+        }
+
+        .pdf_download button {
+            color: #ffffff !important;
+        }
+
+        tbody tr {
             vertical-align: middle;
         }
 
@@ -206,7 +225,32 @@
             padding-bottom: 0;
         }
 
-        
+        .resultat_stg{
+            background-color: #2cb445;
+            padding: 0.3rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .5ms ease;
+            position: relative;
+        }
+        .resultat_stg button{
+            color: #ffffff !important;
+        }
+        .resultat_stg:hover{
+            background-color: #1c7f2e;
+        }
+
+        .btn_eval_stg{
+            background-color: #363dbc;
+            padding: 0.3rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .5ms ease;
+            position: relative;
+        }
+        .btn_eval_stg:hover{
+            background-color: #262b86;
+        }
     </style>
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
@@ -270,15 +314,16 @@
                                         <h6><a href="#collapseprojet_{{ $prj->projet_id }}"
                                                 class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse"
                                                 role="button"><i class="bx bx-caret-down carret-icon"></i>&nbsp;
-                                                @php if ($prj->totale_session == 1) {
-                                                        echo $prj->nom_projet. '&nbsp;&nbsp;Session&nbsp;' . $prj->totale_session;
+                                                @php
+                                                    if ($prj->totale_session == 1) {
+                                                        echo $prj->nom_projet . '&nbsp;&nbsp;Sess&nbsp;' . $prj->totale_session;
                                                     } elseif ($prj->totale_session > 1) {
-                                                        echo $prj->nom_projet . '&nbsp;&nbsp;Sessions&nbsp;'. $prj->totale_session;
-                                                    }elseif ($prj->totale_session == 0) {
-                                                        echo $prj->nom_projet . '&nbsp;&nbsp;Session&nbsp;' . $prj->totale_session;
+                                                        echo $prj->nom_projet . '&nbsp;&nbsp;Sess&nbsp;' . $prj->totale_session;
+                                                    } elseif ($prj->totale_session == 0) {
+                                                        echo $prj->nom_projet . '&nbsp;&nbsp;Sess&nbsp;' . $prj->totale_session;
                                                     }
                                                 @endphp
-                                                &nbsp;&nbsp;&#10148;&nbsp;@php
+                                                &nbsp;&nbsp;@php
                                                     setlocale(LC_TIME, 'fr_FR');
                                                 echo strftime('%d %B, %Y', strtotime($prj->date_projet)); @endphp @if ($type_formation_id == 1)
                                                     {{-- {{ $data[0]->nom_etp }} --}}
@@ -316,8 +361,10 @@
                                                 {{-- <span role="button" class=" m-0 nouvelle_session " data-bs-toggle="modal"
                                                     data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static'
                                                     title="Nouvelle session"><i class="bx bx-plus-medical icon_creer"></i>Session</span> --}}
-                                                <button type="button" data-bs-toggle="modal" data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static' title="Nouvelle session" class="btn btn-ajout-session btn-success">
-                                                <span class="btn-label-session"><i class='bx bxs-plus-circle'></i></span>Session</button>
+                                                <span role="button" data-bs-toggle="modal"
+                                                    data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static'
+                                                    title="Nouvelle session" class="btn btn_nouveau py-1 mb-2">
+                                                    <i class='bx bx-plus-medical me-1'></i>Session</span>
                                             @endif
                                         @endcan
                                     </div>
@@ -334,24 +381,23 @@
                                         <th> Modalité </th>
                                         <th> Date du projet</th>
                                         <th> Statut </th>
-                                        <th rowspan="2"></th>
-                                        @if ($prj->type_formation_id == 1)
+                                        {{-- <th rowspan="2"></th> --}}
+                                        {{-- @if ($prj->type_formation_id == 1)
                                             <th></th>
-                                        @endif
-                                        {{-- <th></th> --}}
+                                        @endif --}}
+                                        <th>Actions</th>
                                     </thead>
-                                    <tbody class="tbody_projet">
+                                    <tbody>
 
                                         @if ($prj->totale_session <= 0)
                                             <tr>
                                                 <td colspan="5"> Aucune session</td>
-
                                             </tr>
                                         @else
                                             @foreach ($data as $pj)
                                                 @if ($prj->projet_id == $pj->projet_id)
                                                     <tr>
-                                                        <td> <a
+                                                        <td class="tbody_projet"> <a
                                                                 href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                         </td>
                                                         <td class="text-start">{{ $pj->nom_module }}</td>
@@ -363,56 +409,81 @@
                                                         <td class="text-start">
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    {{ $etp->nom_etp}}
+                                                                    {{ $etp->nom_etp }}
                                                                 @endif
                                                             @endforeach
                                                         </td>
-                                                        <td><span class="modalite">{{ $pj->modalite }}</span></td>
-                                                        <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
+                                                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
+                                                        <td>
+                                                            @php
+                                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                                                            @endphp
+                                                        </td>
                                                         <td align="center" style="min-width: 6rem;">
                                                             <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1">
                                                                 {{ $pj->item_status_groupe }}</p>
 
                                                         </td>
-                                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                                        {{-- <td class="p-0"><a
+                                                                href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}"
+                                                                class="m-0 ps-1 pe-1 pdf_download"><button
+                                                                    class="btn"><i
+                                                                        class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                                         @if ($prj->type_formation_id == 1)
                                                             <td class="p-0">
                                                                 <a class="mt-2 rapport_finale"
-                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank"><button class="btn"><i class='bx bxs-report'></i>Rapport</button></a>
+                                                                    href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}"
+                                                                    target="_blank"><button class="btn"><i
+                                                                            class='bx bxs-report'></i>Rapport</button></a>
                                                             </td>
                                                         @endif
                                                         @can('isCFP')
-                                                            <td class="centrer_edit"><button href="#" class="btn" data-bs-toggle="modal"
+                                                            <td class="centrer_edit"><button href="#" class="btn"
+                                                                    data-bs-toggle="modal"
                                                                     data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}"
-                                                                    data-backdrop="static" ><i class='bx bx-edit bx_modifier' style="font-size: 1.1rem !important;"></i>
-                                                            </button></td>
-                                                        @endcan
-
+                                                                    data-backdrop="static"><i class='bx bx-edit bx_modifier'
+                                                                        style="font-size: 1.1rem !important;"></i>
+                                                                </button></td>
+                                                        @endcan --}}
+                                                        
+                                                        <td class="text-center">
+                                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                                @can('isCFP')
+                                                                    <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static" style="cursor: pointer;">Modifier</span></li>
+                                                                @endcan
+                                                                <li class="action_projet"><a class="dropdown-item" href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                                                @if ($prj->type_formation_id == 1)
+                                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank">Rapport</a></li>
+                                                                @endif
+                                                              </ul>
+                                                        </td>
                                                         {{-- <td><a class="bx bx-trash" data-bs-toggle="modal" data-bs-target="#delete_session_{{ $pj->groupe_id }}" style="font-size: 1.2rem;"></a></td> --}}
 
                                                         {{-- debut supprimer session --}}
-                                                            <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
-                                                                tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header  d-flex justify-content-center"
-                                                                            style="background-color:rgb(224,182,187);">
-                                                                            <h6 class="modal-title">Avertissement !</h6>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <small>Vous êtes sur le point d'effacer une donnée, cette
-                                                                                action est irréversible. Continuer ?</small>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal"> Non </button>
-                                                                            <button type="button" class="btn btn-secondary"><a
-                                                                                    href="{{ route('destroy_groupe', [$pj->groupe_id]) }}">Oui</a></button>
-                                                                        </div>
+                                                        <div class="modal fade" id="delete_session_{{ $pj->groupe_id }}"
+                                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header  d-flex justify-content-center"
+                                                                        style="background-color:rgb(224,182,187);">
+                                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <small>Vous êtes sur le point d'effacer une donnée,
+                                                                            cette
+                                                                            action est irréversible. Continuer ?</small>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal"> Non </button>
+                                                                        <button type="button" class="btn btn-secondary"><a
+                                                                                href="{{ route('destroy_groupe', [$pj->groupe_id]) }}">Oui</a></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
                                                         {{-- fin supprimer session --}}
                                                         {{-- Debut modal edit session --}}
                                                         <div>
@@ -424,7 +495,8 @@
                                                                         <div class="modal-title pt-3"
                                                                             style="height: 50px; align-items: center;">
                                                                             <h5 class="text-center my-auto">Modifier session
-                                                                                <strong>{{ $pj->nom_groupe }}</strong></h5>
+                                                                                <strong>{{ $pj->nom_groupe }}</strong>
+                                                                            </h5>
                                                                         </div>
                                                                         @if ($prj->type_formation_id == 1)
                                                                             <div class="row">
@@ -743,119 +815,72 @@
                                                                                     value="1">
                                                                                 <input type="hidden" name="projet"
                                                                                     value="{{ $pj->projet_id }}">
-                                                                                <div class="row">
                                                                                     <h5 class="mb-4 text-center">Ajouter votre
                                                                                         nouvelle
                                                                                         Session</h5>
                                                                                     <div class="form-group">
-                                                                                        <div class="form-row d-flex">
-                                                                                            <div class="col">
-                                                                                                <div class="row ps-3 mt-2">
-                                                                                                    <div
-                                                                                                        class="form-group mt-1 mb-1">
-                                                                                                        <input type="text"
-                                                                                                            id="min"
-                                                                                                            class="form-control input"
-                                                                                                            name="date_debut"
-                                                                                                            required
-                                                                                                            onfocus="(this.type='date')">
-                                                                                                        <label
-                                                                                                            class="form-control-placeholder"
-                                                                                                            for="min">Date
-                                                                                                            debut<strong
-                                                                                                                class="text-danger">*</strong></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row ps-3 mt-2">
-                                                                                                    <div
-                                                                                                        class="form-group mt-1 mb-1">
-                                                                                                        <input type="text"
-                                                                                                            id="min"
-                                                                                                            class="form-control input"
-                                                                                                            min="1" max="50"
-                                                                                                            name="min_part"
-                                                                                                            required
-                                                                                                            onfocus="(this.type='number')">
-                                                                                                        <label
-                                                                                                            class="form-control-placeholder"
-                                                                                                            for="min">Participant
-                                                                                                            minimal</label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row px-3 mt-2">
-                                                                                                    <div
-                                                                                                        class="form-group mt-1 mb-1">
-                                                                                                        <select
-                                                                                                            class="form-select selectP input"
-                                                                                                            id="etp_id"
-                                                                                                            name="modalite"
-                                                                                                            aria-label="Default select example">
-                                                                                                            {{-- <option value="null" selected hidden>Choisir l'entreprise souhaité...</option> --}}
-                                                                                                            <option
-                                                                                                                value="Présentielle">
-                                                                                                                Présentielle
-                                                                                                            </option>
-                                                                                                            <option
-                                                                                                                value="En ligne">
-                                                                                                                En ligne
-                                                                                                            </option>
-                                                                                                            <option
-                                                                                                                value="Présentiel/En ligne">
-                                                                                                                Présentiel/En
-                                                                                                                ligne</option>
-                                                                                                        </select>
-                                                                                                        <label
-                                                                                                            class="ml-3 form-control-placeholder"
-                                                                                                            for="etp_id">Modalite</label>
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="text-center ps-3">
-                                                                                                    <button type="submit"
-                                                                                                        class="btn btn_enregistrer">Valider</button>
-                                                                                                </div>
+                                                                                        <div class="row mt-2">
+                                                                                            <div
+                                                                                                class="col-lg-6 text-end mt-2">
+                                                                                                <span>Date debut de la
+                                                                                                    session<strong
+                                                                                                        class="text-danger">*</strong></span>
                                                                                             </div>
-                                                                                            <div class="col">
-                                                                                                <div class="row ps-3 mt-2">
-                                                                                                    <div
-                                                                                                        class="form-group mt-1 mb-1">
-                                                                                                        <input type="text"
-                                                                                                            id="min"
-                                                                                                            class="form-control input"
-                                                                                                            name="date_fin"
-                                                                                                            required
-                                                                                                            onfocus="(this.type='date')">
-                                                                                                        <label
-                                                                                                            class=" form-control-placeholder"
-                                                                                                            for="min">Date
-                                                                                                            fin<strong
-                                                                                                                class="text-danger">*</strong></label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row ps-3 mt-2">
-                                                                                                    <div
-                                                                                                        class="form-group mt-1 mb-1">
-                                                                                                        <input type="text"
-                                                                                                            id="min"
-                                                                                                            class="form-control input"
-                                                                                                            min="1" max="50"
-                                                                                                            name="max_part"
-                                                                                                            required
-                                                                                                            onfocus="(this.type='number')">
-                                                                                                        <label
-                                                                                                            class="form-control-placeholder"
-                                                                                                            for="min">Participant
-                                                                                                            maximal</label>
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="text-center ps-3">
-                                                                                                    <button type="button"
-                                                                                                        class="btn btn_annuler"
-                                                                                                        data-bs-dismiss="modal"
-                                                                                                        aria-label="Close"
-                                                                                                        style="margin-top: 6rem;">Annuler</button>
-                                                                                                </div>
+                                                                                            <div class="col-lg-6"><input
+                                                                                                    type="date" id="min"
+                                                                                                    class="form-control input"
+                                                                                                    name="date_debut"
+                                                                                                    style="width: 12rem;"
+                                                                                                    required></div>
+                                                                                        </div>
+                                                                                        <div class="row mt-2">
+                                                                                            <div
+                                                                                                class="col-lg-6 text-end mt-2">
+                                                                                                <span>Date fin de la
+                                                                                                    session<strong
+                                                                                                        class="text-danger">*</strong></span>
+                                                                                            </div>
+                                                                                            <div class="col-lg-6"><input
+                                                                                                    type="date" id="min"
+                                                                                                    class="form-control input"
+                                                                                                    name="date_fin"
+                                                                                                    style="width: 12rem;"
+                                                                                                    required></div>
+                                                                                        </div>
+                                                                                        <div class="row mt-2">
+                                                                                            <div
+                                                                                                class="col-lg-6 text-end mt-2">
+                                                                                                <span>Modalité<strong
+                                                                                                        class="text-danger">*</strong>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                            <div class="col-lg-6 text-end">
+                                                                                                <select
+                                                                                                    class="form-select input_select"
+                                                                                                    name="modalite"
+                                                                                                    aria-label="Default select example"
+                                                                                                    style="width: 15rem;"
+                                                                                                    required>
+                                                                                                    <option value="null">
+                                                                                                        Sélectionnez</option>
+                                                                                                    <option value="Présentiel">
+                                                                                                        Présentielle</option>
+                                                                                                    <option value="En ligne">En
+                                                                                                        ligne</option>
+                                                                                                    <option
+                                                                                                        value="Présentiel/En ligne">
+                                                                                                        Présentiel/En ligne
+                                                                                                    </option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row mt-3">
+                                                                                            <div class="col-lg-6 text-end"><button type="submit"
+                                                                                                    class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Enregistrer</button></div>
+                                                                                            <div class="col-lg-6">
+                                                                                                <button type="button" class="btn  btn_annuler" data-dismiss="modal">
+                                                                                                    <i class='bx bx-x me-1'></i> Annuler
+                                                                                                </button>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -960,34 +985,42 @@
                                 <th> Module </th>
                                 <th>Date session</th>
                                 <th> Entreprise </th>
-                                <th> Date du projet</th>
+                                {{-- <th> Date du projet</th> --}}
                                 <th> Modalité</th>
                                 <th> Statut </th>
-                                <th rowspan="2"></th>
+                                <th></th>
+                                <th>Actions</th>
                             </thead>
-                            <tbody class="tbody_projet">
+                            <tbody>
                                 @foreach ($data as $pj)
                                     <tr class="m-0">
                                         <td>{{ $pj->nom_projet }}</td>
                                         <td>
                                             @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0"><button class="type_intra ">{{ $pj->type_formation }}</button>
+                                                <h6 class="m-0"><button
+                                                        class="type_intra ">{{ $pj->type_formation }}</button>
                                                 </h6>
                                                 &nbsp;&nbsp;
                                             @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button class="type_inter ">{{ $pj->type_formation }}</button></h6>
+                                                <h6 class="m-0"><button
+                                                        class="type_inter ">{{ $pj->type_formation }}</button></h6>
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
-                                        <td> 
-                                            <a href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
+                                        <td class="tbody_projet">
+                                            <a
+                                                href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
                                         <td class="text-start">
                                             @php
-                                                echo $groupe->module_session($pj->module_id).'&nbsp;'.$groupe->nombre_apprenant_session($pj->groupe_id);
+                                                echo $groupe->module_session($pj->module_id) . '&nbsp;' . $groupe->nombre_apprenant_session($pj->groupe_id);
                                             @endphp
                                         </td>
-                                        <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
+                                        <td> 
+                                            @php
+                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                                            @endphp
+                                        </td>
                                         <td class="text-start">
                                             @foreach ($entreprise as $etp)
                                                 @if ($etp->groupe_id == $pj->groupe_id)
@@ -995,24 +1028,35 @@
                                                 @endif
                                             @endforeach
                                         </td>
-                                        <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td>
-                                        <td ><span class="modalite">{{ $pj->modalite }}</span></td>
-                                        <td>
+                                        {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
+                                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
+                                        <td class="tbody_projet">
                                             <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
                                                 {{ $pj->item_status_groupe }}</p>
                                         </td>
-                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td align="left">
                                             <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
-                                            @php
-                                                echo $groupe->statut_presences($pj->groupe_id);
-                                            @endphp
-                                            "></i>&nbsp;Emargement</p>
-                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
-                                            @php
-                                                echo $groupe->statut_evaluation($pj->groupe_id);
-                                            @endphp
-                                            "></i>&nbsp;Evaluation</p>
+                                                @php
+                                                    echo $groupe->statut_presences($pj->groupe_id);
+                                                @endphp
+                                                "></i>&nbsp;Emargement</p>
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle'
+                                                @php
+                                                    $statut_eval = $groupe->statut_evaluation($pj->groupe_id);
+                                                    if($statut_eval == 0){
+                                                        echo 'style="color:#bdbebd;"';
+                                                    }
+                                                    elseif ($statut_eval == 1) {
+                                                        echo 'style="color:#00ff00;"';
+                                                    }
+                                                @endphp
+                                                ></i>&nbsp;Evaluation</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                              </ul>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -1038,28 +1082,30 @@
                                 {{-- <th> Date du projet</th> --}}
                                 <th>Modalité</th>
                                 <th> Statut </th>
-                                <th></th>
+                                <th>Actions</th>
                             </thead>
-                            <tbody class="tbody_projet">
+                            <tbody>
                                 @foreach ($data as $pj)
                                     <tr>
                                         <td>{{ $pj->nom_projet }}</td>
-                                        <td style="vertical-align: middle">
+                                        <td class="tbody_projet" style="vertical-align: middle">
                                             @if ($pj->type_formation_id == 1)
-                                                <h6 class="m-0 "><button class="type_intra ">{{ $pj->type_formation }}</button>
+                                                <h6 class="m-0 "><button
+                                                        class="type_intra ">{{ $pj->type_formation }}</button>
                                                 </h6>
                                                 &nbsp;&nbsp;
                                             @elseif ($pj->type_formation_id == 2)
-                                                <h6 class="m-0"><button class="type_inter ">{{ $pj->type_formation }}</button></h6>
+                                                <h6 class="m-0"><button
+                                                        class="type_inter">{{ $pj->type_formation }}</button></h6>
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
-                                        <td> <a
+                                        <td class="tbody_projet"> <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
                                         <td class="text-start">
                                             @php
-                                                echo $groupe->module_session($pj->module_id)
+                                                echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
                                         <td class="text-end">
@@ -1067,15 +1113,25 @@
                                                 echo $groupe->nombre_apprenant_session($pj->groupe_id);
                                             @endphp
                                         </td>
-                                        <td> {{ $pj->date_debut . ' au ' . $pj->date_fin }} </td>
+                                        <td>
+                                            @php
+                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                                            @endphp
+                                        </td>
                                         <td class="text-start"> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
-                                        {{-- <td>{{ $pj->modalite }}</td> --}}
-                                        <td>
-                                            <p class="{{ $pj->class_status_groupe }} m-0">{{ $pj->item_status_groupe }}
+                                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
+                                        <td class="tbody_projet">
+                                            <p class="{{ $pj->class_status_groupe }} m-0">
+                                                {{ $pj->item_status_groupe }}
                                             </p>
                                         </td>
-                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                        <td class="text-center">
+                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                              </ul>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -1099,31 +1155,42 @@
                                 <th> Module</th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </thead>
-                            <tbody class="tbody_projet">
+                            <tbody class="">
                                 @foreach ($data as $pj)
                                     <tr>
                                         {{-- <td>{{ $pj->nom_projet }}</td> --}}
                                         <td> {{ $pj->nom_groupe }}</td>
                                         <td>
                                             @php
-                                                echo $groupe->module_session($pj->module_id)
+                                                echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
-                                        <td> {{ date('d-m-Y', strtotime($pj->date_debut)) }}-{{ date('d-m-Y', strtotime($pj->date_fin)) }}
+                                        <td> 
+                                            @php
+                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                                            @endphp
                                         </td>
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ $pj->nom_formation }} </td>
                                         <td> {{ $pj->nom_module }} </td>
-                                        <td class="p-0"><a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a></td>
+                                        <td class="p-0"><a
+                                                href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}"
+                                                class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i
+                                                        class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td>
                                             @if ($pj->statut_eval == 0)
-                                                <a class="btn btn_filtre filtre_appliquer"
-                                                    href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}">Evaluation</a>
+                                                <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn pb-2" style="color: #ffffff !important">Evaluation</button></a>
                                             @elseif ($pj->statut_eval == 1)
-                                                <p style="color: green">Evaluation terminé</p>
+                                                <p class="mt-3" style="color: green">Evaluation terminé</p>
                                             @endif
 
+                                        </td>
+                                        <td>
+                                            <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn pb-2">Résultat</button>
+                                            
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

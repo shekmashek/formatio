@@ -106,7 +106,6 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_formateur AS SELECT
     (formateurs.adresse) adresse_formateur,
     (formateurs.cin) cin_formateur,
     (formateurs.specialite) specialite_formateur,
-    (formateurs.niveau) niveau_formateur,
     formateurs.numero_formateur,
     (
         DATEDIFF(
@@ -143,7 +142,6 @@ CREATE OR REPLACE VIEW v_invitation_cfp_pour_formateur AS SELECT
     (formateurs.adresse) adresse_formateur,
     (formateurs.cin) cin_formateur,
     (formateurs.specialite) specialite_formateur,
-    (formateurs.niveau) niveau_formateur,
     formateurs.numero_formateur,
     (
         DATEDIFF(
@@ -417,20 +415,23 @@ CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     f.adresse,
     f.cin,
     f.specialite,
-    f.niveau,
+    f.niveau_etude_id,
+    nv.niveau_etude,
     f.activiter AS activiter_formateur,
     f.user_id AS user_id_formateur
 FROM
-    demmande_cfp_formateur d,cfps c,formateurs f,genre g
+    demmande_cfp_formateur d,cfps c,formateurs f,genre g,niveau_etude nv
 WHERE
     c.id = d.demmandeur_cfp_id AND
     f.id = d.inviter_formateur_id AND
-    g.id = IFNULL(f.genre_id,1) AND d.activiter = 1;
+    g.id = IFNULL(f.genre_id,1) AND d.activiter = 1 AND
+    nv.id = f.niveau_etude_id;
 
 
 
 
-CREATE OR REPLACE VIEW v_demmande_cfp_etp AS SELECT
+CREATE OR REPLACE VIEW v_demmande_cfp_etp AS 
+SELECT
     d.activiter AS activiter_demande,
     c.id AS cfp_id,
     c.nom,

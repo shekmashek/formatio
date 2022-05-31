@@ -129,11 +129,11 @@
                                         <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                         <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
                                         @if($listes->status == "En attente")
-                                            <td> <span style="background-color: orange;padding:10px;color:white;border-radius:10px"  id = "label_statut_{{$listes->abonnement_id}}" > {{$listes->status}} </label> </td>
+                                            <td> <span style="background-color: orange;padding:5px;color:white;border-radius:5px"  id = "label_statut_{{$listes->abonnement_id}}" > {{$listes->status}} </label> </td>
                                         @elseif ($listes->status == "Activé")
-                                            <td> <span style="background-color: green;padding:10px;color:white;border-radius:10px" id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
+                                            <td> <span style="background-color: green;padding:5px;color:white;border-radius:5px" id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
                                         @else
-                                            <td><span style="background-color: red;padding:10px;color:white;border-radius:10px"  id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
+                                            <td><span style="background-color: red;padding:5px;color:white;border-radius:10px"  id = "label_statut_{{$listes->abonnement_id}}"> {{$listes->status}} </label> </td>
                                         @endif
                                         <td>
                                             <input type="hidden" value="{{$listes->entreprise_id}}" id="id_etp">
@@ -176,11 +176,11 @@
                                     {{-- <td><span ">{{$fact->status_facture}}</span></td> --}}
 
                                     @if($listes->status == "En attente")
-                                        <td> <span style="background: orange;padding:10px;color:white;border-radius:10px" id = "label_statut_of_{{$listes->abonnement_id}}" > {{$listes->status}} </span> </td>
+                                        <td> <span style="background: orange;padding:5px;color:white;border-radius:10px" id = "label_statut_of_{{$listes->abonnement_id}}" > {{$listes->status}} </span> </td>
                                     @elseif ($listes->status == "Activé")
-                                        <td> <span style="background: green;padding:10px;color:white;border-radius:10px"  id = "label_statut_of_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
+                                        <td> <span style="background: green;padding:5px;color:white;border-radius:10px"  id = "label_statut_of_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
                                     @else
-                                        <td>  <span style="background: red;padding:10px;color:white;border-radius:10px"  id = "label_statut_of_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
+                                        <td>  <span style="background: red;padding:5px;color:white;border-radius:10px"  id = "label_statut_of_{{$listes->abonnement_id}}"> {{$listes->status}} </span> </td>
                                     @endif
                                     <td>
                                         <input type="hidden" value="{{$listes->cfp_id}}" id="id_cfp">

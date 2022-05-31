@@ -4,7 +4,10 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid pb-1">
@@ -79,21 +82,15 @@
                                                     <div class="col-6 w-100">
                                                         <p class="m-0">
                                                             <span class="new_module_prix">
-                                                                @php
-                                                                echo number_format($mod->prix, 0, ' ', ' ');
-                                                                @endphp
-                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
+                                                                <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                            </span>
                                                         </p>
                                                         <p class="m-0 ">
                                                             <span class="new_module_prix">
-                                                                @if($mod->prix_groupe == null)
-                                                                <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                                @else
-                                                                @php
-                                                                echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                                @endphp
-                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
+                                                            @if($mod->prix_groupe != null)
+                                                                <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                             @endif
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -210,21 +207,15 @@
                                                     <div class="col-6 w-100">
                                                         <p class="m-0">
                                                             <span class="new_module_prix">
-                                                                @php
-                                                                echo number_format($mod->prix, 0, ' ', ' ');
-                                                                @endphp
-                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
+                                                                <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                            </span>
                                                         </p>
                                                         <p class="m-0 ">
                                                             <span class="new_module_prix">
-                                                                @if($mod->prix_groupe == null)
-                                                                <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                                @else
-                                                                @php
-                                                                echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                                @endphp
-                                                                &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
+                                                            @if($mod->prix_groupe != null)
+                                                                <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                             @endif
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -300,8 +291,10 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="mt-2 text-center">
-                                                                <button id="addRow" type="button" class="btn_creer text-center mb-4 pb-2" onclick="competence();">
-                                                                    <i class='bx bx-plus-medical icon_creer'></i>Ajouter
+                                                                <button id="addRow" type="button"
+                                                                    class="btn btn_nouveau text-center mb-4 pb-2"
+                                                                    onclick="competence();">
+                                                                    <i class='bx bx-plus-medical me-1'></i>Ajouter
                                                                     une nouvelle ligne
                                                                 </button>
 
@@ -392,21 +385,15 @@
                                                 <div class="col-6 w-100">
                                                     <p class="m-0">
                                                         <span class="new_module_prix">
-                                                            @php
-                                                            echo number_format($mod->prix, 0, ' ', ' ');
-                                                            @endphp
-                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                        </span>
                                                     </p>
                                                     <p class="m-0 ">
                                                         <span class="new_module_prix">
-                                                            @if($mod->prix_groupe == null)
-                                                            <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                            @else
-                                                            @php
-                                                            echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                            @endphp
-                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
+                                                        @if($mod->prix_groupe != null)
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                         @endif
+                                                        </span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -551,21 +538,15 @@
                                                 <div class="col-6 w-100">
                                                     <p class="m-0">
                                                         <span class="new_module_prix">
-                                                            @php
-                                                            echo number_format($mod->prix, 0, ' ', ' ');
-                                                            @endphp
-                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/pers</span>
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                        </span>
                                                     </p>
                                                     <p class="m-0 ">
                                                         <span class="new_module_prix">
-                                                            @if($mod->prix_groupe == null)
-                                                            <span>-&nbsp;&nbsp;&nbsp;{{$devise->devise}}&nbsp;HT<span>/grp</span></span>
-                                                            @else
-                                                            @php
-                                                            echo number_format($mod->prix_groupe, 0, ' ', ' ');
-                                                            @endphp
-                                                            &nbsp;{{$devise->devise}}</span>&nbsp;HT<span>/grp</span>
+                                                        @if($mod->prix_groupe != null)
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                         @endif
+                                                        </span>
                                                     </p>
                                                 </div>
                                             </div>

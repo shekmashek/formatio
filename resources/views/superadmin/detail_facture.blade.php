@@ -48,6 +48,8 @@
 
         .pdf_download{
             background-color: #e73827 !important;
+            border-radius: 5px;
+            padding: 7px;
         }
         .pdf_download:hover{
             background-color: #af3906 !important;
@@ -100,7 +102,7 @@
                                 <div class="col-4 text-end" align="rigth">
                                     <div class="info_cfp">
                                         <h4 class="m-0 nom_cfp">UpSkill</h4>
-                                        <p class="m-0 adresse_cfp">contact@formation.mg</p>
+                                        <p class="m-0 adresse_cfp">contact-mg@upskill-sarl.com</p>
                                         <p class="m-0 adresse_cfp">Lot IIN 60 Analamahitsy 101 Antananarivo Madagascar</p>
                                         <p class="m-0 adresse_cfp">+261 34 81 135 63</p>
                                         <p class="m-0 adresse_cfp">www.formation.mg</p><br>
@@ -182,7 +184,7 @@
                                         <div class="card detail_espece" style="width: 32rem;display: none">
                                             <div class="card-body">
                                                 <h5 class="card-title">Paiement par espèce</h5>
-                                                <span class="card-text">Veuillez contacter le responsable de UpSkills</span>
+                                                <span class="card-text">Veuillez contacter le responsable de UpSkill</span>
                                             </div>
                                         </div>
                                     </div>
@@ -198,9 +200,7 @@
                                     <thead class="table" style="background-color:#acacac ">
                                         <tr>
                                             <th scope="col">Description</th>
-                                            <th> Montant HT</th>
-                                            <th> TVA (20%) </th>
-                                            <th> Net à payer TTC </th>
+                                            <th> Montant </th>
                                         </tr>
                                     </thead>
                                     <tbody class="mb-1">
@@ -211,8 +211,6 @@
                                                 <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : {{$dates_abonnement[0]->date_debut}} <br> Fin: {{$dates_abonnement[0]->date_fin}}</td>
                                             @endif
                                             <td>{{number_format($facture[0]->montant_facture, 0, ',', '.')}} Ar</td>
-                                            <td>{{number_format($tva,0,',','.')}} Ar</td>
-                                            <td>{{number_format($net_ttc,0,',','.')}} Ar</td>
                                         </tr>
                                     </tbody>
                                 </table>

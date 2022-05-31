@@ -57,11 +57,7 @@ class EntrepriseController extends Controller
         if (Gate::allows('isCFP')) {
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-
             $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
-
-
-
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
 
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
@@ -331,6 +327,20 @@ class EntrepriseController extends Controller
         $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
         return view('admin.entreprise.modification_profil.edit_telephone', compact('etp'));
     }
+
+    public function modification_secteur_entreprise($id){
+        $fonct = new FonctionGenerique();
+        // $secteur = $fonct->findWhereMulitOne("secteurs",["id"],[$id]);
+        $secteur = DB::select('select * from secteurs');
+        return view('admin.entreprise.modification_profil.edit_secteur', compact('secteur','id'));
+    }
+
+    public function get_secteur(Request $req){
+        $formtion_id = $req->formation_id;
+        $thematique = DB::select('select * from formations where domaine_id = ?', [$formtion_id]);
+        return response()->json($thematique);
+    }
+
     public function enregistrer_telephone_entreprise(Request $request,$id){
         if($request->telephone == null){
             return redirect()->back()->with('erreur_telephone', 'Entrez le numéro téléphone de votre entreprise avant de cliquer sur enregistrer');
@@ -340,6 +350,18 @@ class EntrepriseController extends Controller
             return redirect()->route('aff_parametre_referent',[$id]);
            }
     }
+
+    public function enregistrer_secteur_entreprise(Request $request,$id){
+        // dd($request->secteur);
+        if($request->secteur == null){
+            return redirect()->back()->with('erreur_secteur', 'choisissez votre secteur avant de cliquer sur enregistrer');
+           }
+           else{
+            DB::update('update entreprises set secteur_id = ? where id = ?', [$request->secteur,$id]);
+            return redirect()->route('aff_parametre_referent',[$id]);
+           }
+    }
+
     public function modification_stat_entreprise($id){
         $fonct = new FonctionGenerique();
         $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id]);
@@ -410,10 +432,14 @@ class EntrepriseController extends Controller
         return view('admin.entreprise.modification_profil.edit_adresse', compact('etp'));
     }
     public function enregistrer_adresse_entreprise(Request $request,$id){
-
+        if($request->rue == null || $request->quartier == null || $request->code_postal == null || $request->ville == null || $request->region == null) {
+            return back()->with('erreur_adresse','Entrez votre adresse complète avant de cliquer sur enregistrer');
+        }
+        else{
             DB::update('update entreprises set  adresse_rue = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_ville = ?,adresse_region = ?
                where id = ?', [$request->rue,$request->quartier,$request->code_postal,$request->ville,$request->region,$id]);
             return redirect()->route('aff_parametre_referent',[$id]);
+        }
     }
     public function modification_site_etp_entreprise($id){
         $fonct = new FonctionGenerique();

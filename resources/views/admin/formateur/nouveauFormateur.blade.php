@@ -197,7 +197,12 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="niveau" id="niveau"  placeholder="Niveau d'étude*" required>
+                                                <select name="niveau"  class="form-select input" id="">
+                                                    @foreach ($niveau as $nv)
+                                                        <option value="{{$nv->id}}">{{$nv->niveau_etude}}</option>
+                                                    @endforeach
+                                                </select>
+                                                {{-- <input type="text" class="form-control" name="niveau" id="niveau"  placeholder="Niveau d'étude*" required> --}}
                                             </div>
                                         </div>
                                         @error('specialite')
@@ -451,7 +456,16 @@ $(document).on('change', '#cin', function() {
     $(document).on('click', '#removeRow2', function() {
         $(this).closest('#inputFormRow2').remove();
     });
-
+    $(function() {
+        $("input[name='phone']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
+    $(function() {
+        $("input[name='cin']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
 
 </script>
 @endsection

@@ -9,10 +9,16 @@
     <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
 </div>
 <center>
-
+@if (\Session::has('error_phone'))
+    <div class="alert alert-danger col-md-4">
+        <ul>
+            <li>{!! \Session::get('error_phone') !!}</li>
+        </ul>
+    </div>
+@endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        
+
         <form   class="btn-submit" action="{{route('enregistrer_modification_telephone',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
@@ -20,7 +26,7 @@
                     <div class="form-group mt-1 mb-1">
                         <input type="text" class="form-control tes input"  name="phone" value="{{ $responsable->telephone_resp_cfp }}">
                             <label class="ml-3 form-control-placeholder" >Téléphone</label>
-                   
+
                     </div>
                 </div>
 
@@ -32,5 +38,14 @@
 </div>
 </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  $(function() {
+        $("input[name='phone']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
+
+</script>
 
 @endsection

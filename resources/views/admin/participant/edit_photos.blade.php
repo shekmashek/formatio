@@ -5,7 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('profile_stagiaire')}}" role="button" class="btn btn_precedent me-1 my-2"><i class="bx bxs-chevron-left me-1"></i>   Retour</a>
   </div>
 <center>
  {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
@@ -68,7 +68,7 @@
                 </div>
                 </label>
                     <input id="file-input" type="file" name="image" value="{{$stagiaire->photos}}"/>
-                    <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+                    <button class="btn btn_enregistrer mt-1"><i class="bx bx-check me-1"></i> Enregistrer</button>
                 </div>
             </center>
         </div>
@@ -116,7 +116,7 @@
 
                           <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                  <input type="hidden" class="form-control test"  name="niveau" value="   {{ $stagiaire->niveau_etude }}">
+                  <input type="hidden" class="form-control test"  name="niveau" value="   {{ $stagiaire->niveau_etude_id }}">
 
                     <input type="hidden" value="   {{ $stagiaire->matricule}}"  class="form-control test"  name="matricule" placeholder="Matricule" >
 

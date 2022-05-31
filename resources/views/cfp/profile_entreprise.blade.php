@@ -108,14 +108,14 @@
                                         @endcan
                                     </div>
                                 </div> --}}
-                                @can('isPremium')
+                                {{-- @can('isPremium') --}}
                                     {{-- <ul class="dropdown-menu">
                                         <li> --}}
                                             {{-- <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><button type="button" class="btn btn_creer" style="text-decoration:none"><i style="color: red" class="fa fa-trash"></i> <strong>Mettre fin à la collaboration</strong> </button> </a> --}}
                                             <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                                         {{-- </li>
                                     </ul> --}}
-                                @endcan
+                                {{-- @endcan --}}
                             </td>
 
                                {{-- modal delete  --}}

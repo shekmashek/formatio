@@ -99,7 +99,7 @@ CREATE TABLE users (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   email varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
-  cin varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL UNIQUE,
+  cin varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone varchar(100) COLLATE utf8mb4_unicode_ci ,
   email_verified_at timestamp NULL DEFAULT NULL,
   password varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -239,4 +239,30 @@ ALTER TABLE detail_evaluation_action_formation
 
 alter table detail_evaluation_action_formation
   add column groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE;
+
+
+CREATE TABLE IF NOT EXISTS niveau_etude(
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `niveau_etude` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `niveau_etude` (`id`, `niveau_etude`) VALUES
+(1, 'CEPE'),
+(2, 'BEPC'),
+(3, 'BACC'),
+(4,'Bacc + 1'),
+(5,'Bacc + 2'),
+(6,'Licence'),
+(7,'Bacc + 4'),
+(8,'Master'),
+(9,'Bacc + 6'),
+(10,'Bacc + 7'),
+(11,'Doctorat');
+
+alter table stagiaires drop column niveau_etude;
+alter table stagiaires
+  add column niveau_etude_id bigint(20) UNSIGNED NOT NULL REFERENCES niveau_etude(id) ON DELETE CASCADE;
+
+UPDATE stagiaires set niveau_etude_id = 1;
+
 

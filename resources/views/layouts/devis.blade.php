@@ -16,9 +16,9 @@
         <div class="row px-3 mt-4">
                 <div class="form-group mt-1 mb-1">
                     <input type="text" class="form-control test input"  name="devis">
- 
+
                     <label class="ml-3 form-control-placeholder" >Devise</label>
-                 
+
 
             </div>
             </div>
@@ -27,9 +27,9 @@
         <input type="text" class="form-control test input"  name="valeur">
     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
         {{-- <label class="ml-3 form-control-placeholder" >Valeur</label>
-    
+
     </div>
-    </div> --}} 
+    </div> --}}
     {{-- <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
  </form>
 </div>
@@ -39,15 +39,17 @@
         <table class="table mt-4">
             <thead>
             <th>Devise</th>
+            <th>Réference</th>
             <th>Action</th>
 
             </thead>
             <tbody>
                 @foreach ($devise as $dev )
-                    
-              
+
+
                 <tr>
                     <td>{{$dev->devise}}&nbsp;</td>
+                    <td>{{$dev->reference}}&nbsp;</td>
                     <td>
                         <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$dev->id}}">
                             <i class='bx bxs-edit-alt'  style="color: green"></i>
@@ -68,8 +70,10 @@
                                     @csrf
                                     <label for=""> devise</label>
                                     <input type="text" class="form-control" required name="devise" value="{{$dev->devise}}">
+                                    <label for=""> réference</label>
+                                    <input type="text" class="form-control" required name="reference" value="{{$dev->reference}}">
                                     <input type="hidden" class="form-control" required name="id" value="{{$dev->id}}"> <br><br>
-                                    
+
                                     </div>
                                     <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Retour</button>
@@ -91,7 +95,7 @@
                     <input type="text" class="form-control test input"  name="valeur">
 
                     <label class="ml-3 form-control-placeholder" >Valeur</label>
-                
+
                 </div>
                 </div>  --}}
                 {{-- <div class="col-12 pb-4 element">
@@ -118,8 +122,8 @@
 
                 <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
              </form>
-          
-             
+
+
     </div>
     <div class="col-md-6 mt-3">
         <h3>Taux devises</h3>
@@ -131,7 +135,7 @@
             </div>
         <div class="col-12 pb-4 element">
             <div class="row titres_services">
-              
+
                 <div class="col-4">
                     <h6 class="m-0">Devise</h6>
                 </div>
@@ -153,7 +157,7 @@
         <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
      </form>
     </div>
-   
+
 </div>
 <div class="row mt-5">
     <div class="col-md-6">
@@ -172,8 +176,8 @@
                     <td>{{$devis["reference"]}}</td>
                     <td>{{$devis["valeur_ariary"]}}</td>
                     <td>{{$devis["updated_at"]}}</td>
-                </tr>   
-            </tbody> 
+                </tr>
+            </tbody>
             @endforeach
         </table>
     </div>
@@ -192,12 +196,12 @@
                 <td>{{$list->reference}}</td>
                 <td><a
                     href="{{route('edit_devise',$list->id)}}"><i class='bx bxs-edit-alt'  style="color: green"></i></a>
-                
+
                 <a
                     href="{{route('delete_devise',$list->id)}}" onclick="return  confirm('voulez vraiment supprimer?')"><i class='bx bx-trash' style="color: red"></i></a>
                 </td>
-            </tr>   
-        </tbody> 
+            </tr>
+        </tbody>
         @endforeach
     </table>
     </div>
@@ -213,7 +217,7 @@
         <th scope="col">Action</th>
 
     </thead>
-   
+
     @foreach($devises as $devise)
     <tbody>
         <tr>
@@ -226,14 +230,14 @@
             <td>
                 <a
                     href="{{route('edit_taux_devise',$devise->taux_devise_id)}}"><i class='bx bxs-edit-alt'  style="color: green"></i></a>
-                
+
                 <a
                     href="{{route('delete_taux',$devise->taux_devise_id)}}" onclick="return  confirm('voulez vraiment supprimer?')"><i class='bx bx-trash' style="color: red"></i></a>
             </td>
-        </tr>   
-    </tbody> 
+        </tr>
+    </tbody>
     @endforeach
-   
+
 </table>
 </div>
 
@@ -287,12 +291,12 @@
 //dev devis
     $(document).on('click', '#addRowMontant', function() {
         $('#montant').empty();
-       
-    
+
+
             $.ajax({
                 url: "{{route('getDevise')}}"
                 , type: 'get'
-               
+
                 , success: function(response) {
                     var userData = response;
 
@@ -333,9 +337,9 @@
     // remove row
     $(document).on('click', '#removeRowMontant', function() {
         $(this).closest('#inputFormRowMontant').remove();
-       
+
             $("#addRowMontant").css("display", "inline-block");
-      
+
     });
 
 </script>

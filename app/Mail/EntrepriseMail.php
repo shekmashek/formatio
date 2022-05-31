@@ -31,7 +31,7 @@ class EntrepriseMail extends Mailable
     {
         $username = User::where('email',Auth::user()->email)->value('name');
 
-        return $this->from('contact@numerika.center')
+        return $this->from('contact-mg@upskill-sarl.com')
                     ->subject('Nouvelle entreprise créée')
                     ->view('emails.entrepriseNotif',compact('username'));
     }

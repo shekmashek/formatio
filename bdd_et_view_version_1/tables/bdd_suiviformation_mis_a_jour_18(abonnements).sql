@@ -128,6 +128,7 @@ INSERT INTO `type_abonnements_etp` (`id`, `nom_type`, `description`, `tarif`, `n
 (5, 'GE', 'La plateforme pour les Grandes Entreprises à la pointe de la transformation digitale', '400000.00', 0, 0, 0, 0, 1, '2022-05-10 07:27:16', '2022-05-10 07:27:16');
 
 --STATUS DES COMPTES DES UTILISATEURS
+
 CREATE TABLE `statut_compte` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom_statut` varchar(55) COLLATE utf8mb4_unicode_ci,
@@ -149,6 +150,7 @@ ALTER TABLE cfps
   ADD CONSTRAINT FOREIGN KEY(statut_compte_id) REFERENCES statut_compte(id);
 
 --Add column : entreprises / OF and create table assujetti
+
 CREATE TABLE `assujetti` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `assujetti` boolean not null default false,

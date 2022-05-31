@@ -6,13 +6,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profile_formateur')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp"> Page précédente</button></a>
+    <a href="{{route('profile_formateur')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp"><i class="bx bxs-chevron-left me-1"></i>Retour</button></a>
 </div>
 <center>
     <div class="col-lg-4">
         <div class="p-3 form-control">
 
-            <form class="btn-submit" action="{{route('update_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
+            <form class="btn-submit" action="{{route('update_niveau_prof',$formateur->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden" value="   {{ $formateur->nom_formateur }}" class="form-control test input" name="nom">
@@ -50,25 +50,28 @@
 
         <input type="hidden" value="{{ $formateur->cin}}" class="form-control test" name="cin">
 
-        <input type="hidden" class="form-control test input" name="mail" value="   {{ $formateur->mail_formateur }}">
+        <input type="hidden" class="form-control test input" name="mail" value="{{ $formateur->mail_formateur }}">
 
 
-        <input type="hidden" class="form-control test" name="phone" value="  {{ $formateur->numero_formateur }}">
+        <input type="hidden" class="form-control test" name="phone" value="{{ $formateur->numero_formateur }}">
         <div class="row px-3 mt-4">
             <div class="form-group mt-1 mb-1">
-                <input type="text" class="form-control test input" name="niveau" value="  {{ $formateur->niveau}}">
-
+                <select name="niveau" class="form-select input">
+                    @foreach ($niveau as $nv)
+                        <option value="{{$nv->id}}">{{$nv->niveau_etude}}</option>
+                    @endforeach
+                </select>
                 <label class="ml-3 form-control-placeholder">Niveau d'étude</label>
 
             </div>
         </div>
 
-        <input type="hidden" class="form-control test input" name="specialite" value="   {{ $formateur->specialite }}">
+        <input type="hidden" class="form-control test input" name="specialite" value="{{ $formateur->specialite }}">
 
 
 
 
-        <button class="btn_enregistrer mt-1 btn modification "> Enregister</button>
+        <button class="btn_enregistrer mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
         </form>
         <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

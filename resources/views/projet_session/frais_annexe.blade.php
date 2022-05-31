@@ -1,8 +1,10 @@
 <nav class="d-flex justify-content-between mb-2">
     <span class="titre_detail_session"><strong style="font-size: 14px">Frais annexes pour la session</strong></span>
-    <div class="col-md-9 mt-2"><a href="" aria-current="page" data-bs-toggle="modal"
-        data-bs-target="#modal_insert_frais"><i class="bx bx-plus-medical bx_ajouter" style="font-size:1.1rem !important"></i></a>
-    </div>
+    @if(count($all_frais_annexe) > 0)
+        <div class="col-md-9 mt-2"><a href="" aria-current="page" data-bs-toggle="modal"
+            data-bs-target="#modal_insert_frais"><i class="bx bx-plus-medical bx_ajouter" style="font-size:1.1rem !important"></i></a>
+        </div>
+    @endif
 </nav>
 
 <div class="mb-3 col-12 pb-5 section">
@@ -76,14 +78,14 @@
                 <div id="newRow_frais">
 
                 </div>
-                <div class="row ms-4">
+                <div class="row ms-4 mt-4">
                     <div class="col-md-3">
-                        <button type="button" id="addRow_frais" class="mt-3"><i class="fa fa-plus-circle"></i>
-                            Autre(s)</a>
+                        <button type="button" id="addRow_frais" class="py-2"><i class="bx bx-plus-circle mt-2" style="font-size : 1.3rem"></i>
+                            <span class="mb-2">Autre frais</span></button>
                     </div>
                     <div class="col-md-9"></div>
                 </div>
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-md-3"></div>
                     <div class="col-md-9">
                         <span>Total</span>
@@ -286,14 +288,14 @@
                         html += '</select>';
                     html += '</div>';
 
-                    html += '<div class="col-md-4 d-flex mt-3">';
-                        html += '<span class="mt-1 ms-2 me-2">Montant :</span>';
+                    html += '<div class="col-md-3 d-flex mt-3">';
+                        html += '<span class="mt-1 ms-1 me-2">Montant :</span>';
                         html += '<input class="form-control text-end test" type="number" id="montant_id" name="montant[]" value="0"  style="height :30px; width:150px;" placeholder="0" required>&nbsp;';
                         html += '<span class="mt-1 ms-2">'+devise+'</span>';
                     html += '</div>';
 
                     html += '<div class="col-md-3 d-flex mt-2">';
-                        html += '<button><i id="removeRow_frais" class="fal fa-minus-circle mx-5 mt-2"></i> </button>';
+                        html += '<button><i id="removeRow_frais" class="fal fa-minus-circle mx-5 mt-3" style="font-size : 1.3rem"></i> </button>';
                     html += '</div>';                
 
                 html += '</div>';

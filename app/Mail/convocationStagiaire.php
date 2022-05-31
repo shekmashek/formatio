@@ -43,7 +43,7 @@ class ConvocationStagiaire extends Mailable
      */
     public function build()
     {
-       return $this->from('contact@numerika.center')
+       return $this->from('contact-mg@upskill-sarl.com')
                     ->subject('Convocation à une formation')
                     ->view('emails.convocationMail')
                     ->with([

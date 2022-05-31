@@ -39,7 +39,9 @@ class CollaborationController extends Controller
         $user_id = Auth::user()->id;
         if(Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
         else{
-            $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id]);
+            $fonct = new FonctionGenerique();
+            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+            $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["cfp_id", "user_id"], [$cfp_id, $user_id]);
 
             $responsable = $this->fonct->findWhereMulitOne("responsables", ["email_resp"], [$req->email_resp]);
 
@@ -167,13 +169,25 @@ class CollaborationController extends Controller
                 return $this->collaboration->verify_annulation_collaboration_etp_cfp($cfp_id, $req->etp_id);
 
             }else{
-                return back()->whith('message','Vous ne pouvez pas supprimer cette collaboration parce que vous avez des projets ensembles !');
+                return back()->with('message','Vous ne pouvez pas supprimer cette collaboration parce que vous avez des projets ensembles !');
             }
 
         }
         if (Gate::allows('isReferent')) {
+
             $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+            $supprimer_id=DB::select('select * from v_groupe_projet_entreprise where entreprise_id = ? and  cfp_id  = ? ',[$etp_id,$req->cfp_id]);
+
+         if($supprimer_id==NULL || $supprimer_id== ""){
+
             return $this->collaboration->verify_annulation_collaboration_etp_cfp($req->cfp_id, $etp_id);
+
+            }
+         else{
+            return back()->with('message', 'Vous ne pouvez pas supprimer cette collaboration parce que vous  avez des projets ensembles!');;
+         }
+
+
         }
     }
 

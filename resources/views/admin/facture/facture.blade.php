@@ -1028,9 +1028,9 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form action="{{ route('encaisser') }} " id="formPayement" method="POST" novalidate>
+                                                                        <form action="{{ route('encaisser') }} "  method="POST" enctype="multipart/form-data">
                                                                             @csrf
-                                                                            <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>
+                                                                            <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control " required hidden>
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-3  mx-1">
                                                                         <div class="row">
@@ -1038,10 +1038,7 @@
                                                                                 <span>Date de paiement<strong style="color:#ff0000;">*</strong></span>
                                                                             </div>
                                                                             <div class="col">
-                                                                                <input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;">
-                                                                                <div class="invalid-feedback">
-                                                                                    votre Date de paiement
-                                                                                </div>
+                                                                                <input type="date" name="date_encaissement" class="form-control " required style="height: 50px;">
                                                                             </div>
                                                                         </div>
 
@@ -1052,10 +1049,7 @@
                                                                                 <span>Montant à facturer<strong style="color:#ff0000;">*</strong></span>
                                                                             </div>
                                                                             <div class="col">
-                                                                                <input autocomplete="off" type="number" min="1" name="montant" class="form-control formPayement" required="required" style="height: 50px;">
-                                                                                <div class="invalid-feedback">
-                                                                                    votre montant à encaisser
-                                                                                </div>
+                                                                                <input autocomplete="off" type="number" min="1" name="montant" class="form-control " required style="height: 50px;">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1073,9 +1067,6 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="invalid-feedback">
-                                                                            votre mode de paiement
-                                                                        </div>
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-2  mx-1">
                                                                         <span>Memo/Notes</span>
@@ -1083,7 +1074,7 @@
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
                                                                     <div class="">
-                                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div>
+                                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit"  class="btn btn_creer btnP px-3">Encaisser</button> </div>
                                                                     </div>
                                                                     </form>
 

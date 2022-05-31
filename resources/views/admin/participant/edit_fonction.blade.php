@@ -5,13 +5,20 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+  <a href="{{route('profile_stagiaire')}}" role="button" class="btn btn_precedent me-1 my-2"><i class="bx bxs-chevron-left me-1"></i>   Retour</a>
+  {{-- <a href="{{route('profile_stagiaire')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a> --}}
 </div>
 <center>
-
+@if (\Session::has('error_fonction'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_fonction') !!}</li>
+      </ul>
+  </div>
+@endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        
+
         <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
@@ -77,7 +84,7 @@
                           <input type="hidden" class="form-control test" id="region" name="region" placeholder="Region" value="{{ $stagiaire->region}}">
 
 
-                  <input type="hidden" class="form-control test"  name="niveau" value="{{ $stagiaire->niveau_etude }}">
+                  <input type="hidden" class="form-control test"  name="niveau" value="{{ $stagiaire->niveau_etude_id }}">
                     <input type="hidden" value="{{ $stagiaire->matricule}}"  class="form-control"  name="matricule" placeholder="Matricule" readonly>
                     <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
@@ -93,7 +100,7 @@
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>
 
-<button class="btn_enregistrer  mt-1 btn modification "> Enregister</button>
+                    <button class="btn btn_enregistrer mt-1"><i class="bx bx-check me-1"></i> Enregistrer</button>
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

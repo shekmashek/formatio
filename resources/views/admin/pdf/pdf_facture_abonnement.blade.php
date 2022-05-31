@@ -158,10 +158,11 @@
                                 </td>
                                 <td align="right">
                                     <h6>UpSkill</h6>
-                                    <h6>contact@formation.mg</h6>
+                                    <h6>contact-mg@upskill-sarl.com</h6>
                                     <h6>Lot IIN 60 Analamahitsy 101 Antananarivo Madagascar</h6>
                                     <h6>+261 34 81 135 63</h6>
                                     <h6>www.formation.mg</h6><br>
+                                    <p class="m-0 adresse_cfp">NIF : 5011767848 <br> RCS : 2022B00475 <br> Stat : 62011 11 2022 0 10487 <br> Carte Fiscale : N° 0183506/DGI-J</p>
                                 </td>
                             </tr>
                             <tr>
@@ -207,17 +208,13 @@
                         <thead class="btn-secondary">
                             <tr>
                                 <th scope="col">Description</th>
-                                <th>Montant HT</th>
-                                <th>TVA (20%)</th>
-                                <th>Net à payer TTC</th>
+                                <th>Montant </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : {{$dates_abonnement[0]->date_debut}} <br> Fin: {{$dates_abonnement[0]->date_fin}}</td>
                                 <td>{{number_format($facture[0]->montant_facture, 0, ',', '.')}} Ar</td>
-                                <td>{{number_format($tva,0,',','.')}} Ar</td>
-                                <td>{{number_format($net_ttc,0,',','.')}} Ar</td>
                             </tr>
                         </tbody>
                     </table>

@@ -74,7 +74,7 @@
                 @if($nom_formation == null)
                     <h2 class="">Tous les formations en : tous</h2><br>
                 @else
-                    <h2 class="">Tous les formations en :&nbsp;{{ $nom_formation }}</h2><br>
+                    <h2 class="">Tous les formations en :&nbsp;{{$nom_formation}}</h2><br>
                 @endif
             @endif
             @if(Session::has('success'))
@@ -88,7 +88,7 @@
     </div>
     <div class="container pb-5 ">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
 
                 @if (count($infos)>0)
 
@@ -107,93 +107,99 @@
                                     <span><strong>{{ $info->pourcentage }}</strong>/5</span>
                                 </div>
 
-                                <p class="mt-2 description">Formation proposée
-                                    par&nbsp;<span class="">{{$info->nom}}</span>&nbsp;&nbsp;&nbsp;<img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;"></p>
+
 
                             </div>
                         </a>
                     </div>
 
-                    <div class="col-lg-6 col-md-6 text-end description">
+                    <div class="col-lg-6 col-md-6 justify-content-between description d-flex">
+                        <div class="px-3">
+                            <a href="{{route('detail_cfp',$info->cfp_id)}}">
+                                <p class="mt-2 description">Formation proposée
+                                par&nbsp;<span class="">{{$info->nom}}</span>&nbsp;&nbsp;&nbsp;<img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
+                                </p>
+                            </a>
+                            <div class="row row-cols-auto liste__formation__item3 justify-content-space-between description">
+                                <div class="col"><i class="bx bx-alarm bx_icon"></i>
+                                    <span>
+                                        @isset($info->duree_jour)
+                                        {{$info->duree_jour}} jours
+                                        @endisset
+                                    </span>
+                                    <span>
+                                        @isset($info->duree)
+                                        /{{$info->duree}} h
+                                        @endisset
+                                    </span> </p>
+                                </div>
+                                <div class="col"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
+                                </div>
+                                <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
+                                </div>
+                                <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="liste__formation__item2">
-                            <form action="{{route('demande_devis.store')}}" method="post">
-                                @csrf
-                                <input type="text" hidden name="module_id" value="{{$info->module_id}}">
-                                <button type="submit" class=" btn btn_next mb-3">Démander
-                                    un devis&nbsp;<i class="bx bxs-cart-add bx_icon"></i></button>
-                            </form>
+                                <a href="{{route('demande_devis_client',$info->module_id)}}"><button type="submit" class=" btn btn_nouveau mb-3">Démander&nbsp;un&nbsp;devis</button></a>
+
 
                             {{-- <a href="#">
                                 <h6 class="devis_form">Démander un devis&nbsp;<i class="bx bxs-cart-add bx_icon"></i>
                                 </h6>
                             </a> --}}
-                            <p class="prix_ht"><span class="prix_ar">
-                                    @php
-                                    echo number_format($info->prix, 0, ' ', ' ');
-                                    @endphp
-                                    &nbsp;{{$devise->devise}}</span>&nbsp;HT</p>
+                            <div>{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                            @if($info->prix_groupe != null)
+                                <div>{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                            @endif
+
                             <p>Réference : <span>{{$info->reference}}</span></p>
                         </div>
 
                     </div>
-                    <div class="row row-cols-auto liste__formation__item3 justify-content-space-between description">
-                        <div class="col"><i class="bx bx-alarm bx_icon"></i>
-                            <span>
-                                @isset($info->duree_jour)
-                                {{$info->duree_jour}} jours
-                                @endisset
-                            </span>
-                            <span>
-                                @isset($info->duree)
-                                /{{$info->duree}} h
-                                @endisset
-                            </span> </p>
-                        </div>
-                        <div class="col"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
-                        </div>
-                        <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
-                        </div>
-                        <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row w-100 justify-content-end">
+                        @foreach ($datas as $data)
+                            @if($info->module_id == $data->module_id)
+                                @if (count($datas) <= 0)
 
-                        <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates&nbsp;<i class="bx bx-caret-down caret-icon"></i>
-                        </h6>
+                                @else
+                                    <hr>
+                                    <div class="row w-100 justify-content-end">
+                                        <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates&nbsp;<i class="bx bx-caret-down caret-icon"></i>
+                                        </h6>
+                                    </div>
+                                    <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
+                                        <div class="row px-3 py-2">
+                                            <div class="col-3">
+                                                <p>Prochaines Sessions</p>
+                                            </div>
+                                            <div class="col-5 date">
+                                                @foreach ($datas as $data)
+                                                    @if($info->module_id == $data->module_id)
+                                                        <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                            <div class="col-4">
+                                                <p>Cette thématique vous intéresse ?
+                                                    Nos experts conçoivent votre formation
+                                                    sur-mesure ! Nous contacter</p>
+                                                    <button type="button" class="btn_next"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
+                        @endforeach
                     </div>
-                    <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
-                        {{-- @if (count($datas)<=0)
-                            <div class="row px-3 py-2">
-                                <div class="col-3">
-                                    <p>Aucun session inter</p>
-                                </div>
-                            </div>
-                        @else --}}
-                            <div class="row px-3 py-2">
-                                <div class="col-3">
-                                    <p>Prochaines Sessions</p>
-                                </div>
-                                <div class="col-5 date">
-                                    @foreach ($datas as $data)
-                                        @if($info->module_id == $data->module_id)
-                                            <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
-                                        @endif
-                                    @endforeach
-                                </div>
-                                <div class="col-4">
-                                    <p>Cette thématique vous intéresse ?
-                                        Nos experts conçoivent votre formation
-                                        sur-mesure ! Nous contacter</p>
-                                        <button type="button" class="btn_next"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button>
-                                </div>
-                            </div>
-                        {{-- @endif --}}
-                    </div>
-                </div>
                 @endforeach
                 @else
-                <h2>Aucun module pour cette formation.</h2>
+                <h2 class="text-center">Aucun module pour cette formation 😅 !</h2>
+                <div class="col text-center">
+                    <a class="mb-2 new_list_nouvelle " href="{{route('liste_formation')}}">
+                        <span class="btn_enregistrer text-center"><i class="bx bxs-chevron-left me-1"></i>Retour</span>
+                    </a>
+                </div>
                 @endif
             </div>
         </div>

@@ -42,13 +42,24 @@ class ResponsableCfpController extends Controller
             }
             else{
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
+                $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$refs->cfp_id]);
+                $modules_counts = $fonct->findWhere("modules",["cfp_id"],[$refs->cfp_id]);
+                $projets_counts = $fonct->findWhere("projets",["cfp_id"],[$refs->cfp_id]);
+                $factures_counts = $fonct->findWhere("factures",["cfp_id"],[$refs->cfp_id]);
+                $formateurs_counts = $fonct->findWhere("demmande_cfp_formateur",["demmandeur_cfp_id","activiter"],[$refs->cfp_id,1]);
+                $entreprises_counts = $fonct->findWhere("demmande_cfp_etp",["demmandeur_cfp_id","activiter"],[$refs->cfp_id,1]);
+                $projetInter_counts = $fonct->findWhere("projets",["cfp_id","type_formation_id"],[$refs->cfp_id,2]);
+                $projetIntra_counts = $fonct->findWhere("projets",["cfp_id","type_formation_id"],[$refs->cfp_id,1]);
+                $sessions_counts = DB::select('select grp.id from groupes as grp join projets as prj on grp.projet_id = prj.id where prj.cfp_id = ?',[$refs->cfp_id]);
+                $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
+                $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
             }
-            return view('cfp.responsable_cfp.profile', compact('refs'));
+            return view('cfp.responsable_cfp.profile', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts'));
 
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
             $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
-            return view('cfp.responsable_cfp.profiles', compact('refs'));
+            return view('cfp.responsable_cfp.profile', compact('refs'));
 
         }
 
@@ -322,9 +333,17 @@ class ResponsableCfpController extends Controller
 
     //update responsable cfp
     public function update_nom_responsable($id,Request $request){
-        DB::update('update users set name = ? where id = ?', [$request->nom.' '.$request->prenom, Auth::id()]);
-        DB::update('update responsables_cfp set nom_resp_cfp = ?,prenom_resp_cfp = ? where user_id = ?', [$request->nom,$request->prenom, Auth::id()]);
-        return redirect()->route('profil_du_responsable');
+        if($request->nom == null){
+            return back()->with('error_nom','Entrez votre nom avant  de cliquer sur enregistrer');
+        }
+        elseif($request->prenom == null){
+            return back()->with('error_prenom','Entrez votre prenom avant  de cliquer sur enregistrer');
+        }
+        else{
+            DB::update('update users set name = ? where id = ?', [$request->nom.' '.$request->prenom, Auth::id()]);
+            DB::update('update responsables_cfp set nom_resp_cfp = ?,prenom_resp_cfp = ? where user_id = ?', [$request->nom,$request->prenom, Auth::id()]);
+            return redirect()->route('profil_du_responsable');
+        }
     }
     public function update_dtn_responsable($id,Request $request){
          DB::update('update responsables_cfp set date_naissance_resp_cfp = ? where user_id = ?', [$request->date_naissance, Auth::id()]);
@@ -339,42 +358,76 @@ class ResponsableCfpController extends Controller
         return redirect()->route('profil_du_responsable');
     }
     public function update_mdp_responsable($id,Request $request){
-        $users =  db::select('select * from users where id = ?', [Auth::id()]);
-        $pwd = $users[0]->password;
-        $new_password = Hash::make($request->new_password);
-        if (Hash::check($request->get('ancien_password'), $pwd)) {
-            DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
-            return redirect()->route('profil_du_responsable');
-        } else {
-            return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+        if($request->ancien_password == null){
+            return back()->with('error_ancien_pwd','Entrez votre ancien mot de passe');
+        }
+        elseif($request->new_password == null){
+            return back()->with('error_new_pwd','Entrez votre nouveau mot de passe avant de cliquer sur enregistrer');
+        }
+        else{
+            $users =  db::select('select * from users where id = ?', [Auth::id()]);
+            $pwd = $users[0]->password;
+            $new_password = Hash::make($request->new_password);
+            if (Hash::check($request->get('ancien_password'), $pwd)) {
+                DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
+                return redirect()->route('profil_du_responsable');
+            } else {
+                return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+            }
         }
     }
     public function update_email_responsable($id,Request $request){
-        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
-        DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
-        DB::update('update responsables_cfp set email_resp_cfp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
-        DB::update('update cfps set email = ? where id = ?', [$request->mail_resp, $cfp_id]);
-        return redirect()->route('profil_du_responsable');
+        if($request->mail_resp == null){
+            return back()->with('error_email','Entrez votre adresse e-mail avant de cliquer sur enregistrer');
+        }
+        else{
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
+            DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
+            DB::update('update responsables_cfp set email_resp_cfp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
+            DB::update('update cfps set email = ? where id = ?', [$request->mail_resp, $cfp_id]);
+            return redirect()->route('profil_du_responsable');
+        }
     }
     public function update_telephone_responsable($id,Request $request){
-        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
-        DB::update('update users set telephone = ? where id = ?', [$request->phone, Auth::id()]);
-        DB::update('update responsables_cfp set telephone_resp_cfp = ? where user_id = ?', [$request->phone, Auth::id()]);
-        DB::update('update cfps set telephone = ? where id = ?', [$request->phone, $cfp_id]);
-        return redirect()->route('profil_du_responsable');
+        if($request->phone == null){
+            return back()->with('error_phone','Entrez votre numéro de téléphone avant de cliquer sur enregistrer');
+        }
+        else{
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id])->cfp_id;
+            DB::update('update users set telephone = ? where id = ?', [$request->phone, Auth::id()]);
+            DB::update('update responsables_cfp set telephone_resp_cfp = ? where user_id = ?', [$request->phone, Auth::id()]);
+            DB::update('update cfps set telephone = ? where id = ?', [$request->phone, $cfp_id]);
+            return redirect()->route('profil_du_responsable');
+        }
+
     }
     public function update_cin_responsable($id,Request $request){
+        if($request->cin == null){
+            return back()->with('error_cin','Entrez votre CIN avant de cliquer sur enregistrer');
+        }
         DB::update('update users set cin = ? where id = ?', [$request->cin, Auth::id()]);
         DB::update('update responsables_cfp set cin_resp_cfp = ? where user_id = ?', [$request->cin, Auth::id()]);
         return redirect()->route('profil_du_responsable');
     }
     public function update_adresse_responsable($id,Request $request){
-        DB::update('update responsables_cfp set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where user_id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, Auth::id()]);
-        return redirect()->route('profil_du_responsable');
+        if($request->lot == null || $request->ville == null || $request->region == null || $request->quartier == null || $request->code_postal == null){
+            return back()->with('error_adresse','Entrez votre adresse complète avant  de cliquer sur enregistrer');
+        }
+        else{
+            DB::update('update responsables_cfp set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where user_id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, Auth::id()]);
+            return redirect()->route('profil_du_responsable');
+        }
+
     }
     public function update_fonction_responsable($id,Request $request){
-        DB::update('update responsables_cfp set fonction_resp_cfp = ? where user_id = ?', [$request->fonction, Auth::id()]);
-        return redirect()->route('profil_du_responsable');
+        if($request->error_fonction == null){
+            return back()->with('error_fonction','Entrez votre fonction avant de cliquer sur enregistrer');
+        }
+        else{
+            DB::update('update responsables_cfp set fonction_resp_cfp = ? where user_id = ?', [$request->fonction, Auth::id()]);
+            return redirect()->route('profil_du_responsable');
+        }
+
     }
     public function update_photo_responsable($id,Request $request){
         $image = $request->file('image');

@@ -268,7 +268,7 @@ tbody tr{
     border-radius: 5px;
     cursor: pointer;
     transition: all .5ms ease;
-    color: white;
+    color: white !important;
     position: relative;
     /* top: 5px; */
 }
@@ -276,7 +276,7 @@ tbody tr{
 .tbody_projet a:hover {
     background-color: white;
     border: 1px solid #5433FF;
-    color: #5433FF;
+    color: #5433FF !important;
 }
 .centrer_edit{
     display: grid;
@@ -302,12 +302,14 @@ tbody tr{
     transform: scale(1.05);
 } */
 
+
+
 .modal_projets .modal-content {
     width: 43.75rem !important;
 }
 
 .modal_projets .modal-header {
-    background: #7535dc38;
+    background: #7b2ff4a7;
     color: #637381;
 }
 
@@ -402,7 +404,7 @@ tbody tr{
     background-color: #2193b0;
     border-radius: 5px;
     transition: all 200ms;
-    color: white;
+    color: white !important;
     border: none;
     box-shadow: none;
     outline: none;
@@ -423,7 +425,7 @@ tbody tr{
     background-color: #2ebf91;
     border-radius: 5px;
     transition: all 200ms;
-    color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255) !important;
     border: none;
     box-shadow: none;
     outline: none;
@@ -460,50 +462,57 @@ tbody tr{
     border-radius: 1rem;
     background-color: #00CDAC;
     color: white;
-    align-items: center margin: 0 auto;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .status_cloturer {
     border-radius: 1rem;
     background-color: #314755;
     color: white;
-    align-items: center margin: 0 auto;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .status_reporter {
     border-radius: 1rem;
     background-color: #26a0da;
-    color: white;
-    align-items: center margin: 0 auto;
+    color: white !important;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .status_annulee {
     border-radius: 1rem;
     background-color: #b31217;
-    color: white;
-    align-items: center margin: 0 auto;
+    color: white !important;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .status_termine {
     border-radius: 1rem;
     background-color: #1E9600;
-    color: white;
-    align-items: center margin: 0 auto;
+    color: white !important;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .status_confirme {
     border-radius: 1rem;
     background-color: #2B32B2;
-    color: white;
-    align-items: center margin: 0 auto;
+    color: white !important;
+    align-items: center;
+    margin: 0 auto;
     padding-end:1rem;
 }
 
 .statut_active {
     border-radius: 1rem;
     background-color: rgb(15, 126, 145);
-    color: whitesmoke;
-    align-items: center margin: 0 auto;
+    color: whitesmoke !important;
+    align-items: center;
+    margin: 0 auto;
 }
 
 
@@ -534,7 +543,7 @@ tbody tr{
 
 .nouvelle_session:hover{
     background-color: #63738134;
-    color: #0765f3;
+    color: #0765f3 !important;
     border: none;
     border-radius: 15px;
 }

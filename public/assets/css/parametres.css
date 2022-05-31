@@ -16,19 +16,19 @@
     background-color: #7635dc;
     border: none;
     border-radius: 15px;
-    color: white;
+    color: white !important;
     padding: .4rem 1rem;
 }
 
 .action_name:hover{
-    color: #7635dc;
+    color: #7635dc !important;
     background-color: white;
     border:1px solid #7635dc;
     border-radius: 15px;
 }
 
 .action_other{
-    color: #7635dc;
+    color: #7635dc !important;
     background-color: white;
     border:1px solid #7635dc;
     border-radius: 15px;
@@ -39,11 +39,11 @@
     background-color: #7635dc;
     border: none;
     border-radius: 15px;
-    color: white;
+    color: white !important;
 }
 
 .action_other_not{
-    color: red;
+    color: red !important;
     background-color: white;
     border:1px solid red;
     border-radius: 15px;
@@ -54,7 +54,7 @@
     background-color: red;
     border: none;
     border-radius: 15px;
-    color: white;
+    color: white !important;
 }
 
 .action_name:focus{
@@ -62,7 +62,7 @@
 }
 
 .nom_org{
-    font-size: 2rem;
+    font-size: 1rem;
 }
 
 .nb_modules{
@@ -93,25 +93,39 @@ a:hover{
 .info_plus{
     background: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    height: auto;
+    height: 550px;
     border: 1px solid rgb(222, 221, 221);
 }
 
 .info_plus2{
     background: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    height: 400px;
+    height: auto;
     border: 1px solid rgb(222, 221, 221);
 }
 
 .info_plus3{
     background: white;
-    height: auto;
+    height: 550px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border: 1px solid rgb(222, 221, 221);
 }
 
 .info_plus4{
+    background: white;
+    height: 400px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: 1px solid rgb(222, 221, 221);
+}
+
+.info_plus5{
+    background: white;
+    height: 350px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: 1px solid rgb(222, 221, 221);
+}
+
+.info_plus6{
     background: white;
     height: 250px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -120,6 +134,7 @@ a:hover{
 
 .border_bas{
     border-bottom: 1px solid rgb(222, 221, 221);
+    margin-bottom: 15px;
 }
 
 .icon_sociaux1{
@@ -174,7 +189,7 @@ a:hover{
 .icon_sociauxtwt{
     font-size: 1.5rem;
     background-color: #0093E9;
-    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -249,4 +264,20 @@ a:focus{
 .afficher_icon_modif:hover .bx_modifier{
     display: block;
     transition: all .5s;
+}
+
+.logo{
+    display: grid;
+    place-content: center;
+}
+
+.photo_users{
+    color:white;
+    font-size: 30px;
+    border: none;
+    border-radius: 100%;
+    height:100px;
+    width:100px ;
+    display: grid;
+    place-content: center;
 }

@@ -271,6 +271,9 @@ class ResponsableController extends Controller
     }
     public function affReferent()
     {
+
+        $fonct = new FonctionGenerique();
+
         $user_id = Auth::user()->id;
          if (Gate::allows('isReferentPrincipale')) {
 
@@ -288,10 +291,16 @@ class ResponsableController extends Controller
                 // $branche = branche::findorFail($id);
 
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-                $nom_entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
-            // }
-            // dd($refs);
-            return view('admin.responsable.profilResponsables', compact('refs','nom_entreprise'));
+                $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
+
+                $projets_counts = $fonct->findWhere("groupe_entreprises",["entreprise_id"],[$refs->entreprise_id]);
+                $cfp_counts = $fonct->findWhere("demmande_etp_cfp",["demmandeur_etp_id","activiter"],[$refs->entreprise_id,1]);
+                $modulesInternes_counts = $fonct->findWhere("modules_interne",["etp_id"],[$refs->entreprise_id]);
+                $projetIntra_counts = DB::select('select grp.id from groupes as grp join groupe_entreprises as grp_etp on grp.id = grp_etp.groupe_id join projets as prj on prj.id = grp.projet_id where grp_etp.entreprise_id = ? and prj.type_formation_id = ?',[$refs->entreprise_id, 1]);
+                $projetInter_counts = DB::select('select grp.id from groupes as grp join groupe_entreprises as grp_etp on grp.id = grp_etp.groupe_id join projets as prj on prj.id = grp.projet_id where grp_etp.entreprise_id = ? and prj.type_formation_id = ?',[$refs->entreprise_id, 2]);
+                $stagiaires_counts = $fonct->findWhere("stagiaires",["entreprise_id"],[$refs->entreprise_id]);
+                $chef_departements_counts = $fonct->findWhere("chef_departements",["entreprise_id"],[$refs->entreprise_id]);
+            return view('admin.responsable.profilResponsables', compact('refs','entreprise','projets_counts','cfp_counts','modulesInternes_counts','projetInter_counts','projetIntra_counts','stagiaires_counts','chef_departements_counts'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
 
@@ -316,7 +325,7 @@ class ResponsableController extends Controller
                 $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
                 $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
                 $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
-                $secteur = entreprise::with('Secteur')->findOrFail($id);
+                $secteur = DB::select('select nom_secteur from secteurs where id = ?',[$entreprise->secteur_id]);
                 $projets_counts = $fonct->findWhere("groupe_entreprises",["entreprise_id"],[$refs->entreprise_id]);
                 $cfp_counts = $fonct->findWhere("demmande_etp_cfp",["demmandeur_etp_id","activiter"],[$refs->entreprise_id,1]);
                 $modulesInternes_counts = $fonct->findWhere("modules_interne",["etp_id"],[$refs->entreprise_id]);
@@ -342,7 +351,7 @@ class ResponsableController extends Controller
 
             $responsables=responsable::where('entreprise_id',$refs->entreprise_id)->where('prioriter',0)->get();
 
-           return view('admin.responsable.affichage_parametreReferents', compact('refs','entreprise','branche','responsables','abonnement'));
+           return view('admin.responsable.affichage_parametreReferent', compact('refs','entreprise','branche','responsables','abonnement'));
         }
     }
     public function show($id)
@@ -507,6 +516,7 @@ class ResponsableController extends Controller
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
         $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+
         return view('admin.responsable.edit_photos', compact('responsable'));
     }
     public function edit_pwd($id, Request $request)
@@ -592,23 +602,35 @@ class ResponsableController extends Controller
     //update password
     public function update_responsable_mdp(Request $request)
     {
-
-        $users =  db::select('select * from users where id = ?', [Auth::id()]);
-        $pwd = $users[0]->password;
-        $new_password = Hash::make($request->new_password);
-        if (Hash::check($request->get('ancien_password'), $pwd)) {
-            DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
-            return redirect()->route('profil_referent');
-        } else {
-            return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+        if($request->ancien_password == null){
+            return back()->with('error_ancien_pwd','Entrez votre ancien mot de passe');
+        }
+        elseif($request->new_password == null){
+            return back()->with('error_ancien_pwd','Entrez votre nouveau mot de passe avant de cliquer sur enregistrer');
+        }
+        else{
+            $users =  db::select('select * from users where id = ?', [Auth::id()]);
+            $pwd = $users[0]->password;
+            $new_password = Hash::make($request->new_password);
+            if (Hash::check($request->get('ancien_password'), $pwd)) {
+                DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
+                return redirect()->route('profil_referent');
+            } else {
+                return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
+            }
         }
     }
     //update e-mail
     public function update_mail_resp(Request $request)
     {
-        DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
-        DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
-        return redirect()->route('profil_referent');
+        if ($request->mail_resp == null) {
+            return back()->with('error_email','Entrez votre adresse e-mail avant de cliquer sur enregistrer');
+        }
+        else{
+            DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
+            DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
+            return redirect()->route('profil_referent');
+        }
     }
 
     public function update_nom($id, Request $request)
@@ -667,7 +689,6 @@ class ResponsableController extends Controller
             $nom = $request->nom;
             $prenom = $request->prenom;
             $date_naiss = $request->date_naissance;
-
             $cin = $request->cin;
             $genre = $request->genre;
             $code_postal = $request->code_postal;
@@ -683,7 +704,6 @@ class ResponsableController extends Controller
             $mdpHash = Hash::make($mdp);
 
             $input = $request->image;
-
             //stocker logo dans google drive
             //stocker logo dans google drive
             // $dossier = 'responsable';
@@ -699,47 +719,69 @@ class ResponsableController extends Controller
                 $image->move($destinationPath, $profileImage);
                 $input = "$profileImage";
             }
-            if ($input != null) {
-
-                responsable::where('id', $id)
-                    ->update([
-                        'nom_resp' => $nom,
-                        'prenom_resp' => $prenom,
-                        'fonction_resp' => $fonction,
-                        'email_resp' => $mail,
-                        'telephone_resp' => $phone,
-                        'date_naissance_resp' => $date_naiss,
-                        'genre_id' => $genre,
-                        'cin_resp' => $cin,
-                        'adresse_lot' => $lot,
-                        'adresse_code_postal' => $code_postal,
-                        'adresse_quartier' => $quartier,
-                        'adresse_ville' => $ville,
-                        'adresse_region' => $region,
-                        'poste_resp' => $poste,
-                        'photos' => $input
-                    ]);
-
-            } else {
-                responsable::where('id', $id)
-                    ->update([
-                        'nom_resp' => $nom,
-                        'prenom_resp' => $prenom,
-                        'fonction_resp' => $fonction,
-                        'email_resp' => $mail,
-                        'telephone_resp' => $phone,
-                        'date_naissance_resp' => $date_naiss,
-                        'genre_id' => $genre,
-                        'cin_resp' => $cin,
-                        'adresse_lot' => $lot,
-                        'adresse_code_postal' => $code_postal,
-                        'adresse_quartier' => $quartier,
-                        'adresse_ville' => $ville,
-                        'adresse_region' => $region,
-                        'poste_resp' => $poste,
-
-                    ]);
+            if($nom == null){
+                return back()->with('error_nom','Entrez votre nom avant  de cliquer sur enregistrer');
             }
+            elseif($prenom == null){
+                return back()->with('error_prenom','Entrez votre prenom avant  de cliquer sur enregistrer');
+            }
+            elseif($phone == null){
+                return back()->with('error_phone','Entrez votre numéro de téléphone avant  de cliquer sur enregistrer');
+            }
+            elseif($cin == null){
+                return back()->with('error_cin','Entrez votre CIN avant  de cliquer sur enregistrer');
+            }
+            elseif($lot == null || $ville == null || $region == null || $quartier == null || $code_postal == null){
+                return back()->with('error_adresse','Entrez votre adresse complète avant  de cliquer sur enregistrer');
+            }
+            elseif($fonction == null){
+                return back()->with('error_fonction','Entrez votre fonction avant de cliquer sur enregistrer');
+            }
+            else{
+                if ($input != null) {
+
+                    responsable::where('id', $id)
+                        ->update([
+                            'nom_resp' => $nom,
+                            'prenom_resp' => $prenom,
+                            'fonction_resp' => $fonction,
+                            'email_resp' => $mail,
+                            'telephone_resp' => $phone,
+                            'date_naissance_resp' => $date_naiss,
+                            'genre_id' => $genre,
+                            'cin_resp' => $cin,
+                            'adresse_lot' => $lot,
+                            'adresse_code_postal' => $code_postal,
+                            'adresse_quartier' => $quartier,
+                            'adresse_ville' => $ville,
+                            'adresse_region' => $region,
+                            'poste_resp' => $poste,
+                            'photos' => $input
+                        ]);
+
+                } else {
+                    responsable::where('id', $id)
+                        ->update([
+                            'nom_resp' => $nom,
+                            'prenom_resp' => $prenom,
+                            'fonction_resp' => $fonction,
+                            'email_resp' => $mail,
+                            'telephone_resp' => $phone,
+                            'date_naissance_resp' => $date_naiss,
+                            'genre_id' => $genre,
+                            'cin_resp' => $cin,
+                            'adresse_lot' => $lot,
+                            'adresse_code_postal' => $code_postal,
+                            'adresse_quartier' => $quartier,
+                            'adresse_ville' => $ville,
+                            'adresse_region' => $region,
+                            'poste_resp' => $poste,
+
+                        ]);
+                }
+
+            }
+
 
             DB::update('update users set name = ? where id = ?', [$nom.' '.$prenom,Auth::user()->id]);
             DB::update('update users set telephone = ? where id = ?', [$phone,Auth::user()->id]);

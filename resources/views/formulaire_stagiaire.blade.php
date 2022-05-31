@@ -215,8 +215,8 @@
 
                                 </div>
                                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
-                                    @if($testNull[0]->niveau_etude!=null)
-                                    <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<span style="float: right;">{{$testNull[0]->niveau_etude}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                    @if($testNull[0]->niveau_etude_id!=null)
+                                    <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<span style="float: right;">{{$testNull[0]->niveau_etude_id}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                     </p>
                                     @else
                                     <p class="p-1 m-0" style="font-size: 10px;">NIVEAU D'ETUDE<input type="text" name="niveau_stg" style="float: right;"></p>

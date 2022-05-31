@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_enregistrer my-2 edit_pdp_cfp" > Page précédente</button></a>
+    <a href="{{route('profil_du_responsable')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp"><i class="bx bxs-chevron-left"></i> Retour</button></a>
 </div>
 <center>
  {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
@@ -64,7 +64,7 @@
                         </div>
                         </label>
                             <input id="file-input" type="file" name="image" value="{{$responsable->photos_resp_cfp}}"/>
-                            <button class="btn_enregistrer  mt-1 btn modification "> Enregister</button>
+                            <button class="btn_enregistrer  mt-1 btn modification "><i class="bx bx-check me-1"></i> Enregistrer</button>
                         </div>
                     </center>
 

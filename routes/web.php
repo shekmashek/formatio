@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
+use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -80,7 +81,7 @@ Route::get('/image-cfp/{logo_cfp}', 'CfpController@img_cfp')->name('image-cfp');
 Route::get('listes_notifs', 'HomeController@liste_notification')->name('listes_notifs');
 Route::get('listes_messages', 'HomeController@liste_message')->name('listes_messages');
 //route affiche chaque projet
-Route::get('tous_projets', 'HomeController@tous_projets')->name('tous_projets');
+Route::get('tous_projets/{id}', 'HomeController@tous_projets')->name('tous_projets');
 
 // --------------------ROUTE ADMIN ---------------------------//
 
@@ -197,9 +198,9 @@ Route::post('/update_experience/{id?}', 'ProfController@update_experience')->nam
 Route::post('/update_domaine/{id?}', 'ProfController@update_domaine')->name('update_domaine');
 Route::post('/update_mdp_formateur/{id?}', 'ProfController@update_mdp_formateur')->name('update_mdp_formateur');
 Route::post('/update_email_formateur/{id}', 'ProfController@update_email_formateur')->name('update_email_formateur');
-
-
-
+Route::post('/update_telephone_prof/{id}','ProfController@update_telephone_prof')->name('update_telephone_prof');
+Route::post('/update_niveau_prof/{id}','ProfController@update_niveau_prof')->name('update_niveau_prof');
+Route::post('/update_photos_prof/{id}','ProfController@update_photos_prof')->name('update_photos_prof');
 //collabforfateur
 Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur');
 //route formateur profil
@@ -237,9 +238,10 @@ Route::get('/editer_fonction/{id}', 'ProfController@editer_fonction')->name('edi
 // });
 
 Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
-Route::get('/nouveau_formateur', function () {
-    return view('admin.formateur.nouveauFormateur');
-})->name('nouveau_formateur');
+Route::get('/nouveau_formateur','ProfController@nouveau_formateur')->name('nouveau_formateur');
+// Route::get('/nouveau_formateur', function () {
+//     return view('admin.formateur.nouveauFormateur');
+// })->name('nouveau_formateur');
 Route::get('/edit_formateur', 'ProfController@edit')->name('edit_formateur');
 Route::post('/update_formateur', 'ProfController@update')->name('update_formateur');
 Route::get('/destroy_formateur', 'ProfController@destroy')->name('destroy_formateur');
@@ -334,6 +336,9 @@ Route::get('/destroy_participant/{id}', 'ParticipantController@destroy')->name('
 Route::post('/update_participant', 'ParticipantController@update')->name('update_participant');
 Route::post('/update_stagiaire/{id}', 'ParticipantController@update_stagiaire')->name('update_stagiaire');
 Route::post('/update_photo_stagiaire/{id}', 'ParticipantController@update_photo_stagiaire')->name('update_photo_stagiaire');
+Route::post('/update_mot_de_passe_stagiaire/{id}','ParticipantController@update_mot_de_passe_stagiaire')->name('update_mot_de_passe_stagiaire');
+Route::post('/update_email_stagiaire/{id}','ParticipantController@update_email_stagiaire')->name('update_email_stagiaire');
+Route::post('/update_niveau_stagiaire/{id}','ParticipantController@update_niveau_stagiaire')->name('update_niveau_stagiaire');
 // profile_stagiaire
 // Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
@@ -370,6 +375,7 @@ Route::get('/ajout_categorie', 'FormationController@ajout_categorie')->name('ajo
 Route::get('/ajout_module', 'FormationController@ajout_module')->name('ajout_module');
 //route catalogue de formation
 Route::get('result__formation', 'FormationController@rechercheParModule')->name('result_formation');
+Route::get('affichage_formation/{id}', 'FormationController@affichage_formation')->name('affichage_formation');
 Route::get('search__formation', 'FormationController@getModulesParReference')->name('search__formation');
 Route::get('domaine_formation', 'FormationController@formation_domaine')->name('domaine_formation');
 Route::get('domaine_vers_formation/{id}', 'FormationController@domaine_vers_formation')->name('domaine_vers_formation');
@@ -378,8 +384,9 @@ Route::get('select_par_formation_par_cfp/{id_formation}/{id_cfp}', 'FormationCon
 Route::get('select_par_module/{id}', 'FormationController@affichageParModule')->name('select_par_module');
 Route::get('select_tous', 'FormationController@affichageTousCategories')->name('select_tous');
 Route::get('inscriptionInter/{type_formation_id}/{id_groupe}', 'SessionController@inscription')->name('inscriptionInter');
+Route::get('demande_devis_client/{id}', 'FormationController@demande_devis_client')->name('demande_devis_client');
 //route annuaire de cfp
-Route::get('annuaire','FormationController@annuaire')->name('annuaire');
+Route::get('annuaire/{page?}','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
 Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
 Route::get('annuaire+recherche+par+entiter/{page?}/{nom_entiter?}','FormationController@search_par_nom_entiter')->name('annuaire+recherche+par+entiter');
@@ -415,6 +422,7 @@ Route::post('modification_equipement/{id}','ModuleController@edit_equipement')->
 Route::post('modification_bon_a_savoir/{id}','ModuleController@edit_bon_a_savoir')->name('modification_bon_a_savoir');
 Route::post('modification_prestation/{id}','ModuleController@edit_prestation')->name('modification_prestation');
 Route::get('mettre_en_ligne','ModuleController@mettre_en_ligne')->name('mettre_en_ligne');
+Route::get('mettre_hors_ligne','ModuleController@mettre_hors_ligne')->name('mettre_hors_ligne');
 Route::get('mettre_hors_ligne','ModuleController@mettre_hors_ligne')->name('mettre_hors_ligne');
 
 
@@ -1004,6 +1012,7 @@ Route::get('download_file', 'DocumentController@download_file')->name('download_
 Route::post('delete_folder', 'DocumentController@delete_folder')->name('delete_folder');
 
 
+
 Route::get('liste+responsable+cfp', 'ResponsableCfpController@index')->name('liste+responsable+cfp');
 Route::get('liste+responsable+entreprise', 'ResponsableController@show_responsable')->name('liste+responsable+entreprise');
 
@@ -1189,8 +1198,8 @@ Route::get('/modification_nom/{id}', 'ResponsableCfpController@edit_nom')->name(
 Route::get('/modification_date_de_naissance/{id}', 'ResponsableCfpController@edit_naissance')->name('modification_date_de_naissance');
 Route::get('/modification_genre/{id}', 'ResponsableCfpController@edit_genre')->name('modification_genre');
 Route::get('/modification_mdp/{id}', 'ResponsableCfpController@edit_mdp')->name('modification_mdp');
-Route::get('/modification_email/{id}', 'ResponsableCfpController@edit_mail')->name('modification_email');
-Route::get('/modification_telephone/{id}', 'ResponsableCfpController@edit_phone')->name('modification_telephone');
+Route::get('/modification_adresse_email/{id}', 'ResponsableCfpController@edit_mail')->name('modification_adresse_email');
+Route::get('/modification_numero_telephone/{id}', 'ResponsableCfpController@edit_phone')->name('modification_numero_telephone');
 Route::get('/modification_cin/{id}', 'ResponsableCfpController@edit_cin')->name('modification_cin');
 Route::get('/modificationn_adresse/{id}', 'ResponsableCfpController@edit_adresse')->name('modificationn_adresse');
 Route::get('/modification_fonction/{id}', 'ResponsableCfpController@edit_fonction')->name('modification_fonction');
@@ -1264,7 +1273,10 @@ Route::post('enregistrer_email_entreprise/{id}','EntrepriseController@enregistre
 Route::get('modification_nif_entreprise/{id}','EntrepriseController@modification_nif_entreprise')->name('modification_nif_entreprise');
 Route::post('enregistrer_nif_entreprise/{id}','EntrepriseController@enregistrer_nif_entreprise')->name('enregistrer_nif_entreprise');
 Route::get('modification_telephone_entreprise/{id}','EntrepriseController@modification_telephone_entreprise')->name('modification_telephone_entreprise');
+Route::get('modification_secteur_entreprise/{id}','EntrepriseController@modification_secteur_entreprise')->name('modification_secteur_entreprise');
 Route::post('enregistrer_telephone_entreprise/{id}','EntrepriseController@enregistrer_telephone_entreprise')->name('enregistrer_telephone_entreprise');
+Route::get('/get_secteur','EntrepriseController@get_secteur')->name('get_secteur');
+Route::post('enregistrer_secteur_entreprise/{id}','EntrepriseController@enregistrer_secteur_entreprise')->name('enregistrer_secteur_entreprise');
 Route::get('modification_stat_entreprise/{id}','EntrepriseController@modification_stat_entreprise')->name('modification_stat_entreprise');
 Route::post('enregistrer_stat_entreprise/{id}','EntrepriseController@enregistrer_stat_entreprise')->name('enregistrer_stat_entreprise');
 Route::get('modification_rcs_entreprise/{id}','EntrepriseController@modification_rcs_entreprise')->name('modification_rcs_entreprise');
@@ -1340,3 +1352,5 @@ Route::post('modifier_frais/{id}','FraisAnnexesController@update')->name('modifi
 Route::get('supprimer_frais/{id}','FraisAnnexesController@destroy')->name('supprimer_frais');
 
 Route::get('supprimer_frais_annexes/{id}','SessionController@supprimer_frais')->name('supprimer_frais_annexes');
+
+Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagiaire')->name('resultat_stagiaire');

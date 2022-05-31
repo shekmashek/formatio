@@ -324,7 +324,6 @@ class DepartementController extends Controller
         $service_departement_tous = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? ", [$id_etp]);
         $nb_serv = count($service_departement);
         $branches = DB::select('select * from branches where entreprise_id = ?', [$id_etp]);
-
         $nb_branche = count($branches);
             return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tous','branches', 'nb_branche'));
     }

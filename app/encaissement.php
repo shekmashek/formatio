@@ -17,12 +17,10 @@ class Encaissement extends Model
         $rules = [
             'montant.required' => 'Veillez remplir le champ.',
             'montant.integer' => 'la valeur doit être numerique.',
-            'montant.min' => 'La valeur doit être positive.',
-            'libelle.required' => 'Veillez remplir le champ.'
+            'montant.min' => 'La valeur doit être positive.'
         ];
         $critere = [
-            'montant' => 'required|integer|min:0',
-            'libelle' => 'required'
+            'montant' => 'required|integer|min:0'
         ];
         $input->validate($critere, $rules);
     }
@@ -37,12 +35,14 @@ class Encaissement extends Model
     }
 
 
-    public static function modifierEncaissementNow($id, $montant, $libelle,$mode_paye, $dte_encaissement)
+    public static function modifierEncaissementNow($id, $montant, $libelle, $mode_paye, $dte_encaissement)
     {
         $encaissement_now = DB::select('select * from encaissements where id = ?', [$id]);
         $montant_ouvert = $encaissement_now[0]->montant_facture - $montant;
-        DB::update('update encaissements set payement = ? , libelle = ? , montant_ouvert = ?, mode_financement_id=?, date_encaissement=?  where id = ?',
-        [$montant, $libelle, $montant_ouvert,$mode_paye, $dte_encaissement, $id]);
+        DB::update(
+            'update encaissements set payement = ? , libelle = ? , montant_ouvert = ?, mode_financement_id=?, date_encaissement=?  where id = ?',
+            [$montant, $libelle, $montant_ouvert, $mode_paye, $dte_encaissement, $id]
+        );
     }
 
     public static function modifierAutres($id_modifier)

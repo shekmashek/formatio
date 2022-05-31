@@ -5,9 +5,6 @@ CREATE TABLE valeur_TVA
  `tva` decimal(15,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-
-
 CREATE TABLE devises
 (
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -19,7 +16,6 @@ insert into devises values
 (1,"Ariary","AR"),
 (2,"Euro","€"),
 (3,"Dollar","$");
-
 
 CREATE TABLE taux_devises
 (

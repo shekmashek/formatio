@@ -22,7 +22,7 @@
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                    <input type="text" value="{{ $etp->telephone_etp}}" class="form-control input"  name="telephone" required>
+                    <input type="text" value="{{ $etp->telephone_etp}}" class="form-control input"  name="telephone" id="telephone" required>
                     <label for="telephone" class="form-control-placeholder">Téléphone</label>
                     </div>
                 </div>
@@ -35,6 +35,13 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  $(function() {
+        $("input[name='telephone']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
 
-
+</script>
 @endsection
