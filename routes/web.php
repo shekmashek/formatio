@@ -386,7 +386,7 @@ Route::get('select_tous', 'FormationController@affichageTousCategories')->name('
 Route::get('inscriptionInter/{type_formation_id}/{id_groupe}', 'SessionController@inscription')->name('inscriptionInter');
 Route::get('demande_devis_client/{id}', 'FormationController@demande_devis_client')->name('demande_devis_client');
 //route annuaire de cfp
-Route::get('annuaire','FormationController@annuaire')->name('annuaire');
+Route::get('annuaire/{page?}','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
 Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
 Route::get('annuaire+recherche+par+entiter/{page?}/{nom_entiter?}','FormationController@search_par_nom_entiter')->name('annuaire+recherche+par+entiter');
