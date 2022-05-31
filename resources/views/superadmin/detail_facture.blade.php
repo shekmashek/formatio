@@ -199,11 +199,7 @@
                                             {{ session()->get('message') }}
                                         </div>
                                         @endif
-                                        @if(session()->has('erreur'))
-                                            <div class="alert alert-danger text-center">
-                                                {{ session()->get('erreur') }}
-                                            </div>
-                                        @endif
+                                       
                                         @if(session()->has('erreur_coupon'))
                                         <div class="alert alert-danger">
                                             {{ session()->get('erreur_coupon') }}

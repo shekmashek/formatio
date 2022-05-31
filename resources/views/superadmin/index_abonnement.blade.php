@@ -58,8 +58,10 @@
 
                     <form action="{{route('enregistrer_abonnement')}}" method="POST">
                         @csrf
-                        @if(session()->has('id_coupon'))
-                            <input type="hidden" name="id_coupon" value="{{session()->get('id_coupon')}}">
+                        @if(session()->has('erreur'))
+                            <div class="alert alert-danger text-center">
+                                {{ session()->get('erreur') }}
+                            </div>
                         @endif
                         @if($entreprise!=null)
                             @foreach ($entreprise as $etp)
