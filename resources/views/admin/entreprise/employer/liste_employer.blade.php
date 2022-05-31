@@ -401,7 +401,7 @@
                                 <span class="d-block">Département</span>
                                 <span>Service</span>
                             </th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Age</th>
+                            {{-- <th scope="col" class="table-head font-weight-light align-middle text-center ">Age</th> --}}
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Ajout</th>
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
@@ -479,7 +479,7 @@
                                                 <span class="d-block">{{ $employe->service->departement->nom_departement }}</span>
                                                 <span>{{ $employe->service != null ? $employe->service->nom_service : '----'  }}</span>
                                             </td>
-                                            <td class="align-middle text-center text-secondary">61</td>
+                                            {{-- <td class="align-middle text-center text-secondary">61</td> --}}
                                             <td class="align-middle text-center text-secondary">2011-04-25</td>
                                             <td class="align-middle text-center text-secondary">
 
