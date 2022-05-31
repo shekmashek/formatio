@@ -198,8 +198,8 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <select name="niveau"  class="form-select input" id="">
-                                                    @foreach ($niveau as $nv)
-                                                        <option value="{{$nv->id}}">{{$nv->niveau_etude}}</option>
+                                                    @foreach ($niveaux_etude as $niveau)
+                                                        <option value="{{$niveau->id}}">{{$niveau->niveau_etude}}</option>
                                                     @endforeach
                                                 </select>
                                                 {{-- <input type="text" class="form-control" name="niveau" id="niveau"  placeholder="Niveau d'étude*" required> --}}

@@ -80,6 +80,7 @@ class EmployeurController extends Controller
         $phone = $request->phone;
         $fonction_employer=$request->fonction;
         $niveau_etude_id = $request->niveau_etude_id;
+        $service_id = $request->service_id;
 
         // if (Gate::allows('isReferent')) {
             
@@ -190,6 +191,7 @@ class EmployeurController extends Controller
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$resp->entreprise_id]);
             $user_id = $this->fonct->findWhereMulitOne("users", ["email"], [$mail])->id;
 
+            
 
             // if ($request->type_enregistrement == "STAGIAIRE") {
                 if($abonnement_etp !=null){
@@ -207,7 +209,9 @@ class EmployeurController extends Controller
                         echo $e->getMessage();
                     }
 
-                    $temp_service_id = rand(1, 5);
+                    
+
+
                     $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
                     DB::table('stagiaires')->insert([
                     'matricule' => $matricule,

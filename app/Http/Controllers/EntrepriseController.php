@@ -77,6 +77,9 @@ class EntrepriseController extends Controller
             return view('admin.entreprise.entreprise', compact('datas', 'entreprise'));
         }
     }
+
+
+    
     public function information_entreprise(Request $request)
     {
         $user_id = Auth::id();

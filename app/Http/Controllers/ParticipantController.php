@@ -12,6 +12,7 @@ use App\stagiaire;
 use Carbon\Carbon;
 use App\Entreprise;
 use App\Departement;
+use App\NiveauEtude;
 use App\responsable;
 use App\chefDepartement;
 use Illuminate\Http\Request;
@@ -20,9 +21,9 @@ use App\DepartementEntreprise;
 use App\Models\FonctionGenerique;
 use App\Exports\ParticipantExport;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 
 /* ====================== Exportation Excel ============= */
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
@@ -122,7 +123,8 @@ class ParticipantController extends Controller
         //     $liste_departement = db::select('select * from departement_entreprises where entreprise_id = ?', [$entreprise_id]);
         //     return view('admin.chefDepartement.chef', compact('liste_departement'));
         // }
-        $niveaux_etude = Niveau::all();
+        $niveaux_etude = NiveauEtude::all();
+
 
         return view('admin.entreprise.employer.nouveau_employer', compact('niveaux_etude'));
     }
@@ -148,10 +150,18 @@ class ParticipantController extends Controller
         $employers = Stagiaire::where('entreprise_id', $entreprise_id)->get();
         $entreprise = Entreprise::find($entreprise_id);    
         $departements = DepartementEntreprise::where('entreprise_id', $entreprise_id)->get();
-        $niveaux_etude = Niveau::all();
         
+        $dep = DepartementEntreprise::where('entreprise_id', 1)->get();
+dd($dep);
+        $niveaux_etude = NiveauEtude::all();
+        
+        // dd($niveaux_etude);
+
         return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise', 'niveaux_etude', 'departements'));
     }
+
+
+
 
     public function index()
     {

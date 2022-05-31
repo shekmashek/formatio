@@ -219,7 +219,7 @@
                         <div class="input-group-text border-0 border-bottom bg-light">
                             <box-icon name='building form-icon'></box-icon>
                         </div>
-                        <select name="departement" id="">
+                        <select name="departement" class="form-control input border-bottom" id="">
                             <option value="">selectionner le département</option>
                             @forelse ($departements as $departement)
                                 <option value="{{ $departement->id }}">{{ $departement->nom_departement }}</option>
@@ -227,7 +227,14 @@
                                 <p>---</p>
                             @endforelse
                         </select>
-                        <input type="text" aria-label="Last name" class="form-control input border-bottom">
+                        <select name="service_id" class="form-control" id="">
+                            <option value="">selectionner le service</option>
+                            @forelse ($services as $service)
+                                <option value="{{ $service->id }}">{{ $service->nom_service }}</option>
+                            @empty
+                                <p>---</p>
+                            @endforelse
+                        </select>
                     </div>
 
                     <div class="input-group">

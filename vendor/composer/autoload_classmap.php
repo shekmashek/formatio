@@ -123,6 +123,7 @@ return array(
     'App\\Models\\excel\\ResponsableExcel' => $baseDir . '/app/Models/excel/ResponsableExcel.php',
     'App\\Models\\getImageModel' => $baseDir . '/app/Models/getImageModel.php',
     'App\\Niveau' => $baseDir . '/app/Niveau.php',
+    'App\\NiveauEtude' => $baseDir . '/app/NiveauEtude.php',
     'App\\Notifications\\MailResetPasswordNotification' => $baseDir . '/app/Notifications/MailResetPasswordNotification.php',
     'App\\NouveauCompte' => $baseDir . '/app/NouveauCompte.php',
     'App\\PlanFormation' => $baseDir . '/app/PlanFormation.php',
