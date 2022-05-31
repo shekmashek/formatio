@@ -1354,3 +1354,9 @@ Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagia
 Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploye');
 
 Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInfo');
+
+Route::get('/detail_session_info/{etp_id}', 'SessionController@infoEtpCom');
+
+
+
+

@@ -446,7 +446,8 @@
                                     <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>
                                     &nbsp;&nbsp;
                                     <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
-                                        class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                                        class="mt-2 empNew" height="30px" width="30px" style="border-radius: 50%; cursor: pointer" 
+                                        data-id={{$projet[0]->entreprise_id}} id={{$projet[0]->entreprise_id}} onclick="afficherInfos();">&nbsp;
                                 </div>
                             </div>
                         @endif
@@ -456,7 +457,7 @@
                                 <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
                                     {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
                                 <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
-                                    height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                                    height="30px" width="30px" style="border-radius: 50%; cursor: pointer">&nbsp;
                             </div>
                         </div>
                         @canany(['isCFP'])
@@ -795,7 +796,73 @@
             </div>
         </section>
     </div>
-    <div class="infos mt-3">
+
+{{--AfficheInfos--}}
+<div class="infos mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0 text-center">INFORMATION</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+        </div>
+        <hr class="mt-2">
+
+        <div class="mt-2" style="font-size:14px">
+            @if ($type_formation_id == 1)
+                <div class="mt-1 text-center mb-3">
+                    <span id="donner">
+                        <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" class="img-fluid text-center"
+                        style="width:120px;height:120px;" role="button" onclick="afficherInfos();">
+                    </span>
+                </div>
+                <div class="mt-1 text-center">
+                    <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold">
+                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
+                    </span>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-user'></i></div>
+                        <div class="col-md-3">Responsable</div>
+                        <div class="col-md">
+                            <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold">
+                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
+                            </span>
+                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
+                        <div class="col-md-3">Matricule</div>
+                        <div class="col-md">
+                            <span id="matriculess" style="font-size: 14px; text-transform: uppercase; font-weight: bold">
+                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                        <div class="col-md-3">E-mail</div>
+                        <div class="col-md"><span id="mail_stagiaire">
+                            <p class="p-0 m-0 text-center"> <strong> Adresse:{{ $projet[0]->adresse_rue }}
+                                {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal }}
+                                {{ $projet[0]->adresse_ville }} {{ $projet[0]->adresse_region }}</strong></p>    
+                        </span></div>
+                    </div>
+                </div>
+            @endif
+        </div>
+</div>
+
+    {{-- <div class="infos mt-3">
         <div class="row">
             <div class="col">
                 <p class="m-0">infos</p>
@@ -819,11 +886,10 @@
                 @endif
 
             </div>
-
-
         </div>
-    </div>
-    </div>
+    </div> --}}
+
+    {{-- </div> --}}
     {{-- affiche prof --}}
     <div class="prof mt-3">
         <div class="row">

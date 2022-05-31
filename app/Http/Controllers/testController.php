@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\FonctionGenerique;
-use App\Responsable;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class testController extends Controller
 {
-    public function filtrereferent(){
-        $function = new FonctionGenerique();
-
-        $res = $function->filtreReferent('responsables');
-        dd($res);
-    }
+    public function test(){
+        $req = DB::table('moduleformation')
+                ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.module_id', 'moduleformation.module_id')
+                ->select('*')
+                ->groupBy('moduleformation.module_id')
+                // ->select('nom_formation', 'nom_module')
+                ->get();
+        dd($req);
+        }
 
 }
