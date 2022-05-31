@@ -1,12 +1,31 @@
 
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css");
+
+label.in-non-modal span {
+    opacity: 1;
+}
+
+.input-placeholder {
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    /* opacity: 0.5; */
+    z-index: 100;
+    transition: 0.3s;
+    
+}
+
+.in-non-modal{
+    left: 10%;
+}
 
 
-/* Styles d'ajout d'employe */
+.input:focus+.input-placeholder, .input:valid+.input-placeholder{
+    transform: translateY(-100%);
+    transition: 0.3s;
+}
 
-
-
-.input {
+.input,
+.input_select {
     padding: 2px 1rem;
     border-radius: 5px;
     box-sizing: border-box;
@@ -14,85 +33,17 @@
     border: 1px solid #bdbdbd;
     font-size: 16px;
     letter-spacing: 1px;
-    height: 50px !important;
-    transition: 0.3s;
-    
+    height: 40px !important;
 }
 
-
-@media (max-width: 700px) {
-    .m-5{
-        margin: 0 !important;
-    }
-    .id{
-        display: none !important;
-    }
+.input:focus,
+.input_select:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-bottom: 2px solid #7635dc !important;
+    outline-width: 0 !important;
 }
-
-.modal-header {
-    margin: 0 1%;
-}
-
-.input-group {
-    margin-bottom: 20px;
-}
-.form-icon{
-    font-size:2rem;
-    font-weight: lighter;
-    line-height: 1;
-    color: #888787;
-}
-
-.profile-holder{
-    width: 45px;
-    height: 45px;
-    font-size: xxx-large;
-    opacity: 0.7;
-}
-
-
-.input:focus + .form-icon, .input:valid + .form-icon {
-    color: #070606;
-}
-
-.input:focus::placeholder{
-    transition: 0.3s;
-}
-
-.input:focus::placeholder{
-    transform: translateX(50%);
-    
-}
-
-.input:focus + .input-placeholder, .input:valid + .input-placeholder{
-    transform: translateY(-100%);
-    transition: 0.3s;
-}
-
-
-#phone_err, #mail_err, #cin_err {
-    color: #ff0000;
-    position: absolute;
-    bottom: -30px;
-    right: 0;
-    font-size: smaller;
-}
-
-
-/* Style d'ajout d'employe */
-
-/* liste */
-.bg-success{
-    opacity: 0.7;
-    background-color: rgba(93, 253, 19, 0.541)!important;
-    color: #028002;
-}
-.bg-secondary {
-    opacity: 0.7;
-    background-color: rgba(175, 175, 175, 0.5)!important;
-    color: #0e0e0e;
-}
-
 
 .input:focus,
 .input:valid {
@@ -102,16 +53,6 @@
     border-bottom: 2px solid #7635dc !important;
     outline-width: 0 !important;
 }
-
-.input-placeholder {
-    position: absolute;
-    top: 30%;
-    left: 20%;
-    transition: 0.3s;
-    opacity: 0.5;
-    z-index: 100;
-}
-
 
 .form-control-placeholder {
     position: relative;
