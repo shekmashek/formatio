@@ -200,6 +200,11 @@
                     </tbody>
                 </table>
             </div>
+            @if(session()->has('message'))
+            <div class="alert alert-danger">
+                {{ session()->get('message') }}
+            </div>
+            @endif
             <div class="tab-pane fade show active" id="coupon">
                 <table class="table table-hover">
                     <thead>
@@ -262,29 +267,30 @@
         </div>
          {{-- suppression coupon --}}
          <div>
-            <div class="modal" id="modif_coupon" aria-labelledby="modif_coupon" aria-hidden="true">
-                <div class="modal-dialog">
+            <div class="modal fade" id="supp_coupon" tabindex="-1"
+                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <form  method="post" action="{{route('modifier_coupon',$coupon->id)}}">
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title text-center">Modification coupon</h5>
+                        <div class="modal-header .avertissement  d-flex justify-content-center"
+                            style="background-color:#ee0707; color: white">
+                            <h6 class="modal-title">Avertissement !</h6>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center my-2">
+                                <i class="fa-solid fa-circle-exclamation warning"></i>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <input type="text" class="form-control module module input" name="coupon" required value="{{$coupon->coupon}}" placeholder="Coupon">
-                                    <label for="coupon" class="form-control-placeholder">Coupon</label>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <input type="text" class="form-control module module input" name="valeur" required value="{{$coupon->valeur}}" placeholder="Valeur(%)">
-                                    <label for="valeur" class="form-control-placeholder">Valeur(%)</label>
-                                </div>
-                                <div class="text-center">
-                                    <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
-                                </div>
-                            </div>
-                        </form>
+                            <small>Vous êtes sur le point d'effacer une donnée, cette
+                                action
+                                est irréversible. Continuer ?</small>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                            <form method="post" action="{{route('supprimer_coupon',$coupon->id)}}">
+                                @csrf
+                                <button type="submit" class="btn btn_enregistrer suppression_module" id=""><i class='bx bx-check me-1'></i>Oui</button>
+                            </form>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>

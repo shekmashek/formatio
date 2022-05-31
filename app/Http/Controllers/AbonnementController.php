@@ -1108,4 +1108,21 @@ class AbonnementController extends Controller
         DB::update('update coupon set coupon = ?, valeur = ? where id = ?', [$coupon,$valeur,$id]);
         return back();
     }
+    //suppression de coupon
+    public function supprimer_coupon($id){
+        $disponibilite = $this->fonct->findWhereMulitOne("coupon",["id"],[$id]);
+        if($disponibilite->utilise == 1) return back()->with('message','Vous ne pouvez pas supprimer ce coupon parce qu\'il a été déjà utilisé');
+        else DB::delete('delete from coupon where id = ?', [$id]);
+        return back();
+    }
+    //test ajout de coupon par le client
+    public function coupon_client(Request $request){
+        $coupon = $request->coupon;
+        $test = $this->fonct->findWhereMulitOne("coupon",["coupon"],[$coupon]);
+        if($test == null) return back()->with('erreur_coupon','Désolé,le code de coupon que vous avez saisi n\'existe pas');
+        elseif($test->utilise ==  1) return back()->with('erreur_coupon','Désolé,le code de coupon que vous avez saisi a été déjà utilisé');
+        else{
+            return back()->with(['valeur' => $test->valeur,'coupon' => $test->coupon]);
+        }
+    }
 }

@@ -17,13 +17,18 @@ CREATE OR REPLACE VIEW v_type_abonnement_etp AS SELECT
     e.nom_etp as nom_entreprise,
     a.activite,
     a.created_at,
-    a.type_arret
+    a.type_arret,
+    a.coupon_id,
+    cp.valeur,
+    cp.utilise
 FROM
     type_abonnements_etp t
 JOIN abonnements a ON
     t.id = a.type_abonnement_id
 JOIN entreprises e ON
-    e.id = a.entreprise_id;
+    e.id = a.entreprise_id
+LEFT JOIN coupon cp ON
+    cp.id = a.coupon_id;
 
 CREATE OR REPLACE VIEW v_type_abonnement_cfp AS SELECT
     t.id AS type_abonnements_cfp_id,
@@ -42,14 +47,19 @@ CREATE OR REPLACE VIEW v_type_abonnement_cfp AS SELECT
     a.cfp_id,
     c.nom as nom_of,
     a.activite,
-     a.created_at,
-     a.type_arret
+    a.created_at,
+    a.type_arret,
+    a.coupon_id,
+    cp.coupon,
+    cp.utilise
 FROM
     type_abonnements_of t
 JOIN abonnement_cfps a ON
     t.id = a.type_abonnement_id
 JOIN cfps c ON
-    c.id = a.cfp_id;
+    c.id = a.cfp_id
+LEFT JOIN coupon cp ON
+    cp.id = a.coupon_id;
 
 CREATE OR REPLACE VIEW v_abonnement_facture as SELECT
     factures.id as facture_id,

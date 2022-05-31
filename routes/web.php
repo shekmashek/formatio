@@ -777,6 +777,8 @@ Route::get('activer_compte_of','AbonnementController@activer_of')->name('activer
 Route::get('/impression_facture/{id}','AbonnementController@impression')->name('impression_facture');
 Route::post('enregistrer_coupon','AbonnementController@enregistrer_coupon')->name('enregistrer_coupon');
 Route::post('/modifier_coupon/{id}','AbonnementController@modifier_coupon')->name('modifier_coupon');
+Route::post('/supprimer_coupon/{id}','AbonnementController@supprimer_coupon')->name('supprimer_coupon');
+Route::post('coupon_client','AbonnementController@coupon_client')->name('coupon_client');
 
 Route::get('/', function () {
     return view('index_accueil');

@@ -15,4 +15,6 @@ Recopier view abonnement
 
 --30mai
 copier le script create table coupon dans abonnement
-
+--31mai
+copier le script alter table add coupon_id dans abonnement
+recopier les view abonnement
