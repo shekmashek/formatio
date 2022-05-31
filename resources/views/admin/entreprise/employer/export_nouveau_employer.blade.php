@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 
 <?php
-$nbStg=3;
+$nbStg=30;
 ?>
 
 
