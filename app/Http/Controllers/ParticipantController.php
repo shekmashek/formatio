@@ -1326,10 +1326,19 @@ class ParticipantController extends Controller
 
     public function verify_cin_stg(Request $req)
     {
+        $msg = [];
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
-        $entreprise_id =$fonct->findWhereMulitOne("responsables",["user_id"],[$user_id])->entreprise_id;
-        $data = $fonct->findWhereParam("stagiaires", ["cin","activiter"],["=","="], [$req->valiny,true]);
+        $entreprise_id = $fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
+        $data = $fonct->findWhereParam("stagiaires", ["cin", "activiter", "entreprise_id"], ["=", "=", "!="], [$req->valiny, true, $entreprise_id]);
+        // if (count($data) > 0) { // verify cin dans autre etp si mbola actif
+        //     $msg = [
+        //         "error" => "CIN existe déjà"
+        //     ];
+        // } else {
+        //     $data2 = $fonct->findWhereParam("stagiaires", ["cin", "activiter", "entreprise_id"], ["=", "=", "!="], [$req->valiny, true, $entreprise_id]);
+
+        // }
 
         return response()->json($data);
     }
