@@ -454,7 +454,7 @@
                                     {{-- @canany(['isManager','isReferent','isStagiaire']) --}}
                                     @canany(['isReferent'])
                                         <div class="col-3 text-center">
-                                            <a href="{{route('inscriptionInter',[$data->type_formation_id,$data->groupe_id])}}" class="btn_inscription" role="button">
+                                            <a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="btn_inscription" role="button">
                                                 @php
                                                     $inscrit = $groupe->inscrit_session_inter($data->groupe_id);
                                                     if ($inscrit == 0) {

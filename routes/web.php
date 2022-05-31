@@ -638,6 +638,7 @@ Route::post('createEvaluationChaud/{groupe}', 'EvaluationChaudController@create'
 Route::get('evaluationchaud/{matricule?}', 'EvaluationChaudController@index')->name('evaluationchaud');
 
 Route::post('insert_avis', 'EvaluationChaudController@store')->name('insert_avis');
+Route::get('evaluation_chaud/{groupe}','EvaluationChaudController@show')->name('evaluation_chaud');
 // =======================  Envoi de mail
 Route::resource('convocation', 'ConvocationMail');
 Route::get('convocationMail/{detail}/{groupe}', 'ConvocationMail@sendMail')->name('convocationMail');

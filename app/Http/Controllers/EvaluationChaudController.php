@@ -84,7 +84,7 @@ class EvaluationChaudController extends Controller
     {
         $fonct = new FonctionGenerique();
         $id_user = Auth::user()->id;
-        $stagiaire_id = stagiaire::where('user_id',$id_user)->value('matricule');
+        $stagiaire_id = stagiaire::where('user_id',$id_user)->value('id');
         $stagiaire =  $fonct->findWhereMulitOne("v_stagiaire_groupe",["stagiaire_id","groupe_id"],[$stagiaire_id,$request->groupe]);
         $evaluation = new EvaluationChaud();
         // $data = $evaluation->findDetailProject($matricule); // return les information du project avec detail et information du stagiaire
@@ -94,7 +94,7 @@ class EvaluationChaudController extends Controller
         // $detail = $data['detail'];
         $evaluation_detail = $evaluation->getDetailResponseEvaluationChaud($stagiaire_id);
 
-        return view("admin.evaluation.evaluationChaud.detailEvaluationChaud", compact('detail', 'stagiaire', 'qst_mere', 'qst_fille', 'evaluation_detail'));
+        return view("admin.evaluation.evaluationChaud.detailEvaluationChaud", compact( 'stagiaire', 'qst_mere', 'qst_fille', 'evaluation_detail'));
     }
 
     public function edit($id)
@@ -114,5 +114,11 @@ class EvaluationChaudController extends Controller
 
     public function test_avis(Request $request){
         dd($request->note);
+    }
+
+    public function evaluation_chaud_pdf(Request $request){
+        // preparation de la formation
+            
+        // end
     }
 }

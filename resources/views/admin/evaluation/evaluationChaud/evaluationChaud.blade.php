@@ -16,7 +16,7 @@
     {{-- <div class="container mt-4">
         <div class="row"> --}}
 
-    <div class="col-md-5 card shadow p-3 mb-5 bg-body rounded">
+    <div class="col-md-5 card  p-3 mb-5 bg-body rounded ms-4">
         {{-- <h4 class="card-title"> Information de l'entreprise et Formateur</h4> --}}
         <div class="card-body">
 
@@ -54,7 +54,7 @@
 
     {{-- <div class="container"> --}}
 
-    <h5 class="text-center mt-1">Evaluation</h5>
+    {{-- <h5 class="text-center">Evaluation</h5> --}}
 
     @if (Session::has('error_evaluation'))
         <div class="alert alert-danger ms-2 me-2">
@@ -63,10 +63,10 @@
             </ul>
         </div>
     @endif
-    <div class="row">
+    <div class="row ms-2 me-2">
         <form method="POST" action="{{ route('createEvaluationChaud', [$data->groupe_id]) }}">
             @csrf
-            <div class="col-md-12 card shadow p-3 mb-1 bg-body rounded">
+            <div class="col-md-12 card  p-3 mb-1 bg-body rounded">
 
                 @foreach ($qst_mere as $qst_mere)
                     <div class="my-2">
