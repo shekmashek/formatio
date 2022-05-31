@@ -1137,7 +1137,14 @@ class AbonnementController extends Controller
                 $mont_reduit = $factures->montant_facture - (($factures->montant_facture * $test->valeur)/100);
                 DB::update('update factures_abonnements set montant_facture = ? where id = ?', [$mont_reduit,$facture_id]);
             }
-            if(Gate::allows('isCFP')) DB::update('update abonnement_cfps set coupon_id = ? where id = ?', [$test->id,$abonnemet_id]);
+            if(Gate::allows('isCFP')){
+                DB::update('update abonnement_cfps set coupon_id = ? where id = ?', [$test->id,$abonnemet_id]);
+                $factures = $this->fonct->findWhereMulitOne("factures_abonnements_cfp",["id"],[$facture_id]);
+
+                $mont_reduit = $factures->montant_facture - (($factures->montant_facture * $test->valeur)/100);
+                DB::update('update factures_abonnements_cfp set montant_facture = ? where id = ?', [$mont_reduit,$facture_id]);
+
+            }
             return back()->with(['valeur' => $test->valeur,'coupon' => $test->coupon,'id_coupon' => $test->id]);
         }
     }
