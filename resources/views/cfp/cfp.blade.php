@@ -131,8 +131,8 @@
                         </td> --}}
                        
                             <td class="align-middle" >
-                                <a href="{{route('tous_projets',$centre->cfp_id)}}" class="btn btn-info btn-sm " style="color: white;text-decoration:none">Voir tous les projets</a>
-                                <a  data-bs-toggle="modal" class="ms-3 mt-5"  data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i  class='bx bx-trash bx_supprimer'></i></a>
+                                <a href="{{route('tous_projets',$centre->cfp_id)}}" class="btn btn-info btn-sm text-light" >Voir tous les projets</a>
+                                <a  data-bs-toggle="modal" class="ms-3 mt-5"  data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i  class='bx bx-trash bx_supprimer align-middle'></i></a>
                             </td>
                        
                     </tr>
