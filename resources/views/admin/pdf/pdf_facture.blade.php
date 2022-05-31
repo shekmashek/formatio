@@ -194,17 +194,18 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="row me-2 mr-2">
+                <div class="row my-0 me-2 mr-2">
                     <table class="table">
-                        <thead class="btn-secondary">
+                        <thead>
                             <tr>
-                                <th scope="col">Réf</th>
-                                <th>Module</th>
+                                {{-- <th scope="col">Réf</th> --}}
+                                <th> Réf/ Module</th>
                                 <th>Designation</th>
                                 <th></th>
                                 <th>Qte</th>
-                                <th>Unité</th>
-                                <th>PU HT</th>
+                                {{-- <th>Unité</th> --}}
+                                <th> <div align="right">
+                                    PU HT</div></th>
                                 <th>
                                     <div align="right">
                                         Montant
@@ -215,26 +216,27 @@
                         <tbody>
                             @foreach ($facture as $montant_facture)
                             <tr>
-                                <td>{{$montant_facture->reference}}</td>
-                                <td>{{$montant_facture->nom_module}}</td>
+                                {{-- <td>{{$montant_facture->reference}}</td> --}}
+                                <td> <div align="left">
+                                    {{$montant_facture->reference."/ ".$montant_facture->nom_module}}</div></td>
                                 <td>{{$montant_facture->nom_projet." de la ".$montant_facture->nom_groupe.",avec ".$montant_facture->nbre_participant." participant(s) du ".$montant_facture->date_debut_session}}</td>
                                 <td>{{$montant_facture->nom_groupe}}</td>
-                                <td>{{$montant_facture->qte}}</td>
-                                <td>
+                                <td>{{$montant_facture->qte."  ".$montant_facture->description_facture}}</td>
+                                {{-- <td>
                                     <div align="left">
                                         {{$montant_facture->description_facture}}
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td>
-                                    <div align="left">
+                                    <div align="right">
                                         {{$devise->reference." ".number_format($montant_facture->pu,0,","," ")}}
                                     </div>
                                 </td>
-                                <th>
+                                <td>
                                     <div align="right">
                                         {{$devise->reference." ".number_format($montant_facture->hors_taxe,0,","," ")}}
                                     </div>
-                                </th>
+                                </td>
                             </tr>
                             @endforeach
                             @if($facture_acompte != null && strtoupper($facture[0]->reference_facture) == strtoupper("Facture"))
@@ -247,26 +249,26 @@
                                 </td>
                                 <td></td>
                                 <td>{{$fa->reference_type_facture}}</td>
+                                {{-- <td></td> --}}
+                                {{-- <td></td> --}}
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <th>
+                                <td>
                                     <div align="right">
                                         {{$devise->reference." -".number_format($fa->dernier_montant_ouvert,0,","," ")}}
                                     </div>
-                                </th>
+                                </td>
                             </tr>
                             @endforeach
                             @endif
                             @if($frais_annexes != null)
                             @foreach ($frais_annexes as $frais_annexe)
                             <tr>
+                                {{-- <td></td> --}}
                                 <td>{{$frais_annexe->frais_annexe_description}}</td>
-                                <td></td>
+                                {{-- <td></td> --}}
                                 <td>{{$frais_annexe->description}}</td>
                                 <td></td>
                                 <td> {{$frais_annexe->qte}}</td>
-                                <td></td>
                                 <td>
                                     <div align="left">
                                         {{$devise->reference." ".number_format($frais_annexe->pu,0,","," ")}}
@@ -285,7 +287,7 @@
                 </div>
                 <hr>
                 <div class="row table_facture2 me-2 mr-2">
-                    <table class="table">
+                    <table class="table table-borderless">
                         <tbody>
                             <tr>
                                 <td></td>
@@ -343,7 +345,7 @@
                                 </td>
                             </tr>
                             @endif
-                            <tr class="table">
+                            <tr>
                                 <td></td>
                                 <td></td>
                                 <td>Net à payer TTC
@@ -362,16 +364,16 @@
                 </div>
                 {{-- <hr> --}}
                 <div class="row table_facture2  me-2 mr-2 justify-content-center">
-                    <table class="table table-borderless">
+                    <table class="table text-muted">
                         <tbody>
                             <tr>
                                 <td style="max-width: 25%">
                                     <div align="left">
-                                        <h6>Arretée la présente facture à la somme de: {{$lettre_montant." ".$devise->devise}}</h6><br>
-                                        <h6>mode de paiement: {{$montant_totale->description_financement}}</h6><br>
+                                        <h6 class="fw-light lh-sm">Arretée la présente facture à la somme de: {{$lettre_montant." ".$devise->devise}}</h6><br>
+                                        <h6 class="fw-light">mode de paiement: {{$montant_totale->description_financement}}</h6><br>
                                         @if($facture[0]->other_message!=null)
                                         <h6>Autre Message</h6><br>
-                                        <p>{{$facture[0]->other_message}}</p><br>
+                                        <h6 class="fw-light lh-sm">{{$facture[0]->other_message}}</h6><br>
                                         @endif
                                     </div>
                                 </td>
@@ -385,9 +387,9 @@
                 </div>
             </div>
         </div>
-        <div class="row table_facture2  me-2 mr-2 justify-content-center text-center text-muted">
-            <p style=" font-size: 80%;">NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
-        </div>
+        {{-- <div class="row table_facture2  me-2 mr-2 justify-content-center text-center text-muted"> --}}
+            <p class="me-2 mr-2 justify-content-center text-center text-muted" style=" font-size: 80%;">NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
+        {{-- </div> --}}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
 </body>

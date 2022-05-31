@@ -275,7 +275,7 @@
 
                                             </tbody>
                                         </table>
-                                        <table class="table">
+                                        <table class="table  table-borderless">
                                             <tbody>
                                                 <tr>
                                                     <td>Net à payer TTC</td>

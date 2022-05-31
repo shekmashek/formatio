@@ -570,7 +570,7 @@
                                             class="text_racourcis">employés</span></span></a>
                             </div class="btn_racourcis">
                             <div class="btn_racourcis me-4">
-                                <a href="{{route('employes')}}" class="text-center" role="button"><span
+                                <a href="{{route('employes.equipe')}}" class="text-center" role="button"><span
                                         class="d-flex flex-column"><i class='bx bxs-group mb-2 mt-1'></i><span
                                             class="text_racourcis">Equipe</span></span></a>
                             </div>

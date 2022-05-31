@@ -195,16 +195,18 @@
         <div class="row me-2 mr-2">
             <div class="col-md-12">
 
-                <table class="table">
-                    <thead class="btn-secondary">
+                {{-- <table class="table"> --}}
+                    {{-- <thead class="btn-secondary"> --}}
+                        <table class="table table-hover">
+                        <thead>
                         <tr>
                             <th scope="col">Date</th>
-                            <th scope="col">Libellé</th>
+                            <th scope="col">Memo/Notes</th>
                             <th scope="col">Montant</th>
                             <th scope="col">Paiement</th>
                             <th scope="col">Montant ouvert</th>
                             <th scope="col">Mode de paiement</th>
-                            <th scope="col">Encaisseur</th>
+                            {{-- <th scope="col">Encaisseur</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -216,7 +218,7 @@
                             <td class="text-end">{{$devise->reference." ". number_format($info->payement, 0, ',', ' ') }}</td>
                             <td class="text-end">{{$devise->reference." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
                             <td>{{ $info->description }}</td>
-                            <td>{{ $info->nom_resp_cfp}}</td>
+                            {{-- <td>{{ $info->nom_resp_cfp}}</td> --}}
                         </tr>
                         @endforeach
                     </tbody>

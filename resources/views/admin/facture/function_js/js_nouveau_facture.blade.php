@@ -2,6 +2,68 @@
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{asset('js/facture.js')}}"></script>
 <script type="text/javascript">
+    function getCalcule() {
+        var qte = document.getElementsByName("qte[]");
+        var facture = document.getElementsByName("facture[]");
+        var totale_facture = document.getElementsByName("totale_facture[]");
+        var remise = document.getElementById("remise");
+        var type_remise = document.getElementById("type_remise_id");
+        var total_remise = document.getElementById("total_remise");
+        var montant_frais_annexe = document.getElementsByName("montant_frais_annexe[]");
+        var totale_frais_annexe = document.getElementsByName("totale_frais_annexe[]");
+        var qte_annexe = document.getElementsByName("qte_annexe[]");
+        var calc_re = 0;
+
+        var totale_facture_ht = document.getElementById("totale_facture_ht");
+        var totale_facture_ttc = document.getElementById("totale_facture_ttc");
+        var taxe_value = document.getElementById("taxe_value");
+        var taxe = document.getElementById("taxe");
+
+        var calc_taxe = 0;
+        var totale = 0;
+        var totale_annexe = 0;
+        var ensemble = 0;
+        for (var i = 0; i < facture.length; i += 1) {
+            var sum = facture[i].value * qte[i].value;
+            totale_facture[i].innerHTML = sum;
+            totale_facture[i].innerHTML = totale_facture[i].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+            /*     totale_facture[i].innerHTML = number_format(sum, 0, ",", " "); */
+            totale += sum;
+        }
+
+        for (var j = 0; j < montant_frais_annexe.length; j += 1) {
+            var sum_annexe = qte_annexe[j].value * montant_frais_annexe[j].value;
+            totale_annexe += sum_annexe;
+            totale_frais_annexe[j].innerHTML = sum_annexe;
+            totale_frais_annexe[j].innerHTML = totale_frais_annexe[j].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+        }
+
+        ensemble = totale + totale_annexe;
+        totale_facture_ht.innerHTML = ensemble;
+        totale_facture_ht.innerHTML = totale_facture_ht.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+        if (type_remise.value == 1) { // MGA
+            calc_re = remise.value;
+            total_remise.innerHTML = "-" + calc_re;
+        }
+        if (type_remise.value == 2) { // %
+            calc_re = (ensemble * remise.value) / 100;
+            total_remise.innerHTML = "-" + calc_re;
+        }
+        total_remise.innerHTML = total_remise.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+        if (taxe_value.value > 0) {
+            calc_taxe = (ensemble * taxe_value.value) / 100;
+        }
+        taxe.innerHTML = calc_taxe;
+        taxe.innerHTML = taxe.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+        //TTC = TAXE+MONTANT_total-remise
+        totale_facture_ttc.innerHTML = (ensemble - calc_re + calc_taxe);
+        totale_facture_ttc.innerHTML = totale_facture_ttc.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+    }
     /*=========================================================*/
     $(document).on("keyup change", "#invoice_date", function() {
         document.getElementById("due_date").setAttribute("min", $(this).val());
@@ -335,7 +397,6 @@
 
                     html += '<div class="col-1 text-end">';
                     html += '<p name="totale_frais_annexe[]" class="text_prix" align="right">0</p>';
-
                     html += '</div>';
 
                     html += '<div class="col-1 text-start pt-2">';
@@ -364,65 +425,7 @@
 
 
     $(document).on("keyup change", ".services_factures", function() {
-        var qte = document.getElementsByName("qte[]");
-        var facture = document.getElementsByName("facture[]");
-        var totale_facture = document.getElementsByName("totale_facture[]");
-        var remise = document.getElementById("remise");
-        var type_remise = document.getElementById("type_remise_id");
-        var total_remise = document.getElementById("total_remise");
-        var montant_frais_annexe = document.getElementsByName("montant_frais_annexe[]");
-        var totale_frais_annexe = document.getElementsByName("totale_frais_annexe[]");
-        var qte_annexe = document.getElementsByName("qte_annexe[]");
-        var calc_re = 0;
-
-        var totale_facture_ht = document.getElementById("totale_facture_ht");
-        var totale_facture_ttc = document.getElementById("totale_facture_ttc");
-        var taxe_value = document.getElementById("taxe_value");
-        var taxe = document.getElementById("taxe");
-
-        var calc_taxe = 0;
-        var totale = 0;
-        var totale_annexe = 0;
-        var ensemble = 0;
-        for (var i = 0; i < facture.length; i += 1) {
-            var sum = facture[i].value * qte[i].value;
-            totale_facture[i].innerHTML = sum;
-            totale_facture[i].innerHTML = totale_facture[i].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-
-            /*     totale_facture[i].innerHTML = number_format(sum, 0, ",", " "); */
-            totale += sum;
-        }
-
-        for (var j = 0; j < montant_frais_annexe.length; j += 1) {
-            var sum_annexe = qte_annexe[j].value * montant_frais_annexe[j].value;
-            totale_annexe += sum_annexe;
-            totale_frais_annexe[j].innerHTML = sum_annexe;
-            totale_frais_annexe[j].innerHTML = totale_frais_annexe[j].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-        }
-
-        ensemble = totale + totale_annexe;
-        totale_facture_ht.innerHTML = ensemble;
-        totale_facture_ht.innerHTML = totale_facture_ht.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-
-        if (type_remise.value == 1) { // MGA
-            calc_re = remise.value;
-            total_remise.innerHTML = "-" + calc_re;
-        }
-        if (type_remise.value == 2) { // %
-            calc_re = (ensemble * remise.value) / 100;
-            total_remise.innerHTML = "-" + calc_re;
-        }
-        total_remise.innerHTML = total_remise.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-
-        if (taxe_value.value > 0) {
-            calc_taxe = (ensemble * taxe_value.value) / 100;
-        }
-        taxe.innerHTML = calc_taxe;
-        taxe.innerHTML = taxe.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-
-        //TTC = TAXE+MONTANT_total-remise
-        totale_facture_ttc.innerHTML = (ensemble - calc_re + calc_taxe);
-        totale_facture_ttc.innerHTML = totale_facture_ttc.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+        getCalcule();
     });
 
     // ============================ Montant=========================
@@ -499,6 +502,7 @@
         } else {
             $("#addRowMontant").css("display", "none");
         }
+        getCalcule();
     });
 
 
@@ -506,12 +510,13 @@
     $(document).on('click', '#removeRow', function() {
         $(this).closest('#inputFormRow').remove();
         var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
-        if ((total_frais_annexe_possible-1) < 1) {
+        if ((total_frais_annexe_possible - 1) < 1) {
             $("#titres_services_annexe").css("display", "none");
         }
         if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
             $("#addRow").css("display", "inline-block");
         }
+        getCalcule();
     });
 
 </script>

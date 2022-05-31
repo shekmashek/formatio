@@ -246,33 +246,34 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 {{-- <a href="{{route('liste_facture',2)}}"><button class="btn btn-success">retour</button></a> --}}
-                                <table class="table table-striped">
+                                <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Date de paiement</th>
-                                            <th scope="col">Libellé</th>
-                                            <th scope="col">N° facture</th>
+                                            <th scope="col">N° #</th>
                                             <th scope="col">Montant facturer</th>
                                             <th scope="col">Paiement</th>
                                             <th scope="col">Montant ouvert</th>
                                             <th scope="col">Mode de paiement</th>
+                                            <th scope="col">Date de paiement</th>
+                                            <th scope="col">Memo/Notes</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($encaissement as $info)
                                         <tr>
-                                            <td>{{ $info->date_encaissement }}</td>
-                                            <td>{{ $info->libelle }}</td>
                                             <td> <a href="{{route('detail_facture',$info->num_facture)}}">
-                                                    {{ $info->num_facture }}</a>
-                                            </td>
+                                                {{ $info->num_facture }}</a>
+                                        </td>
+
                                             <td>{{$devise->reference." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
                                             <td>{{$devise->reference." ". number_format($info->payement, 0, ',', ' ') }}</td>
                                             <td>{{$devise->reference." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
                                             <td>{{ $info->description }}</td>
-                                            <td><button class="button_tail btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color: green"><i class="fa fa-edit"></i></button>&nbsp;
-                                                <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="button_tail btn btn_creer btn-block mb-2 supprimer" style="color: red"><span class="fa fa-trash"></span></button></a>
+                                            <td>{{ $info->date_encaissement }}</td>
+                                            <td>{{ $info->libelle }}</td>
+                                            <td><button class=" btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
                                             </td>
                                         </tr>
 

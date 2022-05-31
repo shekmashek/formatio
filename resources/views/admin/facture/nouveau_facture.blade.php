@@ -297,7 +297,7 @@
                             <div class="col-2">
                                 <span id="taxe_name" value="0"></span>
                             </div>
-                            <div class="col-2 text-end">
+                            <div class="col-2 text-end pe-3">
                                 <input type="hidden" id="taxe_value">
                                 <p class="text-end" id="taxe"></p>
                             </div>
