@@ -76,7 +76,7 @@ class SessionController extends Controller
     public function store(Request $request)
     {
         //enregistrer les projets dans la bdd
-        $session = new session;
+        $session = new session();
         $session->date_debut = $request->date_debut;
         $session->date_fin = $request->date_fin;
         $num = DB::select('select max(id)+1 as numero from sessions')[0]->numero;
@@ -158,9 +158,9 @@ class SessionController extends Controller
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
         if(Gate::allows('isReferent')){
-            if (Gate::allows('isReferentPrincipale')) {
+            // if (Gate::allows('isReferentPrincipale')) {
                 $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            }
+            // }
             if (Gate::allows('isStagiairePrincipale')) {
                 $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
             }

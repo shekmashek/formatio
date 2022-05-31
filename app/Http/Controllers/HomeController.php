@@ -79,7 +79,7 @@ class HomeController extends Controller
         if ($request->input('genre_stg') != null) {
             if ($request->input('genre_stg') == 'Femme') $genre = 1;
             if ($request->input('genre_stg') == 'Homme') $genre = 2;
-            DB::update('update stagiaires set genre_stagiaire = ? where id = ?', [$genre, $id_stg]);
+            DB::update('update stagiaires set genre_id = ? where id = ?', [$genre, $id_stg]);
         }
         if ($request->input('tel_stg') != null) {
             DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_stg'), $id_stg]);
@@ -122,7 +122,7 @@ class HomeController extends Controller
         if ($request->input('genre_chef') != null) {
             if ($request->input('genre_chef') == 'Femme') $genre = 1;
             if ($request->input('genre_chef') == 'Homme') $genre = 2;
-            DB::update('update chef_departements set genre_chef = ? where id = ?', [$genre, $id_chef]);
+            DB::update('update employers set genre_id = ? where id = ?', [$genre, $id_chef]);
         }
         if ($request->input('tel_chef') != null) {
             DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_chef'), $id_chef]);
@@ -208,7 +208,7 @@ class HomeController extends Controller
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
+                if ($colonnes[$i]->COLUMN_NAME != "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "prioriter" and $colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }
@@ -388,13 +388,16 @@ class HomeController extends Controller
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
+
+                if ($colonnes[$i]->COLUMN_NAME != "prioriter" and $colonnes[$i]->COLUMN_NAME != "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
+                    // if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }
                 }
             }
             //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
+
 
             if ($nb > 0) {
                 return view('formulaire', compact('testNull', 'entreprise', 'departement'));
@@ -710,6 +713,7 @@ class HomeController extends Controller
         $status = DB::select('select * from status');
         $type_formation_id = $request->type_formation;
         $data = [];
+        $entreprise_id=0;
         $nb_par_page = 5;
         if ($page == null) {
             $page = 1;
@@ -722,9 +726,9 @@ class HomeController extends Controller
             return view('admin.projet.home', compact('data', 'cfp', 'projet', 'totale_invitation', 'entreprise', 'status'));
         }
         if (Gate::allows('isReferent')) {
-            if (Gate::allows('isReferentPrincipale')) {
+            // if (Gate::allows('isReferentPrincipale')) {
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            }
+            // }
             if (Gate::allows('isStagiairePrincipale')) {
                 $entreprise_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
             }
