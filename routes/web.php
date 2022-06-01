@@ -380,10 +380,10 @@ Route::get('search__formation', 'FormationController@getModulesParReference')->n
 Route::get('domaine_formation', 'FormationController@formation_domaine')->name('domaine_formation');
 Route::get('domaine_vers_formation/{id}', 'FormationController@domaine_vers_formation')->name('domaine_vers_formation');
 Route::get('select_par_formation/{id}', 'FormationController@affichageParFormation')->name('select_par_formation');
-Route::get('select_par_formation_par_cfp/{id_formation}/{id_cfp}', 'FormationController@affichageParFormationParCfp')->name('select_par_formation_par_cfp');
+Route::get('select_par_formation_par_cfp/{id_formation}', 'FormationController@affichageParFormationParcfp')->name('select_par_formation_par_cfp');
 Route::get('select_par_module/{id}', 'FormationController@affichageParModule')->name('select_par_module');
 Route::get('select_tous', 'FormationController@affichageTousCategories')->name('select_tous');
-Route::get('inscriptionInter/{type_formation_id}/{id_groupe}', 'SessionController@inscription')->name('inscriptionInter');
+Route::get('inscriptionInter/{id_groupe}/{type_formation_id}', 'SessionController@inscription')->name('inscriptionInter');
 Route::get('demande_devis_client/{id}', 'FormationController@demande_devis_client')->name('demande_devis_client');
 //route annuaire de cfp
 Route::get('annuaire/{page?}','FormationController@annuaire')->name('annuaire');

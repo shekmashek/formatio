@@ -404,7 +404,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         s.cin,
         s.date_naissance,
         (s.lot) adresse,
-        s.niveau_etude,
+        s.niveau_etude_id,
         s.activiter AS activiter_stagiaire,
         s.branche_id
     FROM
@@ -552,7 +552,7 @@ SELECT
     stg.photos,
     stg.cin,
     stg.date_naissance,
-    stg.niveau_etude,
+    stg.niveau_etude_id,
     stg.activiter,
     stg.branche_id,
     stg.quartier,

@@ -66,15 +66,19 @@
         </ul>
     </div>
 </div>
-<section class="mt-5">
+<section class="mt-3">
     <div class="container">
         <div class="row">
 
             @if (count($infos)>0)
                 @if($nom_formation == null)
-                    <h2 class="">Tous les formations en : tous</h2><br>
+                    <h5 class="">Formations : {{count($infos)}} résultats</h5><br>
                 @else
-                    <h2 class="">Tous les formations en :&nbsp;{{$nom_formation}}</h2><br>
+                    @if (count($infos) == 1)
+                        <h5 class="">Formations : {{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
+                    @else
+                        <h5 class="">Formations : {{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
+                    @endif
                 @endif
             @endif
             @if(Session::has('success'))
@@ -93,70 +97,68 @@
                 @if (count($infos)>0)
 
                 @foreach ($infos as $info)
-                <div class="row liste__formation justify-content-space-between mb-5">
-                    <div class="col-lg-6 col-md-6 liste__formation__content">
+                <div class="row liste__formation justify-content-space-between mb-4">
+                    <div class="col d-flex flex-column">
+                        <a href="{{route('detail_cfp',$info->cfp_id)}}" class="justify-content-center text-center">
+                            <span class="mb-2 description">{{$info->nom}}</span><img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
+                        </a>
+                        </div>
+                    <div class="col-3 liste__formation__content">
                         <a href="{{route('select_par_module',$info->module_id)}}">
                             <div class="liste__formation__item">
-                                <h4>{{$info->nom_module}}</h4>
-                                <p>{{$info->nom_formation}}</p>
-                                <p class="description">{{$info->description}}</p>
-                                <div class="liste__formation__avis">
-                                    <div class="Stars" style="--note: {{ $info->pourcentage }};">
-
-                                    </div>
-                                    <span><strong>{{ $info->pourcentage }}</strong>/5</span>
-                                </div>
-
-
+                                <h5>{{$info->nom_module}}</h5>
+                                <p><span>{{$info->nom_formation}}</span></p>
+                                {{-- <p>Réference : <span>{{$info->reference}}</span></p> --}}
 
                             </div>
                         </a>
                     </div>
+                    <div class="col-4">
+                        <div class="liste__formation__avis mb-3">
+                            <div class="Stars" style="--note: {{ $info->pourcentage }};">
 
-                    <div class="col-lg-6 col-md-6 justify-content-between description d-flex">
-                        <div class="px-3">
-                            <a href="{{route('detail_cfp',$info->cfp_id)}}">
-                                <p class="mt-2 description">Formation proposée
-                                par&nbsp;<span class="">{{$info->nom}}</span>&nbsp;&nbsp;&nbsp;<img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
-                                </p>
-                            </a>
-                            <div class="row row-cols-auto liste__formation__item3 justify-content-space-between description">
-                                <div class="col"><i class="bx bx-alarm bx_icon"></i>
-                                    <span>
-                                        @isset($info->duree_jour)
-                                        {{$info->duree_jour}} jours
-                                        @endisset
-                                    </span>
-                                    <span>
-                                        @isset($info->duree)
-                                        /{{$info->duree}} h
-                                        @endisset
-                                    </span> </p>
-                                </div>
-                                <div class="col"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
-                                </div>
-                                <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
-                                </div>
-                                <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
-                                </div>
+                            </div>
+                            <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5 ({{count($liste_avis)}} avis)</span>
+                            <span>Réf : {{$info->reference}}</span>
+                        </div>
+                        <div class=" liste__formation__item3 description d-flex flex-row">
+                            <div class="me-2"><i class="bx bx-alarm bx_icon"></i>
+                                <span>
+                                    @isset($info->duree_jour)
+                                    {{$info->duree_jour}} jours
+                                    @endisset
+                                </span>
+                                <span>
+                                    @isset($info->duree)
+                                    /{{$info->duree}} h
+                                    @endisset
+                                </span> </p>
+                            </div>
+                            <div class="me-2"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
+                            </div>
+                            <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
+                            </div>
+                            <div ><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                             </div>
                         </div>
-                        <div class="liste__formation__item2">
-                                <a href="{{route('demande_devis_client',$info->module_id)}}"><button type="submit" class=" btn btn_nouveau mb-3">Démander&nbsp;un&nbsp;devis</button></a>
+                    </div>
+                    <div class="col">
+                        <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                        @if($info->prix_groupe != null)
+                            <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                        @endif
+                    </div>
+                    <div class="col">
+                        <div class="mb-2 lien_clique"><a href="{{route('demande_devis_client',$info->module_id)}}" class="description ">Démander&nbsp;un&nbsp;devis</a></div>
+                        @if (count($datas) <= 0)
 
-
-                            {{-- <a href="#">
-                                <h6 class="devis_form">Démander un devis&nbsp;<i class="bx bxs-cart-add bx_icon"></i>
-                                </h6>
-                            </a> --}}
-                            <div>{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
-                            @if($info->prix_groupe != null)
-                                <div>{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
-                            @endif
-
-                            <p>Réference : <span>{{$info->reference}}</span></p>
-                        </div>
-
+                        @else
+                            @foreach ($datas as $data)
+                                @if($info->module_id == $data->module_id)
+                                    <div class="pt-1 lien_clique"><a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="description ">S'inscrire</a></div>
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
                         @foreach ($datas as $data)
                             @if($info->module_id == $data->module_id)
@@ -165,26 +167,23 @@
                                 @else
                                     <hr>
                                     <div class="row w-100 justify-content-end">
-                                        <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates&nbsp;<i class="bx bx-caret-down caret-icon"></i>
+                                        <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates du Session Inter&nbsp;<i class="bx bx-caret-down caret-icon"></i>
                                         </h6>
                                     </div>
                                     <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
                                         <div class="row px-3 py-2">
-                                            <div class="col-3">
+                                            <div class="col-2">
                                                 <p>Prochaines Sessions</p>
                                             </div>
-                                            <div class="col-5 date">
+                                            <div class="col-5 date text-center">
                                                 @foreach ($datas as $data)
                                                     @if($info->module_id == $data->module_id)
                                                         <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
                                                     @endif
                                                 @endforeach
                                             </div>
-                                            <div class="col-4">
-                                                <p>Cette thématique vous intéresse ?
-                                                    Nos experts conçoivent votre formation
-                                                    sur-mesure ! Nous contacter</p>
-                                                    <button type="button" class="btn_next"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button>
+                                            <div class="col-5 text-center">
+                                                <p class="">Cette thématique vous intéresse?<button type="button" class="btn_next ms-4"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button> </p>
                                             </div>
                                         </div>
                                     </div>

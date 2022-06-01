@@ -66,7 +66,7 @@ CREATE TABLE `etats` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-alter table modules add etat_id bigint(20) NOT NULL REFERENCES etats(id) ON DELETE CASCADE;
+alter table modules add etat_id bigint(20) NOT NULL DEFAULT 2 REFERENCES etats(id) ON DELETE CASCADE;
 
 recréer vue v_moduleformation dans bdd_suiviformation_view_1(views_miasa+avis)
 recréer vue v_cours_programme dans bdd_suiviformation_view_1(views_miasa+avis)
