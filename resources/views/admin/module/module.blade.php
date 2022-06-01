@@ -78,6 +78,7 @@
                                                             <i class='bx bxs-star'></i>
                                                             <i class='bx bxs-star-half'></i>
                                                         </div>
+                                                        
                                                         <span><strong>0.0</strong>/5 (aucun avis)</span>
                                                         @if($mod->min_pers != 0 && $mod->max_pers != 0)
                                                         <span
