@@ -1111,14 +1111,14 @@ class AbonnementController extends Controller
         $valeur = $request->valeur;
         if($disponibilite->utilise == 1) return back()->with('message','Vous ne pouvez pas modifier ce coupon parce qu\'il a été déjà utilisé');
         else DB::update('update coupon set coupon = ?, valeur = ? where id = ?', [$coupon,$valeur,$id]);
-        return back();
+        return redirect()->route('listeAbonne');
     }
     //suppression de coupon
     public function supprimer_coupon($id){
         $disponibilite = $this->fonct->findWhereMulitOne("coupon",["id"],[$id]);
         if($disponibilite->utilise == 1) return back()->with('message','Vous ne pouvez pas supprimer ce coupon parce qu\'il a été déjà utilisé');
         else DB::delete('delete from coupon where id = ?', [$id]);
-        return back();
+        return redirect()->route('listeAbonne');
     }
     //test ajout de coupon par le client
     public function coupon_client(Request $request){

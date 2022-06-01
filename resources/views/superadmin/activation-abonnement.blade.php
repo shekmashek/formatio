@@ -7,7 +7,36 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
 <style>
+
 .navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item.active .nav-link {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+/* .navigation_module .nav-link {
     color: #637381;
     padding: 5px;
     cursor: pointer;
@@ -28,22 +57,27 @@
     background-color: rgb(245, 243, 243);
     transform: scale(1.1);
     border: none;
-}
+} */
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid mt-5">
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#types" class="nav-link active" data-bs-toggle="tab">Liste des abonnements</a>
+                <a href="#types" class="nav-link active" data-toggle="tab">Liste des abonnements</a>
             </li>
             <li class="nav-item">
-                <a href="#entreprise" class="nav-link" data-bs-toggle="tab">Entreprise</a>
+                <a href="#entreprise" class="nav-link" data-toggle="tab">Entreprise</a>
             </li>
             <li class="nav-item">
-                <a href="#of" class="nav-link " data-bs-toggle="tab">Organisme de formation</a>
+                <a href="#of" class="nav-link " data-toggle="tab">Organisme de formation</a>
             </li>
             <li class="nav-item">
-                <a href="#coupon" class="nav-link " data-bs-toggle="tab">Coupon</a>
+                <a href="#coupon" class="nav-link " data-toggle="tab">Coupon</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -110,7 +144,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade " id="entreprise">
+            <div class="tab-pane fade show" id="entreprise">
                 <table class="table table-hover">
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client_etp" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
@@ -158,7 +192,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade " id="of">
+            <div class="tab-pane fade show" id="of">
                 <table class="table table-hover">
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
@@ -313,9 +347,21 @@
     </div>
 </div>
 
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{{-- <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            let lien = ($(e.target).attr('href'));
+            localStorage.setItem('abonnement_admin', lien);
+    });
+    let activeTab = localStorage.getItem('abonnement_admin');
+    // console.log(activeTab);
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+
+
     Date.prototype.addDays = function(noOfDays){
         var tmpDate = new Date(this.valueOf());
         tmpDate.setDate(tmpDate.getDate() + noOfDays);
