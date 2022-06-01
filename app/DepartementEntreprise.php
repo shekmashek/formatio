@@ -16,4 +16,9 @@ class DepartementEntreprise extends Model
     public function Entreprise(){
         return $this->belongsTo('App\Entreprise', 'departement_entreprise_id');
     }   
+
+    public function services(){
+        return $this->hasMany('App\Service');
+    }
+
 }

@@ -2,10 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\DepartementEntreprise;
+use App\Service;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
-class entreprise extends Model
+class Entreprise extends Model
 {
     protected $table = "entreprises";
 
@@ -18,6 +20,23 @@ class entreprise extends Model
     {
         return $this->belongsTo('App\Secteur');
     }
+
+
+    public function departements()
+    {
+        return $this->hasMany('App\DepartementEntreprise');
+    }
+
+/**
+ * Get all of the services for the entreprise
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+ */
+public function services(): HasManyThrough
+{
+    return $this->hasManyThrough(Service::class, DepartementEntreprise::class);
+}
+
 
     public function getEntreprise($etp1, $etp2)
     {

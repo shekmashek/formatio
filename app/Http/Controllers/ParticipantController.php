@@ -12,6 +12,7 @@ use App\stagiaire;
 use Carbon\Carbon;
 use App\Entreprise;
 use App\Departement;
+use App\Service;
 use App\NiveauEtude;
 use App\responsable;
 use App\chefDepartement;
@@ -30,7 +31,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+
 use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
 
 class ParticipantController extends Controller
@@ -150,14 +151,13 @@ class ParticipantController extends Controller
         $employers = Stagiaire::where('entreprise_id', $entreprise_id)->get();
         $entreprise = Entreprise::find($entreprise_id);    
         $departements = DepartementEntreprise::where('entreprise_id', $entreprise_id)->get();
-        
-        $dep = DepartementEntreprise::where('entreprise_id', 1)->get();
-dd($dep);
+
         $niveaux_etude = NiveauEtude::all();
+        $services = Service::all();
         
         // dd($niveaux_etude);
 
-        return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise', 'niveaux_etude', 'departements'));
+        return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise', 'niveaux_etude', 'departements', 'services'));
     }
 
 
