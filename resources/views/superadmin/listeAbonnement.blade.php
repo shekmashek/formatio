@@ -385,15 +385,14 @@
     <script>
 
         // $(document).ready(function () {
-        // $('#myTab  a[href="#facture"]').tab('show')
+        // $('#myTab  a[href="#{{old('tab')}}"]').tab('show')
         // });
-        // console.log(#{{old('tab')}});
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 let lien = ($(e.target).attr('href'));
-                localStorage.setItem('activeTab', lien);
+                localStorage.setItem('abonnement', lien);
         });
-        let activeTab = localStorage.getItem('activeTab');
+        let activeTab = localStorage.getItem('abonnement');
         // console.log(activeTab);
         if(activeTab){
             $('#myTab a[href="' + activeTab + '"]').tab('show');

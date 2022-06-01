@@ -204,7 +204,7 @@
                         </div>
                         <br><br>
                         <div class="col text-center">
-                            <button class="btn btn-success" type="submit">Accepter le Changement de tarif</button>
+                            <button class="btn btn-success accepter" type="submit">Accepter le Changement de tarif</button>
                         </div>
                         <input type="text" value ="{{$typeAbonnement->id}} " hidden name="type_abonnement_role_id">
                     </form>
@@ -212,4 +212,10 @@
            </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $('.accepter').on('click',function(e){
+            localStorage.setItem('abonnement','#facture');
+        });
+    </script>
 @endsection
