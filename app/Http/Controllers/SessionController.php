@@ -108,10 +108,12 @@ class SessionController extends Controller
 
     //info etp
     public function infoEtpCom($etp_id){
-        $etp = DB::table('v_groupe_projet_entreprise')
+        $etp = DB::table('entreprises')
+                ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+                ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
                 ->select('*')
-                ->where('entreprise_id', $etp_id)
-                ->groupBy('entreprise_id')
+                // ->groupBy('v_groupe_projet_entreprise.id')
+                ->where('v_groupe_projet_entreprise.entreprise_id', $etp_id)
                 ->get();
         
         // dd($etp);

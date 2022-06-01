@@ -7,14 +7,18 @@ use Illuminate\Support\Facades\DB;
 
 class testController extends Controller
 {
-    public function test(){
-        $req = DB::table('moduleformation')
-                ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.module_id', 'moduleformation.module_id')
-                ->select('*')
-                ->groupBy('moduleformation.module_id')
-                // ->select('nom_formation', 'nom_module')
-                ->get();
-        dd($req);
-        }
+    public function test($etp_id){
+        $etp = DB::table('entreprises')
+        ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+        ->join('groupe_entreprises', 'groupe_entreprises.entreprise_id', 'entreprises.id')
+        ->join('groupes', 'groupes.id', 'groupe_entreprises.groupe_id' )
+
+        ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
+        ->select('*')
+        ->where('v_groupe_projet_entreprise.entreprise_id', $etp_id)
+        ->get();
+
+        dd($etp);
+    }
 
 }

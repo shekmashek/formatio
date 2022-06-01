@@ -80,6 +80,30 @@ class Groupe extends Model
         return $info;
     }
 
+    
+    public function info_resp_etp($id_etp){
+        $info = DB::table('entreprises')
+                ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+                ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
+                ->select('*')
+                ->where('v_groupe_projet_entreprise.entreprise_id', $id_etp)
+                ->get()[0];
+                
+        return $info;
+    }
+
+        
+    public function info_resp_of($id_of){
+        $info = DB::table('cfps')
+                ->join('responsables_cfp', 'responsables_cfp.cfp_id', 'cfps.id')
+                ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.cfp_id', 'cfps.id')
+                ->select('*')
+                ->where('v_groupe_projet_entreprise.cfp_id', $id_of)
+                ->get()[0];
+
+        return $info;
+    }
+
     public function resultat_eval($groupe_id){
         $users = Auth::user()->id;
         $stg_id= stagiaire::where('user_id',$users)->value('id');

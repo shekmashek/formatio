@@ -443,23 +443,48 @@
                             <div class="chiffre_d_affaire m-0 p-0 me-3">
     
                                 <div class="d-flex flex-row">
-                                    <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>
+                                    <p class="p-0 mt-3 text-center">Entreprise client <span style="font-weight: 400; font-size: 16px ; color: #26A0DA">{{ $projet[0]->nom_etp }}</span> </p>
                                     &nbsp;&nbsp;
                                     <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
                                         class="mt-2 empNew" height="30px" width="30px" style="border-radius: 50%; cursor: pointer" 
                                         data-id={{$projet[0]->entreprise_id}} id={{$projet[0]->entreprise_id}} onclick="afficherInfos();">&nbsp;
                                 </div>
                             </div>
-                        @endif
-                        <div class="chiffre_d_affaire me-2">
-    
-                            <div class="d-flex flex-row">
-                                <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
-                                    {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
-                                <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
-                                    height="30px" width="30px" style="border-radius: 50%; cursor: pointer">&nbsp;
+                            <div class="chiffre_d_affaire m-0 p-0 me-3">
+                                    <div class="d-flex flex-row">
+                                        @php
+                                            $etp = $groupe->info_resp_etp($projet[0]->entreprise_id);
+                                        @endphp
+                
+                                        <p class="p-0 mt-3 text-center">Réferent de l'entreprise <span style="font-weight: 400; font-size: 16px ; color: #26A0DA">{{ $projet[0]->nom_etp }}</span> </p>
+                                        &nbsp;&nbsp;
+                                        <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" src="{{ asset('images/responsables/' . $etp->photos) }}" alt=""
+                                            class="mt-2 resp_etp" height="30px" width="30px" style="border-radius: 50%; cursor: pointer" 
+                                            data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}}>&nbsp;
+                                    </div>
                             </div>
-                        </div>
+                        @endif
+                            <div class="chiffre_d_affaire m-0 p-0 me-3">
+                                @php
+                                    $of = $groupe->info_resp_of($projet[0]->cfp_id)
+                                @endphp
+
+                                <div class="d-flex flex-row">
+                                    <p class="p-0 mt-3 text-center"> Organisme de formation
+                                        <span style="font-weight: 400; font-size: 16px ; color: #000000">{{ $of->nom_cfp }}</span></p>&nbsp;&nbsp;
+                                    <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" src="{{ asset('images/CFP/' . $of->logo_cfp) }}" alt="" class="mt-2"
+                                        height="30px" width="30px" style="border-radius: 50%; cursor: pointer" data-id={{$of->cfp_id}} id={{$of->cfp_id}}>&nbsp;
+                                </div>
+                            </div>
+                            <div class="chiffre_d_affaire m-0 p-0 me-3">
+                                
+                                <div class="d-flex flex-row">
+                                    <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
+                                        <span style="font-weight: 400; font-size: 16px ; color: #000000">{{ $of->nom_resp_cfp }}</span></p>&nbsp;&nbsp;
+                                    <img data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" src="{{ asset('images/CFP/' . $of->logo_cfp) }}" alt="" class="mt-2"
+                                        height="30px" width="30px" style="border-radius: 50%; cursor: pointer" data-id={{$of->cfp_id}} id={{$of->cfp_id}}>&nbsp;
+                                </div>
+                            </div>
                         @canany(['isCFP'])
                             <div class="chiffre_d_affaire">
                                 <div class="d-flex flex-row">
@@ -797,6 +822,176 @@
         </section>
     </div>
 
+    {{--resp OF--}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="test" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">INFORMATION</h5>
+            <hr>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <hr class="mt-2">
+
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1)
+                    <div class="mt-1 text-center mb-3">
+                        <span id="donner">
+                            <img src="{{ asset('images/CFP/' . $of->logo_cfp ) }}" class="img-fluid text-center"
+                            style="width:120px;height:120px;" role="button">
+                        </span>
+                    </div>
+                    <div class="mt-1 text-center">
+                        <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold">
+                            {{ $of->nom_cfp }}
+                        </span>
+                    </div>
+                    
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-envelope'></i></div>
+                            <div class="col-md-3">E-mail</div>
+                            <div class="col-md">
+                                <span id="matriculess">
+                                    @if ($of->email == null)
+                                        @php
+                                            echo "---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->email }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-phone'></i></div>
+                            <div class="col-md-3">Télephone</div>
+                            <div class="col-md">
+                                <span id="mail_stagiaire">
+                                    @if ($of->tel_cfp == null)
+                                        @php
+                                            echo "---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->tel_cfp }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
+                            <div class="col-md-3">Adresse</div>
+                            <div class="col-md">
+                                <span id="mail_stagiaire">
+                                    @if ($of->adresse_lot == null)
+                                        @php
+                                            echo "---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->adresse_quartier }}
+                                        {{ $of->adresse_ville }} {{ $of->adresse_code_postal }}
+                                        {{ $of->adresse_ville  }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    {{--ETP--}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">INFORMATION</h5>
+            <hr>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <hr class="mt-2">
+
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1)
+                    <div class="mt-1 text-center mb-3">
+                        <span id="donner">
+                            <img src="{{ asset('images/CFP/' . $of->logo_cfp ) }}" class="img-fluid text-center"
+                            style="width:120px;height:120px;" role="button">
+                        </span>
+                    </div>
+                    <div class="mt-1 text-center">
+                        <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold">
+                            {{ $of->nom_cfp }}
+                        </span>
+                    </div>
+                    
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-envelope'></i></div>
+                            <div class="col-md-3">E-mail</div>
+                            <div class="col-md">
+                                <span id="matriculess">
+                                    @if ($of->email == null)
+                                        @php
+                                            echo "---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->email }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-phone'></i></div>
+                            <div class="col-md-3">Télephone</div>
+                            <div class="col-md">
+                                <span id="mail_stagiaire">
+                                    @if ($of->tel_cfp == null)
+                                        @php
+                                            echo "---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->tel_cfp }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
+                            <div class="col-md-3">Adresse</div>
+                            <div class="col-md">
+                                <span id="mail_stagiaire">
+                                    @if ($of->adresse_lot == null)
+                                        @php
+                                            echo "---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->adresse_quartier }}
+                                        {{ $of->adresse_ville }} {{ $of->adresse_code_postal }}
+                                        {{ $of->adresse_ville  }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
 {{--AfficheInfos--}}
 <div class="infos mt-3">
     <div class="row">
@@ -818,17 +1013,24 @@
                 </div>
                 <div class="mt-1 text-center">
                     <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold">
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
+                        {{ $projet[0]->nom_etp }}
                     </span>
                 </div>
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class='bx bx-user'></i></div>
-                        <div class="col-md-3">Responsable</div>
+                        <div class="col-md-1"><i class='bx bx-credit-card-front' ></i></div>
+                        <div class="col-md-3">NIF</div>
                         <div class="col-md">
-                            <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold">
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
+                            <span id="nom" style="font-size: 14px;">
+                                @if ( $projet[0]->nif == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $projet[0]->nif }}
+                                @endif
+                                
                             </span>
                             <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
                         </div>
@@ -837,12 +1039,38 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
-                        <div class="col-md-3">Matricule</div>
+                        <div class="col-md-1"><i class='bx bx-credit-card' ></i></div>
+                        <div class="col-md-3">STAT</div>
                         <div class="col-md">
-                            <span id="matriculess" style="font-size: 14px; text-transform: uppercase; font-weight: bold">
-                                <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
+                            <span id="nomd" style="font-size: 14px;">
+                                @if ($projet[0]->stat == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $projet[0]->stat }}
+                                @endif
                             </span>
+                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-phone'></i></div>
+                        <div class="col-md-3">Tel</div>
+                        <div class="col-md">
+                            <span id="nom" style="font-size: 14px;">
+                                @if ($projet[0]->telephone_etp == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $projet[0]->telephone_etp }}
+                                @endif
+                            </span>
+                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
                         </div>
                     </div>
                 </div>
@@ -851,17 +1079,163 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
                         <div class="col-md-3">E-mail</div>
-                        <div class="col-md"><span id="mail_stagiaire">
-                            <p class="p-0 m-0 text-center"> <strong> Adresse:{{ $projet[0]->adresse_rue }}
-                                {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal }}
-                                {{ $projet[0]->adresse_ville }} {{ $projet[0]->adresse_region }}</strong></p>    
-                        </span></div>
+                        <div class="col-md">
+                            <span id="matriculess">
+                                @if ($projet[0]->email_etp == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $projet[0]->email_etp }}
+                                @endif
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                        <div class="col-md-3">Adresse</div>
+                        <div class="col-md">
+                            <span id="mail_stagiaire">
+                                @if ($projet[0]->adresse_rue == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $projet[0]->adresse_rue }}
+                                    {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal }}
+                                    {{ $projet[0]->adresse_ville }} {{ $projet[0]->adresse_region }} 
+                                @endif
+                            </span>
+                        </div>
                     </div>
                 </div>
             @endif
         </div>
 </div>
 
+{{--Responsable ETP--}}
+
+<div class="offcanvas offcanvas-end" style="padding-top: 50px" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">INFORMATION</h5>
+        <hr>
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <hr class="mt-2">
+
+        <div class="mt-2" style="font-size:14px">
+            @if ($type_formation_id == 1)
+                <div class="mt-1 text-center mb-3">
+                    <span id="donner">
+                        <img src="{{ asset('images/responsables/' . $etp->photos) }}" class="img-fluid text-center"
+                        style="width:120px;height:120px;" role="button">
+                    </span>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
+                        <div class="col-md-3">Matricule</div>
+                        <div class="col-md">
+                            <span id="nom" style="font-size: 14px;">
+                                @if ($etp->matricule == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $etp->matricule }}
+                                @endif
+                            </span>
+                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-user'></i></div>
+                        <div class="col-md-3">Nom_prénoms</div>
+                        <div class="col-md">
+                            <span id="nomd" style="font-size: 14px;">
+                                @if ($etp->nom_resp  == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $etp->nom_resp }}&nbsp;&nbsp;{{ $etp->prenom_resp }}
+                                @endif
+                            </span>
+                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                        <div class="col-md-3">E-mail</div>
+                        <div class="col-md">
+                            <span id="matriculess">
+                                @if ($etp->email_resp == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $etp->email_resp }}
+                                @endif
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                        <div class="col-md-3">Télephone</div>
+                        <div class="col-md">
+                            <span id="mail_stagiaire">
+                                @if ($etp->telephone_resp == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $etp->telephone_resp }}
+                                @endif
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                        <div class="col-md-3">Adresse</div>
+                        <div class="col-md">
+                            <span id="mail_stagiaire">
+                                @if ($etp->adresse_quartier == null)
+                                    @php
+                                        echo "---"
+                                    @endphp
+                                @else
+                                    : {{ $etp->adresse_quartier }}
+                                    {{ $etp->adresse_lot }} {{ $etp->adresse_ville }}
+                                    {{ $etp->adresse_region }}
+                                @endif
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+ 
     {{-- <div class="infos mt-3">
         <div class="row">
             <div class="col">
@@ -890,26 +1264,6 @@
     </div> --}}
 
     {{-- </div> --}}
-    {{-- affiche prof --}}
-    <div class="prof mt-3">
-        <div class="row">
-            <div class="col">
-                <p class="m-0">Infos</p>
-            </div>
-            <div class="col text-end">
-                <i class="bx bx-x " role="button" onclick="afficherProf();"></i>
-            </div>
-            <hr class="mt-2">
-            <div class="text-center mt-2">
-
-            </div>
-            <div>
-
-            </div>
-
-        </div>
-    </div>
-    </div>
 
     {{-- keep nav in refresh --}}
     <script>

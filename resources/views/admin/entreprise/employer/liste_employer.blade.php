@@ -546,7 +546,7 @@
                 </div> --}}
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
+                        {{-- <div class="col-md-1"></div> --}}
                         <div class="col-md-1"><i class='bx bx-user'></i></div>
                         <div class="col-md-3">Nom_prénoms</div>
                         <div class="col-md">
@@ -557,7 +557,7 @@
                 </div>
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
+                        {{-- <div class="col-md-1"></div> --}}
                         <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
                         <div class="col-md-3">Matricule</div>
                         <div class="col-md">
@@ -567,7 +567,7 @@
                 </div>
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
+                        {{-- <div class="col-md-1"></div> --}}
                         <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
                         <div class="col-md-3">E-mail</div>
                         <div class="col-md"><span id="mail_stagiaire"></span></div>
@@ -575,7 +575,7 @@
                 </div>
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
+                        {{-- <div class="col-md-1"></div> --}}
                         <div class="col-md-1"><i class='bx bx-phone' ></i></div>
                         <div class="col-md-3">Télephone</div>
                         <div class="col-md">
@@ -585,7 +585,7 @@
                 </div>
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
+                        {{-- <div class="col-md-1"></div> --}}
                         <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
                         <div class="col-md-3">Adresse</div>
                         <div class="col-md"><span id="adresse"></span></div>
