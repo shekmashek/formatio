@@ -40,7 +40,6 @@ class FactureController extends Controller
         $user_id = Auth::user()->id;
 
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
@@ -69,7 +68,7 @@ class FactureController extends Controller
 
         $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
 
-        $nb_limit = 2;
+        $nb_limit = 10;
 
         $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["cfp_id"], ["="], [$cfp_id], "AND");
         $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", ["cfp_id"], ["="], [$cfp_id], "AND");
@@ -118,7 +117,7 @@ class FactureController extends Controller
 
         $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
 
-        $nb_limit = 2;
+        $nb_limit = 10;
 
         $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["activiter", "entreprise_id"], ["=", "="], [True, $entreprise_id], "AND");
         $pagination_full = $this->fonct->nb_liste_pagination($totale_pag_full, $nb_pag_full, $nb_limit);
@@ -163,7 +162,7 @@ class FactureController extends Controller
         $solde_fin = $req->solde_fin;
         $mode_payement = DB::select('select * from mode_financements');
 
-        $nb_limit = 2;
+        $nb_limit = 10;
         if ($solde_debut_pag != null || $solde_fin_pag != null) {
             $solde_debut = $solde_debut_pag;
             $solde_fin = $solde_fin_pag;
@@ -233,7 +232,7 @@ class FactureController extends Controller
         $mode_payement = DB::select('select * from mode_financements');
         $invoice_dte = null;
         $due_dte = null;
-        $nb_limit = 2;
+        $nb_limit = 10;
 
         if ($invoice_dte_pag != null && $due_dte_pag != null) {
             $invoice_dte = $invoice_dte_pag;
@@ -301,7 +300,7 @@ class FactureController extends Controller
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
         $entiter_id = null;
-        $nb_limit = 2;
+        $nb_limit = 10;
 
         if ($entiter_id_pag != null) {
             $entiter_id = $entiter_id_pag;
@@ -365,7 +364,7 @@ class FactureController extends Controller
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
-        $nb_limit = 2;
+        $nb_limit = 10;
         $status = null;
         $para = [];
         $opt = [];
@@ -584,7 +583,7 @@ class FactureController extends Controller
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $mode_payement = DB::select('select * from mode_financements');
         $num_fact = null;
-        $nb_limit = 2;
+        $nb_limit = 10;
 
         if ($num_fact_pag != null) {
             $num_fact = $num_fact_pag;
@@ -667,7 +666,7 @@ class FactureController extends Controller
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         if (Gate::allows('isCFP')) {
-            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id", "prioriter"], [Auth::user()->id, true])->cfp_id;
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
 
@@ -742,7 +741,7 @@ class FactureController extends Controller
     public function generatePDF($numero_fact)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id", "prioriter"], [Auth::user()->id, true])->cfp_id;
+        $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
         $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
 
@@ -1116,7 +1115,7 @@ class FactureController extends Controller
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         if (Gate::allows('isCFP')) {
-            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id", "prioriter"], [Auth::user()->id, true])->cfp_id;
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$montant_totale->entreprise_id]);
@@ -1330,7 +1329,7 @@ class FactureController extends Controller
 
     public function trie_par(Request $req)
     {
-        $nb_limit = 2;
+        $nb_limit = 10;
 
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $data_num_fact_trie = null;
