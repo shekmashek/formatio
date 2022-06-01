@@ -79,6 +79,7 @@ class DetailController extends Controller
             INNER JOIN cfps ON details.cfp_id = cfps.id
             WHERE details.cfp_id = ? order by details.groupe_id
             ',[$cfp_id]);
+            
 
             $modules = array();
             $formations = array();

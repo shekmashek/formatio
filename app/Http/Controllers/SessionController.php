@@ -110,6 +110,7 @@ class SessionController extends Controller
         // dd(URL::to('/').'/sarin Gael');
         $user_id = Auth::user()->id;
         $id = request()->id_session;
+        
         $type_formation_id = request()->type_formation;
         // ???--mbola tsy mety
         $test = DB::select('select count(id) as nombre from details where groupe_id = ?',[$id])[0]->nombre;
@@ -203,6 +204,7 @@ class SessionController extends Controller
         }
 
         $prix = $fonct->findWhereMulitOne('v_montant_session',['groupe_id'],[$id]);
+      
         // public
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);
@@ -217,13 +219,15 @@ class SessionController extends Controller
         //--modalite de formation
         $modalite = DB::select('select modalite from groupes where id = ?',[$id])[0]->modalite;
         $devise = DB::select('select * from devise')[0]->devise;
+        $ref = DB::select('select * from devise')[0]->reference;
 
         $lieu_formation = DB::select('select lieu from details where groupe_id = ?', [$id]);
+        
         if(count($lieu_formation)>0){
             $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
         }
 
-        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation','frais_annexe'));
+        return view('projet_session.session', compact('id', 'test', 'projet', 'formateur','ref', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','prix','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation','frais_annexe'));
     }
 
     public function getFormateur(){

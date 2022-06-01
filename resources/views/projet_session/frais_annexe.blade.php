@@ -161,10 +161,11 @@
                     </div>
                 </div>
             </div>
-            
-            @php
+            <span id="frais_annex_formation">
+                @php
                 $somme += $frais->montant;
-            @endphp
+                @endphp
+            </span>
         @endforeach
         <div class="row mt-3">
             <div class="col-md-5"></div>

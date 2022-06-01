@@ -21,7 +21,7 @@
             border-radius: 5px;
             background-color: #637381;
             color: white;
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
             position: relative;
@@ -32,7 +32,7 @@
             border-radius: 5px;
             background-color: #00CDAC;
             color: white;
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
             position: relative;
@@ -375,11 +375,14 @@
                                     aria-labelledby="collapseprojet_{{ $prj->projet_id }}">
                                     <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                         <th> Session </th>
-                                        <th> Module </th>
+                                        <th>Module</th>
+                                        <th><i class="bx bx-dollar"></i> {{$ref}}</th>
                                         <th> <i class='bx bx-group'></i> </th>
                                         <th> Entreprise </th>
                                         <th> Modalité </th>
                                         <th> Date du projet</th>
+                                        <th>Ville</th>
+                                        
                                         <th> Statut </th>
                                         {{-- <th rowspan="2"></th> --}}
                                         {{-- @if ($prj->type_formation_id == 1)
@@ -387,7 +390,7 @@
                                         @endif --}}
                                         <th>Actions</th>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="text-center">
 
                                         @if ($prj->totale_session <= 0)
                                             <tr>
@@ -400,13 +403,27 @@
                                                         <td class="tbody_projet"> <a
                                                                 href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                         </td>
-                                                        <td class="text-start">{{ $pj->nom_module }}</td>
+                                                        <td>{{ $pj->nom_module }}</td>
                                                         <td class="text-end">
+                                                        @php
+                                                            $nombreStagiaire =$groupe->nombre_apprenant_session($pj->groupe_id);
+                                                        if($nombreStagiaire > 0){
+                                                            $ca = $pj->prix * $nombreStagiaire;
+                                                            echo number_format($ca, 0, ',', ' ');
+                                                            
+                                                        }
+                                                        else{
+                                                            $ca = 0;
+                                                            echo number_format($ca, 0, '.', ' '); 
+                                                        }                            
+                                                        @endphp
+                                                        </td>
+                                                        <td>
                                                             @php
                                                                 echo $groupe->nombre_apprenant_session($pj->groupe_id);
                                                             @endphp
                                                         </td>
-                                                        <td class="text-start">
+                                                        <td>
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
                                                                     {{ $etp->nom_etp }}
@@ -418,6 +435,15 @@
                                                             @php
                                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                                             @endphp
+                                                        </td>
+                                                        <td>
+                                                            @foreach ($lieu_formation as $lieu)
+                                                                @if(count($lieuFormation)>0)
+                                                                    @if($pj->projet_id == $lieu->projet_id && $pj->groupe_id == $lieu->groupe_id )
+                                                                        {{$lieuFormation[0]}}
+                                                                    @endif
+                                                                @endif
+                                                            @endforeach
                                                         </td>
                                                         <td align="center" style="min-width: 6rem;">
                                                             <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1">
@@ -1076,8 +1102,10 @@
                                 <th>Type de formation</th>
                                 <th> Session </th>
                                 <th> Module </th>
+                                <th><i class="bx bx-dollar"></i> {{$ref}}</th>
                                 <th> <i class='bx bx-group'></i> </th>
                                 <th>Date session</th>
+                                <th>Ville</th>
                                 <th> Centre de formation </th>
                                 {{-- <th> Date du projet</th> --}}
                                 <th>Modalité</th>
@@ -1108,6 +1136,24 @@
                                                 echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
+                                        <td>
+                                            @foreach ($prix_formation as $prix)
+                                            @if($pj->projet_id == $prix->projet_id && $pj->entreprise_id == $prix->entreprise_id)
+                                                @if ($groupe->nombre_apprenant_session($pj->groupe_id) > 0)
+                                                    @php
+                                                        $prixFormation = $prix->prix * $groupe->nombre_apprenant_session($pj->groupe_id);
+                                                        echo number_format($prixFormation, 0, ',', ' ')
+                                                    @endphp
+                                                @else
+                                                    @php
+                                                        echo "0";
+                                                    @endphp
+                                                @endif
+                                                
+                                                
+                                            @endif
+                                            @endforeach
+                                        </td>
                                         <td class="text-end">
                                             @php
                                                 echo $groupe->nombre_apprenant_session($pj->groupe_id);
@@ -1118,7 +1164,16 @@
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                             @endphp
                                         </td>
-                                        <td class="text-start"> {{ $pj->nom_cfp }} </td>
+                                        <td>
+                                            @foreach ($lieu_formations as $lieux)
+                                                @if(count($lieuFormation)>0)
+                                                    @if($pj->projet_id == $lieux->projet_id && $pj->groupe_id == $lieux->groupe_id )
+                                                        {{$lieuFormation[0]}}
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td class="text-center"> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
                                         <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
                                         <td class="tbody_projet">

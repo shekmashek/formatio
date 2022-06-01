@@ -208,7 +208,6 @@ alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL;
 alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL;
 
 
-
 CREATE TABLE responsables_cfp(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

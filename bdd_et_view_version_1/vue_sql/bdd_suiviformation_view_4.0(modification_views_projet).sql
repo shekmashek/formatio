@@ -210,7 +210,8 @@ create or replace view v_groupe_projet_module as
     join type_payement tp on tp.id = g.type_payement_id
     left join groupe_entreprises g_etp on g.id = g_etp.groupe_id;
 
-
+-- d.lieu,
+-- join details d on d.projet_id = p.id,
 create or replace view v_groupe_projet_entreprise_module as
     select
         vgpe.*,

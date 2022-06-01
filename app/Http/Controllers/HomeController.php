@@ -736,6 +736,7 @@ class HomeController extends Controller
             }
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?', [$entreprise_id])[0]->nb_projet;
+            
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
                 $offset = 0;
@@ -757,8 +758,16 @@ class HomeController extends Controller
             // fin pagination
             $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
             $data = DB::select($sql);
+
+            $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$entreprise_id]);
+            if(count($lieu_formations)>0){
+                $lieuFormation = explode(',  ',$lieu_formations[0]->lieu);
+            }
+            $prix_formation = DB::select('select cfp_id,projet_id,entreprise_id,module_id,modalite_formation,prix FROM v_groupe_projet_module GROUP BY entreprise_id,projet_id;');
+            $ref = DB::select('select * from devise')[0]->reference;
+            
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
-            return view('projet_session.index2', compact('data', 'stagiaires', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            return view('projet_session.index2', compact('data','prix_formation','ref','stagiaires','lieu_formations','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
@@ -792,14 +801,18 @@ class HomeController extends Controller
             // fin pagination
 
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request, $nb_par_page, $offset);
-
             $projet = DB::select($sql);
-
-            // dd( $projet);
+            // $lieu_formation =DB::table('details')->groupBy("groupe_id")->get();
+            $lieu_formation =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$cfp_id]);
+            if(count($lieu_formation)>0){
+                $lieuFormation = explode(',  ',$lieu_formation[0]->lieu);
+            }
+            $ref = DB::select('select * from devise')[0]->reference;
+        
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
 
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
-
+            
             // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
@@ -808,13 +821,14 @@ class HomeController extends Controller
             $type_formation = DB::select('select * from type_formations');
 
             $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
+            
             $module = $fonct->findWhere("v_module", ['cfp_id', 'status'], [$cfp_id, 2]);
             $payement = $fonct->findAll("type_payement");
 
             // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
             // dd($data);
-            return view('projet_session.index2', compact('projet', 'data', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
