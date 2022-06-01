@@ -1320,7 +1320,7 @@ class ParticipantController extends Controller
     public function verify_email_stg(Request $req)
     {
         $fonct = new FonctionGenerique();
-        $data = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req->valiny]);
+        $data = $fonct->findWhere("users", ["email"], [$req->valiny]);
         return response()->json($data);
     }
 
