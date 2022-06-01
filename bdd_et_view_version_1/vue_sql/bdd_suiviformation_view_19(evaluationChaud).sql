@@ -65,6 +65,10 @@ group by
 select
     id_qst_fille,
     qst_fille,
-    (total_stagiaire * point_max) as note_sur_10,
+    points,
+    ROUND(((nombre_stg * points)/(total_stagiaire * point_max)) * 10,1) as note_sur_10,
+    ROUND(((nombre_stg * points)/(total_stagiaire * point_max)) * 100,1) as pourcentage
+from v_evaluation_chaud where id_qst_fille=6;
     
 
+creer points

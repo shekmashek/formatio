@@ -356,7 +356,7 @@ class SessionController extends Controller
     }
 
     public function insert_presence(Request $request){
-        if(isset($request->edit_form)){
+        if(!isset($request->insert_form)){
             $presence = $request->edit_attendance;
             $h_entree = $request->edit_h_entree;
             $h_sortie = $request->edit_h_sortie;
