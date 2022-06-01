@@ -614,77 +614,77 @@ class AbonnementController extends Controller
     public function enregistrer_abonnement(Request $request)
     {
 
-        $id_coupon = $request->id_coupon;
+        // $id_coupon = $request->id_coupon;
 
-        if($request->accepter == null) return back()->with('erreur','Veuillez accepter les politiques de confidentialités,les CGU et les CGV');
+        // if($request->accepter == null) return back()->with('erreur','Veuillez accepter les politiques de confidentialités,les CGU et les CGV');
 
-        else{
-            $abonnement = new abonnement();
-            $abonnement_cfp = new abonnement_cfp();
-            $dt = Carbon::today()->toDateString();
-            $due_date = Carbon::today()->addDays(15)->toDateString();
+        // else{
+        //     $abonnement = new abonnement();
+        //     $abonnement_cfp = new abonnement_cfp();
+        //     $dt = Carbon::today()->toDateString();
+        //     $due_date = Carbon::today()->addDays(15)->toDateString();
 
-            $user_id = Auth::user()->id;
-            $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-
-
-            $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
-            if($resp!=null) $cfp_id = $resp[0]->cfp_id;
-            else $cfp_id = null;
+        //     $user_id = Auth::user()->id;
+        //     $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
 
 
-            if ($cfp_id == null) {
-                $abonnement->date_demande = $dt;
-                $abonnement->status = "En attente";
-                $abonnement->type_abonnement_id = $request->type_abonnement_role_id;
-                $abonnement->entreprise_id = $entreprise_id;
-                $abonnement->activite = 0;
-                $abonnement->type_arret = "";
-
-                $abonnement->save();
-
-                /**générer une facture*/
-
-                // $abonnement_cfp_id =$this->fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
-                $abonnement_id = DB::select('select * from abonnements where entreprise_id = ? and status = ? order by id desc limit 1', [$entreprise_id,'En attente']);
-                 // $montant =$this->fonct->findWhere('v_categorie_abonnement_etp',['type_abonnement_role_id'],[$abonnement_id[0]->type_abonnement_role_id]);
-                $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_etp",['abonnement_id'],[$abonnement_id[0]->id]);
-
-                // //on change le statut compte id de l'entreprise
-                // DB::update('update entreprises set statut_compte_id = 2 where id = ?', [$entreprise_id]);
-                $this->abonnement_model->insert_factures_abonnements_etp($abonnement_id[0]->id,$dt,$due_date,$tarif->tarif);
-
-            }
-            if ($entreprise_id == null) {
-
-                $abonnement_cfp->date_demande = $dt;
-                $abonnement_cfp->status = "En attente";
-                $abonnement_cfp->type_abonnement_id = $request->type_abonnement_role_id;
-                $abonnement_cfp->cfp_id = $cfp_id;
-                $abonnement_cfp->activite = 0;
-                $abonnement_cfp->type_arret = "";
-                $abonnement_cfp->save();
-
-                //générer une facture
-
-                // $abonnement_cfp_id =$this->fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
-                $abonnement_cfp_id = DB::select('select * from abonnement_cfps where cfp_id = ? and status = ? order by id desc limit 1', [$cfp_id,'En attente']);
-                // $montant =$this->fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
-                $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_cfp",['abonnement_id'],[$abonnement_cfp_id[0]->id]);
+        //     $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+        //     if($resp!=null) $cfp_id = $resp[0]->cfp_id;
+        //     else $cfp_id = null;
 
 
-                // //on change le statut compte id de l'organisme de formation
-                // DB::update('update cfps set statut_compte_id = 2 where id = ?', [$cfp_id]);
-                // $last_num_facture =$this->fonct->fin
-                $this->abonnement_model->insert_factures_abonnements_cfp($abonnement_cfp_id[0]->id,$dt,$due_date,$tarif->tarif);
-                // DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$due_date,1,$montant[0]->tarif]);
+        //     if ($cfp_id == null) {
+        //         $abonnement->date_demande = $dt;
+        //         $abonnement->status = "En attente";
+        //         $abonnement->type_abonnement_id = $request->type_abonnement_role_id;
+        //         $abonnement->entreprise_id = $entreprise_id;
+        //         $abonnement->activite = 0;
+        //         $abonnement->type_arret = "";
 
-            }
+        //         $abonnement->save();
+
+        //         /**générer une facture*/
+
+        //         // $abonnement_cfp_id =$this->fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
+        //         $abonnement_id = DB::select('select * from abonnements where entreprise_id = ? and status = ? order by id desc limit 1', [$entreprise_id,'En attente']);
+        //          // $montant =$this->fonct->findWhere('v_categorie_abonnement_etp',['type_abonnement_role_id'],[$abonnement_id[0]->type_abonnement_role_id]);
+        //         $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_etp",['abonnement_id'],[$abonnement_id[0]->id]);
+
+        //         // //on change le statut compte id de l'entreprise
+        //         // DB::update('update entreprises set statut_compte_id = 2 where id = ?', [$entreprise_id]);
+        //         $this->abonnement_model->insert_factures_abonnements_etp($abonnement_id[0]->id,$dt,$due_date,$tarif->tarif);
+
+        //     }
+        //     if ($entreprise_id == null) {
+
+        //         $abonnement_cfp->date_demande = $dt;
+        //         $abonnement_cfp->status = "En attente";
+        //         $abonnement_cfp->type_abonnement_id = $request->type_abonnement_role_id;
+        //         $abonnement_cfp->cfp_id = $cfp_id;
+        //         $abonnement_cfp->activite = 0;
+        //         $abonnement_cfp->type_arret = "";
+        //         $abonnement_cfp->save();
+
+        //         //générer une facture
+
+        //         // $abonnement_cfp_id =$this->fonct->findWhere('abonnement_cfps',['cfp_id','status'],[$cfp_id,'En attente']);
+        //         $abonnement_cfp_id = DB::select('select * from abonnement_cfps where cfp_id = ? and status = ? order by id desc limit 1', [$cfp_id,'En attente']);
+        //         // $montant =$this->fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
+        //         $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_cfp",['abonnement_id'],[$abonnement_cfp_id[0]->id]);
+
+
+        //         // //on change le statut compte id de l'organisme de formation
+        //         // DB::update('update cfps set statut_compte_id = 2 where id = ?', [$cfp_id]);
+        //         // $last_num_facture =$this->fonct->fin
+        //         $this->abonnement_model->insert_factures_abonnements_cfp($abonnement_cfp_id[0]->id,$dt,$due_date,$tarif->tarif);
+        //         // DB::insert('insert into factures_abonnements_cfp (abonnement_cfps_id, invoice_date,due_date,num_facture,montant_facture) values (?, ?,?,?,?)', [$abonnement_cfp_id[0]->id,$dt,$due_date,1,$montant[0]->tarif]);
+
+        //     }
 
             return redirect()->route('ListeAbonnement')->withInput(['tab' => 'facture']);
 
             // return redirect()->route('ListeAbonnement')->withInput(['tab' => 'facture']);
-        }
+        // }
     }
     //liste des demandes d'abonnement
     public function listeAbonne()
