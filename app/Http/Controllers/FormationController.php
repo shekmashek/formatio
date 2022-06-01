@@ -309,11 +309,12 @@ class FormationController extends Controller
             $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
+            $statistiques = DB::select('select * from v_statistique_avis where module_id = ?',[$id]);
+            // dd($statistiques);
             $competences = DB::select('select titre_competence from competence_a_evaluers where module_id = ?',[$id]);
             $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id,adresse_lot,adresse_ville from v_session_projet where module_id = ? and type_formation_id = 2', [$id]);
-            return view('referent.catalogue.detail_formation', compact('devise','infos', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id','competences','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+            return view('referent.catalogue.detail_formation', compact('devise','infos','statistiques', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id','competences','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         } else
-            dd("eto");
         return redirect()->route('liste_formation');
     }
     public function categorie_formations()
@@ -586,7 +587,10 @@ class FormationController extends Controller
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $domaine_id = $request->id;
-        $formations = DB::select('select * from formations where domaine_id = ?', [$domaine_id]);
+        $modules = DB::select('select md.id, md.nom_module, md.formation_id,md.cfp_id, md.duree, md.duree_jour, md.prix, md.prix_groupe, md.modalite_formation, cfp.nom from modules as md join formations as frmt on md.formation_id = frmt.id join domaines as dm on frmt.domaine_id = dm.id join cfps as cfp on md.cfp_id = cfp.id where md.status = 2 and md.etat_id = 1');
+        // $formations = DB::select('select * from formations where domaine_id = ?', [$domaine_id]);
+        $formations = DB::select('select frmt.nom_formation,frmt.id from formations as frmt join modules as md on frmt.id = md.formation_id join domaines as dm on frmt.domaine_id = dm.id where dm.id = ? and md.etat_id = 1 group by frmt.nom_formation,frmt.id',[$domaine_id]);
+        // dd($formations);
         $test = 4;
         $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
         $offset = round($domaines_count[0]->nb_domaines / $test);
@@ -598,7 +602,6 @@ class FormationController extends Controller
         $nom_domaine = DB::select('select nom_domaine from domaines where id = ?',[$domaine_id]);
         // dd($nom_domaine);
         // $formation_id = $formations[0]->id;
-        $modules = DB::select('select md.id, md.nom_module, md.formation_id,md.cfp_id, md.duree, md.duree_jour, md.prix, md.prix_groupe, md.modalite_formation, cfp.nom from modules as md join formations as frmt on md.formation_id = frmt.id join domaines as dm on frmt.domaine_id = dm.id join cfps as cfp on md.cfp_id = cfp.id where md.status = 2 and md.etat_id = 1');
         $modules_counts = DB::select('select count(*) as nb_modules, md.formation_id from modules as md join formations as frmt on md.formation_id = frmt.id where md.status = 2 and md.etat_id = 1 group by md.formation_id');
         // dd($modules_counts);
         return view('referent.catalogue.domaine', compact('formations', 'modules', 'modules_counts', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4','nom_domaine','devise'));
