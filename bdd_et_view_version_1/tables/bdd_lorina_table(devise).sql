@@ -12,14 +12,11 @@ DROP TABLE IF EXISTS  devise;
 CREATE TABLE devise
 (
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    devise varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-    reference varchar(255) COLLATE utf8mb4_unicode_ci  NULL
+    devise varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-insert into devise values
-(1,"Ariary","AR");
-
 ALTER TABLE devise add column description  VARCHAR(200);
- 
+insert into devise values
+(1,"AR","Ariary");
+
 
 
