@@ -236,6 +236,7 @@
 
     <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
     <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+    <script src="{{asset('js/fr.js')}}"></script>
 </head>
 <body>
     <div class="container-fluid">
@@ -448,6 +449,7 @@
 
                         }
                         , editable: true
+                        ,lang: 'fr'
                         , eventClick: function(info) {
                             $('#detail').css('display','block');
 
