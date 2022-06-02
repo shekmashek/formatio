@@ -1,9 +1,9 @@
-@extends('./layouts/admin')
-@inject('groupe', 'App\groupe')
-@section('content')
-<!-- CSS only -->
-{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous">
 <style>
+    h3{
+        font-weight: lighter;
+    }
     .btn_note_radar{
         width: 100%;
         background-color: rgb(241, 241, 242);
@@ -132,6 +132,7 @@
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         color: #fff;
+        width: 300px;
     }
     .label_acquis{
         background-color: #00CDAC;
@@ -140,6 +141,25 @@
         border-bottom-right-radius: 5px;
         color: #fff;
     }
+    .tete{
+        width: 100%;
+        height: 50px;
+        background:linear-gradient(to right, #5d1cc5,#91d4e5);
+        
+    }
+    .information{
+        width: 100%;
+        height: 170px;
+    }
+    p{
+        line-height: 15px;
+        font-weight:lighter;
+    }
+    .evaluation{
+        width: 100%;
+        height: 170px;
+    }
+    
 </style>
 <script>
     function modifier_note(){
@@ -179,8 +199,9 @@
                     $('#resultat_eval').html('');     
 
                     var html = '<div class="row p-2">';
+                    var html = '<div class="col-lg-12">'
                     for(let i = 0 ; i < detail.length ; i++){
-                        html += '<div class="col-lg-5 text-start p-1"><span class="mt-2">'+detail[i].titre_competence+'</span></div>';
+                        html += '<div class="col-lg-5 text-start p-1"><span class="mt-2"><i class="bi bi-check-circle"></i>&nbsp;'+detail[i].titre_competence+'</span></div>';
                         // html += '<div class="col-lg-2"><input class="p-0 m-1 py-1" style="height: 1.98rem; width: 4rem; justify-content:center;text-align:center;" type="number" min="1" max="10" name="note['+detail[i].competence_id+']" value="'+detail[i].note_apres+'" required></div>';
                         html += '<div class="col-lg-7">';
                             html += '<div class="d-flex flex-row">';
@@ -202,7 +223,7 @@
                     }
 
                     html += '</div>';
-                    
+                    html += '</div>';
                     $('#resultat_eval').append(html);
 
                     if(globale[0].status == 2){
@@ -235,7 +256,9 @@
             label: "Objectif à atteindre",
             backgroundColor: "rgba(0,0,250,0.1)",
             borderColor: "rgba(0,0,250,0.6)",
+            fontSize: "30px",
             data: JSON.parse(data_objectif)
+
         },
         {
             label: "Avant formation",
@@ -264,7 +287,7 @@
                     stepSize: 1
                 },
                 pointLabels: {
-                    fontSize: 18
+                    fontSize: 30
                 }
             },
             legend: {
@@ -313,35 +336,82 @@
 <script src="https://fonts.googleapis.com/css?family=Lato"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    
-
-    <nav class="d-flex justify-content-between mb-1 ms-5">
-        <span class="titre_detail_session"><p style="font-size: 16px" id="eval_globale"></p></span>
-    </nav>
-    <div class="mt-2 p-1">
-        <div class="row">
-            <div class="col-lg-12 "></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-5 ms-2"> 
-                <div id="resultat_eval" class="mt-3"></div>
-                <script type="text/javascript">
-                    var id_stg = @php echo $stagiaire; @endphp;
-                    var groupe_id = @php echo $groupe_id; @endphp;
-                    eval_stagiaire(id_stg,groupe_id);
-                </script>
+<div class="container  mt-3 p-2">
+    <div class="row">
+        <div class="col-lg-12" >
+            
+            
+            <div class="tete p-2" style="display: flex;justify-content: flex-end">
+                <h3 style="justify-content: flex-start" class="text-light">RAPPORT D'EVALUATION</h3>
+                <button class="btn btn-info text-light" style="justify-content: flex-end"> <a href="{{route('fichePDF')}}">PDF</a> </button>
             </div>
-            <div class="col-lg-6">
-                <canvas class='mt-3' id="marksChart" width="500" height="300"></canvas>
-                <script type="text/javascript">
-                    var id_stg = @php echo $stagiaire; @endphp;
-                    var groupe_id = @php echo $groupe_id; @endphp;
-                    radar(id_stg,groupe_id);
-                </script>
+        </div>
+        <div class="col-lg-12">
+            <div class="information  p-4">
+                <div class="row">
+                    <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
+                        <p><i class="bx bxs-customize mb-1  mt-1 align-middle" style="font-size:25px;"></i> Initiation à la méthode Merise </p>
+                        <p><i class="bi bi-calendar-check-fill align-middle" style="font-size:22px;"></i> &nbsp;31-05-22 au 05-06-22</p>
+                        <p><i class="bi bi-clipboard-check-fill align-middle" style="font-size:22px;"></i> &nbsp;Concevoir une application web</p>
+                    </div>
+                    <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
+                        <p><i class="bi bi-file-person-fill mt-2 align-middle" style="font-size:25px;"></i>&nbsp;Formateur : Numérika Center</p>
+                        <p><i class="bi bi-google align-middle" style="font-size:22px;"></i>&nbsp;&nbsp;Email : Numerika@gmail.com</p>
+                        <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : 0345032565</p>
+                    </div>
+                    <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
+                        <p><i class="bi bi-person-circle mt-3 align-middle" style="font-size:22px;"></i>&nbsp;Apprenant : Safidy Mahafaly</p>
+                        <p><i class="bi bi-google align-middle" style="font-size:22px;"></i>&nbsp;&nbsp;Email : safidymahafaly1@gmail.com</p>
+                        <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : 0340000000</p>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-lg-12 mt-2 " >
+                <div class="description p-4">
+                    <h3>Description de la formation :</h3>
+                    <p>- Formation présentielle propose par le centre de formation Numerika Center, qui a pour objectif de concevoir une application web avec le système d'analyse merise</p>
+                </div>
+            </div>
+            <div class="evaluation  p-4">
+                <h3>Résultat :</h3>
+                
+                <div class="mt-2 p-1">
+                    <div class="row">
+                        <div class="col-lg-12 "></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 ms-2"> 
+                            <div id="resultat_eval" class="mt-3"></div>
+                            <script type="text/javascript">
+                                var id_stg = @php echo $stagiaire; @endphp;
+                                var groupe_id = @php echo $groupe_id; @endphp;
+                                eval_stagiaire(id_stg,groupe_id);
+                            </script>
+                        </div>
+                        <div class="col-lg-6">
+                            <canvas class='mt-3' id="marksChart" width="500" height="300"></canvas>
+                            <script type="text/javascript">
+                                var id_stg = @php echo $stagiaire; @endphp;
+                                var groupe_id = @php echo $groupe_id; @endphp;
+                                radar(id_stg,groupe_id);
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 " style="margin-top:280px">
+                <div class="description p-4">
+                    <h3>Historique présence :</h3>
+                    <table>
+                        <tr>
+                             
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
 
-
-@endsection

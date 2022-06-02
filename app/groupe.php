@@ -112,7 +112,7 @@ class Groupe extends Model
     }
 
     public function module_projet($projet_id){
-        return DB::select('select groupe_id,nom_module from v_groupe_projet_module where projet_id = ? group by nom_module',[$projet_id]);
+        return DB::select('select nom_module from v_groupe_projet_module where projet_id = ? group by nom_module',[$projet_id]);
     }
 
 

@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '4881d190190e2a8e4f2a3ecb1104d60d794fe3d9',
+        'reference' => '5df755e7a8c67929697bf05bea31137c2345474c',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -29,12 +29,12 @@
             'dev_requirement' => false,
         ),
         'barryvdh/laravel-dompdf' => array(
-            'pretty_version' => 'v0.9.0',
-            'version' => '0.9.0.0',
+            'pretty_version' => 'v1.0.0',
+            'version' => '1.0.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../barryvdh/laravel-dompdf',
             'aliases' => array(),
-            'reference' => '5b99e1f94157d74e450f4c97e8444fcaffa2144b',
+            'reference' => 'e3f429e97087b2ef19b83e5ed313f080f2477685',
             'dev_requirement' => false,
         ),
         'brick/math' => array(
@@ -514,7 +514,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '4881d190190e2a8e4f2a3ecb1104d60d794fe3d9',
+            'reference' => '5df755e7a8c67929697bf05bea31137c2345474c',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(

@@ -471,7 +471,9 @@ class SessionController extends Controller
             $users = Auth::user()->id;
             $stagiaire= stagiaire::where('user_id',$users)->value('id');
             $groupe_id =$request->groupe_id;
-            return view('projet_session.resultat_stagiaire',compact('stagiaire','groupe_id'));
+            $module = DB::select('select * from v_groupe_projet_module where groupe_id = ?',[$request->groupe_id]);
+            // dd($module);
+            return view('projet_session.resultat_stagiaire',compact('stagiaire','groupe_id','module'));
         }catch(Exception $e){
             return back();
         }
@@ -608,6 +610,21 @@ class SessionController extends Controller
         }
         $frais = DB::select('select * from frais_annexes where entreprise_id = ?', [$etp_id]);
         return response()->json(['devise'=>$devise,'frais'=>$frais]);
+    }
+
+
+
+    public function fiche(Request $request){
+        
+            $users = Auth::user()->id;
+            $stagiaire= stagiaire::where('user_id',$users)->value('id');
+            $groupe_id =$request->groupe_id;
+            $module = DB::select('select * from v_groupe_projet_module where groupe_id = ?',[$request->groupe_id]);
+            // dd($module);
+            // return view('projet_session.resultat_stagiaire',compact('stagiaire','groupe_id','module'));
+            $pdf = PDF::loadView('projet_session.resultat_stagiaire',compact('stagiaire','groupe_id','module'));
+            return $pdf->download('teste.pdf');
+        
     }
 
 }

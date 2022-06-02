@@ -464,6 +464,7 @@
     $('.stagiaire').on('click',function(e){
         var stg_id = $("input[type='radio'][name='stagiaire']:checked").val();
         var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
+        
         $.ajax({
             type: "GET",
             url: "{{ route('competence_stagiaire') }}",
@@ -521,7 +522,7 @@
                             html += '</div>';
                         html += '</div>';
                     html += '</div>';
-
+                    
                     $('#validation_module').append(html); 
                 }else{
                     $('#validation_module').html('');

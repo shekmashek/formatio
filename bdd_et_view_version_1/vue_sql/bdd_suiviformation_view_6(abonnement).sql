@@ -56,6 +56,7 @@ CREATE OR REPLACE VIEW v_abonnement_facture as SELECT
     factures.num_facture,
     factures.invoice_date,
     factures.due_date,
+    factures.created_at,
     factures.statut as status_facture,
     factures.montant_facture,
     factures.abonnement_cfps_id,
@@ -67,8 +68,10 @@ JOIN v_type_abonnement_cfp v_ab_cfp ON v_ab_cfp.abonnement_id = factures.abonnem
 CREATE OR REPLACE VIEW v_abonnement_facture_entreprise as SELECT
     factures.id as facture_id,
     factures.num_facture,
+    factures.created_at,
     factures.invoice_date,
     factures.due_date,
+    
     factures.statut as status_facture,
     factures.montant_facture,
     v_ab_etp.*
