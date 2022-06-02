@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbonnementController;
-use App\Http\Controllers\NiveauController;
+use App\Http\Controllers\NiveauController; 
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;

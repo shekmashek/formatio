@@ -12,6 +12,9 @@
 
         #texte_1{
           font-size: 13px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
         }
 
         .text_11{
@@ -19,8 +22,8 @@
         }
 
         .circle_1{
-          margin-bottom: 20px;
-          border-right: 1px solid rgb(203, 203, 203);
+          margin-bottom: 25px;
+
           padding: 0 30px;
 
         }
@@ -37,7 +40,8 @@
 
         .row_flex{
           display: flex;
-          width: fit-content;
+          /* width: fit-content; */
+          justify-content: flex-end;
         }
           #my-pie-chart {
             /* --pourcentage: calc((var(--test) / 100 * 100%); */
@@ -53,6 +57,49 @@
             }
 
             #my-pie-chart3 {
+            /* --pourcentage: calc((var(--test) / 100 * 100%); */
+            border-radius: 50%;
+                width: 60px;
+                height: 60px;
+            }
+
+            #my-pie-chart4 {
+            /* --pourcentage: calc((var(--test) / 100 * 100%); */
+            border-radius: 50%;
+                width: 60px;
+                height: 60px;
+            }
+
+            #my-pie-chart5 {
+            /* --pourcentage: calc((var(--test) / 100 * 100%); */
+            border-radius: 50%;
+                width: 60px;
+                height: 60px;
+            }
+
+            #my-pie-chart6 {
+            /* --pourcentage: calc((var(--test) / 100 * 100%); */
+            border-radius: 50%;
+                width: 60px;
+                height: 60px;
+            }
+
+
+            #my-pie-chart7 {
+            /* --pourcentage: calc((var(--test) / 100 * 100%); */
+            border-radius: 50%;
+                width: 60px;
+                height: 60px;
+            }
+
+            #my-pie-chart8 {
+            /* --pourcentage: calc((var(--test) / 100 * 100%); */
+            border-radius: 50%;
+                width: 60px;
+                height: 60px;
+            }
+
+            #my-pie-chart9 {
             /* --pourcentage: calc((var(--test) / 100 * 100%); */
             border-radius: 50%;
                 width: 60px;
@@ -93,6 +140,80 @@
             border: 1px solid rgb(195, 194, 194)
           }
 
+          #my-pie-chart4::before{
+            content: '';
+            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border: 1px solid rgb(195, 194, 194)
+          }
+
+
+          #my-pie-chart5::before{
+            content: '';
+            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border: 1px solid rgb(195, 194, 194)
+          }
+
+          #my-pie-chart6::before{
+            content: '';
+            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border: 1px solid rgb(195, 194, 194)
+          }
+
+
+          #my-pie-chart7::before{
+            content: '';
+            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border: 1px solid rgb(195, 194, 194)
+          }
+
+          #my-pie-chart8::before{
+            content: '';
+            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border: 1px solid rgb(195, 194, 194)
+          }
+
+          #my-pie-chart9::before{
+            content: '';
+            background: conic-gradient(rgb(123, 240, 199) 0.00% calc(var(--test)*1%),rgb(156, 252, 160) calc(var(--test)*1%) calc(var(--test2)*1%), rgb(251, 238, 145) calc(var(--test2)*1%) calc(var(--test3)*1%), rgb(255, 188, 126) calc(var(--test3)*1%) calc(var(--test4)*1%), rgb(255, 255, 255) calc(var(--test4)*1%) 100%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-block;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border: 1px solid rgb(195, 194, 194)
+          }
+
     .circle{
         position: relative;
         width: 100px;
@@ -106,9 +227,21 @@
         color: black;
     }
 
+    .table-rating-bar {
+        margin-bottom: 25px 0;
+    }
+
+    .rating-label {
+        min-width: 110px;
+    }
+
+    .rating-bar {
+        min-width: 285px;
+    }
 .table-rating-bar .rating-label{
   padding-right: 10px;
   text-align: end
+
 }
 
 .table-rating-bar .rating-bar {
@@ -156,6 +289,313 @@
     border-radius: 20px;
 }
 
+
+.table-rating-bar .bar-container .bar-6 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-7 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(156, 252, 160);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-8 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-9 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(255, 188, 126);
+    border-radius: 20px;
+}
+
+
+
+.table-rating-bar .bar-container .bar-10 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-11 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(156, 252, 160);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-12 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(156, 252, 160);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-13 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+
+
+.table-rating-bar .bar-container .bar-14 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(255, 188, 126);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-15 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-16 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-17 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(156, 252, 160);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-18 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-19 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(255, 188, 126);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-20 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-21 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(156, 252, 160);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-22 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-23 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(255, 188, 126);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-24 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-25 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(156, 252, 160);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-26 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-27 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(255, 188, 126);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-28 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-29 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(126, 137, 255);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-30 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(203, 123, 240);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-31 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(252, 156, 156);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-32 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-33 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(156, 252, 160);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-34 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-35 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(255, 188, 126);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-36 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-37 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(156, 252, 160);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-38 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-39 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(255, 188, 126);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-40 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-41 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(156, 252, 160);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-42 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-43 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(255, 188, 126);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-44 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(251, 238, 145);
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-45 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(123, 240, 199);
+    border-radius: 20px;
+}
+
+
+.table-rating-bar .bar-container .bar-46 {
+    width: var(--progress_bar);
+    height: 8px;
+    background-color: rgb(252, 156, 156);
+    border-radius: 20px;
+}
+
 .placement_progress{
     display: grid;
     place-content: center;
@@ -168,7 +608,12 @@
 }
 
 .marge_top {
-  margin-top: 5px;
+  margin-top: 0px;
+}
+.marge_top .row_flex {
+    justify-content: space-between;
+    border-right: 1px solid rgb(222, 222, 222);
+    margin-bottom: 10px;
 }
 
 #my-pie-chart{
@@ -275,7 +720,7 @@
                     <td class="rating-label">Totalement</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-5"
+                            <div class="bar-6"
                                 style="--progress_bar: 45%;">
                             </div>
                         </div>
@@ -287,7 +732,7 @@
                     <td class="rating-label">En partie</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-4"
+                            <div class="bar-7"
                                 style="--progress_bar: 60%;">
                             </div>
                         </div>
@@ -299,7 +744,7 @@
                     <td class="rating-label">Insuffisament</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-3"
+                            <div class="bar-8"
                                 style="--progress_bar: 50%;">
                             </div>
                         </div>
@@ -311,7 +756,7 @@
                     <td class="rating-label">Pas du tout</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-2"
+                            <div class="bar-9"
                                 style="--progress_bar: 75%;">
                             </div>
                         </div>
@@ -329,7 +774,7 @@
               <tr>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-5"
+                          <div class="bar-10"
                               style="--progress_bar: 65%;">
                           </div>
                       </div>
@@ -368,7 +813,7 @@
                     <td class="rating-label">Totalement</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-5"
+                            <div class="bar-11"
                                 style="--progress_bar: 100%;">
                             </div>
                         </div>
@@ -380,7 +825,7 @@
                     <td class="rating-label">En partie</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-4"
+                            <div class="bar-12"
                                 style="--progress_bar: 0%;">
                             </div>
                         </div>
@@ -392,7 +837,7 @@
                     <td class="rating-label">Insuffisament</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-3"
+                            <div class="bar-13"
                                 style="--progress_bar: 0%;">
                             </div>
                         </div>
@@ -404,7 +849,7 @@
                     <td class="rating-label">Pas du tout</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-2"
+                            <div class="bar-14"
                                 style="--progress_bar: 0%;">
                             </div>
                         </div>
@@ -421,7 +866,7 @@
               <tr>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-5"
+                          <div class="bar-15"
                               style="--progress_bar: 100%;">
                           </div>
                       </div>
@@ -446,7 +891,7 @@
               <span id="texte">Le formateur était-il clair et dynamique ?</span>
             </div>
             <div class=" circle_1">
-              <div id="my-pie-chart" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
+              <div id="my-pie-chart4" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
                 <span class="center"> <span style="font-size: 12px;"><b> 5,5 </b></span> <span style="font-size: 10px"> / 10 </span></span>
               </div>
             </div>
@@ -457,7 +902,7 @@
               <span id="texte">Les exercices et activités étaient-ils pertinents ?</span>
             </div>
             <div class=" circle_1">
-              <div id="my-pie-chart2" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
+              <div id="my-pie-chart5" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
                 <span class="center"> <span style="font-size: 12px;"><b> 3 </b></span> <span style="font-size: 10px"> / 10 </span></span>
               </div>
             </div>
@@ -468,7 +913,7 @@
               <span id="texte">Le formateur a t-il adapté la formation aux stagiaires ?</span>
             </div>
             <div class=" circle_1">
-              <div id="my-pie-chart2" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
+              <div id="my-pie-chart6" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
                 <span class="center"> <span style="font-size: 12px;"><b> 3 </b></span> <span style="font-size: 10px"> / 10 </span></span>
               </div>
             </div>
@@ -483,7 +928,7 @@
                     <td class="rating-label">Totalement</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-5"
+                            <div class="bar-16"
                                 style="--progress_bar: 45%;">
                             </div>
                         </div>
@@ -495,7 +940,7 @@
                     <td class="rating-label">En partie</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-4"
+                            <div class="bar-17"
                                 style="--progress_bar: 60%;">
                             </div>
                         </div>
@@ -507,7 +952,7 @@
                     <td class="rating-label">Insuffisament</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-3"
+                            <div class="bar-18"
                                 style="--progress_bar: 50%;">
                             </div>
                         </div>
@@ -519,7 +964,7 @@
                     <td class="rating-label">Pas du tout</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-2"
+                            <div class="bar-19"
                                 style="--progress_bar: 75%;">
                             </div>
                         </div>
@@ -536,7 +981,7 @@
                     <td class="rating-label">Totalement</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-5"
+                            <div class="bar-20"
                                 style="--progress_bar: 45%;">
                             </div>
                         </div>
@@ -548,7 +993,7 @@
                     <td class="rating-label">En partie</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-4"
+                            <div class="bar-21"
                                 style="--progress_bar: 60%;">
                             </div>
                         </div>
@@ -560,7 +1005,7 @@
                     <td class="rating-label">Insuffisament</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-3"
+                            <div class="bar-22"
                                 style="--progress_bar: 50%;">
                             </div>
                         </div>
@@ -572,7 +1017,7 @@
                     <td class="rating-label">Pas du tout</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-2"
+                            <div class="bar-23"
                                 style="--progress_bar: 75%;">
                             </div>
                         </div>
@@ -588,7 +1033,7 @@
                     <td class="rating-label">Totalement</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-5"
+                            <div class="bar-24"
                                 style="--progress_bar: 45%;">
                             </div>
                         </div>
@@ -600,7 +1045,7 @@
                     <td class="rating-label">En partie</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-4"
+                            <div class="bar-25"
                                 style="--progress_bar: 60%;">
                             </div>
                         </div>
@@ -612,7 +1057,7 @@
                     <td class="rating-label">Insuffisament</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-3"
+                            <div class="bar-26"
                                 style="--progress_bar: 50%;">
                             </div>
                         </div>
@@ -624,7 +1069,7 @@
                     <td class="rating-label">Pas du tout</td>
                     <td class="rating-bar">
                         <div class="bar-container">
-                            <div class="bar-2"
+                            <div class="bar-27"
                                 style="--progress_bar: 75%;">
                             </div>
                         </div>
@@ -642,7 +1087,7 @@
               <tr>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-5"
+                          <div class="bar-28"
                               style="--progress_bar: 65%;">
                           </div>
                       </div>
@@ -662,13 +1107,13 @@
   <span style="color: rgb(100, 100, 100)"><b>Le rythme de la formation était-il ?</b></span>
 </div>
 <div class="col-lg-4">
-  <div class="table-rating-bar justify-content-center marge_top" style="font-size: 13px;">
+  <div class="table-rating-bar justify-content-center " style="font-size: 13px; margin-top:8px">
     <table class="text-left mx-auto">
         <tr>
             <td class="rating-label" style="color: rgb(65, 65, 65)">Adapté</td>
             <td class="rating-bar">
                 <div class="bar-container">
-                    <div class="bar-5"
+                    <div class="bar-29"
                         style="--progress_bar: 100%;">
                     </div>
                 </div>
@@ -684,7 +1129,7 @@
             <td class="rating-label" style="color: rgb(65, 65, 65)">Trop rapide</td>
             <td class="rating-bar">
                 <div class="bar-container">
-                    <div class="bar-5"
+                    <div class="bar-30"
                         style="--progress_bar: 0%;">
                     </div>
                 </div>
@@ -700,7 +1145,7 @@
             <td class="rating-label" style="color: rgb(65, 65, 65)">Trop lent</td>
             <td class="rating-bar">
                 <div class="bar-container">
-                    <div class="bar-5"
+                    <div class="bar-31"
                         style="--progress_bar: 0%;">
                     </div>
                 </div>
@@ -725,7 +1170,7 @@
             <span id="texte">Le programme était-il clair et précis ?</span>
           </div>
           <div class=" circle_1">
-            <div id="my-pie-chart" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
+            <div id="my-pie-chart7" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
               <span class="center"> <span style="font-size: 12px;"><b> 5,5 </b></span> <span style="font-size: 10px"> / 10 </span></span>
             </div>
           </div>
@@ -736,7 +1181,7 @@
             <span id="texte">Le programme était-il adapté à vos besoins ?</span>
           </div>
           <div class=" circle_1">
-            <div id="my-pie-chart2" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
+            <div id="my-pie-chart8" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
               <span class="center"> <span style="font-size: 12px;"><b> 3 </b></span> <span style="font-size: 10px"> / 10 </span></span>
             </div>
           </div>
@@ -747,7 +1192,7 @@
             <span id="texte">Les supports de formation étaient-ils clairs et utiles ?</span>
           </div>
           <div class=" circle_1">
-            <div id="my-pie-chart2" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
+            <div id="my-pie-chart9" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
               <span class="center"> <span style="font-size: 12px;"><b> 3 </b></span> <span style="font-size: 10px"> / 10 </span></span>
             </div>
           </div>
@@ -762,7 +1207,7 @@
                   <td class="rating-label">Totalement</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-5"
+                          <div class="bar-32"
                               style="--progress_bar: 45%;">
                           </div>
                       </div>
@@ -774,7 +1219,7 @@
                   <td class="rating-label">En partie</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-4"
+                          <div class="bar-33"
                               style="--progress_bar: 60%;">
                           </div>
                       </div>
@@ -786,7 +1231,7 @@
                   <td class="rating-label">Insuffisament</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-3"
+                          <div class="bar-34"
                               style="--progress_bar: 50%;">
                           </div>
                       </div>
@@ -798,7 +1243,7 @@
                   <td class="rating-label">Pas du tout</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-2"
+                          <div class="bar-35"
                               style="--progress_bar: 75%;">
                           </div>
                       </div>
@@ -815,7 +1260,7 @@
                   <td class="rating-label">Totalement</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-5"
+                          <div class="bar-36"
                               style="--progress_bar: 45%;">
                           </div>
                       </div>
@@ -827,7 +1272,7 @@
                   <td class="rating-label">En partie</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-4"
+                          <div class="bar-37"
                               style="--progress_bar: 60%;">
                           </div>
                       </div>
@@ -839,7 +1284,7 @@
                   <td class="rating-label">Insuffisament</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-3"
+                          <div class="bar-38"
                               style="--progress_bar: 50%;">
                           </div>
                       </div>
@@ -851,7 +1296,7 @@
                   <td class="rating-label">Pas du tout</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-2"
+                          <div class="bar-39"
                               style="--progress_bar: 75%;">
                           </div>
                       </div>
@@ -867,7 +1312,7 @@
                   <td class="rating-label">Totalement</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-5"
+                          <div class="bar-40"
                               style="--progress_bar: 45%;">
                           </div>
                       </div>
@@ -879,7 +1324,7 @@
                   <td class="rating-label">En partie</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-4"
+                          <div class="bar-41"
                               style="--progress_bar: 60%;">
                           </div>
                       </div>
@@ -891,7 +1336,7 @@
                   <td class="rating-label">Insuffisament</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-3"
+                          <div class="bar-42"
                               style="--progress_bar: 50%;">
                           </div>
                       </div>
@@ -903,7 +1348,7 @@
                   <td class="rating-label">Pas du tout</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-2"
+                          <div class="bar-43"
                               style="--progress_bar: 75%;">
                           </div>
                       </div>
@@ -921,7 +1366,7 @@
             <tr>
                 <td class="rating-bar">
                     <div class="bar-container">
-                        <div class="bar-5"
+                        <div class="bar-44"
                             style="--progress_bar: 65%;">
                         </div>
                     </div>
@@ -934,28 +1379,27 @@
     </div>
   </div>
 <br>
-
 {{-- 6 RESULTAT EVALUATION A CHAUD, FORMATIONJ SST 30 SEPTEMBRE 2019 --}}
 
 
+{{-- </div> --}}
 
-  {{-- </div> --}}
 </div>
 <div class="container_code">
     <div class="text_center">
         <span>RESULTAT EVALUATION A CHAUD, FORMATIONJ SST 30 SEPTEMBRE 2019</span>
     </div>
-    <div class="">
+    <div class="marge_top">
         <span style="color: rgb(100, 100, 100)"><b>Recommanderiez-vous cette formation ?</b></span>
     </div>
       <div class="col-lg-4">
-        <div class="table-rating-bar justify-content-center marge_top" style="font-size: 13px;">
+        <div class="table-rating-bar justify-content-center" style="font-size: 13px; margin-top:7px">
           <table class="text-left mx-auto">
               <tr>
                   <td class="rating-label" style="color: rgb(65, 65, 65)">OUI</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-5"
+                          <div class="bar-45"
                               style="--progress_bar: 100%;">
                           </div>
                       </div>
@@ -971,7 +1415,7 @@
                   <td class="rating-label" style="color: rgb(65, 65, 65)">NON</td>
                   <td class="rating-bar">
                       <div class="bar-container">
-                          <div class="bar-5"
+                          <div class="bar-46"
                               style="--progress_bar: 0%;">
                           </div>
                       </div>
@@ -982,11 +1426,37 @@
           </table>
         </div>
       </div>
-      <div class="">
+      <div style="margin-top: 9px">
         <span style="color: rgb(100, 100, 100)"><b>Quels sont les points forts de cette formation ?</b></span>
       </div>
-      
+      <div style="border:1px solid black; border-color:rgb(196, 195, 255); margin-top:8px">
+        <div style="margin-top: 6px; margin-left:8px;font-size:13px">Stagiaire 1</div>
+        <div style="margin-top: 5px; margin-left:5px;font-size:15px">La sécurité</div>
+      </div>
+      <div style="border:1px solid black; border-color:rgb(196, 195, 255); margin-top:9px">
+        <div style="margin-top: 6px; margin-left:8px;font-size:13px">Stagiaire 2</div>
+        <div style="margin-top: 5px; margin-left:5px;font-size:15px">Les mises en pratique</div>
+      </div>
+      <div style="border:1px solid black; border-color:rgb(196, 195, 255); margin-top:9px">
+        <div style="margin-top: 6px; margin-left:8px;font-size:13px">Stagiaire 3</div>
+        <div style="margin-top: 5px; margin-left:5px;font-size:15px">Formation utile autant sur le plan professionnel que privé .</div>
+      </div>
       <br>
+      <div style="margin-top: 9px">
+        <span style="color: rgb(100, 100, 100)"><b>Quels sont les points faibles de cette formation ?</b></span>
+      </div>
+      <div style="border:1px solid black; border-color:rgb(196, 195, 255); margin-top:8px">
+        <div style="margin-top: 6px; margin-left:8px;font-size:13px">Stagiaire 1</div>
+        <div style="margin-top: 5px; margin-left:5px;font-size:15px">Au qu'une</div>
+      </div>
+      <div style="border:1px solid black; border-color:rgb(196, 195, 255); margin-top:9px">
+        <div style="margin-top: 6px; margin-left:8px;font-size:13px">Stagiaire 2</div>
+        <div style="margin-top: 5px; margin-left:5px;font-size:15px">L'énorme ressemblance avec le PSC1 que j'avais passé </div>
+      </div>
+      <div style="border:1px solid black; border-color:rgb(196, 195, 255); margin-top:9px">
+        <div style="margin-top: 6px; margin-left:8px;font-size:13px">Stagiaire 3</div>
+        <div style="margin-top: 5px; margin-left:5px;font-size:15px">Pas assez d'exercices  pratiques lors de la formation.</div>
+      </div>
 </div>
 
 
