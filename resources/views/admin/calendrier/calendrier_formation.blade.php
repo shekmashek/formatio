@@ -299,10 +299,10 @@
                                 </tbody>
                             </table>
                         @endcanany
-                        <table class="table">    
+                        <table class="table">
                         <thead>
                             <tr>
-                              
+
                                 <th>Matériel nécessaire</th>
                                 <th>
                                     Demandé(e) par
@@ -603,8 +603,7 @@
                                             cfp = cfp.replace(":?",userData[$i].cfp_id);
                                             $('#cfp').append(cfp);
 
-                                            etp+='<a href = "{{url("profile_entreprise/:?")}}" target = "_blank">'+entreprises[$i].nom_etp+'</a>'
-                                            etp = etp.replace(":?",entreprises[$i].entreprise_id);
+                                            etp+='<a href = "{{url("profil_referent")}}" target = "_blank">'+entreprises[$i].nom_etp+'</a>'
                                             $('#etp').append(etp);
 
                                             if(test_photo=='oui'){
@@ -684,15 +683,15 @@
                                             }
                                             $('#liste_app').append(html);
                                             html = '';
-                                   
+
                                         }
                                      /*ressource*/
                                     for(var $i =0;$i<res.length;$i++){
                                         html += '<tr><td>'+res[$i].description+'</td><td>'+res[$i].demandeur+'</td><td>'+res[$i].pris_en_charge+'</td><td>'+res[$i].note+'</td></tr>';
- 
+
                                     }
                                     $('#ressource').append(html);
-                                  
+
 
                                     }
                                     , error: function(error) {
