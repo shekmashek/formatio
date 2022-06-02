@@ -271,7 +271,7 @@ class DetailController extends Controller
             inner join type_formations on projets.type_formation_id = type_formations.id
             where details.id = ?',[$id]);
         
-    
+   
          
 
         $entreprises = DB::select('
@@ -279,7 +279,7 @@ class DetailController extends Controller
             inner join entreprises on groupe_entreprises.entreprise_id = entreprises.id
             where groupe_entreprises.groupe_id = ?
             ',[$detail[0]->groupe_id]);
-
+            
         $formations = DB::select('
         select * from groupes
         inner join modules on groupes.module_id = modules.id
@@ -374,13 +374,15 @@ class DetailController extends Controller
             where g.id =?
         ",[$id_groupe]);
         $lieu_formation = DB::select('select lieu from v_detailmodule where groupe_id = ?', [$id_groupe]);
+        $ressource = DB::select('select * from ressources where groupe_id =?',[$id_groupe]);
+        // dd($ressource);
         if(count($lieu_formation)>0){
             $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
         }else{
             $lieu_formation[0]='';
             $lieu_formation[1]='';
         }
-         /**Recuperer duree total de la session */
+         /** Recuperer duree total de la session */
          $nb_seance = '';
          $info = $this->groupes->infos_session($id_groupe);
          if ($info->difference == null && $info->nb_detail == 0) {
@@ -390,10 +392,9 @@ class DetailController extends Controller
          }elseif ($info->difference != null && $info->nb_detail > 1) {
              $nb_seance = $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
          }
-
-        $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('nb_seance','lieu_formation','nb_stg','status','detail', 'stg', 'date_groupe'));
-    //    return view('admin.calendrier.detail_pdf' ,compact('nb_seance','status','detail', 'stg','date_groupe','nb_stg','lieu_formation'));
-        return $pdf->download('Detail du projet.pdf');
+         $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('nb_seance','lieu_formation','nb_stg','status','detail', 'stg', 'date_groupe','ressource'));
+        //return view('admin.calendrier.detail_pdf' ,compact('nb_seance','status','detail', 'stg','date_groupe','nb_stg','lieu_formation','ressource'));
+       return $pdf->download('Detail du projet.pdf');
     }
     //filtre calendrier
     public function rechercheModuleCalendar(Request $request){

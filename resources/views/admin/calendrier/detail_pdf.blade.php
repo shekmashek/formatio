@@ -64,7 +64,7 @@
                     &nbsp;&nbsp;<img src="{{public_path('images/icone/group.png')}}" style="width: 20px"/> <span> apprenants inscrits: {{$nb_stg}}</span><br><br>
                     <img src="{{public_path('images/icone/home.png')}}" style="width: 20px"/><span>{{$lieu_formation[0]}}</span>
                     &nbsp;&nbsp;<img src="{{public_path('images/icone/door-open.png')}}" style="width: 20px"><span>{{$lieu_formation[1]}}</span><br><br>
-                    <img src="{{public_path('images/icone/home.png')}}" style="width: 20px"><span>{{$detail[$i]->nom_etp}} <img src = "{{ public_path('images/entreprises/'.$detail[$i]->logo_entreprise)}}" width="50px" class="photo"></span>
+                    <img src="{{public_path('images/icone/home.png')}}" style="width: 20px"><span>{{$detail[$i]->nom_etp}} <img src = "{{ public_path('images/entreprises/'.$detail[$i]->logo_entreprise)}}" width="50px" ></span>
                     &nbsp;&nbsp;  <img src="{{public_path('images/icone/home.png')}}" style="width: 20px"><span>{{$detail[$i]->nom_cfp}} <img src="{{ public_path('images/CFP/'.$detail[$i]->logo_cfp)}}" width="50px"></span>
                     {{-- <label for=""><strong>Entreprise client:</strong>&nbsp;<img src = "{{ public_path('images/entreprises/'.$detail[$i]->logo_entreprise)}}" width="50px" class="photo">&nbsp; {{$detail[$i]->nom_etp}}</label><br><br>
                     <label for=""><strong>Organisme de formation:</strong>&nbsp;<img src = "{{ public_path('images/CFP/'.$detail[$i]->logo_cfp)}}" width="50px">&nbsp; {{$detail[$i]->nom_cfp}}</label><br><br>
@@ -82,7 +82,7 @@
                             $t4 = substr($detail[$i]->numero_formateur,6,2);
                         @endphp
                         @if($detail[$i]->photos != null)
-                            <li><img src = "{{ public_path('images/formateurs/'.$detail[$i]->photos)}}" width="50px" class="photo">&nbsp;{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$t1}} {{$t2}} {{$t3}} {{$t4}}</li>
+                            <li><img src = "{{ public_path('images/formateurs/'.$detail[$i]->photos)}}" style="border-radius:100%;width:50px;height:50px;margin-top:10px;" >&nbsp;{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$t1}} {{$t2}} {{$t3}} {{$t4}}</li>
                         @else
                             <li>{{$detail[$i]->nom_formateur}} - {{$detail[$i]->prenom_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/email.png')}}" width="20px">&nbsp;{{$detail[$i]->mail_formateur}}&nbsp;&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/phone.png')}}" width="20px" class="photo">{{$detail[$i]->numero_formateur}}</li>
                         @endif
@@ -91,7 +91,7 @@
                     @for($j = 0; $j < count($date_groupe); $j++)
                         <label for="">- Séance {{$j+1}} : </label>&nbsp;<img src = "{{ public_path('images/icone/calendar.png')}}" width="20px" class="photo">{{$date_groupe[$j]->date_detail}}&nbsp;&nbsp;&nbsp;<img src = "{{ public_path('images/icone/times.png')}}" width="20px" class="photo">&nbsp;{{$date_groupe[$j]->h_debut}}h - {{$date_groupe[$j]->h_fin}}h <br>
                     @endfor
-
+                    <div style="margin-top: 20px">
                     <label for=""><strong>Liste des apprenants</strong></label>
                     <table>
                         <tr>
@@ -124,8 +124,31 @@
                                 </tr>
                             @endfor
                     </table>
-
             @endfor
+                        </div>
+            <div style="margin-top: 20px">
+
+           
+            <label for=""><strong >Les matériels nécessaires</strong></label>
+            <table>
+                <tr>
+                    <th>Matériel nécessaire</th>
+                    <th> Demandé(e) par</th>
+                    <th> Pris en charge par</th>
+                    <th> Note</th>
+                </tr>
+
+                   @foreach ($ressource as $res )
+                <tr>
+                    <td> {{$res->description}}</td>
+                    <td>{{$res->demandeur}} </td>
+                    <td>{{$res->pris_en_charge}} </td>
+                    <td>{{$res->note}}</td>
+                </tr>
+                   @endforeach
+                    
+            </table>
+        </div>
             </div>
             <div class="col-xs-4"></div>
         </div>

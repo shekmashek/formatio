@@ -299,6 +299,7 @@
                                 </tbody>
                             </table>
                         @endcanany
+                        <label for="" class="mt-2">Les matériels nécessaires</label><br>
                         <table class="table">
                         <thead>
                             <tr>
@@ -607,7 +608,7 @@
                                             $('#etp').append(etp);
 
                                             if(test_photo=='oui'){
-                                                logo_formateur+='<img src = "{{asset("images/formateurs/:?")}}" class ="rounded-circle"  style="width:50px">';
+                                                logo_formateur+='<img src = "{{asset("images/formateurs/:?")}}"   class ="rounded-circle"  style="width:50px">';
                                                 logo_formateur = logo_formateur.replace(":?",userData[$i].photos);
                                                 $('#logo_formateur').removeClass('randomColor photo_users');
                                             }
@@ -723,7 +724,6 @@
         $('#fermer').on('click', function(e) {
              $('#detail').css('display','none');
         });
-
     </script>
 </html>
 @endsection
