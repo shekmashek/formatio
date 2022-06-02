@@ -1356,6 +1356,7 @@ Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploy
 Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInfo');
 
 Route::get('/detail_session_info/{etp_id}', 'SessionController@infoEtpCom');
+Route::get('/detail_session_of/{cfp_id}', 'SessionController@infoOf');
 
 
 
