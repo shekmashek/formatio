@@ -307,12 +307,12 @@
                             </table>
                         @endcanany
                         <label id=""></label>
-                      
+
                         <table class="table">
-                           
+
                             <thead>
                                 <tr>
-                                  
+
                                     <th>Matériel nécessaire</th>
                                     <th>
                                         Demandé(e) par
@@ -554,7 +554,7 @@
                                     var logo_formateur = document.getElementById('logo_formateur');
                                     var nb_apprenant = document.getElementById('nb_apprenant');
                                     nb_apprenant.innerHTML = '';
-                                    
+
                                     if ( nom_cfp == null) {
                                         console.log('null');
                                     }
@@ -629,7 +629,7 @@
                                     var etp = '';
                                     var printpdf = '';
 
-                                  
+
 
                                     for (var $i = 0; $i < userData.length; $i++) {
                                         printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a>';
@@ -736,24 +736,27 @@
                                             html += '</td><td>'+stg[$a].nom_stagiaire +' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + "&nbsp" + t2 + "&nbsp"+ t3 + "&nbsp" + t4 + '</td><td>'+stg[$a].nom_departement +'<br>'+stg[$a].nom_service+'</td></tr>'
                                         }
                                         else{
-                                            html += '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:30px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                            html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + '&nbsp' + t2 + '&nbsp'+ t3 + '&nbsp' + t4 + '</td><td>'+stg[$a].nom_departement+'<br>'+stg[$a].nom_service+'</td></tr>'
+
                                             html = html.replace(":?",stg[$a].stagiaire_id);
                                             html = html.replace(":!",stg[$a].photos);
 
                                         }
+                                        $('#liste_app').append(html);
+                                            html = '';
 
                                     }
-                                    $('#liste_app').append(html);
+
 
                                       /*ressource*/
                                     for(var $i =0;$i<res.length;$i++){
                                         html += '<tr><td>'+res[$i].description+'</td><td>'+res[$i].demandeur+'</td><td>'+res[$i].pris_en_charge+'</td><td>'+res[$i].note+'</td></tr>';
-                                           
+
                                     }
                                     $('#ressource').append(html);
 
 
-                                    
+
                                 }
                                 , error: function(error) {
                                     console.log(error)

@@ -677,7 +677,7 @@
                                                 html += '</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + "&nbsp" + t2 + "&nbsp"+ t3 + "&nbsp" + t4 + '</td><td>'+stg[$a].nom_departement +'<br>'+stg[$a].nom_service+'</td></tr>'
                                             }
                                             else{
-                                                html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].matricule+'</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'</td><td>'+stg[$a].telephone_stagiaire+'</td></tr>'
+                                                html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + '&nbsp' + t2 + '&nbsp'+ t3 + '&nbsp' + t4 + '</td><td>'+stg[$a].nom_departement+'<br>'+stg[$a].nom_service+'</td></tr>'
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html = html.replace(":!",stg[$a].photos);
                                             }
