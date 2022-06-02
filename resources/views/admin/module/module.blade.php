@@ -10,6 +10,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
 <div class="container-fluid pb-1">
 
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();">
@@ -380,7 +382,7 @@
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
                                                     <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Annuler</button>
-                                                    <button type="submit" class="btn btn_enregistrer" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                                    <button type="submit" class="btn btn_enregistrer redirect_tab" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Enregistrer</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -1097,16 +1099,48 @@
     </div>
 </div>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="{{asset('js/modules.js')}}"></script>
 <script >
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
-        localStorage.setItem('Tabactive', lien);
+        localStorage.setItem('ActiveTabMod', lien);
     });
-    let Tabactive = localStorage.getItem('Tabactive');
-    if(Tabactive){
-        $('#myTab a[href="' + Tabactive + '"]').tab('show');
+    let ActiveTabMod = localStorage.getItem('ActiveTabMod');
+    if(ActiveTabMod){
+        $('#myTab a[href="' + ActiveTabMod + '"]').tab('show');
     }
+
+    $('.redirect_tab').on('click', function (e) {
+        localStorage.setItem('ActiveTabMod', '#hors_ligne');
+    });
+
+    $('.mettre_en_ligne').on('click', function (e) {
+        localStorage.setItem('ActiveTabMod', '#publies');
+    });
+
+    $('.mettre_hors_ligne').on('click', function (e) {
+        localStorage.setItem('ActiveTabMod', '#hors_ligne');
+    });
+
+    toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "3000",
+    "timeOut": "5000",
+    "extendedTimeOut": "3000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+    }
+
     document.getElementById('prix_pers').addEventListener('input', function (e) {
         let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
         rangePrimary.value = valeur;
@@ -1140,6 +1174,7 @@
             , data: {Id : id}
             , success: function(response) {
                 window.location.reload();
+
             }
             , error: function(error) {
                 console.log(error)
@@ -1179,6 +1214,7 @@
             , data: {Id : id}
             , success: function(response) {
                 window.location.reload();
+                // $("#switch2_"+id).prop('checked',true);
             }
             , error: function(error) {
                 console.log(error)

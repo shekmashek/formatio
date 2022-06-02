@@ -489,6 +489,7 @@ ul li a {
     border: 1px solid rgba(202, 202, 202, 0.618);
     margin-top: 15px;
     padding: .5rem;
+    border-radius: 5px;
 }
 
 .deconnexion_text:hover {

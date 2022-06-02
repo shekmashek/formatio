@@ -351,7 +351,7 @@
                             <div class="row">
                                 <div class="d-flex flex-row">
                                     <div class="col">
-                                        <h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }} {{ $avis->prenom_stagiaire }}
+                                        <h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }}.{{ $avis->prenom_stagiaire }}
                                         </h5>
                                     </div>
                                     <div class="col">
@@ -430,6 +430,9 @@
         </div>
 
         <div class="container">
+            @if($datas == null)
+
+            @else
             <div class="row ">
                 <h3 class="pt-3 pb-3">Dates et Villes Session Inter</h3>
                 <div class="col-lg-12">
@@ -475,6 +478,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </section>

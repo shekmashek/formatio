@@ -72,12 +72,12 @@
 
             @if (count($infos)>0)
                 @if($nom_formation == null)
-                    <h5 class="">Formations : {{count($infos)}} résultats</h5><br>
+                    <h5 class="">{{count($infos)}} résultats</h5><br>
                 @else
                     @if (count($infos) == 1)
-                        <h5 class="">Formations : {{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
+                        <h5 class="">{{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
                     @else
-                        <h5 class="">Formations : {{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
+                        <h5 class="">{{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
                     @endif
                 @endif
             @endif
@@ -118,7 +118,16 @@
                             <div>
                                 <div class="Stars" style="--note: {{ $info->pourcentage }};">
                                 </div>
-                                <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5 ({{$info->total_avis}} avis)</span>
+
+
+
+                                <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5
+                                    @if($info->total_avis != null)
+                                        ({{$info->total_avis}} avis)
+                                    @else
+                                        (0 avis)
+                                    @endif
+                                </span>
                             </div>
                             <div>
                                 <span>Réf : {{$info->reference}}</span>

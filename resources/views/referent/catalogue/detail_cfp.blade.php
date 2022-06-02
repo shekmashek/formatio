@@ -104,61 +104,61 @@
                                             <td class="rating-label">Excellent</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
-                                                    {{-- <div class="bar-5"
-                                                        style="--progress_bar: {{ $statistiques[0]->pourcentage_note }}%;">
-                                                    </div> --}}
+                                                    <div class="bar-5"
+                                                        style="--progress_bar: {{ $avis_cfp[0]->pourcentage }}%;">
+                                                    </div>
                                                 </div>
                                             </td>
-                                            {{-- <td class="text-right">{{ $statistiques[0]->pourcentage_note }}%
-                                            </td> --}}
+                                            <td class="text-right">{{ $avis_cfp[0]->pourcentage }}%
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="rating-label">Bien</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
-                                                    {{-- <div class="bar-4"
-                                                        style="--progress_bar: {{ $statistiques[1]->pourcentage_note }}%;">
-                                                    </div> --}}
+                                                    <div class="bar-4"
+                                                        style="--progress_bar: {{ $avis_cfp[1]->pourcentage }}%;">
+                                                    </div>
                                                 </div>
                                             </td>
-                                            {{-- <td class="text-right">{{ $statistiques[1]->pourcentage_note }}%
-                                            </td> --}}
+                                            <td class="text-right">{{ $avis_cfp[1]->pourcentage }}%
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="rating-label">Moyenne</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
-                                                    {{-- <div class="bar-3"
-                                                        style="--progress_bar: {{ $statistiques[2]->pourcentage_note }}%;">
-                                                    </div> --}}
+                                                    <div class="bar-3"
+                                                        style="--progress_bar: {{ $avis_cfp[2]->pourcentage }}%;">
+                                                    </div>
                                                 </div>
                                             </td>
-                                            {{-- <td class="text-right">{{ $statistiques[2]->pourcentage_note }}%
-                                            </td> --}}
+                                            <td class="text-right">{{ $avis_cfp[2]->pourcentage }}%
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="rating-label">Normal</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
-                                                    {{-- <div class="bar-2"
-                                                        style="--progress_bar: {{ $statistiques[3]->pourcentage_note }}%;">
-                                                    </div> --}}
+                                                    <div class="bar-2"
+                                                        style="--progress_bar: {{ $avis_cfp[3]->pourcentage }}%;">
+                                                    </div>
                                                 </div>
                                             </td>
-                                            {{-- <td class="text-right">{{ $statistiques[3]->pourcentage_note }}%
-                                            </td> --}}
+                                            <td class="text-right">{{ $avis_cfp[3]->pourcentage }}%
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="rating-label">Terrible</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
-                                                    {{-- <div class="bar-1"
-                                                        style="--progress_bar: {{ $statistiques[4]->pourcentage_note }}%;">
-                                                    </div> --}}
+                                                    <div class="bar-1"
+                                                        style="--progress_bar: {{ $avis_cfp[4]->pourcentage }}%;">
+                                                    </div>
                                                 </div>
                                             </td>
-                                            {{-- <td class="text-right">{{ $statistiques[4]->pourcentage_note }}%
-                                            </td> --}}
+                                            <td class="text-right">{{ $avis_cfp[4]->pourcentage }}%
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -315,27 +315,28 @@
                 <div id="avis"></div>
                 <div class="detail__formation__programme__avis__donnes mt-3">
                     <hr>
-                    {{-- @foreach ($liste_avis as $avis) --}}
+                    <h5 class="mb-5 mt-4">Evaluations sur les formations</h5>
+                    @foreach ($liste_avis as $avis)
                     <div class="row" id="avis">
                         <div class="d-flex flex-row">
                             <div class="col">
-                                {{-- <h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }} {{ $avis->prenom_stagiaire }} --}}
-                                </h5>
+                                <h6 class="mt-3 mb-0">{{ $avis->nom_stagiaire }}.{{ $avis->prenom_stagiaire }}
+                                </h6>
                             </div>
                             <div class="col">
-                                {{-- <p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p> --}}
+                                <p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p>
                             </div>
                             <div class="col">
                                 <p class="text-left d-flex flex-row">
-                                {{-- <div class="Stars" style="--note: {{ $avis->note }};"></div>&nbsp;<span class="text-muted">{{ $avis->note }}</span></p> --}}
+                                <div class="Stars" style="--note: {{ $avis->note }};"></div>&nbsp;<span class="text-muted">{{ $avis->note }}</span></p>
                             </div>
                         </div>
                     </div>
                     <div class="row ms-1">
-                        {{-- <p>{{ $avis->commentaire }}</p> --}}
+                        <p>{{ $avis->commentaire }}</p>
                     </div>
 
-                    {{-- @endforeach --}}
+                    @endforeach
                 </div>
             </div>
         </div>

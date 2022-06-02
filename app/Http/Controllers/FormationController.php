@@ -163,41 +163,28 @@ class FormationController extends Controller
         $domaine_col2 = DB::select('select * from domaines limit '.$offset.' offset '.$offset.'');
         $domaine_col3 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*2).'');
         $domaine_col4 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*3).'');
-        // $infos = DB::select('select * from moduleFormation where nom_formation like ("%' . $nom_formation .'%") and status = 2 and etat_id = 1 order by nom_formation desc');
-        // dd($infos);
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_groupe_projet_module where type_formation_id = 2 group by module_id');
-        // dd($datas);
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         if ($nom_formation == null) {
-            // $infos = DB::select('select * from moduleFormation');
-
-            $infos = DB::select('select *,count(lsta.module_id) as total_avis from moduleformation as md join v_liste_avis as lsta on md.module_id = lsta.module_id where status = 2 and etat_id = 1 group by md.module_id order by md.nom_formation asc');
+            $infos = DB::select('select *,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 order by md.nom_formation asc');
             // dd($infos);
-            // $liste_avis = DB::select('select count(*) as total_avis, md.id, lsta.module_id from modules as md join v_liste_avis as lsta on lsta.module_id = md.id group by md.id');
-            // dd($liste_avis);
             return view('referent.catalogue.liste_formation', compact('infos', 'datas', 'categorie','devise','nom_formation','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         } else {
-
-            // dd($datas);
             $id_formation = formation::where('nom_formation',$nom_formation)->value('id');
-            // $infos = DB::select('select * from moduleformation where nom_formation like ("%' . $nom_formation .'%") and status = 2 and etat_id = 1 order by nom_formation desc');
-            $infos = DB::select('select *,count(lsta.module_id) as total_avis from moduleformation as md join v_liste_avis as lsta on md.module_id = lsta.module_id where nom_formation like ("%' . $nom_formation .'%") and md.status = 2 and md.etat_id = 1 group by md.module_id order by md.nom_formation asc');
+            $infos = DB::select('select *,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where md.nom_formation like ("%' . $nom_formation .'%") and md.status = 2 and md.etat_id = 1 order by md.nom_formation asc');
             // dd($infos);
-            // $liste_avis = DB::select('select count(*) as total_avis, md.id, lsta.module_id from modules as md join v_liste_avis as lsta on lsta.module_id = md.id group by md.id');
-            // dd($liste_avis);
+
             return view('referent.catalogue.liste_formation', compact('infos', 'datas', 'categorie','devise','nom_formation','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
     }
 
     public function affichage_formation(Request $request)
     {
-        // dd("eto");
         $id_formation = $request->id;
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
         $categorie = DB::select('select * from formations where status = 1');
         $nom_formation = formation::where('id',$id_formation)->value('nom_formation');
-        // dd($nom_formation);
         $domaines = Domaine::all();
         $test = 4;
         $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
@@ -206,29 +193,11 @@ class FormationController extends Controller
         $domaine_col2 = DB::select('select * from domaines limit '.$offset.' offset '.$offset.'');
         $domaine_col3 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*2).'');
         $domaine_col4 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*3).'');
-        // $infos = DB::select('select * from moduleFormation where nom_formation like ("%' . $nom_formation .'%") and status = 2 and etat_id = 1 order by nom_formation desc');
-        // dd($infos);
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_groupe_projet_entreprise_module where type_formation_id = 2 group by module_id');
-        $infos = DB::select('select *,count(lsta.module_id) as total_avis from moduleformation as md join v_liste_avis as lsta on md.module_id = lsta.module_id where md.status = 2 and md.etat_id = 1 and md.formation_id = ? group by md.module_id order by md.nom_formation asc',[$id_formation]);
-        // dd($infos);
-        // $liste_avis = DB::select('select * from v_liste_avis limit 10');
+        $infos = DB::select('select *,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.formation_id = ? order by md.nom_formation asc',[$id_formation]);
         return view('referent.catalogue.liste_formation', compact('infos', 'datas', 'categorie','devise','nom_formation','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
-
     }
 
-    //recheche formation
-    // public function search(Request $request){
-    //     $search = $request->input('search');
-
-    //     $categorie= formation::query()
-    //                             ->where('nom_formation', 'LIKE', "%{$search}%")
-    //                             ->get();
-    //     $domaines= Domaine::query()
-    //                         ->where('nom_domaine','LIKE',"%{$search}%")
-    //                         ->orwhere('sous_titre','LIKE',"%{$search}%")
-    //                         ->get();
-    // return view('referent.catalogue.resultat_formation', compact('domaines', 'categorie'));
-    // }
     public function getModulesParReference(Request $request)
     {
 
@@ -265,7 +234,7 @@ class FormationController extends Controller
         $domaine_col3 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*2).'');
         $domaine_col4 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*3).'');
         $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2 and etat_id = 1', [$id]);
-        $datas = DB::select('select module_id,formation_id,date_debut,date_fin from v_session_projet where formation_id = ? and type_formation_id = 2 group by module_id', [$id]);
+        $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_session_projet where formation_id = ? and type_formation_id = 2 group by module_id', [$id]);
         return view('referent.catalogue.liste_formation', compact('devise', 'infos', 'datas', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
     }
 
@@ -299,7 +268,6 @@ class FormationController extends Controller
         $domaine_col4 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*3).'');
         //on verifie si moduleformation contient le module_id
         if ($test[0]->moduleExiste == 1) {
-            // $infos = DB::select('select * from moduleformation where formation_id = ?',[$id]);
             $infos = DB::select('select * from moduleformation where module_id = ? and status = 2 and etat_id = 1', [$id]);
             // dd($infos);
             $nb = DB::select('select count(*) as nb_avis from v_liste_avis where module_id = ?', [$id]);
@@ -308,13 +276,10 @@ class FormationController extends Controller
             } else {
                 $nb_avis = $nb[0]->nb_avis;
             }
-
-
             $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
-            $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 10', [$id]);
+            $liste_avis = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis where module_id = ? limit 10', [$id]);
             $statistiques = DB::select('select * from v_statistique_avis where module_id = ?',[$id]);
-            // dd($liste_avis);
             $competences = DB::select('select titre_competence from competence_a_evaluers where module_id = ?',[$id]);
             $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id,adresse_lot,adresse_ville from v_session_projet where module_id = ? and type_formation_id = 2 group by module_id', [$id]);
             return view('referent.catalogue.detail_formation', compact('devise','infos','statistiques', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id','competences','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
@@ -386,14 +351,6 @@ class FormationController extends Controller
         $id_type_formation = $request->type_formation_id;
         return redirect()->route('detail_session', ['id_session' => $id_groupe, 'type_formation' => $id_type_formation]);
     }
-
-    /*  public function annuaire(){
-        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
-            $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
-            $pagination = Cfp::orderBy('nom')->paginate(1);
-            return view('referent.catalogue.cfp_tous', compact('pagination','initial'));
-        }
-    } */
 
     public function annuaire($nbPagination_pag = null)
     {
@@ -527,17 +484,6 @@ class FormationController extends Controller
                 $nb_limit
             );
         } else {
-            // $query = $this->fonct->queryWhereTrieOrderBy(
-            //     "cfps",
-            //     ["nom"],
-            //     ["LIKE"],
-            //     [$request->Alpha . "%"],
-            //     ["nom"],
-            //     "ASC",
-            //     0,
-            //     $nb_limit
-            // );
-
             $cfp = $this->fonct->findWhereTrieOrderBy(
                 "cfps",
                 ["nom"],
@@ -550,7 +496,6 @@ class FormationController extends Controller
             );
         }
 
-        //    $cfp = DB::select('select * from cfps where nom like "' . $alpha . '%" order by nom asc');
         return response()->json($cfp);
     }
 
@@ -565,17 +510,19 @@ class FormationController extends Controller
         $reseau_sociaux = $fonct->findWhere("v_reseaux_sociaux_cfp", ["cfp_id"], [$id]);
         $formation = DB::select('select frmt.nom_formation,frmt.id from formations as frmt join modules as md on frmt.id = md.formation_id where md.cfp_id = ? and md.etat_id = 1 group by frmt.nom_formation,frmt.id', [$id]);
         $domaine_cfp = DB::select('select nom_domaine from domaines as dm join formations as frmt on dm.id = frmt.domaine_id join modules as md on frmt.id = md.formation_id where md.cfp_id = ? group by dm.nom_domaine',[$id]);
-        // dd($horaire);
-        return view('referent.catalogue.detail_cfp', compact('cfp', 'formation', 'reseau_sociaux', 'horaire', 'modules_counts', 'modules', 'devise', 'domaine_cfp'));
+        $liste_avis = DB::select('select SUBSTRING(lsta.nom_stagiaire, 1, 1) as nom_stagiaire, lsta.prenom_stagiaire, lsta.date_avis, lsta.note, lsta.commentaire from v_liste_avis as lsta join modules as md on lsta.module_id = md.id join cfps as cfp on md.cfp_id = cfp.id where md.cfp_id = ? ', [$id]);
+        $pourcentage_cfp = DB::select('select vpa.note, vpa.nombre_note, SUM(vpa.pourcentage_note * vpa.nombre_note) as nb_pourcent, SUM(vpa.nombre_note) as nombre_note from v_pourcentage_avis as vpa join moduleformation as md on vpa.module_id = md.module_id where md.cfp_id = ?',[$id]);
+        $avis_cfp = DB::select('select vptc.nb_pourcent, vpa.note, vpa.nombre_note, ROUND((SUM(vpa.pourcentage_note * vpa.nombre_note)*100) / vptc.nb_pourcent, 2) as pourcentage, SUM(vpa.nombre_note) as nombre_note from v_pourcentage_avis as vpa join moduleformation as md on vpa.module_id = md.module_id join v_pourcentage_total_module_cfp as vptc where md.cfp_id = ? group by vpa.note,vptc.nb_pourcent',[$id]);
+        // dd($avis_cfp);
+        return view('referent.catalogue.detail_cfp', compact('cfp','liste_avis','avis_cfp', 'formation', 'reseau_sociaux', 'horaire', 'modules_counts', 'modules', 'devise', 'domaine_cfp'));
     }
 
     public function affichageParFormationParcfp($id_formation)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $module_cfp_id = module::where('formation_id',$id_formation)->value('cfp_id');
-        $infos = DB::select('select *,count(lsta.module_id) as total_avis from moduleformation as md join v_liste_avis as lsta on md.module_id = lsta.module_id where md.status = 2 and md.etat_id = 1 and md.formation_id = ? and md.cfp_id = ? group by md.module_id order by md.nom_formation asc',[$id_formation, $module_cfp_id]);
+        $infos = DB::select('select *,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.formation_id = ? and md.cfp_id = ? order by md.nom_formation asc',[$id_formation, $module_cfp_id]);
         // dd($infos);
-        // $infos = DB::select('select * from moduleformation where formation_id = ? and status = 2 and cfp_id = ? and etat_id = 1', [$id_formation, $module_cfp_id]);
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_session_projet where formation_id = ? and type_formation_id = 2 group by module_id', [$id_formation]);
         $test = 4;
         $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
