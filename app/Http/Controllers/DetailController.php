@@ -14,6 +14,7 @@ use App\formation;
 use App\formateur;
 use App\stagiaire;
 use App\responsable;
+use App\session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -34,13 +35,19 @@ class DetailController extends Controller
         $this->groupes = new groupe();
     }
     public function calendrier(){
-
+        
         $domaines = $this->fonct->findAll('domaines');
+       
         $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+       
         $statut = $this->fonct->findAll('status');
+       
         if (Gate::allows('isCFP')) {
             $cfp_id = $rqt[0]->cfp_id;
+           
             $formations = $this->fonct->findWhere('v_formation',['cfp_id'],[$cfp_id]);
+           
+           
         }
         else{
             $formations = DB::select('select * from formations ');
@@ -253,9 +260,7 @@ class DetailController extends Controller
 
     public function informationModule(Request $request)
     {
-        $fonct = new FonctionGenerique();
         $id = $request->Id;
-
         // $detail = DB::select(' select statut,date_detail,h_debut,h_fin, detail_id,nom_projet,type_formation,lieu,nom_groupe,groupe_id,type_formation_id,nom_cfp,cfp_id,nom_etp,entreprise_id,photos,logo_entreprise,logo_cfp,nom_formateur,prenom_formateur,mail_formateur,numero_formateur,formateur_id,formation_id,nom_formation,module_id,nom_module  from v_detailmodule where detail_id = ' . $id);
         $detail = DB::select('
             SELECT *,details.id as detail_id FROM details
@@ -265,6 +270,9 @@ class DetailController extends Controller
             inner join projets on details.projet_id = projets.id
             inner join type_formations on projets.type_formation_id = type_formations.id
             where details.id = ?',[$id]);
+        
+    
+         
 
         $entreprises = DB::select('
             select * from groupe_entreprises
@@ -307,7 +315,9 @@ class DetailController extends Controller
             array_push($initial_stg,DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from v_participant_groupe_detail where stagiaire_id =  ?', [$stg[$i]->stagiaire_id ]));
         }
         $id_groupe = $detail[0]->groupe_id;
+     
         $date_groupe =  DB::select('select status_groupe,date_detail,h_debut,h_fin,detail_id,nom_projet,type_formation,lieu,nom_groupe,groupe_id,type_formation_id,nom_cfp,cfp_id,nom_etp,entreprise_id,photos,logo_entreprise,logo_cfp,nom_formateur,prenom_formateur,mail_formateur,numero_formateur,formateur_id,formation_id,nom_formation,module_id,nom_module  from v_detailmodule where groupe_id = ' . $id_groupe);
+        $ressource = DB::select('select * from ressources where groupe_id =?',[$id_groupe]);
 
         /**Recuperer duree total de la session */
         $nb_seance = '';
@@ -335,7 +345,7 @@ class DetailController extends Controller
             $photo_form = 'oui';
         }
 
-        return response()->json(['nombre_stg'=>$nombre_stg,'nb_seance'=>$nb_seance,'id_detail'=>$id,'formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
+        return response()->json(['ressource'=>$ressource,'nombre_stg'=>$nombre_stg,'nb_seance'=>$nb_seance,'id_detail'=>$id,'formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
     }
     //impression
     public function detail_printpdf($id)

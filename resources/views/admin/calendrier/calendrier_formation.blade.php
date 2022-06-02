@@ -299,6 +299,26 @@
                                 </tbody>
                             </table>
                         @endcanany
+                        <table class="table">    
+                        <thead>
+                            <tr>
+                              
+                                <th>Matériel nécessaire</th>
+                                <th>
+                                    Demandé(e) par
+                                </th>
+                                <th>
+                                    Pris en charge par
+                                </th>
+                                <th>
+                                    Note
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="ressource" >
+
+                        </tbody>
+                    </table>
                     {{-- </div>
                 </div>
             </div> --}}
@@ -509,6 +529,8 @@
                                         liste_app.innerHTML = '';
                                         var nb_apprenant = document.getElementById('nb_apprenant');
                                         nb_apprenant.innerHTML = '';
+                                        var ressource = document.getElementById('ressource');
+                                        ressource.innerHTML = '';
                                         @endcanany
                                         // alert(JSON.stringify(response));
 
@@ -527,6 +549,8 @@
                                         var formations = userDataDetail['formations'];
                                         var nombre_stg = userDataDetail['nombre_stg'];
                                         var id_detail = userDataDetail['id_detail'];
+                                        var res=userDataDetail["ressource"];
+                                        console.log(res);
                                         var images = '';
                                         var html = '';
                                         var formation = '';
@@ -559,6 +583,8 @@
                                             $('#fin').append(event2.toLocaleDateString('fr-FR',options));
 
                                             $('#nb_apprenant').append(nombre_stg);
+                                            $('#ressource').append(ressource);
+
 
                                             $("#projet").append(userData[$i].nom_projet);
                                             $('#statut').append(statut_pj);
@@ -658,8 +684,15 @@
                                             }
                                             $('#liste_app').append(html);
                                             html = '';
+                                   
                                         }
-
+                                     /*ressource*/
+                                    for(var $i =0;$i<res.length;$i++){
+                                        html += '<tr><td>'+res[$i].description+'</td><td>'+res[$i].demandeur+'</td><td>'+res[$i].pris_en_charge+'</td><td>'+res[$i].note+'</td></tr>';
+ 
+                                    }
+                                    $('#ressource').append(html);
+                                  
 
                                     }
                                     , error: function(error) {

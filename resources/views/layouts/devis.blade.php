@@ -4,7 +4,6 @@
     <p class="text_header m-0 mt-1">Devise
     </p>
 @endsection
-
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 @section('content')
@@ -38,22 +37,20 @@
     <div class="col-md-8">
         <table class="table mt-4">
             <thead>
-            <th>Devise</th>
-            <th>Réference</th>
+            <th>Devise court</th>
+            <th>Devise long</th>
             <th>Action</th>
 
             </thead>
             <tbody>
                 @foreach ($devise as $dev )
-
-
                 <tr>
                     <td>{{$dev->devise}}&nbsp;</td>
-                    <td>{{$dev->reference}}&nbsp;</td>
+                    <td>{{$dev->description}}&nbsp;</td>
                     <td>
                         <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$dev->id}}">
                             <i class='bx bxs-edit-alt'  style="color: green"></i>
-                          </a>
+                        </a>
                           {{-- <a href="{{route('delete_devise',$dev->id)}}" type="button"  onclick="return  confirm('voulez vraiment supprimer?')">
                             <i class='bx bx-trash' style="color: red"></i>
                           </a> --}}
@@ -68,15 +65,15 @@
                             <div class="modal-body">
                                 <form action="{{route('update_devise')}}"  method="post">
                                     @csrf
-                                    <label for=""> devise</label>
+                                    <label for=""> Devise</label>
                                     <input type="text" class="form-control" required name="devise" value="{{$dev->devise}}">
-                                    <label for=""> réference</label>
-                                    <input type="text" class="form-control" required name="reference" value="{{$dev->reference}}">
+                                    <label for=""> Déscription</label>
+                                    <input type="text" class="form-control" required name="description" value="{{$dev->description}}">
                                     <input type="hidden" class="form-control" required name="id" value="{{$dev->id}}"> <br><br>
 
                                     </div>
                                     <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Retour</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">&nbsp; Annuler</button>
                                     <button type="submit" class="btn btn-primary">&nbsp; Enregistrer</button>
                                 </form>
                             </div>
@@ -85,7 +82,6 @@
                 </div>
                 @endforeach
             </tbody>
-
         </table>
     </div>
 </center>

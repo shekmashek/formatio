@@ -331,7 +331,7 @@ class FormationController extends Controller
     {
 
         $module = module::all();
-        // $modules=module::where(['status', 2])->where(['etat_id', 1])->get();
+        $modules=module::where('status', 2)->get();
         return view('superadmin.catalogue.formation_publier', compact('module','modules'));
     }
     public function ajout_categorie(Request $request)

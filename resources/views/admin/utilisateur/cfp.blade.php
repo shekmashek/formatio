@@ -2,8 +2,8 @@
 @section('title')
     <h3 class="text_header m-0 mt-1">Centre de formation professionnelle</h3>
 @endsection
+@inject('groupe','App\groupe')
 @section('content')
-
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -168,7 +168,10 @@
                </td>
                 <td> <a class="dropdown-item" href=""><span>{{ $resp->nom_resp_cfp}}</span><span class="ms-1">{{ $resp->prenom_resp_cfp}}</span>  </a></td>
                 <td>{{ $resp->email_resp_cfp}}</td>
-                <td>{{ $resp->telephone_resp_cfp}}</td>
+                <td>
+                    
+                    
+                </td>
                 <td>{{ $resp->created_at}}</td>
                 <td>
 

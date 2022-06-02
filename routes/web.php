@@ -267,7 +267,6 @@ Route::post('update_entreprise/{id?}', 'ResponsableController@update_etp')->name
 Route::get('profil_referent', 'ResponsableController@affReferent')->name('profil_referent');
 
 // affichage parametre referent
-// Route::get('aff_parametre_referent', 'ResponsableController@affParametreReferent')->name('aff_parametre_referent');
 
 
 Route::get('aff_parametre_referent/{id?}','ResponsableController@affParametreReferent')->name('aff_parametre_referent');
@@ -492,8 +491,6 @@ Route::get('allEvent', 'DetailController@listEvent')->name('allEvent');
 //calendrier entreprise
 Route::get('/calendrier_formation', 'DetailController@calendrier_formation')->name('calendrier_formation');
 Route::get('allEventEntreprise', 'DetailController@listEvent_entreprise')->name('allEventEntreprise');
-
-
 
 // ======= Route Imprimer PDF Catalogue de Formation
 Route::get('pdf.imprime_calalogue', 'ModuleController@generatePDF')->name('imprime_calalogue');
