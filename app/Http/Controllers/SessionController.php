@@ -110,10 +110,12 @@ class SessionController extends Controller
         // dd(URL::to('/').'/sarin Gael');
         $user_id = Auth::user()->id;
         $id = request()->id_session;
+
         $type_formation_id = request()->type_formation;
         // ???--mbola tsy mety
         $test = DB::select('select count(id) as nombre from details where groupe_id = ?',[$id])[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
+
         // ???--
         $competences = [];
         $all_frais_annexe = [];
@@ -134,6 +136,7 @@ class SessionController extends Controller
             $cfp_nom = $resp->nom_cfp;
 
             $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
+
             // $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $requette = $projet->requette_detail_session_of($cfp_id,$id);
             $datas = DB::select($requette);
@@ -152,8 +155,12 @@ class SessionController extends Controller
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
             $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
-            // dd($formateur_cfp);
+
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
+
+            $drive = new getImageModel();
+            $drive->create_folder($cfp_nom);
+            $drive->create_sub_folder($cfp_nom, "Mes documents");
             $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
@@ -207,6 +214,7 @@ class SessionController extends Controller
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
+
         // end public
         $presence_detail = DB::select("select * from v_emargement where groupe_id = ?", [$projet[0]->groupe_id]);
         // dd($presence_detail);
@@ -356,7 +364,7 @@ class SessionController extends Controller
     }
 
     public function insert_presence(Request $request){
-        if(isset($request->edit_form)){
+        if(!isset($request->insert_form)){
             $presence = $request->edit_attendance;
             $h_entree = $request->edit_h_entree;
             $h_sortie = $request->edit_h_sortie;
@@ -558,7 +566,7 @@ class SessionController extends Controller
             $user_id = Auth::user()->id;
             $etp_id = responsable::where('user_id',$user_id)->value('entreprise_id');
             DB::insert('insert into groupe_entreprises (groupe_id, entreprise_id) values (?, ?)', [$request->id_groupe, $etp_id]);
-            return redirect()->route('detail_session',['id_session'=>$request->id_groupe]);
+            return redirect()->route('detail_session',[$request->id_groupe,2]);
         }catch(Exception $e){
             return redirect()->route('detail_session',[$request->id_groupe,2]);
         }

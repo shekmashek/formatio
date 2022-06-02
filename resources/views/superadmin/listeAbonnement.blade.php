@@ -161,7 +161,7 @@
                                     <td><a href="{{route('detail_facture_abonnement',$fact->facture_id)}}" style="text-decoration: underline">{{$fact->num_facture}}</a></td>
 
 
-                                    <td>{{$fact->nom_type}}</td>
+                                    <td>{{$fact->nom_type}}&nbsp,&nbspMensuel</td>
                                     <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
                                     <td>{{$fact->invoice_date}}</td>
                                     <td>{{$fact->due_date}}</td>
@@ -375,14 +375,19 @@
     </div> --}}
 
     <script>
+
+
+
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 let lien = ($(e.target).attr('href'));
-                localStorage.setItem('activeTab', lien);
-            });
-            let activeTab = localStorage.getItem('activeTab');
-            if(activeTab){
-                $('#myTab a[href="' + activeTab + '"]').tab('show');
-            }
+                localStorage.setItem('abonnement', lien);
+        });
+        let activeTab = localStorage.getItem('abonnement');
+        // console.log(activeTab);
+        if(activeTab){
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+
     </script>
 
 

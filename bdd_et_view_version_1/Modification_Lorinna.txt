@@ -22,3 +22,5 @@ ajout colone telephone_etp dans  bdd_suiviformation_mise_a_jour_15(v_apple_offre
 
 -------12Mai
 ajout colonne updated_at et genre_id     dans bdd_lorina_table
+----30 MAI 
+ajout column description in table devise dans bdd_lorina_table(devise);

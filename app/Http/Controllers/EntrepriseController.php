@@ -46,30 +46,20 @@ class EntrepriseController extends Controller
 
     public function create($id = null)
     {
-
-
         $user_id = Auth::id();
-
         $fonct = new FonctionGenerique();
         $entp = new entreprise();
-
-
         if (Gate::allows('isCFP')) {
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
             $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
-
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
-
             $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             // dd($refuse_demmande_etp);
             $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
-
            $entreprise = $entp->getEntreprise($etp2, $etp1);
             // $entreprise =DB::select('select logo_etp,nom_etp,entreprise_id,photos_resp,nom_resp,prenom_resp ,SUBSTRING(prenom_resp, 1, 1) AS pr, SUBSTRING(nom_resp, 1, 1) AS nm from v_demmande_cfp_etp where cfp_id=?',[$cfp_id]);
-
-
             // dd($entreprise);
             //  $entreprisess=DB::select('select * from  v_demmande_cfp_etp where cfp_id= ?',[$cfp_id]);
             //  $entreprises=DB::select('select * from  v_demmande_cfp_etp where cfp_id= ?',[$cfp_id]);

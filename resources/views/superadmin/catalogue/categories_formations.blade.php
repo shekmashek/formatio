@@ -25,7 +25,7 @@
 
           <table class="table mt-4">
             <thead>
-            <th>Formation</th>
+            <th>Formations</th>
             </thead>
             <tbody>
               @foreach ($formation as $form)

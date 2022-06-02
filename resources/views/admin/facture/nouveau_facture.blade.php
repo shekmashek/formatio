@@ -105,6 +105,9 @@
                                     <option value="{{$tp->entreprise_id}}">{{$tp->nom_etp}}</option>
                                     @endforeach
                                 </select>
+                                @if ((count($entreprise))<=0)
+                                <span style="color:#ff0000;font-size: 60%"> vous ne pouvez pas faire la facturation si vous n'êtes collaboré avec aucun entreprise</span>
+                                @endif
                                 <div class="details">
                                     <p class="m-0 nom_cfp" id="nom_etp_detail"></p>
                                     <p class="m-0 " id="adresse_etp"></p>
@@ -117,25 +120,25 @@
                         </div>
                         <div class="col-6 p-4">
                             <div class="row mb-2">
-                                <div class="col-12 d-flex flex-row justify-content-end">
+                                <div class="col-12   d-flex flex-row justify-content-end">
                                     {{-- <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" autocomplete="off" placeholder="N° facture" class="form-control input_simple" name="num_facture" id="num_facture" required> --}}
 
                                     <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" autocomplete="off" placeholder="N°" class="text-end titre_facture   mb-2 m-0 " name="num_facture" id="num_facture" required>
                                     @error('num_facture')
-                                    <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                    <p> <span class="m-0 pt-3 text-end me-3 d-flex " style="color:#ff0000;float:right; font-size: 60%"> {{$message}} </span></p>
                                     @enderror
                                 </div>
-                                <p> <span style="color:#ff0000;" id="num_facture_err"></span></p>
+                                <p> <span class="text-end" style="color:#ff0000;float:right; font-size: 60%" id="num_facture_err"></span></p>
 
                             </div>
                             <div class="row mb-2">
                                 <div class="col-12 d-flex flex-row justify-content-end">
                                     <p class="m-0 pt-3 text-end me-3">N° BC</p> <input type="text" autocomplete="off" class="text-end titre_facture   mb-2 m-0 " name="reference_bc" id="reference_bc" required placeholder="bon de commande">
                                     @error('reference_bc')
-                                    <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                    <p> <span style="color:#ff0000;float:right; font-size: 60%"> {{$message}} </span></p>
                                     @enderror
                                 </div>
-                                <p> <span style="color:#ff0000;" id="reference_bc_err"></span></p>
+                                <p> <span style="color:#ff0000;float:right; font-size: 60%" id="reference_bc_err"></span></p>
 
                             </div>
                             <div class="row mb-2">
@@ -183,13 +186,13 @@
                                 <div class="col-2">
                                     <select class="form-select selectP input_section4 mb-2" id="projet_id" name="projet_id" aria-label="Default select example" required>
                                     </select>
-                                    <span style="color:#ff0000;" id="projet_id_err">Aucun projet a été
+                                    <span style="color:#ff0000; font-size: 60%" id="projet_id_err">Aucun projet a été
                                         détecter</span>
                                 </div>
                                 <div class="col-3">
                                     <select class="form-select selectP input_section4 mb-2 session_id" id="session_id[]" name="session_id[]" aria-label="Default select example" required>
                                     </select>
-                                    <span style="color:#ff0000;" id="session_id_err">Aucun session a été
+                                    <span style="color:#ff0000; font-size: 60%" id="session_id_err">Aucun session a été
                                         détecter</span>
                                 </div>
                                 <div class="col-1">
@@ -250,7 +253,7 @@
                         </div>
 
                         <div class="">
-                            <p> <a role="button"  id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
+                            <p> <a role="button" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
                         </div>
                         <div class="row mb-1 g-0 p-2">
 
@@ -263,8 +266,6 @@
                                 <div class="col-2 text-end pe-2">
                                     <p id="totale_facture_ht" align="right">0</p>
                                 </div>
-                                {{-- <div class="col-1 text-end pt-2">
-                                </div> --}}
                             </div>
                             <div class="row mb-3">
                                 <div class="col-8 d-flex flex-row justify-content-end">
@@ -283,8 +284,6 @@
                                 <div class="col-2 text-end pe-2">
                                     <p id="total_remise" align="right">0</p>
                                 </div>
-                                {{-- <div class="col-1">
-                                </div> --}}
                             </div>
                         </div>
 

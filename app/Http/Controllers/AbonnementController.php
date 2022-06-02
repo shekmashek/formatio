@@ -348,7 +348,7 @@ class AbonnementController extends Controller
             // $typeAbonne_id = 2;
 
             /** on récupère l'abonnement actuel */
-            $abonnement_actuel = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
+            $abonnement_actuel = DB::select('select * from v_abonnement_facture where cfp_id = ?  order by created_at desc  limit 1', [$cfp_id]);
 
             // $typeAbonnement =$this->fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
             //on recupere les types d'abonnements
@@ -359,7 +359,7 @@ class AbonnementController extends Controller
 
                //liste facturation
             // $facture =$this->fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
-            $facture = DB::select('select * from v_abonnement_facture where cfp_id = ? order by date_demande desc',[$cfp_id] );
+            $facture = DB::select('select * from v_abonnement_facture where cfp_id = ?  order by created_at desc',[$cfp_id] );
             // facture du mois suivant
              $facture_suivant = [];
              for ($i=0; $i < count($facture); $i++) {
@@ -613,7 +613,11 @@ class AbonnementController extends Controller
     //enregistrer abonnement des utilisateurs;
     public function enregistrer_abonnement(Request $request)
     {
+
+        $id_coupon = $request->id_coupon;
+
         if($request->accepter == null) return back()->with('erreur','Veuillez accepter les politiques de confidentialités,les CGU et les CGV');
+
         else{
             $abonnement = new abonnement();
             $abonnement_cfp = new abonnement_cfp();
@@ -636,6 +640,7 @@ class AbonnementController extends Controller
                 $abonnement->entreprise_id = $entreprise_id;
                 $abonnement->activite = 0;
                 $abonnement->type_arret = "";
+
                 $abonnement->save();
 
                 /**générer une facture*/
@@ -667,6 +672,7 @@ class AbonnementController extends Controller
                 // $montant =$this->fonct->findWhere('v_categorie_abonnements_cfp',['type_abonnement_role_id'],[$abonnement_cfp_id[0]->type_abonnement_role_id]);
                 $tarif = $this->fonct->findWhereMulitOne("v_type_abonnement_cfp",['abonnement_id'],[$abonnement_cfp_id[0]->id]);
 
+
                 // //on change le statut compte id de l'organisme de formation
                 // DB::update('update cfps set statut_compte_id = 2 where id = ?', [$cfp_id]);
                 // $last_num_facture =$this->fonct->fin
@@ -676,7 +682,9 @@ class AbonnementController extends Controller
             }
 
             return redirect()->route('ListeAbonnement');
-        }
+
+            // return redirect()->route('ListeAbonnement')->withInput(['tab' => 'facture']);
+         }
     }
     //liste des demandes d'abonnement
     public function listeAbonne()
@@ -694,8 +702,8 @@ class AbonnementController extends Controller
         //liste des types d'abonnements
         $typeAbonnement_etp =$this->fonct->findAll('type_abonnements_etp');
         $typeAbonnement_of =$this->fonct->findAll('type_abonnements_of');
-
-        return view('superadmin.activation-abonnement', compact('liste','cfpListe','typeAbonnement_etp','typeAbonnement_of'));
+        $liste_coupon = $this->fonct->findAll('coupon');
+        return view('superadmin.activation-abonnement', compact('liste_coupon','liste','cfpListe','typeAbonnement_etp','typeAbonnement_of'));
     }
     //activation de compte
     public function activation()
@@ -1088,5 +1096,56 @@ class AbonnementController extends Controller
         }
         DB::update('update type_abonnements_etp set nom_type = ?, description = ?,tarif = ?, nb_utilisateur = ?,nb_formateur = ?,min_emp = ?,max_emp = ?,illimite = ? where id = ?', [$nom_type,$description,$prix,$nb_utilisateur,$nb_formateur,$min_emp,$max_emp,$illimite,$id]);
         return redirect()->route('listeAbonne');
+    }
+    //enregistrement coupon par le super admin
+    public function enregistrer_coupon(Request $request){
+        $coupon = $request->coupon;
+        $valeur = $request->valeur;
+        DB::insert('insert into coupon (coupon, valeur) values (?, ?)', [$coupon, $valeur]);
+        return redirect()->route('listeAbonne');
+    }
+    //modification du coupon
+    public function modifier_coupon(Request $request,$id){
+        $disponibilite = $this->fonct->findWhereMulitOne("coupon",["id"],[$id]);
+        $coupon = $request->coupon;
+        $valeur = $request->valeur;
+        if($disponibilite->utilise == 1) return back()->with('message','Vous ne pouvez pas modifier ce coupon parce qu\'il a été déjà utilisé');
+        else DB::update('update coupon set coupon = ?, valeur = ? where id = ?', [$coupon,$valeur,$id]);
+        return redirect()->route('listeAbonne');
+    }
+    //suppression de coupon
+    public function supprimer_coupon($id){
+        $disponibilite = $this->fonct->findWhereMulitOne("coupon",["id"],[$id]);
+        if($disponibilite->utilise == 1) return back()->with('message','Vous ne pouvez pas supprimer ce coupon parce qu\'il a été déjà utilisé');
+        else DB::delete('delete from coupon where id = ?', [$id]);
+        return redirect()->route('listeAbonne');
+    }
+    //test ajout de coupon par le client
+    public function coupon_client(Request $request){
+        $coupon = $request->coupon;
+        $abonnemet_id = $request->abonnemet_id;
+        $facture_id = $request->facture_id;
+        $test = $this->fonct->findWhereMulitOne("coupon",["coupon"],[$coupon]);
+        if($test == null) return back()->with('erreur_coupon','Désolé,le code de coupon que vous avez saisi n\'existe pas');
+        elseif($test->utilise ==  1) return back()->with('erreur_coupon','Désolé,le code de coupon que vous avez saisi a été déjà utilisé');
+        else{
+            DB::update('update coupon set utilise = 1 where id = ?', [$test->id]);
+            if(Gate::allows('isReferent')){
+                DB::update('update abonnements set coupon_id = ? where id = ?', [$test->id,$abonnemet_id]);
+                $factures = $this->fonct->findWhereMulitOne("factures_abonnements",["id"],[$facture_id]);
+
+                $mont_reduit = $factures->montant_facture - (($factures->montant_facture * $test->valeur)/100);
+                DB::update('update factures_abonnements set montant_facture = ? where id = ?', [$mont_reduit,$facture_id]);
+            }
+            if(Gate::allows('isCFP')){
+                DB::update('update abonnement_cfps set coupon_id = ? where id = ?', [$test->id,$abonnemet_id]);
+                $factures = $this->fonct->findWhereMulitOne("factures_abonnements_cfp",["id"],[$facture_id]);
+
+                $mont_reduit = $factures->montant_facture - (($factures->montant_facture * $test->valeur)/100);
+                DB::update('update factures_abonnements_cfp set montant_facture = ? where id = ?', [$mont_reduit,$facture_id]);
+
+            }
+            return back()->with(['valeur' => $test->valeur,'coupon' => $test->coupon,'id_coupon' => $test->id]);
+        }
     }
 }

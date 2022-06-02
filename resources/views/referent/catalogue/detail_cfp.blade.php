@@ -4,6 +4,7 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/annuaire.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 <section class="container-fluid">
     <div class="container pb-5">
         <div class="row details g-0">
@@ -14,17 +15,19 @@
                             <a href="#" class="text-center mb-2"><img src="{{asset("images/CFP/".$cfp->logo)}}" alt="logo" class="img-fliud logo_img"></a>
 
                           @if (count($horaire)>0)
-                          <p class="text-center m-0 horloge"><i class="bx bx-alarm"></i>
+                          <p class="text-center m-0 horloge text-capitalize"><i class="bx bx-alarm"></i>
                             Ouvert le
                             @php
                                 foreach ($horaire as $cfp_h) {
                                     setlocale(LC_TIME, "fr_FR");
-                                    $jours1 = $cfp_h->jours;
+                                    $today = date("l");
+                                    $jours_today = lcfirst(strftime("%A", strtotime($today)));
+                                    if ($cfp_h->jours === $jours_today) {
+                                        echo $cfp_h->jours."<br>";
+                                    }
                                     $ouverture = $cfp_h->h_entree;
                                     $fermeture = $cfp_h->h_sortie;
-                                    $jours_today = strftime("%A", strtotime($jours1));
                                 }
-                                echo $jours1.'<br>';
                                 echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
                             @endphp
                         </p>
@@ -33,7 +36,7 @@
                         @endif
 
                         </div>
-                        <div class="col-9">
+                        <div class="col-5">
                             <div class="row ps-5">
                                 <h4><a href="#">{{$cfp->nom}}</a></h4>
                                 <p>{{$cfp->slogan}}</p>
@@ -45,13 +48,14 @@
                                     <p class="m-0">{{$cfp->telephone}}</p>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-4">
                             <div class="col d-flex flex-row mb-2 ps-5">
                                 <span class="btn_actions" role="button"><a href="#"><i
                                             class="bx bx-mail-send"></i>Email</a></span>
                                 <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank"><i class="bx bx-globe"></i>Site
                                         Web</a></span>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -79,10 +83,10 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-3">
-                <div class="row avis mt-3">
+            <div class="col-3 ">
+                <div class="row avis mt-3 fixer">
                     <div class="col-12">
-                        <h5>Résumé des avis</h5>
+                        <h5 class="text-center">Résumé des avis</h5>
                         <div class="row d-flex">
                             <div class="col-md-12 text-center d-flex flex-column">
                                 <div class="rating-box">
@@ -162,9 +166,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row avis mt-3">
+                <div class="row avis mt-3 fixer2">
                     <div class="col-12">
-                        <h5>Horaires d'ouvertures</h5>
+                        <h5 class="text-center mb-3">Horaires d'ouvertures</h5>
 
                         @if (count($horaire)>0)
                         @foreach ($horaire as $cfp)
@@ -183,10 +187,10 @@
 
                     </div>
                 </div>
-                <div class="row avis mt-3">
+                <div class="row avis mt-3 fixer3">
                     <div class="col-12">
                         @if (count($reseau_sociaux)>0)
-                        <h5>Trouvez-nous sur</h5>
+                        <h5 class="text-center mb-3">Trouvez-nous sur</h5>
                         @foreach ($reseau_sociaux as $reseau)
                         <div class="row">
                             <div class="col-12 text-center">
@@ -228,10 +232,84 @@
                     <h5>Domaines de formations</h5>
                     <div class="row">
                         <div class="col-12 p-2 flex-wrap d-flex">
-                    @foreach ($formation as $frm)
-                            <p class="text-capitalize my-4 mx-2"><a href="{{route("select_par_formation_par_cfp",[$frm->id,$frm->cfp_id])}}" class="formations">{{$frm->nom_formation}}</a></p>
-                    @endforeach
+                            @foreach ($domaine_cfp as $dmc)
+                                <p class="text-capitalize formations my-4 mx-2">{{$dmc->nom_domaine}}</p>
+                            @endforeach
                         </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <hr>
+                    <h5>Thématiques de formations</h5>
+                    <div class="row">
+                        <div class="col-12 p-2 flex-wrap d-flex">
+                        @foreach ($formation as $frm)
+                            <p class="text-capitalize my-4 mx-2"><a href="{{route("select_par_formation_par_cfp",[$frm->id])}}" class="formations">{{$frm->nom_formation}}</a></p>
+                        @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="content_modules mt-5">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        @foreach ($formation as $frmt)
+                        <div id="encre_{{$frmt->id}}"></div>
+                        <div class="accordion-item mb-3" id="formation{{$frmt->id}}">
+                            <h2 class="accordion-header" id="{{$frmt->id}}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#frmt_{{$frmt->id}}" aria-expanded="false" aria-controls="frmt_{{$frmt->id}}">
+                                    <span>Formation sur :<strong>&nbsp;{{$frmt->nom_formation}}</strong></span>
+                                    @foreach ($modules_counts as $mdc)
+                                        @if ($frmt->id == $mdc->formation_id)
+                                            @if ($mdc->nb_modules != null)
+                                                <span class="nbr_module"><span>{{$mdc->nb_modules}}</span>&nbsp;Modules</span>
+                                            @else
+                                                <span class="nbr_module"><span>0</span>&nbsp;Modules</span>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </button>
+                            </h2>
+
+
+                            <div id="frmt_{{$frmt->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$frmt->id}}">
+                                <div class="accordion-body">
+                                    @foreach ($modules as $mod)
+                                        @if($mod->formation_id == $frmt->id)
+                                            @if ($mod->nom_module == null)
+                                                <p class="text-center">Cette thématique n'as pas encore de module mise en ligne 😓!</p>
+                                            @else
+                                                <a href="{{route('select_par_module',$mod->id)}}" class="">
+                                                    <div id="module{{$mod->id}}" class="row mb-3 module_lien justify-content-center align-items-center">
+                                                        <div class="col-5 text_minifier">
+                                                            <div class="pt-2">{{$mod->nom_module}}</div>
+                                                        </div>
+                                                        <div class="col-3 text_minifier">
+                                                            <div class="mb-2"><i class='bx bx-calendar bx_supprimer me-2'></i>{{$mod->duree_jour}}&nbsp;J / {{$mod->duree}}&nbsp;H</div>
+                                                            <div><i class='bx bx-windows bx_ajouter me-2'></i>{{$mod->modalite_formation}}</div>
+                                                        </div>
+                                                        <div class="col-2 text_minifier text-end">
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                            @if($mod->prix_groupe != null)
+                                                                <div>{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="col-2 text_minifier text-center">
+                                                            <div class="mb-3">
+                                                                <span class="btn_annuler text-uppercase">Organisme</span>
+                                                            </div>
+                                                            <div class="">
+                                                                {{$mod->nom}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div id="avis"></div>

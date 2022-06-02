@@ -104,9 +104,12 @@ class GroupeController extends Controller
 
         $type_formation = $request->type_formation;
         try {
-            if($abonnement_cfp[0]->nb_projet == count($nb_projet) && $abonnement_cfp[0]->illimite = 0){
-                throw new Exception("Vous avez atteint le nombre maximum de projet, veuillez upgrader votre compte pour ajouter plus de projet");
+            if($abonnement_cfp!=null){
+                if($abonnement_cfp[0]->nb_projet == count($nb_projet) && $abonnement_cfp[0]->illimite = 0){
+                    throw new Exception("Vous avez atteint le nombre maximum de projet, veuillez upgrader votre compte pour ajouter plus de projet");
+                }
             }
+
             if($request->date_debut >= $request->date_fin){
                 throw new Exception("Date de début doit être inférieur date de fin.");
             }

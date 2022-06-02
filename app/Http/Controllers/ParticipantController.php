@@ -44,6 +44,29 @@ class ParticipantController extends Controller
         $this->fonct = new FonctionGenerique();
     }
 
+    //newAfficheInfo
+    public function infoEmploye($user_id){
+
+        $funct = new FonctionGenerique();
+        $emps = $funct->filtreEmployeNew($user_id);
+        
+        return response()->json($emps);
+    }
+
+    public function infoResponsable($id_emp, $id){
+        $responsable = DB::table('users')
+                    // ->join('role_users', 'role_users.id', 'users.id')
+                    // ->join('responsables', 'responsables.role_id', 'role.id')
+                    // ->join('responsables', 'responsables.role_id', 'role.id')
+                    ->select('SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=13  ORDER BY created_at DESC LIMIT 1')
+                    ->where('user_id', '=', $id_emp)
+                    ->where('entreprise_id', '=', $id)
+                    ->get();
+        
+        return response()->json($responsable);
+    }
+    //end newAfficheInfo
+
     public function get_service(Request $req)
     {
         $service = db::select('select * from v_departement_service_entreprise where departement_entreprise_id = ? ', [$req->id]);

@@ -7,7 +7,36 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/abonnement.css')}}">
 <style>
+
 .navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item.active .nav-link {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+/* .navigation_module .nav-link {
     color: #637381;
     padding: 5px;
     cursor: pointer;
@@ -28,19 +57,27 @@
     background-color: rgb(245, 243, 243);
     transform: scale(1.1);
     border: none;
-}
+} */
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid mt-5">
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#types" class="nav-link active" data-bs-toggle="tab">Liste des abonnements</a>
+                <a href="#types" class="nav-link active" data-toggle="tab">Liste des abonnements</a>
             </li>
             <li class="nav-item">
-                <a href="#entreprise" class="nav-link" data-bs-toggle="tab">Entreprise</a>
+                <a href="#entreprise" class="nav-link" data-toggle="tab">Entreprise</a>
             </li>
             <li class="nav-item">
-                <a href="#of" class="nav-link " data-bs-toggle="tab">Organisme de formation</a>
+                <a href="#of" class="nav-link " data-toggle="tab">Organisme de formation</a>
+            </li>
+            <li class="nav-item">
+                <a href="#coupon" class="nav-link " data-toggle="tab">Coupon</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -107,11 +144,12 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade " id="entreprise">
+            <div class="tab-pane fade show" id="entreprise">
                 <table class="table table-hover">
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client_etp" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
                         <th>Type d'abonnement &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th>Coupon &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Date d'inscription &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Début &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Fin &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
@@ -125,6 +163,9 @@
                                     <tr>
                                         <td class="th_color"> {{$listes->nom_entreprise}} </td>
                                         <td class="th_color"> {{$listes->nom_type}},&nbsp;Mensuel,&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td>
+                                        @if($listes->valeur!=null)  <td class="th_color">{{$listes->coupon}} ({{$listes->valeur}} %)</td>
+                                        @else <td class="th_color"> - </td>
+                                        @endif
                                         <td class="th_color">  {{$listes->date_demande}} </td>
                                         <td class="th_color"> <span id = "debut_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                         <td class="th_color"><span id = "fin_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
@@ -151,11 +192,12 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade " id="of">
+            <div class="tab-pane fade show" id="of">
                 <table class="table table-hover">
                     <thead>
                         <th> Client &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" id="client" value="0"> <i class="fa icon_trie fa-arrow-down" ></i> </button></th>
-                         <th>Type d'abonnement &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th>Type d'abonnement &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
+                        <th>Coupon &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Date d'inscription &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Début &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
                         <th> Fin &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"> <i class="fa icon_trie fa-arrow-down"></i>  </th>
@@ -169,6 +211,9 @@
                                 <tr>
                                     <td class="th_color"> {{$listes->nom_of}} </td>
                                     <td class="th_color"> {{$listes->nom_type}},&nbsp;Mensuel,&nbsp;{{number_format($listes->montant_facture,0, ',', '.')}}Ar</td></td>
+                                    @if($listes->valeur!=null)  <td class="th_color">{{$listes->coupon}} ({{$listes->valeur}} %)</td>
+                                    @else <td class="th_color"> - </td>
+                                    @endif
                                     <td class="th_color">  {{$listes->date_demande}} </td>
                                     <td class="th_color"> <span id = "debut_of_{{$listes->abonnement_id}}" >{{$listes->date_debut}}</span> </td>
                                     <td class="th_color"><span id = "fin_of_{{$listes->abonnement_id}}" > {{$listes->date_fin}} </span> </td>
@@ -197,13 +242,126 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="tab-pane fade" id="coupon">
+                @if(session()->has('message'))
+                <div class="alert alert-danger">
+                    {{ session()->get('message') }}
+                </div>
+                @endif
+                @if(session()->has('message_modification'))
+                <div class="alert alert-danger">
+                    {{ session()->get('message_modification') }}
+                </div>
+                @endif
+                <table class="table table-hover">
+                    <thead>
+                        <th>Coupon</th>
+                        <th>Valeur</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($liste_coupon as $coupon)
+                            <tr>
+                                <td>{{$coupon->coupon}}</td>
+                                <td>{{$coupon->valeur}}%</td>
+                                @if($coupon->utilise == 1)
+                                <td><span style="background-color: red;padding:5px;color:white;border-radius:10px"> expiré </span> </td>
+                                @else
+                                <td><span style="background: green;padding:5px;color:white;border-radius:10px"> disponible </span> </td>
+                                @endif
+                                <td>
+                                    <span role="button" data-bs-toggle="modal" data-bs-target="#modif_coupon">
+                                        <i class='bx bx-edit bx_modifier' title="Modifier coupon"></i>
+                                    </span>
+                                    <span role="button" data-bs-toggle="modal" data-bs-target="#supp_coupon">
+                                        <i class='bx bx-trash bx_supprimer' title="Supprimer coupon"></i>
+                                    </span></td>
+                            </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
+         {{-- modification modif_coupon --}}
+         <div>
+            <div class="modal" id="modif_coupon" aria-labelledby="modif_coupon" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form  method="post" action="{{route('modifier_coupon',$coupon->id)}}">
+                            @csrf
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center">Modification coupon</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input type="text" class="form-control module module input" name="coupon" required value="{{$coupon->coupon}}" placeholder="Coupon">
+                                    <label for="coupon" class="form-control-placeholder">Coupon</label>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <input type="text" class="form-control module module input" name="valeur" required value="{{$coupon->valeur}}" placeholder="Valeur(%)">
+                                    <label for="valeur" class="form-control-placeholder">Valeur(%)</label>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         {{-- suppression coupon --}}
+         <div>
+            <div class="modal fade" id="supp_coupon" tabindex="-1"
+                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header .avertissement  d-flex justify-content-center"
+                            style="background-color:#ee0707; color: white">
+                            <h6 class="modal-title">Avertissement !</h6>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center my-2">
+                                <i class="fa-solid fa-circle-exclamation warning"></i>
+                            </div>
+                            <small>Vous êtes sur le point d'effacer une donnée, cette
+                                action
+                                est irréversible. Continuer ?</small>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                            <form method="post" action="{{route('supprimer_coupon',$coupon->id)}}">
+                                @csrf
+                                <button type="submit" class="btn btn_enregistrer suppression_module" id=""><i class='bx bx-check me-1'></i>Oui</button>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
 </div>
 
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{{-- <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            let lien = ($(e.target).attr('href'));
+            localStorage.setItem('abonnement_admin', lien);
+    });
+    let activeTab = localStorage.getItem('abonnement_admin');
+    // console.log(activeTab);
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+
+
     Date.prototype.addDays = function(noOfDays){
         var tmpDate = new Date(this.valueOf());
         tmpDate.setDate(tmpDate.getDate() + noOfDays);

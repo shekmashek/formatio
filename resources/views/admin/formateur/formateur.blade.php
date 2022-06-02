@@ -119,7 +119,7 @@
                                 </tr>
                                 @else
                                 @foreach($formateur as $frm)
-                                <tr class="information" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}">
+                                <tr class="informm" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}">
                                     @if($frm->photos == NULL or $frm->photos == '' or $frm->photos == 'XXXXXXX')
                                         <td ><span  class="randomColor text-uppercase" style="padding: 15px; border-radius:100%; color:white;"> {{$frm->n}} {{$frm->p}} </span></td>
                                         <td><span>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</td>
@@ -280,44 +280,89 @@
                 </div>
             </form>
 
+{{--Affiche info new--}}
+<div class="infos mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0 text-center">INFORMATION</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+        </div>
+        <hr class="mt-2">
 
-        <div class="infos mt-3">
+        <div class="mt-2" style="font-size:14px">
+            {{-- <div class="mt-1">
+                    <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
+        </div> --}}
+        <div class="mt-1 text-center mb-3">
+            <span id="logo"></span>
+        </div>
+
+        <div class="mt-1 text-center">
+            <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+        </div>
+        {{-- <div class="mt-1 mb-3 text-center">
+            <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
+        </div> --}}
+        <div class="mt-1">
             <div class="row">
-                <div class="col">
-                    <p class="m-0">infos</p>
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-user'></i></div>
+                <div class="col-md-3">Nom_prénoms</div>
+                <div class="col-md">
+                    <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                    <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
                 </div>
-                <div class="col text-end">
-                    <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
-                </div>
-                <hr class="mt-2">
-
-                <span class="text-center" id="logo"> </span>
-                <div style="font-size: 13px" >
-                <div class="text-center mt-2" >
-                <span id="nom"> </span>
-                </div>
-                <div class="text-center mt-1">
-                  <span id="prenom" > <span>
-                </div>
-                <div class="text-center mt-1">
-                    <span id="genre"> <span>
-                </div>
-                    <div class="text-center mt-1">
-                        <span id="email">  </span>
-                    </div>
-                    <div class="text-center mt-1">
-                        <span id="telephone">  </span>
-                    </div>
-                <div class="text-center mt-1">
-                        <span id="specialite" > <span>
-                </div>
-                <div class="text-center mt-1">
-                    <span id="adresse_formateur" > <span>
-            </div>
-            </div>
-
             </div>
         </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
+                <div class="col-md-3">Sexe</div>
+                <div class="col-md">
+                    <span id="genre"></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                <div class="col-md-3">E-mail</div>
+                <div class="col-md"><span id="email"></span></div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                <div class="col-md-3">Télephone</div>
+                <div class="col-md">
+                    <span></span><span id="telephone"></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                <div class="col-md-3">Adresse</div>
+                <div class="col-md"><span id="adresse_formateur"></span></div>
+            </div>
+
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-briefcase-alt-2'></i></div>
+                <div class="col-md-3">Spécialité</div>
+                <div class="col-md"><span id="specialite"></span></div>
+            </div>
+        </div>
+    </div>
+</div>
             @if(Session::has('success'))
             <div class="alert alert-success">
                 <strong> {{Session::get('success')}}</strong>
@@ -422,9 +467,10 @@ $('.activer_formateur').on('click',function(e){
 
 
 
-    $(".information").on('click', function(e) {
+    $(".informm").on('click', function(e) {
 
     let id = $(this).data("id");
+    // console.log(id);
     $.ajax({
         method: "GET"
         , url: "/information_formateur"
@@ -442,13 +488,13 @@ $('.activer_formateur').on('click',function(e){
                 url_photo = url_photo.replace(":url_img", userData[$i].photos);
                 $("#logo").html(" ");
                 $("#logo").append(url_photo);
-                $("#nom").text(userData[$i].nom_formateur);
+                $("#nom").text(': '+userData[$i].nom_formateur);
                 $("#prenom").text(userData[$i].prenom_formateur);
-                $("#genre").text(userData[$i].genre);
-                 $("#email").text(userData[$i].mail_formateur);
-                 $("#telephone").text(userData[$i].numero_formateur);
-                 $("#specialite").text(userData[$i].specialite);
-                $("#adresse_formateur").text(userData[$i].adresse);
+                $("#genre").text(': '+userData[$i].genre);
+                 $("#email").text(': '+userData[$i].mail_formateur);
+                 $("#telephone").text(': '+userData[$i].numero_formateur);
+                 $("#specialite").text(': '+userData[$i].specialite);
+                $("#adresse_formateur").text(': '+userData[$i].adresse);
             }
         }
     });

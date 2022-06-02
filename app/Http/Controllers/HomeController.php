@@ -299,12 +299,12 @@ class HomeController extends Controller
             // dd($user_id, $centre_fp, $top_10_par_client);
 
 
-            /*
+            
 
             $drive = new getImageModel();
             $drive->create_folder($cfp);
             $drive->create_sub_folder($cfp, "Mes documents");
-*/
+
             $formateur = DB::select('select * from demmande_cfp_formateur where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $dmd_cfp_etp = DB::select('select * from demmande_cfp_etp where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $resp_cfp = DB::select('select * from responsables_cfp where user_id = ' . $user_id . ' ');
@@ -736,6 +736,7 @@ class HomeController extends Controller
             }
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?', [$entreprise_id])[0]->nb_projet;
+           
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
                 $offset = 0;
@@ -771,6 +772,7 @@ class HomeController extends Controller
 
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;
+           
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
                 $offset = 0;
@@ -792,13 +794,14 @@ class HomeController extends Controller
             // fin pagination
 
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request, $nb_par_page, $offset);
-
+            
             $projet = DB::select($sql);
-
+          
             // dd( $projet);
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
 
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
+    //    dd($data);
 
             // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             // $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
@@ -806,13 +809,17 @@ class HomeController extends Controller
             // $entreprise = $entp->getEntreprise($etp2, $etp1);
             // dd($entreprise);
             $type_formation = DB::select('select * from type_formations');
+           
 
             $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
+           
             $module = $fonct->findWhere("v_module", ['cfp_id', 'status'], [$cfp_id, 2]);
+           
             $payement = $fonct->findAll("type_payement");
-
+            
             // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
+           
             // dd($data);
             return view('projet_session.index2', compact('projet', 'data', 'totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
@@ -1251,7 +1258,8 @@ class HomeController extends Controller
     }
     public function update_devise(Request $request)
     {
-        DB::update('update devise set devise=?,reference=? where id=?',[$request->devise,$request->reference,$request->id]);
+        
+        DB::update('update devise set devise=?,description=? where id=?',[$request->devise,$request->description,$request->id]);
         return back();
     }
     public function delete_devise($id)

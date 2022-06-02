@@ -391,7 +391,6 @@
             </li>
             @endcanany --}}
             @canany(['isCFP','isReferent'])
-            @can('isPremium')
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -399,7 +398,6 @@
                 </a>
 
             </li>
-            @endcan
             {{-- integrer dans la page
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
@@ -539,7 +537,7 @@
                             class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
-                    @canany('isReferent','isStagiaire','isManager')
+                    @canany(['isReferent','isStagiaire','isManager'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
 
@@ -727,6 +725,9 @@
                                     <li><a class="dropdown-item" href="{{route('nouveau_type')}}"> <i
                                                 class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouveau type
                                         </a></li>
+                                        <li><a class="dropdown-item" href="{{route('nouveau_coupon')}}"> <i
+                                            class='bx bx-money '></i>&nbsp;Nouveau coupon
+                                    </a></li>
                                 </ul>
                             </div>
                             @endcan
@@ -875,13 +876,12 @@
                                                 <i class="bx bx-library icon_plus"></i>&nbsp; Projet Intra
                                             </a>
                                         </li>
-                                        @can('isPremium')
                                         <li>
                                             <a class="dropdown-item" href="{{route('facture')}}">
                                                 <i class='bx bxs-bank icon_plus'></i>&nbsp;Nouvelle Facture
                                             </a>
                                         </li>
-                                        @endcan
+
                                     </ul>
                                 </div>
                                 @can('isCFPPrincipale','isPremium')

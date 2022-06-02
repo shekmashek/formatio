@@ -26,3 +26,16 @@ recopier view :dans facture bdd_suiviformation_mise_a_jour_4.sql(facturation)
 Vendredi 13 mai 2022
 
 -recopier view v_full_facture,v_facture_actif,v_facture_inactif
+
+-- drop  unique constraint
+ALTER TABLE users
+DROP INDEX cin;
+
+ALTER TABLE stagiaires
+DROP INDEX cin;
+
+ALTER TABLE responsables
+DROP INDEX cin;
+
+ALTER TABLE chef_departements
+DROP INDEX cin;

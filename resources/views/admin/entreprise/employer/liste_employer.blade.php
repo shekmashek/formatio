@@ -294,276 +294,167 @@
 
         <div class="row">
             <div class="col-12">
-
-                <table class="table  table-hover">
+                <table id="example" class="table " style="width:100%">
                     <thead>
                         <tr>
-                            <th scope="col">Photo</th>
-                            <th scope="col">Noms</th>
-                            <th scope="col">Contact </th>
-                            <th scope="col"> Dept et Se</th>
-                            <th scope="col" colspan="2">Action</th>
-                            {{-- <th scope="col">Voir profil</th> --}}
-                            {{-- <th style="width: 10px;">Rétirer</th> --}}
+                            <th class="id">ID</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Contacts</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">
+                                <span class="d-block">Département</span>
+                                <span>Service</span>
+                            </th>
+                            {{-- <th scope="col" class="table-head font-weight-light align-middle text-center ">Age</th> --}}
+
+
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
+
                         </tr>
                     </thead>
-                    <tbody id="list_data_trie_valider">
+                    <tbody>
+                        @forelse ($employers as $employe)
+                            <tr data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew">
+                                <td class="align-middle id">
 
-                        {{-- @foreach ($chefs as $sefo)
-                        <tr>
-                            <td>
-                                <a href="{{route('profile_resp',$sefo->id)}}">
-                                    @if($sefo->photos == null)
-                                    <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
-                                        <span class="" style="position:relative; top: .5rem;"><b>{{$sefo->nom_cf}}{{$sefo->prenom_cf}}</b></span>
-                                    </p>
+                                    @if ($employe->activiter == 1)
+                                        <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
                                     @else
-                                    <a href="{{asset('images/chefDepartement/'.$sefo->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/chefDepartement/'.$sefo->photos)}}" style="width:30px; height:30px; border-radius:100%; font-size:15px; border: 1px solid black;"></a>
+                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span>
                                     @endif
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{route('profile_stagiaire',$sefo->id)}}">
-                                    <p> {{$sefo->nom_chef." ".$sefo->prenom_chef}} </p>
-                                    <p> @if ($sefo->activiter==1)
-                                        <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$sefo->matricule}}
-                                        @else
-                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$sefo->matricule}}
-                                        @endif</p>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{route('profile_stagiaire',$sefo->id)}}">
-                                    <p> {{$sefo->mail_chef}} </p>
-                                    @if($sefo->telephone_chef==null)
-                                    <p> ----</p>
-                                    @else
-                                    <p> {{$sefo->telephone_chef}}</p>
-                                    @endif
-                                </a>
-                            </td>
-                            <td>
-                                @if($sefo->service_id!=null)
-                                <p>{{$sefo->nom_branche}}</p>
-                                <p>{{$sefo->nom_service}}</p>
-                                @else
-                                <p>-----</p>
-                                <p>------</p>
-                                @endif
-                            </td>
-                            <td>
-                                @if ($sefo->activiter==1)
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
-                                    <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$sefo->user_id}}" value="{{$sefo->id}}" checked>
-                                </div>
-                                @else
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
-                                    <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$sefo->user_id}}" value="{{$sefo->id}}">
-                                </div>
-                                @endif
+                                    {{ $employe->matricule }}
+                                </td>
 
-                            </td>
-                            {{-- <td>
-                                <a href="{{route('profile_stagiaire',$sefo->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
-                            </td>
-                            <td>
-                                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$sefo->id}}"><span class="fa fa-trash" style="color:red"></span></button>
-                            </td>
-                        </tr>
 
-                        <div class="modal fade" id="delete_emp_{{$sefo->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                                        <h4 class="modal-title text-white">Avertissement !</h4>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if ($employe->photos == null)
+                                            {{-- image placeholder --}}
+                                            {{-- <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Image non chargée"
+                                                style="width: 45px; height: 45px" class="rounded-circle" /> --}}
 
+                                            {{-- grey color --}}
+                                            {{-- <i class='bx bx-user-circle profile-holder'
+                                                style="width: 45px; height: 45px"></i> --}}
+
+                                            {{-- actif/inactif color --}}
+                                                    {{-- <i class='bx bx-user-circle  h1' style='
+                                                        @if ($employe->activiter == 1) color:#25b900c9;'
+                                                            @else
+                                                            color:#e21717;'
+                                                            @endif
+                                                            ></i> --}}
+
+                                            {{-- initials --}}
+                                                            <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
+                                                                <span class="align-middle text-center profile-initial" style="position:relative;">
+                                                                    <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
+                                                                </span>
+                                                            </div>
+                                                        @else
+                                                                <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
+                                                                alt="Image non chargée" style="width: 45px; height: 45px"
+                                                                class="rounded-circle" />
+                                                        @endif
+                                                    <div class="ms-3">
+                                                        <p class="fw-normal mb-1 text-purple ">
+                                                        {{-- <p class="fw-bold mb-1 text-purple "> --}}
+                                                            {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
+                                                        <p class="text-muted mb-0">{{ $employe->fonction_stagiaire }}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td class="align-middle text-start">
+
+                                                <div class="ms-3">
+                                                    <p class="mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
+                                                    {{-- <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p> --}}
+                                                    <p class="text-muted mb-0">
+                                                        {{ $employe->telephone_stagiaire != null ? $employe->telephone_stagiaire : '----' }}
+                                                    </p>
+
+
+                                                </div>
+
+                                            </td>
+                                            <td class="align-middle text-center text-secondary">
+                                                <span>----</span>
+                                            </td>
+                                            {{-- <td class="align-middle text-center text-secondary">61</td> --}}
+
+                                            <td class="align-middle text-center text-secondary">
+
+                                                @if ($employe->activiter == 1)
+                                                    <div class="form-check form-switch">
+                                                        <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                                                class="badge bg-success">actif</span></label>
+                                                        <input class="form-check-input desactiver_stg" type="checkbox"
+                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                            checked>
+                                                    </div>
+                                                        @else
+                                                    <div class="form-check form-switch">
+                                                        <label class="form-check-label"
+                                                            for="flexSwitchCheckChecked">
+                                                            <span class="badge bg-danger">
+                                                                inactif
+                                                            </span>
+                                                        </label>
+                                                        <input class="form-check-input activer_stg" type="checkbox"
+                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                    </div>
+                                                        @endif
+
+                                            </td>
+                                            <td class="align-middle text-center text-secondary">
+                                                <button type="button" class="btn " data-bs-toggle="modal"
+                                                    data-bs-target="#delete_emp_{{ $employe->id }}">
+                                                    <i class=' bx bxs-trash' style='color:#e21717'></i>
+                                            </button>
+                                </td>
+
+                            </tr>
+
+                            <div class="modal fade" id="delete_emp_{{ $employe->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <form action="{{ route('mettre_fin_cfp_etp') }}" method="POST">
+                                    @csrf
+
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header d-flex justify-content-center"
+                                                style="background-color:rgb(235, 20, 45);">
+                                                <h4 class="modal-title text-white">Avertissement !</h4>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <small>Vous êtes sur le point d'enlever l'employé
+                                                    {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }} -
+                                                    id : {{ $employe->id }}, utilisateur {{ $employe->user_id }},
+                                                    cette action est irréversible. Continuer ?</small>
+                                            </div>
+
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non
+                                                </button>
+
+                                                <a href="{{ route('employeur.destroy', $employe->id) }}"> <button
+                                                        type="button" class="btn btn_creer btnP px-3">Oui</button></a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                        <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
-                                    </div>
+                                </form>
 
-                                    <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                                        <a href="{{route('employeur.destroy',$sefo->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                        @endforeach --}}
+                        @empty
 
-                        {{-- ============================================================ --}}
-                        @foreach ($responsables as $resp)
-                        <tr>
-                            <td>
-                                {{-- <a href="{{route('profile_resp',$resp->id)}}"> --}}
-                                    @if($resp->photos == null)
-                                    <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
-                                        <span class="" style="position:relative; top: .5rem;"><b>{{$resp->nom_rsp}}{{$resp->prenom_rsp}}</b></span>
-                                    </p>
-                                    @else
-                                    <a href="{{asset('images/responsables/'.$resp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/responsables/'.$resp->photos)}}" style="width:30px; height:30px; border-radius:100%; font-size:15px; border: 1px solid black;"></a>
-                                    @endif
-                                {{-- </a> --}}
-                            </td>
-                            <td>
-                                {{-- <a href="{{route('profile_stagiaire',$resp->id)}}"> --}}
-                                    <p> {{$resp->nom_resp." ".$resp->prenom_resp}} </p>
-                                    <p> @if ($resp->activiter==1)
-                                        <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$resp->matricule}}
-                                        @else
-                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$resp->matricule}}
-                                        @endif</p>
-                                {{-- </a> --}}
-                            </td>
-                            <td>
-                                {{-- <a href="{{route('profile_stagiaire',$resp->id)}}"> --}}
-                                    <p> {{$resp->email_resp}} </p>
-                                    @if($resp->telephone_resp==null)
-                                    <p> ----</p>
-                                    @else
-                                    <p> {{$resp->telephone_resp}}</p>
-                                    @endif
-                                {{-- </a> --}}
-                            </td>
-                            <td>
-                                @if($resp->service_id!=null)
-                                {{-- <p>{{$resp->nom_branche}}</p> --}}
-                                {{-- <p>{{$resp->nom_service}}</p> --}}
-                                @else
-                                <p>-----</p>
-                                <p>------</p>
-                                @endif
-                            </td>
-                            <td>
-                                responsable
-                                {{-- @if ($resp->activiter==1 && $resp->prioriter!=True)
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span>actif</span></label>
-                                    <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$resp->user_id}}" value="{{$resp->id}}" checked>
-            </div>
-            @else
-            <div class="form-check form-switch">
-                <label class="form-check-label" for="flexSwitchCheckChecked"><span>inactif</span></label>
-                <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$resp->user_id}}" value="{{$resp->id}}">
-            </div>
-            @endif --}}
+                        @endforelse
 
-            </td>
-            {{-- <td>
-                                <a href="{{route('profile_stagiaire',$resp->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
-            </td> --}}
-            <td>
-                {{-- <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$resp->id}}"><span class="fa fa-trash" style="color:red"></span></button> --}}
-            </td>
-            </tr>
-
-            <div class="modal fade" id="delete_emp_{{$resp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                            <h4 class="modal-title text-white">Avertissement !</h4>
-
-                        </div>
-                        <div class="modal-body">
-                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
-                        </div>
-
-                        <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                            <a href="{{route('employeur.destroy',$resp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-
-            {{-- ============================================================ --}}
-            @foreach ($employers as $emp)
-            <tr>
-                <td>
-                    <a href="{{route('profile_stagiaire',$emp->id)}}">
-                        @if($emp->photos == null)
-                        <p class="randomColor text-center" style="color:white; font-size: 10px; border: none; border-radius: 100%; height:30px; width:30px ; border: 1px solid black;">
-                            <span class="" style="position:relative; top: .5rem;"><b>{{$emp->nom_stg}}{{$emp->prenom_stg}}</b></span>
-                        </p>
-                        @else
-                        <a href="{{asset('images/stagiaires/'.$emp->photos)}}"><img title="clicker pour voir l'image" src="{{asset('images/stagiaires/'.$emp->photos)}}" style="width:50px; height:50px; border-radius:100%; font-size:15px"></a>
-                        @endif
-                    </a>
-                </td>
-                <td>
-                    <a href="{{route('profile_stagiaire',$emp->id)}}">
-                        <p> {{$emp->nom_stagiaire." ".$emp->prenom_stagiaire}} </p>
-                        <p> @if ($emp->activiter==1)
-                            <span style="color:green; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
-                            @else
-                            <span style="color:red; "> <i class="bx bxs-circle"></i> </span> {{$emp->matricule}}
-                            @endif</p>
-                    </a>
-                </td>
-                <td>
-                    <a href="{{route('profile_stagiaire',$emp->id)}}">
-                        <p> {{$emp->mail_stagiaire}} </p>
-                        @if($emp->telephone_stagiaire==null)
-                        <p> ----</p>
-                        @else
-                        <p> {{$emp->telephone_stagiaire}}</p>
-                        @endif
-                    </a>
-                </td>
-                <td>
-                    @if($emp->service_id!=null)
-                    {{-- <p>{{$emp->nom_branche}}</p>
-                    <p>{{$emp->nom_service}}</p> --}}
-                    @else
-                    <p>-----</p>
-                    <p>------</p>
-                    @endif
-                </td>
-                <td>
-                    @if ($emp->activiter==1)
-                    <div class="form-check form-switch">
-                        <input class="form-check-input desactiver_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}" checked>
-                    </div>
-                    @else
-                    <div class="form-check form-switch">
-                        <input class="form-check-input activer_stg" type="checkbox" data-user-id="{{$emp->user_id}}" value="{{$emp->id}}">
-                    </div>
-                    @endif
-
-                </td>
-                {{-- <td>
-                                <a href="{{route('profile_stagiaire',$emp->id)}}" class="btn btn-sm"><i class="fas fa-ellipsis-v"></i></a>
-                </td> --}}
-                <td>
-                    <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_emp_{{$emp->id}}"><span class="fa fa-trash" style="color:red"></span></button>
-                </td>
-            </tr>
-
-            <div class="modal fade" id="delete_emp_{{$emp->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header d-flex justify-content-center" style="background-color:rgb(235, 20, 45);">
-                            <h4 class="modal-title text-white">Avertissement !</h4>
-
-                        </div>
-                        <div class="modal-body">
-                            <small>Vous <span style="color: red"> êtes </span>sur le point d'enlever l'une de votre employé sur le plateforme, cette action est irréversible. Continuer ?</small>
-                        </div>
-
-                        <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non </button>
-                            <a href="{{route('employeur.destroy',$emp->user_id)}}"> <button type="button" class="btn btn_creer btnP px-3">Oui</button></a>
-                        </div>
-                    </div>
-                </div>
+                    </tbody>
+                </table>
 
             </div>
-            @endforeach
-            </tbody>
-            </table>
         </div>
 
 
@@ -628,10 +519,123 @@
         </div>
 
 
+        {{--AfficheInfos--}}
+        <div class="infos mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0 text-center">INFORMATION</p>
+                </div>
+                <div class="col text-end">
+                    <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                </div>
+                <hr class="mt-2">
+
+                <div class="mt-2" style="font-size:14px">
+                    {{-- <div class="mt-1">
+                            <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
+                </div> --}}
+                <div class="mt-1 text-center mb-3">
+                    <span id="donner"></span>
+                </div>
+
+                <div class="mt-1 text-center">
+                    <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+                </div>
+                {{-- <div class="mt-1 mb-3 text-center">
+                    <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
+                </div> --}}
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-user'></i></div>
+                        <div class="col-md-3">Nom_prénoms</div>
+                        <div class="col-md">
+                            <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
+                        <div class="col-md-3">Matricule</div>
+                        <div class="col-md">
+                            <span id="matricule" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                        <div class="col-md-3">E-mail</div>
+                        <div class="col-md"><span id="mail_stagiaire"></span></div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                        <div class="col-md-3">Télephone</div>
+                        <div class="col-md">
+                            <span></span><span id="telephone_stagiaire"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                        <div class="col-md-3">Adresse</div>
+                        <div class="col-md"><span id="adresse"></span></div>
+                    </div>
+
+                </div>
+                {{-- <div class="mt-1">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                        <div class="col-md-3">Code postal</div>
+                        <div class="col-md"><span id="code_postal"></span></div>
+                    </div>
+                </div> --}}
+            </div>
+        </div>
+
 
         <script src="{{ asset('assets/js/jquery.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+        <script>
+            $('.empNew').on('click', function(){
+                var user_id = $(this).data("id");
+                console.log(user_id);
+                $.ajax({
+                    method: "GET"
+                    , url: "/newAfficheInfo/employe/"+user_id
+                    , dataType: "html"
+                    , success: function(response) {
+                        let userData = JSON.parse(response);
+                        console.log(userData);
+                        for (let $i = 0; $i < userData.length; $i++) {
+                            let url_photo = '<img src="{{asset("images/stagiaires/:url_img")}}" style="height80px; width:80px;">';
+                            url_photo = url_photo.replace(":url_img", userData[$i].photos);
+                            $("#donner").html(" ");
+                            $("#donner").append(url_photo);
+                            $("#matricule").text(': '+userData[$i].matricule);
+                            $("#nom").text(': '+userData[$i].nom_stagiaire);
+                            $("#prenom").text(userData[$i].prenom_stagiaire);
+                            $("#mail_stagiaire").text(': '+userData[$i].mail_stagiaire);
+                            $("#telephone_stagiaire").text(': '+userData[$i].telephone_stagiaire);
+                            $("#adresse").text(': '+userData[$i].adresse);
+                            $("#code_postal").text(': '+userData[$i].code_postal);
+                        }
+                    }
+                });
+            });
+        </script>
 
         <script type="text/javascript">
 

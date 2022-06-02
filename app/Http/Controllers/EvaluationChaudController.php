@@ -53,15 +53,16 @@ class EvaluationChaudController extends Controller
             $fonct = new FonctionGenerique();
             $user_id = Auth::user()->id;
             $stg_id = stagiaire::where('user_id',$user_id)->value('id');
-            
+
             $note = $request->nb_qst_fille_1;
             $commentaire = $request->txt_qst_fille_20;
             $module = $fonct->findWhereMulitOne("v_stagiaire_groupe",["groupe_id","stagiaire_id"],[$request->groupe,$stg_id]);
-          
+            // dd($module);
             DB::insert('insert into avis(stagiaire_id,module_id,note,commentaire,status,date_avis) value(?,?,?,?,?,?)',[$stg_id,$module->module_id,$note,$commentaire,'Fini',date('Y-m-d')]);
             $evaluation = new EvaluationChaud();
-            
+
             $message = $evaluation->verificationEvaluation($module->stagiaire_id,$module->groupe_id,$module->cfp_id,$request);
+
             DB::commit();
 
             return redirect()->route('liste_projet',[1]);
