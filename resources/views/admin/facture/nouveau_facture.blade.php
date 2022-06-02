@@ -105,17 +105,16 @@
                                     <option value="{{$tp->entreprise_id}}">{{$tp->nom_etp}}</option>
                                     @endforeach
                                 </select>
-                                @if ((count($entreprise))<=0)
-                                <span style="color:#ff0000;font-size: 60%"> vous ne pouvez pas faire la facturation si vous n'êtes collaboré avec aucun entreprise</span>
-                                @endif
-                                <div class="details">
-                                    <p class="m-0 nom_cfp" id="nom_etp_detail"></p>
-                                    <p class="m-0 " id="adresse_etp"></p>
-                                    <p class="mt-3 m-0 " id="tel_etp"></p>
-                                    <p class="m-0 " id="mail_etp"></p>
-                                    <p class="m-0 " id="site_etp"></p>
-                                    <p class="m-0 " id="info_légale_etp"></p>
-                                </div>
+                                @if ((count($entreprise))<=0) <span style="color:#ff0000;font-size: 60%"> vous ne pouvez pas faire la facturation si vous n'êtes collaboré avec aucun entreprise</span>
+                                    @endif
+                                    <div class="details">
+                                        <p class="m-0 nom_cfp" id="nom_etp_detail"></p>
+                                        <p class="m-0 " id="adresse_etp"></p>
+                                        <p class="mt-3 m-0 " id="tel_etp"></p>
+                                        <p class="m-0 " id="mail_etp"></p>
+                                        <p class="m-0 " id="site_etp"></p>
+                                        <p class="m-0 " id="info_légale_etp"></p>
+                                    </div>
                             </div>
                         </div>
                         <div class="col-6 p-4">
@@ -156,30 +155,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="section4 mb-4">
+                <div class="section4 mb-4 mt-4">
                     <div class="row services_factures">
                         <div class="col-12 pb-4 ">
                             <div class="row titres_services">
                                 <div class="col-2">
-                                    <h6 class="m-0">Projet</h6>
+                                    <p class="m-0" style="font-size: 80%">Projet</p>
                                 </div>
                                 <div class="col-3">
-                                    <h6 class="m-0">Session</h6>
+                                    <p class="m-0" style="font-size: 80%">Session</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Quantité</h6>
+                                    <p class="m-0" style="font-size: 80%">Quantité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">Unité</h6>
+                                    <p class="m-0" style="font-size: 80%">Unité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
+                                    <p class="m-0" style="font-size: 80%">PU HT ({{$devise->reference}})</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
+                                    <p class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0"></h6>
+                                    <p class="m-0"></p>
                                 </div>
                             </div>
                             <div class="row my-3">
@@ -204,7 +203,7 @@
                                 <div class="col-2">
                                     <input type="number" name="facture[]" autocomplete="off" min="0" id="facture[]" class="  form-control  qte input_quantite" required>
                                 </div>
-                                <div class="col-1 text-end">
+                                <div class="col-1 text-end pe-0">
                                     <p name="totale_facture[]" class="m-0 text_prix">0</p>
                                 </div>
                                 <div class="col-1 text-start pt-2">
@@ -224,23 +223,23 @@
 
 
 
-                        <div class="col-12 pb-4 my-3">
+                        <div class="col-12 pb-4 ">
 
                             <div class="row  titres_services" style="display: none" id="titres_services_annexe">
                                 <div class="col-3">
-                                    <h6 class="m-0">Frais annexes</h6>
+                                    <p class="m-0" style="font-size: 80%">Frais annexes</p>
                                 </div>
                                 <div class="col-4">
-                                    <h6 class="m-0">Descriptions</h6>
+                                    <p class="m-0" style="font-size: 80%">Descriptions</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Quantité</h6>
+                                    <p class="m-0" style="font-size: 80%">Quantité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
+                                    <h6 class="m-0" style="font-size: 80%">PU HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1" align="right">
-                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
+                                    <h6 class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>
@@ -248,13 +247,16 @@
                             </div>
 
                             <div class="row ">
-                            <div id="newRow"></div>
+                                <div id="newRow"></div>
                             </div>
+
+
                         </div>
 
                         <div class="">
                             <p> <a role="button" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
                         </div>
+
                         <div class="row mb-1 g-0 p-2">
 
                             <div class="row mb-3">

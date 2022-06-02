@@ -105,9 +105,7 @@
 
         } else {
             $(".titre_annexe").css("display", "inline-block");
-
         }
-        console.log("totale: " + total_frais_annexe_possible);
 
         $(".changer_carret").on("click", function() {
             if (
@@ -399,7 +397,7 @@
                     html += '<input type="number" min="0" value="0" autocomplete="off" required name="montant_frais_annexe[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe[]" placeholder="0">';
                     html += '</div>';
 
-                    html += '<div class="col-1 text-end">';
+                    html += '<div class="col-1 text-end pe-0">';
                     html += '<p name="totale_frais_annexe[]" class="text_prix" align="right">0</p>';
                     html += '</div>';
 
