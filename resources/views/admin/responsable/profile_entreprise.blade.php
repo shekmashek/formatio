@@ -251,7 +251,7 @@
                 <th>Status facture</th>
                  <th>Type d'abonnement</th> 
                 <th>Montant</th>
-                <th>Categorie Paiement</th>
+                {{-- <th>Categorie Paiement</th> --}}
                 </thead>
             @foreach ($abonnement as $abn)
             <tbody style="font-size: 11px; color: #545454"> 
@@ -262,7 +262,7 @@
                     <td>{{$abn->status_facture}}</td>
                     <td>{{$abn->nom_type}}</td> 
                     <td>{{$abn->montant_facture}}</td>
-                    <td>{{$abn->categorie}}</td>
+                    {{-- <td>{{$abn->categorie}}</td> --}}
                 </tr>
             </tbody>
             @endforeach

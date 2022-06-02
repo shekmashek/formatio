@@ -19,4 +19,7 @@ CREATE TABLE devise
 insert into devise values
 (1,"Ariary","AR");
 
+ALTER TABLE devise add column description  VARCHAR(200);
+ 
+
 

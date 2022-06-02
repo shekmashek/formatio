@@ -107,7 +107,7 @@ class ResponsableCfpController extends Controller
             // dd($responsables);
             $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
             $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
-            return view('cfp.responsable_cfp.affParametre_cfps', compact('refs','horaire','reseaux_sociaux','responsables','abonnement'));
+            return view('cfp.responsable_cfp.profile_cfp', compact('refs','horaire','reseaux_sociaux','responsables','abonnement'));
         }
 
     }

@@ -21,7 +21,7 @@
 </form>
 <table class="table mt-4">
   <thead>
-  <th>Module </th>
+  <th>Modules </th>
   </thead>
   <tbody>  
     @foreach ($modules as $modulo)   

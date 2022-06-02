@@ -295,7 +295,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Noms</th>
+                                        <th>Noms </th>
                                         <th>Fonction</th>
                                         <th>Contact</th>
                                         <th>Dept & Sce</th>
@@ -306,6 +306,29 @@
                                 </tbody>
                             </table>
                         @endcanany
+                        <label id=""></label>
+                      
+                        <table class="table">
+                           
+                            <thead>
+                                <tr>
+                                  
+                                    <th>Matériel nécessaire</th>
+                                    <th>
+                                        Demandé(e) par
+                                    </th>
+                                    <th>
+                                        Pris en charge par
+                                    </th>
+                                    <th>
+                                        Note
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="ressource" >
+
+                            </tbody>
+                        </table>
                     {{-- </div>
                 </div>
             </div> --}}
@@ -531,6 +554,7 @@
                                     var logo_formateur = document.getElementById('logo_formateur');
                                     var nb_apprenant = document.getElementById('nb_apprenant');
                                     nb_apprenant.innerHTML = '';
+                                    
                                     if ( nom_cfp == null) {
                                         console.log('null');
                                     }
@@ -572,7 +596,8 @@
                                     lieu.innerHTML = '';
                                     var salle = document.getElementById('salle');
                                     salle.innerHTML = '';
-
+                                    var ressource = document.getElementById('ressource');
+                                    ressource.innerHTML = '';
                                     var liste_app = document.getElementById('liste_app');
                                     liste_app.innerHTML = '';
                                     // alert(entreprises[0].nom_etp);
@@ -591,6 +616,7 @@
                                     var nombre_stg = userDataDetail['nombre_stg'];
                                     var formations = userDataDetail['formations'];
                                     var id_detail = userDataDetail['id_detail'];
+                                    var res=userDataDetail["ressource"];
                                     var images = '';
                                     var html = '';
                                     var formation = '';
@@ -602,6 +628,9 @@
                                     var cfp = '';
                                     var etp = '';
                                     var printpdf = '';
+
+                                  
+
                                     for (var $i = 0; $i < userData.length; $i++) {
                                         printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a>';
                                         printpdf = printpdf.replace(":?",id_detail);
@@ -611,7 +640,7 @@
                                         date_fin= new Date(userData[$i].date_fin);
 
                                         $('#nb_apprenant').append(nombre_stg);
-
+                                        $('#ressource').append(ressource);
                                         const event1 = new Date(date_debut);
                                         const event2 = new Date(date_fin);
 
@@ -715,6 +744,16 @@
 
                                     }
                                     $('#liste_app').append(html);
+
+                                      /*ressource*/
+                                    for(var $i =0;$i<res.length;$i++){
+                                        html += '<tr><td>'+res[$i].description+'</td><td>'+res[$i].demandeur+'</td><td>'+res[$i].pris_en_charge+'</td><td>'+res[$i].note+'</td></tr>';
+                                           
+                                    }
+                                    $('#ressource').append(html);
+
+
+                                    
                                 }
                                 , error: function(error) {
                                     console.log(error)

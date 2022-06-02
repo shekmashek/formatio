@@ -2,6 +2,7 @@
 @section('title')
     <h3 class="text_header m-0 mt-1">Entreprises professionnelles</h3>
 @endsection
+@inject('groupe','App\groupe')
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -193,16 +194,22 @@
  
                     @foreach ($datas as $data)
                         
-                   
+                  
                     <tr>
                         <td>
                             <img  class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/entreprises/'.$data->entreprise->logo)}}" style="width:120px;height:60px" cellspacing="0">
+                            
                         </td>
+                       
                         <td><span>{{ $data->entreprise->nom_etp }}</span></td>
                         <td><span>{{ $data->nom_resp}}</span><span class="ms-1">{{ $data->prenom_resp}}</span></td>
                       
                         <td>{{ $data->entreprise->email_etp}}</td>
-                        <td>{{ $data->telephone_resp}}</td>
+                        <td>
+                        @php
+                            echo $groupe->formatting_phone($data->telephone_resp);
+                        @endphp
+                        </td>
                         <td>{{ $data->created_at}}</td>
                         
                         {{-- <td>{{ $etp->site_etp }}</td> --}}

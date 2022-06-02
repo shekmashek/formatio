@@ -345,16 +345,15 @@ class ResponsableController extends Controller
             $refs = $fonct->findWhereMulitOne("responsables",["id"],[$id]);
 
             $entreprise = entreprise::with('Secteur')->findOrFail($refs->entreprise_id);
-
-            $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$refs->entreprise_id]);
+            // $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$refs->entreprise_id]);
+            $branche=branche::where('entreprise_id',$refs->entreprise_id)->get();
             // $referent = entreprise::findOrFail($id);
             //  $entreprise_id=entreprise::where('id',$id)->value('id');
-
              $abonnement = $fonct->findWhere("v_abonnement_facture_entreprise",["entreprise_id"],[$refs->entreprise_id]);
 
             $responsables=responsable::where('entreprise_id',$refs->entreprise_id)->where('prioriter',0)->get();
 
-           return view('admin.responsable.affichage_parametreReferent', compact('refs','entreprise','branche','responsables','abonnement'));
+           return view('admin.responsable.profile_entreprise', compact('refs','entreprise','branche','responsables','abonnement'));
         }
     }
     public function show($id)
