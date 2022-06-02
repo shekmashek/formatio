@@ -250,7 +250,7 @@
                                                             data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
                                                             checked>
                                                     </div>
-                                                        @else
+                                                @else
                                                     <div class="form-check form-switch">
                                                         <label class="form-check-label"
                                                             for="flexSwitchCheckChecked">
@@ -261,7 +261,7 @@
                                                         <input class="form-check-input activer_stg" type="checkbox"
                                                             data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
                                                     </div>
-                                                        @endif
+                                                @endif
 
                                             </td>
                                             <td class="align-middle text-center text-secondary">
@@ -352,7 +352,7 @@
                 new $.fn.dataTable.FixedHeader(table);
             });
 
-            // desactiver stagiaire
+            // desactiver/activer stagiaire
             $(".desactiver_stg").on('click', function(e) {
                 var user_id = $(this).data("user-id");
                 var stg_id = $(this).val();
@@ -389,8 +389,6 @@
                     }
                 });
             });
-
-            // modal form 
 
             // verification à l'ajout 
 

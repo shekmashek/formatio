@@ -193,6 +193,7 @@ Route::get('/utilisateur_superAdmin', 'UtilisateurControlleur@superAdmin')->name
 Route::resource('formateur', 'ProfController')->except([
     'index', 'edit'
 ]);
+
 Route::post('/update_prof/{id?}', 'ProfController@misajourFormateur')->name('update_prof');
 Route::post('/update_experience/{id?}', 'ProfController@update_experience')->name('update_experience');
 Route::post('/update_domaine/{id?}', 'ProfController@update_domaine')->name('update_domaine');
@@ -724,8 +725,8 @@ Route::get('employes.export.verify_email_stg','ParticipantController@verify_emai
 Route::get('employes.export.verify_cin_stg','ParticipantController@verify_cin_stg')->name('employes.export.verify_cin_stg');
 
 Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->name('employes.liste.activer');
-Route::get('employes.new','ParticipantController@new_emp')->name('employes.new');
 Route::get('employes.liste.desactiver','ParticipantController@desactiver_stagiaire')->name('employes.liste.desactiver');
+Route::get('employes.new','ParticipantController@new_emp')->name('employes.new');
 
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement', 'ChefDepartementController');
@@ -1354,3 +1355,7 @@ Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagia
 Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploye');
 
 Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInfo');
+
+// ROUTES DONNEES JSON
+Route::get('/getDomains', 'ProfController@getDomains')->name('getDomains');
+

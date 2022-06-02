@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Image;
+use App\cfp;
+use App\User;
+use App\Domaine;
+use App\formateur;
+use App\responsable;
 use App\competenceFormateur;
 use App\experienceFormateur;
 use Illuminate\Http\Request;
-use App\formateur;
-use App\responsable;
-use App\User;
-use App\cfp;
 use App\Models\getImageModel;
+use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use App\Models\FonctionGenerique;
-use Illuminate\Support\Facades\URL;
-use Image;
+
 class ProfController extends Controller
 {
 
@@ -162,11 +164,24 @@ class ProfController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+     
+    public function getDomains () {
+        $domaines = Domaine::all();
+        // dd($domaines);
+        return response()->json($domaines);
+}
+
     public function  nouveau_formateur(){
         $fonct = new FonctionGenerique();
-        $niveau = $fonct->findAll('niveau_etude');
-        return view('admin.formateur.nouveauFormateur',compact('niveau'));
+        $domaines = Domaine::all();
+        $niveaux_etude = $fonct->findAll('niveau_etude');
+        // dd($domaines);
+        return view('admin.formateur.nouveauFormateur',compact('niveaux_etude', 'domaines'));
     }
+
+
     public function store(Request $request)
     {
         $fonct = new FonctionGenerique();
@@ -185,21 +200,21 @@ class ProfController extends Controller
                     return redirect()->back()->with('erreur_photo', 'La taille maximale de la photo doit être de 1.7 MB');
                 }
                 else{
-                    if($request->sexe == "homme") $genre = 2;
-                    if($request->sexe == "femme") $genre = 1;
-                    if($request->sexe == "null") $genre = null;
+                    // if($request->sexe == "homme") $genre = 2;
+                    // if($request->sexe == "femme") $genre = 1;
+                    // if($request->sexe == "null") $genre = null;
 
                     $frm = new formateur();
                     $frm->nom_formateur = $request->nom;
                     $frm->prenom_formateur = $request->prenom;
                     $frm->mail_formateur = $request->mail;
                     $frm->numero_formateur = $request->phone;
-                    $frm->genre_id = $genre;
+                    $frm->genre_id = $request->sexe;
                     $frm->date_naissance = $request->date_naissance;
                     $frm->adresse = $request->adresse;
                     $frm->CIN = $request->cin;
                     $frm->specialite = $request->specialite;
-                    $frm->niveau_etude_id = $request->niveau;
+                    $frm->niveau = $request->niveau;
 
                     $date = date('d-m-Y');
                     $nom_image = str_replace(' ', '_', $request->nom . '' . $request->phone . '' . $date . '.png');

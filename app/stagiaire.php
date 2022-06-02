@@ -75,6 +75,7 @@ class Stagiaire extends Model
         DB::commit();
     }
 
+    
     public function desactiver($user_id, $emp_id,$entreprise_id){
         DB::update("UPDATE stagiaires SET activiter=FALSE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
         return ["status" =>"activer"];

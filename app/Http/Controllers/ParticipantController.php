@@ -78,6 +78,9 @@ class ParticipantController extends Controller
 
 
 
+
+    // desactiver() et activer() sont des fonctions dans le model Stagiaire
+
     public function desactiver_stagiaire(Request $req)
     {
 

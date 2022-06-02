@@ -2,23 +2,16 @@
 
 ### Laravel wrapper for [Dompdf HTML to PDF Converter](https://github.com/dompdf/dompdf)
 
+![Tests](https://github.com/barryvdh/laravel-dompdf/workflows/Tests/badge.svg)
+
+## Installation
+
+### Laravel
 Require this package in your composer.json and update composer. This will download the package and the dompdf + fontlib libraries also.
 
     composer require barryvdh/laravel-dompdf
 
-## Installation
-
-### Laravel 5.x:
-
-After updating composer, add the ServiceProvider to the providers array in config/app.php
-
-    Barryvdh\DomPDF\ServiceProvider::class,
-
-You can optionally use the facade for shorter code. Add this to your facades:
-
-    'PDF' => Barryvdh\DomPDF\Facade::class,
-
-### Lumen:
+### Lumen
 
 After updating composer add the following lines to register provider in `bootstrap/app.php`
 
@@ -36,22 +29,32 @@ To change the configuration, copy the config file to your config folder and enab
 
 You can create a new DOMPDF instance and load a HTML string, file or view name. You can save it to a file, or stream (show in browser) or download.
 
+```php
     $pdf = App::make('dompdf.wrapper');
     $pdf->loadHTML('<h1>Test</h1>');
     return $pdf->stream();
+```
 
 Or use the facade:
 
+```php
+    use Barryvdh\DomPDF\Facade\Pdf;
+
     $pdf = PDF::loadView('pdf.invoice', $data);
     return $pdf->download('invoice.pdf');
+```
 
 You can chain the methods:
 
+```php
     return PDF::loadFile(public_path().'/myfile.html')->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
+```
 
 You can change the orientation and paper size, and hide or show errors (by default, errors are shown when debug is on)
 
+```php
     PDF::loadHTML($html)->setPaper('a4', 'landscape')->setWarnings(false)->save('myfile.pdf')
+```
 
 If you need the output as a string, you can get the rendered PDF with the output() function, so you can save/output it yourself.
 
@@ -60,12 +63,14 @@ You can also use your ConfigProvider to set certain keys.
 
 ### Configuration
 The defaults configuration settings are set in `config/dompdf.php`. Copy this file to your own config directory to modify the values. You can publish the config using this command:
-
+```shell
     php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+```
 
 You can still alter the dompdf options in your code before generating the pdf using this command:
-
+```php
     PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+```
     
 Available options and their defaults:
 * __rootDir__: "{app_directory}/vendor/dompdf/dompdf"
