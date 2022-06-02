@@ -109,6 +109,13 @@ class Groupe extends Model
         return $info;
     }
 
+    public function info_resp_cfp($id){
+        $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,
+        f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,d.groupe_id,d.formateur_id,f.photos ',[$id]);
+
+        return $formateur_cfp;
+    }
+
     public function resultat_eval($groupe_id){
         $users = Auth::user()->id;
         $stg_id= stagiaire::where('user_id',$users)->value('id');

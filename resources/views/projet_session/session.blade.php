@@ -496,14 +496,19 @@
                                 </div>
                             </div>  
                         @canany(['isCFP'])
+                            @php
+                                $form_cfp = $groupe->info_resp_cfp($projet[0]->groupe_id);
+                            @endphp
+
                             <div class="chiffre_d_affaire">
                                 <div class="d-flex flex-row">
                                     @if(count($formateur_cfp)>0)
                                         <p class="p-0 me-2 text-center" style="margin-top: 1.9rem !important"> Formateur(s) :&nbsp;</p>
                                     @endif
                                     @foreach ($formateur_cfp as $form)
-                                        <img src="{{ asset('images/formateurs/' . $form->photos) }}" alt=""
-                                            class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%;margin-top: 1.6rem !important">
+                                        <img data-bs-toggle="offcanvas" data-bs-target="#formCanvas" aria-controls="formCanvas" src="{{ asset('images/formateurs/' . $form->photos) }}" alt=""
+                                            class="img_superpose mt-2" height="30px" width="30px" style="cursor: pointer; border-radius: 50%;margin-top: 1.6rem !important"
+                                            data-id="{{$form->formateur_id}}" id="{{$form->formateur_id}}">
                                     @endforeach()
                                 </div>
                                 </strong></p>
@@ -832,6 +837,150 @@
         </section>
     </div>
 
+    {{-- formateur cfp --}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="formCanvas" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">INFORMATION</h5>
+            <hr>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <hr class="mt-2">
+
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1 || $type_formation_id == 2)
+                    <div class="mt-1 text-center mb-3">
+                        <span id="donner">
+                            <img src="{{ asset('images/formateurs/' . $form->photos ) }}" class="img-fluid text-center"
+                            style="width:120px;height:120px;" role="button">
+                        </span>
+                    </div>
+                    <div class="mt-1 text-center">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <p id="nomEtp" style="border-bottom: 3px solid rgb(137, 56, 243); color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 500; padding: 5px;">
+                                    {{ $of->nom }}
+                                </p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-user saClass'></i></div>
+                            <div class="col-md-3" id="saId">Nom_prénoms</div>
+                            <div class="col-md">
+                                <span id="saId" style="font-size: 14px;">
+                                    @if ($form->nom_formateur  == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $form->nom_formateur }}&nbsp;&nbsp;{{ $form->prenom_formateur }}
+                                    @endif
+                                </span>
+                                <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-envelope saClass'></i></div>
+                            <div class="col-md-3" id="saId">E-mail</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($form->mail_formateur == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $form->mail_formateur }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-phone saClass'></i></div>
+                            <div class="col-md-3" id="saId">Télephone</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($form->numero_formateur == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $form->numero_formateur }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-id-card saClass' ></i></div>
+                            <div class="col-md-3" id="saId">CIN</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($form->cin == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $form->cin }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-location-plus saClass'></i></div>
+                            <div class="col-md-3" id="saId">Adresse</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($form->adresse == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $form->adresse }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-spreadsheet saClass'></i></div>
+                            <div class="col-md-3" id="saId">Spécialité</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($form->specialite == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $form->specialite }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
     {{--resp OF--}}
     <div class="offcanvas offcanvas-end" tabindex="-1" id="test" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
@@ -843,7 +992,7 @@
             <hr class="mt-2">
 
             <div class="mt-2" style="font-size:14px">
-                @if ($type_formation_id == 1)
+                @if ($type_formation_id == 1 || $type_formation_id == 2)
                     <div class="mt-1 text-center mb-3">
                         <span id="donner">
                             <img src="{{ asset('images/CFP/' . $of->photos_resp_cfp ) }}" class="img-fluid text-center"
@@ -851,9 +1000,15 @@
                         </span>
                     </div>
                     <div class="mt-1 text-center">
-                        <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold">
-                            {{ $of->nom }}
-                        </span>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <p id="nomEtp" style="border-bottom: 3px solid rgb(137, 56, 243); color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+                                    {{ $of->nom }}
+                                </p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
                     </div>
                     <div class="mt-1">
                         <div class="row">
@@ -949,6 +1104,7 @@
                         </div>
                     </div>
                 @endif
+                
             </div>
         </div>
     </div>
@@ -964,7 +1120,7 @@
             <hr class="mt-2">
 
             <div class="mt-2" style="font-size:14px">
-                @if ($type_formation_id == 1)
+                @if ($type_formation_id == 1 || $type_formation_id == 2)
                     <div class="mt-1 text-center mb-3">
                         <span id="donner">
                             <img src="{{ asset('images/CFP/' . $of->logo ) }}" class="img-fluid text-center"
@@ -972,9 +1128,15 @@
                         </span>
                     </div>
                     <div class="mt-1 text-center">
-                        <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold">
-                            {{ $of->nom }}
-                        </span>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <p id="nomEtp" style="border-bottom: 3px solid rgb(137, 56, 243); color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+                                    {{ $of->nom }}
+                                </p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
                     </div>
                     <div class="mt-1">
                         <div class="row">
@@ -1090,6 +1252,7 @@
                         </div>
                     </div>
                 @endif
+                
             </div>
         </div>
     </div>
@@ -1114,9 +1277,15 @@
                     </span>
                 </div>
                 <div class="mt-1 text-center">
-                    <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold">
-                        {{ $projet[0]->nom_etp }}
-                    </span>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <p id="nomEtp" style="border-bottom: 3px solid rgb(137, 56, 243); color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+                                {{ $projet[0]->nom_etp }}
+                            </p>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
                 </div>
                 <div class="mt-1">
                     <div class="row">
@@ -1358,34 +1527,6 @@
     </div>
 </div>
 
-    {{-- <div class="infos mt-3">
-        <div class="row">
-            <div class="col">
-                <p class="m-0">infos</p>
-            </div>
-            <div class="col text-end">
-                <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
-            </div>
-            <hr class="mt-2">
-            <div class="text-center mt-2">
-                @if ($type_formation_id == 1)
-                    <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" class="img-fluid text-center"
-                        style="width:120px;height:60px;" role="button" onclick="afficherInfos();">
-                    <div>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong> Adresse:{{ $projet[0]->adresse_rue }}
-                                {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal }}
-                                {{ $projet[0]->adresse_ville }} {{ $projet[0]->adresse_region }}</strong></p>
-                    </div>
-                @endif
-
-            </div>
-        </div>
-    </div> --}}
-
-    {{-- </div> --}}
 
     {{-- keep nav in refresh --}}
     <script>

@@ -137,6 +137,13 @@ class SessionController extends Controller
         return response()->json($of);
     }
 
+    public function info_resp_cfp($id){
+        $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,
+        f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,d.groupe_id,d.formateur_id,f.photos ',[$id]);
+
+        dd($formateur_cfp);
+    }
+
     public function detail_session(){
         // dd(URL::to('/').'/sarin Gael');
         $user_id = Auth::user()->id;
@@ -182,7 +189,8 @@ class SessionController extends Controller
 
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
-            $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
+            $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,
+            f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,d.groupe_id,d.formateur_id,f.photos ',[$id]);
             // dd($formateur_cfp);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             

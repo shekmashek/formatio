@@ -405,7 +405,8 @@
                                                 @if ($d->photos == null)
                                                     <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @else
-                                                    <img src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                    <img data-bs-toggle="offcanvas" data-bs-target="#formCanvas" aria-controls="formCanvas" src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%; cursor: pointer" 
+                                                    data-id="{{$form->formateur_id}}" id="{{$form->formateur_id}}"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif
                                             </td>
                                             @canany(['isCFP'])

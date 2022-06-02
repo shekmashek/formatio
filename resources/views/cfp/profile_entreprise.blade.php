@@ -458,10 +458,14 @@
                         </tr>
                     @else
                         @foreach($entreprise as $etp)
-                        <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
-                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
-                            <td role="button"  onclick="afficherInfos();">
-                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                        <tr>
+                            <td>
+                                <img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;" 
+                                data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" class="information"  onclick="afficherInfos();"><span class="ms-3">{{$etp->nom_etp}}</span>
+                            </td>
+                            <td >
+                                <img  src="{{asset("images/responsables/".$etp->photos_resp)}}" 
+                                style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                             </td>
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
@@ -743,9 +747,10 @@
                         </tr>
                     @else
                         @foreach($entreprise as $etp)
-                        <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
-                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
-                            <td role="button"  onclick="afficherInfos();">
+                        <tr >
+                            <td>
+                                <img class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();" src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
+                            <td>
                                 <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                             </td>
                         <td>
@@ -921,7 +926,8 @@
           Tab 3 content
         </div>
       </div>
-      <div class="infos mt-3">
+
+    <div class="infos mt-3">
         <div class="row">
             <div class="col">
                 <p class="m-0 text-center">INFORMATION</p>
@@ -942,7 +948,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                        <div class="col-md-1"><i class='bx bx-user'></i></div>
                         <div class="col-md-3">Responsable</div>
                         <div class="col-md">
                             <span id="nom_reponsable" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
@@ -953,7 +959,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
                         <div class="col-md-3">Adresse</div>
                         <div class="col-md">
                             <div class="row">
@@ -976,7 +982,7 @@
                 <div class="mt-2">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="col-md-1"><i class='bx bx-envelope'></i></div>
                         <div class="col-md-3">E-mail</div>
                         <div class="col-md">
                             <span id="email_etp"><span>
@@ -986,7 +992,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                        <div class="col-md-1"><i class='bx bx-phone'></i></div>
                         <div class="col-md-3">Tel</div>
                         <div class="col-md">
                             <span id="telephone_etp"><span>
@@ -996,7 +1002,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                        <div class="col-md-1"><i class='bx bx-globe'></i></div>
                         <div class="col-md-3">Site web</div>
                         <div class="col-md"><span id="site_etp"></span></div>
                     </div>
@@ -1144,7 +1150,7 @@
                 //parcourir le premier tableau contenant les info sur les programmes
                 for (let $i = 0; $i < userData.length; $i++) {
 
-                    let url_photo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:60px">';
+                    let url_photo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:120px">';
                     url_photo = url_photo.replace(":url_img", userData[$i].logo_etp);
                     $("#logo").html(" ");
                     $("#logo").append(url_photo);

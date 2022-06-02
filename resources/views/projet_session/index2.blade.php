@@ -409,7 +409,8 @@
                                                         <td class="text-start">
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    {{ $etp->nom_etp }}
+                                                                    <a href="#" class="information" data-id="{{ $etp->groupe_id }}" id="{{ $etp->groupe_id }}" 
+                                                                        onclick="afficherInfos();">{{ $etp->nom_etp }}</a>
                                                                 @endif
                                                             @endforeach
                                                         </td>
@@ -1303,7 +1304,248 @@
                         @endcanany
                     </div>
                 </div>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+            {{--AfficheInfos--}}
+            {{-- <div class="infos mt-3">
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0 text-center">INFORMATION</p>
+                    </div>
+                    <div class="col text-end">
+                        <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                    </div>
+                    <hr class="mt-2">
+
+                    <div class="mt-2" style="font-size:14px">
+                            @if ($etp->groupe_id == $pj->groupe_id)
+                                <div class="mt-1 text-center mb-3">
+                                    <span id="donner">
+                                        <img src="{{ asset('images/entreprises/' . $etp->logo) }}" class="img-fluid text-center"
+                                        style="width:120px;height:120px;" role="button" onclick="afficherInfos();">
+                                    </span>
+                                </div>
+                                <div class="mt-1 text-center">
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <p id="nomEtp" style="border-bottom: 3px solid rgb(137, 56, 243); color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+                                                {{ $etp->nom_etp }}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-credit-card-front' ></i></div>
+                                        <div class="col-md-3">NIF</div>
+                                        <div class="col-md">
+                                            <span id="nom" style="font-size: 14px;">
+                                                @if ( $etp->nif == null)
+                                                    @php
+                                                        echo ": ---"
+                                                    @endphp
+                                                @else
+                                                    : {{ $etp->nif }}
+                                                @endif
+                                                
+                                            </span>
+                                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-credit-card' ></i></div>
+                                        <div class="col-md-3">STAT</div>
+                                        <div class="col-md">
+                                            <span id="nomd" style="font-size: 14px;">
+                                                @if ($etp->stat == null)
+                                                    @php
+                                                        echo ": ---"
+                                                    @endphp
+                                                @else
+                                                    : {{ $etp->stat }}
+                                                @endif
+                                            </span>
+                                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-phone'></i></div>
+                                        <div class="col-md-3">Tel</div>
+                                        <div class="col-md">
+                                            <span id="nom" style="font-size: 14px;">
+                                                @if ($etp->telephone_etp == null)
+                                                    @php
+                                                        echo ": ---"
+                                                    @endphp
+                                                @else
+                                                    : {{ $etp->telephone_etp }}
+                                                @endif
+                                            </span>
+                                            <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                                        <div class="col-md-3">E-mail</div>
+                                        <div class="col-md">
+                                            <span id="matriculess">
+                                                @if ($etp->email_etp == null)
+                                                    @php
+                                                        echo ": ---"
+                                                    @endphp
+                                                @else
+                                                    : {{ $etp->email_etp }}
+                                                @endif
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                                        <div class="col-md-3">Adresse</div>
+                                        <div class="col-md">
+                                            <span id="mail_stagiaire">
+                                                @if ($etp->adresse_rue == null)
+                                                    @php
+                                                        echo ": ---"
+                                                    @endphp
+                                                @else
+                                                    : {{ $etp->adresse_rue }}
+                                                    {{ $etp->adresse_quartier }} {{ $etp->adresse_code_postal }}
+                                                    {{ $etp->adresse_ville }} {{ $etp->adresse_region }} 
+                                                @endif
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-globe' ></i></div>
+                                        <div class="col-md-3">Site web</div>
+                                        <div class="col-md">
+                                            <span id="mail_stagiaire">
+                                                @if ($etp->site_etp == null)
+                                                    @php
+                                                        echo ": ---"
+                                                    @endphp
+                                                @else
+                                                    : {{ $etp->site_etp }}
+                                                @endif
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                    </div>
+                </div>
+            </div> --}}
+
+            <div class="infos mt-3">
+                <div class="row">
+                    <div class="col">
+                        <p class="m-0 text-center">INFORMATION</p>
+                    </div>
+                    <div class="col text-end">
+                        <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                    </div>
+                    <hr class="mt-2">
+                    <div style="font-size: 13px">
+            
+                        <div class="mt-1 text-center mb-3">
+                            <span id="logo"></span>
+                        </div>
+                        <div class="mt-1 text-center">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p id="nom_entreprise" style="color: #64b5f6; font-size: 22px; text-transform: uppercase; border-bottom: 3px solid rgb(137, 56, 243);"></p>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                        </div>
+            
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-user'></i></div>
+                                <div class="col-md-3">Responsable</div>
+                                <div class="col-md">
+                                    <span id="nom_reponsable" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                                    <span id="prenom_responsable" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-2">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-envelope'></i></div>
+                                <div class="col-md-3">E-mail</div>
+                                <div class="col-md">
+                                    <span id="email_etp"><span>
+                            </div>
+            
+                        </div>
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-phone'></i></div>
+                                <div class="col-md-3">Tel</div>
+                                <div class="col-md">
+                                    <span id="telephone_etp"><span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
+                                <div class="col-md-3">Adresse</div>
+                                <div class="col-md">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span id="adrlot"></span>
+                                        </div>
+                                        <div class="com-md-12">
+                                            <span id="adrlot2"></span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <span id="adrlot3"></span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <span id="adrlot4"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-globe'></i></div>
+                                <div class="col-md-3">Site web</div>
+                                <div class="col-md"><span id="site_etp"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
                 <script src="{{ asset('js/index2.js') }}"></script>
                 <script>
                     $("#formation_session_id").on("change", function() {
@@ -1348,4 +1590,37 @@
 
                     localStorage.setItem('activeTab', 'detail');
                 </script>
-            @endsection
+    <script>
+            $(".information").on('click', function(e) {
+            let id = $(this).data("id");
+            console.log(id);
+            $.ajax({
+                method: "GET"
+                , url: "/info_etp_new/"+id
+                    , dataType: "html"
+                    , success: function(response) {
+                        let userData = JSON.parse(response);
+                        // console.log(userData);
+
+                        for (let $i = 0; $i < userData.length; $i++) {
+
+                            let url_photo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:120px">';
+                            url_photo = url_photo.replace(":url_img", userData[$i].logo);
+                            $("#logo").html(" ");
+                            $("#logo").append(url_photo);
+                            $("#nom_entreprise").text(userData[$i].nom_etp);
+                            $("#nom_reponsable").text(': '+userData[$i].nom_resp);
+                            $("#prenom_responsable").text(userData[$i].prenom_resp);
+                            $("#adrlot").text(': '+userData[$i].adresse_rue);
+                            $("#adrlot3").text(': '+userData[$i].adresse_quartier);
+                            $("#adrlot4").text(': '+userData[$i].adresse_ville);
+                            $("#email_etp").text(': '+userData[$i].email_etp);
+                            $("#telephone_etp").text(': '+userData[$i].telephone_etp);
+                            $("#site_etp").text(': '+userData[$i].site_etp);
+                        }
+                    }
+                });
+            });
+        
+    </script>
+@endsection
