@@ -39,8 +39,9 @@
 
         <form action="{{route('create_facture')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
             @csrf
+
             <div class="container-fluid">
-                <section class="section1 mb-4">
+                <div class="section1 mb-4">
                     <div class="row">
                         <div class="col-6">
                             <h2>Nouvelle facture</h2>
@@ -49,10 +50,11 @@
                             <input type="submit" class="btn btn_submit " id="enregristrer_facture" value="Enregistrer et continuer">
                         </div>
                     </div>
-                </section>
-                <section class="section2 mb-4">
+                </div>
+                <div class="section2 mb-4">
                     <div class="row header_facture">
                         <h6 class="mb-0 changer_carret d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
+
                             Adresse et coordonnées de l'entreprise, titre, résumé et logo
                             <i class="bx bx-caret-down carret-icon text-end"></i>
                         </h6>
@@ -91,8 +93,8 @@
                             </div>
                         </div>
                     </div>
-                </section>
-                <section class="section3">
+                </div>
+                <div class="section3">
                     <div class="row entreprise_facturer">
                         <div class="col-6 p-4">
                             <h6>Facturer à</h6>
@@ -103,37 +105,39 @@
                                     <option value="{{$tp->entreprise_id}}">{{$tp->nom_etp}}</option>
                                     @endforeach
                                 </select>
-                                <div class="details">
-                                    <p class="m-0 nom_cfp" id="nom_etp_detail"></p>
-                                    <p class="m-0 " id="adresse_etp"></p>
-                                    <p class="mt-3 m-0 " id="tel_etp"></p>
-                                    <p class="m-0 " id="mail_etp"></p>
-                                    <p class="m-0 " id="site_etp"></p>
-                                    <p class="m-0 " id="info_légale_etp"></p>
-                                </div>
+                                @if ((count($entreprise))<=0) <span style="color:#ff0000;font-size: 60%"> vous ne pouvez pas faire la facturation si vous n'êtes collaboré avec aucun entreprise</span>
+                                    @endif
+                                    <div class="details">
+                                        <p class="m-0 nom_cfp" id="nom_etp_detail"></p>
+                                        <p class="m-0 " id="adresse_etp"></p>
+                                        <p class="mt-3 m-0 " id="tel_etp"></p>
+                                        <p class="m-0 " id="mail_etp"></p>
+                                        <p class="m-0 " id="site_etp"></p>
+                                        <p class="m-0 " id="info_légale_etp"></p>
+                                    </div>
                             </div>
                         </div>
                         <div class="col-6 p-4">
                             <div class="row mb-2">
-                                <div class="col-12 d-flex flex-row justify-content-end">
+                                <div class="col-12   d-flex flex-row justify-content-end">
                                     {{-- <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" autocomplete="off" placeholder="N° facture" class="form-control input_simple" name="num_facture" id="num_facture" required> --}}
 
                                     <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" autocomplete="off" placeholder="N°" class="text-end titre_facture   mb-2 m-0 " name="num_facture" id="num_facture" required>
                                     @error('num_facture')
-                                    <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                    <p> <span class="m-0 pt-3 text-end me-3 d-flex " style="color:#ff0000;float:right; font-size: 60%"> {{$message}} </span></p>
                                     @enderror
                                 </div>
-                                <p> <span style="color:#ff0000;" id="num_facture_err"></span></p>
+                                <p> <span class="text-end" style="color:#ff0000;float:right; font-size: 60%" id="num_facture_err"></span></p>
 
                             </div>
                             <div class="row mb-2">
                                 <div class="col-12 d-flex flex-row justify-content-end">
                                     <p class="m-0 pt-3 text-end me-3">N° BC</p> <input type="text" autocomplete="off" class="text-end titre_facture   mb-2 m-0 " name="reference_bc" id="reference_bc" required placeholder="bon de commande">
                                     @error('reference_bc')
-                                    <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                    <p> <span style="color:#ff0000;float:right; font-size: 60%"> {{$message}} </span></p>
                                     @enderror
                                 </div>
-                                <p> <span style="color:#ff0000;" id="reference_bc_err"></span></p>
+                                <p> <span style="color:#ff0000;float:right; font-size: 60%" id="reference_bc_err"></span></p>
 
                             </div>
                             <div class="row mb-2">
@@ -150,44 +154,44 @@
                             </div>
                         </div>
                     </div>
-                </section>
-                <section class="section4 mb-4">
+                </div>
+                <div class="section4 mb-4 mt-4">
                     <div class="row services_factures">
                         <div class="col-12 pb-4 ">
                             <div class="row titres_services">
                                 <div class="col-2">
-                                    <h6 class="m-0">Projet</h6>
+                                    <p class="m-0" style="font-size: 80%">Projet</p>
                                 </div>
                                 <div class="col-3">
-                                    <h6 class="m-0">Session</h6>
+                                    <p class="m-0" style="font-size: 80%">Session</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Quantité</h6>
+                                    <p class="m-0" style="font-size: 80%">Quantité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">Unité</h6>
+                                    <p class="m-0" style="font-size: 80%">Unité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
+                                    <p class="m-0" style="font-size: 80%">PU HT ({{$devise->reference}})</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
+                                    <p class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0"></h6>
+                                    <p class="m-0"></p>
                                 </div>
                             </div>
                             <div class="row my-3">
                                 <div class="col-2">
                                     <select class="form-select selectP input_section4 mb-2" id="projet_id" name="projet_id" aria-label="Default select example" required>
                                     </select>
-                                    <span style="color:#ff0000;" id="projet_id_err">Aucun projet a été
+                                    <span style="color:#ff0000; font-size: 60%" id="projet_id_err">Aucun projet a été
                                         détecter</span>
                                 </div>
                                 <div class="col-3">
                                     <select class="form-select selectP input_section4 mb-2 session_id" id="session_id[]" name="session_id[]" aria-label="Default select example" required>
                                     </select>
-                                    <span style="color:#ff0000;" id="session_id_err">Aucun session a été
+                                    <span style="color:#ff0000; font-size: 60%" id="session_id_err">Aucun session a été
                                         détecter</span>
                                 </div>
                                 <div class="col-1">
@@ -199,7 +203,7 @@
                                 <div class="col-2">
                                     <input type="number" name="facture[]" autocomplete="off" min="0" id="facture[]" class="  form-control  qte input_quantite" required>
                                 </div>
-                                <div class="col-1 text-end">
+                                <div class="col-1 text-end pe-0">
                                     <p name="totale_facture[]" class="m-0 text_prix">0</p>
                                 </div>
                                 <div class="col-1 text-start pt-2">
@@ -214,37 +218,45 @@
                         </div>
 
                         <div class="">
-                            <p><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></p>
+                            <p><a role="button" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></p>
                         </div>
 
+
+
                         <div class="col-12 pb-4 ">
+
                             <div class="row  titres_services" style="display: none" id="titres_services_annexe">
                                 <div class="col-3">
-                                    <h6 class="m-0">Frais annexes</h6>
+                                    <p class="m-0" style="font-size: 80%">Frais annexes</p>
                                 </div>
                                 <div class="col-4">
-                                    <h6 class="m-0">Descriptions</h6>
+                                    <p class="m-0" style="font-size: 80%">Descriptions</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Quantité</h6>
+                                    <p class="m-0" style="font-size: 80%">Quantité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
+                                    <h6 class="m-0" style="font-size: 80%">PU HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1" align="right">
-                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
+                                    <h6 class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</h6>
                                 </div>
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>
                                 </div>
                             </div>
 
-                            <div id="newRow"></div>
+                            <div class="row ">
+                                <div id="newRow"></div>
+                            </div>
+
+
                         </div>
 
                         <div class="">
-                            <p> <a href="#" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
+                            <p> <a role="button" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
                         </div>
+
                         <div class="row mb-1 g-0 p-2">
 
                             <div class="row mb-3">
@@ -256,8 +268,6 @@
                                 <div class="col-2 text-end pe-2">
                                     <p id="totale_facture_ht" align="right">0</p>
                                 </div>
-                                {{-- <div class="col-1 text-end pt-2">
-                                </div> --}}
                             </div>
                             <div class="row mb-3">
                                 <div class="col-8 d-flex flex-row justify-content-end">
@@ -276,8 +286,6 @@
                                 <div class="col-2 text-end pe-2">
                                     <p id="total_remise" align="right">0</p>
                                 </div>
-                                {{-- <div class="col-1">
-                                </div> --}}
                             </div>
                         </div>
 
@@ -324,8 +332,8 @@
                             </div>
                         </div>
                     </div>
-                </section>
-                <section class="section5 mb-4">
+                </div>
+                <div class="section5 mb-4">
                     <div class="row header_facture">
                         <h6 class="mb-0 changer_carret2 d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
                             Informations légales
@@ -337,9 +345,11 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
+
         </form>
+
     </div>
 </div>
 {{-- <script src="{{asset('js/facture.js')}}"></script> --}}

@@ -103,7 +103,6 @@ GROUP BY
     pourcent;
 
 
-
 CREATE OR REPLACE VIEW v_remise_facture_tmp AS SELECT
 	cfp_id,
     projet_id,
@@ -126,6 +125,7 @@ GROUP BY
     remise_id,
     type_remise.description,
     type_remise.reference;
+
 
 CREATE OR REPLACE VIEW v_remise_facture AS SELECT
 	v_montant_brut_facture.cfp_id,

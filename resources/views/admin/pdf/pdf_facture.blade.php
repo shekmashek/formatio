@@ -247,10 +247,10 @@
                                         {{$fa->num_facture}}
                                     </a>
                                 </td>
-                                <td></td>
                                 <td>{{$fa->reference_type_facture}}</td>
+                                <td></td>
                                 {{-- <td></td> --}}
-                                {{-- <td></td> --}}
+                                <td></td>
                                 <td></td>
                                 <td>
                                     <div align="right">

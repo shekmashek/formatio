@@ -101,7 +101,7 @@
                                 <div class="col-12 d-flex flex-row justify-content-end">
                                     <p class="m-0 pt-3 text-end me-3">N° facture</p> <input type="text" value="{{$montant_totale->num_facture}}" class="text-end titre_facture   mb-2 m-0 " name="num_facture" required placeholder="reference du facture">
                                     @error('num_facture')
-                                    <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                    <p> <span style="color:#ff0000;float:right; font-size: 60%"> {{$message}} </span></p>
                                     @enderror
                                 </div>
                             </div>
@@ -109,9 +109,9 @@
                                 <div class="col-12 d-flex flex-row justify-content-end">
                                     <p class="m-0 pt-3 text-end me-3">N° BC</p> <input type="text" value="{{$session[0]->reference_bc}}" class="text-end titre_facture   mb-2 m-0 " name="reference_bc" id="reference_bc" required placeholder="reference du bon de commande">
                                     @error('reference_bc')
-                                    <p> <span style="color:#ff0000;"> {{$message}} </span></p>
+                                    <p> <span style="color:#ff0000; font-size: 60%"> {{$message}} </span></p>
                                     @enderror
-                                    <p> <span style="color:#ff0000;" id="reference_bc_err"></span></p>
+                                    <p> <span style="color:#ff0000; font-size: 60%" id="reference_bc_err"></span></p>
                                 </div>
                             </div>
                             <div class="row mb-2">
@@ -127,30 +127,30 @@
                         </div>
                     </div>
                 </section>
-                <section class="section4 mb-4">
+                <section class="section4 mb-4  mt-4">
                     <div class="row services_factures">
                         <div class="col-12 pb-4 ">
                             <div class="row titres_services">
                                 <div class="col-2">
-                                    <h6 class="m-0">Projet</h6>
+                                    <p class="m-0" style="font-size: 80%">Projet</p>
                                 </div>
                                 <div class="col-3">
-                                    <h6 class="m-0">Session</h6>
+                                    <p class="m-0" style="font-size: 80%">Session</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Quantité</h6>
+                                    <p class="m-0" style="font-size: 80%">Quantité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">Unité</h6>
+                                    <p class="m-0" style="font-size: 80%">Unité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
+                                    <p class="m-0" style="font-size: 80%">PU HT ({{$devise->reference}})</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
+                                    <p class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0"></h6>
+                                    <p class="m-0"></p>
                                 </div>
                             </div>
                             <div class="row my-2" id="inputFormRowMontant">
@@ -199,7 +199,7 @@
                                 <div class="col-2">
                                     <input type="number" value="{{$session[$i]->pu}}" name="facture[]" min="0" value="0" id="facture[]" class=" somme_totale_montant facture form-control input_quantite2 montant_session_facture" required>
                                 </div>
-                                <div class="col-1 text-end">
+                                <div class="col-1 text-end  pe-0">
                                     <p align="right" name="totale_facture[]" class="m-0 text_prix">{{number_format($session[$i]->hors_taxe,0,","," ")}}</p>
                                 </div>
                                 <div class="col-1 text-end pt-2">
@@ -214,105 +214,99 @@
                         </div>
 
                         <div class="">
-                            <p><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></p>
+                            <p><a role="button" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></p>
                         </div>
-
-                        @if (count($frais_annexes)>0)
                         <div class="col-12 pb-4 ">
+                            @if (count($frais_annexes)>0)
 
-                            <div class="row  titres_services" id=" titres_services_annexe">
+                            <div class="row mb-2 titres_services" id=" titres_services_annexe">
 
                                 <div class="col-3">
-                                    <h6 class="m-0">Frais annexes</h6>
+                                    <p class="m-0" style="font-size: 80%">Frais annexes</p>
                                 </div>
                                 <div class="col-4">
-                                    <h6 class="m-0">Descriptions</h6>
+                                    <p class="m-0" style="font-size: 80%">Descriptions</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Quantité</h6>
+                                    <p class="m-0" style="font-size: 80%">Quantité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
+                                    <p class="m-0" style="font-size: 80%">PU HT ({{$devise->reference}})</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
+                                    <p class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</p>
                                 </div>
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>
                                 </div>
                             </div>
-                        </div>
-                        @else
-                        <div class="col-12 pb-4 ">
+
+                            @endif
+
 
                             <div class="row  titres_services" style="display: none" id="titres_services_annexe">
                                 <div class="col-3">
-                                    <h6 class="m-0">Frais annexes</h6>
+                                    <p class="m-0" style="font-size: 80%">Frais annexes</p>
                                 </div>
                                 <div class="col-4">
-                                    <h6 class="m-0">Descriptions</h6>
+                                    <p class="m-0" style="font-size: 80%">Descriptions</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Quantité</h6>
+                                    <p class="m-0" style="font-size: 80%">Quantité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0">PU HT ({{$devise->reference}})</h6>
+                                    <p class="m-0" style="font-size: 80%">PU HT ({{$devise->reference}})</p>
                                 </div>
                                 <div class="col-1">
-                                    <h6 class="m-0">Total HT ({{$devise->reference}})</h6>
-                                </div>
-                                <div class="col-1 text-end">
-                                    <h6 class="m-0"></h6>
+                                    <p class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</p>
                                 </div>
                             </div>
-                        </div>
-                        @endif
-
-                        @if (count($frais_annexes)>0)
-
-                        <div class="row my-1" id="inputFormRow">
-                            <div class="col-3">
-                                <select class="form-select selectP input_section4" id="frais_annexe_id[]" name="frais_annexe_id[]" required>
-                                    @foreach ($frais_annexes as $frais)
-                                    <option value="{{$frais->frais_annexe_id}}">{{$frais->frais_annexe_description}}</option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-4">
-                                <textarea name="description_annexe[]" id="description_annexe[]" class="text_description form-control" placeholder="déscription du frais annexe">{{$frais->frais_annexe_description}}</textarea>
-                            </div>
-
-                            <div class="col-1">
-                                <input type="number" min="1" value="{{$frais->qte}}" required class="form-control input_quantite annexe_qte" name="qte_annexe[]" id="qte_annexe[]">
-                            </div>
-
-                            <div class="col-2">
-                                <input type="number" min="0" value="{{$frais->pu}}" required name="montant_frais_annexe[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe[]" placeholder="0">
-                            </div>
-
                             <div class="col-1 text-end">
-                                <p align="right" name="totale_frais_annexe[]" class="text_prix">{{number_format($frais->hors_taxe,0,","," ")}}</p>
+                                <h6 class="m-0"></h6>
                             </div>
 
-                            <div class="col-1 text-end pt-2">
-                                <p class="m-0"> </p>
-                                <a href="{{route('delete_frais_annexe_facture',[$montant_totale->num_facture,$frais->frais_annexe_id])}}"> <button type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></a></span>
+                            <div class="row my-1" id="inputFormRow">
+                                @if (count($frais_annexes)>0)
 
+                                <div class="col-3">
+                                    <select class="form-select selectP input_section4" id="frais_annexe_id[]" name="frais_annexe_id[]" required>
+                                        @foreach ($frais_annexes as $frais)
+                                        <option value="{{$frais->frais_annexe_id}}">{{$frais->frais_annexe_description}}</option>
+
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-4">
+                                    <textarea name="description_annexe[]" id="description_annexe[]" class="text_description form-control" placeholder="déscription du frais annexe">{{$frais->frais_annexe_description}}</textarea>
+                                </div>
+
+                                <div class="col-1">
+                                    <input type="number" min="1" value="{{$frais->qte}}" required class="form-control input_quantite annexe_qte" name="qte_annexe[]" id="qte_annexe[]">
+                                </div>
+
+                                <div class="col-2">
+                                    <input type="number" min="0" value="{{$frais->pu}}" required name="montant_frais_annexe[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe[]" placeholder="0">
+                                </div>
+
+                                <div class="col-1 text-end">
+                                    <p align="right" name="totale_frais_annexe[]" class="text_prix">{{number_format($frais->hors_taxe,0,","," ")}}</p>
+                                </div>
+
+                                <div class="col-1 text-end pt-2">
+                                    <p class="m-0"> </p>
+                                    <a href="{{route('delete_frais_annexe_facture',[$montant_totale->num_facture,$frais->frais_annexe_id])}}"> <button type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></a></span>
+
+                                </div>
+
+                                @endif
+                                <div id="newRow"></div>
+
+                                <div class="">
+                                    <p> <a role="button" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
+                                </div>
                             </div>
                         </div>
-                        @endif
-                        {{-- </div> --}}
-                        <div class="row my-1">
-                            <div id="newRow"></div>
-                        </div>
-                        {{-- <div id="newRow" class="mx-0"></div> --}}
-
-                        <div class="">
-                            <p> <a href="#" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
-                        </div>
-
 
                         <div class="row mb-1 g-0 p-2">
 
@@ -511,17 +505,14 @@
         }
         /*=========================================================*/
         $(document).ready(function() {
-            // if ($("#addRowMontant").val() > 1) {
-            //     $("#addRowMontant").css("display", "inline-block");
-            // } else {
-            //     $("#addRowMontant").css("display", "none");
-            // }
 
-            // if ($("#addRow").val() > 1) {
-            //             $("#addRow").css("display", "inline-block");
-            //         } else {
-            //             $("#addRow").css("display", "none");
-            //         }
+            var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
+            if (total_frais_annexe_possible < 1) {
+                $(".titre_annexe").css("display", "none");
+
+            } else {
+                $(".titre_annexe").css("display", "inline-block");
+            }
 
             $(".changer_carret").on("click", function() {
                 if (
@@ -651,6 +642,12 @@
 
         // add row
         $(document).on('click', '#addRow', function() {
+            var test = ($(".row #inputFormRow").length + 1);
+            if (test < 1) {
+                $("#titres_services_annexe").css("display", "none");
+            } else {
+                $("#titres_services_annexe").css("display", "flex");
+            }
             $('#frais').empty();
             $.ajax({
                 url: "{{route('frais_annexe')}}"
@@ -694,11 +691,11 @@
                         html += '<input type="number" min="0" value="0" required name="montant_frais_annexe_new[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe_new[]" placeholder="0">';
                         html += '</div>';
 
-                        html += '<div class="col-1 text-end">';
+                        html += '<div class="col-1 text-end pe-0">';
                         html += '<p name="totale_frais_annexe_new[]" class="text_prix" align="right">0</p>';
                         html += '</div>';
 
-                        html += '<div class="col-1 text-end pt-2">';
+                        html += '<div class="col-1 text-start pt-2">';
                         html += '<p class="m-0"><span>';
                         html += '<button id="removeRow" type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></span>';
                         html += '</div>';
