@@ -310,7 +310,7 @@
                     }
 
                     var html = '';
-                    html += '<div class="row my-1" id="inputFormRow">';
+                    html += '<div class="row mt-3" id="inputFormRow">';
                     html += '<div class="col-3">';
                     html += '<select class="form-select selectP input_section4"  id="frais_annexe_id[]" name="frais_annexe_id[]" required>';
 
@@ -341,7 +341,7 @@
                     html += '<div class="col-1 text-start pt-2">';
                     html += '<button id="removeRow" type="button" class="btn icon_suppre_frais "><i class="fa fa-trash suppre_frais"></i></button></p>';
                     html += '</div>';
-                    html += '</div><br>';
+                    html += '</div>';
 
                     $('#newRow').append(html);
 
@@ -446,7 +446,7 @@
                     var userData = response;
 
                     var html = '';
-                    html += '<div class="row my-1" id="inputFormRowMontant">';
+                    html += '<div class="row mt-2" id="inputFormRowMontant">';
                     html += '<div class="col-2">';
                     html += '</div>';
                     html += '<div class="col-3">';
@@ -472,7 +472,7 @@
                     html += '<div class="col-1 text-start pt-2">';
                     html += '<button id="removeRowMontant" type="button" class="btn icon_suppre_frais "><i class="fa fa-trash"></i></button></span></p>';
                     html += '</div>';
-                    html += '</div><br>';
+                    html += '</div>';
 
                     $('#newRowMontant').append(html);
                 }

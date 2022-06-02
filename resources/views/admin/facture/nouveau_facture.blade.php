@@ -39,8 +39,9 @@
 
         <form action="{{route('create_facture')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
             @csrf
+
             <div class="container-fluid">
-                <section class="section1 mb-4">
+                <div class="section1 mb-4">
                     <div class="row">
                         <div class="col-6">
                             <h2>Nouvelle facture</h2>
@@ -49,10 +50,11 @@
                             <input type="submit" class="btn btn_submit " id="enregristrer_facture" value="Enregistrer et continuer">
                         </div>
                     </div>
-                </section>
-                <section class="section2 mb-4">
+                </div>
+                <div class="section2 mb-4">
                     <div class="row header_facture">
                         <h6 class="mb-0 changer_carret d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
+
                             Adresse et coordonnées de l'entreprise, titre, résumé et logo
                             <i class="bx bx-caret-down carret-icon text-end"></i>
                         </h6>
@@ -91,8 +93,8 @@
                             </div>
                         </div>
                     </div>
-                </section>
-                <section class="section3">
+                </div>
+                <div class="section3">
                     <div class="row entreprise_facturer">
                         <div class="col-6 p-4">
                             <h6>Facturer à</h6>
@@ -150,8 +152,8 @@
                             </div>
                         </div>
                     </div>
-                </section>
-                <section class="section4 mb-4">
+                </div>
+                <div class="section4 mb-4">
                     <div class="row services_factures">
                         <div class="col-12 pb-4 ">
                             <div class="row titres_services">
@@ -214,10 +216,13 @@
                         </div>
 
                         <div class="">
-                            <p><a href="#" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></p>
+                            <p><a role="button" id="addRowMontant" value="0"><i class='bx bx-plus-medical me-2'></i> Ajouter une autre session</a></p>
                         </div>
 
-                        <div class="col-12 pb-4 ">
+
+
+                        <div class="col-12 pb-4 my-3">
+
                             <div class="row  titres_services" style="display: none" id="titres_services_annexe">
                                 <div class="col-3">
                                     <h6 class="m-0">Frais annexes</h6>
@@ -239,11 +244,13 @@
                                 </div>
                             </div>
 
+                            <div class="row ">
                             <div id="newRow"></div>
+                            </div>
                         </div>
 
                         <div class="">
-                            <p> <a href="#" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
+                            <p> <a role="button"  id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
                         </div>
                         <div class="row mb-1 g-0 p-2">
 
@@ -324,8 +331,8 @@
                             </div>
                         </div>
                     </div>
-                </section>
-                <section class="section5 mb-4">
+                </div>
+                <div class="section5 mb-4">
                     <div class="row header_facture">
                         <h6 class="mb-0 changer_carret2 d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
                             Informations légales
@@ -337,9 +344,11 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
+
         </form>
+
     </div>
 </div>
 {{-- <script src="{{asset('js/facture.js')}}"></script> --}}
