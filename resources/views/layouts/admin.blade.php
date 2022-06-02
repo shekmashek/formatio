@@ -1006,7 +1006,7 @@
                                                 <p class="m-0">Contactez-nous</p>
                                             </a>
                                             &nbsp;-&nbsp;
-                                            <a href="#" target="_blank">
+                                            <a href="{{url('info_legale')}}" target="_blank">
                                                 <p class="m-0">Informations légales</p>
                                             </a>
                                         </div>
