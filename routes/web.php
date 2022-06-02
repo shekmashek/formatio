@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use phpseclib3\Crypt\RC2;
 
+Route::get('page1', function () {
+    return view('cfp.responsable_cfp.page1');
+})->name('page1');
+
+
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');

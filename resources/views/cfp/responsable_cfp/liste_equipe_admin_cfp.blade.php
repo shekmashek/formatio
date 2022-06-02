@@ -121,6 +121,7 @@ th{
 
 
 <div class="container-fluid pb-1">
+    <a href="{{route('page1')}}" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> vonjy</a> <br> <br>
     @if($resp_connecte->activiter == 1)
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">

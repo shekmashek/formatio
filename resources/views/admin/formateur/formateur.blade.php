@@ -495,3 +495,212 @@ $('.activer_formateur').on('click',function(e){
     });
 </script>
 @endsection
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script> --}}
+    {{-- <title>Vonjy</title> --}}
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .chartMenu {
+        width: 100vw;
+        height: 40px;
+        background: #1A1A1A;
+        color: rgba(255, 26, 104, 1);
+      }
+      .chartMenu p {
+        padding: 10px;
+        font-size: 20px;
+      }
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgba(255, 26, 104, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chartBox {
+        width: 700px;
+        padding: 20px;
+        border-radius: 20px;
+        border: solid 3px rgba(255, 26, 104, 1);
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chartMenu">
+    </div>
+    <div class="chartCard">
+      <div class="chartBox">
+        <div class="row">
+            <div class="col-lg-6">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="col-lg-6">
+                <canvas id="myChart1"></canvas>
+            </div>
+        </div>
+        <button onclick="downloadPDF()" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i>Exporter</button>
+        <button onclick="downloadPDF1()" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i>Exporter1</button>
+      </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js" integrity="sha512-dw+7hmxlGiOvY3mCnzrPT5yoUwN/MRjVgYV7HGXqsiXnZeqsw1H9n9lsnnPu4kL2nx2bnrjFcuWK+P3lshekwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    
+    <script>
+    // setup 
+    const data = {
+      labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+      datasets: [{
+        label: 'Weekly Sales',
+        data: [8, 2, 6, 9, 2, 3, 1],
+        backgroundColor: [
+          'rgba(255, 26, 104, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(0, 0, 0, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 26, 104, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(0, 0, 0, 1)'
+        ],
+        borderWidth: 1
+      }]
+    };
+
+    const bgColor = {
+        id: 'bgColor',
+        beforeDraw: (chart, steps, options) => {
+            const {ctx, width, height} = chart ;
+            ctx.fillStyle = options.backgroundColor ;
+            ctx.fillRect (0, 0, width, height)
+            ctx.restore();
+        }
+    }
+
+    const config = {
+      type: 'radar',
+      data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+            bgColor:{
+                backgroundColor: 'white'
+            }
+        }
+      },
+      plugins: [bgColor] 
+    };
+
+    const ctx = document.getElementById('myChart1').getContext('2d');
+    const myChart1 = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+
+    const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+        
+
+
+        function downloadPDF(){
+        
+        const canvas = document.getElementById('myChart');
+        // const canvas = document.getElementById('piechart');  
+        const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+        // const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+        // console.log(canvasImage);
+
+        let pdf = new jsPDF("p", "mm", "a4");
+    
+        pdf.setFontSize(20);
+        pdf.addImage(canvasImage, 'JPEG', 52, 20, 100, 80);
+        pdf.setFont("times");
+        pdf.setFontType("arial");
+        pdf.text(15,15,"Aujourd'hui le 31/05/21");
+        pdf.save('chartVonjy.pdf');
+    }
+
+
+
+    function downloadPDF1(){
+        
+        const canvas = document.getElementById('myChart1');
+        // const canvas = document.getElementById('piechart');  
+        const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+        // const canvasImage = canvas.toDataURL('image/jpeg', 1.0);
+        // console.log(canvasImage);
+
+        let pdf = new jsPDF("p", "mm", "a4");
+    
+        pdf.setFontSize(20);
+        pdf.addImage(canvasImage, 'JPEG', 52, 20, 100, 80);
+        pdf.setFont("times");
+        pdf.setFontType("arial");
+        pdf.text(15,15,"Aujourd'hui le 31/05/21");
+        pdf.save('chartVonjy.pdf');
+    }
+
+
+
+        
+      </script>
+
+  </body>
+</html>
+
+
+
