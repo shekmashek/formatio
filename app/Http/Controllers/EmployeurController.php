@@ -175,7 +175,7 @@ class EmployeurController extends Controller
         //         ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
         //     }
             Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
-            return back()->with('success',"Terminé !");
+            return back()->with('success',"Employé enregistré avec succès !");
         }
 
 
