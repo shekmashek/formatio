@@ -537,7 +537,7 @@
                             class="img-fluid menu_logo me-3"></span>@yield('title')
                 </div>
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
-                    @canany('isReferent','isStagiaire','isManager')
+                    @canany(['isReferent','isStagiaire','isManager'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
 
