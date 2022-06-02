@@ -181,6 +181,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td>
                                             <div align="right">
                                                 {{$devise->reference." -".number_format($fa->montant_total,0,","," ")}}
