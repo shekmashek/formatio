@@ -379,13 +379,13 @@ Route::get('search__formation', 'FormationController@getModulesParReference')->n
 Route::get('domaine_formation', 'FormationController@formation_domaine')->name('domaine_formation');
 Route::get('domaine_vers_formation/{id}', 'FormationController@domaine_vers_formation')->name('domaine_vers_formation');
 Route::get('select_par_formation/{id}', 'FormationController@affichageParFormation')->name('select_par_formation');
-Route::get('select_par_formation_par_cfp/{id_formation}/{id_cfp}', 'FormationController@affichageParFormationParCfp')->name('select_par_formation_par_cfp');
+Route::get('select_par_formation_par_cfp/{id_formation}', 'FormationController@affichageParFormationParcfp')->name('select_par_formation_par_cfp');
 Route::get('select_par_module/{id}', 'FormationController@affichageParModule')->name('select_par_module');
 Route::get('select_tous', 'FormationController@affichageTousCategories')->name('select_tous');
-Route::get('inscriptionInter/{type_formation_id}/{id_groupe}', 'SessionController@inscription')->name('inscriptionInter');
+Route::get('inscriptionInter/{id_groupe}/{type_formation_id}', 'SessionController@inscription')->name('inscriptionInter');
 Route::get('demande_devis_client/{id}', 'FormationController@demande_devis_client')->name('demande_devis_client');
 //route annuaire de cfp
-Route::get('annuaire','FormationController@annuaire')->name('annuaire');
+Route::get('annuaire/{page?}','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
 Route::get('detail_cfp/{id}','FormationController@detail_cfp')->name('detail_cfp');
 Route::get('annuaire+recherche+par+entiter/{page?}/{nom_entiter?}','FormationController@search_par_nom_entiter')->name('annuaire+recherche+par+entiter');
@@ -772,6 +772,10 @@ Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne'
 Route::get('activer_compte','AbonnementController@activer')->name('activer_compte');
 Route::get('activer_compte_of','AbonnementController@activer_of')->name('activer_compte_of');
 Route::get('/impression_facture/{id}','AbonnementController@impression')->name('impression_facture');
+Route::post('enregistrer_coupon','AbonnementController@enregistrer_coupon')->name('enregistrer_coupon');
+Route::post('/modifier_coupon/{id}','AbonnementController@modifier_coupon')->name('modifier_coupon');
+Route::post('/supprimer_coupon/{id}','AbonnementController@supprimer_coupon')->name('supprimer_coupon');
+Route::post('coupon_client','AbonnementController@coupon_client')->name('coupon_client');
 
 Route::get('/', function () {
     return view('index_accueil');
@@ -780,6 +784,10 @@ Route::get('/', function () {
 Route::get('nouveau_type',function(){
     return view('superadmin.nouveau_type');
 })->name('nouveau_type');
+Route::get('nouveau_coupon',function(){
+    return view('superadmin.nouveau_coupon');
+})->name('nouveau_coupon');
+
 Route::get('modifier_abonnement_of/{id}','AbonnementController@modifier_abonnement_of')->name('modifier_abonnement_of');
 Route::post('enregistrer_modification_abonnement_of/{id}','AbonnementController@enregistrer_modification_abonnement_of')->name('enregistrer_modification_abonnement_of');
 Route::get('modifier_abonnement_entreprise/{id}','AbonnementController@modifier_abonnement_entreprise')->name('modifier_abonnement_entreprise');
@@ -1340,3 +1348,8 @@ Route::get('supprimer_frais/{id}','FraisAnnexesController@destroy')->name('suppr
 Route::get('supprimer_frais_annexes/{id}','SessionController@supprimer_frais')->name('supprimer_frais_annexes');
 
 Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagiaire')->name('resultat_stagiaire');
+
+//newAfficheInfo
+Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploye');
+
+Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInfo');

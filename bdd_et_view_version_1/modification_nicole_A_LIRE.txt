@@ -13,3 +13,11 @@ Recopier view dans collaboration v_demmande_cfp_formateur/v_demmande_cfp_pour_fo
 Recopier view dans bdd_suiviformation_view_4.0 :v_formateur_projet/ v_projet_formateur/v_detail_presence_stagiaire
 Recopier view abonnement
 
+--30mai
+copier le script create table coupon dans abonnement
+--31mai
+copier le script alter table add coupon_id dans abonnement
+recopier les view abonnement
+
+
+

@@ -40,8 +40,8 @@
             @endcanany
             @canany(['isReferentPrincipale','isManagerPrincipale','isReferent','isManager'])
             <li class="nav-item ">
-                <a class="nav-link  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$montant_totale->num_facture])}}">
-                    <i class="fa fa-download"></i> PDF</a>
+                <a class="nav-link pdf_download  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$montant_totale->num_facture])}}">
+                    <button class="btn"><i class="bx bxs-file-pdf"></i> PDF </button></a>
             </li>
             @endcanany
         </ul>
@@ -275,7 +275,7 @@
 
                                             </tbody>
                                         </table>
-                                        <table class="table">
+                                        <table class="table  table-borderless">
                                             <tbody>
                                                 <tr>
                                                     <td>Net à payer TTC</td>

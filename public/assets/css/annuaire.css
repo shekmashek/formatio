@@ -241,7 +241,7 @@ color: #7635dc;
 }
 
 .formations:hover{
-    color: white;
+    color: white !important;
     background: #7635dc;
     border: none;
     transform: scale(1.1);
@@ -262,4 +262,22 @@ color: #7635dc;
 }
 .pagination{
     font-size: 1.5rem;
+}
+
+.text_minifier{
+    font-size: .8rem;
+}
+
+.fixer{
+    position: sticky !important;
+    top: 8rem;
+}
+
+.fixer2{
+    position: sticky !important;
+    top: 22.5rem;
+}
+.fixer3{
+    position: sticky !important;
+    top: 37rem;
 }

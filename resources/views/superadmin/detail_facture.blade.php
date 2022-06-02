@@ -3,7 +3,7 @@
     <h3 class="text-white ms-5">Détail facture</h3>
 @endsection
 @section('content')
-
+<link rel="stylesheet" href="{{asset('assets/css/inputControlModules.css')}}">
 <style type="text/css">
     .btn_pdf{
         padding: auto 2rem;
@@ -163,6 +163,55 @@
                                                     @endforeach
                                                 </select>
                                             </h6>
+                                        @endif
+                                        <span>Si vous avez un coupon, vous obtiendrez une réduction <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#coupon">J'ai un coupon</button></span><br><br>
+                                        {{-- modal ajout coupon --}}
+                                        <div>
+                                            <div class="modal" id="coupon" aria-labelledby="coupon" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <form  method="post" action="{{route('coupon_client')}}">
+                                                            <input type="hidden" name="abonnemet_id" value = "{{$facture[0]->abonnement_id}}">
+                                                            <input type="hidden" name="facture_id" value = "{{$facture[0]->facture_id}}">
+
+                                                            @csrf
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title text-center">Entrez le code</h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control module " name="coupon" required  placeholder="Coupon" style="height: 50px">
+                                                                    <label for="coupon" class="form-control-placeholder">Coupon</label>
+
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if(session()->has('message'))
+                                        <div class="alert alert-success">
+                                            {{ session()->get('message') }}
+                                        </div>
+                                        @endif
+                                       
+                                        @if(session()->has('erreur_coupon'))
+                                        <div class="alert alert-danger">
+                                            {{ session()->get('erreur_coupon') }}
+                                        </div>
+                                        @endif
+                                        @if(session()->has('valeur'))
+                                        <div class="alert alert-success">
+                                            Vous aurez une réduction de {{session()->get('valeur')}} %
+                                            <input type="hidden" name="valeur" value="{{session()->get('valeur')}}">
+                                            <input type="hidden" name = "coupon" value = "{{session()->get('coupon')}}">
+
+                                        </div>
                                         @endif
 
                                         <div class="card detail_virement" style="width: 32rem;display: none">

@@ -107,7 +107,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="shadow p-3 mb-12 bg-body rounded ">
+
                                                     <h4>Entreprises</h4>
                                                     <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination_etp["debut_aff"]."-".$pagination_etp["fin_aff"]." sur ".$pagination_etp["totale_pagination"]}}</span>
 
@@ -175,7 +175,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">Nom</th>
-                                                                    <th scope="col">Iframe</th>
+                                                                    <th scope="col"  style="width: 30rem">Iframe</th>
                                                                     <th scope="col">Actions</th>
                                                                 </tr>
                                                             </thead>
@@ -264,7 +264,6 @@
                                                     @endif
                                                     </tbody>
                                                     </table>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -294,7 +293,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
 
-                                                <div class="shadow p-3 mb-2 bg-body rounded ">
+
 
                                                     <h4>Organisme de formation</h4>
 
@@ -378,7 +377,7 @@
                                                                         <form action="enregistrer_iframe_cfp" method="post" class="d-flex flex-row">
                                                                             @csrf
                                                                             <input type="hidden" name="cfp_id" value={{$f_etp->cfp_id}}>
-                                                                            <input type="text" name="iframe_url" class="form-control"><button class="btn btn_next" type="submit">Ajouter </button>
+                                                                            <input type="text"name="iframe_url" class="form-control"><button class="btn btn_next" type="submit">Ajouter </button>
                                                                         </form>
                                                                         @else
                                                                         {{$f_etp->iframe}}
@@ -453,7 +452,7 @@
                                                     @endif
                                                     </tbody>
                                                     </table>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

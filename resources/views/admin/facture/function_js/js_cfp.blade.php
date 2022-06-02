@@ -2,7 +2,7 @@
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
- /*   $(document).ready(function() {
+    /*   $(document).ready(function() {
         $("#myModal").modal('show');
 
     });
@@ -141,6 +141,14 @@
 
                 if (full_facture[i_act].dernier_montant_ouvert <= 0) {
                     html_tous += '<div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">  payé </div>';
+                } else if (full_facture[i_act].activiter == false) {
+
+                    if (full_facture[i_act].jour_restant > 0) {
+                        html_tous += '<div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">nom envoyé</div>';
+                    } else {
+                        html_tous += '<div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">en retard</div>';
+                    }
+
                 } else {
                     if (full_facture[i_act].facture_encour == "valider") {
                         if (full_facture[i_act].jour_restant > 0) {
@@ -269,7 +277,7 @@
                 html_tous += ' <div class="inputbox inputboxP mt-3" id="numero_facture"></div>';
                 html_tous += '</form>';
                 html_tous += '<div class="mt-4 mb-4">';
-                html_tous += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div>';
+                html_tous += '     <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class=" btn_annuler annuler"  data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x me-1"></i>Annuler</button></span> <button type="submit" class="btn btn_enregistrer btnP px-3"> <i class="bx bx-check me-1"></i> Encaisser</button> </div>';
                 html_tous += '</div>';
                 html_tous += '</div>';
                 html_tous += ' </div>';
@@ -533,7 +541,7 @@
                 html_actif += '<form action="' + url_form_encaissement + '" id="formPayement" method="POST">';
 
                 html_actif += '  @csrf';
-                html_actif += '    <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>';
+                html_actif += '    <input autocomplete="off" type="text" value="' + facture_actif[i_actif].num_facture + '" name="num_facture" class="form-control formPayement" required="required" hidden>';
                 html_actif += ' </div>';
                 html_actif += ' <div class="inputbox inputboxP mt-3  mx-1">';
                 html_actif += ' <div class="row">';
@@ -576,7 +584,7 @@
                 html_actif += '  </div>';
                 html_actif += '    <div class="inputbox inputboxP mt-3" id="numero_facture"></div>';
                 html_actif += '     <div class="">';
-                html_actif += '    <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div>';
+                html_actif += '         <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class=" btn_annuler annuler"  data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x me-1"></i>Annuler</button></span> <button type="submit" class="btn btn_enregistrer btnP px-3"> <i class="bx bx-check me-1"></i> Encaisser</button> </div>';
                 html_actif += '    </div>';
                 html_actif += '    </form>';
 
@@ -1364,26 +1372,5 @@
     });
 
 
-
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
 
 </script>

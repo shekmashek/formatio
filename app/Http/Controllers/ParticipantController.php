@@ -44,6 +44,29 @@ class ParticipantController extends Controller
         $this->fonct = new FonctionGenerique();
     }
 
+    //newAfficheInfo
+    public function infoEmploye($user_id){
+
+        $funct = new FonctionGenerique();
+        $emps = $funct->filtreEmployeNew($user_id);
+        
+        return response()->json($emps);
+    }
+
+    public function infoResponsable($id_emp, $id){
+        $responsable = DB::table('users')
+                    // ->join('role_users', 'role_users.id', 'users.id')
+                    // ->join('responsables', 'responsables.role_id', 'role.id')
+                    // ->join('responsables', 'responsables.role_id', 'role.id')
+                    ->select('SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=13  ORDER BY created_at DESC LIMIT 1')
+                    ->where('user_id', '=', $id_emp)
+                    ->where('entreprise_id', '=', $id)
+                    ->get();
+        
+        return response()->json($responsable);
+    }
+    //end newAfficheInfo
+
     public function get_service(Request $req)
     {
         $service = db::select('select * from v_departement_service_entreprise where departement_entreprise_id = ? ', [$req->id]);
@@ -609,7 +632,7 @@ class ParticipantController extends Controller
         $branche = $fonct->findWhereMulitOne("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
         // return view('admin.participant.edit_niveau', compact('stagiaire','service','departement','branche'));
         $niveau_etude = $fonct->findAll('niveau_etude');
-        return view('admin.participant.edit_niveau', compact('stagiaire', 'service', 'branche','niveau_etude'));
+        return view('admin.participant.edit_niveau', compact('stagiaire', 'service', 'branche', 'niveau_etude'));
     }
     public function edit_departement($id, Request $request)
     {
@@ -999,10 +1022,9 @@ class ParticipantController extends Controller
                 $departement = $fonct->findWhereMulitOne("departement_entreprises", ["id"], [$service->departement_entreprise_id]);
             }
 
-            if($stagiaire->niveau_etude_id == null){
+            if ($stagiaire->niveau_etude_id == null) {
                 $niveau = "---------------";
-            }
-            else{
+            } else {
                 $niveau = $fonct->findWhereMulitOne("niveau_etude", ["id"], [$stagiaire->niveau_etude_id]);
             }
             $entreprise = $fonct->findWhereMulitOne("entreprises", ["id"], [$stagiaire->entreprise_id]);
@@ -1013,7 +1035,7 @@ class ParticipantController extends Controller
             if ($stagiaire->genre_stagiaire == 2) {
                 $genre = 'Homme';
             }
-            return view('profil_public.stagiaire', compact('niveau','initial_stagiaire','entreprise', 'stagiaire', 'service', 'departement', 'branche','genre'));
+            return view('profil_public.stagiaire', compact('niveau', 'initial_stagiaire', 'entreprise', 'stagiaire', 'service', 'departement', 'branche', 'genre'));
         }
         // $stagiaire=stagiaire::findOrFail($id);
         // if(Gate::allows('isStagiaire') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager'))))
@@ -1031,14 +1053,13 @@ class ParticipantController extends Controller
         // }
     }
     //update_stagiaire connecte
-    public function update_mot_de_passe_stagiaire(Request $request,$id){
-        if($request->ancien_password == null){
-            return back()->with('error_ancien_pwd','Entrez votre ancien mot de passe');
-        }
-        elseif($request->new_password == null){
-            return back()->with('error_new_pwd','Entrez votre nouveau mot de passe avant de cliquer sur enregistrer');
-        }
-        else{
+    public function update_mot_de_passe_stagiaire(Request $request, $id)
+    {
+        if ($request->ancien_password == null) {
+            return back()->with('error_ancien_pwd', 'Entrez votre ancien mot de passe');
+        } elseif ($request->new_password == null) {
+            return back()->with('error_new_pwd', 'Entrez votre nouveau mot de passe avant de cliquer sur enregistrer');
+        } else {
             $users =  db::select('select * from users where id = ?', [Auth::id()]);
             $pwd = $users[0]->password;
             $new_password = Hash::make($request->new_password);
@@ -1050,16 +1071,17 @@ class ParticipantController extends Controller
             }
         }
     }
-    public function update_niveau_stagiaire(Request $request,$id){
+    public function update_niveau_stagiaire(Request $request, $id)
+    {
         $niveau = $request->niveau;
         DB::update('update stagiaires set niveau_etude_id = ? where id = ?', [$niveau, $id]);
         return redirect()->route('profile_stagiaire');
     }
-    public function update_email_stagiaire(Request $request,$id){
+    public function update_email_stagiaire(Request $request, $id)
+    {
         if ($request->mail == null) {
-            return back()->with('error_email','Entrez votre adresse e-mail avant de cliquer sur enregistrer');
-        }
-        else{
+            return back()->with('error_email', 'Entrez votre adresse e-mail avant de cliquer sur enregistrer');
+        } else {
             DB::update('update users set email = ? where id = ?', [$request->mail, Auth::id()]);
             DB::update('update stagiaires set mail_stagiaire = ? where user_id = ?', [$request->mail, Auth::id()]);
             return redirect()->route('profile_stagiaire');
@@ -1067,22 +1089,17 @@ class ParticipantController extends Controller
     }
     public function update_stagiaire(Request $request, $id)
     {
-        if($request->nom == null){
-            return back()->with('error_nom','Entrez votre nom avant de cliquer sur enregistrer');
-        }
-        elseif($request->prenom == null){
-            return back()->with('error_prenom','Entrez votre prénom avant de cliquer sur enregistrer');
-        }
-        elseif($request->phone == null){
-            return back()->with('error_phone','Entrez votre numéro de téléphone avant de cliquer sur enregistrer');
-        }
-        elseif($request->cin == null){
-            return back()->with('error_cin','Entrez votre CIN avant de cliquer sur enregistrer');
-        }
-        elseif($request->fonction == null){
-            return back()->with('error_fonction','Entrez votre fonction avant de cliquer sur enregistrer');
-        }
-        else{
+        if ($request->nom == null) {
+            return back()->with('error_nom', 'Entrez votre nom avant de cliquer sur enregistrer');
+        } elseif ($request->prenom == null) {
+            return back()->with('error_prenom', 'Entrez votre prénom avant de cliquer sur enregistrer');
+        } elseif ($request->phone == null) {
+            return back()->with('error_phone', 'Entrez votre numéro de téléphone avant de cliquer sur enregistrer');
+        } elseif ($request->cin == null) {
+            return back()->with('error_cin', 'Entrez votre CIN avant de cliquer sur enregistrer');
+        } elseif ($request->fonction == null) {
+            return back()->with('error_fonction', 'Entrez votre fonction avant de cliquer sur enregistrer');
+        } else {
             $user_id = Auth::user()->id;
             $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
 
@@ -1264,33 +1281,34 @@ class ParticipantController extends Controller
         $stg = new stagiaire();
         $fonct = new FonctionGenerique();
         $totale_valide = 0;
-        for ($i = 1; $i <= 30; $i += 1) {
+        for ($i = 0; $i < count($req["matricule_"]); $i += 1) {
 
-            $doner["matricule"] = $req["matricule_" . $i];
-            $doner["nom"]  = $req["nom_" . $i];
-            $doner["prenom"]  = $req["prenom_" . $i];
-            $doner["cin"]  = $req["cin_" . $i];
-            $doner["email"]  = $req["email_" . $i];
-            $doner["tel"]  = $req["tel_" . $i];
-            if ($req["matricule_" . $i] != null && $req["nom_" . $i] != null) {
+            $doner["matricule"] = $req["matricule_"][$i];
+            $doner["nom"]  = $req["nom_"][$i];
+            $doner["prenom"]  = $req["prenom_"][$i];
+            $doner["cin"]  = $req["cin_"][$i];
+            $doner["email"]  = $req["email_"][$i];
+            // $doner["tel"]  = $req["tel_"][$i];
+            if ($req["matricule_"][$i] != null && $req["nom_"][$i] != null) {
+                $totale_valide += 1;
+
                 if (
-                    $req["cin_" . $i] != null
-                    && $req["email_" . $i] != null
+                    $req["cin_"][$i] != null
+                    && $req["email_"][$i] != null
                 ) {
-                    $totale_valide += 1;
-                    $verify = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req["email_" . $i]]);
+                    $verify = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req["email_"][$i]]);
 
                     if (count($verify) <= 0) {
 
                         $user = new User();
-                        $user->name = $req["nom_" . $i];
-                        $user->email = $req["email_" . $i];
-                        $user->cin = $req["cin_" . $i];
+                        $user->name = $req["nom_"][$i];
+                        $user->email = $req["email_"][$i];
+                        $user->cin = $req["cin_"][$i];
                         $ch1 = "0000";
                         $user->password = Hash::make($ch1);
                         $user->save();
-                        $user_stg_id = $fonct->findWhereMulitOne("users", ["email"], [$req["email_" . $i]])->id;
-                        $fonct->insert_role_user($user_stg_id, 3, True);
+                        $user_stg_id = $fonct->findWhereMulitOne("users", ["email"], [$req["email_"][$i]])->id;
+                        $fonct->insert_role_user($user_stg_id, 3, false, True);
                         if (Gate::allows('isReferent')) {
                             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
                             $etp = $fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
@@ -1310,7 +1328,9 @@ class ParticipantController extends Controller
             }
         }
 
-        return back()->with('success', "" + $totale_valide + " desc nouveaux employés sont terminés avec succès!");
+
+        $msg = $totale_valide . " nouveaux employés ont été ajouter  avec succès!";
+        return back()->with('success', $msg);
     }
 
     public function verify_matricule_stg(Request $req)
@@ -1323,14 +1343,40 @@ class ParticipantController extends Controller
     public function verify_email_stg(Request $req)
     {
         $fonct = new FonctionGenerique();
-        $data = $fonct->findWhere("stagiaires", ["mail_stagiaire"], [$req->valiny]);
+        $data = $fonct->findWhere("users", ["email"], [$req->valiny]);
         return response()->json($data);
     }
 
     public function verify_cin_stg(Request $req)
     {
+        $msg = [];
         $fonct = new FonctionGenerique();
-        $data = $fonct->findWhere("stagiaires", ["cin"], [$req->valiny]);
-        return response()->json($data);
+        $user_id = Auth::user()->id;
+        $entreprise_id = $fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
+        // $data = $fonct->findWhereParam("employers", ["cin_emp", "activiter", "entreprise_id"], ["=", "=", "!="], [$req->valiny, true, $entreprise_id]);
+        $data = $fonct->findWhereParam("stagiaires", ["cin", "activiter", "entreprise_id"], ["=", "=", "!="], [$req->valiny, true, $entreprise_id]);
+
+        if (count($data) > 0) { // verify cin dans autre etp si mbola actif
+            $msg = [
+                "error" => "CIN existe déjà"
+            ];
+        } else {
+            // $data2 = $fonct->findWhereParam("employers", ["cin_emp", "entreprise_id"], ["=", "="], [$req->valiny, $entreprise_id]);
+            $data2 = $fonct->findWhereParam("stagiaires", ["cin", "entreprise_id"], ["=", "="], [$req->valiny, $entreprise_id]);
+            $msg = [
+                "success" => "CIN validé"
+            ];
+            if (count($data2) > 0) {
+                $msg = [
+                    "error" => "CIN existe déjà"
+                ];
+            } else {
+                $msg = [
+                    "success" => "CIN validé"
+                ];
+            }
+        }
+        return response()->json($msg);
+        // return response()->json($data);
     }
 }

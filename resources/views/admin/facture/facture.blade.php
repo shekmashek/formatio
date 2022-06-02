@@ -231,38 +231,8 @@
 
     @endif
 
-
-    @if (isset($invoice_dte))
-    {{-- {{dd($invoice_dte)}} --}}
-    @endif
-    {{-- @if($pagination_full["debut_aff"]>1 || $pagination_brouillon["debut_aff"]>1 || $pagination_actif["debut_aff"]>1 || $pagination_payer["debut_aff"]>1 )
-
-    @if(isset($invoice_dte) && isset($due_dte))
-    <a href="{{route('search_par_date',[1,1,1,1,$pour_list,$invoice_dte,$due_dte])}}" class="btn_creer text-center filter" role="button">
-    pagination activé <i class="fas fa-times"></i> </a>
-    @elseif(isset($solde_debut) && isset($solde_fin))
-    <a href="{{route('search_par_solde',[1,1,1,1,$pour_list,$solde_debut,$solde_fin])}}"><span class="btn_creer  text-center filter"><span style="position: relative; bottom: -0.2rem">
-            </span> pagination activé <i class="fas fa-times"></i></span>
-    </a>
-    @elseif(isset($num_fact))
-    <a href="{{route('search_par_num_fact',[1,1,1,1,$pour_list,$num_fact])}}" class="btn_creer text-center filter" role="button">
-        pagination activé <i class="fas fa-times"></i> </a>
-    @elseif(isset($entiter_id))
-    <a href="{{route('search_par_entiter',[1,1,1,1,$pour_list,$entiter_id])}}" class="btn_creer text-center filter" role="button">
-        pagination activé <i class="fas fa-times"></i> </a>
-    @else
-    <a href="{{route('liste_facture',[1,1,1,1,$pour_list])}}" class="btn_creer text-center filter" role="button">
-        pagination activé <i class="fas fa-times"></i> </a>
-    @endif
-    @endif --}}
-
     <div class="m-4">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            <li>
-                <a href="{{route('facture')}}" class="nav-link" style="color: rgb(17, 66, 17)`">
-                    Nouveau
-                </a>
-            </li>
             <li class="nav-item">
 
                 @if (isset($pour_list))
@@ -320,6 +290,12 @@
                             Payé
                             {{count($facture_payer)}}
                         </a>
+            </li>
+            <li>
+                <a href="{{route('facture')}}" class="btn_nouveau">
+                    <i class="bx bx-plus-medical me-2"></i>
+                    Nouveau Facture
+                </a>
             </li>
         </ul>
 
@@ -436,8 +412,22 @@
                                                         @if($actif->dernier_montant_ouvert<=0) <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
                                                             payé
                                 </div>
+
+                                @elseif($actif->activiter==false)
+
+                                @if ($actif->jour_restant >0)
+                                <div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">
+                                    nom envoyé
+                                </div>
+                                @else
+                                <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                    en retard
+                                </div>
+                                @endif
+
                                 @else
                                 @if($actif->facture_encour =="valider")
+
                                 @if ($actif->jour_restant >0)
                                 <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
                                     envoyé
@@ -447,6 +437,7 @@
                                     en retard
                                 </div>
                                 @endif
+
                                 @elseif($actif->facture_encour =="en_cour")
                                 @if ($actif->jour_restant >0)
                                 <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
@@ -457,6 +448,8 @@
                                     en retard
                                 </div>
                                 @endif
+
+
                                 @endif
                                 @endif
 
@@ -555,7 +548,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('encaisser') }} needs-validation" id="formPayement" method="POST" novalidate>
+                                                <form action="{{ route('encaisser') }} " id="formPayement" method="POST" novalidate>
                                                     @csrf
                                                     <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>
                                             </div>
@@ -612,13 +605,15 @@
 
                                             <div class="inputbox inputboxP mt-2  mx-1">
                                                 <span>Memo/Notes</span>
-                                                <textarea autocomplete="off" name="libelle" class="text_description form-control" placeholder="description d'encaissement" rows="5"></textarea>
+                                                <textarea autocomplete="off" name="libelle" class="text_description form-control" placeholder="description" rows="5"></textarea>
 
                                             </div>
 
                                             <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
                                             <div class="">
-                                                <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div>
+                                                {{-- <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div> --}}
+                                                <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_annuler annuler"  data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x me-1"></i>Annuler</button></span> <button type="submit" class="btn btn_enregistrer btnP px-3"> <i class="bx bx-check me-1"></i> Encaisser</button> </div>
+
                                             </div>
 
                                             </form>
@@ -684,13 +679,15 @@
                                                     <th scope="col">Date de facturation</th>
                                                     <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                     </th>
-                                                    <th scope="col">  <div align="right">
-                                                        Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                   </div>
+                                                    <th scope="col">
+                                                        <div align="right">
+                                                            Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </div>
                                                     </th>
-                                                    <th scope="col">  <div align="right">
-                                                        Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                   </div>
+                                                    <th scope="col">
+                                                        <div align="right">
+                                                            Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        </div>
                                                     </th>
                                                     <th scope="col">Statut</th>
                                                     @canany(['isCFP'])
@@ -748,15 +745,15 @@
                                                         </a>
                                                     </td>
                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                        <div align="right">
-                                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                                        </div>
+                                                            <div align="right">
+                                                                {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                            </div>
                                                         </a>
                                                     </td>
                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                        <div align="right">
-                                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
-                                                        </div>
+                                                            <div align="right">
+                                                                {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                            </div>
                                                         </a>
                                                     </td>
                                                     <td>
@@ -859,13 +856,15 @@
                                                         <th scope="col">Date de facturation</th>
                                                         <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                         </th>
-                                                        <th scope="col">  <div align="right">
-                                                            Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                       </div>
+                                                        <th scope="col">
+                                                            <div align="right">
+                                                                Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                            </div>
                                                         </th>
-                                                        <th scope="col">  <div align="right">
-                                                            Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                      </div>
+                                                        <th scope="col">
+                                                            <div align="right">
+                                                                Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                            </div>
                                                         </th>
                                                         <th scope="col">Statut</th>
                                                         @canany(['isCFP'])
@@ -918,15 +917,15 @@
                                                                 </a>
                                                             </td>
                                                             <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                                <div align="right">
-                                                                    {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                                                </div>
+                                                                    <div align="right">
+                                                                        {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                                    </div>
                                                                 </a>
                                                             </td>
                                                             <td>
                                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                     <div align="right">
-                                                                    {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                                        {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
                                                                     </div>
                                                                 </a>
                                                             </td>
@@ -1007,9 +1006,9 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form action="{{ route('encaisser') }} needs-validation" id="formPayement" method="POST" novalidate>
+                                                                        <form action="{{ route('encaisser') }} " method="POST" enctype="multipart/form-data">
                                                                             @csrf
-                                                                            <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control formPayement" required="required" hidden>
+                                                                            <input autocomplete="off" type="text" value="{{$actif->num_facture}}" name="num_facture" class="form-control " required hidden>
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-3  mx-1">
                                                                         <div class="row">
@@ -1017,10 +1016,7 @@
                                                                                 <span>Date de paiement<strong style="color:#ff0000;">*</strong></span>
                                                                             </div>
                                                                             <div class="col">
-                                                                                <input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;">
-                                                                                <div class="invalid-feedback">
-                                                                                    votre Date de paiement
-                                                                                </div>
+                                                                                <input type="date" name="date_encaissement" class="form-control " required style="height: 50px;">
                                                                             </div>
                                                                         </div>
 
@@ -1031,10 +1027,7 @@
                                                                                 <span>Montant à facturer<strong style="color:#ff0000;">*</strong></span>
                                                                             </div>
                                                                             <div class="col">
-                                                                                <input autocomplete="off" type="number" min="1" name="montant" class="form-control formPayement" required="required" style="height: 50px;">
-                                                                                <div class="invalid-feedback">
-                                                                                    votre montant à encaisser
-                                                                                </div>
+                                                                                <input autocomplete="off" type="number" min="1" name="montant" class="form-control " required style="height: 50px;">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1052,17 +1045,14 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="invalid-feedback">
-                                                                            votre mode de paiement
-                                                                        </div>
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-2  mx-1">
                                                                         <span>Memo/Notes</span>
-                                                                        <textarea autocomplete="off" name="libelle" class="text_description form-control" placeholder="description d'encaissement" rows="5"></textarea>
+                                                                        <textarea autocomplete="off" name="libelle" class="text_description form-control" placeholder="description" rows="5"></textarea>
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
                                                                     <div class="">
-                                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div>
+                                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class=" btn_annuler annuler"  data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x me-1"></i>Annuler</button></span> <button type="submit" class="btn btn_enregistrer btnP px-3"> <i class="bx bx-check me-1"></i> Encaisser</button> </div>
                                                                     </div>
                                                                     </form>
 
@@ -1108,13 +1098,15 @@
                                                                 <th scope="col">Date de facturation</th>
                                                                 <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
                                                                 </th>
-                                                                <th scope="col">  <div align="right">
-                                                                    Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                                </div>
+                                                                <th scope="col">
+                                                                    <div align="right">
+                                                                        Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                    </div>
                                                                 </th>
-                                                                <th scope="col">  <div align="right">
-                                                                    Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                               </div>
+                                                                <th scope="col">
+                                                                    <div align="right">
+                                                                        Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                    </div>
                                                                 </th>
                                                                 <th scope="col">Statut</th>
                                                                 @canany(['isCFP'])
@@ -1165,15 +1157,15 @@
                                                                         </a>
                                                                     </td>
                                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                                        <div align="right">
-                                                                            {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
-                                                                        </div>
+                                                                            <div align="right">
+                                                                                {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
+                                                                            </div>
                                                                         </a>
                                                                     </td>
                                                                     <td><a href="{{route('detail_facture',$actif->num_facture)}}">
-                                                                        <div align="right">
-                                                                            {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
-                                                                        </div>
+                                                                            <div align="right">
+                                                                                {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
+                                                                            </div>
                                                                         </a>
                                                                     </td>
                                                                     <td>
@@ -1248,7 +1240,7 @@
                                             <div class="filtrer mt-3">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <p class="m-0">Filtre</p>
+                                                        <p class="m-0">Filtre par</p>
                                                     </div>
                                                     <div class="col text-end">
                                                         <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
@@ -1256,54 +1248,32 @@
                                                     <hr class="mt-2">
                                                     <div class="row mt-0 navigation_module">
                                                         <p>
-                                                            <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique" class="dte_facturation_filtre">Recherche par intervale de date de facturation <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                            <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique" class="dte_facturation_filtre">Intervale de date de facturation <i class='bx icon_trie bxs-chevron-up'></i></a>
                                                         </p>
                                                         <div class="collapse multi-collapse" id="detail_par_thematique">
                                                             <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <div class="row">
-                                                                    <div class="col">
-                                                                        <div class="form-group">
-                                                                            <label for="dte_debut" class="form-label" align="left"> Date début<strong style="color:#ff0000;">*</strong></label>
-                                                                            <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
-                                                                        </div>
+                                                                    <div class="col-md-6">
+                                                                        <label for="dte_debut" class="form-label" align="left"> Date début<strong style="color:#ff0000;">*</strong></label>
+                                                                        <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
                                                                     </div>
-                                                                    <div class="col">
-                                                                        <div class="form-group">
-                                                                            <label for="dte_fin" class="form-label" align="left">Date fin <strong style="color:#ff0000;">*</strong></label>
-                                                                            <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
-
-                                                                        </div>
+                                                                    <div class="col-md-6">
+                                                                        <label for="dte_fin" class="form-label" align="left">Date fin <strong style="color:#ff0000;">*</strong></label>
+                                                                        <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
                                                                     </div>
                                                                 </div>
                                                                 <div align="center">
+                                                                    {{-- <button type="submit" class="btn btn_nouveau mt-2"><i class="bx bx-search"></i> recherche</button> --}}
                                                                     <button type="submit" class="btn_creer mt-2">Recherche</button>
                                                                 </div>
 
                                                             </form>
                                                         </div>
+
                                                         <hr>
                                                         <p>
-                                                            <a data-bs-toggle="collapse" class="num_fact_filtre" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par numero de facture <i class='bx icon_trie bxs-chevron-up'></i></a>
-                                                        </p>
-                                                        <div class="collapse multi-collapse" id="search_num_fact">
-                                                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
-                                                                @csrf
-                                                                <div class="row">
-                                                                    <div class="col">
-                                                                        <div class="form-group">
-                                                                            <input autocomplete="off" name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                        <hr>
-                                                        <p>
-                                                            <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" class="solde_total_payer_filtre" aria-controls="detail_par_solde">Recherche par intervale de solde total à payer <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                            <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" class="solde_total_payer_filtre" aria-controls="detail_par_solde">Intervale de solde total à payer <i class='bx icon_trie bxs-chevron-up'></i></a>
                                                         </p>
                                                         <div class="collapse multi-collapse" id="detail_par_solde">
                                                             <form class="mt-1 mb-2 form_colab" action="{{route('search_par_solde')}}" method="GET" enctype="multipart/form-data">
@@ -1312,13 +1282,13 @@
                                                                 <div class="row">
                                                                     <div class="col">
                                                                         <div class="form-group">
-                                                                            <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
+                                                                            <label for="dte_debut" class="form-label" align="left">Solde minimum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
                                                                             <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
                                                                         </div>
                                                                     </div>
                                                                     <div class="col">
                                                                         <div class="form-group">
-                                                                            <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
+                                                                            <label for="dte_fin" class="form-label" align="left"> Solde maximum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
                                                                             <input required type="number" name="solde_fin" id="solde_fin" class="form-control" />
                                                                         </div>
                                                                     </div>
@@ -1355,9 +1325,29 @@
                                                         </div>
                                                         </form>
                                                     </div> --}}
+
+                                                    <hr>
+                                                        <p>
+                                                            <a data-bs-toggle="collapse" class="num_fact_filtre" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Numero de facture <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                        </p>
+                                                        <div class="collapse multi-collapse" id="search_num_fact">
+                                                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <div class="form-group">
+                                                                            <input autocomplete="off" name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     <hr>
                                                     <p>
-                                                        <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Recherche par entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                        <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Par entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
                                                     </p>
                                                     <div class="collapse multi-collapse" id="detail_par_etp">
                                                         <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
@@ -1391,13 +1381,13 @@
                                                     </div>
                                                     <hr>
                                                     <p>
-                                                        <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Recherche par status <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                        <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Par statut <i class='bx icon_trie bxs-chevron-up'></i></a>
                                                     </p>
                                                     <div class="collapse multi-collapse" id="detail_par_status">
                                                         <form class="mt-1 mb-2 form_colab" action="{{route('search_par_status')}}" method="GET" enctype="multipart/form-data">
                                                             @csrf
                                                             <div class="row">
-                                                                <div class="col">
+                                                                <div class="col-8">
                                                                     <div class="form-group">
                                                                         <select class="form-select" name="status" id="status">
                                                                             <option value="INACTIF">Nom envoyé</option>

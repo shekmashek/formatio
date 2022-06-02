@@ -162,7 +162,8 @@
                     @endforeach
                     @if ($status == 'non')
                         <div align="center">
-                            <button type="submit" name="insert_form"  class="btn btn_enregistrer"><i class="bx bx-check me-1"></i>Enregistrer</button>
+                            <input type="hidden" name="insert_form" value="insert">
+                            <button type="submit" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i>Enregistrer</button>
                         </div>
                     @endif
                 </div>

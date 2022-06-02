@@ -151,78 +151,7 @@
     color: black;
 }
 
-.table-rating-bar .rating-label {
-    font-weight: bold;
-}
 
-.table-rating-bar .rating-bar {
-    width: 300px;
-    padding: 8px;
-    border-radius: 5px;
-}
-
-.table-rating-bar .bar-container {
-    width: 100%;
-    background-color: #f1f1f1;
-    text-align: center;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-bottom: 5px;
-}
-
-.table-rating-bar .bar-container .bar-5 {
-    width: 70%;
-    height: 13px;
-    background-color: orangered;
-    border-radius: 20px;
-}
-
-.table-rating-bar .bar-container .bar-4 {
-    width: 50%;
-    height: 13px;
-    background-color: orangered;
-    border-radius: 20px;
-}
-
-.table-rating-bar .bar-container .bar-3 {
-    width: 30%;
-    height: 13px;
-    background-color: orangered;
-    border-radius: 20px;
-}
-
-.table-rating-bar .bar-container .bar-2 {
-    width: 15%;
-    height: 13px;
-    background-color: orangered;
-    border-radius: 20px;
-}
-
-.table-rating-bar .bar-container .bar-1 {
-    width: 0%;
-    height: 13px;
-    background-color: orangered;
-    border-radius: 20px;
-}
-
-.table-rating-bar td {
-    padding-bottom: 10px;
-}
-
-.Stars {
-    color: orangered;
-}
-.rating-star .checked {
-    color: orangered;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.rating-star .checked:hover {
-    color: #f9a825;
-    cursor: pointer;
-}
 .detail__formation__programme__avis__donnes {
     border-radius: 5px;
     background-color: rgb(226, 226, 226);
@@ -415,7 +344,7 @@
 
 .nav-tabs .nav-link:hover {
     background-color: rgb(245, 243, 243);
-    transform: scale(1.1);
+    
     border: none;
 }
 .nav-tabs .nav-item a{

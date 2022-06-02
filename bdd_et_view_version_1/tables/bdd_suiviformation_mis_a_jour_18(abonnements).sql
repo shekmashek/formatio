@@ -171,3 +171,18 @@ ALTER TABLE cfps
     add column assujetti_id bigint(20) unsigned default 0,
     ADD CONSTRAINT FOREIGN KEY(assujetti_id) REFERENCES assujetti(id);
 
+drop table if exists coupon;
+CREATE TABLE `coupon` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `coupon` varchar(55) COLLATE utf8mb4_unicode_ci not null,
+  `valeur` int(3) NOT NULL,
+  `utilise` boolean not null default false,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+ALTER TABLE abonnements
+  add column coupon_id bigint(20) unsigned default 0;
+ALTER TABLE abonnement_cfps
+  add column coupon_id bigint(20) unsigned default 0;

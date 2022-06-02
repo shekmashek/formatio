@@ -312,6 +312,37 @@ class FonctionGenerique extends Model
         return $emps;
     }
 
+    //filtre employes new
+    public function filtreEmployeNew($user_id){
+
+        $emps = DB::table('stagiaires')
+                ->select('*')
+                ->where('user_id', '=', $user_id)
+                // ->where('entreprise_id', '=', $etp_id)
+                ->get();
+
+        return $emps;
+    }
+
+    public function afficheInfoNewOne($id){
+        // $emps = DB::table('users')
+        //         ->join('v_role_user_etp_stg', 'v_role_user_etp_stg.user_id', 'users.id')
+        //         ->join('stagiaires', 'stagiaires.user_id', 'v_role_user_etp_stg.user_id')
+        //         ->join('entreprises', 'entreprises.id', 'stagiaires.entreprise_id')
+        //         ->select('stagiaires.entreprise_id' ,'telephone_stagiaire' ,'role_name', 'matricule', 'nom_stagiaire', 'prenom_stagiaire',
+        //             'role_id', 'mail_stagiaire', 'photos',
+        //             'stagiaires.user_id', 'fonction_stagiaire',
+        //             'users.name', 'users.telephone', 'users.email', 'stagiaires.user_id')
+        //         ->where('stagiaires.user_id', '=', $id)
+        //         ->get();
+        $emps = DB::table('stagiaires')
+                ->select('*')
+                ->where('user_id', '=', $id)
+                ->get();
+
+        return $emps;
+    }
+
     //filtre Réferent
     public function filtreReferent($search_param_name, $input){
 
