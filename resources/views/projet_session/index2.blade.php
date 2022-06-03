@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
 
     <style>
-        .dropdown-item.active{ 
+        .dropdown-item.active{
             background-color: transparent !important;
         }
 
@@ -445,7 +445,7 @@
                                                                         style="font-size: 1.1rem !important;"></i>
                                                                 </button></td>
                                                         @endcan --}}
-                                                        
+
                                                         <td class="text-center">
                                                             <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                                             <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
@@ -1017,7 +1017,7 @@
                                                 echo $groupe->module_session($pj->module_id) . '&nbsp;' . $groupe->nombre_apprenant_session($pj->groupe_id);
                                             @endphp
                                         </td>
-                                        <td> 
+                                        <td>
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                             @endphp
@@ -1170,7 +1170,7 @@
                                                 echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
-                                        <td> 
+                                        <td>
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                             @endphp
@@ -1192,12 +1192,7 @@
                                         </td>
                                         <td>
                                             <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn pb-2">Résultat</button>
-                                            
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a class="resultat_stg" href="{{ route('faireEvaluationChaud',[$pj->groupe_id]) }}"><button class="btn pb-2">Eval</button>
-                                            
+
                                             </a>
                                         </td>
 
