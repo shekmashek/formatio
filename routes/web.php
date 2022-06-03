@@ -1344,3 +1344,6 @@ Route::get('supprimer_frais/{id}','FraisAnnexesController@destroy')->name('suppr
 Route::get('supprimer_frais_annexes/{id}','SessionController@supprimer_frais')->name('supprimer_frais_annexes');
 
 Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagiaire')->name('resultat_stagiaire');
+
+
+Route::get('resultat_evaluation/{groupe_id}','EvaluationChaudController@evaluation_chaud_pdf')->name('resultat_evaluation');

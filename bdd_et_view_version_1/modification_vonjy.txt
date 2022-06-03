@@ -161,3 +161,8 @@ UPDATE `description_champ_reponse` SET `point_champ` = '1' WHERE `description_ch
 creation vue v_reponse_evaluationchaud => bdd_suiviformation_view_19(evaluationChaud)
 creation vue v_nombre_stagiaire_groupe => bdd_suiviformation_view_19(evaluationChaud)
 creation vue v_evaluation_chaud => bdd_suiviformation_view_19(evaluationChaud)
+
+alter table reponse_evaluationchaud add column statut int(2) default 0; 
+
+
+copier bdd_suiviformation_view_19(evaluationChaud)
