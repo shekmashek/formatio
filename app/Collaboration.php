@@ -26,17 +26,17 @@ class Collaboration extends Model
         DB::commit();
     }
 */
-    public function insert_collaboration_cfp_etp($cfp_id, $etp_id)
+    public function insert_collaboration_cfp_etp($cfp_id, $etp_id,$id_resp_cfp)
     {
-        $data = [$cfp_id, $etp_id];
-        DB::insert('insert into demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at,updated_at) values (?,?, NOW(), NOW())', $data);
+        $data = [$cfp_id, $etp_id,$id_resp_cfp];
+        DB::insert('insert into demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at,updated_at,resp_cfp_id) values (?,?, NOW(), NOW(),?)', $data);
         DB::commit();
     }
 
-    public function insert_collaboration_etp_cfp($cfp_id, $etp_id)
+    public function insert_collaboration_etp_cfp($cfp_id, $etp_id,$id_resp_etp)
     {
-        $data = [$etp_id, $cfp_id];
-        DB::insert('insert into demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,created_at,updated_at) values (?,?, NOW(), NOW())', $data);
+        $data = [$etp_id, $cfp_id,$id_resp_etp];
+        DB::insert('insert into demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,created_at,updated_at,resp_etp_id) values (?,?, NOW(), NOW(),?)', $data);
         DB::commit();
     }
 
@@ -84,10 +84,10 @@ class Collaboration extends Model
     // ========================= invitation refuse
 
     // ----------------------------------------------------------------------
-    public function insert_invitation_refuser_etp_cfp($cfp_id, $etp_id)
+    public function insert_invitation_refuser_etp_cfp($cfp_id, $etp_id,$resp_cfp_id,$resp_etp_id)
     {
-        $data = [$etp_id, $cfp_id];
-        DB::insert('insert into refuse_demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,created_at) values (?,?, NOW())', $data);
+        $data = [$etp_id, $cfp_id,$resp_cfp_id,$resp_etp_id];
+        DB::insert('insert into refuse_demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,created_at,resp_cfp_id,resp_etp_id) values (?,?, NOW(),?,?)', $data);
         DB::commit();
     }
     public function suprime_invitation_collaboration_etp_cfp($id)
@@ -98,10 +98,10 @@ class Collaboration extends Model
         return back();
     }
     // -----------------------------------------
-    public function insert_invitation_refuser_cfp_etp($cfp_id, $etp_id)
+    public function insert_invitation_refuser_cfp_etp($cfp_id, $etp_id,$resp_cfp_id,$resp_etp_id)
     {
-        $data = [$cfp_id, $etp_id];
-        DB::insert('insert into refuse_demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at) values (?,?, NOW())', $data);
+        $data = [$cfp_id, $etp_id,$resp_cfp_id,$resp_etp_id];
+        DB::insert('insert into refuse_demmande_cfp_etp (demmandeur_cfp_id,inviter_etp_id,created_at,resp_cfp_id,resp_etp_id) values (?,?, NOW(),?,?)', $data);
         DB::commit();
     }
     public function suprime_invitation_collaboration_cfp_etp($id)
@@ -131,7 +131,7 @@ class Collaboration extends Model
     }
 
     //=================   accepter invitation==========================
-    public function accept_invitation_collaboration_etp_cfp($id)
+    public function accept_invitation_collaboration_etp_cfp($id,$resp_etp_id)
     {
         $demande = $this->fonct->findWhereMulitOne("demmande_cfp_etp", ["id"], [$id]);
         $verify_exist = $this->fonct->findWhere("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$demande->inviter_etp_id, $demande->demmandeur_cfp_id]);
@@ -140,7 +140,7 @@ class Collaboration extends Model
             if (count($verify_exist) > 0) {
                 DB::delete("delete from demmande_etp_cfp where demmandeur_etp_id=? AND inviter_cfp_id=?", [$demande->inviter_etp_id, $demande->demmandeur_cfp_id]);
             }
-            DB::update("update demmande_cfp_etp set activiter=1 where id=?", [$id]);
+            DB::update("update demmande_cfp_etp set activiter=1,resp_etp_id=? where id=?", [$resp_etp_id,$id]);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -149,7 +149,7 @@ class Collaboration extends Model
         return back();
     }
 
-    public function accept_invitation_collaboration_cfp_etp($id)
+    public function accept_invitation_collaboration_cfp_etp($id,$resp_cfp_id)
     {
         $demande = $this->fonct->findWhereMulitOne("demmande_etp_cfp", ["id"], [$id]);
         $verify_exist = $this->fonct->findWhere("demmande_cfp_etp", ["demmandeur_cfp_id", "inviter_etp_id"], [$demande->inviter_cfp_id, $demande->demmandeur_etp_id]);
@@ -158,7 +158,7 @@ class Collaboration extends Model
             if (count($verify_exist) > 0) {
                 DB::delete("delete from demmande_cfp_etp where demmandeur_cfp_id=? AND inviter_etp_id=?", [$demande->inviter_cfp_id, $demande->demmandeur_etp_id]);
             }
-            DB::update("update demmande_etp_cfp set activiter=1 where id=?", [$id]);
+            DB::update("update demmande_etp_cfp set activiter=1,resp_cfp_id=? where id=?", [$resp_cfp_id,$id]);
             DB::commit();
 
         } catch (Exception $e) {
@@ -230,11 +230,11 @@ class Collaboration extends Model
     }
 
 
-    public function verify_collaboration_cfp_etp($cfp_id, $etp_id, $nom_resp)
+    public function verify_collaboration_cfp_etp($cfp_id, $etp_id,$id_resp)
     {
         DB::beginTransaction();
         try {
-            $this->insert_collaboration_cfp_etp($cfp_id, $etp_id);
+            $this->insert_collaboration_cfp_etp($cfp_id, $etp_id,$id_resp);
         } catch (Exception $e) {
             DB::rollback();
             echo $e->getMessage();
@@ -243,12 +243,12 @@ class Collaboration extends Model
         return back()->with("success", "une invitation de collaboration a été envoyée ");
     }
 
-    public function verify_collaboration_etp_cfp($cfp_id, $etp_id, $nom_cfp)
+    public function verify_collaboration_etp_cfp($cfp_id, $etp_id, $nom_cfp,$id_resp)
     {
         //  $this->validation_form($imput);
         DB::beginTransaction();
         try {
-            $this->insert_collaboration_etp_cfp($cfp_id, $etp_id);
+            $this->insert_collaboration_etp_cfp($cfp_id, $etp_id,$id_resp);
         } catch (Exception $e) {
             DB::rollback();
             echo $e->getMessage();

@@ -361,7 +361,7 @@ Route::resource('formation', 'FormationController')->except([
 ]);
 Route::post('/delete_formation/{id}', 'FormationController@destroy')->name('destroy_formation');
 Route::post('/show_formation/{id}', 'FormationController@show')->name('show_formation');
-Route::get('/liste_formation/{id?}', 'FormationController@index')->name('liste_formation');
+Route::get('/liste_formation/{id?}/{nbPag?}', 'FormationController@index')->name('liste_formation');
 Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->name('nouvelle_formation');
 //route categorie_formation
 Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
