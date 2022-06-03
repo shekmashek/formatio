@@ -8,11 +8,12 @@ use Image;
 use App\User;
 use App\Niveau;
 use App\branche;
+use App\Service;
+use App\RoleUser;
 use App\stagiaire;
 use Carbon\Carbon;
 use App\Entreprise;
 use App\Departement;
-use App\Service;
 use App\NiveauEtude;
 use App\responsable;
 use App\chefDepartement;
@@ -21,17 +22,17 @@ use App\Models\getImageModel;
 use App\DepartementEntreprise;
 use App\Models\FonctionGenerique;
 use App\Exports\ParticipantExport;
-use Illuminate\Support\Facades\DB;
 
 /* ====================== Exportation Excel ============= */
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Storage;
 use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
 
 class ParticipantController extends Controller
@@ -137,23 +138,10 @@ class ParticipantController extends Controller
 
         $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);
 
-
-        // if (Gate::allows('isReferent')) {
-        //     $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
-        //     if ($resp_connecter->prioriter == true) {
-        //         DB::beginTransaction();
-        //         try {
-        //             DB::insert("insert into role_users(user_id,role_id,activiter) values (?,?,false)", [$user_id, $role_id]);
-        //             DB::commit();
-        //         } catch (Exception $e) {
-        //             DB::rollback();
-        //             echo $e->getMessage();
-        //         }
-        //         return response()->json(['success' => "Terminé!"]);
-        //     } else {
-        //         return back()->with('error', 'désolé,seul le responsable principale à le droit de modifier les roles des employés!');
-        //     }
-        // }
+        
+        RoleUser::updateOrInsert(
+            ['user_id' => $user_id, 'role_id' => 2]
+        );
 
         return response()->json($ref_status);
         

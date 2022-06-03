@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RoleUser extends Model
 {
     use SoftDeletes;
+    protected $table = "role_users";
 
     public function queryWhereRole_etp($val = [])
     {
