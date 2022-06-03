@@ -72,12 +72,12 @@
 
             @if (count($infos)>0)
                 @if($nom_formation == null)
-                    <h5 class="">Formations : {{count($infos)}} résultats</h5><br>
+                    <h5 class="ms-5">{{count($infos)}} résultats</h5><br>
                 @else
                     @if (count($infos) == 1)
-                        <h5 class="">Formations : {{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
+                        <h5 class="ms-5">{{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
                     @else
-                        <h5 class="">Formations : {{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
+                        <h5 class="ms-5">{{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
                     @endif
                 @endif
             @endif
@@ -90,7 +90,7 @@
     </div>
 
     </div>
-    <div class="container pb-5 ">
+    <div class="container-fluid pb-5 px-5">
         <div class="row justify-content-center">
             <div class="col-lg-12">
 
@@ -114,14 +114,27 @@
                         </a>
                     </div>
                     <div class="col-4">
-                        <div class="liste__formation__avis mb-3">
-                            <div class="Stars" style="--note: {{ $info->pourcentage }};">
+                        <div class="liste__formation__avis mb-3 d-flex flex-row justify-content-between">
+                            <div>
+                                <div class="Stars" style="--note: {{ $info->pourcentage }};">
+                                </div>
 
+
+
+                                <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5
+                                    @if($info->total_avis != null)
+                                        ({{$info->total_avis}} avis)
+                                    @else
+                                        (0 avis)
+                                    @endif
+                                </span>
                             </div>
-                            <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5 ({{count($liste_avis)}} avis)</span>
-                            <span>Réf : {{$info->reference}}</span>
+                            <div>
+                                <span>Réf : {{$info->reference}}</span>
+                            </div>
+
                         </div>
-                        <div class=" liste__formation__item3 description d-flex flex-row">
+                        <div class="liste__formation__item3 description d-flex flex-row">
                             <div class="me-2"><i class="bx bx-alarm bx_icon"></i>
                                 <span>
                                     @isset($info->duree_jour)
@@ -142,7 +155,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col text-center">
                         <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                         @if($info->prix_groupe != null)
                             <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
@@ -165,7 +178,7 @@
                                 @if (count($datas) <= 0)
 
                                 @else
-                                    <hr>
+                                    <hr class = "mb-1 mt-2">
                                     <div class="row w-100 justify-content-end">
                                         <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates du Session Inter&nbsp;<i class="bx bx-caret-down caret-icon"></i>
                                         </h6>
