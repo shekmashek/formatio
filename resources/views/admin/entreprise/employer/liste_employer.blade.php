@@ -99,7 +99,7 @@
         <ul class="nav nav-tabs mb-3 ml-3 col-md-10" id="ex1" role="tablist">
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="emps-list" data-mdb-toggle="tab" data-bs-toggle="tab" href="#emp-list"
-                    role="tab" aria-controls="emp-list" aria-selected="true">Liste</a>
+                    role="tab" aria-controls="emp-list" aria-selected="true">Liste des emmployes</a>
 
             </li>
             <li class="nav-item" role="presentation">
@@ -113,6 +113,12 @@
                 <a class="nav-link" id="emps-export" data-mdb-toggle="tab" data-bs-toggle="tab" href="#emp-export"
                     role="tab" aria-controls="emp-export" aria-selected="false">Exporter</a>
             </li>
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="emps-referents" data-mdb-toggle="tab" data-bs-toggle="tab" href="#emp-referents"
+                    role="tab" aria-controls="emp-referents" aria-selected="false">Référents</a>
+            </li>
+            
         </ul>
         <!-- Tabs navs -->
 
@@ -265,20 +271,30 @@
                                                 @endif
 
                                             </td>
-
+                                            
                                             {{-- status référent --}}
                                             <td class="align-middle text-center text-secondary">
 
-                                                    <div class="form-check form-switch">
-                                                        <label class="form-check-label"
-                                                            for="flexSwitchCheckChecked">
-                                                            <span class="badge bg-secondary">
-                                                                inactif
-                                                            </span>
-                                                        </label>
-                                                        <input class="form-check-input activer_reférent" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
-                                                    </div>
+                                            @if ($employe->status_referent == 1)
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                                            class="badge bg-success">Référent</span></label>
+                                                    <input class="form-check-input desactiver_referent" type="checkbox"
+                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                        checked>
+                                                </div>
+                                            @else
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label"
+                                                        for="flexSwitchCheckChecked">
+                                                        <span class="badge bg-secondary">
+                                                            non référent
+                                                        </span>
+                                                    </label>
+                                                    <input class="form-check-input activer_referent" type="checkbox"
+                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                </div>
+                                            @endif
 
                                             </td>
 
@@ -341,6 +357,9 @@
             <div class="tab-pane fade" id="emp-export" role="tabpanel" aria-labelledby="emp-export">
                 export
             </div>
+            <div class="tab-pane fade" id="emp-referents" role="tabpanel" aria-labelledby="emp-referents">
+                @include('admin.entreprise.employer.liste_referent')
+            </div>
         </div>
 
         {{-- tabs content --}}
@@ -372,15 +391,47 @@
             });
 
 
-            // changer le status de référent
+            // changer le status de référent -> activer
             $(".activer_referent").on('click', function(e) {
                 var user_id = $(this).data("user-id");
                 var stg_id = $(this).val();
                 $.ajax({
                     type: "GET",
-                    
+                    url: "employes.setReferent",
+                    data: {
+                        user_id: user_id,
+                        emp_id: stg_id
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        window.location.reload();
+                    },
+                    error: function(response) {
+                        console.log(error);
+                    }
                 });
             });
+
+            // changer le status de référent à désactiver
+            $(".desactiver_referent").on('click', function(e) {
+                var user_id = $(this).data("user-id");
+                var stg_id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "employes.unsetReferent",
+                    data: {
+                        user_id: user_id,
+                        emp_id: stg_id
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        window.location.reload();
+                    },
+                    error: function(response) {
+                        console.log(error);
+                    }
+                })
+            })
 
             // desactiver/activer stagiaire
             $(".desactiver_stg").on('click', function(e) {
@@ -394,6 +445,7 @@
                         emp_id: stg_id
                     },
                     success: function(response) {
+                        console.log(response);
                         window.location.reload();
                     },
                     error: function(error) {
@@ -412,6 +464,7 @@
                         emp_id: stg_id
                     },
                     success: function(response) {
+                        console.log(response);
                         window.location.reload();
                     },
                     error: function(error) {

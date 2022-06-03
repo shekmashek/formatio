@@ -84,4 +84,9 @@ class Stagiaire extends Model
         DB::update("UPDATE stagiaires SET activiter=TRUE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
         return ["status" =>"desactiver"];
     }
+    public function setReferent($user_id, $emp_id,$entreprise_id){
+        DB::update("UPDATE stagiaires SET status_referent=TRUE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
+        return ["status" =>"referent"];
+    }
+
 }

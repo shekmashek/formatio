@@ -104,6 +104,7 @@ class ParticipantController extends Controller
 
         $stg = new stagiaire();
         $user_id = $req->user_id;
+
         $emp_id = $req->emp_id;
         $entreprise_id = 0;
         if (Gate::allows('isReferent')) {
@@ -113,13 +114,76 @@ class ParticipantController extends Controller
             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
         }
         $status = $stg->activer($user_id, $emp_id, $entreprise_id);
-
+        // dd($status);
         return response()->json($status);
     }
 
 
-    public function setRererent (Request $request) {
+    public function setReferent (Request $request) {
+
+        $employe = new stagiaire();
+        $user_id = $request->user_id;
+        $emp_id = $request->emp_id;
+
+
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+        }
+
+        // $stagiaire = stagiaire::where('user_id', $user_id)->where('entreprise_id', $entreprise_id)->first();
+
+        $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);
+
+
+        // if (Gate::allows('isReferent')) {
+        //     $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
+        //     if ($resp_connecter->prioriter == true) {
+        //         DB::beginTransaction();
+        //         try {
+        //             DB::insert("insert into role_users(user_id,role_id,activiter) values (?,?,false)", [$user_id, $role_id]);
+        //             DB::commit();
+        //         } catch (Exception $e) {
+        //             DB::rollback();
+        //             echo $e->getMessage();
+        //         }
+        //         return response()->json(['success' => "Terminé!"]);
+        //     } else {
+        //         return back()->with('error', 'désolé,seul le responsable principale à le droit de modifier les roles des employés!');
+        //     }
+        // }
+
+        return response()->json($ref_status);
         
+
+    }
+
+    public function unsetReferent (Request $request) {
+
+        // $employe = new stagiaire();
+        $user_id = $request->user_id;
+        $emp_id = $request->emp_id;
+
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+        }
+
+        $employe = stagiaire::where('user_id', $user_id)->where('entreprise_id', $entreprise_id)->first();
+        DB::table('stagiaires')
+            ->where('user_id', $user_id)
+            ->where('entreprise_id', $entreprise_id)
+            ->update([
+                'status_referent' => 0
+            ]);
+        $ref_status = $employe->status_referent;
+        return response()->json($ref_status);
+
+
     }
 
     public function new_emp()

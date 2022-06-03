@@ -2,16 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use App\Models\FonctionGenerique;
 use Exception;
+use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RoleUser extends Model
 {
-    //
-
-
+    use SoftDeletes;
 
     public function queryWhereRole_etp($val = [])
     {

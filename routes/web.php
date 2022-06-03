@@ -727,6 +727,8 @@ Route::get('employes.export.verify_cin_stg','ParticipantController@verify_cin_st
 Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->name('employes.liste.activer');
 Route::get('employes.liste.desactiver','ParticipantController@desactiver_stagiaire')->name('employes.liste.desactiver');
 Route::get('employes.new','ParticipantController@new_emp')->name('employes.new');
+Route::get('employes.setReferent', 'ParticipantController@setReferent')->name('employes.setReferent');
+Route::get('employes.unsetReferent', 'ParticipantController@unsetReferent')->name('employes.unsetReferent');
 
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement', 'ChefDepartementController');
