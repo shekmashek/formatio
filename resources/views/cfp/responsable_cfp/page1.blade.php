@@ -641,8 +641,8 @@
               <span id="texte">Les objectifs de la formation ont-ils été clairement annoncés ?</span>
             </div>
             <div class=" circle_1">
-              <div id="my-pie-chart" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
-                <span class="center"> <span style="font-size: 12px;"><b> 5,5 </b></span> <span style="font-size: 10px"> / 10 </span></span>
+              <div id="my-pie-chart" class="circle " style="--test: 75; --test2: 100; --test3: 0; --test4: 0">
+                <span class="center"> <span style="font-size: 12px;"><b> 8,5 </b></span> <span style="font-size: 10px"> / 10 </span></span>
               </div>
             </div>
           </div>
@@ -652,8 +652,8 @@
             <span id="texte">Avez-vous eu une discussion avec votre hiérarchie concernant  cette formation ?</span>
           </div>
           <div class=" circle_1">
-            <div id="my-pie-chart2" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
-              <span class="center"> <span style="font-size: 12px;"><b> 3 </b></span> <span style="font-size: 10px"> / 10 </span></span>
+            <div id="my-pie-chart2" class="circle " style="--test: 0; --test2: 75; --test3: 0; --test4: 0">
+              <span class="center"> <span style="font-size: 12px;"><b> 7.5 </b></span> <span style="font-size: 10px"> / 10 </span></span>
             </div>
           </div>
         </div>
@@ -668,11 +668,11 @@
                     <td class="rating-bar">
                         <div class="bar-container">
                             <div class="bar-5"
-                                style="--progress_bar: 45%;">
+                                style="--progress_bar: 75%;">
                             </div>
                         </div>
                     </td>
-                    <td class="text-right"><span class="rating-label">4</span>&nbsp;<span class="text-muted">45%</span>
+                    <td class="text-right"><span class="rating-label">3</span>&nbsp;<span class="text-muted">75%</span>
                     </td>
                 </tr>
                 <tr>
@@ -680,11 +680,11 @@
                     <td class="rating-bar">
                         <div class="bar-container">
                             <div class="bar-4"
-                                style="--progress_bar: 60%;">
+                                style="--progress_bar: 25%;">
                             </div>
                         </div>
                     </td>
-                    <td class="text-right"><span class="rating-label">5</span>&nbsp;<span class="text-muted">60%</span>
+                    <td class="text-right"><span class="rating-label">1</span>&nbsp;<span class="text-muted">25%</span>
                     </td>
                 </tr>
                 <tr>
@@ -692,11 +692,11 @@
                     <td class="rating-bar">
                         <div class="bar-container">
                             <div class="bar-3"
-                                style="--progress_bar: 50%;">
+                                style="--progress_bar: 0%;">
                             </div>
                         </div>
                     </td>
-                    <td class="text-right"><span class="rating-label">2</span>&nbsp;<span class="text-muted">50%</span>
+                    <td class="text-right"><span class="rating-label">0</span>&nbsp;<span class="text-muted">0%</span>
                     </td>
                 </tr>
                 <tr>
@@ -704,11 +704,11 @@
                     <td class="rating-bar">
                         <div class="bar-container">
                             <div class="bar-2"
-                                style="--progress_bar: 75%;">
+                                style="--progress_bar: 0%;">
                             </div>
                         </div>
                     </td>
-                    <td class="text-right"><span class="rating-label">9</span>&nbsp;<span class="text-muted">75%</span>
+                    <td class="text-right"><span class="rating-label">0</span>&nbsp;<span class="text-muted">0%</span>
                     </td>
                 </tr>
                 
@@ -721,11 +721,11 @@
                     <td class="rating-bar">
                         <div class="bar-container">
                             <div class="bar-6"
-                                style="--progress_bar: 45%;">
+                                style="--progress_bar: 0%;">
                             </div>
                         </div>
                     </td>
-                    <td class="text-right"><span class="rating-label">4</span>&nbsp;<span class="text-muted">45%</span>
+                    <td class="text-right"><span class="rating-label">0</span>&nbsp;<span class="text-muted">0%</span>
                     </td>
                 </tr>
                 <tr>
@@ -733,11 +733,11 @@
                     <td class="rating-bar">
                         <div class="bar-container">
                             <div class="bar-7"
-                                style="--progress_bar: 60%;">
+                                style="--progress_bar: 75%;">
                             </div>
                         </div>
                     </td>
-                    <td class="text-right"><span class="rating-label">5</span>&nbsp;<span class="text-muted">60%</span>
+                    <td class="text-right"><span class="rating-label">4</span>&nbsp;<span class="text-muted">75%</span>
                     </td>
                 </tr>
                 <tr>
@@ -745,11 +745,11 @@
                     <td class="rating-bar">
                         <div class="bar-container">
                             <div class="bar-8"
-                                style="--progress_bar: 50%;">
+                                style="--progress_bar: 0%;">
                             </div>
                         </div>
                     </td>
-                    <td class="text-right"><span class="rating-label">2</span>&nbsp;<span class="text-muted">50%</span>
+                    <td class="text-right"><span class="rating-label">0</span>&nbsp;<span class="text-muted">0%</span>
                     </td>
                 </tr>
                 <tr>
@@ -757,11 +757,11 @@
                     <td class="rating-bar">
                         <div class="bar-container">
                             <div class="bar-9"
-                                style="--progress_bar: 75%;">
+                                style="--progress_bar: 0%;">
                             </div>
                         </div>
                     </td>
-                    <td class="text-right"><span class="rating-label">9</span>&nbsp;<span class="text-muted">75%</span>
+                    <td class="text-right"><span class="rating-label">0</span>&nbsp;<span class="text-muted">0%</span>
                     </td>
                 </tr>
             </table>
@@ -775,11 +775,11 @@
                   <td class="rating-bar">
                       <div class="bar-container">
                           <div class="bar-10"
-                              style="--progress_bar: 65%;">
+                              style="--progress_bar: 80%;">
                           </div>
                       </div>
                   </td>
-                  <td class="text-right"><span class="rating-label">7</span>&nbsp;<span class="text-muted">80%</span>
+                  <td class="text-right"><span class="rating-label">8</span>&nbsp;<span class="text-muted">/ 10</span>
                   </td>
               </tr>
           </table>
@@ -798,7 +798,7 @@
             <span id="texte">La durée du stage vous a t-elle semblé adaptée ?</span>
           </div>
           <div class=" circle_1">
-            <div id="my-pie-chart3" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
+            <div id="my-pie-chart3" class="circle " style="--test: 100; --test2: 0; --test3: 0; --test4: 0">
               <span class="center"> <span style="font-size: 12px;"><b> 10 </b></span> <span style="font-size: 10px"> / 10 </span></span>
             </div>
           </div>
@@ -891,7 +891,7 @@
               <span id="texte">Le formateur était-il clair et dynamique ?</span>
             </div>
             <div class=" circle_1">
-              <div id="my-pie-chart4" class="circle " style="--test: 10; --test2: 65; --test3: 70; --test4: 85">
+              <div id="my-pie-chart4" class="circle " style="--test: 0; --test2: 65; --test3: 90; --test4: 100">
                 <span class="center"> <span style="font-size: 12px;"><b> 5,5 </b></span> <span style="font-size: 10px"> / 10 </span></span>
               </div>
             </div>
