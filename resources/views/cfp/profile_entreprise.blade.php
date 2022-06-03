@@ -749,7 +749,8 @@
                         @foreach($entreprise as $etp)
                         <tr >
                             <td>
-                                <img class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();" src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
+                                <img class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();" src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:80px;height:80px;text-align:center; cursor: pointer">
+                                <span class="ms-3 information" style="cursor: pointer;" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();">{{$etp->nom_etp}}</span></td>
                             <td>
                                 <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                             </td>

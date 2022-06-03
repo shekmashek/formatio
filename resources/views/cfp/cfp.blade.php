@@ -102,7 +102,9 @@
                     @foreach($cfp as $centre)
                     <tr>
 
-                        <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:60px; width:120px;"><span class="ms-3">{{$centre->nom}} </span></td>
+                        <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>
+                            <img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:80px; width:80px;"><span class="ms-3">{{$centre->nom}} </span>
+                        </td>
                         {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->telephone}}</td> --}}
                         <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>
 
@@ -298,6 +300,7 @@
       </div>
       <!-- Tabs content -->
 </div>
+
 <div class="infos mt-3">
     <div class="row">
         <div class="col">

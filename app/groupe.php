@@ -82,10 +82,22 @@ class Groupe extends Model
 
     
     public function info_resp_etp($id_etp){
+        // $info = DB::table('entreprises')
+        //         ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+        //         ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
+        //         ->select('*')
+        //         ->where('v_groupe_projet_entreprise.entreprise_id', $id_etp)
+        //         ->get()[0];
+
         $info = DB::table('entreprises')
                 ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
                 ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
-                ->select('*')
+                ->select(DB::raw('substr(entreprises.nom_etp, 1, 2) as nomEtpS') ,DB::raw('substr(responsables.nom_resp, 1, 1) as nomEtresp'), DB::raw('substr(responsables.prenom_resp, 1, 1) as prenomEtpresp'), 'entreprises.logo', 
+                'entreprises.nif', 'entreprises.stat', 'entreprises.email_etp', 'entreprises.site_etp', 'entreprises.telephone_etp' ,
+                'responsables.photos', 'responsables.matricule', 'responsables.nom_resp', 'responsables.prenom_resp',
+                'responsables.email_resp', 'responsables.telephone_resp', 'responsables.adresse_quartier', 'responsables.adresse_lot',
+                'responsables.adresse_ville', 'responsables.adresse_region', 'v_groupe_projet_entreprise.entreprise_id'
+                )
                 ->where('v_groupe_projet_entreprise.entreprise_id', $id_etp)
                 ->get()[0];
                 
@@ -97,7 +109,9 @@ class Groupe extends Model
         $info = DB::table('cfps')
                 ->join('responsables_cfp', 'responsables_cfp.cfp_id', 'cfps.id')
                 ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.cfp_id', 'cfps.id')
-                ->select('cfps.id', 'cfps.nif', 'cfps.stat', 'cfps.nom', 'cfps.adresse_lot', 'cfps.adresse_quartier',
+                ->select(DB::raw('substr(responsables_cfp.nom_resp_cfp, 1, 1) as nomRespOf'), DB::raw('substr(responsables_cfp.prenom_resp_cfp, 1, 1) as prenomRespOf'), 
+                DB::raw('substr(cfps.nom, 1, 2) as nomOfS'),
+                'cfps.id', 'cfps.nif', 'cfps.stat', 'cfps.nom', 'cfps.adresse_lot', 'cfps.adresse_quartier',
                 'cfps.adresse_code_postal', 'cfps.adresse_ville', 'cfps.adresse_region', 'cfps.email', 'cfps.telephone', 'cfps.logo',
                 'cfps.site_web', 'responsables_cfp.nom_resp_cfp', 'responsables_cfp.prenom_resp_cfp', 'responsables_cfp.email_resp_cfp',
                 'responsables_cfp.sexe_resp_cfp', 'responsables_cfp.fonction_resp_cfp', 'responsables_cfp.adresse_lot',

@@ -466,9 +466,22 @@
                 
                                         <p class="p-0 mt-3 text-center">Réferent de l'entreprise <span style="font-weight: 400; font-size: 16px ; color: #26A0DA">{{ $projet[0]->nom_etp }}</span> </p>
                                         &nbsp;&nbsp;
-                                        <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" src="{{ asset('images/responsables/' . $etp->photos) }}" alt=""
-                                            class="mt-2 resp_etp" height="30px" width="30px" style="border-radius: 50%; cursor: pointer" 
-                                            data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}}>&nbsp;
+
+                                        <span>
+                                            @if($etp->photos == NULL or $etp->photos == '' or $etp->photos == 'XXXXXXX')
+                                                <td role="button" >
+                                                    <span  class="randomColor m-auto mt-2 text-uppercase" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
+                                                        <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 15px; cursor: pointer"
+                                                        data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}} class="resp_etp">{{$etp->nomEtpS}}</span> 
+                                                    </span>
+                                                </td>
+                                            @else
+                                                <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                                    <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" rc="{{asset("images/responsables/".$etp->photos)}}" style="width:30px;height:120px; border-radius:100% ;cursor: pointer"
+                                                    data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}} class="resp_etp">
+                                                </td>
+                                            @endif
+                                        </span>
                                     </div>
                             </div>
                         @endif
@@ -506,7 +519,7 @@
                                         <p class="p-0 me-2 text-center" style="margin-top: 1.9rem !important"> Formateur(s) :&nbsp;</p>
                                     @endif
                                     @foreach ($formateur_cfp as $form)
-                                        <img data-bs-toggle="offcanvas" data-bs-target="#formCanvas" aria-controls="formCanvas" src="{{ asset('images/formateurs/' . $form->photos) }}" alt=""
+                                        <img src="{{ asset('images/formateurs/' . $form->photos) }}" alt=""
                                             class="img_superpose mt-2" height="30px" width="30px" style="cursor: pointer; border-radius: 50%;margin-top: 1.6rem !important"
                                             data-id="{{$form->formateur_id}}" id="{{$form->formateur_id}}">
                                     @endforeach()
@@ -837,150 +850,6 @@
         </section>
     </div>
 
-    {{-- formateur cfp --}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="formCanvas" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasRightLabel">INFORMATION</h5>
-            <hr>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <hr class="mt-2">
-
-            <div class="mt-2" style="font-size:14px">
-                @if ($type_formation_id == 1 || $type_formation_id == 2)
-                    <div class="mt-1 text-center mb-3">
-                        <span id="donner">
-                            <img src="{{ asset('images/formateurs/' . $form->photos ) }}" class="img-fluid text-center"
-                            style="width:120px;height:120px;" role="button">
-                        </span>
-                    </div>
-                    <div class="mt-1 text-center">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10">
-                                <p id="nomEtp" style="border-bottom: 3px solid rgb(137, 56, 243); color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 500; padding: 5px;">
-                                    {{ $of->nom }}
-                                </p>
-                            </div>
-                            <div class="col-md-1"></div>
-                        </div>
-
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-user saClass'></i></div>
-                            <div class="col-md-3" id="saId">Nom_prénoms</div>
-                            <div class="col-md">
-                                <span id="saId" style="font-size: 14px;">
-                                    @if ($form->nom_formateur  == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $form->nom_formateur }}&nbsp;&nbsp;{{ $form->prenom_formateur }}
-                                    @endif
-                                </span>
-                                <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-envelope saClass'></i></div>
-                            <div class="col-md-3" id="saId">E-mail</div>
-                            <div class="col-md">
-                                <span id="saId">
-                                    @if ($form->mail_formateur == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $form->mail_formateur }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-phone saClass'></i></div>
-                            <div class="col-md-3" id="saId">Télephone</div>
-                            <div class="col-md">
-                                <span id="saId">
-                                    @if ($form->numero_formateur == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $form->numero_formateur }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-id-card saClass' ></i></div>
-                            <div class="col-md-3" id="saId">CIN</div>
-                            <div class="col-md">
-                                <span id="saId">
-                                    @if ($form->cin == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $form->cin }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-location-plus saClass'></i></div>
-                            <div class="col-md-3" id="saId">Adresse</div>
-                            <div class="col-md">
-                                <span id="saId">
-                                    @if ($form->adresse == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $form->adresse }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-spreadsheet saClass'></i></div>
-                            <div class="col-md-3" id="saId">Spécialité</div>
-                            <div class="col-md">
-                                <span id="saId">
-                                    @if ($form->specialite == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $form->specialite }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
-
     {{--resp OF--}}
     <div class="offcanvas offcanvas-end" tabindex="-1" id="test" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
@@ -994,9 +863,18 @@
             <div class="mt-2" style="font-size:14px">
                 @if ($type_formation_id == 1 || $type_formation_id == 2)
                     <div class="mt-1 text-center mb-3">
-                        <span id="donner">
-                            <img src="{{ asset('images/CFP/' . $of->photos_resp_cfp ) }}" class="img-fluid text-center"
-                            style="width:120px;height:120px;" role="button">
+                        <span>
+                            @if($of->photos_resp_cfp == NULL or $of->photos_resp_cfp == '' or $of->photos_resp_cfp == 'XXXXXXX')
+                                <td role="button" >
+                                    <span class="randomColor m-auto mt-2 text-uppercase" style="width:120px;height:120px; border-radius:100%; color:white; display: grid; place-content: center">
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: 18px">{{$of->nomRespOf}} {{$of->prenomRespOf}}</span> 
+                                    </span>
+                                </td>
+                            @else
+                                <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                    <img src="{{asset("images/CFP/".$of->photos_resp_cfp)}}" style="width:120px;height:120px; border-radius:100%">
+                                </td>
+                            @endif
                         </span>
                     </div>
                     <div class="mt-1 text-center">
@@ -1122,9 +1000,18 @@
             <div class="mt-2" style="font-size:14px">
                 @if ($type_formation_id == 1 || $type_formation_id == 2)
                     <div class="mt-1 text-center mb-3">
-                        <span id="donner">
-                            <img src="{{ asset('images/CFP/' . $of->logo ) }}" class="img-fluid text-center"
-                            style="width:120px;height:120px;" role="button">
+                        <span >
+                            @if($of->logo == NULL or $of->logo == '' or $of->logo == 'XXXXXXX')
+                                <td role="button" >
+                                    <span class="randomColor m-auto mt-2 text-uppercase" style="width:120px;height:120px; border-radius:100%; color:white; display: grid; place-content: center">
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: 18px">{{$of->nomOfS}}</span> 
+                                    </span>
+                                </td>
+                            @else
+                                <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                    <img src="{{asset("images/CFP/".$of->logo)}}" style="width:120px;height:120px; border-radius:100%">
+                                </td>
+                            @endif
                         </span>
                     </div>
                     <div class="mt-1 text-center">
@@ -1420,9 +1307,18 @@
         <div class="mt-2" style="font-size:14px">
             @if ($type_formation_id == 1)
                 <div class="mt-1 text-center mb-3">
-                    <span id="donner">
-                        <img src="{{ asset('images/responsables/' . $etp->photos) }}" class="img-fluid text-center"
-                        style="width:120px;height:120px;" role="button">
+                    <span>
+                        @if($etp->photos == NULL or $etp->photos == '' or $etp->photos == 'XXXXXXX')
+                            <td role="button" >
+                                <span  class="randomColor m-auto mt-2 text-uppercase" style="width:120px;height:120px; border-radius:100%; color:white; display: grid; place-content: center">
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: 18px">{{$etp->nomEtresp}} {{$etp->prenomEtpresp}}</span> 
+                                </span>
+                            </td>
+                        @else
+                            <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                <img src="{{asset("images/responsables/".$etp->photos)}}" style="width:120px;height:120px; border-radius:100%">
+                            </td>
+                        @endif
                     </span>
                 </div>
                 <div class="mt-1">
@@ -1528,8 +1424,19 @@
 </div>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script type="text/javascript">
+    //Pour chaque div de classe randomColor
+    $(".randomColor").each(function() {
+        //On change la couleur de fond au hasard
+        $(this).css("background-color", '#' + (Math.random() * 0xFFFFFF << 0).toString(16));
+    })
+
+</script>
     {{-- keep nav in refresh --}}
     <script>
+
         $('.evaluation_pre_formation-tab').on('click',function(e){
             localStorage.setItem('activeTab', 'evaluation_pre_formation');
         });

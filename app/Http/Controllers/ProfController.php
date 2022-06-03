@@ -114,12 +114,7 @@ class ProfController extends Controller
     }
     public function information_formateur(Request $request)
     {
-        $fonct = new FonctionGenerique();
         $id = $request->Id;
-        // $user_id = Auth::user()->id;
-        // dd($user_id);
-        // $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-
         $formateur = DB::select("select * from v_demmande_cfp_formateur where formateur_id = ?", [$id]);
 
         return response()->json($formateur);

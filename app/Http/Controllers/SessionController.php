@@ -144,6 +144,30 @@ class SessionController extends Controller
         dd($formateur_cfp);
     }
 
+    public function formateurInfo(Request $request){
+        $form_id = $request->Id;
+        
+        // $form = DB::select('select d.groupe_id,d.formateur_id,f.nom_formateur, f.prenom_formateur, f.mail_formateur, 
+        //             f.numero_formateur, f.adresse, f.cin, f.specialite,
+        //             f.photos from details d join formateurs f on f.id = d.formateur_id where d.formateur_id = ? group by f.nom_formateur, 
+        //             f.prenom_formateur, f.mail_formateur, f.numero_formateur, 
+        //             f.adresse, f.cin, f.specialite,d.groupe_id,d.formateur_id,f.photos ',[$form_id])[0];
+
+        $formateur = DB::table('formateurs')
+                    ->join('v_detail_session', 'v_detail_session.formateur_id', 'formateurs.id')
+                    ->select('formateurs.nom_formateur', 'formateurs.mail_formateur', 'formateurs.numero_formateur', 'formateurs.photos', 
+                    'formateurs.adresse', 'formateurs.specialite', 'v_detail_session.detail_id', 
+                    'formateurs.prenom_formateur', 'formateurs.cin')
+                    ->where('v_detail_session.formateur_id', $form_id)
+                    // ->where('v_detail_session.detail_id', $detail_id)
+                    ->groupBy('formateurs.nom_formateur', 'formateurs.mail_formateur', 'formateurs.numero_formateur', 'formateurs.photos', 
+                    'formateurs.adresse', 'formateurs.specialite', 'v_detail_session.detail_id',
+                    'formateurs.prenom_formateur', 'formateurs.cin')
+                    ->get()[0];
+                    
+        return response()->json($formateur);
+    }
+
     public function detail_session(){
         // dd(URL::to('/').'/sarin Gael');
         $user_id = Auth::user()->id;

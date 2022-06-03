@@ -314,8 +314,8 @@
                     </thead>
                     <tbody>
                         @forelse ($employers as $employe)
-                            <tr data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew">
-                                <td class="align-middle id">
+                            <tr>
+                                <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
 
                                     @if ($employe->activiter == 1)
                                         <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
@@ -326,7 +326,7 @@
                                 </td>
 
 
-                                <td>
+                                <td >
                                     <div class="d-flex align-items-center">
                                         @if ($employe->photos == null)
                                             {{-- image placeholder --}}
@@ -346,26 +346,26 @@
                                                             ></i> --}}
 
                                             {{-- initials --}}
-                                                            <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
-                                                                <span class="align-middle text-center profile-initial" style="position:relative;">
-                                                                    <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
-                                                                </span>
-                                                            </div>
-                                                        @else
-                                                                <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
-                                                                alt="Image non chargée" style="width: 45px; height: 45px"
-                                                                class="rounded-circle" />
-                                                        @endif
-                                                    <div class="ms-3">
-                                                        <p class="fw-normal mb-1 text-purple ">
-                                                        {{-- <p class="fw-bold mb-1 text-purple "> --}}
-                                                            {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
-                                                        <p class="text-muted mb-0">{{ $employe->fonction_stagiaire }}</p>
-                                                    </div>
+                                            <td data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew" style="cursor: pointer">
+                                                <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
+                                                    <span class="align-middle text-center profile-initial" style="position:relative;">
+                                                        <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
+                                                    </span>
+                                                </div>
+                                                    @else
+                                                        <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew" src="{{ asset('images/stagiaires/' . $employe->photos) }}"
+                                                        alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
+                                                        class="rounded-circle" />
+                                                    @endif
+                                                <div class="ms-3">
+                                                    <p class="fw-normal mb-1 text-purple empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
+                                                    {{-- <p class="fw-bold mb-1 text-purple "> --}}
+                                                        {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
+                                                    <p class="text-muted mb-0">{{ $employe->fonction_stagiaire }}</p>
                                                 </div>
                                             </td>
 
-                                            <td class="align-middle text-start">
+                                            <td class="align-middle text-start empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
 
                                                 <div class="ms-3">
                                                     <p class="mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>

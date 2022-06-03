@@ -334,6 +334,7 @@
         color: #7635dc;
     }
 </style>
+{{-- @include('projet_session.session') --}}
 @canany(['isReferent','isFormateur'])
     @if (count($datas) <= 0)
         <div class="d-flex mt-3 titre_projet p-1 mb-1">
@@ -402,11 +403,12 @@
                                             <td>{{ $d->h_fin }} h</td>
                                             {{-- test commit --}}
                                             <td>
+
                                                 @if ($d->photos == null)
                                                     <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @else
-                                                    <img data-bs-toggle="offcanvas" data-bs-target="#formCanvas" aria-controls="formCanvas" src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%; cursor: pointer" 
-                                                    data-id="{{$form->formateur_id}}" id="{{$form->formateur_id}}"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                    <img  src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;" 
+                                                    data-id="{{$d->formateur_id}}" id="{{$d->formateur_id}}"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif
                                             </td>
                                             @canany(['isCFP'])
@@ -659,8 +661,208 @@
         </div>
     </div>
 @endif
+
+{{-- formateur cfp --}}
+{{-- <div class="infos mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0 text-center">INFORMATION</p>
+        </div>
+        <div class="col text-end">
+            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+        </div>
+        <hr class="mt-2">
+
+        <div class="mt-2" style="font-size:14px">
+
+        <div class="mt-1 text-center mb-3">
+            <span id="logo"></span>
+        </div>
+
+        <div class="mt-1 text-center">
+            <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+        </div>
+
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-user'></i></div>
+                <div class="col-md-3">Nom_prénoms</div>
+                <div class="col-md">
+                    <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                    <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
+                <div class="col-md-3">Sexe</div>
+                <div class="col-md">
+                    <span id="genre"></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                <div class="col-md-3">E-mail</div>
+                <div class="col-md"><span id="email"></span></div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                <div class="col-md-3">Télephone</div>
+                <div class="col-md">
+                    <span></span><span id="telephone"></span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                <div class="col-md-3">Adresse</div>
+                <div class="col-md"><span id="adresse_formateur"></span></div>
+            </div>
+
+        </div>
+        <div class="mt-1">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-1"><i class='bx bx-briefcase-alt-2'></i></div>
+                <div class="col-md-3">Spécialité</div>
+                <div class="col-md"><span id="specialite"></span></div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+{{-- formateur cfp --}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="formCanvas" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">INFORMATION</h5>
+            <hr>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <hr class="mt-2">
+
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1 || $type_formation_id == 2)
+                    {{-- @can('isCFP') --}}
+                    <div class="mt-2" style="font-size:14px">
+
+                        <div class="mt-1 text-center mb-3">
+                            <span class="newLogo"></span>
+                        </div>
+                
+                        <div class="mt-1 text-center">
+                            <span class="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+                        </div>
+                
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-user'></i></div>
+                                <div class="col-md-3">Nom_prénoms</div>
+                                <div class="col-md">
+                                    <span class="newNom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                                    <span class="newPrenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
+                                <div class="col-md-3">Sexe</div>
+                                <div class="col-md">
+                                    <span class="newGenre"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                                <div class="col-md-3">E-mail</div>
+                                <div class="col-md"><span class="newEmail"></span></div>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                                <div class="col-md-3">Télephone</div>
+                                <div class="col-md">
+                                    <span></span><span class="newTelephone"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                                <div class="col-md-3">Adresse</div>
+                                <div class="col-md"><span class="newAdresse_formateur"></span></div>
+                            </div>
+                
+                        </div>
+                        <div class="mt-1">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1"><i class='bx bx-briefcase-alt-2'></i></div>
+                                <div class="col-md-3">Spécialité</div>
+                                <div class="col-md"><span class="newSpecialite"></span></div>
+                            </div>
+                        </div>
+                    {{-- @endcan --}}
+                @endif
+            </div>
+        </div>
+    </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+<script>
+    $('.showResp').on('click', function(){
+        var resp_id = $(this).data("id");
+        // console.log(resp_id);
+        $.ajax({
+            method: "GET"
+            , url: "/detail_formateur_new"
+            , data: {
+                Id: resp_id
+            }
+            , dataType: "html"
+            , success: function(response) {
+                let userData = JSON.parse(response);
+                // console.log(userData);
+                for (let $i = 0; $i< userData.length; $i++ ) {
+
+                    let url_photo = '<img src="{{asset("images/formateurs/:url_img")}}" style="width:80px;height:80px;border-radius:100%">';
+                    url_photo = url_photo.replace(":url_img", userData[$i].photos);
+                    $(".newLogo").html(" ");
+                    $(".newLogo").append(url_photo);
+                    $(".newNom").text(': '+userData[$i].nom_formateur);
+                    $(".newPrenom").text(userData[$i].prenom_formateur);
+                    $(".newGenre").text(': '+userData[$i].genre);
+                    $(".newEmail").text(': '+userData[$i].mail_formateur);
+                    $(".newTelephone").text(': '+userData[$i].numero_formateur);
+                    $(".newSpecialite").text(': '+userData[$i].specialite);
+                    $(".newAdresse_formateur").text(': '+userData[$i].adresse);
+                }
+            }
+        });
+    });
+</script>
+
 <script>
     $('select[name^=ville]').change(function() {
         if ($(this).val() == 'ajout')

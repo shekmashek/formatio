@@ -1359,10 +1359,14 @@ Route::get('/detail_session_info/{etp_id}', 'SessionController@infoEtpCom');
 Route::get('/detail_session_of/{cfp_id}', 'SessionController@infoOf');
 
 Route::get('/detail_session_resp_cfp/{id}', 'SessionController@info_resp_cfp');
+Route::get('/detail_formateur_new', 'SessionController@formateurInfo');
 
 
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
+
+
+
 
 
 
