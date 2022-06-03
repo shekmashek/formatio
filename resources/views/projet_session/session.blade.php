@@ -451,7 +451,7 @@
                             <div class="chiffre_d_affaire m-0 p-0 me-3">
     
                                 <div class="d-flex flex-row">
-                                    <p class="p-0 mt-3 text-center">Entreprise client <span style="font-weight: 400; font-size: 16px ; color: #26A0DA">{{ $projet[0]->nom_etp }}</span> </p>
+                                    <p class="p-0 mt-3 text-center">Entreprise client <span style="font-weight: 400; color: #26A0DA">{{ $projet[0]->nom_etp }}</span> </p>
                                     &nbsp;&nbsp;
                                     <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
                                         class="mt-2 empNew" height="30px" width="30px" style="border-radius: 50%; cursor: pointer" 
@@ -464,7 +464,7 @@
                                             $etp = $groupe->info_resp_etp($projet[0]->entreprise_id);
                                         @endphp
                 
-                                        <p class="p-0 mt-3 text-center">Réferent de l'entreprise <span style="font-weight: 400; font-size: 16px ; color: #26A0DA">{{ $projet[0]->nom_etp }}</span> </p>
+                                        <p class="p-0 mt-3 text-center">Réferent de l'entreprise <span style="font-weight: 400; color: #26A0DA">{{ $projet[0]->nom_etp }}</span> </p>
                                         &nbsp;&nbsp;
 
                                         <span>
@@ -492,7 +492,7 @@
 
                                 <div class="d-flex flex-row">
                                     <p class="p-0 mt-3 text-center"> Organisme de formation
-                                        <span style="font-weight: 400; font-size: 16px ; color: #000000">{{ $of->nom }}</span></p>&nbsp;&nbsp;
+                                        <span style="font-weight: 400; color: #000000">{{ $of->nom }}</span></p>&nbsp;&nbsp;
                                     <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" src="{{ asset('images/CFP/' . $of->logo) }}" alt="" class="mt-2"
                                         height="30px" width="30px" style="border-radius: 50%; cursor: pointer" 
                                         data-id={{$of->id}} id={{$of->id}}>&nbsp;
@@ -502,7 +502,7 @@
                                 
                                 <div class="d-flex flex-row">
                                     <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
-                                        <span style="font-weight: 400; font-size: 16px ; color: #000000">{{ $of->nom_resp_cfp }}</span></p>&nbsp;&nbsp;
+                                        <span style="font-weight: 400; color: #000000">{{ $of->nom_resp_cfp }}</span></p>&nbsp;&nbsp;
                                     <img data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" src="{{ asset('images/CFP/' . $of->logo) }}" alt="" class="mt-2" 
                                         height="30px" width="30px" style="border-radius: 50%; cursor: pointer" 
                                         data-id={{$of->id}} id={{$of->id}}>&nbsp;

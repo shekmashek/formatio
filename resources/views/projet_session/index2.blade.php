@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
 
     <style>
+        .myEtpStyle:hover{
+            text-decoration: underline;
+            color: darkorchid;
+        }
         .dropdown-item.active{ 
             background-color: transparent !important;
         }
@@ -409,7 +413,7 @@
                                                         <td class="text-start">
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    <a href="#" class="information" data-id="{{ $etp->groupe_id }}" id="{{ $etp->groupe_id }}" 
+                                                                    <a href="#" class="information myEtpStyle" data-id="{{ $etp->groupe_id }}" id="{{ $etp->groupe_id }}" 
                                                                         onclick="afficherInfos();">{{ $etp->nom_etp }}</a>
                                                                 @endif
                                                             @endforeach
