@@ -115,6 +115,7 @@ class EvaluationChaud extends Model
                 $valiny['point'][$i] = $str[2];
             }
         }
+        // dd($valiny);
         //============ insert multiple
         for ($j=0; $j <count($valiny['result']) ; $j++) {
             $message= $this->insert($valiny['point'][$j],$valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$groupe_id,$cfp_id);

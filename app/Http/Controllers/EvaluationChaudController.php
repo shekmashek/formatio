@@ -54,14 +54,14 @@ class EvaluationChaudController extends Controller
             $fonct = new FonctionGenerique();
             $user_id = Auth::user()->id;
             $stg_id = stagiaire::where('user_id',$user_id)->value('id');
-            
+
             $note = $request->nb_qst_fille_1;
             $commentaire = $request->txt_qst_fille_20;
             $module = $fonct->findWhereMulitOne("v_stagiaire_groupe",["groupe_id","stagiaire_id"],[$request->groupe,$stg_id]);
-          
+
             DB::insert('insert into avis(stagiaire_id,module_id,note,commentaire,status,date_avis) value(?,?,?,?,?,?)',[$stg_id,$module->module_id,$note,$commentaire,'Fini',date('Y-m-d')]);
             $evaluation = new EvaluationChaud();
-            
+
             $message = $evaluation->verificationEvaluation($module->stagiaire_id,$module->groupe_id,$module->cfp_id,$request);
             DB::commit();
 
@@ -229,29 +229,30 @@ class EvaluationChaudController extends Controller
 
             // recommanderiez vous cette formation
             // q13
-                $res_q13 = DB::select('
-                    select
-                        nsg.groupe_id,
-                        count(stagiaire_id) as nombre_stg,
-                        ifnull(
-                            ROUND(
-                                (
-                                    (count(stagiaire_id) * case when desc_champ = "Oui" then 2 when desc_champ = "Non" then 1 end) /(nsg.total_stagiaire * 2)
-                                ) * 100,
-                                1
-                            ),
-                            0
-                        ) as pourcentage,
-                        desc_champ
-                    from
-                        v_reponse_evaluationchaud re
-                    join v_nombre_stagiaire_groupe nsg on nsg.groupe_id = re.groupe_id
-                    where
-                        id_qst_fille = ? and nsg.groupe_id = ?
-                    group by
-                        nsg.groupe_id,nsg.total_stagiaire,
-                        desc_champ order by desc_champ desc',[17,$groupe]);
+                // $res_q13 = DB::select('
+                //     select
+                //         nsg.groupe_id,
+                //         count(stagiaire_id) as nombre_stg,
+                //         ifnull(
+                //             ROUND(
+                //                 (
+                //                     (count(stagiaire_id) * case when desc_champ = "Oui" then 2 when desc_champ = "Non" then 1 end) /(nsg.total_stagiaire * 2)
+                //                 ) * 100,
+                //                 1
+                //             ),
+                //             0
+                //         ) as pourcentage,
+                //         desc_champ
+                //     from
+                //         v_reponse_evaluationchaud re
+                //     join v_nombre_stagiaire_groupe nsg on nsg.groupe_id = re.groupe_id
+                //     where
+                //         id_qst_fille = ? and nsg.groupe_id = ?
+                //     group by
+                //         nsg.groupe_id,nsg.total_stagiaire,
+                //         desc_champ order by desc_champ desc',[17,$groupe]);
 
+                $res_q13 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? and point < 3',[$groupe,10]);
                 if(count($res_q13)<=0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }
@@ -283,7 +284,7 @@ class EvaluationChaudController extends Controller
             // dd($res_q14);
 
             // $pdf = PDF::loadView('admin.evaluation.evaluationChaud.pdf_evaluation_chaud',compact('session','res_q1','note_10_q1','res_q2','note_10_q2','res_q3','note_10_q3','res_q4','note_10_q4','res_q5','note_10_q5','res_q6','note_10_q6','res_q7','res_q8','note_10_q8','res_q9','note_10_q9','res_q10','note_10_q10','res_q11','note_10_q11','res_q12','note_10_q12','res_q13','res_q14','res_q15'));
-            
+
             return view('admin.evaluation.evaluationChaud.resultat_evaluation_chaud_pdf',compact('session','res_q1','note_10_q1','res_q2','note_10_q2','res_q3','note_10_q3','res_q4','note_10_q4','res_q5','note_10_q5','res_q6','note_10_q6','res_q7','res_q8','note_10_q8',
             'res_q9','note_10_q9','res_q10','note_10_q10','res_q11','note_10_q11','res_q12','note_10_q12','res_q13','res_q14','res_q15'));
             // return $pdf->download('Resulat_evaluation_a_chaud.pdf');

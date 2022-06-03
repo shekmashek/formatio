@@ -181,26 +181,36 @@ where
 group by
     id_qst_fille;
 
+create table reponse_total(
+    reponse text
+);
+
+insert into reponse_total value('Oui');
+insert into reponse_total value('Non');
+
+select * from reponse_total cross join v_reponse_evaluationchaud
+
 select
-    nsg.groupe_id,
-    count(stagiaire_id) as nombre_stg,
+    re.groupe_id,
+    count(r.stagiaire_id) as nombre_stg,
     ifnull(
         ROUND(
             (
-                (count(stagiaire_id) * case when desc_champ = 'Oui' then 2 when desc_champ = 'Non' then 1 end) /(nsg.total_stagiaire * 2)
+                (count(r.stagiaire_id) * case when r.desc_champ = 'Oui' then 2 when r.desc_champ = 'Non' then 1 else 0 end) /(nsg.total_stagiaire * 2)
             ) * 100,
             1
         ),
         0
     ) as note_sur_10,
-    desc_champ
+    re.reponse
 from
-    v_reponse_evaluationchaud re
+    (select * from reponse_total cross join v_reponse_evaluationchaud) as re
+left join v_reponse_evaluationchaud r on r.groupe_id = re.groupe_id and re.reponse = r.desc_champ
 join v_nombre_stagiaire_groupe nsg on nsg.groupe_id = re.groupe_id
 where
-    id_qst_fille = 17
+    re.id_qst_fille = 17
 group by
     nsg.groupe_id,
-    desc_champ order by desc_champ desc;
+    re.reponse order by desc_champ desc;
 
 select reponse_desc_champ,case when statut = 0 then concat(nom_stagiaire,' ',prenom_stagiaire) when statut = 1 then 'Anonyme' end stagiaire from v_reponse_evaluationchaud re join stagiaires s on s.id = re.stagiaire_id where groupe_id = 28 and id_qst_fille = 20
