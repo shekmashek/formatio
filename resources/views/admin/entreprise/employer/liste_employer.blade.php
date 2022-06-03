@@ -164,6 +164,7 @@
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Ajout</th>
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th> 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
 
                         </tr>
@@ -264,6 +265,24 @@
                                                 @endif
 
                                             </td>
+
+                                            {{-- status référent --}}
+                                            <td class="align-middle text-center text-secondary">
+
+                                                    <div class="form-check form-switch">
+                                                        <label class="form-check-label"
+                                                            for="flexSwitchCheckChecked">
+                                                            <span class="badge bg-secondary">
+                                                                inactif
+                                                            </span>
+                                                        </label>
+                                                        <input class="form-check-input activer_reférent" type="checkbox"
+                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                    </div>
+
+                                            </td>
+
+
                                             <td class="align-middle text-center text-secondary">
                                                 <button type="button" class="btn " data-bs-toggle="modal"
                                                     data-bs-target="#delete_emp_{{ $employe->id }}">
@@ -350,6 +369,17 @@
                 });
 
                 new $.fn.dataTable.FixedHeader(table);
+            });
+
+
+            // changer le status de référent
+            $(".activer_referent").on('click', function(e) {
+                var user_id = $(this).data("user-id");
+                var stg_id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    
+                });
             });
 
             // desactiver/activer stagiaire

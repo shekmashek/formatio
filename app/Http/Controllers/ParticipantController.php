@@ -117,8 +117,14 @@ class ParticipantController extends Controller
         return response()->json($status);
     }
 
+
+    public function setRererent (Request $request) {
+        
+    }
+
     public function new_emp()
     {
+        $user_id = Auth::user()->id;
         // $fonct = new FonctionGenerique();
 
 
@@ -127,10 +133,19 @@ class ParticipantController extends Controller
         //     $liste_departement = db::select('select * from departement_entreprises where entreprise_id = ?', [$entreprise_id]);
         //     return view('admin.chefDepartement.chef', compact('liste_departement'));
         // }
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
+        }
+        $departements = DepartementEntreprise::where('entreprise_id', $entreprise_id)->get();
         $niveaux_etude = NiveauEtude::all();
+        $services = Service::all();
+        
 
 
-        return view('admin.entreprise.employer.nouveau_employer', compact('niveaux_etude'));
+        return view('admin.entreprise.employer.nouveau_employer', compact('niveaux_etude', 'departements', 'services'));
     }
 
     public function getDepartments () {

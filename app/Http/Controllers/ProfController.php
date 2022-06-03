@@ -731,4 +731,7 @@ class ProfController extends Controller
         DB::update('update formateurs set activiter = ? where id = ?', [$activiter, $id]);
         return response()->json(['success' => 'ok']);
     }
+
+    
+
 }

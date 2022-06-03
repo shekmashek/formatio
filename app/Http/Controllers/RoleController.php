@@ -35,6 +35,8 @@ class RoleController extends Controller
         $user_id = $request->user_id;
         $role_id = $request->role_id;
 
+        dd($user_id);
+
         if (Gate::allows('isReferent')) {
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             if ($resp_connecter->prioriter == true) {
