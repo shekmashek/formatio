@@ -635,6 +635,7 @@ Route::post('createEvaluationChaud/{groupe}', 'EvaluationChaudController@create'
 Route::get('evaluationchaud/{matricule?}', 'EvaluationChaudController@index')->name('evaluationchaud');
 
 Route::post('insert_avis', 'EvaluationChaudController@store')->name('insert_avis');
+Route::get('evaluation_chaud/{groupe}','EvaluationChaudController@show')->name('evaluation_chaud');
 // =======================  Envoi de mail
 Route::resource('convocation', 'ConvocationMail');
 Route::get('convocationMail/{detail}/{groupe}', 'ConvocationMail@sendMail')->name('convocationMail');
@@ -1353,3 +1354,5 @@ Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagia
 Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploye');
 
 Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInfo');
+
+Route::get('resultat_evaluation/{groupe_id}','EvaluationChaudController@evaluation_chaud_pdf')->name('resultat_evaluation');

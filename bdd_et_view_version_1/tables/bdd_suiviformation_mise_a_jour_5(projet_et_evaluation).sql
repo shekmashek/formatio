@@ -132,6 +132,21 @@ CREATE TABLE `question_fille` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+alter table question_fille add column point_max int(10) default 0;
+
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 3;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 4;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 6;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 7;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 8;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 9;
+UPDATE `question_fille` SET `point_max` = '3' WHERE `question_fille`.`id` = 10;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 11;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 12;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 13;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 15;
+UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 16;
+
 
 CREATE TABLE `description_champ_reponse` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -188,7 +203,7 @@ insert into question_fille values (7,"Le formateur étail-il clair et dynamique 
 insert into question_fille values (8,"les exercices et activités étaient-ils pertinents ?",2,5,null,null);
 insert into question_fille values (9,"Le formateur a-t-il adapté la formation aux stagiaires ?",2,5,null,null);
 
-insert into question_fille values (10,"",2,6,null,null);
+insert into question_fille values (10,"Le rythme de la formation était-il?",2,6,null,null);
 
 insert into question_fille values (11,"Le programme étail-il clair et précis ?",2,7,null,null);
 insert into question_fille values (12,"Le programme étail-il adapté à vos besoins ?",2,7,null,null);

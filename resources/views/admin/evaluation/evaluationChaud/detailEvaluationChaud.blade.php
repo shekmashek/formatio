@@ -27,10 +27,10 @@
                     <h4 class="card-title"> Information de l'entreprise et Formateur</h4>
                     <div class="card-body">
                         {{-- <h4 class="card-title"><img src=" {{asset('storage/'.$detail->logo)}} " class="profil-entreprise" alt="..."/> {{$detail->nom_etp}}</h4> --}}
-                        <h6 class="card-title my-1">Project: {{$detail->nom_projet}}</h6>
-                        <h6 class="card-title my-1">Groupe: {{$detail->groupe_id}}</h6>
+                        {{-- <h6 class="card-title my-1">Project: {{$detail->nom_projet}}</h6> --}}
+                        {{-- <h6 class="card-title my-1">Groupe: {{$detail->groupe_id}}</h6> --}}
                         {{-- <h6 class="card-title my-1">Session: de 2021/02/13 à 2021/02/26(static)  id session: {{$detail->session_id}}</h6> --}}
-                        <h6 class="card-title my-1">Formation: {{$detail->nom_formation}} Module: {{$detail->nom_module}}</h6>
+                        {{-- <h6 class="card-title my-1">Formation: {{$detail->nom_formation}} Module: {{$detail->nom_module}}</h6> --}}
                     </div>
                 {{-- </div> --}}
 
@@ -43,7 +43,7 @@
                 {{-- <div class="card shadow p-3 mb-5 bg-body rounded"> --}}
                     <h4 class="card-title"> Information du Stagiaire</h4>
                     <div class="card-body">
-                        <h5 class="card-title"><img src=" {{asset('images/stagiaires/'.$stagiaire->photos)}}" class="logo" alt="..."> {{$stagiaire->nom_stagiaire.' '.$stagiaire->prenom_stagiaire}}</h5>
+                        {{-- <h5 class="card-title"><img src=" {{asset('images/stagiaires/'.$stagiaire->photos)}}" class="logo" alt="..."> {{$stagiaire->nom_stagiaire.' '.$stagiaire->prenom_stagiaire}}</h5> --}}
                         <h6 class="card-title my-1">Matricule: {{$stagiaire->matricule}}  Genre: {{$stagiaire->genre_stagiaire}}</h6>
                         <h6 class="card-title my-1">Foncion: {{$stagiaire->fonction_stagiaire}} </h6>
                         <h6 class="card-title my-1">Mail: <a href="#">{{$stagiaire->mail_stagiaire}}</a> </h6>
@@ -53,7 +53,7 @@
 
             </div>
 
-            <h4 class="card-title text-center">Formateur: <img src=" {{asset('images/formateurs/'.$detail->photos)}} " class="logo" alt="..."/> {{$detail->nom_formateur.' '.$detail->prenom_formateur}}</h5>
+            {{-- <h4 class="card-title text-center">Formateur: <img src=" {{asset('images/formateurs/'.$detail->photos)}} " class="logo" alt="..."/> {{$detail->nom_formateur.' '.$detail->prenom_formateur}}</h5> --}}
 
         </div>
     </div>

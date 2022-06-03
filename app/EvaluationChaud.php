@@ -115,6 +115,7 @@ class EvaluationChaud extends Model
                 $valiny['point'][$i] = $str[2];
             }
         }
+        // dd($valiny);
         //============ insert multiple
         for ($j=0; $j <count($valiny['result']) ; $j++) {
             $message= $this->insert($valiny['point'][$j],$valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$groupe_id,$cfp_id);
@@ -281,5 +282,15 @@ public function insert_desc_champ_reponse($desc,$id_qst_fille,$nb_max){
         }
 
     }
+
+
+    public function pourcentage_point($groupe,$id_qst){
+        return DB::select('select id_qst_fille,qst_fille,nombre_stg,point,note_sur_10,pourcentage,total_stagiaire from v_evaluation_chaud_resultat where id_qst_fille = ? and groupe_id = ? order by point desc',[$id_qst,$groupe]);
+    }
+
+    public function note_question($groupe,$id_qst){
+        return DB::select('select id_qst_fille,sum(note_sur_10) as note from v_evaluation_chaud_resultat where id_qst_fille = ? and groupe_id = ? group by id_qst_fille',[$id_qst,$groupe]);
+    }
+
 
 }
