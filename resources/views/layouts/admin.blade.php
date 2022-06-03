@@ -686,8 +686,8 @@
                         </div>
                         @endcan
                         @can('isReferent')
-                        <div class="col-5 header-right">
-                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer apprendreBox">
+                        <div class="col-5 header-right d-flex flex-row">
+                            <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
                                 <div class="btn_racourcis" id="text_apprendre">
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
@@ -695,18 +695,105 @@
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
                                 </div>
+                                <div class="btn_racourcis dropdown prevent_afficahge .navigation_module" >
+                                    {{-- <span class="text_apprendre" role="button"><i
+                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
+                                    <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
+                                        <span class="text_racourcis"></span></span>
+                                        <span class="badge_invitation">9</span>
+                                    </a>
+                                    <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
+                                        <div class="m-4 mt-2" role="tabpanel">
+                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+                                                <li class="nav-item ">
+                                                    <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#invitation_refuses" class="nav-link" data-bs-toggle="tab">Invitations réfusées</a>
+                                                </li>
+
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="invitation_attente">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <ul>
+                                                                liste invitations en attente
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="invitation_refuses">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <ul>
+                                                                liste des invitations réfusées
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
                             </div>
+
                         </div>
                         @endcan
                         @can('isCFP')
                         <div class="col-5 header-right">
-                            <div class="col-11 d-flex flex-row justify-content-end apprendCreer apprendreBox">
+                            <div class="col-12 d-flex flex-row justify-content-end apprendCreer apprendreBox">
                                 <div class="btn_racourcis" id="text_apprendre">
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
+                                </div>
+                                <div class="btn_racourcis dropdown prevent_afficahge .navigation_module" >
+                                    {{-- <span class="text_apprendre" role="button"><i
+                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
+                                    <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
+                                        <span class="text_racourcis"></span></span>
+                                        <span class="badge_invitation">9</span>
+                                    </a>
+                                    <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
+                                        <div class="m-4 mt-2" role="tabpanel">
+                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+                                                <li class="nav-item ">
+                                                    <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#invitation_refuses" class="nav-link" data-bs-toggle="tab">Invitations réfusées</a>
+                                                </li>
+
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="invitation_attente">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <ul>
+                                                                liste invitations en attente
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="invitation_refuses">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <ul>
+                                                                liste des invitations réfusées
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -1316,6 +1403,9 @@
             });
         });
 
+        $('.prevent_afficahge').on('click', function(e){
+            e.stopPropagation();
+        })
 
     </script>
 </body>

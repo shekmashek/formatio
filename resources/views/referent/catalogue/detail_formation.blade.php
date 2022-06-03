@@ -273,7 +273,13 @@
                             <div class="row detail__formation__programme__avis__rated d-flex">
                                 <div class="col-md-4 text-center d-flex flex-column">
                                     <div class="rating-box">
-                                        <h1 class="pt-4">{{ $res->pourcentage }}</h1>
+                                        <h1 class="pt-4">
+                                            @if($res->pourcentage != null)
+                                                {{$res->pourcentage}} avis
+                                            @else
+                                                0 avis
+                                            @endif
+                                        </h1>
                                         <p class="">sur 5</p>
                                     </div>
                                     <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>

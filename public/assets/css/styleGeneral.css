@@ -1184,3 +1184,49 @@ font-size: 0.850rem;
 a{
     color: white;
 }
+
+.badge_invitation{
+    padding: 0px 6px;
+    color: white;
+    background-color: red;
+    font-size: .8rem;
+    border: none;
+    border-radius: 30px;
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+}
+
+.agrandir{
+    width: 500px;
+    height: auto;
+
+}
+
+.navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}

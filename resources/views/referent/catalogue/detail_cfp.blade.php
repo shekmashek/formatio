@@ -19,14 +19,14 @@
                             Ouvert le
                             @php
                                 foreach ($horaire as $cfp_h) {
-                                    setlocale(LC_TIME, "fr_FR");
+                                    setlocale(LC_ALL, "fr_FR");
                                     $today = date("l");
                                     $jours_today = lcfirst(strftime("%A", strtotime($today)));
                                     if ($cfp_h->jours === $jours_today) {
                                         echo $cfp_h->jours."<br>";
+                                        $ouverture = $cfp_h->h_entree;
+                                        $fermeture = $cfp_h->h_sortie;
                                     }
-                                    $ouverture = $cfp_h->h_entree;
-                                    $fermeture = $cfp_h->h_sortie;
                                 }
                                 echo (date('H:i', strtotime($ouverture))." - ".date('H:i', strtotime($fermeture)));
                             @endphp
@@ -40,12 +40,28 @@
                             <div class="row ps-5">
                                 <h4><a href="#">{{$cfp->nom}}</a></h4>
                                 <p>{{$cfp->slogan}}</p>
+                                @if($avis_etoile[0]->pourcentage != null)
+                                <div class="d-flex flex-row">
+                                    @if($avis_etoile[0]->pourcentage != null)
+                                        <div class="Stars" style="--note: {{ $avis_etoile[0]->pourcentage }};"></div>
+                                    @else
+                                        <div class="Stars" style="--note: 0;"></div>
+                                    @endif
+                                    <div class="rating-box ms-2">
+                                        @if($avis_etoile[0]->pourcentage != null)
+                                            <span class="avis_verif"><span class="">{{ $avis_etoile[0]->pourcentage }}</span> ({{$avis_etoile[0]->nb_avis}} avis)</span>
+                                        @else
+                                            <span class="">0 sur 5 (0 avis)</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endif
                                 <p class="mt-1"><i
                                         class="bx bx-map me-2"></i>{{$cfp->adresse_lot}}&nbsp;{{$cfp->adresse_quartier}}&sbquo;&nbsp;{{$cfp->adresse_ville}}&nbsp;{{$cfp->adresse_code_postal}}&sbquo;&nbsp;{{$cfp->adresse_region}}
                                 </p>
                                 <div class="col-6 mb-3">
-                                    <span class="text-muted"><i class="bx bx-phone"></i> Téléphone</span>
-                                    <p class="m-0">{{$cfp->telephone}}</p>
+                                    <span class="text-muted"><i class="bx bx-phone me-2"></i>{{$cfp->telephone}}</span>
+                                    <p class="m-0"></p>
                                 </div>
                             </div>
                         </div>
@@ -84,16 +100,22 @@
         </div>
         <div class="row mt-3">
             <div class="col-3 ">
-                <div class="row avis mt-3 fixer">
+                <div class="row avis mt-3 ">
                     <div class="col-12">
-                        <h5 class="text-center">Résumé des avis</h5>
+                        <h5 class="text-center mb-3">Résumé des avis</h5>
+                        @if($avis_etoile[0]->pourcentage != null)
+
                         <div class="row d-flex">
-                            <div class="col-md-12 text-center d-flex flex-column">
-                                <div class="rating-box">
-                                    {{-- <h1 class="pt-4">{{ $res->pourcentage }}</h1> --}}
-                                    <p class="m-0">sur 5</p>
+                            <div class="col-md-12 text-center justify-content-center d-flex flex-column">
+
+                                <div class="Stars" style="--note: {{ $avis_etoile[0]->pourcentage }};"></div>
+                                <div class="rating-box ms-2 mt-3">
+                                    @if($avis_etoile[0]->pourcentage != null)
+                                        <h6 class=""><span class="fs-4">{{ $avis_etoile[0]->pourcentage }}</span> sur 5 ({{$avis_etoile[0]->nb_avis}} avis véifiées)</h6>
+                                    @else
+                                        <h6 class="">0 sur 5 (0 avis)</h6>
+                                    @endif
                                 </div>
-                                {{-- <div class="Stars" style="--note: {{ $res->pourcentage }};"></div> --}}
                             </div>
                         </div>
                         <div class="row d-flex">
@@ -164,12 +186,32 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="text-center mt-3">
+                            <a href="#avis" role="button" class="btn btn_annuler">voir les avis</a>
+                        </div>
+                        @else
+                        <div class="row d-flex">
+                            <div class="col-md-12 justify-content-center d-flex flex-ow">
+
+                                <div class="Stars" style="--note: 0;"></div>
+                                <div class="rating-box ms-2">
+                                    @if($avis_etoile[0]->pourcentage != null)
+                                        <h6 class=""><strong>{{ $avis_etoile[0]->pourcentage }}</strong> sur 5 ({{$avis_etoile[0]->nb_avis}} avis vérifiés)</h6>
+                                    @else
+                                        <h6 class="">0 sur 5 (0 avis)</h6>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-center">Il n'y a pas d'avis pour cette organisme de formation</p>
+                        </div>
+                        @endif
                     </div>
                 </div>
-                <div class="row avis mt-3 fixer2">
+                <div class="row avis mt-3">
                     <div class="col-12">
                         <h5 class="text-center mb-3">Horaires d'ouvertures</h5>
-
                         @if (count($horaire)>0)
                         @foreach ($horaire as $cfp)
                         <div class="row">
@@ -182,15 +224,15 @@
                         </div>
                         @endforeach
                         @else
-                            Aucun horaire
+                            <p class="text-center">Aucun horaire</p>
                         @endif
 
                     </div>
                 </div>
-                <div class="row avis mt-3 fixer3">
+                <div class="row avis mt-3 ">
                     <div class="col-12">
-                        @if (count($reseau_sociaux)>0)
                         <h5 class="text-center mb-3">Trouvez-nous sur</h5>
+                        @if (count($reseau_sociaux)>0)
                         @foreach ($reseau_sociaux as $reseau)
                         <div class="row">
                             <div class="col-12 text-center">
@@ -212,7 +254,7 @@
                         @endforeach
 
                         @else
-                        <h5>Aucun réseau pour cette organisme de formation</h5>
+                        <p class="text-center">Aucun réseau sociaux</p>
 
                         @endif
 
@@ -335,7 +377,6 @@
                     <div class="row ms-1">
                         <p>{{ $avis->commentaire }}</p>
                     </div>
-
                     @endforeach
                 </div>
             </div>

@@ -575,19 +575,9 @@ input{
 
 :root {
     --star-size: 20px;
-    --star-color: rgb(186, 186, 186);
+    --star-color: #c8c7c77c;
     --star-background: #fc0;
   }
-
-
-/* #grad {
-    width: 100px;
-    height: 100px;
-    background: conic-gradient(
-     red 6deg, orange 6deg 18deg, yellow 18deg 45deg,
-     green 45deg 110deg, blue 110deg 200deg, purple 200deg);
-    border-radius: 50%;
-  } */
 
 .Stars{
     --poucentage: calc(var(--note) / 5 * 100%);
@@ -618,7 +608,7 @@ input{
 
 .table-rating-bar .bar-container {
     width: 100%;
-    background-color: #f1f1f1;
+    background-color: #c8c7c752;
     text-align: center;
     color: white;
     border-radius: 20px;

@@ -303,8 +303,6 @@ ORDER BY
     mn.id;
 
 CREATE OR REPLACE VIEW v_pourcentage_total_module_cfp AS SELECT
-    vpa.note,
-    vpa.nombre_note,
     SUM(vpa.pourcentage_note * vpa.nombre_note) as nb_pourcent,
     SUM(vpa.nombre_note) as nombre_note,
     md.cfp_id

@@ -209,7 +209,7 @@ color: #7635dc;
 }
 
 .avis{
-    background-color: rgba(128, 128, 128, 0.124);
+    background-color: rgba(176, 175, 175, 0.124);
     padding: 1rem;
 }
 
@@ -270,7 +270,7 @@ color: #7635dc;
 
 .fixer{
     position: sticky !important;
-    top: 8rem;
+    top: 6rem;
 }
 
 .fixer2{
@@ -280,4 +280,8 @@ color: #7635dc;
 .fixer3{
     position: sticky !important;
     top: 41rem;
+}
+
+.avis_verif{
+    color: #5433FF;
 }

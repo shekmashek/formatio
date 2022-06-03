@@ -231,12 +231,9 @@ Effacer les données dans la table modules, pogrammes, cours
 creer le view v_pourcentage_total_module_cfp dans bdd_suiviformation_view_1(views_miasa+avis)
 
 CREATE OR REPLACE VIEW v_pourcentage_total_module_cfp AS SELECT
-    vpa.note,
-    vpa.nombre_note,
     SUM(vpa.pourcentage_note * vpa.nombre_note) as nb_pourcent,
-    SUM(vpa.nombre_note) as nbr_note,
-    md.cfp_id,
-    md.module_id
+    SUM(vpa.nombre_note) as nombre_note,
+    md.cfp_id
     from v_pourcentage_avis as vpa
     join moduleformation as md on vpa.module_id = md.module_id
     where md.module_id = vpa.module_id;

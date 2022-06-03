@@ -187,7 +187,7 @@ class ModuleController extends Controller
             return back();
         } else {
             DB::insert('insert into modules(reference,nom_module,formation_id,prix,prix_groupe,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?)', [$request->reference, $request->nom_module, $request->categorie, $request->prix,$request->prix_groupe, $request->heure, $request->jour, $request->prerequis, $request->objectif, $request->description, $request->modalite, $request->materiel, $request->niveau, $request->cible, $request->bon_a_savoir, $request->prestation, $request->min_pers, $request->max_pers, $cfp_id]);
-            DB::update('update formations as frmt join modules as md on frmt.id = md.formation_id set frmt.cfp_id = ? where frmt.id = md.formation_id;',[$cfp_id]);
+            // DB::update('update formations as frmt join modules as md on frmt.id = md.formation_id set frmt.cfp_id = ? where frmt.id = md.formation_id;',[$cfp_id]);
             return redirect()->route('liste_module');
         }
     }
