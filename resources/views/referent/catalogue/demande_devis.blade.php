@@ -94,22 +94,33 @@
             <div class="" >
                 <div class="">
                     @foreach ($modules as $mod)
-                    <a href="{{route('select_par_module',$mod->id)}}" class="">
+                    <a href="{{route('select_par_module',$mod->module_id)}}" class="">
                         <div class="row mb-3 module_lien justify-content-center align-items-center">
-                            <div class="col">
+                            <div class="col text_minifier">
                                 <div class="pt-2">{{$mod->nom_module}}</div>
+                                <div>
+                                    <div class="Stars" style="--note: {{ $mod->pourcentage }};">
+                                    </div>
+                                    <span class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
+                                        @if($mod->total_avis != null)
+                                            ({{$mod->total_avis}} avis)
+                                        @else
+                                            (0 avis)
+                                        @endif
+                                    </span>
+                                </div>
                             </div>
-                            <div class="col text-end">
+                            <div class="col text_minifier text-end">
                                 <div class="mb-2">{{$mod->duree_jour}}&nbsp;J / {{$mod->duree}}&nbsp;H<i class='bx bx-calendar bx_supprimer ms-2'></i></div>
                                 <div>{{$mod->modalite_formation}}<i class='bx bx-windows bx_ajouter ms-2'></i></div>
                             </div>
-                            <div class="col text-end">
+                            <div class="col text_minifier text-end">
                                 <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                 @if($mod->prix_groupe != null)
                                     <div>{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                 @endif
                             </div>
-                            <div class="col text-center">
+                            <div class="col text_minifier text-center">
                                 <div class="mb-3">
                                     <p><span class="btn_annuler text-uppercase">Organisme</span></p>
                                 </div>
@@ -119,7 +130,7 @@
                             </div>
                         </div>
                     </a>
-                    <input type="hidden" name="id_module" value="{{$mod->id}}">
+                    <input type="hidden" name="id_module" value="{{$mod->module_id}}">
                     <input type="hidden" name="id_cfp" value="{{$mod->cfp_id}}">
                     @endforeach
                 </div>

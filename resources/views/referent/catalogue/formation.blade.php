@@ -127,9 +127,18 @@
                             title="organisme de formation">
                     </div>
                     <div class="titre_module">
-                        <p class="text-capitalize text-">{{$mod->nom_module}}</p>
+                        <p class="text-capitalize mb-1">{{$mod->nom_module}}</p>
+                        <div class="Stars" style="--note: {{ $mod->pourcentage }};">
+                        </div>
+                        <span class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
+                            @if($mod->total_avis != null)
+                                ({{$mod->total_avis}} avis)
+                            @else
+                                (0 avis)
+                            @endif
+                        </span>
                     </div>
-                    <div class="details_module">
+                    <div class="details_module mt-3">
                         <div class="row">
                             <div class="col-6">
                                 <p class="text-capitalize text-dark"><i

@@ -226,3 +226,15 @@ INSERT INTO `formations` (`id`, `nom_formation`, `domaine_id`, `created_at`, `up
 (103, 'Power BI', 9, '2021-11-17 04:06:54', '2021-11-17 04:06:54',NULL);
 
 Effacer les données dans la table modules, pogrammes, cours
+
+------------ 2 juin ---------
+creer le view v_pourcentage_total_module_cfp dans bdd_suiviformation_view_1(views_miasa+avis)
+
+CREATE OR REPLACE VIEW v_pourcentage_total_module_cfp AS SELECT
+    SUM(vpa.pourcentage_note * vpa.nombre_note) as nb_pourcent,
+    SUM(vpa.nombre_note) as nombre_note,
+    md.cfp_id
+    from v_pourcentage_avis as vpa
+    join moduleformation as md on vpa.module_id = md.module_id
+    where md.module_id = vpa.module_id;
+

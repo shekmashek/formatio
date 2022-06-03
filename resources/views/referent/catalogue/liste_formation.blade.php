@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<h3 class="text-white ms-5">Liste formation </h3>
+    <h3 class="text-white ms-5">Liste formation </h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
@@ -40,22 +40,22 @@
                             <div class="d-flex align-items-start flex-column flex-sm-row px-3 py-5">
                                 <div>
                                     @foreach ($domaine_col1 as $dom)
-                                    <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
                                     @endforeach
                                 </div>
                                 <div>
                                     @foreach ($domaine_col2 as $dom)
-                                    <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
                                     @endforeach
                                 </div>
                                 <div>
                                     @foreach ($domaine_col3 as $dom)
-                                    <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
                                     @endforeach
                                 </div>
                                 <div>
                                     @foreach ($domaine_col4 as $dom)
-                                    <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
                                     @endforeach
                                 </div>
                             </div>
@@ -67,21 +67,19 @@
     </div>
 </div>
 <section class="mt-3">
-
-
     <div class="container">
         <div class="row">
 
             @if (count($infos)>0)
-            @if($nom_formation == null)
-            <h5 class="">{{count($infos)}} résultats</h5><br>
-            @else
-            @if (count($infos) == 1)
-            <h5 class="">{{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
-            @else
-            <h5 class="">{{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
-            @endif
-            @endif
+                @if($nom_formation == null)
+                    <h5 class="ms-5">{{count($infos)}} résultats</h5><br>
+                @else
+                    @if (count($infos) == 1)
+                        <h5 class="ms-5">{{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
+                    @else
+                        <h5 class="ms-5">{{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
+                    @endif
+                @endif
             @endif
             @if(Session::has('success'))
             <div class="alert alert-success">
@@ -89,19 +87,17 @@
             </div>
             @endif
 
-
             <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
-                {{-- =========== pagination module =============================================== --}}
-                @include("referent.catalogue.pagination.pagination_liste_formation")
+            {{-- =========== pagination module =============================================== --}}
+            @include("referent.catalogue.pagination.pagination_liste_formation")
 
-                <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+            <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
 
-                @if(isset($nom_formation) )
-                <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
-                    filtre activé <i class="fas fa-times"></i> </a>
-                @endif
-
+            @if(isset($nom_formation) )
+            <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
+                filtre activé <i class="fas fa-times"></i> </a>
+            @endif
 
         </div>
     </div>
@@ -119,7 +115,7 @@
                         <a href="{{route('detail_cfp',$info->cfp_id)}}" class="justify-content-center text-center">
                             <span class="mb-2 description">{{$info->nom}}</span><img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
                         </a>
-                    </div>
+                        </div>
                     <div class="col-3 liste__formation__content">
                         <a href="{{route('select_par_module',$info->module_id)}}">
                             <div class="liste__formation__item">
@@ -140,9 +136,9 @@
 
                                 <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5
                                     @if($info->total_avis != null)
-                                    ({{$info->total_avis}} avis)
+                                        ({{$info->total_avis}} avis)
                                     @else
-                                    (0 avis)
+                                        (0 avis)
                                     @endif
                                 </span>
                             </div>
@@ -168,52 +164,59 @@
                             </div>
                             <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
                             </div>
-                            <div><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                            <div ><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                             </div>
                         </div>
                     </div>
                     <div class="col text-center">
                         <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                         @if($info->prix_groupe != null)
-                        <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                            <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                         @endif
                     </div>
                     <div class="col">
                         <div class="mb-2 lien_clique"><a href="{{route('demande_devis_client',$info->module_id)}}" class="description ">Démander&nbsp;un&nbsp;devis</a></div>
-                        @if (count($datas) <= 0) @else @foreach ($datas as $data) @if($info->module_id == $data->module_id)
-                            <div class="pt-1 lien_clique"><a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="description ">S'inscrire</a></div>
-                            @endif
+                        @if (count($datas) <= 0)
+
+                        @else
+                            @foreach ($datas as $data)
+                                @if($info->module_id == $data->module_id)
+                                    <div class="pt-1 lien_clique"><a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="description ">S'inscrire</a></div>
+                                @endif
                             @endforeach
-                            @endif
+                        @endif
                     </div>
-                    @foreach ($datas as $data)
-                    @if($info->module_id == $data->module_id)
-                    @if (count($datas) <= 0) @else <hr class="mb-1 mt-2">
-                        <div class="row w-100 justify-content-end">
-                            <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates du Session Inter&nbsp;<i class="bx bx-caret-down caret-icon"></i>
-                            </h6>
-                        </div>
-                        <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
-                            <div class="row px-3 py-2">
-                                <div class="col-2">
-                                    <p>Prochaines Sessions</p>
-                                </div>
-                                <div class="col-5 date text-center">
-                                    @foreach ($datas as $data)
-                                    @if($info->module_id == $data->module_id)
-                                    <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
-                                    @endif
-                                    @endforeach
-                                </div>
-                                <div class="col-5 text-center">
-                                    <p class="">Cette thématique vous intéresse?<button type="button" class="btn_next ms-4"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button> </p>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-                        @endif
+                        @foreach ($datas as $data)
+                            @if($info->module_id == $data->module_id)
+                                @if (count($datas) <= 0)
+
+                                @else
+                                    <hr class = "mb-1 mt-2">
+                                    <div class="row w-100 justify-content-end">
+                                        <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates du Session Inter&nbsp;<i class="bx bx-caret-down caret-icon"></i>
+                                        </h6>
+                                    </div>
+                                    <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
+                                        <div class="row px-3 py-2">
+                                            <div class="col-2">
+                                                <p>Prochaines Sessions</p>
+                                            </div>
+                                            <div class="col-5 date text-center">
+                                                @foreach ($datas as $data)
+                                                    @if($info->module_id == $data->module_id)
+                                                        <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                            <div class="col-5 text-center">
+                                                <p class="">Cette thématique vous intéresse?<button type="button" class="btn_next ms-4"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
                         @endforeach
-                </div>
+                    </div>
                 @endforeach
                 @else
                 <h2 class="text-center">Aucun module pour cette formation 😅 !</h2>
@@ -226,6 +229,8 @@
             </div>
         </div>
     </div>
+
+
 
     <div class="filtrer mt-3">
         <div class="row">
@@ -464,7 +469,6 @@
             </div>
         </div>
     </div>
-
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />

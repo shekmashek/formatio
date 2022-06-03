@@ -293,7 +293,7 @@ a:focus {
     color: black;
     border: none;
     border-radius: 15px;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     position: relative;
     left: 0.8rem;
     padding-top: 1rem;
@@ -574,20 +574,10 @@ input{
 }
 
 :root {
-    --star-size: 30px;
-    --star-color: rgb(186, 186, 186);
+    --star-size: 20px;
+    --star-color: #c8c7c77c;
     --star-background: #fc0;
-  }
-
-
-/* #grad {
-    width: 100px;
-    height: 100px;
-    background: conic-gradient(
-     red 6deg, orange 6deg 18deg, yellow 18deg 45deg,
-     green 45deg 110deg, blue 110deg 200deg, purple 200deg);
-    border-radius: 50%;
-  } */
+}
 
 .Stars{
     --poucentage: calc(var(--note) / 5 * 100%);
@@ -618,7 +608,7 @@ input{
 
 .table-rating-bar .bar-container {
     width: 100%;
-    background-color: #f1f1f1;
+    background-color: #c8c7c752;
     text-align: center;
     color: white;
     border-radius: 20px;
@@ -627,37 +617,37 @@ input{
 }
 
 .table-rating-bar .bar-container .bar-5 {
-    width: 70%;
+    width: var(--progress_bar);
     height: 13px;
-    background-color: var(--progress_bar);
+    background-color: orangered;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-4 {
-    width: 50%;
+    width: var(--progress_bar);
     height: 13px;
-    background-color: var(--progress_bar);
+    background-color: orangered;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-3 {
-    width: 30%;
+    width: var(--progress_bar);
     height: 13px;
-    background-color: var(--progress_bar);
+    background-color: orangered;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-2 {
-    width: 15%;
+    width: var(--progress_bar);
     height: 13px;
-    background-color: var(--progress_bar);
+    background-color: orangered;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-1 {
-    width: 0%;
+    width: var(--progress_bar);
     height: 13px;
-    background-color: var(--progress_bar);
+    background-color: orangered;
     border-radius: 20px;
 }
 
@@ -677,4 +667,8 @@ input{
 .rating-star .checked:hover {
     color: #f9a825;
     cursor: pointer;
+}
+
+.text_minifier{
+    font-size: .8rem;
 }

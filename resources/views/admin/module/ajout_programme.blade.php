@@ -64,7 +64,7 @@ href="{{route('liste_module')}}">
                                     </button>
                                 </div>
                                 <div>
-                                    <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
                                 </div>
                             </div>
                         </form>
@@ -497,6 +497,9 @@ href="{{route('liste_module')}}">
         $(this).closest('#heading1').remove();
     });
 
+    $('.apres_ajout_prog').on('click', function (e) {
+        localStorage.setItem('ActiveTabMod', '#nonPublies');
+    });
 
     // var acc = document.getElementsByClassName("accordion");
     // var i;
