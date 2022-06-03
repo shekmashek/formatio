@@ -128,8 +128,7 @@
                         </div>
             <div style="margin-top: 20px">
 
-           
-            <label for=""><strong >Les matériels nécessaires</strong></label>
+            <label for=""><strong>Les matériels nécessaires</strong></label>
             <table>
                 <tr>
                     <th>Matériel nécessaire</th>
@@ -137,7 +136,6 @@
                     <th> Pris en charge par</th>
                     <th> Note</th>
                 </tr>
-
                    @foreach ($ressource as $res )
                 <tr>
                     <td> {{$res->description}}</td>
@@ -148,7 +146,7 @@
                    @endforeach
                     
             </table>
-        </div>
+             </div>
             </div>
             <div class="col-xs-4"></div>
         </div>

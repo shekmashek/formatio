@@ -34,7 +34,6 @@ from groupes g
 join frais_annexe_formation fr on  fr.groupe_id=  g.id
 group by groupe_id;
 
-
 create or replace view v_action_formation as
 select 
     p.nom_projet,
@@ -56,7 +55,6 @@ select
     ifnull(prof.nom_formateur,'')as nom_formateur,
     ifnull(prof.prenom_formateur,'') as prenom_formateur,
     ifnull(v.ville,'') as ville
-    
 from 
     groupes g
     left join projets p on p.id = g.projet_id

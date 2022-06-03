@@ -626,8 +626,6 @@
                                     var etp = '';
                                     var printpdf = '';
 
-                                  
-
                                     for (var $i = 0; $i < userData.length; $i++) {
                                         printpdf+='<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a>';
                                         printpdf = printpdf.replace(":?",id_detail);
@@ -749,9 +747,6 @@
                                            
                                     }
                                     $('#ressource').append(html);
-
-
-                                    
                                 }
                                 , error: function(error) {
                                     console.log(error)
@@ -769,7 +764,6 @@
                         events: event
                     });
 
-
                     calendar.render();
 
                 }
@@ -782,7 +776,6 @@
         $('#fermer').on('click', function(e) {
              $('#detail').css('display','none');
         });
-
     </script>
 </html>
 @endsection
