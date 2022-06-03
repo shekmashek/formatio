@@ -54,27 +54,6 @@
 
 
 
-
-
-    {{-- <li class="nav-item" role="presentation">
-          <a
-            class="nav-link"
-            id="ex1-tab-3"
-            data-mdb-toggle="tab"
-            data-bs-toggle="tab"
-            href="#ex1-tabs-3"
-            role="tab"
-            aria-controls="ex1-tabs-3"
-            aria-selected="false"
-            >Tab 3</a
-          >
-        </li> --}}
-    </ul>
-    <!-- Tabs navs -->
-
-    <!-- Tabs content -->
-
-
     <div class="tab-content" id="ex1-content">
         <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel" aria-labelledby="ex1-tab-1">
             {{-- Tab 1 content --}}

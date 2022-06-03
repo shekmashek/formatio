@@ -361,7 +361,7 @@ Route::resource('formation', 'FormationController')->except([
 ]);
 Route::post('/delete_formation/{id}', 'FormationController@destroy')->name('destroy_formation');
 Route::post('/show_formation/{id}', 'FormationController@show')->name('show_formation');
-Route::get('/liste_formation/{id?}/{nbPag?}', 'FormationController@index')->name('liste_formation');
+Route::get('/liste_formation/{id?}', 'FormationController@index')->name('liste_formation');
 Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->name('nouvelle_formation');
 //route categorie_formation
 Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
@@ -373,7 +373,7 @@ Route::get('/ajout_categorie', 'FormationController@ajout_categorie')->name('ajo
 //route ajout_module_formation
 Route::get('/ajout_module', 'FormationController@ajout_module')->name('ajout_module');
 //route catalogue de formation
-Route::get('result__formation', 'FormationController@rechercheParModule')->name('result_formation');
+Route::get('result_formation/{nbPag?}/{nom_formation?}', 'FormationController@rechercheParModule')->name('result_formation');
 Route::get('affichage_formation/{id}', 'FormationController@affichage_formation')->name('affichage_formation');
 Route::get('search__formation', 'FormationController@getModulesParReference')->name('search__formation');
 Route::get('domaine_formation', 'FormationController@formation_domaine')->name('domaine_formation');

@@ -768,7 +768,7 @@
                                             </div>
                                             <hr>
                                             <p>
-                                                <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Recherche par entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
+                                                <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Recherche par organisme de formation <i class='bx icon_trie bxs-chevron-up'></i></a>
                                             </p>
                                             <div class="collapse multi-collapse" id="detail_par_etp">
                                                 <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
