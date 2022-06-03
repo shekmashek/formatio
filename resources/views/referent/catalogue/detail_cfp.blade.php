@@ -214,6 +214,7 @@
                         <h5 class="text-center mb-3">Horaires d'ouvertures</h5>
                         @if (count($horaire)>0)
                         @foreach ($horaire as $cfp)
+
                         <div class="row">
                             <div class="col-6">
                                 <p class="m-0 text-capitalize">{{$cfp->jours}}</p>
@@ -320,10 +321,21 @@
                                             @if ($mod->nom_module == null)
                                                 <p class="text-center">Cette thématique n'as pas encore de module mise en ligne 😓!</p>
                                             @else
-                                                <a href="{{route('select_par_module',$mod->id)}}" class="">
-                                                    <div id="module{{$mod->id}}" class="row mb-3 module_lien justify-content-center align-items-center">
+                                                <a href="{{route('select_par_module',$mod->module_id)}}" class="">
+                                                    <div id="module{{$mod->module_id}}" class="row mb-3 module_lien justify-content-center align-items-center">
                                                         <div class="col-5 text_minifier">
                                                             <div class="pt-2">{{$mod->nom_module}}</div>
+                                                            <div>
+                                                                <div class="Stars" style="--note: {{ $mod->pourcentage }};">
+                                                                </div>
+                                                                <span class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
+                                                                    @if($mod->total_avis != null)
+                                                                        ({{$mod->total_avis}} avis)
+                                                                    @else
+                                                                        (0 avis)
+                                                                    @endif
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                         <div class="col-3 text_minifier">
                                                             <div class="mb-2"><i class='bx bx-calendar bx_supprimer me-2'></i>{{$mod->duree_jour}}&nbsp;J / {{$mod->duree}}&nbsp;H</div>

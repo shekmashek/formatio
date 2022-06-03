@@ -293,7 +293,7 @@ a:focus {
     color: black;
     border: none;
     border-radius: 15px;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     position: relative;
     left: 0.8rem;
     padding-top: 1rem;
@@ -577,7 +577,7 @@ input{
     --star-size: 20px;
     --star-color: #c8c7c77c;
     --star-background: #fc0;
-  }
+}
 
 .Stars{
     --poucentage: calc(var(--note) / 5 * 100%);
@@ -667,4 +667,8 @@ input{
 .rating-star .checked:hover {
     color: #f9a825;
     cursor: pointer;
+}
+
+.text_minifier{
+    font-size: .8rem;
 }

@@ -662,7 +662,7 @@
                     <div class="col-10 d-flex flex-row justify-content-center apprendCreer pb-3">
                         @can('isStagiaire')
                         <div class="col-5 header-right">
-                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer apprendreBox">
+                            <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
                                 <div class="btn_racourcis" id="text_apprendre">
                                     {{-- <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
@@ -674,7 +674,7 @@
                         @endcan
                         @can('isManager')
                         <div class="col-5 header-right">
-                            <div class="col-11 d-flex flex-row justify-content-center apprendCreer apprendreBox">
+                            <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
                                 <div class="btn_racourcis" id="text_apprendre">
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
@@ -695,11 +695,23 @@
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
                                 </div>
-                                <div class="btn_racourcis dropdown prevent_afficahge .navigation_module" >
+                                <div class="btn_racourcis dropdown prevent_affichage .navigation_module" >
+                                    {{-- <span class="text_apprendre" role="button"><i
+                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
+                                    <a href="#" class="dropdown-toggle" role="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                                        <span class=""><i class='bx bxs-bell-ring bx-tada-hover mb-2 mt-1'></i>
+                                        <span class="text_racourcis"></span></span>
+                                        <span class="badge_invitation">6</span>
+                                    </a>
+                                    <ul class="dropdown-menu agrandir2" aria-labelledby="notification">
+                                        listes des notifications
+                                    </ul>
+                                </div>
+                                <div class="btn_racourcis dropdown prevent_affichage2 .navigation_module" >
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
+                                        <span class=""><i class='bx bxs-message-add bx-burst-hover mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
                                         <span class="badge_invitation">9</span>
                                     </a>
@@ -752,11 +764,23 @@
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
                                 </div>
-                                <div class="btn_racourcis dropdown prevent_afficahge .navigation_module" >
+                                <div class="btn_racourcis dropdown prevent_affichage .navigation_module" >
+                                    {{-- <span class="text_apprendre" role="button"><i
+                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
+                                    <a href="#" class="dropdown-toggle" role="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                                        <span class=""><i class='bx bxs-bell-ring bx-tada-hover mb-2 mt-1'></i>
+                                        <span class="text_racourcis"></span></span>
+                                        <span class="badge_invitation">6</span>
+                                    </a>
+                                    <ul class="dropdown-menu agrandir2" aria-labelledby="notification">
+                                        listes des notifications
+                                    </ul>
+                                </div>
+                                <div class="btn_racourcis dropdown prevent_affichage2 .navigation_module" >
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
+                                        <span class=""><i class='bx bxs-message-add bx-burst-hover mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
                                         <span class="badge_invitation">9</span>
                                     </a>
@@ -1403,9 +1427,13 @@
             });
         });
 
-        $('.prevent_afficahge').on('click', function(e){
+        $('.prevent_affichage').on('click', function(e){
             e.stopPropagation();
-        })
+        });
+
+        $('.prevent_affichage2').on('click', function(e){
+            e.stopPropagation();
+        });
 
     </script>
 </body>

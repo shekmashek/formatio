@@ -72,12 +72,12 @@
 
             @if (count($infos)>0)
                 @if($nom_formation == null)
-                    <h5 class="">{{count($infos)}} résultats</h5><br>
+                    <h5 class="ms-5">{{count($infos)}} résultats</h5><br>
                 @else
                     @if (count($infos) == 1)
-                        <h5 class="">{{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
+                        <h5 class="ms-5">{{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
                     @else
-                        <h5 class="">{{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
+                        <h5 class="ms-5">{{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
                     @endif
                 @endif
             @endif

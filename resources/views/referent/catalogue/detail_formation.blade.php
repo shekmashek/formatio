@@ -95,7 +95,7 @@
                     <h4 class="py-4">{{$res->nom_module}}</h4>
                     <p class="lien_formation"><a href="{{route('affichage_formation',$res->formation_id)}}">{{$res->nom_formation}}</a></p>
                     <p>{{$res->description}}</p>
-                    <div class="detail__formation__result__avis d-flex flex-column">
+                    <div class="detail__formation__result__avis d-flex flex-row">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
                         {{-- <div class="Stars" style="--note: 2.5"></div> --}}
                         <span class="ms-2"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
@@ -273,18 +273,18 @@
                             <div class="row detail__formation__programme__avis__rated d-flex">
                                 <div class="col-md-4 text-center d-flex flex-column">
                                     <div class="rating-box">
-                                        <h1 class="pt-4">
+                                        <h3 class="pt-4">
                                             @if($res->pourcentage != null)
                                                 {{$res->pourcentage}} avis
                                             @else
                                                 0 avis
                                             @endif
-                                        </h1>
+                                        </h3>
                                         <p class="">sur 5</p>
                                     </div>
                                     <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
                                 </div>
-                                <div class="col-md-8 pt-2">
+                                <div class="col-md-8 pt-2 ">
                                     <div class="table-rating-bar justify-content-center">
                                         <table class="text-left mx-auto">
                                             <tr>
@@ -352,7 +352,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="detail__formation__programme__avis__donnes">
+                        <div class="detail__formation__programme__avis__donnes mt-5">
                             @foreach ($liste_avis as $avis)
                             <div class="row">
                                 <div class="d-flex flex-row">
