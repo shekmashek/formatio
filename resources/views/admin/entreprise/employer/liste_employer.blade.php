@@ -290,7 +290,13 @@
                                                             </span>
                                                         </label>
                                                         <input class="form-check-input activer_referent" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                            
+                                                            {{-- desactiver le bouton si l'employé n'est pas actif --}}
+                                                            @if ($employe->activiter !=1)
+                                                                disabled
+                                                            @endif
+                                                            >
                                                     </div>
                                                 @endif
                     
