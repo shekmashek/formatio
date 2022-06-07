@@ -477,6 +477,15 @@
             </li>
 
             @endcan
+            @can(['isCFP'])
+            <li>
+                <a href="{{route('liste_demande_devis')}}" class="d-flex nav_linke">
+                    <i class='bx bxs-notepad'></i>
+                    <span class="links_name"> Demande devis</span>
+                </a>
+            </li>
+
+            @endcan
             @can('isFormateur')
             <li>
                 <a href="{{route('profilProf',Auth::user()->id)}}" class="d-flex nav_linke">
@@ -1117,7 +1126,7 @@
                                                 <p class="m-0">Contactez-nous</p>
                                             </a>
                                             &nbsp;-&nbsp;
-                                            <a href="#" target="_blank">
+                                            <a href="{{url('info_legale')}}" target="_blank">
                                                 <p class="m-0">Informations légales</p>
                                             </a>
                                         </div>

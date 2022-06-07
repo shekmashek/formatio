@@ -73,7 +73,13 @@
     </div>
 </div>
 <div class="container mt-4">
+   <a href="{{url()->previous()}}" ><button type="button" class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bx-chevron-left me-1"></i> Retour</button></a>
     <h3 class="text-capitalize text-center titre_domaine">Formulaire de demande de dévis</h3>
+    @if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
     <form action="{{route('demande_devis.store')}}" method="POST" class="form_devis w-75 mt-5">
         @csrf
         <div class="mb-3 row text-end">
@@ -86,6 +92,12 @@
             <label for="mail" class="col-sm-2 col-form-label">Email<sup>*</sup></label>
             <div class="col-sm-6">
                 <input type="text" class="form-control" id="mail" name="mail" required>
+            </div>
+        </div>
+        <div class="mb-3 row text-end">
+            <label for="mail" class="col-sm-2 col-form-label">Objet<sup>*</sup></label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="objet" name="objet" required>
             </div>
         </div>
         {{-- <hr class="w-50 mx-auto"> --}}

@@ -240,10 +240,7 @@
                                     <h6 class="m-0"></h6>
                                 </div>
                             </div>
-
-                            @endif
-
-
+                            @else
                             <div class="row  titres_services" style="display: none" id="titres_services_annexe">
                                 <div class="col-3">
                                     <p class="m-0" style="font-size: 80%">Frais annexes</p>
@@ -261,6 +258,10 @@
                                     <p class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</p>
                                 </div>
                             </div>
+                            @endif
+
+
+
                             <div class="col-1 text-end">
                                 <h6 class="m-0"></h6>
                             </div>

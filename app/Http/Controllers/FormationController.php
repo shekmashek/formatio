@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
+use App\responsable_cfp;
+use App\demande_devis;
 
 class FormationController extends Controller
 {
@@ -601,8 +603,10 @@ class FormationController extends Controller
 
         $id_module = $request->id;
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $test = 4;
         $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
+
         $offset = round($domaines_count[0]->nb_domaines / $test);
         $domaine_col1 = DB::select('select * from domaines limit ' . $offset . '');
         $domaine_col2 = DB::select('select * from domaines limit ' . $offset . ' offset ' . $offset . '');

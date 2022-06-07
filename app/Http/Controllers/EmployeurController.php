@@ -46,6 +46,7 @@ class EmployeurController extends Controller
      */
     public function store(Request $request)
     {
+
         $rules = [
             'nom.required' => 'le Nom ne doit pas être null',
             'matricule.required' => 'invalid',
@@ -102,22 +103,40 @@ class EmployeurController extends Controller
 
             // if ($request->type_enregistrement == "STAGIAIRE") {
                 if($abonnement_etp !=null){
+
                     if($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
+                    else{
+                        $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
+
+                        DB::beginTransaction();
+                        try {
+                            $this->fonct->insert_role_user($user_id, "3",false,true); // EMPLOYEUR
+                            $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
+                            DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
+                            entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+                            DB::commit();
+                        } catch (Exception $e) {
+                            DB::rollback();
+                            echo $e->getMessage();
+                        }
+                    }
                 }
                 else{
+
                     $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
 
                     DB::beginTransaction();
                     try {
                         $this->fonct->insert_role_user($user_id, "3",false,true); // EMPLOYEUR
+                        $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
+                        DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
+                        entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
                         DB::commit();
                     } catch (Exception $e) {
                         DB::rollback();
                         echo $e->getMessage();
                     }
-                    $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
-                    DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
-                    entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
+
                 }
         //    }
         //     if ($request->type_enregistrement == "REFERENT") {
@@ -156,7 +175,7 @@ class EmployeurController extends Controller
         //         ,entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
         //     }
             Mail::to($resp->email_resp)->send(new create_compte_new_employer_mail($entreprise->nom_etp, $resp, $request->nom.' '.$request->prenom, $request->mail,$fonction_employer));
-            return back()->with('success',"Terminé !");
+            return back()->with('success',"Employé enregistré avec succès !");
         }
 
 
