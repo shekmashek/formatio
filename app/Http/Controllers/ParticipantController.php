@@ -140,6 +140,7 @@ class ParticipantController extends Controller
 
         // $stagiaire = stagiaire::where('user_id', $user_id)->where('entreprise_id', $entreprise_id)->first();
 
+        // setReferent() : méthode dans le model Stagiaire
         $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);
         // if ($user_actif == 1) {
         //     $employe->setReferent($user_id, $emp_id, $entreprise_id);
@@ -151,7 +152,7 @@ class ParticipantController extends Controller
         RoleUser::updateOrInsert(
             ['user_id' => $user_id, 'role_id' => 2]
         );
-
+        
         return response()->json($ref_status);
         
 
