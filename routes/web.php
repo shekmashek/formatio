@@ -975,7 +975,7 @@ Route::get('recherche_admin', 'RecherchemultiController@index')->name('recherche
 //route politque confidentialité
 Route::get('/politique_confidentialite', function () {
     return view('/politique_confidentialite');
-});
+})->name('politique_confidentialite');
 Route::get('/politique_confidentialites', function () {
     return view('/politique_confidentialites');
 });
