@@ -63,9 +63,10 @@ create or replace view v_groupe_entreprise as
     join entreprises e on ge.entreprise_id = e.id
     join type_payement tp on g.type_payement_id = tp.id;
 
-    
+
     /* view demande de devis*/
-   CREATE OR REPLACE VIEW v_liste_demande_devis AS 
+
+   CREATE OR REPLACE VIEW v_liste_demande_devis AS
    SELECT
    demande_devis.id,
    demande_devis.nom,
@@ -82,11 +83,11 @@ create or replace view v_groupe_entreprise as
    responsables.telephone_resp,
    cfps.nom as nom_cfp,
    cfps.id as cfp_id,
-   modules.nom_module, 
+   modules.nom_module,
    modules.id as module_id,
    modules.reference as reference_module
-   
-   from 
+
+   from
    demande_devis,
    entreprises,
    responsables,
