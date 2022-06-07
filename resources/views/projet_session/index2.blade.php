@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
 
     <style>
-        .myEtpStyle:hover{
+        /* .myEtpStyle:hover{
             text-decoration: underline;
             color: darkorchid;
-        }
+        } */
         .dropdown-item.active{ 
             background-color: transparent !important;
         }
@@ -1608,10 +1608,22 @@
 
                         for (let $i = 0; $i < userData.length; $i++) {
 
+
                             let url_photo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:120px">';
                             url_photo = url_photo.replace(":url_img", userData[$i].logo);
-                            $("#logo").html(" ");
-                            $("#logo").append(url_photo);
+
+                            var nom = (userData[$i].nom_etp).substr(0, 2);
+
+                            if(userData[$i].logo == null){
+                                $('#logo').html(" ");
+                                $('#logo').append('<p style="background-color: #5c6bc0; width: 80px; height: 80px; border-radius: 50%; padding: 30px; color: white; font-weight: 700; font-size: 14px; marging-bottom: 20px; position: relative; left: 40%">'+nom+'</p>');
+                            }else{
+                                $("#logo").html(" ");
+                                $("#logo").append(url_photo);
+                            }
+
+                            // $("#logo").html(" ");
+                            // $("#logo").append(url_photo);
                             $("#nom_entreprise").text(userData[$i].nom_etp);
                             $("#nom_reponsable").text(': '+userData[$i].nom_resp);
                             $("#prenom_responsable").text(userData[$i].prenom_resp);

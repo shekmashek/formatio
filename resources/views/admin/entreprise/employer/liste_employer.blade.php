@@ -327,36 +327,43 @@
 
 
                                 <td >
-                                    <div class="d-flex align-items-center">
-                                        @if ($employe->photos == null)
-                                            {{-- image placeholder --}}
-                                            {{-- <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Image non chargée"
-                                                style="width: 45px; height: 45px" class="rounded-circle" /> --}}
+                                {{-- <div class="d-flex align-items-center"> --}}
+                                    @if ($employe->photos == null)
+                                    
+                                        {{-- image placeholder --}}
+                                        {{-- <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Image non chargée"
+                                            style="width: 45px; height: 45px" class="rounded-circle" /> --}}
 
-                                            {{-- grey color --}}
-                                            {{-- <i class='bx bx-user-circle profile-holder'
-                                                style="width: 45px; height: 45px"></i> --}}
+                                        {{-- grey color --}}
+                                        {{-- <i class='bx bx-user-circle profile-holder'
+                                            style="width: 45px; height: 45px"></i> --}}
 
-                                            {{-- actif/inactif color --}}
-                                                    {{-- <i class='bx bx-user-circle  h1' style='
-                                                        @if ($employe->activiter == 1) color:#25b900c9;'
-                                                            @else
-                                                            color:#e21717;'
-                                                            @endif
-                                                            ></i> --}}
+                                        {{-- actif/inactif color --}}
+                                                {{-- <i class='bx bx-user-circle  h1' style='
+                                                    @if ($employe->activiter == 1) color:#25b900c9;'
+                                                        @else
+                                                        color:#e21717;'
+                                                        @endif
+                                                        ></i> --}}
 
-                                            {{-- initials --}}
-                                            <td data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew" style="cursor: pointer">
-                                                <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
-                                                    <span class="align-middle text-center profile-initial" style="position:relative;">
-                                                        <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
-                                                    </span>
-                                                </div>
-                                                    @else
-                                                        <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew" src="{{ asset('images/stagiaires/' . $employe->photos) }}"
-                                                        alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
-                                                        class="rounded-circle" />
-                                                    @endif
+                                        {{-- initials --}}
+
+                                            <p class="randomColor text-center"
+                                                style="color:white; font-size: 15px; border: none; border-radius: 100%; height:50px; width:50px ;">
+                                                <span class=""
+                                                    style="position:relative; top: .9rem;">
+                                                    <b data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew" style="cursor: pointer">{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
+                                                </span>
+                                            </p>
+
+                                    @else
+                                        <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew" src="{{ asset('images/stagiaires/' . $employe->photos) }}"
+                                        alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
+                                        class="rounded-circle" />
+                                    @endif
+                                </td>
+                                            <td>
+                                            
                                                 <div class="ms-3">
                                                     <p class="fw-normal mb-1 text-purple empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
                                                     {{-- <p class="fw-bold mb-1 text-purple "> --}}
@@ -385,33 +392,32 @@
 
                                             <td class="align-middle text-center text-secondary">
 
-                                                @if ($employe->activiter == 1)
-                                                    <div class="form-check form-switch">
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked"><span
-                                                                class="badge bg-success">actif</span></label>
-                                                        <input class="form-check-input desactiver_stg" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
-                                                            checked>
-                                                    </div>
-                                                        @else
-                                                    <div class="form-check form-switch">
-                                                        <label class="form-check-label"
-                                                            for="flexSwitchCheckChecked">
-                                                            <span class="badge bg-danger">
-                                                                inactif
-                                                            </span>
-                                                        </label>
-                                                        <input class="form-check-input activer_stg" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
-                                                    </div>
-                                                        @endif
-
-                                            </td>
-                                            <td class="align-middle text-center text-secondary">
-                                                <button type="button" class="btn " data-bs-toggle="modal"
-                                                    data-bs-target="#delete_emp_{{ $employe->id }}">
-                                                    <i class=' bx bxs-trash' style='color:#e21717'></i>
-                                            </button>
+                                            @if ($employe->activiter == 1)
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                                            class="badge bg-success">actif</span></label>
+                                                    <input class="form-check-input desactiver_stg" type="checkbox"
+                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                        checked>
+                                                </div>
+                                            @else
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label"
+                                                        for="flexSwitchCheckChecked">
+                                                        <span class="badge bg-danger">
+                                                            inactif
+                                                        </span>
+                                                    </label>
+                                                    <input class="form-check-input activer_stg" type="checkbox"
+                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                </div>
+                                            @endif
+                                    </td>
+                                    <td class="align-middle text-center text-secondary">
+                                        <button type="button" class="btn " data-bs-toggle="modal"
+                                            data-bs-target="#delete_emp_{{ $employe->id }}">
+                                            <i class=' bx bxs-trash' style='color:#e21717'></i>
+                                    </button>
                                 </td>
 
                             </tr>
@@ -592,14 +598,7 @@
                     </div>
 
                 </div>
-                {{-- <div class="mt-1">
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
-                        <div class="col-md-3">Code postal</div>
-                        <div class="col-md"><span id="code_postal"></span></div>
-                    </div>
-                </div> --}}
+
             </div>
         </div>
 
@@ -609,6 +608,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <script>
+            
+
             $('.empNew').on('click', function(){
                 var user_id = $(this).data("id");
                 console.log(user_id);
@@ -622,8 +623,17 @@
                         for (let $i = 0; $i < userData.length; $i++) {
                             let url_photo = '<img src="{{asset("images/stagiaires/:url_img")}}" style="height80px; width:80px;">';
                             url_photo = url_photo.replace(":url_img", userData[$i].photos);
-                            $("#donner").html(" ");
-                            $("#donner").append(url_photo);
+                            var nom = (userData[$i].nom_stagiaire).substr(0, 1);
+                            var prenom = (userData[$i].prenom_stagiaire).substr(0, 1);
+
+                            if(userData[$i].photos == null){
+                                $('#donner').html(" ");
+                                $('#donner').append('<p style="background-color: #5c6bc0; width: 80px; height: 80px; border-radius: 50%; padding: 30px; color: white; font-weight: 700; font-size: 14px; marging-bottom: 20px; position: relative; left: 40%"><span>'+nom+prenom+'</span></p>');
+                            }else{
+                                $("#donner").html(" ");
+                                $("#donner").append(url_photo);
+                            }
+
                             $("#matricule").text(': '+userData[$i].matricule);
                             $("#nom").text(': '+userData[$i].nom_stagiaire);
                             $("#prenom").text(userData[$i].prenom_stagiaire);
@@ -634,6 +644,12 @@
                         }
                     }
                 });
+            });
+        </script>
+        <script>
+            $(".randomColor").each(function() {
+            //On change la couleur de fond au hasard
+                $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
             });
         </script>
 
