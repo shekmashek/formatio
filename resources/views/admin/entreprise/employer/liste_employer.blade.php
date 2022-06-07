@@ -603,7 +603,7 @@
         </div>
 
 
-        <script src="{{ asset('assets/js/jquery.js') }}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -648,7 +648,7 @@
         </script>
         <script>
             $(".randomColor").each(function() {
-            //On change la couleur de fond au hasard
+            //On change la couleur de fond au hasard  
                 $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
             });
         </script>
