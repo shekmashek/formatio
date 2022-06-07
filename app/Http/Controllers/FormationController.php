@@ -904,4 +904,23 @@ class FormationController extends Controller
 
 
 
+// }
+    public function liste_demande_devis(){
+        $id_user = Auth::user()->id;
+        $id_cfp = responsable_cfp::where('user_id', $id_user)->value('id');
+        $liste=DB::select('select *  from v_liste_demande_devis where cfp_id=?',[$id_cfp]);
+        return view('referent.catalogue.liste_demande_devis',compact('liste'));
+
+    }
+    public function detail_demande_devis($id){
+        $detail=demande_devis::findOrfail($id);
+        // $liste=DB::select('select *  from v_liste_demande_devis where cfp_id=?',[$id_cfp]);
+        return view('referent.catalogue.detail_demande_devis',compact('detail'));
+    }
+    public function delete_demande_devis($id)
+    {
+        // DB::delete('delete devise from devise where id=?',[$id]);
+        DB::table('demande_devis')->delete($id);
+        return back();
+    }
 }
