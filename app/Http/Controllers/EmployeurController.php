@@ -11,7 +11,7 @@ use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\new_employer\create_compte_new_employer_mail;
 use Illuminate\Support\Facades\Gate;
-
+use Carbon\Carbon;
 class EmployeurController extends Controller
 {
     /**
@@ -81,8 +81,12 @@ class EmployeurController extends Controller
             $entreprise_id = $this->fonct->findWhere("responsables",["user_id"],[Auth::user()->id]);
 
              /**On doit verifier le dernier abonnement de l'entreprise pour pouvoir limité le referent à ajouter */
-            $nb_referent = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
-            $nb_stagiaire = $this->fonct->findWhere("stagiaires",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
+
+            $current_year = Carbon::now();
+            $nb_stagiaire = DB::select('SELECT * from stagiaires where entreprise_id = ? and YEAR(created_at) = ? ',[$entreprise_id[0]->entreprise_id,$current_year]);
+            $nb_referent =  DB::select('SELECT * from responsables where entreprise_id = ? and YEAR(created_at) = ? ',[$entreprise_id[0]->entreprise_id,$current_year]);
+
+            // $nb_stagiaire = $this->fonct->findWhere("stagiaires",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
 
             $abonnement_etp =  DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1',[$entreprise_id[0]->entreprise_id]);
 

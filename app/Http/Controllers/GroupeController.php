@@ -13,7 +13,7 @@ use App\Models\FonctionGenerique;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Excel;
-
+use Carbon\Carbon;
 class GroupeController extends Controller
 {
     public function __construct()
@@ -98,7 +98,11 @@ class GroupeController extends Controller
         $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-        $nb_projet = $fonct->findWhere("v_session_projet",["cfp_id"],[$cfp_id]);
+         /**annee courante */
+        $current_year = Carbon::now();
+        $nb_projet = DB::select('SELECT * from v_session_projet where cfp_id = ? and YEAR(date_projet) = ? ',[$cfp_id,$current_year]);
+
+        // $nb_projet = $fonct->findWhere("v_session_projet",["cfp_id"],[$cfp_id]);
         /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le projet à ajouter */
         $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
 
