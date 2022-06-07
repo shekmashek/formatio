@@ -272,16 +272,16 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                 <td><span style="background: green;padding:5px;color:white;border-radius:10px"> disponible </span> </td>
                                 @endif
                                 <td>
-                                    <span role="button" data-bs-toggle="modal" data-bs-target="#modif_coupon">
+                                    <span role="button" data-bs-toggle="modal" data-bs-target="#modif_coupon_{{ $coupon->id}}">
                                         <i class='bx bx-edit bx_modifier' title="Modifier coupon"></i>
                                     </span>
-                                    <span role="button" data-bs-toggle="modal" data-bs-target="#supp_coupon">
+                                    <span role="button" data-bs-toggle="modal" data-bs-target="#supp_coupon_{{ $coupon->id}}">
                                         <i class='bx bx-trash bx_supprimer' title="Supprimer coupon"></i>
                                     </span></td>
                             </tr>
                             {{-- modification modif_coupon --}}
                             <div>
-                                <div class="modal" id="modif_coupon" aria-labelledby="modif_coupon" aria-hidden="true">
+                                <div class="modal" id="modif_coupon_{{ $coupon->id}}" aria-labelledby="modif_coupon" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <form  method="post" action="{{route('modifier_coupon',$coupon->id)}}">
@@ -310,7 +310,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                             </div>
                             {{-- suppression coupon --}}
                             <div>
-                                <div class="modal fade" id="supp_coupon" tabindex="-1"
+                                <div class="modal fade" id="supp_coupon_{{ $coupon->id}}" tabindex="-1"
                                     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">

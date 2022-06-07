@@ -175,7 +175,7 @@
                 var globale = data['globale'];
                 var note_avant = data['note_avant'];
                 if(note_avant == 1){
-                    $('#resultat_eval_'+stg_id).html('');     
+                    $('#resultat_eval_'+stg_id).html('');
 
                     var html = '<div class="row p-2">';
                     for(let i = 0 ; i < detail.length ; i++){
@@ -201,7 +201,7 @@
                     }
 
                     html += '</div>';
-                    
+
                     $('#resultat_eval_'+stg_id).append(html);
 
                     if(globale[0].status == 2){
@@ -210,13 +210,13 @@
                         $('#eval_globale_'+stg_id).append('<span style="color:#ff0000;">NON-VALIDÉ</span>');
                     }
                 }else{
-                    $('#resultat_eval_'+stg_id).html('');
+                    // $('#resultat_eval_'+stg_id).html('');
 
-                    var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
-                    $('#choix_stagiaire').hide();
-                    $('#validation_module').append(html); 
+                    // var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
+                    // $('#choix_stagiaire').hide();
+                    // $('#validation_module').append(html);
                 }
-                          
+
             },
             error: function(error) {
                 console.log(error);
@@ -316,7 +316,7 @@
 <script src="https://fonts.googleapis.com/css?family=Lato"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-    
+
 
     <nav class="d-flex justify-content-between mb-1 ">
         <span class="titre_detail_session"><strong style="font-size: 14px">Note des apprenants de la session</strong></span>
@@ -324,7 +324,7 @@
     <nav class="d-flex justify-content-around">
         @canany(['isFormateur'])
             <button id="btn_note" class="btn btn_note_radar" style="background-color: #fff; border: 1px solid grey" onclick="modifier_note()">Notes des stagiaires</button>
-        
+
         <button id="btn_radar" class="btn btn_note_radar" onclick="voir_radar()">Résultats</button>
         {{-- <button id="btn_formateur" class="btn btn_note_radar" onclick="evaluation_formateur()">Evaluation des formateurs</button> --}}
         @endcanany
@@ -414,7 +414,7 @@
             <span class="text-center">Aucun apprenant inscrit</span>
         </div>
         @endif
-        
+
     </div>
 
     @endcanany
@@ -437,7 +437,7 @@
                     </div>
                 </div>
                 <div class="row collapse" id="collapseEval_{{ $s->stagiaire_id }}" aria-labelledby="collapseEval_{{ $s->stagiaire_id }}">
-                    <div class="col-lg-5 ms-2"> 
+                    <div class="col-lg-5 ms-2">
                         <div id="resultat_eval_{{ $s->stagiaire_id }}" class="mt-3"></div>
                         <script type="text/javascript">
                             var id = @php echo $s->stagiaire_id; @endphp;
@@ -460,7 +460,7 @@
 
 
 <script type="text/javascript">
-    
+
     $('.stagiaire').on('click',function(e){
         var stg_id = $("input[type='radio'][name='stagiaire']:checked").val();
         var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
@@ -478,7 +478,7 @@
                 var globale = data['globale'];
                 var note_avant = data['note_avant'];
                 if(note_avant == 1){
-                    $('#validation_module').html('');     
+                    $('#validation_module').html('');
 
                     var html = '<div class="row p-2">';
                     for(let i = 0 ; i < detail.length ; i++){
@@ -522,15 +522,15 @@
                         html += '</div>';
                     html += '</div>';
 
-                    $('#validation_module').append(html); 
+                    $('#validation_module').append(html);
                 }else{
                     $('#validation_module').html('');
 
                     var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
                     $('#boutton_save_eval').hide();
-                    $('#validation_module').append(html); 
+                    $('#validation_module').append(html);
                 }
-                          
+
             },
             error: function(error) {
                 console.log(error);
@@ -555,7 +555,7 @@
     //             var globale = data['globale'];
     //             var note_avant = data['note_avant'];
     //             if(note_avant == 1){
-    //                 $('#resultat_eval').html('');     
+    //                 $('#resultat_eval').html('');
 
     //                 var html = '<div class="row p-2">';
     //                 for(let i = 0 ; i < detail.length ; i++){
@@ -599,15 +599,15 @@
     //                     html += '</div>';
     //                 html += '</div>';
 
-    //                 $('#resultat_eval').append(html); 
+    //                 $('#resultat_eval').append(html);
     //             }else{
     //                 $('#resultat_eval').html('');
 
     //                 var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
     //                 $('#choix_stagiaire').hide();
-    //                 $('#validation_module').append(html); 
+    //                 $('#validation_module').append(html);
     //             }
-                          
+
     //         },
     //         error: function(error) {
     //             console.log(error);
@@ -616,8 +616,8 @@
     // });
 
 
-    
-    
+
+
     // $('.inserer_emargement').on('click',function(e){
     //     $("input[type='radio'][name^='status']:checked").map(function() {
     //         // attendance.push($(this).val());
@@ -625,7 +625,7 @@
     //     });
 
     // });
-    
+
     // var marksCanvas = document.getElementById("marksChart");
 
     // var marksData = {
@@ -675,7 +675,7 @@
     //     }
     // };
 
-    
+
 
     $("#stagiaire_radar").on('change', function(e) {
         // var id = e.target.id;
