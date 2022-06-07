@@ -1,0 +1,52 @@
+[1mdiff --git a/app/Http/Controllers/ParticipantController.php b/app/Http/Controllers/ParticipantController.php[m
+[1mindex 6e9afccb7..f8de7f2d6 100644[m
+[1m--- a/app/Http/Controllers/ParticipantController.php[m
+[1m+++ b/app/Http/Controllers/ParticipantController.php[m
+[36m@@ -96,6 +96,9 @@[m [mclass ParticipantController extends Controller[m
+             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;[m
+         }[m
+         $status = $stg->desactiver($user_id, $emp_id, $entreprise_id);[m
+[32m+[m[32m        // stagiaire::where('id', $emp_id)->update([[m
+[32m+[m[32m        //     'status_referent' => 0[m
+[32m+[m[32m        // ]);[m
+ [m
+         return response()->json($status);[m
+     }[m
+[36m@@ -124,6 +127,7 @@[m [mclass ParticipantController extends Controller[m
+ [m
+         $employe = new stagiaire();[m
+         $user_id = $request->user_id;[m
+[32m+[m[32m        // $user_actif = $request->user_actif;[m
+         $emp_id = $request->emp_id;[m
+ [m
+ [m
+[36m@@ -136,8 +140,13 @@[m [mclass ParticipantController extends Controller[m
+ [m
+         // $stagiaire = stagiaire::where('user_id', $user_id)->where('entreprise_id', $entreprise_id)->first();[m
+ [m
+[31m-        $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);[m
+[31m-[m
+[32m+[m[32m        $employe->setReferent($user_id, $emp_id, $entreprise_id);[m
+[32m+[m[32m        // if ($user_actif == 1) {[m
+[32m+[m[32m        //     $employe->setReferent($user_id, $emp_id, $entreprise_id);[m
+[32m+[m[32m        // } else {[m
+[32m+[m[32m        //     // return redirect()->back()->with('error', 'Cet employé n\'est pas actif');[m
+[32m+[m[32m        //     return response()->json(['error' => 'Vous ne pouvez pas activer un stagiaire qui n\'est pas actif']);[m
+[32m+[m[32m        // }[m
+         [m
+         RoleUser::updateOrInsert([m
+             ['user_id' => $user_id, 'role_id' => 2][m
+[1mdiff --git a/resources/views/admin/entreprise/employer/liste_employer.blade.php b/resources/views/admin/entreprise/employer/liste_employer.blade.php[m
+[1mindex 8d3fc3faa..5f43ea799 100644[m
+[1m--- a/resources/views/admin/entreprise/employer/liste_employer.blade.php[m
+[1m+++ b/resources/views/admin/entreprise/employer/liste_employer.blade.php[m
+[36m@@ -407,7 +407,8 @@[m
+                         window.location.reload();[m
+                     },[m
+                     error: function(response) {[m
+[31m-                        console.log(error);[m
+[32m+[m[32m                        // console.log(error);[m
+[32m+[m[32m                        console.log('erreur');[m
+                     }[m
+                 });[m
+             });[m
