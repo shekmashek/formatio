@@ -101,12 +101,12 @@
                 @elseif(isset($data_debut_filtre) && isset($data_fin_filtre))
                 <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
                     filtre activé <i class="fas fa-times"></i> </a>
-                @elseif(isset($nom_formation) )
+                 @elseif(isset($nom_entiter) )
                 <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
                     filtre activé <i class="fas fa-times"></i> </a>
-                @elseif(isset($nom_entiter) )
-                <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
-                    filtre activé <i class="fas fa-times"></i> </a>
+                    @elseif(isset($nom_modalite) )
+                    <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
+                        filtre activé <i class="fas fa-times"></i> </a>
                 @endif
 
         </div>
@@ -453,7 +453,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <select class="form-select" name="nom_entiter" id="nom_entiter">
+                                    <select class="form-select" name="nom_modalite" id="nom_modalite">
                                         <option value="En ligne">En ligne</option>
                                         <option value="Presentiel">Présentiel</option>
                                         <option value="En ligne/Presentiel">En ligne/Présentiel</option>

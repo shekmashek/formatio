@@ -73,7 +73,7 @@ class FormationController extends Controller
             // $domaine_col5 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*4).'');
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
             // $categorie = DB::select('select * from formations where status = 1 limit 5');
-            $module = DB::select('select md.*,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where  status = 2 and etat_id = 1 order by md.pourcentage desc limit 6 ');
+            $module = DB::select('select md.*,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where  status = 2 and etat_id = 1 order by md.pourcentage desc limit 2 ');
             return view('referent.catalogue.formation', compact('devise', 'categorie', 'module', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
     }
@@ -153,7 +153,7 @@ class FormationController extends Controller
 
         $nbPagination = null;
         $nom_formation = null;
-        $nb_limit = 6;
+        $nb_limit = 2;
 
         if (isset($nom_formation_pag)) {
             $nom_formation = $nom_formation_pag;
@@ -626,7 +626,7 @@ class FormationController extends Controller
 
         $nbPagination = null;
         $nom_entiter = null;
-        $nb_limit = 6;
+        $nb_limit = 2;
 
         if (isset($nom_entiter_pag)) {
             $nom_entiter = $nom_entiter_pag;
@@ -637,12 +637,12 @@ class FormationController extends Controller
             $nbPagination = $nbPagination_pag;
         }
         if ($nbPagination < 0  || $nbPagination == null) {
-            $nbPagination = 1;
+            $nbPagination = 2;
         }
 
-        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 2)[0];
 
-        $categorie = DB::select('select * from formations where status = 1');
+        $categorie = DB::select('select * from formations where status = 2');
         $domaines = Domaine::all();
         $test = 4;
         $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
@@ -653,12 +653,12 @@ class FormationController extends Controller
         $domaine_col4 = DB::select('select * from domaines limit ' . $offset . ' offset ' . ($offset * 3) . '');
 
 
-        $query2 = '(SELECT md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id WHERE md.nom like (?) and md.status = 2 and md.etat_id = 1 LIMIT ' . $nb_limit . ' OFFSET ' . ($nbPagination - 1) . ') AS t1';
+        $query2 = '(SELECT md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id WHERE md.nom like (?) and md.status = 2 and md.etat_id = 2 LIMIT ' . $nb_limit . ' OFFSET ' . ($nbPagination - 2) . ') AS t1';
         $query1 = 'SELECT * FROM ';
         $query = $query1 . " " . $query2;
         $query .= "  ORDER BY pourcentage DESC";
 
-        $totale_module = $this->fonct->getNbrePagination("moduleformation", "module_id", ["nom", "status", "etat_id"], ["LIKE", "=", "="], ["%" . $nom_entiter . "%", 2, 1], "AND");
+        $totale_module = $this->fonct->getNbrePagination("moduleformation", "module_id", ["nom", "status", "etat_id"], ["LIKE", "=", "="], ["%" . $nom_entiter . "%", 2, 2], "AND");
         $pagination = $this->fonct->nb_liste_pagination($totale_module, $nbPagination, $nb_limit);
 
         $infos = DB::select($query, ["%" . $nom_entiter . "%"]);
@@ -674,12 +674,12 @@ class FormationController extends Controller
 
     public function filtre_par_modaliter(Request $request, $nbPagination_pag = null, $nom_entiter_pag = null)
     {
-        $nom_entiter = null;
+        $nom_modalite = null;
 
         $nom_param = "";
 
         $nbPagination = null;
-        $nb_limit = 6;
+        $nb_limit = 2;
 
 
         if (isset($nbPagination_pag)) {
@@ -690,9 +690,9 @@ class FormationController extends Controller
         }
 
         if (isset($nom_entiter_pag)) {
-            $nom_entiter = $nom_entiter_pag;
+            $nom_modalite = $nom_entiter_pag;
         } else {
-            $nom_entiter = $request->nom_entiter;
+            $nom_modalite = $request->nom_modalite;
         }
 
         $nom_param = "modalite_formation";
@@ -714,17 +714,17 @@ class FormationController extends Controller
         $query = $query1 . " " . $query2;
         $query .= "  ORDER BY pourcentage DESC";
 
-        $totale_module = $this->fonct->getNbrePagination("moduleformation", "module_id", [$nom_param, "status", "etat_id"], ["=", "=", "="], [$nom_entiter, 2, 1], "AND");
+        $totale_module = $this->fonct->getNbrePagination("moduleformation", "module_id", [$nom_param, "status", "etat_id"], ["=", "=", "="], [$nom_modalite, 2, 1], "AND");
         $pagination = $this->fonct->nb_liste_pagination($totale_module, $nbPagination, $nb_limit);
 
-        $infos = DB::select($query, [$nom_entiter]);
+        $infos = DB::select($query, [$nom_modalite]);
 
         $organismes = DB::select('select * from cfps');
         $competences = DB::select('select * from competence_a_evaluers');
         $formations = DB::select('select * from formations');
 
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_groupe_projet_module where type_formation_id = 2 group by module_id');
-        return view('referent.catalogue.liste_formation', compact('formations', 'competences', 'organismes', 'nom_entiter', 'pagination', 'infos', 'datas', 'categorie', 'devise', 'domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+        return view('referent.catalogue.liste_formation', compact('formations', 'competences', 'organismes', 'nom_modalite', 'pagination', 'infos', 'datas', 'categorie', 'devise', 'domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
     }
 
 
@@ -736,7 +736,7 @@ class FormationController extends Controller
         $nom_param = "";
 
         $nbPagination = null;
-        $nb_limit = 6;
+        $nb_limit = 2;
         $para = [];
         $opt = [];
         $val = [];
@@ -827,7 +827,7 @@ class FormationController extends Controller
         $nom_par_fin = "";
 
         $nbPagination = null;
-        $nb_limit = 6;
+        $nb_limit = 2;
 
 
         if (isset($nbPagination_pag)) {
