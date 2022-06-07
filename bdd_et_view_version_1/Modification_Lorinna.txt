@@ -26,4 +26,4 @@ ajout colonne updated_at et genre_id     dans bdd_lorina_table
 ajout column description in table devise dans bdd_lorina_table(devise);
 ---------03 juin
 creation table demande_devis dans bdd_lorina_table.sql 
-creation view lv_liste_demande_devis dans bdd_suivi_formation_view_0
+creation view v_liste_demande_devis dans bdd_suivi_formation_view_0

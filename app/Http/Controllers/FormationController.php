@@ -613,7 +613,11 @@ class FormationController extends Controller
     }
 
     public function demande_devis_client(Request $request){
-
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id]);
+        
+    //  dd($resp_etp);
         $id_module = $request->id;
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         
@@ -631,7 +635,7 @@ class FormationController extends Controller
         $formations = DB::select('select * from formations where domaine_id = ?', [$domaine_id]);
         $modules = DB::select('select md.id, md.nom_module, md.formation_id,md.cfp_id, md.duree, md.duree_jour, md.prix, md.prix_groupe, md.modalite_formation, cfp.nom from modules as md join formations as frmt on md.formation_id = frmt.id join cfps as cfp on md.cfp_id = cfp.id where md.status = 2 and md.etat_id = 1 and md.id = ?',[$id_module]);
         $modules_counts = DB::select('select count(*) as nb_modules, md.formation_id from modules as md join formations as frmt on md.formation_id = frmt.id where md.status = 2 and md.etat_id = 1 group by md.formation_id');
-        return view('referent.catalogue.demande_devis', compact('formations', 'modules', 'modules_counts','devise', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+        return view('referent.catalogue.demande_devis', compact('resp_etp','formations', 'modules', 'modules_counts','devise', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
     }
     public function liste_demande_devis(){
         $id_user = Auth::user()->id;
