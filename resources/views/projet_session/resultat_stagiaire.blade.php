@@ -154,18 +154,18 @@
         background:linear-gradient(to right, #5d1cc5,#91d4e5);
         
     }
-    .information{
+    /* .information{
         width: 100%;
         height: 170px;
-    }
+    } */
     p{
         line-height: 15px;
         font-weight:lighter;
     }
-    .evaluation{
+    /* .evaluation{
         width: 100%;
-        height: 170px;
-    }
+        height: 1900px;
+    } */
     
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
@@ -349,25 +349,37 @@
         });
     }
     
-    let htmlpdf = document.getElementById("bod");
+    let htmlpdf = document.getElementById("mahafaly");
     let save    = document.getElementById("save");
-    save.onclick = (e) => html2pdf(htmlpdf);
+    var opt = {
+    margin:       20,
+    filename:     'Rapport_d_evaluation.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+    };
+    save.onclick = (e) => html2pdf().set(opt).from(htmlpdf).save();
    
     
     </script>
 <script src="https://fonts.googleapis.com/css?family=Lato"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" ></script>
+<button class="btn btn-info text-light" id="bobi" style="justify-content: flex-end" id="save" >PDF</button>
+<div id="mahafaly">
 
-<div class="container  mt-3 p-2" id="bob">
+
+<div class="container  mt-3 p-2" id="bob"  >
+    
     <div class="row" >
         <div class="col-lg-12" >
             
             
-            <div class="tete p-2" style="display: flex;justify-content: flex-end">
-                <h3 style="justify-content: flex-start" class="text-light">RAPPORT D'EVALUATION</h3>
-                {{-- <button class="btn btn-info text-light" id="bobi" style="justify-content: flex-end" id="save" >PDF</button> --}}
-                
+            <div class="tete p-2" style="display: flex;">
+                @foreach ($logo as $g)
+                <img style="width: 100px;height:60px;margin-top:-10px" src="{{asset('images/CFP/Numerika19-01-2022.png')}}" alt="">
+                @endforeach
+                <h3 class="text-light" style="margin-left:150px">RAPPORT D'EVALUATION</h3>
             </div>
         </div>
         <div class="col-lg-12">
@@ -375,11 +387,12 @@
                 <div class="row">
                     @foreach ($module as $m )
                        
+                   
                     
                     <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
-                        <p><i class="bx bxs-customize mb-1  mt-1 align-middle" style="font-size:25px;"></i> {{$m->nom_module}}</p>
-                        <p><i class="bi bi-calendar-check-fill align-middle" style="font-size:22px;"></i> &nbsp; {{ \Carbon\Carbon::parse($m->date_debut)->format('d - m - Y')}} au {{ \Carbon\Carbon::parse($m->date_fin)->format('d - m - Y')}}</p>
-                        <p><i class="bi bi-clipboard-check-fill align-middle" style="font-size:22px;"></i> &nbsp;{{$m->objectif}}</p>
+                        <p><i class="bx bxs-customize mb-1  mt-1 align-middle" style="font-size:22px;"></i> {{$m->nom_module}}</p>
+                        <p><i class="bi bi-calendar-check-fill align-middle" style="font-size:18px;"></i> &nbsp; {{ \Carbon\Carbon::parse($m->date_debut)->format('d-m-Y')}} au {{ \Carbon\Carbon::parse($m->date_fin)->format('d-m-Y')}}</p>
+                        <p><i class="bi bi-clipboard-check-fill align-middle" style="font-size:18px;"></i> &nbsp;{{$m->objectif}}</p>
                     </div>
                     <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
                         <p><i class="bi bi-file-person-fill mt-2 align-middle" style="font-size:25px;"></i>&nbsp;Formateur : {{$m->nom}}</p>
@@ -409,7 +422,6 @@
             </div>
             <div class="evaluation  p-4">
                 <h3>Résultat :</h3>
-                
                 <div class="mt-2 p-1">
                     <div class="row">
                         <div class="col-lg-12 "></div>
@@ -424,7 +436,7 @@
                             </script>
                         </div>
                         <div class="col-lg-6">
-                            <canvas class='mt-3'  id="marksChart" width="500" height="300"></canvas>
+                            <canvas class='mt-3' style="margin-left:-100px;"  id="marksChart" width="500" height="300"></canvas>
                             <script type="text/javascript">
                                 var id_stg = @php echo $stagiaire; @endphp;
                                 var groupe_id = @php echo $groupe_id; @endphp;
@@ -434,36 +446,13 @@
                     </div>
                 </div>
                 {{-- <button  onclick="teste();" class="btn btn-info">Save</button>  --}}
-            </div>
             
-            {{-- <div class="col-lg-12 " style="margin-top:280px">
-                <div class="description p-4" style="height: 300px">
-                    <h3>Historique présence :</h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Date de formation:</th> 
-                            </tr>
-                            <tr class="text-center">
-                                <th>31 -05- 22</th>
-                                <th>31 -05- 22</th>
-                                <th>31 -05- 22</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="text-center">
-                                <td ><a href="" class="btn btn text-light" style="background: #00CDAC">P</a></td>
-                                <td ><a href="" class="btn btn-danger text-light" style="">Abs</a></td>
-                                <td ><a href="" class="btn btn text-light" style="background: #00CDAC">P</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div> --}}
+            
+            </div>  
         </div>
     </div>
 </div>
 
-
+</div>
 
 @endsection 

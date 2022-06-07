@@ -10,10 +10,10 @@ class Presence extends Model
     protected $fillable = [
         'id','status','detail_id','stagiaire_id'
     ];
-    public function detail(){
-        return $this->belongsTo('App\detail');
-    }
-    public function stagiaire(){
-        return $this->belongsTo('App\stagiaire');
-    }
+    // public function detail(){
+    //     return $this->belongsTo('App\detail');
+    // }
+    // public function stagiaire(){
+    //     return $this->belongsTo('App\stagiaire');
+    // }
 }

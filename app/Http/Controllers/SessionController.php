@@ -485,9 +485,13 @@ class SessionController extends Controller
             // dd($stagiaire);
             $groupe_id =$request->groupe_id;
             $module = DB::select('select * from v_groupe_projet_module where groupe_id = ?',[$groupe_id]);
-            
-            
-            return view('projet_session.resultat_stagiaire',compact('stagiaire','stage','groupe_id','module'));
+            foreach ($module as $p){
+                $identre = $p->cfp_id;
+            }
+            $logo = DB::select('select * from cfps where id = ?', [$identre]);
+
+            // dd($identre);
+            return view('projet_session.resultat_stagiaire',compact('stagiaire','stage','groupe_id','module','logo'));
         }catch(Exception $e){
             return back();
         }
@@ -550,7 +554,6 @@ class SessionController extends Controller
         // $cfp = Cfp::where('user_id', $user_id)->value('nom');
         // $fonct = new FonctionGenerique();
         // $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-
         // $cfp_id = $resp->cfp_id;
         // $cfp = $resp->nom_cfp;
         $namefile = request()->filename;
@@ -580,11 +583,11 @@ class SessionController extends Controller
     }
 
     public function ajouter_salle_of(Request $request){
-        $user_id = Auth::user()->id;
-        $fonct = new FonctionGenerique();
-        $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-        $cfp_id = $resp->cfp_id;
-        $salle = $request->salle;
+        $user_id  = Auth::user()->id;
+        $fonct    = new FonctionGenerique();
+        $resp     = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+        $cfp_id   = $resp->cfp_id;
+        $salle    = $request->salle;
         if($salle == null){
             return response()->json(['status'=>'400']);
         }elseif($salle != null){
@@ -598,11 +601,11 @@ class SessionController extends Controller
     {
         try{
             $info_projet = DB::select('select type_formation,nom_cfp,logo_cfp,nom_projet,groupe_id,nom_groupe,item_status_groupe,nom_formation,nom_module from v_groupe_projet_module where groupe_id = ?',[$id])[0];
-            $entreprise = DB::select('select nom_etp,logo from v_groupe_entreprise where groupe_id = ?',[$id])[0];
-            $formateurs = DB::select('select photos,nom_formateur,prenom_formateur,numero_formateur,mail_formateur from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by photos,nom_formateur,prenom_formateur,numero_formateur,mail_formateur',[$id]);
-            $lieux = DB::select('select lieu from details where groupe_id = ? group by lieu',[$id]);
-            $stagiaires = DB::select('select * from  v_stagiaire_groupe where groupe_id = ?',[$id]);
-            $date_groupe =  DB::select('select date_detail,h_debut,h_fin from details where groupe_id = ?',[$id]);
+            $entreprise  = DB::select('select nom_etp,logo from v_groupe_entreprise where groupe_id = ?',[$id])[0];
+            $formateurs  = DB::select('select photos,nom_formateur,prenom_formateur,numero_formateur,mail_formateur from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by photos,nom_formateur,prenom_formateur,numero_formateur,mail_formateur',[$id]);
+            $lieux       = DB::select('select lieu from details where groupe_id = ? group by lieu',[$id]);
+            $stagiaires  = DB::select('select * from  v_stagiaire_groupe where groupe_id = ?',[$id]);
+            $date_groupe = DB::select('select date_detail,h_debut,h_fin from details where groupe_id = ?',[$id]);
             // return view('projet_session.fiche_technique_pdf' ,compact('info_projet','formateurs','lieux','stagiaires', 'date_groupe','entreprise'));
             $pdf = PDF::loadView('projet_session.fiche_technique_pdf', compact('info_projet','formateurs','lieux','stagiaires', 'date_groupe','entreprise'));
             return $pdf->download('fiche_technique.pdf');
@@ -629,9 +632,7 @@ class SessionController extends Controller
         $stagiaire= stagiaire::where('user_id',$users)->value('id');
         $stage= stagiaire::where('user_id',$users)->get();
         // $detail = DB::select('select * from v_evaluation_stagiaire_competence where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
-        // $module = DB::select('select * from v_groupe_projet_module where groupe_id = ?',[$stagia]);
-        
-        
+        // $module = DB::select('select * from v_groupe_projet_module where groupe_id = ?',[$stagia]);=
         // return view('projet_session.pdf',compact('stagiaire','groupe_id','users'));
         $pdf = PDF::loadView('projet_session.resultat_stagiaire',compact('stagiaire','stage','module'))->setOptions(['defaultFont' => 'sans-serif']);;
          $pdf->setPaper('a4', 'paysage');
