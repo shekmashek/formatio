@@ -275,27 +275,25 @@
                                             {{-- status référent --}}
                                             <td class="align-middle text-center text-secondary">
 
-                                            @if ($employe->status_referent == 1)
-                                                <div class="form-check form-switch">
-                                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span
-                                                            class="badge bg-success">Référent</span></label>
-                                                    <input class="form-check-input desactiver_referent" type="checkbox"
-                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
-                                                        checked>
-                                                </div>
-                                            @else
-                                                <div class="form-check form-switch">
-                                                    <label class="form-check-label"
-                                                        for="flexSwitchCheckChecked">
-                                                        <span class="badge bg-secondary">
-                                                            non référent
-                                                        </span>
-                                                    </label>
-                                                    <input class="form-check-input activer_referent" type="checkbox"
-                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
-                                                </div>
-                                            @endif
-
+                                                @if ($employe->status_referent == 1)
+                                                    <div class="form-check form-switch">
+                                                        <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                                                class="badge bg-success">Référent</span></label>
+                                                        <input class="form-check-input desactiver_referent" type="checkbox"
+                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}" checked>
+                                                    </div>
+                                                @else
+                                                    <div class="form-check form-switch">
+                                                        <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                            <span class="badge bg-secondary">
+                                                                non référent
+                                                            </span>
+                                                        </label>
+                                                        <input class="form-check-input activer_referent" type="checkbox"
+                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                    </div>
+                                                @endif
+                    
                                             </td>
 
 
@@ -408,6 +406,7 @@
                     },
                     error: function(response) {
                         console.log(error);
+                        console.log('erreur');
                     }
                 });
             });

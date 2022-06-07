@@ -96,6 +96,9 @@ class ParticipantController extends Controller
             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
         }
         $status = $stg->desactiver($user_id, $emp_id, $entreprise_id);
+        // stagiaire::where('id', $emp_id)->update([
+        //     'status_referent' => 0
+        // ]);
 
         return response()->json($status);
     }
@@ -124,6 +127,7 @@ class ParticipantController extends Controller
 
         $employe = new stagiaire();
         $user_id = $request->user_id;
+        // $user_actif = $request->user_actif;
         $emp_id = $request->emp_id;
 
 
@@ -137,7 +141,12 @@ class ParticipantController extends Controller
         // $stagiaire = stagiaire::where('user_id', $user_id)->where('entreprise_id', $entreprise_id)->first();
 
         $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);
-
+        // if ($user_actif == 1) {
+        //     $employe->setReferent($user_id, $emp_id, $entreprise_id);
+        // } else {
+        //     // return redirect()->back()->with('error', 'Cet employé n\'est pas actif');
+        //     return response()->json(['error' => 'Vous ne pouvez pas activer un stagiaire qui n\'est pas actif']);
+        // }
         
         RoleUser::updateOrInsert(
             ['user_id' => $user_id, 'role_id' => 2]
