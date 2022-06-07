@@ -378,7 +378,7 @@
                     
                     <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
                         <p><i class="bx bxs-customize mb-1  mt-1 align-middle" style="font-size:25px;"></i> {{$m->nom_module}}</p>
-                        <p><i class="bi bi-calendar-check-fill align-middle" style="font-size:22px;"></i> &nbsp; {{$m->date_debut}} au {{$m->date_fin}}</p>
+                        <p><i class="bi bi-calendar-check-fill align-middle" style="font-size:22px;"></i> &nbsp; {{ \Carbon\Carbon::parse($m->date_debut)->format('d - m - Y')}} au {{ \Carbon\Carbon::parse($m->date_fin)->format('d - m - Y')}}</p>
                         <p><i class="bi bi-clipboard-check-fill align-middle" style="font-size:22px;"></i> &nbsp;{{$m->objectif}}</p>
                     </div>
                     <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
