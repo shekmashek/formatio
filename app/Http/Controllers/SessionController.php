@@ -476,17 +476,22 @@ class SessionController extends Controller
 
     public function competence_stagiaire(Request $request){
         try{
+            
             $users = Auth::user()->id;
+            
+            // $apprenant = DB::select()
             $stagiaire= stagiaire::where('user_id',$users)->value('id');
+            $stage= stagiaire::where('user_id',$users)->get();
+            // dd($stagiaire);
             $groupe_id =$request->groupe_id;
-            $module = DB::select('select * from v_groupe_projet_module where groupe_id = ?',[$request->groupe]);
-            dd($module);
-            //return view('projet_session.resultat_stagiaire',compact('stagiaire','groupe_id','module'));
+            $module = DB::select('select * from v_groupe_projet_module where groupe_id = ?',[$groupe_id]);
+            
+            
+            return view('projet_session.resultat_stagiaire',compact('stagiaire','stage','groupe_id','module'));
         }catch(Exception $e){
             return back();
         }
     }
-
     public function acceptation_session(Request $request){
         // envoyer mail
         // $fonct = new FonctionGenerique();
@@ -622,10 +627,13 @@ class SessionController extends Controller
     public function fiche(Request $request){
         $users = Auth::user()->id; //20
         $stagiaire= stagiaire::where('user_id',$users)->value('id');
-        $detail = DB::select('select * from v_evaluation_stagiaire_competence where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
-        $groupe_id =$request->groupe_id;
+        $stage= stagiaire::where('user_id',$users)->get();
+        // $detail = DB::select('select * from v_evaluation_stagiaire_competence where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
+        // $module = DB::select('select * from v_groupe_projet_module where groupe_id = ?',[$stagia]);
+        
+        
         // return view('projet_session.pdf',compact('stagiaire','groupe_id','users'));
-        $pdf = PDF::loadView('projet_session.resultat_stagiaire',compact('stagiaire','groupe_id'))->setOptions(['defaultFont' => 'sans-serif']);;
+        $pdf = PDF::loadView('projet_session.resultat_stagiaire',compact('stagiaire','stage','module'))->setOptions(['defaultFont' => 'sans-serif']);;
          $pdf->setPaper('a4', 'paysage');
         return $pdf->download('rapport.pdf');
         

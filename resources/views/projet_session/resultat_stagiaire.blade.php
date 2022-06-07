@@ -5,6 +5,8 @@
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
     h3{
         font-weight: lighter;
@@ -248,7 +250,6 @@
                     }
                 }else{
                     $('#resultat_eval').html('');
-
                     var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
                     $('#choix_stagiaire').hide();
                     $('#validation_module').append(html); 
@@ -348,7 +349,9 @@
         });
     }
     
-    
+    let htmlpdf = document.getElementById("bod");
+    let save    = document.getElementById("save");
+    save.onclick = (e) => html2pdf(htmlpdf);
    
     
     </script>
@@ -363,35 +366,46 @@
             
             <div class="tete p-2" style="display: flex;justify-content: flex-end">
                 <h3 style="justify-content: flex-start" class="text-light">RAPPORT D'EVALUATION</h3>
-                {{-- <button class="btn btn-info text-light" id="bobi" style="justify-content: flex-end"> </button> --}}
+                {{-- <button class="btn btn-info text-light" id="bobi" style="justify-content: flex-end" id="save" >PDF</button> --}}
+                
             </div>
         </div>
         <div class="col-lg-12">
             <div class="information  p-4">
                 <div class="row">
+                    @foreach ($module as $m )
+                       
+                    
                     <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
-                        <p><i class="bx bxs-customize mb-1  mt-1 align-middle" style="font-size:25px;"></i> Initiation à la méthode Merise </p>
-                        <p><i class="bi bi-calendar-check-fill align-middle" style="font-size:22px;"></i> &nbsp;31-05-22 au 05-06-22</p>
-                        <p><i class="bi bi-clipboard-check-fill align-middle" style="font-size:22px;"></i> &nbsp;Concevoir une application web</p>
+                        <p><i class="bx bxs-customize mb-1  mt-1 align-middle" style="font-size:25px;"></i> {{$m->nom_module}}</p>
+                        <p><i class="bi bi-calendar-check-fill align-middle" style="font-size:22px;"></i> &nbsp; {{$m->date_debut}} au {{$m->date_fin}}</p>
+                        <p><i class="bi bi-clipboard-check-fill align-middle" style="font-size:22px;"></i> &nbsp;{{$m->objectif}}</p>
                     </div>
                     <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
-                        <p><i class="bi bi-file-person-fill mt-2 align-middle" style="font-size:25px;"></i>&nbsp;Formateur : Numérika Center</p>
-                        <p><i class="bi bi-google align-middle" style="font-size:22px;"></i>&nbsp;&nbsp;Email : Numerika@gmail.com</p>
-                        <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : 0345032565</p>
+                        <p><i class="bi bi-file-person-fill mt-2 align-middle" style="font-size:25px;"></i>&nbsp;Formateur : {{$m->nom}}</p>
+                        <p><i class="bi bi-google align-middle" style="font-size:22px;"></i>&nbsp;&nbsp;Email : {{$m->email}}</p>
+                        <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : {{$m->telephone}}</p>
                     </div>
+
+                    
+                    @foreach ($stage as $u)
                     <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
-                        <p><i class="bi bi-person-circle mt-3 align-middle" style="font-size:22px;"></i>&nbsp;Apprenant : Safidy Mahafaly</p>
-                        <p><i class="bi bi-google align-middle" style="font-size:22px;"></i>&nbsp;&nbsp;Email : safidymahafaly1@gmail.com</p>
-                        <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : 0340000000</p>
+                        <p><i class="bi bi-person-circle mt-3 align-middle" style="font-size:22px;"></i>&nbsp;Apprenant : {{$u->nom_stagiaire}} {{$u->prenom_stagiaire}} </p>
+                        <p><i class="bi bi-google align-middle" style="font-size:22px;"></i>&nbsp;&nbsp;Email : {{$u->mail_stagiaire}}</p>
+                        <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : {{$u->telephone_stagiaire}}</p>
                     </div>
+                    @endforeach
+                        
+                    
                 </div>
                 
             </div>
             <div class="col-lg-12 mt-2 " >
                 <div class="description p-4">
                     <h3>Description de la formation :</h3>
-                    <p>- Formation présentielle propose par le centre de formation Numerika Center, qui a pour objectif de concevoir une application web avec le système d'analyse merise</p>
+                    <p>- Formation {{$m->modalite}} propose par la centre de formation {{$m->nom}}, qui a pour objectif {{$m->objectif}} </p>
                 </div>
+                @endforeach
             </div>
             <div class="evaluation  p-4">
                 <h3>Résultat :</h3>
@@ -422,7 +436,7 @@
                 {{-- <button  onclick="teste();" class="btn btn-info">Save</button>  --}}
             </div>
             
-            <div class="col-lg-12 " style="margin-top:280px">
+            {{-- <div class="col-lg-12 " style="margin-top:280px">
                 <div class="description p-4" style="height: 300px">
                     <h3>Historique présence :</h3>
                     <table class="table table-hover">
@@ -445,7 +459,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
