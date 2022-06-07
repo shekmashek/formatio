@@ -354,6 +354,7 @@ class FormationController extends Controller
 
     public function annuaire($nbPagination_pag = null)
     {
+        $fonct = new FonctionGenerique();
         $nb_limit = 10;
         $nbPagination=0;
         if(isset($nbPagination_pag)){
@@ -367,8 +368,14 @@ class FormationController extends Controller
             $totaleData = $this->fonct->getNbrePagination("cfps", "id", [], [], [], "");
             $pagination = $this->fonct->nb_liste_pagination($totaleData,  $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
+            $user_id = Auth::id();
+            $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+            $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+            $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1, $resp_etp_connecter->entreprise_id]);
+            $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis, md.cfp_id from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id join cfps as cfp on md.cfp_id = cfp.id where md.cfp_id = cfp.id group by md.cfp_id');
+            // dd($avis_etoile);
 
-            return view('referent.catalogue.cfp_tous', compact('secteurs', 'cfps', 'pagination', 'initial'));
+            return view('referent.catalogue.cfp_tous', compact('secteurs', 'cfps', 'pagination', 'initial','collaboration','avis_etoile'));
         }
     }
 
@@ -452,12 +459,9 @@ class FormationController extends Controller
         }
     }
 
-
-
-
-
     public function alphabet_filtre(Request $request)
     {
+        $fonct = new FonctionGenerique();
         $nb_limit = 10;
         $query = "";
         if (isset($request->nom_entiter)) {
@@ -495,8 +499,13 @@ class FormationController extends Controller
                 $nb_limit
             );
         }
+        $user_id = Auth::id();
+        $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+        $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+        $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1, $resp_etp_connecter->entreprise_id]);
+        $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis, md.cfp_id from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id join cfps as cfp on md.cfp_id = cfp.id where md.cfp_id = cfp.id group by md.cfp_id');
 
-        return response()->json($cfp);
+        return response()->json(['cfp'=>$cfp,'collab'=>$collaboration,'avis'=>$avis_etoile]);
     }
 
     public function detail_cfp($id)
@@ -515,8 +524,12 @@ class FormationController extends Controller
         $pourcentage_cfp = DB::select('select vpa.note, vpa.nombre_note, SUM(vpa.pourcentage_note * vpa.nombre_note) as nb_pourcent, SUM(vpa.nombre_note) as nombre_note from v_pourcentage_avis as vpa join moduleformation as md on vpa.module_id = md.module_id where md.cfp_id = ?',[$id]);
         $avis_cfp = DB::select('select vptc.nb_pourcent, vpa.note, vpa.nombre_note, ROUND((SUM(vpa.pourcentage_note * vpa.nombre_note)*100) / vptc.nb_pourcent, 2) as pourcentage, SUM(vpa.nombre_note) as nombre_note from v_pourcentage_avis as vpa join moduleformation as md on vpa.module_id = md.module_id join v_pourcentage_total_module_cfp as vptc where md.cfp_id = ? group by vpa.note,vptc.nb_pourcent',[$id]);
         $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id where md.cfp_id = ?',[$id]);
-        // dd($avis_etoile);
-        return view('referent.catalogue.detail_cfp', compact('cfp', 'liste_avis','liste_avis_tous', 'avis_cfp', 'avis_etoile', 'formation', 'reseau_sociaux', 'horaire', 'modules_counts', 'modules', 'devise', 'domaine_cfp'));
+        $user_id = Auth::id();
+        $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+        $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+        $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1, $resp_etp_connecter->entreprise_id]);
+        // dd($collaboration);
+        return view('referent.catalogue.detail_cfp', compact('cfp', 'liste_avis','liste_avis_tous', 'avis_cfp', 'avis_etoile', 'formation', 'reseau_sociaux', 'horaire', 'modules_counts', 'modules', 'devise', 'domaine_cfp','collaboration'));
     }
 
     public function affichageParFormationParcfp($id_formation)

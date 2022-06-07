@@ -5,7 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 <div class="row navigation_detail ">
-    <div class="ps-5 pt-3">
+    <div class="ps-5">
         <ul class="">
             <div class="row align-items-center">
                 <div class="col-3">

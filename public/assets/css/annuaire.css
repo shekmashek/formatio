@@ -1,3 +1,4 @@
+@import url(collab_badge.css);
 .input {
     padding: 2px 1rem;
     border-radius: 5px;
@@ -284,4 +285,109 @@ color: #7635dc;
 
 .avis_verif{
     color: #5433FF;
+}
+
+:root {
+    --star-size: 20px;
+    --star-color: #c8c7c77c;
+    --star-background: #fc0;
+}
+
+.Stars{
+    --poucentage: calc(var(--note) / 5 * 100%);
+    display: inline-block;
+    font-size: var(--star-size);
+    font-family: Times;
+    line-height: 1;
+
+}
+.Stars::before {
+    content: '★★★★★';
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--star-background) var(--poucentage), var(--star-color) var(--poucentage));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.table-rating-bar .rating-label {
+    font-weight: bold;
+}
+
+.table-rating-bar .rating-bar {
+    width: 300px;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.table-rating-bar .bar-container {
+    width: 100%;
+    background-color: #c8c7c752;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.table-rating-bar .bar-container .bar-5 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: orangered;
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-4 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: orangered;
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-3 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: orangered;
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-2 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: orangered;
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-1 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: orangered;
+    border-radius: 20px;
+}
+
+.table-rating-bar td {
+    padding-bottom: 10px;
+}
+
+.Stars {
+    color: orangered;
+}
+.rating-star .checked {
+    color: orangered;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.rating-star .checked:hover {
+    color: #f9a825;
+    cursor: pointer;
+}
+
+.text_minifier{
+    font-size: .8rem;
+}
+
+.place_badge{
+ display: grid;
+ place-content: center;
 }

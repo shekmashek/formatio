@@ -67,13 +67,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="col d-flex flex-row mb-2 ps-5">
+                        <div class="col-4 place_badge">
+                            <div class="col d-flex flex-row mb-4">
                                 <span class="btn_actions" role="button"><a href="#"><i
                                             class="bx bx-mail-send"></i>Email</a></span>
                                 <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank"><i class="bx bx-globe"></i>Site
                                         Web</a></span>
                             </div>
+                            @foreach ($collaboration as $collab)
+                                @if($collab->inviter_cfp_id == $cfp->id && $collab->activiter == 1)
+                                    <div class="main-wrapper">
+                                        <div class="badge green">
+                                            <div class="circle"> <i class="bx bxs-badge-check"></i></div>
+                                            <div class="ribbon">Collaboré</div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
