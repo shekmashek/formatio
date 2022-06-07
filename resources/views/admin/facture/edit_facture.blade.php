@@ -352,7 +352,7 @@
                                 <div class="col-2">
                                     <span id="taxe_name" value="0">{{$taxes->description." (".$taxes->pourcent." %)"}}</span>
                                 </div>
-                                <div class="col-2 text-end">
+                                <div  class="col-2 text-end pe-3">
                                     <input type="hidden" id="taxe_value" value="{{$taxes->pourcent}}">
                                     <p align="right" class="text-end" id="taxe"> {{number_format($montant_totale->tva,0,","," ")}}</p>
                                 </div>

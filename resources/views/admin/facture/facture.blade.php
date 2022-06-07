@@ -207,6 +207,11 @@
         color: blue;
     }
 
+    /* .bgTest {
+        background-color: #7635DC;
+        color: white
+    } */
+
 </style>
 
 <div class="container-fluid">
@@ -612,7 +617,7 @@
                                             <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
                                             <div class="">
                                                 {{-- <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span> <button type="submit" form="formPayement" class="btn btn_creer btnP px-3">Encaisser</button> </div> --}}
-                                                <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_annuler annuler"  data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x me-1"></i>Annuler</button></span> <button type="submit" class="btn btn_enregistrer btnP px-3"> <i class="bx bx-check me-1"></i> Encaisser</button> </div>
+                                                <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_annuler annuler" data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x me-1"></i>Annuler</button></span> <button type="submit" class="btn btn_enregistrer btnP px-3"> <i class="bx bx-check me-1"></i> Encaisser</button> </div>
 
                                             </div>
 
@@ -1052,7 +1057,7 @@
                                                                     </div>
                                                                     <div class="inputbox inputboxP mt-3" id="numero_facture"></div>
                                                                     <div class="">
-                                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class=" btn_annuler annuler"  data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x me-1"></i>Annuler</button></span> <button type="submit" class="btn btn_enregistrer btnP px-3"> <i class="bx bx-check me-1"></i> Encaisser</button> </div>
+                                                                        <div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class=" btn_annuler annuler" data-bs-dismiss="modal" aria-label="Close"><i class="bx bx-x me-1"></i>Annuler</button></span> <button type="submit" class="btn btn_enregistrer btnP px-3"> <i class="bx bx-check me-1"></i> Encaisser</button> </div>
                                                                     </div>
                                                                     </form>
 
@@ -1237,6 +1242,9 @@
                                             @endif
                                             {{-- fin --}}
 
+
+
+
                                             <div class="filtrer mt-3">
                                                 <div class="row">
                                                     <div class="col">
@@ -1246,166 +1254,152 @@
                                                         <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
                                                     </div>
                                                     <hr class="mt-2">
-                                                    <div class="row mt-0 navigation_module">
-                                                        <p>
-                                                            <a data-bs-toggle="collapse" href="#detail_par_thematique" role="button" aria-expanded="false" aria-controls="detail_par_thematique" class="dte_facturation_filtre">Intervale de date de facturation <i class='bx icon_trie bxs-chevron-up'></i></a>
-                                                        </p>
-                                                        <div class="collapse multi-collapse" id="detail_par_thematique">
-                                                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
-                                                                @csrf
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <label for="dte_debut" class="form-label" align="left"> Date début<strong style="color:#ff0000;">*</strong></label>
-                                                                        <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <label for="dte_fin" class="form-label" align="left">Date fin <strong style="color:#ff0000;">*</strong></label>
-                                                                        <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                                <div align="center">
-                                                                    {{-- <button type="submit" class="btn btn_nouveau mt-2"><i class="bx bx-search"></i> recherche</button> --}}
-                                                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                                                </div>
 
-                                                            </form>
-                                                        </div>
 
-                                                        <hr>
-                                                        <p>
-                                                            <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" class="solde_total_payer_filtre" aria-controls="detail_par_solde">Intervale de solde total à payer <i class='bx icon_trie bxs-chevron-up'></i></a>
-                                                        </p>
-                                                        <div class="collapse multi-collapse" id="detail_par_solde">
-                                                            <form class="mt-1 mb-2 form_colab" action="{{route('search_par_solde')}}" method="GET" enctype="multipart/form-data">
-                                                                @csrf
-
-                                                                <div class="row">
-                                                                    <div class="col">
-                                                                        <div class="form-group">
-                                                                            <label for="dte_debut" class="form-label" align="left">Solde minimum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
-                                                                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
+                                                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header" id="flush-headingOne">
+                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                                    Intervale de date de facturation
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                                <div class="accordion-body">
+                                                                    <form class="mt-1 mb-2 form_colab" action="{{route('search_par_date')}}" method="GET" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <label for="dte_debut" class="form-label" align="left"> Date début<strong style="color:#ff0000;">*</strong></label>
+                                                                                <input required type="date" name="dte_debut" id="dte_debut" class="form-control" />
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <label for="dte_fin" class="form-label" align="left">Date fin <strong style="color:#ff0000;">*</strong></label>
+                                                                                <input required type="date" name="dte_fin" id="dte_fin" class="form-control" />
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <div class="form-group">
-                                                                            <label for="dte_fin" class="form-label" align="left"> Solde maximum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
-                                                                            <input required type="number" name="solde_fin" id="solde_fin" class="form-control" />
+                                                                        <div align="center">
+                                                                            <button type="submit" class="btn_creer mt-2">Recherche</button>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div align="center">
-                                                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                        {{-- <hr>
-                                                    <p>
-                                                        <a data-bs-toggle="collapse" href="#detail_par_rest" role="button" aria-expanded="false" class="solde_reste_payer_filtre" aria-controls="detail_par_rest">Recherche par intervale de solde <i class='bx icon_trie bxs-chevron-up'></i></a>
-                                                    </p>
-                                                    <div class="collapse multi-collapse" id="detail_par_rest">
-                                                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_solde')}}" method="GET" enctype="multipart/form-data">
-                                                        @csrf
-
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
-                                                                    <input required type="number" min="0" placeholder="valeur" name="reste_solde_payer_debut" id="reste_solde_payer_debut" class="form-control" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
-                                                                    <input required type="number" name="reste_solde_payer_fin" id="reste_solde_payer_fin" class="form-control" />
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div align="center">
-                                                            <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                                        </div>
-                                                        </form>
-                                                    </div> --}}
-
-                                                    <hr>
-                                                        <p>
-                                                            <a data-bs-toggle="collapse" class="num_fact_filtre" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Numero de facture <i class='bx icon_trie bxs-chevron-up'></i></a>
-                                                        </p>
-                                                        <div class="collapse multi-collapse" id="search_num_fact">
-                                                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
-                                                                @csrf
-                                                                <div class="row">
-                                                                    <div class="col">
-                                                                        <div class="form-group">
-                                                                            <input autocomplete="off" name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header" id="flush-headingTwo">
+                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                                    Intervale de solde total à payer
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                                                <div class="accordion-body">
+                                                                    <form class="mt-1 mb-2 form_colab" action="{{route('search_par_solde')}}" method="GET" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="form-group">
+                                                                                    <label for="dte_debut" class="form-label" align="left">Solde minimum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
+                                                                                    <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div class="form-group">
+                                                                                    <label for="dte_fin" class="form-label" align="left"> Solde maximum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
+                                                                                    <input required type="number" name="solde_fin" id="solde_fin" class="form-control" />
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                                                    </div>
+                                                                        <div align="center">
+                                                                            <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
-                                                            </form>
+                                                            </div>
                                                         </div>
-                                                    <hr>
-                                                    <p>
-                                                        <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Par entreprise <i class='bx icon_trie bxs-chevron-up'></i></a>
-                                                    </p>
-                                                    <div class="collapse multi-collapse" id="detail_par_etp">
-                                                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
-                                                            @csrf
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <select class="form-select" name="entiter_id" id="entiter_id">
-                                                                            @foreach ($entreprise as $etp)
-                                                                            <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
-
-                                                                </div>
-                                                            </div>
-
-                                                            {{-- <label for="dte_debut" class="form-label" align="left">Entreprise<strong style="color:#ff0000;">*</strong></label>
-                                                                <br>
-                                                                <select class="form-select" name="entiter_id" id="entiter_id">
-                                                                    @foreach ($entreprise as $etp)
-                                                                    <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
-                                                            @endforeach
-                                                            </select>
-                                                            <br>
-                                                            <button type="submit" class="btn_creer mt-2">Recherche</button> --}}
-                                                        </form>
-                                                    </div>
-                                                    <hr>
-                                                    <p>
-                                                        <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">Par statut <i class='bx icon_trie bxs-chevron-up'></i></a>
-                                                    </p>
-                                                    <div class="collapse multi-collapse" id="detail_par_status">
-                                                        <form class="mt-1 mb-2 form_colab" action="{{route('search_par_status')}}" method="GET" enctype="multipart/form-data">
-                                                            @csrf
-                                                            <div class="row">
-                                                                <div class="col-8">
-                                                                    <div class="form-group">
-                                                                        <select class="form-select" name="status" id="status">
-                                                                            <option value="INACTIF">Nom envoyé</option>
-                                                                            <option value="ACTIF">Envoyé</option>
-                                                                            <option value="EN_COUR">Partiellement payé</option>
-                                                                            <option value="PAYER">Payé</option>
-                                                                            <option value="RETARD">En retard</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
-
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header" id="flush-headingThree">
+                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                                                    Numero de facture
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                                                <div class="accordion-body">
+                                                                    <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('search_par_num_fact')}}" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="form-group">
+                                                                                    <input autocomplete="off" name="num_fact" id="num_fact" required class="form-control" required type="text" aria-label="Search" placeholder="Numero Facture">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header" id="flush-headingFour">
+                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
+                                                                    Entreprise facturé
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                                                <div class="accordion-body">
+                                                                    <form class="mt-1 mb-2 form_colab" action="{{route('search_par_entiter')}}" method="GET" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="form-group">
+                                                                                    <select class="form-select" name="entiter_id" id="entiter_id">
+                                                                                        @foreach ($entreprise as $etp)
+                                                                                        <option value="{{$etp->entreprise_id}}">{{$etp->nom_etp}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <button type="submit" class="btn_creer mt-2">Recherche</button>
 
-                                                            <br>
-                                                        </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header" id="flush-headingFive">
+                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFour">
+                                                                    Statut de facture
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                                                <div class="accordion-body">
+                                                                    <form class="mt-1 mb-2 form_colab" action="{{route('search_par_status')}}" method="GET" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        <div class="row">
+                                                                            <div class="col-8">
+                                                                                <div class="form-group">
+                                                                                    <select class="form-select" name="status" id="status">
+                                                                                        <option value="INACTIF">Nom envoyé</option>
+                                                                                        <option value="ACTIF">Envoyé</option>
+                                                                                        <option value="EN_COUR">Partiellement payé</option>
+                                                                                        <option value="PAYER">Payé</option>
+                                                                                        <option value="RETARD">En retard</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
 
                                                 </div>
@@ -1418,5 +1412,4 @@
                     </div>
                 </div>
             </div>
-        </div>
-        {{-- inmportation fonction js pour cfp --}} @include("admin.facture.function_js.js_cfp") @endsection
+            {{-- inmportation fonction js pour cfp --}} @include("admin.facture.function_js.js_cfp") @endsection
