@@ -394,6 +394,17 @@ Route::get('annuaire+recherche+par+adresse/{page?}/{qter?}/{vlle?}/{postal?}/{re
 Route::resource('module', 'ModuleController')->except([
     'index', 'edit', 'destroy', 'update', 'create'
 ]);
+
+
+// ============== Filtre module côté Client========================
+Route::get('result_formation.filtre/{type_filtre?}/{nbPag?}/{data_min?}/{data_max?}', 'FormationController@filtre_par')->name('result_formation.filtre');
+Route::get('result_formation.entiter.filtre/{type_filtre?}/{nbPag?}/{nom_entiter?}', 'FormationController@filtre_par_nom')->name('result_formation.entiter.filtre');
+Route::get('result_formation.modalite.filtre/{nbPag?}/{nom_entiter?}', 'FormationController@filtre_par_modaliter')->name('result_formation.modalite.filtre');
+
+
+// ============== Fin Filtrecôté Client =============================
+
+
 Route::get('afficher_module','ModuleController@affichage')->name('afficher_module');
 Route::get('/liste_module/{id?}/{page?}/{index?}','ModuleController@index')->name('liste_module');
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
