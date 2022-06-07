@@ -209,7 +209,8 @@ class EmployeurController extends Controller
                         echo $e->getMessage();
                     }
 
-                    
+
+                    // $service_id = Service::where('entreprise_id', $entreprise->id)->max('id') + 1;
 
 
                     $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];

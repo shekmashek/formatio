@@ -2,7 +2,7 @@
 <div class="tab-content">
     <div class="m-5 tab-pane fade show active" id="emp-list" role="tabpanel" aria-labelledby="emp-list">
 
-        <table id="example" class="table " style="width:100%">
+        <table id="liste_referents" class="table " style="width:100%">
             <thead>
                 <tr>
                     <th class="id">ID</th>

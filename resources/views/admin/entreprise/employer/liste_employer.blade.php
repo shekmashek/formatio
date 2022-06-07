@@ -36,17 +36,17 @@
                 color: #9359ff;
                 text-decoration: none;
             }
-        
+
             .nav-tabs .nav-link {
                 border: none;
-                color:#535353c9;
+                color: #535353c9;
             }
 
-            .nav-tabs .nav-link.active{
-               
+            .nav-tabs .nav-link.active {
+
                 border-bottom: 2px solid #9359ff;
                 color: #9359ff;
-                
+
             }
 
 
@@ -90,7 +90,6 @@
                 flex-wrap: nowrap;
                 font-size: 1rem;
             }
-
         </style>
     @endpush
 
@@ -103,8 +102,8 @@
 
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="emps-add" data-mdb-toggle="tab" data-bs-toggle="tab" href="#emp-add"
-                    role="tab" aria-controls="emp-add" aria-selected="true">Nouveau</a>
+                <a class="nav-link" id="emps-add" data-mdb-toggle="tab" data-bs-toggle="tab" href="#emp-add" role="tab"
+                    aria-controls="emp-add" aria-selected="true">Nouveau</a>
                 {{-- <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#form-ajout">
                     Ajouter
                 </button> --}}
@@ -115,42 +114,33 @@
             </li>
 
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="emps-referents" data-mdb-toggle="tab" data-bs-toggle="tab" href="#emp-referents"
-                    role="tab" aria-controls="emp-referents" aria-selected="false">Référents</a>
+                <a class="nav-link" id="emps-referents" data-mdb-toggle="tab" data-bs-toggle="tab"
+                    href="#emp-referents" role="tab" aria-controls="emp-referents" aria-selected="false">Référents</a>
             </li>
-            
+
         </ul>
         <!-- Tabs navs -->
 
 
         @if (Session::has('success'))
-        <div class="alert alert-success h6 text-sm">
-            {{ Session::get('success') }}
-        </div>
-    @endif
-    @if (Session::has('error'))
-        <div class="alert alert-danger h6 text-sm">
-            {{ Session::get('error') }}
-        </div>
-    @endif
-    @if (Session::has('info'))
-        <div class="alert alert-info h6 text-sm">
-            {{ Session::get('info') }}
-        </div>
-    @endif
+            <div class="alert alert-success h6 text-sm">
+                {{ Session::get('success') }}
+            </div>
+        @endif
+        @if (Session::has('error'))
+            <div class="alert alert-danger h6 text-sm">
+                {{ Session::get('error') }}
+            </div>
+        @endif
+        @if (Session::has('info'))
+            <div class="alert alert-info h6 text-sm">
+                {{ Session::get('info') }}
+            </div>
+        @endif
 
         {{-- form ajout --}}
 
- 
-
-        {{-- NE PAS SUPPRIMER : la datatable ny marche pas si on l'enlève --}}
-        <div class="modal fade" id="form-ajout" tabindex="-1" aria-labelledby="form-ajoutLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-
-            </div>
-        </div>
-
-
+        <div class="divider"></div>
 
         <!-- Tabs content -->
 
@@ -170,7 +160,7 @@
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Ajout</th>
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
-                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th> 
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
 
                         </tr>
@@ -183,7 +173,7 @@
                                     @if ($employe->activiter == 1)
                                         <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
                                     @else
-                                        <span style="color:red; "> <i class="bx bxs-circle"></i> </span>
+                                        <span class="text-danger"> <i class="bx bxs-circle"></i> </span>
                                     @endif
                                     {{ $employe->matricule }}
                                 </td>
@@ -197,117 +187,149 @@
                                                 style="width: 45px; height: 45px" class="rounded-circle" /> --}}
 
                                             {{-- grey color --}}
-                                            <i class='bx bx-user-circle profile-holder'
-                                                style="width: 45px; height: 45px"></i>
+                                            <span class=" position-relative">
+                                                <i class='bx bx-user-circle profile-holder'
+                                                    style="width: 45px; height: 45px">
+                                                </i>
+                                                {{-- <span
+                                                    class="opacity-100 position-absolute bottom-0 mt-3 top-50 
+                                                    start-50 ms-3 translate-middle p-2 border border-light 
+                                                    rounded-circle
+                                                    @if ($employe->activiter == 1) 
+                                                        bg-success
+                                                    @else
+                                                        bg-danger 
+                                                    @endif
+                                                    ">
+                                                
+                                                </span> --}}
+                                                <span class="opacity-100 position-absolute bottom-0 mt-2 top-50 
+                                                start-50 ms-3 translate-middle p-2">
+                                                <i class="bi bi-gem f-w-600"></i>
+                                            </span>
+
+
+                                            </span>
+
 
                                             {{-- actif/inactif color --}}
-                                                    {{-- <i class='bx bx-user-circle  h1' style='
-                                                        @if ($employe->activiter == 1) color:#25b900c9;'
-                                                            @else
-                                                            color:#e21717;' 
-                                                            @endif
-                                                            ></i> --}}
+                                            {{-- <i class='bx bx-user-circle  h1' style='
+                                                @if ($employe->activiter == 1) color:#25b900c9;'
+                                                    @else
+                                                    color:#e21717;' 
+                                                    @endif
+                                                    ></i> --}}
 
                                             {{-- initials --}}
-                                                            {{-- <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
-                                                                <span class="align-middle text-center profile-initial" style="position:relative;">
-                                                                    <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
-                                                                </span>
-                                                            </div> --}}
-                                                        @else
-                                                                <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
-                                                                alt="Image non chargée" style="width: 45px; height: 45px"
-                                                                class="rounded-circle" />
-                                                        @endif
-                                                    <div class="ms-3">
-                                                        <p class="fw-normal mb-1 text-purple ">
-                                                        {{-- <p class="fw-bold mb-1 text-purple "> --}}
-                                                            {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
-                                                        <p class="text-muted mb-0">{{ $employe->fonction_stagiaire }}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            {{-- <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
+                                                <span class="align-middle text-center profile-initial" style="position:relative;">
+                                                    <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
+                                                </span>
+                                            </div> --}}
+                                        @else
+                                            <span class="position-relative">
+                                                <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
+                                                    alt="Image non chargée" style="width: 45px; height: 45px"
+                                                    class="rounded-circle" />
+                                                <span
+                                                    class="opacity-100 position-absolute bottom-0 mt-3 top-50 start-50 ms-3 
+                                                    translate-middle p-2 border 
+                                                    border-light rounded-circle
+                                                    @if ($employe->activiter == 1) 
+                                                        bg-success
+                                                    @else
+                                                        bg-danger 
+                                                    @endif
+                                                ">
+                                                    <span class="visually-hidden">Activity</span>
+                                                </span>
+                                            </span>
+                                        @endif
+                                        <div class="ms-3">
+                                            <p class="fw-normal mb-1 text-purple ">
+                                                {{-- <p class="fw-bold mb-1 text-purple "> --}}
+                                                {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
+                                            <p class="text-muted mb-0">{{ $employe->fonction_stagiaire }}</p>
+                                        </div>
+                                    </div>
+                                </td>
 
-                                            <td class="align-middle text-start">
+                                <td class="align-middle text-start">
 
-                                                <div class="ms-3">
-                                                    <p class="mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
-                                                    {{-- <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p> --}}
-                                                    <p class="text-muted mb-0">
-                                                        {{ $employe->telephone_stagiaire != null ? $employe->telephone_stagiaire : '----' }}
-                                                    </p>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td class="align-middle text-center text-secondary">
-                                                <span class="d-block">{{ $employe->service->departement->nom_departement }}</span>
-                                                <span>{{ $employe->service != null ? $employe->service->nom_service : '----'  }}</span>
-                                            </td>
-                                            {{-- <td class="align-middle text-center text-secondary">61</td> --}}
-                                            <td class="align-middle text-center text-secondary">2011-04-25</td>
-                                            <td class="align-middle text-center text-secondary">
-
-                                                @if ($employe->activiter == 1)
-                                                    <div class="form-check form-switch">
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked"><span
-                                                                class="badge bg-success">actif</span></label>
-                                                        <input class="form-check-input desactiver_stg" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
-                                                            checked>
-                                                    </div>
-                                                @else
-                                                    <div class="form-check form-switch">
-                                                        <label class="form-check-label"
-                                                            for="flexSwitchCheckChecked">
-                                                            <span class="badge bg-danger">
-                                                                inactif
-                                                            </span>
-                                                        </label>
-                                                        <input class="form-check-input activer_stg" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
-                                                    </div>
-                                                @endif
-
-                                            </td>
-                                            
-                                            {{-- status référent --}}
-                                            <td class="align-middle text-center text-secondary">
-
-                                                @if ($employe->status_referent == 1)
-                                                    <div class="form-check form-switch">
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked"><span
-                                                                class="badge bg-success">Référent</span></label>
-                                                        <input class="form-check-input desactiver_referent" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}" checked>
-                                                    </div>
-                                                @else
-                                                    <div class="form-check form-switch">
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked">
-                                                            <span class="badge bg-secondary">
-                                                                non référent
-                                                            </span>
-                                                        </label>
-                                                        <input class="form-check-input activer_referent" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
-                                                            
-                                                            {{-- desactiver le bouton si l'employé n'est pas actif --}}
-                                                            @if ($employe->activiter !=1)
-                                                                disabled
-                                                            @endif
-                                                            >
-                                                    </div>
-                                                @endif
-                    
-                                            </td>
+                                    <div class="ms-3">
+                                        <p class="mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
+                                        {{-- <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p> --}}
+                                        <p class="text-muted mb-0">
+                                            {{ $employe->telephone_stagiaire != null ? $employe->telephone_stagiaire : '----' }}
+                                        </p>
 
 
-                                            <td class="align-middle text-center text-secondary">
-                                                <button type="button" class="btn " data-bs-toggle="modal"
-                                                    data-bs-target="#delete_emp_{{ $employe->id }}">
-                                                    <i class=' bx bxs-trash' style='color:#e21717'></i>
-                                            </button>
+                                    </div>
+
+                                </td>
+                                <td class="align-middle text-center text-secondary">
+                                    <span
+                                        class="d-block">{{ $employe->service->departement->nom_departement }}</span>
+                                    <span>{{ $employe->service != null ? $employe->service->nom_service : '----' }}</span>
+                                </td>
+                                {{-- <td class="align-middle text-center text-secondary">61</td> --}}
+                                <td class="align-middle text-center text-secondary">2011-04-25</td>
+                                <td class="align-middle text-center text-secondary">
+
+                                    @if ($employe->activiter == 1)
+                                        <div class="form-check form-switch">
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                                    class="badge bg-success">actif</span></label>
+                                            <input class="form-check-input desactiver_stg" type="checkbox"
+                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                checked>
+                                        </div>
+                                    @else
+                                        <div class="form-check form-switch">
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                <span class="badge bg-danger">
+                                                    inactif
+                                                </span>
+                                            </label>
+                                            <input class="form-check-input activer_stg" type="checkbox"
+                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                        </div>
+                                    @endif
+
+                                </td>
+
+                                {{-- status référent --}}
+                                <td class="align-middle text-center text-secondary">
+
+                                    @if ($employe->status_referent == 1)
+                                        <div class="form-check form-switch">
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                                    class="badge bg-success">Référent</span></label>
+                                            <input class="form-check-input desactiver_referent" type="checkbox"
+                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                checked>
+                                        </div>
+                                    @else
+                                        <div class="form-check form-switch">
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                <span class="badge bg-secondary">
+                                                    non référent
+                                                </span>
+                                            </label>
+                                            <input class="form-check-input activer_referent" type="checkbox"
+                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                {{-- desactiver le bouton si l'employé n'est pas actif --}} @if ($employe->activiter != 1) disabled @endif>
+                                        </div>
+                                    @endif
+
+                                </td>
+
+
+                                <td class="align-middle text-center text-secondary">
+                                    <button type="button" class="btn " data-bs-toggle="modal"
+                                        data-bs-target="#delete_emp_{{ $employe->id }}">
+                                        <i class=' bx bxs-trash' style='color:#e21717'></i>
+                                    </button>
                                 </td>
 
                             </tr>
@@ -327,7 +349,7 @@
                                             <div class="modal-body">
                                                 <small>Vous êtes sur le point d'enlever l'employé
                                                     {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }} -
-                                                    id : {{ $employe->id }}, utilisateur {{ $employe->user_id }}, 
+                                                    id : {{ $employe->id }}, utilisateur {{ $employe->user_id }},
                                                     cette action est irréversible. Continuer ?</small>
                                             </div>
 
@@ -344,7 +366,6 @@
 
                             </div>
                         @empty
-                            
                         @endforelse
 
                     </tbody>
@@ -362,6 +383,7 @@
                 export
             </div>
             <div class="tab-pane fade" id="emp-referents" role="tabpanel" aria-labelledby="emp-referents">
+
                 @include('admin.entreprise.employer.liste_referent')
             </div>
         </div>
@@ -370,21 +392,33 @@
     </div>
 
     @push('extra-js')
-        {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
+        {{-- scr --}}
+        {{-- <script src="{{ asset('js/employes_scripts.js') }}"></script> --}}
 
         <script>
             // modal
-            var myModal = document.getElementById('form-ajout')
-            var myInput = document.getElementById('myInput')
+            // var myModal = document.getElementById('form-ajout')
+            // var myInput = document.getElementById('myInput')
 
-            myModal.addEventListener('shown.bs.modal', function() {
-                myInput.focus()
-            })
+            // myModal.addEventListener('shown.bs.modal', function() {
+            //     myInput.focus()
+            // })
 
             // dataTables
             $(document).ready(function() {
                 var table = $('#example').DataTable({
+                    responsive: true,
+                    language: {
+                        url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/fr-FR.json",
+                    },
+                });
+
+                new $.fn.dataTable.FixedHeader(table);
+            });
+            $(document).ready(function() {
+                var table = $('#liste_referents').DataTable({
                     responsive: true,
                     language: {
                         url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/fr-FR.json",
@@ -507,7 +541,7 @@
                 } else {
                     document.getElementById("cin_err").innerHTML = "";
                     $.ajax({
-                        url: '{{ route('verify_cin_user') }}',
+                        url: "{{ route('verify_cin_user') }}",
                         type: 'get',
                         data: {
                             valiny: result
@@ -532,7 +566,7 @@
             $(document).on('change', '#mail', function() {
                 var result = $(this).val();
                 $.ajax({
-                    url: '{{ route('verify_mail_user') }}',
+                    url: "{{ route('verify_mail_user') }}",
                     type: 'get',
                     data: {
                         valiny: result
@@ -561,24 +595,25 @@
                 } else {
                     document.getElementById("phone_err").innerHTML = '';
                     $.ajax({
-                          url: '{{ route('verify_tel_user') }}'
-                          , type: 'get'
-                          , data: {
-                              valiny: result
-                          }
-                          , success: function(response) {
-                              var userData = response;
+                        url: '{{ route('verify_tel_user') }}',
+                        type: 'get',
+                        data: {
+                            valiny: result
+                        },
+                        success: function(response) {
+                            var userData = response;
 
-                              if (userData.length > 0) {
-                                  document.getElementById("phone_err").innerHTML = "le numéro du télephone existe déjà";
-                              } else {
-                                  document.getElementById("phone_err").innerHTML = "";
-                              }
-                          }
-                          , error: function(error) {
-                              console.log(error);
-                          }
-                      });
+                            if (userData.length > 0) {
+                                document.getElementById("phone_err").innerHTML =
+                                    "le numéro du télephone existe déjà";
+                            } else {
+                                document.getElementById("phone_err").innerHTML = "";
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
                 }
 
 
@@ -607,10 +642,6 @@
                     }
                 });
             });
-
-
-            
-
         </script>
 
 
