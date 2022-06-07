@@ -701,6 +701,18 @@ class HomeController extends Controller
         }
     }
 
+    //infoetpNew
+    public function etpInfoNew($id_grp){
+        $etp = DB::table('entreprises')
+                ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+                ->join('v_groupe_entreprise', 'v_groupe_entreprise.entreprise_id', 'entreprises.id')
+                ->select('*')
+                ->where('groupe_id', $id_grp)
+                ->get();
+
+        return response()->json($etp);
+    }
+
     public function liste_projet(Request $request, $id = null, $page = null)
     {
         $projet_model = new projet();

@@ -106,6 +106,68 @@ class SessionController extends Controller
         //
     }
 
+    //info etp
+    public function infoEtpCom($etp_id){
+        $etp = DB::table('entreprises')
+                ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+                ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
+                ->select('*')
+                // ->groupBy('v_groupe_projet_entreprise.id')
+                ->where('v_groupe_projet_entreprise.entreprise_id', $etp_id)
+                ->get()[0];
+
+        // dd($etp);
+        return response()->json($etp);
+    }
+
+    public function infoOf($id_of){
+        $of = DB::table('cfps')
+                ->join('responsables_cfp', 'responsables_cfp.cfp_id', 'cfps.id')
+                ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.cfp_id', 'cfps.id')
+                ->select('cfps.id', 'cfps.nif', 'cfps.stat', 'cfps.nom', 'cfps.adresse_lot', 'cfps.adresse_quartier',
+                'cfps.adresse_code_postal', 'cfps.adresse_ville', 'cfps.adresse_region', 'cfps.email', 'cfps.telephone', 'cfps.logo',
+                'cfps.site_web', 'responsables_cfp.nom_resp_cfp', 'responsables_cfp.prenom_resp_cfp', 'responsables_cfp.email_resp_cfp',
+                'responsables_cfp.sexe_resp_cfp', 'responsables_cfp.fonction_resp_cfp', 'responsables_cfp.adresse_lot',
+                'responsables_cfp.adresse_quartier', 'responsables_cfp.adresse_code_postal', 'responsables_cfp.adresse_ville',
+                'responsables_cfp.adresse_region', 'responsables_cfp.photos_resp_cfp')
+                ->where('v_groupe_projet_entreprise.cfp_id', $id_of)
+                ->get()[0];
+
+        // dd($etp);
+        return response()->json($of);
+    }
+
+    public function info_resp_cfp($id){
+        $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,
+        f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,d.groupe_id,d.formateur_id,f.photos ',[$id]);
+
+        dd($formateur_cfp);
+    }
+
+    public function formateurInfo(Request $request){
+        $form_id = $request->Id;
+
+        // $form = DB::select('select d.groupe_id,d.formateur_id,f.nom_formateur, f.prenom_formateur, f.mail_formateur,
+        //             f.numero_formateur, f.adresse, f.cin, f.specialite,
+        //             f.photos from details d join formateurs f on f.id = d.formateur_id where d.formateur_id = ? group by f.nom_formateur,
+        //             f.prenom_formateur, f.mail_formateur, f.numero_formateur,
+        //             f.adresse, f.cin, f.specialite,d.groupe_id,d.formateur_id,f.photos ',[$form_id])[0];
+
+        $formateur = DB::table('formateurs')
+                    ->join('v_detail_session', 'v_detail_session.formateur_id', 'formateurs.id')
+                    ->select('formateurs.nom_formateur', 'formateurs.mail_formateur', 'formateurs.numero_formateur', 'formateurs.photos',
+                    'formateurs.adresse', 'formateurs.specialite', 'v_detail_session.detail_id',
+                    'formateurs.prenom_formateur', 'formateurs.cin')
+                    ->where('v_detail_session.formateur_id', $form_id)
+                    // ->where('v_detail_session.detail_id', $detail_id)
+                    ->groupBy('formateurs.nom_formateur', 'formateurs.mail_formateur', 'formateurs.numero_formateur', 'formateurs.photos',
+                    'formateurs.adresse', 'formateurs.specialite', 'v_detail_session.detail_id',
+                    'formateurs.prenom_formateur', 'formateurs.cin')
+                    ->get()[0];
+
+        return response()->json($formateur);
+    }
+
     public function detail_session(){
         // dd(URL::to('/').'/sarin Gael');
         $user_id = Auth::user()->id;
@@ -154,13 +216,15 @@ class SessionController extends Controller
 
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
-            $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
-
+            $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,
+            f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by f.nom_formateur, f.prenom_formateur, f.mail_formateur, f.numero_formateur, f.adresse, f.cin, f.specialite,d.groupe_id,d.formateur_id,f.photos ',[$id]);
+            // dd($formateur_cfp);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
 
             $drive = new getImageModel();
             $drive->create_folder($cfp_nom);
             $drive->create_sub_folder($cfp_nom, "Mes documents");
+
             $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
@@ -618,6 +682,6 @@ class SessionController extends Controller
         return response()->json(['devise'=>$devise,'frais'=>$frais]);
     }
 
-    
+
 
 }
