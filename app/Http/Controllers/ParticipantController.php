@@ -148,10 +148,23 @@ class ParticipantController extends Controller
         //     // return redirect()->back()->with('error', 'Cet employé n\'est pas actif');
         //     return response()->json(['error' => 'Vous ne pouvez pas activer un stagiaire qui n\'est pas actif']);
         // }
-        
-        RoleUser::updateOrInsert(
-            ['user_id' => $user_id, 'role_id' => 2]
-        );
+
+
+        // restaurer le role_users de l'employé s'il a déjà été un referent mais désactivé
+        // utilisation du softdelete
+        $deleted_role_user = RoleUser::withTrashed()
+                                    ->where('user_id', $user_id)
+                                    ->where('role_id', 2);
+
+        if ($deleted_role_user->exists()) {
+            $deleted_role_user->restore();
+        } else {
+            RoleUser::updateOrInsert(
+                ['user_id' => $user_id, 'role_id' => 2]
+            );
+        }    
+
+
         
         return response()->json($ref_status);
         
@@ -178,6 +191,13 @@ class ParticipantController extends Controller
             ->update([
                 'status_referent' => 0
             ]);
+
+
+            // supression avec soft delete
+            RoleUser::where('user_id', $user_id)
+                    ->where('role_id', 2)
+                    ->delete();
+
         $ref_status = $employe->status_referent;
         return response()->json($ref_status);
 
