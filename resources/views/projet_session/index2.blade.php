@@ -1178,14 +1178,17 @@
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ $pj->nom_formation }} </td>
                                         <td> {{ $pj->nom_module }} </td>
+                                        @php
+                                            $statut_eval = $groupe->statut_valuation_chaud($pj->groupe_id,$pj->stagiaire_id);
+                                        @endphp
                                         <td class="p-0"><a
                                                 href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}"
                                                 class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i
                                                         class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td>
-                                            @if ($pj->statut_eval == 0)
+                                            @if ($statut_eval == 0)
                                                 <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn pb-2" style="color: #ffffff !important">Evaluation</button></a>
-                                            @elseif ($pj->statut_eval == 1)
+                                            @elseif ($statut_eval == 1)
                                                 <p class="mt-3" style="color: green">Evaluation terminé</p>
                                             @endif
 
