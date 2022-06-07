@@ -62,3 +62,37 @@ create or replace view v_groupe_entreprise as
     join groupes g on ge.groupe_id = g.id
     join entreprises e on ge.entreprise_id = e.id
     join type_payement tp on g.type_payement_id = tp.id;
+
+    
+    /* view demande de devis*/
+   CREATE OR REPLACE VIEW v_liste_demande_devis AS 
+   SELECT
+   demande_devis.id,
+   demande_devis.nom,
+   demande_devis.email,
+   demande_devis.objet,
+   demande_devis.description,
+   demande_devis.vue,
+   demande_devis.created_at as date_envoye,
+   entreprises.nom_etp,
+   entreprises.id as entreprise_id,
+   responsables.nom_resp,
+   responsables.prenom_resp,
+   responsables.id as resp_etp_id,
+   responsables.telephone_resp,
+   cfps.nom as nom_cfp,
+   cfps.id as cfp_id,
+   modules.nom_module, 
+   modules.id as module_id,
+   modules.reference as reference_module
+   
+   from 
+   demande_devis,
+   entreprises,
+   responsables,
+   cfps,
+   modules
+   where
+   demande_devis.etp_id=entreprises.id AND responsables.id=demande_devis.resp_etp_id AND cfps.id=demande_devis.cfp_id AND modules.id=demande_devis.module_id;
+
+

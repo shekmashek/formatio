@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
+use App\responsable_cfp;
+use App\demande_devis;
 
 class FormationController extends Controller
 {
@@ -614,8 +616,10 @@ class FormationController extends Controller
 
         $id_module = $request->id;
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+        
         $test = 4;
         $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
+        
         $offset = round($domaines_count[0]->nb_domaines / $test);
         $domaine_col1 = DB::select('select * from domaines limit '.$offset.'');
         $domaine_col2 = DB::select('select * from domaines limit '.$offset.' offset '.$offset.'');
@@ -628,5 +632,23 @@ class FormationController extends Controller
         $modules = DB::select('select md.id, md.nom_module, md.formation_id,md.cfp_id, md.duree, md.duree_jour, md.prix, md.prix_groupe, md.modalite_formation, cfp.nom from modules as md join formations as frmt on md.formation_id = frmt.id join cfps as cfp on md.cfp_id = cfp.id where md.status = 2 and md.etat_id = 1 and md.id = ?',[$id_module]);
         $modules_counts = DB::select('select count(*) as nb_modules, md.formation_id from modules as md join formations as frmt on md.formation_id = frmt.id where md.status = 2 and md.etat_id = 1 group by md.formation_id');
         return view('referent.catalogue.demande_devis', compact('formations', 'modules', 'modules_counts','devise', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+    }
+    public function liste_demande_devis(){
+        $id_user = Auth::user()->id;
+        $id_cfp = responsable_cfp::where('user_id', $id_user)->value('id');
+        $liste=DB::select('select *  from v_liste_demande_devis where cfp_id=?',[$id_cfp]);
+        return view('referent.catalogue.liste_demande_devis',compact('liste'));
+
+    }
+    public function detail_demande_devis($id){
+        $detail=demande_devis::findOrfail($id);
+        // $liste=DB::select('select *  from v_liste_demande_devis where cfp_id=?',[$id_cfp]);
+        return view('referent.catalogue.detail_demande_devis',compact('detail'));
+    }
+    public function delete_demande_devis($id)
+    {
+        // DB::delete('delete devise from devise where id=?',[$id]);
+        DB::table('demande_devis')->delete($id);
+        return back();
     }
 }
