@@ -188,7 +188,7 @@ class HomeController extends Controller
         if ($request->input('region') != null) {
             DB::update('update responsables set adresse_region = ? where id = ?', [$request->input('region'), $id_resp]);
         }
-        if (count($request->input()) > 2) {
+        if (2 > count($request->input())) {
             return redirect()->back()->with('error', 'Remplissez les champs vides');
         } else {
             $user_id = User::where('id', Auth::user()->id)->value('id');
@@ -387,7 +387,6 @@ class HomeController extends Controller
 
 
             $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
-
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
             $departement = DB::select('select * from departement_entreprises where id  = ? ', [$testNull[0]->departement_entreprises_id]);
 
@@ -406,7 +405,6 @@ class HomeController extends Controller
             //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
 
             if ($nb > 0) {
-
                 return view('formulaire', compact('testNull', 'entreprise', 'departement'));
             } else {
 
