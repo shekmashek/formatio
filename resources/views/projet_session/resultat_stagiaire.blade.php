@@ -132,6 +132,7 @@
         border: 1px solid #F16529;
         background-color: #F16529;
         color: #fff;
+        font-size:15px;
     }
     .label_non_acquis{
         background-color: #e90721;
@@ -140,6 +141,7 @@
         border-bottom-left-radius: 5px;
         color: #fff;
         width: 300px;
+        font-size:15px;
     }
     .label_acquis{
         background-color: #00CDAC;
@@ -147,6 +149,7 @@
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
         color: #fff;
+        font-size:15px;
     }
     .tete{
         width: 100%;
@@ -218,7 +221,7 @@
                     var html = '<div class="row p-2">';
                     var html = '<div class="col-lg-12">'
                     for(let i = 0 ; i < detail.length ; i++){
-                        html += '<div class="col-lg-5 text-start p-1"><span class="mt-2"><i class="bi bi-check-circle"></i>&nbsp;'+detail[i].titre_competence+'</span></div>';
+                        html += '<div class="col-lg-8 text-start p-1"><span class="mt-2"><i class="bi bi-check-circle"></i>&nbsp;'+detail[i].titre_competence+'</span></div>';
                         // html += '<div class="col-lg-2"><input class="p-0 m-1 py-1" style="height: 1.98rem; width: 4rem; justify-content:center;text-align:center;" type="number" min="1" max="10" name="note['+detail[i].competence_id+']" value="'+detail[i].note_apres+'" required></div>';
                         html += '<div class="col-lg-7">';
                             html += '<div class="d-flex flex-row">';
@@ -348,7 +351,6 @@
             }
         });
     }
-    
     let htmlpdf = document.getElementById("mahafaly");
     let save    = document.getElementById("save");
     var opt = {
