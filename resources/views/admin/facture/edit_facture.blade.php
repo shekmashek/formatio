@@ -326,7 +326,6 @@
                                 <div class="col-1 text-end pt-2">
                                     <p class="m-0"> </p>
                                     <a href="{{route('delete_frais_annexe_facture',[$montant_totale->num_facture,$frais_annexes[$i]->frais_annexe_id])}}"> <button type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></a></span>
-
                                 </div>
                         </div>
                         @endfor
