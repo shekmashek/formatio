@@ -226,8 +226,15 @@ class AbonnementController extends Controller
 
         if (Gate::allows('isReferent')) {
 
-            $responsable =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
+            $responsable = $this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
+
+            // dd($responsable);
             $entreprise_id = $responsable[0]->entreprise_id;
+
+            // En laravel pure : 
+            // $responsable = DB::table('responsables')->where('user_id', Auth::user()->id)->first();
+            // $entreprise_id = $responsable->entreprise_id;
+            
             $test_abonne =$this->fonct->findWhere('abonnements',['entreprise_id','status'],[$responsable[0]->entreprise_id,'En attente']);
 
             /** on récupère l'abonnement actuel */
@@ -238,7 +245,7 @@ class AbonnementController extends Controller
 
             //liste facturation
             // $facture =$this->fonct->findWhere('v_abonnement_facture_entreprise',['entreprise_id'],[$responsable[0]->entreprise_id]);
-            $facture = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by created_at desc ',[$responsable[0]->entreprise_id]);
+            $facture = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? ',[$responsable[0]->entreprise_id]);
             // facture du mois suivant
             $facture_suivant = [];
             for ($i=0; $i < count($facture); $i++) {
@@ -348,8 +355,10 @@ class AbonnementController extends Controller
             // $typeAbonne_id = 2;
 
             /** on récupère l'abonnement actuel */
-            $abonnement_actuel = DB::select('select * from v_abonnement_facture where cfp_id = ?  order by created_at desc  limit 1', [$cfp_id]);
+            $abonnement_actuel = DB::select('select * from v_abonnement_facture where cfp_id = ? limit 1', [$cfp_id]);
+            // $abonnement_actuel = 
 
+            
             // $typeAbonnement =$this->fonct->findWhere('v_abonnement_role',['abonne_id'],[$typeAbonne_id]);
             //on recupere les types d'abonnements
             $typeAbonnement =$this->fonct->findAll('type_abonnements_of');
@@ -359,7 +368,7 @@ class AbonnementController extends Controller
 
                //liste facturation
             // $facture =$this->fonct->findWhere('v_abonnement_facture',['cfp_id'],[$cfp_id]);
-            $facture = DB::select('select * from v_abonnement_facture where cfp_id = ?  order by created_at desc',[$cfp_id] );
+            $facture = DB::select('select * from v_abonnement_facture where cfp_id = ? ',[$cfp_id] );
             // facture du mois suivant
              $facture_suivant = [];
              for ($i=0; $i < count($facture); $i++) {
@@ -639,6 +648,7 @@ class AbonnementController extends Controller
                 $abonnement->entreprise_id = $entreprise_id;
                 $abonnement->activite = 0;
                 $abonnement->type_arret = "";
+                $abonnement->categorie_paiement_id = rand(1,2);
                 $abonnement->save();
 
                 /**générer une facture*/
@@ -661,6 +671,9 @@ class AbonnementController extends Controller
                 $abonnement_cfp->cfp_id = $cfp_id;
                 $abonnement_cfp->activite = 0;
                 $abonnement_cfp->type_arret = "";
+
+                // type de paiement temporaire
+                $abonnement_cfp->categorie_paiement_id = rand(1,2);
                 $abonnement_cfp->save();
 
                 //générer une facture

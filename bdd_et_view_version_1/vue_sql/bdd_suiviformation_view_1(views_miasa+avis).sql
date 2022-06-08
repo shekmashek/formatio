@@ -443,7 +443,7 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     stg.region,
     stg.lot,
     b.nom_branche,
-    e.nom_etp,
+    e.nom_etp as nom_entreprise,
     e.adresse_rue,
     e.adresse_quartier,
     e.adresse_code_postal,

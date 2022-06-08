@@ -43,9 +43,9 @@ CREATE TABLE `type_abonnements_etp` (
 
 CREATE TABLE `abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date default current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
+  `date_demande` datetime default current_timestamp(),
+  `date_debut` datetime DEFAULT current_timestamp(),
+  `date_fin` datetime DEFAULT current_timestamp(),
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type_abonnement_id` bigint(20) UNSIGNED NOT NULL  REFERENCES type_abonnements_etp(id) ON DELETE CASCADE,
   `entreprise_id` bigint(20) UNSIGNED NOT NULL  REFERENCES entreprises(id) ON DELETE CASCADE,
@@ -57,9 +57,9 @@ CREATE TABLE `abonnements` (
 
 CREATE TABLE `abonnement_cfps` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `date_demande` date DEFAULT current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
+  `date_demande` datetime DEFAULT current_timestamp(),
+  `date_debut` datetime DEFAULT current_timestamp(),
+  `date_fin` datetime DEFAULT current_timestamp(),
   `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type_abonnement_id` bigint(20) UNSIGNED NOT NULL REFERENCES type_abonnements_of(id) ON DELETE CASCADE,
   `cfp_id` bigint(20) UNSIGNED NOT NULL  REFERENCES cfps(id) ON DELETE CASCADE,
@@ -109,7 +109,7 @@ CREATE TABLE `encaissements_abonnements_cfps` (
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `factures_abonnements_cfp_id` bigint(20) NOT NULL REFERENCES factures_abonnements_cfp(id) ON DELETE CASCADE,
   `type_paiement_id` bigint(20) NOT NULL REFERENCES type_payement(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf 8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 INSERT INTO `type_abonnements_of` (`id`, `nom_type`, `description`, `tarif`, `nb_utilisateur`, `nb_formateur`, `nb_projet`, `illimite`, `created_at`, `updated_at`) VALUES

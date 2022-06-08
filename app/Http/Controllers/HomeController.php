@@ -386,7 +386,15 @@ class HomeController extends Controller
         if (Gate::allows('isReferentPrincipale')) {
 
 
-            $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
+            $testNull = DB::select('select * ,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id])  ;
+            
+            // $testNull = DB::table('responsables')->where('user_id', Auth::user()->id)->first();
+            // if ($testNull->genre_id == 1) {
+            //     $testNull->sexe_resp = "Femme";
+            // } else {
+            //     $testNull->sexe_resp = "Homme";
+            // }
+            // dd($testNull);
 
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
             $departement = DB::select('select * from departement_entreprises where id  = ? ', [$testNull[0]->departement_entreprises_id]);

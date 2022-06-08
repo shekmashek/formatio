@@ -191,7 +191,7 @@
                                                 <i class='bx bx-user-circle profile-holder'
                                                     style="width: 45px; height: 45px">
                                                 </i>
-                                                {{-- <span
+                                                <span
                                                     class="opacity-100 position-absolute bottom-0 mt-3 top-50 
                                                     start-50 ms-3 translate-middle p-2 border border-light 
                                                     rounded-circle
@@ -202,11 +202,13 @@
                                                     @endif
                                                     ">
                                                 
+                                                </span>
+
+                                                {{-- gem icon as badge --}}
+                                                {{-- <span class="opacity-100 position-absolute bottom-0 mt-2 top-50 
+                                                    start-50 ms-3 translate-middle p-2">
+                                                    <i class="bi bi-gem f-w-600"></i>
                                                 </span> --}}
-                                                <span class="opacity-100 position-absolute bottom-0 mt-2 top-50 
-                                                start-50 ms-3 translate-middle p-2">
-                                                <i class="bi bi-gem f-w-600"></i>
-                                            </span>
 
 
                                             </span>
@@ -273,7 +275,9 @@
                                     <span>{{ $employe->service != null ? $employe->service->nom_service : '----' }}</span>
                                 </td>
                                 {{-- <td class="align-middle text-center text-secondary">61</td> --}}
-                                <td class="align-middle text-center text-secondary">2011-04-25</td>
+                                <td class="align-middle text-center text-secondary">
+                                    {{ $employe->created_at->format('d M Y h:m') }}
+                                </td>
                                 <td class="align-middle text-center text-secondary">
 
                                     @if ($employe->activiter == 1)

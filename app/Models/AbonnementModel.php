@@ -19,8 +19,8 @@ class AbonnementModel extends Model
         /** insertion de données dans factures_abonnements_cfp */
         public function insert_factures_abonnements_cfp($abonnement_cfps_id,$invoice_date,$due_date,$montant_facture){
           //generation du numero de facture
-            $max_cfp_id = $this->findMax('factures_abonnements_cfp','num_facture');
-            $max_etp_id = $this->findMax('factures_abonnements','num_facture');
+          $max_cfp_id = $this->findMax('factures_abonnements_cfp','num_facture')[0]->id_max;
+          $max_etp_id = $this->findMax('factures_abonnements','num_facture')[0]->id_max;
 
             if($max_cfp_id == null &&  $max_etp_id == null) $num_facture = 1;
             if($max_cfp_id == null && $max_etp_id != null) $num_facture = $max_etp_id +=  1;
