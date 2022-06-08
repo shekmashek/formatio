@@ -1,3 +1,4 @@
+
 a {
     text-decoration: none;
 }
@@ -24,7 +25,7 @@ a:focus {
 
 .navigation_detail h3 {
     font-size: 1.3rem;
-    text-transform: capitalize;
+    text-transform: initial;
 }
 
 .navigation_details h3 {

@@ -10,7 +10,7 @@
         </ul>
     </div>
 @endif
-<div class="row navigation_detail ">
+<div class="row navigation_detail">
     <div class="ps-5">
         <ul class="">
             <div class="row align-items-center">
@@ -375,6 +375,7 @@
                             </div>
                             <hr>
                             @endforeach
+
                         </div>
                     </div>
                 </div>

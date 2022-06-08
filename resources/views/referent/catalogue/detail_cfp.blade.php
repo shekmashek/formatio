@@ -18,6 +18,8 @@
                           <p class="text-center m-0 horloge text-capitalize"><i class="bx bx-alarm"></i>
                             Ouvert le
                             @php
+                                $ouverture = 0;
+                                $fermeture = 0;
                                 foreach ($horaire as $cfp_h) {
                                     setlocale(LC_ALL, "fr_FR");
                                     $today = date("l");
@@ -38,7 +40,27 @@
                         </div>
                         <div class="col-5">
                             <div class="row ps-5">
-                                <h4><a href="#">{{$cfp->nom}}</a></h4>
+                                <h4><a href="#">{{$cfp->nom}}</a>
+                                @foreach ($type_abonnement as $type)
+                                    @if($cfp->id == $type->cfp_id)
+                                        @if($type->type_abonnement_id == 1)
+                                            <sup><span class="mode1"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                        @if($type->type_abonnement_id == 2)
+                                            <sup><span class="mode2"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                        @if($type->type_abonnement_id == 3)
+                                            <sup><span class="mode3"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                        @if($type->type_abonnement_id == 4)
+                                            <sup><span class="mode4"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                        @if($type->type_abonnement_id == 5)
+                                            <sup><span class="mode5"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                    @endif
+                                @endforeach
+                                </h4>
                                 <p>{{$cfp->slogan}}</p>
                                 @if($avis_etoile[0]->pourcentage != null)
                                 <div class="d-flex flex-row">
@@ -65,13 +87,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="col d-flex flex-row mb-2 ps-5">
+                        <div class="col-4 place_badge">
+                            <div class="col d-flex flex-row mb-4">
                                 <span class="btn_actions" role="button"><a href="#"><i
                                             class="bx bx-mail-send"></i>Email</a></span>
                                 <span class="btn_actions ms-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank"><i class="bx bx-globe"></i>Site
                                         Web</a></span>
                             </div>
+                            @foreach ($collaboration as $collab)
+                                @if($collab->inviter_cfp_id == $cfp->id && $collab->activiter == 1)
+                                    <div class="main-wrapper">
+                                        <div class="badge green">
+                                            <div class="circle"> <i class="bx bxs-badge-check"></i></div>
+                                            <div class="ribbon">Collaboré</div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -126,61 +158,116 @@
                                             <td class="rating-label">Excellent</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
-                                                    <div class="bar-5"
+                                                    @if(isset($avis_cfp[0]))
+                                                    <div class="bar-3"
                                                         style="--progress_bar: {{ $avis_cfp[0]->pourcentage }}%;">
                                                     </div>
+                                                    @else
+                                                    <div class="bar-3"
+                                                        style="--progress_bar: 0%;">
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </td>
-                                            <td class="text-right">{{ $avis_cfp[0]->pourcentage }}%
-                                            </td>
+                                            @if(isset($avis_cfp[0]))
+                                                <td class="text-right">{{ $avis_cfp[0]->pourcentage }}%
+                                                </td>
+                                            @else
+                                                <td class="text-right">0%
+                                                </td>
+                                            @endif
                                         </tr>
                                         <tr>
                                             <td class="rating-label">Bien</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
-                                                    <div class="bar-4"
+                                                    @if(isset($avis_cfp[1]))
+                                                    <div class="bar-3"
                                                         style="--progress_bar: {{ $avis_cfp[1]->pourcentage }}%;">
                                                     </div>
+                                                    @else
+                                                    <div class="bar-3"
+                                                        style="--progress_bar: 0%;">
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </td>
-                                            <td class="text-right">{{ $avis_cfp[1]->pourcentage }}%
-                                            </td>
+                                            @if(isset($avis_cfp[1]))
+                                                <td class="text-right">{{ $avis_cfp[1]->pourcentage }}%
+                                                </td>
+                                            @else
+                                                <td class="text-right">0%
+                                                </td>
+                                            @endif
                                         </tr>
                                         <tr>
                                             <td class="rating-label">Moyenne</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
+                                                    @if(isset($avis_cfp[2]))
                                                     <div class="bar-3"
                                                         style="--progress_bar: {{ $avis_cfp[2]->pourcentage }}%;">
                                                     </div>
+                                                    @else
+                                                    <div class="bar-3"
+                                                        style="--progress_bar: 0%;">
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </td>
-                                            <td class="text-right">{{ $avis_cfp[2]->pourcentage }}%
-                                            </td>
+                                            @if(isset($avis_cfp[2]))
+                                                <td class="text-right">{{ $avis_cfp[2]->pourcentage }}%
+                                                </td>
+                                            @else
+                                                <td class="text-right">0%
+                                                </td>
+                                            @endif
                                         </tr>
                                         <tr>
                                             <td class="rating-label">Normal</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
-                                                    <div class="bar-2"
+                                                    @if(isset($avis_cfp[3]))
+                                                    <div class="bar-3"
                                                         style="--progress_bar: {{ $avis_cfp[3]->pourcentage }}%;">
                                                     </div>
+                                                    @else
+                                                    <div class="bar-3"
+                                                        style="--progress_bar: 0%;">
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </td>
-                                            <td class="text-right">{{ $avis_cfp[3]->pourcentage }}%
-                                            </td>
+                                            @if(isset($avis_cfp[3]))
+                                                <td class="text-right">{{ $avis_cfp[3]->pourcentage }}%
+                                                </td>
+                                            @else
+                                                <td class="text-right">0%
+                                                </td>
+                                            @endif
                                         </tr>
                                         <tr>
                                             <td class="rating-label">Terrible</td>
                                             <td class="rating-bar">
                                                 <div class="bar-container">
-                                                    <div class="bar-1"
+                                                    @if(isset($avis_cfp[4]))
+                                                    <div class="bar-3"
                                                         style="--progress_bar: {{ $avis_cfp[4]->pourcentage }}%;">
                                                     </div>
+                                                    @else
+                                                    <div class="bar-3"
+                                                        style="--progress_bar: 0%;">
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </td>
-                                            <td class="text-right">{{ $avis_cfp[4]->pourcentage }}%
-                                            </td>
+                                            @if(isset($avis_cfp[4]))
+                                                <td class="text-right">{{ $avis_cfp[4]->pourcentage }}%
+                                                </td>
+                                            @else
+                                                <td class="text-right">0%
+                                                </td>
+                                            @endif
                                         </tr>
                                     </table>
                                 </div>
