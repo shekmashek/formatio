@@ -59,3 +59,7 @@ alter table demmande_cfp_etp add column resp_etp_id bigint(20) unsigned ;
 alter table demmande_cfp_etp add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
 
 -recopier tout view Collaboration bdd_suiviformation_view_5(collaboration).sql
+
+------------- 8 JIUN 2022 : export_employer:
+
+- récopier toutes les view factures

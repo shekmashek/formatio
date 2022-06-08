@@ -1111,6 +1111,7 @@ class FactureController extends Controller
         $this->fact->lectureFileProjet($path_file);
     }
 
+
     public function edit_facture($numero_fact)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
@@ -1138,7 +1139,14 @@ class FactureController extends Controller
             } else { // false
                 $taxes = $this->fonct->findWhereMulitOne("taxes", ["id"], [2]); // HT
             }
-            return view('admin.facture.edit_facture', compact('taxes','devise', 'init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
+
+            if ($montant_totale->rest_payer > 0) {
+                $lettre_montant = $this->fact->int2str($montant_totale->dernier_montant_ouvert);
+            } else {
+                $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
+            }
+
+            return view('admin.facture.edit_facture', compact('lettre_montant','taxes','devise', 'init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
         }
     }
 

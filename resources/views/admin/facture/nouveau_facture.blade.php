@@ -324,7 +324,15 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col">
+                                <p>Arretée la présente facture à la somme de: <span class="text-muted" id="chiffre_convert_letter"></span>{{" ".$devise->devise}}</p>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+
                         <hr>
+
                         <div class="row mb-2 g-0">
                             <div class="col-12 ">
                                 <h6 class="note_titre ms-2"><span> Notes et autres rémarques</span></h6>

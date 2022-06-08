@@ -360,8 +360,33 @@ WHERE
     type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
 
 
+
+
+
+
 CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
-    v_facture.*,
+  v_facture.cfp_id,
+    v_facture.activiter,
+     v_facture.entreprise_id,
+    v_facture.num_facture,
+    v_facture.other_message,
+    v_facture.mode_financement_id,
+    v_facture.description_financement,
+        v_facture.description_type_facture,
+        v_facture.due_date,v_facture.invoice_date,
+        v_facture.projet_id,
+        (ROUND(v_facture.montant_brut_ht)) montant_brut_ht,
+        (ROUND(v_facture.remise)) remise,
+        (ROUND(v_facture.valeur_remise)) valeur_remise,
+        v_facture.description_remise,
+        v_facture.remise_id,
+        v_facture.reference_remise,
+        (ROUND(v_facture.net_commercial)) net_commercial,
+        (ROUND(v_facture.net_ht)) net_ht,
+        (ROUND(v_facture.tva)) tva,
+        (ROUND(v_facture.net_ttc)) net_ttc,
+        v_facture.type_facture_id,v_facture.reference_type_facture,
+        (ROUND(v_facture.rest_payer)) rest_payer,
     (v_temp_facture.montant_facture) montant_total,
     (v_temp_facture.payement) payement_totale,
     (v_temp_facture.montant_ouvert) dernier_montant_ouvert,
