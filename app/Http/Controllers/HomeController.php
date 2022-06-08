@@ -301,9 +301,9 @@ class HomeController extends Controller
 
 
 
-            $drive = new getImageModel();
-            $drive->create_folder($cfp);
-            $drive->create_sub_folder($cfp, "Mes documents");
+            // $drive = new getImageModel();
+            // $drive->create_folder($cfp);
+            // $drive->create_sub_folder($cfp, "Mes documents");
 
             $formateur = DB::select('select * from demmande_cfp_formateur where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $dmd_cfp_etp = DB::select('select * from demmande_cfp_etp where demmandeur_cfp_id = ' . $centre_fp . ' ');
@@ -758,36 +758,36 @@ class HomeController extends Controller
             // fin pagination
             $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
             $data = DB::select($sql);
-            $dataMontantSession = DB::select("select * from v_liste_facture where entreprise_id=?",[$entreprise_id]);
-          for($i=0;$i<count($data);$i+=1){
-            $dataMontantSession = DB::select("select * from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
-            [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
-              if(count($dataMontantSession)>0){
+        //     $dataMontantSession = DB::select("select * from v_liste_facture where entreprise_id=?",[$entreprise_id]);
+        //   for($i=0;$i<count($data);$i+=1){
+        //     $dataMontantSession = DB::select("select * from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
+        //     [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
+        //       if(count($dataMontantSession)>0){
 
-                        $data[$i]->hors_taxe = $dataMontantSession[0]->hors_taxe;
-                        $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
-                        $data[$i]->qte = $dataMontantSession[0]->qte;
-                        $data[$i]->pu = $dataMontantSession[0]->pu;
-                        $data[$i]->remise_id = $dataMontantSession[0]->remise_id;
-                        $data[$i]->valeur_remise_pourcent = $dataMontantSession[0]->valeur_remise_pourcent;
-                        $data[$i]->valeur_remise_par_session = $dataMontantSession[0]->valeur_remise_par_session;
-                        $data[$i]->description_remise = $dataMontantSession[0]->description_remise;
-                        $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
+        //                 $data[$i]->hors_taxe = $dataMontantSession[0]->hors_taxe;
+        //                 $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
+        //                 $data[$i]->qte = $dataMontantSession[0]->qte;
+        //                 $data[$i]->pu = $dataMontantSession[0]->pu;
+        //                 $data[$i]->remise_id = $dataMontantSession[0]->remise_id;
+        //                 $data[$i]->valeur_remise_pourcent = $dataMontantSession[0]->valeur_remise_pourcent;
+        //                 $data[$i]->valeur_remise_par_session = $dataMontantSession[0]->valeur_remise_par_session;
+        //                 $data[$i]->description_remise = $dataMontantSession[0]->description_remise;
+        //                 $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
 
-              } else {
-                $data[$i]->hors_taxe = null;
-                $data[$i]->hors_taxe_net = null;
-                $data[$i]->qte =null;
-                $data[$i]->pu = null;
-                $data[$i]->remise_id = null;
-                $data[$i]->valeur_remise_pourcent =null;
-                $data[$i]->valeur_remise_par_session = null;
-                $data[$i]->description_remise =null;
-                $data[$i]->num_facture = null;
-              }
+        //       } else {
+        //         $data[$i]->hors_taxe = null;
+        //         $data[$i]->hors_taxe_net = null;
+        //         $data[$i]->qte =null;
+        //         $data[$i]->pu = null;
+        //         $data[$i]->remise_id = null;
+        //         $data[$i]->valeur_remise_pourcent =null;
+        //         $data[$i]->valeur_remise_par_session = null;
+        //         $data[$i]->description_remise =null;
+        //         $data[$i]->num_facture = null;
+        //       }
 
-          }
-
+        //   }
+            $lieuFormation = '';
             $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$entreprise_id]);
             if(count($lieu_formations)>0){
                 $lieuFormation = explode(',  ',$lieu_formations[0]->lieu);
@@ -806,8 +806,8 @@ class HomeController extends Controller
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-            $facture = $this->fonct->findWhere("v_liste_facture", ["cfp_id"], [ $cfp_id]);
-            $montant_facture = $this->fonct->findWhereMulitOne("v_facture_existant", ["cfp_id"], [$cfp_id]);
+            // $facture = $this->fonct->findWhere("v_liste_facture", ["cfp_id"], [ $cfp_id]);
+            // $montant_facture = $this->fonct->findWhereMulitOne("v_facture_existant", ["cfp_id"], [$cfp_id]);
 
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;
 
@@ -844,34 +844,34 @@ class HomeController extends Controller
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
 
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
-            $dataMontantSession = DB::select("select * from v_liste_facture where cfp_id=?",[$cfp_id]);
-            for($i=0;$i<count($data);$i+=1){
-                $dataMontantSession = DB::select("select * from v_liste_facture where cfp_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
-                [$cfp_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
-                if(count($dataMontantSession)>0){
-                    $data[$i]->hors_taxe = $dataMontantSession[0]->hors_taxe;
-                    $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,1);
-                    $data[$i]->qte = $dataMontantSession[0]->qte;
-                    $data[$i]->pu = $dataMontantSession[0]->pu;
-                    $data[$i]->remise_id = $dataMontantSession[0]->remise_id;
-                    $data[$i]->valeur_remise_pourcent = $dataMontantSession[0]->valeur_remise_pourcent;
-                    $data[$i]->valeur_remise_par_session = $dataMontantSession[0]->valeur_remise_par_session;
-                    $data[$i]->description_remise = $dataMontantSession[0]->description_remise;
-                    $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
+            // $dataMontantSession = DB::select("select * from v_liste_facture where cfp_id=?",[$cfp_id]);
+            // for($i=0;$i<count($data);$i+=1){
+            //     $dataMontantSession = DB::select("select * from v_liste_facture where cfp_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
+            //     [$cfp_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
+            //     if(count($dataMontantSession)>0){
+            //         $data[$i]->hors_taxe = $dataMontantSession[0]->hors_taxe;
+            //         $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,1);
+            //         $data[$i]->qte = $dataMontantSession[0]->qte;
+            //         $data[$i]->pu = $dataMontantSession[0]->pu;
+            //         $data[$i]->remise_id = $dataMontantSession[0]->remise_id;
+            //         $data[$i]->valeur_remise_pourcent = $dataMontantSession[0]->valeur_remise_pourcent;
+            //         $data[$i]->valeur_remise_par_session = $dataMontantSession[0]->valeur_remise_par_session;
+            //         $data[$i]->description_remise = $dataMontantSession[0]->description_remise;
+            //         $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
 
-                } else {
-                    $data[$i]->hors_taxe = null;
-                    $data[$i]->hors_taxe_net = null;
-                    $data[$i]->qte =null;
-                    $data[$i]->pu = null;
-                    $data[$i]->remise_id = null;
-                    $data[$i]->valeur_remise_pourcent =null;
-                    $data[$i]->valeur_remise_par_session = null;
-                    $data[$i]->description_remise =null;
-                    $data[$i]->num_facture = null;
-                }
+            //     } else {
+            //         $data[$i]->hors_taxe = null;
+            //         $data[$i]->hors_taxe_net = null;
+            //         $data[$i]->qte =null;
+            //         $data[$i]->pu = null;
+            //         $data[$i]->remise_id = null;
+            //         $data[$i]->valeur_remise_pourcent =null;
+            //         $data[$i]->valeur_remise_par_session = null;
+            //         $data[$i]->description_remise =null;
+            //         $data[$i]->num_facture = null;
+            //     }
 
-            }
+            // }
             // pagination
 
             // $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
@@ -892,7 +892,8 @@ class HomeController extends Controller
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
 
             // dd($data);
-            return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');

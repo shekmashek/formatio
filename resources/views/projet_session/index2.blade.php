@@ -376,13 +376,13 @@
                                     <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                         <th> Session </th>
                                         <th>Module</th>
-                                        <th><i class="bx bx-dollar"></i> {{$ref}}</th>
-                                        <th> <i class='bx bx-group'></i> </th>
+                                        {{-- <th><i class="bx bx-dollar"></i> {{$ref}}</th>
+                                        <th> <i class='bx bx-group'></i> </th> --}}
                                         <th> Entreprise </th>
                                         <th> Modalité </th>
                                         <th> Date du projet</th>
                                         <th>Ville</th>
-                                        
+
                                         <th> Statut </th>
                                         {{-- <th rowspan="2"></th> --}}
                                         {{-- @if ($prj->type_formation_id == 1)
@@ -404,27 +404,27 @@
                                                                 href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                         </td>
                                                         <td>{{ $pj->nom_module }}</td>
-                                                        <td class="text-end">
-                                                            @if($pj->hors_taxe_net!=null) 
+                                                        {{-- <td class="text-end">
+                                                            @if($pj->hors_taxe_net!=null)
                                                                 <a href="{{route('detail_facture_etp',[$pj->cfp_id,$pj->num_facture])}}">
                                                                 {{number_format($pj->hors_taxe_net,0,","," ")}}
                                                                 </a>
-                                                            @else 
+                                                            @else
                                                                 @php
                                                                     echo "<span>-</span>";
                                                                 @endphp
-                                                            @endif           
-                                                        </td>
-                                                        <td>
+                                                            @endif
+                                                        </td> --}}
+                                                        {{-- <td>
                                                             @if($pj->qte!=null)
                                                                 {{$pj->qte}}
-                                                            @else 
+                                                            @else
                                                                 @php
                                                                     echo "<span>-</span>";
                                                                 @endphp
-                                                            @endif  
-                                                        </td>
-                                                        
+                                                            @endif
+                                                        </td> --}}
+
                                                         <td>
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
@@ -1103,8 +1103,8 @@
                                 <th>Type de formation</th>
                                 <th> Session </th>
                                 <th> Module </th>
-                                <th><i class="bx bx-dollar"></i> {{$ref}}</th>
-                                <th> <i class='bx bx-group'></i> </th>
+                                {{-- <th><i class="bx bx-dollar"></i> {{$ref}}</th>
+                                <th> <i class='bx bx-group'></i> </th> --}}
                                 <th>Date session</th>
                                 <th>Ville</th>
                                 <th> Centre de formation </th>
@@ -1137,26 +1137,26 @@
                                                 echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
-                                        <td class="text-end">
-                                           @if($pj->hors_taxe_net!=null) 
+                                        {{-- <td class="text-end">
+                                           @if($pj->hors_taxe_net!=null)
                                            <a href="{{route('detail_facture_etp',[$pj->cfp_id,$pj->num_facture])}}">
                                            {{number_format($pj->hors_taxe_net,0,","," ")}}
                                            </a>
-                                           @else 
+                                           @else
                                                 @php
                                                     echo "<span>-</span>";
                                                 @endphp
-                                           @endif           
+                                           @endif
                                         </td>
                                        <td>
                                         @if($pj->qte!=null)
                                             {{$pj->qte}}
-                                        @else 
+                                        @else
                                             @php
                                                 echo "<span>-</span>";
                                             @endphp
-                                        @endif  
-                                       </td>
+                                        @endif
+                                       </td> --}}
                                         <td>
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
@@ -1168,7 +1168,7 @@
                                             @else
                                                 {{"-"}}
                                             @endif
-                                            
+
                                         </td>
                                         <td class="text-center"> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
