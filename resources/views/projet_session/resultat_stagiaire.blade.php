@@ -171,7 +171,6 @@
     } */
 
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
 <script>
     window.onload = function(){
@@ -351,16 +350,6 @@
             }
         });
     }
-    let htmlpdf = document.getElementById("mahafaly");
-    let save    = document.getElementById("save");
-    var opt = {
-    margin:       20,
-    filename:     'Rapport_d_evaluation.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2 },
-    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
-    };
-    save.onclick = (e) => html2pdf().set(opt).from(htmlpdf).save();
 
 
     </script>
