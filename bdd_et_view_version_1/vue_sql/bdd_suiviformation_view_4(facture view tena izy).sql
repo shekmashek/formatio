@@ -356,7 +356,7 @@ FROM
 
 
 CREATE OR REPLACE VIEW v_liste_facture_tmp AS SELECT
-    factures.cfp_id,
+   factures.cfp_id,
     (factures.projet_id) as projet_id,
     factures.entreprise_id,
     factures.type_facture_id,
@@ -395,6 +395,48 @@ WHERE
     factures.groupe_entreprise_id = v_groupe_projet_module.groupe_entreprise_id AND
     v_groupe_projet_module.groupe_id = v_totale_participant_session.groupe_id AND
     type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
+
+
+-- CREATE OR REPLACE VIEW v_liste_facture AS SELECT
+--     factures.cfp_id,
+--     (factures.projet_id) as projet_id,
+--     factures.entreprise_id,
+--     factures.type_facture_id,
+--     (type_facture.description) description_type_facture,
+--     (type_facture.reference) reference_facture,
+--     factures.hors_taxe,
+--     factures.groupe_entreprise_id,
+--     v_groupe_projet_module.nom_projet,
+--     v_groupe_projet_module.groupe_id,
+--     v_groupe_projet_module.nom_groupe,
+--     (v_groupe_projet_module.date_debut) date_debut_session,
+--     v_groupe_projet_module.reference,
+--     v_groupe_projet_module.nom_module,
+--     v_totale_participant_session.nbre_participant,
+--     invoice_date,
+--     due_date,
+--     tax_id,
+--     (taxes.description) nom_taxe,
+--     taxes.pourcent,
+--     factures.devise,
+--     (factures.description) description_facture,
+--     other_message,
+--     qte,
+--     num_facture,
+--     factures.activiter,
+--     pu,
+--     reference_bc,
+--     type_financement_id,
+--     (mode_financements.description) description_financement
+-- FROM
+--     factures,
+--     v_groupe_projet_module,type_facture,v_totale_participant_session,
+--     taxes,mode_financements
+-- WHERE
+--     factures.tax_id = taxes.id AND
+--     factures.groupe_entreprise_id = v_groupe_projet_module.groupe_entreprise_id AND
+--     v_groupe_projet_module.groupe_id = v_totale_participant_session.groupe_id AND
+--     type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
 
 CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     v_liste_facture_tmp.*,

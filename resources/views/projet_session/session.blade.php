@@ -409,7 +409,7 @@
     <script src="{{asset('assets/js/all.min.js')}}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" /> 
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <div class="p-3 bg-body rounded ">
         <nav class="body_nav m-0">
             <div class="row">
@@ -428,7 +428,9 @@
                         <i class='bx bx-time-five ms-3 me-1' style="font-size: 1rem;"></i>
                         <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>&nbsp;&nbsp;
                         <i class='bx bx-group ms-3' style="font-size: 1rem;"></i>
-                        @if(count($dataMontantSession)>0)
+                        <span class="m-0 ms-1"> apprenant inscrit : {{ $nombre_stg }}</span>
+                        <span class="text-dark ms-1"> </span>
+                        {{-- @if(count($dataMontantSession)>0)
                             @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
                                 @if ($dataMontantSession[0]->qte >0)
                                 <span class="m-0 ms-1"> apprenant inscrit : {{$dataMontantSession[0]->qte}}</span> &nbsp;&nbsp;
@@ -441,14 +443,14 @@
                             @endif
                         @else
                             <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
-                        @endif 
-                        
-                        @can('isCFP')
+                        @endif --}}
+
+                        {{-- @can('isCFP')
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> CA :<strong>
                                 @if(count($dataMontantSession)>0)
                                     @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
-                                        @php 
+                                        @php
                                             $chiffre_affaire = ($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session);
                                             echo number_format($chiffre_affaire,0,","," ");
                                         @endphp
@@ -462,7 +464,7 @@
                                 @php
                                     echo "<span>-</span>";
                                 @endphp&nbsp;
-                                @endif 
+                                @endif
                             {{$ref}}</strong> </p>&nbsp;&nbsp;
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> FA : <strong>
@@ -472,10 +474,10 @@
                                 @php
                                 echo "<span>-</span>";
                             @endphp
-                                @endif 
+                                @endif
                                 {{$ref}}</strong></p>
-                        @endcan
-                        @can('isReferent')
+                        @endcan --}}
+                        {{-- @can('isReferent')
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
                             <p class="text-dark mt-3"> CP : <strong>
                                 @if (count($dataMontantSession) >0)
@@ -485,7 +487,7 @@
                                         echo "<span>-</span>";
                                     @endphp
                                 @endif
-                               
+
                                           {{$ref}}</strong> </p>&nbsp;&nbsp;
                             <p class="m-0"><i class="bx bx-dollar-circle mt-2"></i></p>&nbsp;
                             <p class="text-dark mt-3"> FA : <strong id="frais_annex_entreprise">
@@ -505,7 +507,7 @@
                                     @endphp
                                 @endif
                             &nbsp;{{$ref}}</strong></p>
-                        @endcan
+                        @endcan --}}
                         @if(count($lieu_formation)>0)
                             <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
                             <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
