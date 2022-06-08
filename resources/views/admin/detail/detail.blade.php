@@ -75,38 +75,40 @@
     }
 
 
-.btn_ajouter_detail{
-    padding: .3rem 1rem;
-    padding-bottom: .4rem;
-    color: black;
-    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
-}
+    .btn_ajouter_detail {
+        padding: .3rem 1rem;
+        padding-bottom: .4rem;
+        color: black;
+        /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+    }
 
-.btn_ajouter_detail a{
-    font-size: .8rem;
-    position: relative;
-    bottom: .4rem;
-}
+    .btn_ajouter_detail a {
+        font-size: .8rem;
+        position: relative;
+        bottom: .4rem;
+    }
 
-.btn_ajouter_detail:hover{
-    background: #efefef;
-    border-radius: 30px;
-    color: rgb(0, 0, 0);
-}
-.icon_ajouter_detail{
-    background-image: linear-gradient(60deg, #f206ee, #0765f3);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    font-size: 1.5rem;
-    position: relative;
-    top: .3rem;
-    margin-right: .3rem;
-}
-.titre_detail_session{
-    font-size: 1rem;
-    padding-top: .8rem;
-}
+    .btn_ajouter_detail:hover {
+        background: #efefef;
+        border-radius: 30px;
+        color: rgb(0, 0, 0);
+    }
+
+    .icon_ajouter_detail {
+        background-image: linear-gradient(60deg, #f206ee, #0765f3);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        font-size: 1.5rem;
+        position: relative;
+        top: .3rem;
+        margin-right: .3rem;
+    }
+
+    .titre_detail_session {
+        font-size: 1rem;
+        padding-top: .8rem;
+    }
 </style>
 @if (Session::has('detail_error'))
     <div class="alert alert-danger ms-2 me-2">
@@ -117,23 +119,22 @@
 @endif
 <nav class="d-flex justify-content-between mb-1 ">
     <span class="titre_detail_session">
-    @php
-        $info = $groupe->infos_session($projet[0]->groupe_id);
-        if ($info->difference == null && $info->nb_detail == 0) {
-            echo $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
-        }elseif ($info->difference != null && $info->nb_detail == 1) {
-            echo $info->nb_detail. ' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
-        }elseif ($info->difference != null && $info->nb_detail > 1) {
-            echo $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
-        }
-    @endphp
+        @php
+            $info = $groupe->infos_session($projet[0]->groupe_id);
+            if ($info->difference == null && $info->nb_detail == 0) {
+                echo $info->nb_detail . ' séance , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m';
+            } elseif ($info->difference != null && $info->nb_detail == 1) {
+                echo $info->nb_detail . ' séance , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m';
+            } elseif ($info->difference != null && $info->nb_detail > 1) {
+                echo $info->nb_detail . ' séances , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m';
+            }
+        @endphp
     </span>
     @canany(['isCFP'])
-    <a aria-current="page" data-bs-toggle="modal"
-        data-bs-target="#modal_nouveau_detail">
-        <button class="btn btn_nouveau"><i class='bx bx-plus-medical'></i>
-        Ajouter une séance</button></a>
-        @endcanany
+        <a aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_nouveau_detail">
+            <button class="btn btn_nouveau"><i class='bx bx-plus-medical'></i>
+                Ajouter une séance</button></a>
+    @endcanany
 </nav>
 @if (count($datas) <= 0)
     @if ($type_formation_id == 1)
@@ -254,19 +255,22 @@
                                         </div>
                                     </div>
                                 @endif
-                                <div class="col-md-7 px-0 pe-2 salle_select"  data-id="{{ $i }}" id="{{ $i }}">
+                                <div class="col-md-7 px-0 pe-2 salle_select" data-id="{{ $i }}"
+                                    id="{{ $i }}">
                                     <div class="input-group">
                                         {{-- <input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" id="lieu" required
                                             onblur="ville_Lieu();"> --}}
-                                            <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
-                                                <option>Choississez votre salle de formation&hellip;</option>
-                                                @foreach ($salle_formation as $salle)
-                                                    <option value="{{ $salle->ville.',  '.$salle->salle_formation }}">{{ $salle->ville.', '.$salle->salle_formation }}</option>
-                                                @endforeach
-                                                {{-- <option class="ajout_salle" value="ajout">Ajouter une autre salle</option> --}}
-                                            </select>
-                                        <button id="removeRow" type="button"><i
-                                                class="bx bx-minus-circle mx-1 my-3" style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button>
+                                        <select name="lieu[]" style="height: 2.361rem"
+                                            class="form-control  my-1 salle_de_formation">
+                                            <option>Choississez votre salle de formation&hellip;</option>
+                                            @foreach ($salle_formation as $salle)
+                                                <option value="{{ $salle->ville . ',  ' . $salle->salle_formation }}">
+                                                    {{ $salle->ville . ', ' . $salle->salle_formation }}</option>
+                                            @endforeach
+                                            {{-- <option class="ajout_salle" value="ajout">Ajouter une autre salle</option> --}}
+                                        </select>
+                                        <button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"
+                                                style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button>
                                         <input type="hidden" name="ville_lieu" id="ville_lieu">
                                     </div>
                                 </div>
@@ -284,13 +288,15 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Nouvelle salle de formation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             {{-- <form action="#" method="POST"> --}}
-                                <label for="salle_formation" class="form-label">Salle</label>
-                                <input type="text"  class="form-control" id="salle_formation">
-                                <button type="button" id="enregistrer_salle" class="btn inserer_emargement p-1 mt-1" data-bs-dismiss="modal">Enregistrer</button>
+                            <label for="salle_formation" class="form-label">Salle</label>
+                            <input type="text" class="form-control" id="salle_formation">
+                            <button type="button" id="enregistrer_salle" class="btn inserer_emargement p-1 mt-1"
+                                data-bs-dismiss="modal">Enregistrer</button>
                             {{-- </form> --}}
                         </div>
                     </div>
@@ -330,11 +336,12 @@
     .titre_projet .collapsed {
         color: #637381;
     }
+
     .titre_projet {
         color: #7635dc;
     }
 </style>
-@canany(['isReferent','isFormateur'])
+@canany(['isReferent', 'isFormateur'])
     @if (count($datas) <= 0)
         <div class="d-flex mt-3 titre_projet p-1 mb-1">
             <span class="text-center">Aucun detail de la session</span>
@@ -352,7 +359,8 @@
                 @can('isReferent')
                     <div class="col-md-12 m-1">
                         Confirmer la session "<Strong style="color: #822164">{{ $projet[0]->nom_groupe }}</Strong>" du
-                        {{                         $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} et les details
+                        {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} et les
+                        details
                         ci-dessous
                         <a href="{{ route('acceptation_session', [$projet[0]->groupe_id]) }}"><button type="button"
                                 class="btn btn-success" data-dismiss="modal">Accepter</button></a>
@@ -364,7 +372,8 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
+                            <table class="table table-hover table-borderless" style="border: none"
+                                id="dataTables-example">
                                 <thead style="border-bottom: 1px solid black; line-height: 20px">
                                     <td>Séance</td>
                                     @canany(['isReferent', 'isManager'])
@@ -393,7 +402,7 @@
                                             @endcanany
                                             <td>{{ $d->nom_module }}</td>
                                             @php
-                                                $salle = explode(",  ",$d->lieu);
+                                                $salle = explode(',  ', $d->lieu);
                                             @endphp
                                             <td>{{ $salle[0] }}</td>
                                             <td>{{ $salle[1] }}</td>
@@ -403,22 +412,24 @@
                                             {{-- test commit --}}
                                             <td>
                                                 @if ($d->photos == null)
-                                                    <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                    <span class="m-0 p-2" height="50px" width="50px"
+                                                        style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @else
-                                                    <img src="{{ asset('images/formateurs/'.$d->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                    <img src="{{ asset('images/formateurs/' . $d->photos) }}" alt=""
+                                                        height="30px" width="30px" style="border-radius: 50%;">
+                                                    {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif
                                             </td>
                                             @canany(['isCFP'])
                                                 <td>
                                                     <a href="" aria-current="page" data-bs-toggle="modal"
                                                         data-bs-target="#modal_modifier_detail_{{ $d->detail_id }}"><i
-                                                            class="bx bx-edit bx_modifier ms-2" ></i></a>
+                                                            class="bx bx-edit bx_modifier ms-2"></i></a>
                                                     {{-- <a href="{{ route('destroy_detail',[$d->detail_id]) }}"><i
                                                     class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></a> --}}
                                                     <button type="button" style="background: none" data-bs-toggle="modal"
                                                         data-bs-target="#delete_detail_{{ $d->detail_id }}"><i
-                                                            class="bx bx-trash bx_supprimer ms-4"
-                                                            ></i></button>
+                                                            class="bx bx-trash bx_supprimer ms-4"></i></button>
                                                 </td>
                                             @endcanany
                                             {{-- @canany(['isFormateur'])
@@ -478,7 +489,7 @@
                                                                         <select class="form-control" id="formateur"
                                                                             name="formateur">
                                                                             <option value="{{ $d->formateur_id }}">
-                                                                                {{                                                                                 $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                                                {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                                             </option>
                                                                             @foreach ($formateur as $format)
                                                                                 <option
@@ -570,10 +581,13 @@
                                             </div>
                                             <div class="form-group mx-auto">
                                                 <label for="lieu">Salle de formation</label>
-                                                <select name="lieu[]" style="height: 2.361rem" class="form-control  my-1 salle_de_formation" >
+                                                <select name="lieu[]" style="height: 2.361rem"
+                                                    class="form-control  my-1 salle_de_formation">
                                                     <option>Choississez votre salle de formation&hellip;</option>
                                                     @foreach ($salle_formation as $salle)
-                                                        <option value="{{ $salle->ville.',  '.$salle->salle_formation }}">{{ $salle->ville.', '.$salle->salle_formation }}</option>
+                                                        <option
+                                                            value="{{ $salle->ville . ',  ' . $salle->salle_formation }}">
+                                                            {{ $salle->ville . ', ' . $salle->salle_formation }}</option>
                                                     @endforeach
                                                 </select>
 
@@ -662,8 +676,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
     $('select[name^=ville]').change(function() {
-        if ($(this).val() == 'ajout')
-        {
+        if ($(this).val() == 'ajout') {
             $('#nouvelle_salle').modal('show');
         }
     });
@@ -671,24 +684,26 @@
     $("#enregistrer_salle").on('click', function(e) {
         var salle = $('#salle_formation').val();
         $.ajax({
-            type: "GET"
-            ,url: "{{ route('ajouter_salle_of') }}"
-            , data: {
-                salle:salle
-            }
-            , success: function(response) {
+            type: "GET",
+            url: "{{ route('ajouter_salle_of') }}",
+            data: {
+                salle: salle
+            },
+            success: function(response) {
                 var data = JSON.parse(JSON.stringify(response));
-                if(data['status'] == '200'){
+                if (data['status'] == '200') {
                     var salle = data['salles'];
                     var html = '';
-                    for (var i = 0; i < salle.length; i++){
-                        html += '<option value="'+salle[i].salle_formation+'">'+salle[i].salle_formation+'</option>'
+                    for (var i = 0; i < salle.length; i++) {
+                        html += '<option value="' + salle[i].salle_formation + '">' + salle[i]
+                            .salle_formation + '</option>'
                     }
-                    html += '<option class="ajout_salle" value="ajout">Ajouter une autre salle</option>';
+                    html +=
+                        '<option class="ajout_salle" value="ajout">Ajouter une autre salle</option>';
                     $('.salle_de_formation').html(html);
                 }
-            }
-            , error: function(error) {
+            },
+            error: function(error) {
                 console.log(error)
             }
         });
@@ -810,7 +825,7 @@
                 html += '</div>';
                 html += ' <div class="col-md-7 ps-1 d-flex">';
                 html +=
-                '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
+                    '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
                 html += '<input type="time" name="fin[]" class="form-control my-1" required>';
                 html += '</div>';
                 html += '</div>';
@@ -859,7 +874,8 @@
                 html += '</div>';
                 html += '<div class="col-md-7 px-0 pe-2">';
                 html += '<div class="input-group">';
-                html += '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
+                html +=
+                    '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
                 html +=
                     '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"></i></button> ';
                 html += '<input type="hidden" name="ville_lieu" id="ville_lieu">';
@@ -903,7 +919,7 @@
                 html += '</div>';
                 html += ' <div class="col-md-7 ps-1 d-flex">';
                 html +=
-                '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
+                    '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
                 html += '<input type="time" name="fin[]" class="form-control my-1" required>';
                 html += '</div>';
                 html += '</div>';
@@ -925,7 +941,8 @@
                 html += '</div>';
                 html += '<div class="col-md-7 px-0 pe-2">';
                 html += '<div class="input-group">';
-                html += '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
+                html +=
+                    '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
                 html +=
                     '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3" style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button> ';
                 html += '<input type="hidden" name="ville_lieu" id="ville_lieu">';

@@ -432,7 +432,7 @@
                                 <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
                                 @endif
                             @else{
-                                <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
+                                <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;git
                             }
                             @endif
                         @else
