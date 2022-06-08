@@ -85,6 +85,11 @@
           id="collabore"
           role="tabpanel"
           aria-labelledby="ex1-tab-1">
+        @if(Session::has('message'))
+            <div class="alert alert-danger close">
+                <strong> {{Session::get('message')}}</strong>
+            </div>
+        @endif
         <table class="table table-hover">
             <thead>
                 <tr>

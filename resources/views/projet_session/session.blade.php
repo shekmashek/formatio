@@ -27,6 +27,10 @@
         border-right:.2rem solid  #7635dc;
     }
 
+    /* .nav-item .nav-link.active {
+        border-bottom: none !important;
+    } */
+
     .nav-tabs .nav-link:hover {
         background-color: rgb(245, 243, 243);
         transform: scale(1.1);
@@ -401,21 +405,28 @@
         box-shadow: none;
         outline: none;
         position: relative;
-        align-items: center margin: 0 auto;
+        align-items: center; margin: 0 auto;
     }
 
 </style>
+    <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
         integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<<<<<<< HEAD
     {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script> --}}
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+=======
+    <script src="{{asset('assets/js/all.min.js')}}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+ <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+>>>>>>> b199dd00cc69ba309c97c9d45693d7863bab8bcf
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <div class="p-3 bg-body rounded ">
         <nav class="body_nav m-0">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-9">
                     <div class="d-flex m-0 p-0 height_default">
                         <a href="{{ route('liste_projet') }}" class="retour_projet mt-4"><i class='bx bxs-chevron-left p-0' style="font-size: 2rem;"></i></a>
                         <i class='bx bxs-book-open me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i>
@@ -428,28 +439,100 @@
                     <div class="d-flex m-0 p-0 height_default">
                         <span class="text-dark ms-5" style="font-weight: bold;"> {{ $projet[0]->nom_groupe }} </span>
                         <i class='bx bx-time-five ms-3 me-1' style="font-size: 1rem;"></i>
-                        <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>
-                        {{-- @canany(['isCFP', 'isReferent'])
-                            <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
-                            <p class="text-dark mt-3"> <strong>@php
-                                echo number_format($prix->montant_session, 2, '.', ' ');
-                            @endphp Ar</strong> </p>
-                        @endcanany --}}
+                        <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>&nbsp;&nbsp;
                         <i class='bx bx-group ms-3' style="font-size: 1rem;"></i>
-                        <span class="m-0 ms-1"> apprenant inscrit : </span>
-                        <span class="text-dark ms-1"> {{ $nombre_stg }} </span>
+                        <span class="m-0 ms-1"> apprenant inscrit : {{ $nombre_stg }}</span>
+                        <span class="text-dark ms-1"> </span>
+                        {{-- @if(count($dataMontantSession)>0)
+                            @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
+                                @if ($dataMontantSession[0]->qte >0)
+                                <span class="m-0 ms-1"> apprenant inscrit : {{$dataMontantSession[0]->qte}}</span> &nbsp;&nbsp;
+                                @else
+                                <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
+                                @endif
+                            @else{
+                                <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;git
+                            }
+                            @endif
+                        @else
+                            <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
+                        @endif --}}
+
+                        {{-- @can('isCFP')
+                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
+                            <p class="text-dark mt-3"> CA :<strong>
+                                @if(count($dataMontantSession)>0)
+                                    @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
+                                        @php
+                                            $chiffre_affaire = ($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session);
+                                            echo number_format($chiffre_affaire,0,","," ");
+                                        @endphp
+                                    @else{
+                                        @php
+                                            echo "<span>-</span>";
+                                        @endphp &nbsp;
+                                    }
+                                    @endif
+                                @else
+                                @php
+                                    echo "<span>-</span>";
+                                @endphp&nbsp;
+                                @endif
+                            {{$ref}}</strong> </p>&nbsp;&nbsp;
+                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
+                            <p class="text-dark mt-3"> FA : <strong>
+                                @if ($frais_annex !=null)
+                                    {{ number_format($frais_annex, 0, ',', ' ')}}
+                                @else
+                                @php
+                                echo "<span>-</span>";
+                            @endphp
+                                @endif
+                                {{$ref}}</strong></p>
+                        @endcan --}}
+                        {{-- @can('isReferent')
+                            <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
+                            <p class="text-dark mt-3"> CP : <strong>
+                                @if (count($dataMontantSession) >0)
+                                    {{ number_format($dataMontantSession[0]->hors_taxe, 0, ',', ' ')}}
+                                @else
+                                    @php
+                                        echo "<span>-</span>";
+                                    @endphp
+                                @endif
+
+                                          {{$ref}}</strong> </p>&nbsp;&nbsp;
+                            <p class="m-0"><i class="bx bx-dollar-circle mt-2"></i></p>&nbsp;
+                            <p class="text-dark mt-3"> FA : <strong id="frais_annex_entreprise">
+                                @php
+                                    $Totalfa = 0;
+                                @endphp
+                                @if (count($all_frais_annexe) > 0)
+                                    @foreach ($all_frais_annexe as $fraisAnnexe)
+                                        @php $Totalfa += $fraisAnnexe->montant; @endphp
+                                    @endforeach
+                                    @php
+                                        echo number_format($Totalfa, 0, ',', ' ');
+                                    @endphp
+                                @else
+                                    @php
+                                        echo "<span>-</span>";
+                                    @endphp
+                                @endif
+                            &nbsp;{{$ref}}</strong></p>
+                        @endcan --}}
                         @if(count($lieu_formation)>0)
                             <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
                             <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
                             <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i>
-                            <span class="m-0 ms-1">{{ $lieu_formation[1] }}</span>
+                            <span class="m-0 ms-1">{{ $lieu_formation[1] }}</span>&nbsp;&nbsp;
                         @endif
-                        
+
                     </div>
                     <div class="d-flex height_default m-0 mt-2 p-0">
                         @if ($type_formation_id == 1)
                             <div class="chiffre_d_affaire m-0 p-0 me-3">
-    
+
                                 <div class="d-flex flex-row">
                                     <p class="p-0 mt-3 text-center">Entreprise client <span style="font-weight: 400; color: #26A0DA">{{ $projet[0]->nom_etp }}</span> </p>
                                     &nbsp;&nbsp;
@@ -458,6 +541,7 @@
                                         data-id={{$projet[0]->entreprise_id}} id={{$projet[0]->entreprise_id}} onclick="afficherInfos();">&nbsp;
                                 </div>
                             </div>
+<<<<<<< HEAD
                             <div class="chiffre_d_affaire m-0 p-0 me-3">
                                     <div class="d-flex flex-row">
                                         @php
@@ -483,6 +567,16 @@
                                             @endif
                                         </span>
                                     </div>
+=======
+                        @endif
+                        <div class="chiffre_d_affaire me-2">
+
+                            <div class="d-flex flex-row">
+                                <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
+                                    {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
+                                <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
+                                    height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+>>>>>>> b199dd00cc69ba309c97c9d45693d7863bab8bcf
                             </div>
                         @endif
                             <div class="chiffre_d_affaire m-0 p-0 me-3">
@@ -527,10 +621,10 @@
                                 </strong></p>
                             </div>
                         @endcanany
-    
+
                     </div>
                 </div>
-                <div class="col-lg-4 d-flex justify-content-end">
+                <div class="col-lg-3 d-flex justify-content-end">
                     @canany(['isReferent','isCFP'])
                         <div class="dropdown">
 
@@ -1509,7 +1603,5 @@
                 x.style.display = "none";
             }
         }
-
-
     </script>
 @endsection

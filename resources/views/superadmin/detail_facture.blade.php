@@ -199,7 +199,7 @@
                                             {{ session()->get('message') }}
                                         </div>
                                         @endif
-                                       
+
                                         @if(session()->has('erreur_coupon'))
                                         <div class="alert alert-danger">
                                             {{ session()->get('erreur_coupon') }}
@@ -216,17 +216,23 @@
 
                                         <div class="card detail_virement" style="width: 32rem;display: none">
                                             <div class="card-body">
-                                                <h5 class="card-title">Paiement par virement</h5>
-                                                <p class="card-text">Veuillez remplir les informations vers ce lien</p>
-                                                <a href="#" class="btn btn-primary">Virement</a>
+                                                <h5 class="card-title">Paiement par virement</h5><br>
+                                                <span class="card-text">Veuillez envoyer le virement vers ce compte:<br>
+                                                    Titulaire: SOCIETE UPSKILL SARL<br>
+                                                    Domiciliation: BNI Antananarivo<br>
+                                                    Code banque: 00005 , code guichet : 00012 , compte numéro : 73293520001 , clé RIB : 60
+                                                </span>
                                             </div>
                                         </div>
 
                                         <div class="card detail_cheque" style="width: 32rem;display: none">
                                             <div class="card-body">
                                                 <h5 class="card-title">Paiement par chèque</h5>
-                                                <p class="card-text">Veuillez suivre ce lien</p>
-                                                <a href="#" class="btn btn-primary">Paiement par chèque</a>
+                                                <span class="card-text">Veuillez envoyer le virement vers ce compte:<br>
+                                                    Titulaire: SOCIETE UPSKILL SARL<br>
+                                                    Domiciliation: BNI Antananarivo<br>
+                                                    Code banque: 00005 , code guichet : 00012 , compte numéro : 73293520001 , clé RIB : 60
+                                                </span>
                                             </div>
                                         </div>
 

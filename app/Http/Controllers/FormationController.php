@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
+use App\responsable_cfp;
+use App\demande_devis;
 
 class FormationController extends Controller
 {
@@ -379,20 +381,18 @@ class FormationController extends Controller
         if ($nbPagination == null || $nbPagination <= 0) {
             $nbPagination = 1;
         }
-
         if ($nom_entiter_pag != null) {
             $nom_entiter = $nom_entiter_pag;
         } else {
             $nom_entiter = $req->nom_entiter;
         }
-
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
             $cfps = $this->fonct->findWhereTrieOrderBy("cfps", ["upper(nom)"], ["LIKE"], ["%" . $nom_entiter . "%"], ["nom"], "ASC", ($nbPagination), $nb_limit);
-
             $totaleData = $this->fonct->getNbrePagination("cfps", "id", ["upper(nom)"], ["LIKE"], ["%" . $nom_entiter . "%"], "AND");
             $pagination = $this->formation->nb_entiter_pagination($nom_entiter,  $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
+
             return view('referent.catalogue.cfp_tous', compact('nom_entiter', 'secteurs', 'cfps', 'pagination', 'initial'));
         }
     }
@@ -403,12 +403,10 @@ class FormationController extends Controller
         $ville = null;
         $code_postal = null;
         $region = null;
-
         $nb_limit = 10;
         if ($nbPagination == null || $nbPagination <= 0) {
             $nbPagination = 1;
         }
-
         if ($qter != null) {
             $quartier = $qter;
             $ville = $vlle;
@@ -416,16 +414,13 @@ class FormationController extends Controller
             $region = $reg;
         } else {
             $nom_entiter = $req->nom_entiter;
-
             $quartier = $req->qter;
             $ville = $req->vlle;
             $code_postal = $req->cde_post;
             $region = $req->reg;
         }
-
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
-
             $cfps = $this->fonct->findWhereTrieOrderBy(
                 "cfps",
                 ["adresse_quartier", "adresse_ville", "adresse_code_postal", "adresse_region"],
@@ -436,7 +431,6 @@ class FormationController extends Controller
                 ($nbPagination),
                 $nb_limit
             );
-
             $totaleData = $this->fonct->getNbrePagination(
                 "cfps",
                 "nom",
@@ -445,16 +439,11 @@ class FormationController extends Controller
                 [$quartier, $ville, $code_postal, $region],
                 "AND"
             );
-
             $pagination = $this->fonct->nb_liste_pagination($totaleData, $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
             return view('referent.catalogue.cfp_tous', compact('quartier', 'ville', 'code_postal', 'region', 'secteurs', 'cfps', 'pagination', 'initial'));
         }
     }
-
-
-
-
 
     public function alphabet_filtre(Request $request)
     {
@@ -566,11 +555,17 @@ class FormationController extends Controller
     }
 
     public function demande_devis_client(Request $request){
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id]);
 
+    //  dd($resp_etp);
         $id_module = $request->id;
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         $test = 4;
         $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
+
         $offset = round($domaines_count[0]->nb_domaines / $test);
         $domaine_col1 = DB::select('select * from domaines limit '.$offset.'');
         $domaine_col2 = DB::select('select * from domaines limit '.$offset.' offset '.$offset.'');
@@ -582,6 +577,25 @@ class FormationController extends Controller
         $formations = DB::select('select * from formations where domaine_id = ?', [$domaine_id]);
         $modules = DB::select('select md.pourcentage,md.module_id, md.nom_module, md.formation_id,md.cfp_id, md.duree, md.duree_jour, md.prix, md.prix_groupe, md.modalite_formation, cfp.nom, vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id join formations as frmt on md.formation_id = frmt.id join domaines as dm on frmt.domaine_id = dm.id join cfps as cfp on md.cfp_id = cfp.id where md.status = 2 and md.etat_id = 1 and md.module_id = ?',[$id_module]);
         $modules_counts = DB::select('select count(*) as nb_modules, md.formation_id from modules as md join formations as frmt on md.formation_id = frmt.id where md.status = 2 and md.etat_id = 1 group by md.formation_id');
-        return view('referent.catalogue.demande_devis', compact('formations', 'modules', 'modules_counts','devise', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+        return view('referent.catalogue.demande_devis', compact('resp_etp','formations', 'modules', 'modules_counts','devise', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+    }
+    public function liste_demande_devis(){
+        $id_user = Auth::user()->id;
+        $id_cfp = responsable_cfp::where('user_id', $id_user)->value('cfp_id');
+        $liste=DB::select('select *  from v_liste_demande_devis where cfp_id=?',[$id_cfp]);
+
+        return view('referent.catalogue.liste_demande_devis',compact('liste'));
+
+    }
+    public function detail_demande_devis($id){
+        $detail=demande_devis::findOrfail($id);
+        // $liste=DB::select('select *  from v_liste_demande_devis where cfp_id=?',[$id_cfp]);
+        return view('referent.catalogue.detail_demande_devis',compact('detail'));
+    }
+    public function delete_demande_devis($id)
+    {
+        // DB::delete('delete devise from devise where id=?',[$id]);
+        DB::table('demande_devis')->delete($id);
+        return back();
     }
 }

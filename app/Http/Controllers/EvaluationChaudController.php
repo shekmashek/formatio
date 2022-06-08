@@ -229,30 +229,7 @@ class EvaluationChaudController extends Controller
 
             // recommanderiez vous cette formation
             // q13
-                // $res_q13 = DB::select('
-                //     select
-                //         nsg.groupe_id,
-                //         count(stagiaire_id) as nombre_stg,
-                //         ifnull(
-                //             ROUND(
-                //                 (
-                //                     (count(stagiaire_id) * case when desc_champ = "Oui" then 2 when desc_champ = "Non" then 1 end) /(nsg.total_stagiaire * 2)
-                //                 ) * 100,
-                //                 1
-                //             ),
-                //             0
-                //         ) as pourcentage,
-                //         desc_champ
-                //     from
-                //         v_reponse_evaluationchaud re
-                //     join v_nombre_stagiaire_groupe nsg on nsg.groupe_id = re.groupe_id
-                //     where
-                //         id_qst_fille = ? and nsg.groupe_id = ?
-                //     group by
-                //         nsg.groupe_id,nsg.total_stagiaire,
-                //         desc_champ order by desc_champ desc',[17,$groupe]);
-
-                $res_q13 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? and point < 3',[$groupe,17]);
+                $res_q13 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? and point < 3 order by point desc',[$groupe,17]);
                 if(count($res_q13)<=0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }

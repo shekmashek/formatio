@@ -76,8 +76,8 @@ class EvaluationChaud extends Model
         DB::beginTransaction();
 
         try {
-            DB::insert("INSERT INTO reponse_evaluationchaud(points,reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values (?,?,?,?,$groupe_id,$cfp_id,NOW(),NOW())",
-            [$point,$reponse,$id_desc_champ,$id_stag]);
+            DB::insert("insert into reponse_evaluationchaud(points,reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values (?,?,?,?,?,?,NOW(),NOW())",
+            [$point,$reponse,$id_desc_champ,$id_stag,$groupe_id,$cfp_id]);
             DB::commit();
             $message['success']="Votre évaluation à chaud est terminée avec succès.";
         } catch (Exception $e) {
@@ -115,12 +115,14 @@ class EvaluationChaud extends Model
                 $valiny['point'][$i] = $str[2];
             }
         }
-        // dd($valiny);
+        // DB::enableQueryLog();
+        // DB::insert('insert into reponse_evaluationchaud(points,reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values(?,?,?,?,?,?,NOW(),NOW())',[$valiny['point'][16],$valiny['result'][16],$valiny['id_champ'][16],$id_stag,$groupe_id,$cfp_id]);
+        
         //============ insert multiple
         for ($j=0; $j <count($valiny['result']) ; $j++) {
             $message= $this->insert($valiny['point'][$j],$valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$groupe_id,$cfp_id);
         }
-
+        // dd(DB::getQueryLog());
         return $message;
     }
 

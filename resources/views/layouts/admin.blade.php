@@ -477,6 +477,15 @@
             </li>
 
             @endcan
+            @can(['isCFP'])
+            <li>
+                <a href="{{route('liste_demande_devis')}}" class="d-flex nav_linke">
+                    <i class='bx bxs-notepad'></i>
+                    <span class="links_name"> Demande devis</span>
+                </a>
+            </li>
+
+            @endcan
             @can('isFormateur')
             <li>
                 <a href="{{route('profilProf',Auth::user()->id)}}" class="d-flex nav_linke">

@@ -29,6 +29,10 @@ Route::get('contacts', function () {
 });
 //Rout send email
 Route::post('/envoyer', 'SendEmailController@sendMail')->name('contact');
+Route::post('/mail_demande_devis', 'Send_devis_mail@mail_demande_devis')->name('mail_demande_devis');
+Route::get('demande_dev',function (){
+    return view('test_demande_devis');
+});
 //route sendemail2
 
 Route::post('/email', 'email@envoie')->name('contacter');
@@ -384,6 +388,12 @@ Route::get('select_par_module/{id}', 'FormationController@affichageParModule')->
 Route::get('select_tous', 'FormationController@affichageTousCategories')->name('select_tous');
 Route::get('inscriptionInter/{id_groupe}/{type_formation_id}', 'SessionController@inscription')->name('inscriptionInter');
 Route::get('demande_devis_client/{id}', 'FormationController@demande_devis_client')->name('demande_devis_client');
+Route::get('liste_demande_devis', 'FormationController@liste_demande_devis')->name('liste_demande_devis');
+Route::get('delete_demande_devis/{id}', 'FormationController@delete_demande_devis')->name('delete_demande_devis');
+Route::get('detail_demande_devis/{id}', 'FormationController@detail_demande_devis')->name('detail_demande_devis');
+
+
+
 //route annuaire de cfp
 Route::get('annuaire/{page?}','FormationController@annuaire')->name('annuaire');
 Route::get('alphabet_filtre','FormationController@alphabet_filtre')->name('alphabet_filtre');
@@ -975,7 +985,7 @@ Route::get('recherche_admin', 'RecherchemultiController@index')->name('recherche
 //route politque confidentialité
 Route::get('/politique_confidentialite', function () {
     return view('/politique_confidentialite');
-});
+})->name('politique_confidentialite');
 Route::get('/politique_confidentialites', function () {
     return view('/politique_confidentialites');
 });
@@ -1376,3 +1386,4 @@ Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
 
 
 
+Route::get('/raport','SessionController@fiche')->name('fichePDF');

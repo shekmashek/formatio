@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\responsable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use App\Mail\demande_devis\demande_devisMail;
@@ -46,21 +46,30 @@ class DemandeDevisController extends Controller
      */
     public function store(Request $request)
     {
+        $user_id = Auth::user()->id;
         $id_module = $request->id_module;
+        $nom=$request->nom;
+        $mail=$request->mail;
+        $objet=$request->objet;
+        $description=$request->details;
         $id_cfp = $request->id_cfp;
         $fonct = new FonctionGenerique();
+        $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
+        // dd( $etp_id );
         if (Gate::allows('isReferent')) {
             $module = $fonct->findWhereMulitOne("v_module",["id"],[$id_module]);
             $resp_cfp = $fonct->findWhereMulitOne("responsables_cfp",["cfp_id","prioriter"],[$id_cfp,"1"]);
             $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id]);
             $etp = $fonct->findWhereMulitOne("entreprises",["id"],[$resp_etp->entreprise_id]);
-
+            $resp_etp_id=$resp_etp->id;
+        DB::insert('insert into demande_devis (nom,email,objet,description,etp_id,resp_etp_id,cfp_id,module_id)  values (?,?,?,?,?,?,?,?)',[$nom,$mail,$objet,$description,$etp_id ,$resp_etp_id,$id_cfp,$id_module]);
+            //   url()->previous();
             // dd($resp_cfp);
             // dd($resp_etp);
             // dd($etp);
             // ($resp_cfp,$module,$resp_etp,$etp);
-            Mail::to($resp_etp->email_resp)->send(new demande_devisMail($resp_cfp, $module, $resp_etp, $etp));
-            return redirect()->route('liste_formation');
+         //   Mail::to($resp_etp->email_resp)->send(new demande_devisMail($resp_cfp, $module, $resp_etp, $etp));
+            return redirect()->back()->with('message', 'Votre demande de devis a été bien envoyé!');
         }
 
     }
@@ -73,7 +82,7 @@ class DemandeDevisController extends Controller
      */
     public function show($id)
     {
-        //
+     
     }
 
     /**
@@ -110,3 +119,4 @@ class DemandeDevisController extends Controller
         //
     }
 }
+ 

@@ -174,5 +174,14 @@ class Groupe extends Model
         return $format;
     }
 
+    public function statut_valuation_chaud($groupe_id,$stagiaire_id){
+        $result = DB::select('select stagiaire_id from reponse_evaluationchaud where groupe_id = ? and stagiaire_id = ?',[$groupe_id,$stagiaire_id]);
+        if(count($result)>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
 }
 ?>

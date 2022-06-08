@@ -198,7 +198,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="accepter" id="flexCheckDefault" name="accepter">
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    <small class="smalli">En envoyant cette demande d'abonnement, j'accepte les politiques de confidentialités,les Conditions générales d'utilisation,les conditions générales de vente </small>
+                                    <small class="smalli">En envoyant cette demande d'abonnement,j'accepte <a href="{{route('politique_confidentialite')}}" target="blank"> les politiques de confidentialités</a>,<a href="{{route('condition_generale_de_vente')}}" target="blank">les Conditions générales d'utilisation,les conditions générales de vente</a> </small>
                                 </label>
                             </div>
                         </div>

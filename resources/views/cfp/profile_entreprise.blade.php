@@ -144,7 +144,7 @@
       <!-- Tabs content -->
       @if(Session::has('error'))
       {{-- eto --}}
-
+      
       <div class="tab-content" id="ex1-content">
         <div
           class="tab-pane fade "
@@ -156,6 +156,11 @@
             <div class="row">
                 
             </div> 
+            @if(Session::has('message'))
+            <div class="alert alert-danger close">
+                <strong> {{Session::get('message')}}</strong>
+            </div>
+            @endif
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -443,6 +448,11 @@
             <div class="row">
                 
             </div> 
+            @if(Session::has('message'))
+            <div class="alert alert-danger close">
+                <strong> {{Session::get('message')}}</strong>
+            </div>
+            @endif
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -732,6 +742,11 @@
             <div class="row">
                 
             </div> 
+            @if(Session::has('message'))
+            <div class="alert alert-danger close">
+                <strong> {{Session::get('message')}}</strong>
+            </div>
+            @endif
             <table class="table table-hover">
                 <thead>
                     <tr>
