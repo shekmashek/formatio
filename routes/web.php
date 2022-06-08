@@ -1356,3 +1356,4 @@ Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploy
 Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInfo');
 
 Route::get('resultat_evaluation/{groupe_id}','EvaluationChaudController@evaluation_chaud_pdf')->name('resultat_evaluation');
+Route::get('/raport','SessionController@fiche')->name('fichePDF');

@@ -3,7 +3,14 @@
 @section('content')
 <!-- CSS only -->
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
+    h3{
+        font-weight: lighter;
+    }
     .btn_note_radar{
         width: 100%;
         background-color: rgb(241, 241, 242);
@@ -125,6 +132,7 @@
         border: 1px solid #F16529;
         background-color: #F16529;
         color: #fff;
+        font-size:15px;
     }
     .label_non_acquis{
         background-color: #e90721;
@@ -132,6 +140,8 @@
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         color: #fff;
+        width: 300px;
+        font-size:15px;
     }
     .label_acquis{
         background-color: #00CDAC;
@@ -139,9 +149,39 @@
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
         color: #fff;
+        font-size:15px;
     }
+    .tete{
+        width: 100%;
+        height: 50px;
+        background:linear-gradient(to right, #5d1cc5,#91d4e5);
+        
+    }
+    /* .information{
+        width: 100%;
+        height: 170px;
+    } */
+    p{
+        line-height: 15px;
+        font-weight:lighter;
+    }
+    /* .evaluation{
+        width: 100%;
+        height: 1900px;
+    } */
+    
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
 <script>
+    window.onload = function(){
+        document.getElementById('bobi').addEventListener("click",()=>{
+            const test = document.getElementById('bob')
+            
+            html2pdf().from(test).save();
+            
+        })
+    }
     function modifier_note(){
         document.getElementById('btn_note').style.backgroundColor = "white";
         document.getElementById('btn_note').style.border = "1px solid grey";
@@ -179,8 +219,9 @@
                     $('#resultat_eval').html('');     
 
                     var html = '<div class="row p-2">';
+                    var html = '<div class="col-lg-12">'
                     for(let i = 0 ; i < detail.length ; i++){
-                        html += '<div class="col-lg-5 text-start p-1"><span class="mt-2">'+detail[i].titre_competence+'</span></div>';
+                        html += '<div class="col-lg-8 text-start p-1"><span class="mt-2"><i class="bi bi-check-circle"></i>&nbsp;'+detail[i].titre_competence+'</span></div>';
                         // html += '<div class="col-lg-2"><input class="p-0 m-1 py-1" style="height: 1.98rem; width: 4rem; justify-content:center;text-align:center;" type="number" min="1" max="10" name="note['+detail[i].competence_id+']" value="'+detail[i].note_apres+'" required></div>';
                         html += '<div class="col-lg-7">';
                             html += '<div class="d-flex flex-row">';
@@ -202,7 +243,7 @@
                     }
 
                     html += '</div>';
-                    
+                    html += '</div>';
                     $('#resultat_eval').append(html);
 
                     if(globale[0].status == 2){
@@ -212,7 +253,6 @@
                     }
                 }else{
                     $('#resultat_eval').html('');
-
                     var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
                     $('#choix_stagiaire').hide();
                     $('#validation_module').append(html); 
@@ -235,7 +275,9 @@
             label: "Objectif à atteindre",
             backgroundColor: "rgba(0,0,250,0.1)",
             borderColor: "rgba(0,0,250,0.6)",
+            fontSize: "30px",
             data: JSON.parse(data_objectif)
+
         },
         {
             label: "Avant formation",
@@ -264,7 +306,7 @@
                     stepSize: 1
                 },
                 pointLabels: {
-                    fontSize: 18
+                    fontSize: 30
                 }
             },
             legend: {
@@ -309,39 +351,110 @@
             }
         });
     }
+    let htmlpdf = document.getElementById("mahafaly");
+    let save    = document.getElementById("save");
+    var opt = {
+    margin:       20,
+    filename:     'Rapport_d_evaluation.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+    };
+    save.onclick = (e) => html2pdf().set(opt).from(htmlpdf).save();
+   
+    
     </script>
 <script src="https://fonts.googleapis.com/css?family=Lato"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" ></script>
+<button class="btn btn-info text-light" id="bobi" style="justify-content: flex-end" id="save" >PDF</button>
+<div id="mahafaly">
 
-    <nav class="d-flex justify-content-between mb-1 ms-5">
-        <span class="titre_detail_session"><p style="font-size: 16px" id="eval_globale"></p></span>
-    </nav>
-    <div class="mt-2 p-1">
-        <div class="row">
-            <div class="col-lg-12 "></div>
+
+<div class="container  mt-3 p-2" id="bob"  >
+    
+    <div class="row" >
+        <div class="col-lg-12" >
+            
+            
+            <div class="tete p-2" style="display: flex;">
+                @foreach ($logo as $g)
+                <img style="width: 100px;height:60px;margin-top:-10px" src="{{asset('images/CFP/Numerika19-01-2022.png')}}" alt="">
+                @endforeach
+                <h3 class="text-light" style="margin-left:150px">RAPPORT D'EVALUATION</h3>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-lg-5 ms-2"> 
-                <div id="resultat_eval" class="mt-3"></div>
-                <script type="text/javascript">
-                    var id_stg = @php echo $stagiaire; @endphp;
-                    var groupe_id = @php echo $groupe_id; @endphp;
-                    eval_stagiaire(id_stg,groupe_id);
-                </script>
+        <div class="col-lg-12">
+            <div class="information  p-4">
+                <div class="row">
+                    @foreach ($module as $m )
+                       
+                   
+                    
+                    <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
+                        <p><i class="bx bxs-customize mb-1  mt-1 align-middle" style="font-size:22px;"></i> {{$m->nom_module}}</p>
+                        <p><i class="bi bi-calendar-check-fill align-middle" style="font-size:18px;"></i> &nbsp; {{ \Carbon\Carbon::parse($m->date_debut)->format('d-m-Y')}} au {{ \Carbon\Carbon::parse($m->date_fin)->format('d-m-Y')}}</p>
+                        <p><i class="bi bi-clipboard-check-fill align-middle" style="font-size:18px;"></i> &nbsp;{{$m->objectif}}</p>
+                    </div>
+                    <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
+                        <p><i class="bi bi-file-person-fill mt-2 align-middle" style="font-size:25px;"></i>&nbsp;Formateur : {{$m->nom}}</p>
+                        <p><i class="bi bi-google align-middle" style="font-size:22px;"></i>&nbsp;&nbsp;Email : {{$m->email}}</p>
+                        <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : {{$m->telephone}}</p>
+                    </div>
+
+                    
+                    @foreach ($stage as $u)
+                    <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
+                        <p><i class="bi bi-person-circle mt-3 align-middle" style="font-size:22px;"></i>&nbsp;Apprenant : {{$u->nom_stagiaire}} {{$u->prenom_stagiaire}} </p>
+                        <p><i class="bi bi-google align-middle" style="font-size:22px;"></i>&nbsp;&nbsp;Email : {{$u->mail_stagiaire}}</p>
+                        <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : {{$u->telephone_stagiaire}}</p>
+                    </div>
+                    @endforeach
+                        
+                    
+                </div>
+                
             </div>
-            <div class="col-lg-6">
-                <canvas class='mt-3' id="marksChart" width="500" height="300"></canvas>
-                <script type="text/javascript">
-                    var id_stg = @php echo $stagiaire; @endphp;
-                    var groupe_id = @php echo $groupe_id; @endphp;
-                    radar(id_stg,groupe_id);
-                </script>
+            <div class="col-lg-12 mt-2 " >
+                <div class="description p-4">
+                    <h3>Description de la formation :</h3>
+                    <p>- Formation {{$m->modalite}} propose par la centre de formation {{$m->nom}}, qui a pour objectif {{$m->objectif}} </p>
+                </div>
+                @endforeach
             </div>
+            <div class="evaluation  p-4">
+                <h3>Résultat :</h3>
+                <div class="mt-2 p-1">
+                    <div class="row">
+                        <div class="col-lg-12 "></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 ms-2"> 
+                            <div id="resultat_eval" class="mt-3"></div>
+                            <script type="text/javascript">
+                                var id_stg = @php echo $stagiaire; @endphp;
+                                var groupe_id = @php echo $groupe_id; @endphp;
+                                eval_stagiaire(id_stg,groupe_id);
+                            </script>
+                        </div>
+                        <div class="col-lg-6">
+                            <canvas class='mt-3' style="margin-left:-100px;"  id="marksChart" width="500" height="300"></canvas>
+                            <script type="text/javascript">
+                                var id_stg = @php echo $stagiaire; @endphp;
+                                var groupe_id = @php echo $groupe_id; @endphp;
+                                radar(id_stg,groupe_id);
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                {{-- <button  onclick="teste();" class="btn btn-info">Save</button>  --}}
+            
+            
+            </div>  
         </div>
     </div>
+</div>
 
+</div>
 
-
-@endsection
+@endsection 
