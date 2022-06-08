@@ -318,7 +318,44 @@ CREATE OR REPLACE VIEW v_totale_participant_session AS SELECT
 (groupes.id) groupe_id,(COUNT(stagiaire_id)) nbre_participant
 FROM groupes LEFT JOIN  participant_groupe ON groupes.id = groupe_id GROUP BY groupes.id;
 
-CREATE OR REPLACE VIEW v_liste_facture AS SELECT
+
+
+
+CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
+    v_facture.*,
+    (v_temp_facture.montant_facture) montant_total,
+    (v_temp_facture.payement) payement_totale,
+    (v_temp_facture.montant_ouvert) dernier_montant_ouvert,
+    (v_temp_facture.due_date) date_facture
+FROM
+    v_facture,
+    v_temp_facture
+WHERE
+    v_facture.cfp_id = v_temp_facture.cfp_id AND  v_facture.num_facture = v_temp_facture.num_facture
+    AND v_facture.entreprise_id = v_temp_facture.entreprise_id ;
+
+
+CREATE OR REPLACE VIEW v_facture_existant AS SELECT
+    v_facture_existant_tmp.*,
+    ROUND((
+        CASE WHEN description_remise = '%' THEN valeur_remise ELSE(valeur_remise * 100) / montant_brut_ht
+    END
+),2) valeur_remise_pourcent,
+(
+    CASE WHEN(
+        payement_totale - montant_total
+    ) < 0 AND payement_totale <= 0 THEN 'valider' WHEN(
+        payement_totale - montant_total
+    ) < 0 AND payement_totale > 0 THEN 'en_cour' WHEN(
+        payement_totale - montant_total
+    ) >= 0 THEN 'terminer'
+END
+) facture_encour
+FROM
+    v_facture_existant_tmp;
+
+
+CREATE OR REPLACE VIEW v_liste_facture_tmp AS SELECT
     factures.cfp_id,
     (factures.projet_id) as projet_id,
     factures.entreprise_id,
@@ -359,36 +396,20 @@ WHERE
     v_groupe_projet_module.groupe_id = v_totale_participant_session.groupe_id AND
     type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
 
-
-CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
-    v_facture.*,
-    (v_temp_facture.montant_facture) montant_total,
-    (v_temp_facture.payement) payement_totale,
-    (v_temp_facture.montant_ouvert) dernier_montant_ouvert,
-    (v_temp_facture.due_date) date_facture
+CREATE OR REPLACE VIEW v_liste_facture AS SELECT
+    v_liste_facture_tmp.*,
+    ROUND((
+        v_liste_facture_tmp.hors_taxe * v_facture_existant.valeur_remise_pourcent
+    ) / 100) AS valeur_remise_par_session,
+v_facture_existant.remise_id,
+v_facture_existant.valeur_remise,
+v_facture_existant.description_remise,
+v_facture_existant.valeur_remise_pourcent
 FROM
-    v_facture,
-    v_temp_facture
+    v_liste_facture_tmp,
+    v_facture_existant
 WHERE
-    v_facture.cfp_id = v_temp_facture.cfp_id AND  v_facture.num_facture = v_temp_facture.num_facture
-    AND v_facture.entreprise_id = v_temp_facture.entreprise_id ;
-
-
-CREATE OR REPLACE VIEW v_facture_existant AS SELECT
-    v_facture_existant_tmp.*
-    ,
-    (
-        CASE
-        WHEN(payement_totale - montant_total) < 0 AND payement_totale <= 0 THEN 'valider'
-        WHEN(payement_totale - montant_total) < 0 AND payement_totale > 0 THEN 'en_cour'
-        WHEN(payement_totale - montant_total) >= 0 THEN 'terminer'
-    END
-) facture_encour
-FROM
-    v_facture_existant_tmp;
-
-
-
+    v_liste_facture_tmp.projet_id = v_facture_existant.projet_id AND v_liste_facture_tmp.num_facture = v_facture_existant.num_facture;
 CREATE OR REPLACE VIEW v_facture_actif AS SELECT
     v_facture_existant.cfp_id,
     v_facture_existant.activiter,

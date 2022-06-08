@@ -52,7 +52,7 @@ class GroupeController extends Controller
         // $formations = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
         // $modules = $fonct->findAll("modules");
         $modules = $fonct->findWhere("modules", ["cfp_id",'status'], [$cfp_id,2]);
-
+        
         $etp1 = $fonct->findWhere("v_demmande_cfp_etp", ['cfp_id'], [$cfp_id]);
         $etp2 = $fonct->findWhere("v_demmande_etp_cfp", ['cfp_id'], [$cfp_id]);
         $entreprise = $fonct->concatTwoList($etp1, $etp2);
