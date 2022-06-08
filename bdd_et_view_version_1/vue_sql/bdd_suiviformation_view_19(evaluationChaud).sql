@@ -131,7 +131,7 @@ select
 from
     v_question_fille_point qfp
     left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille
-    and qfp.point = ec.points
+    and qfp.point = ec.points;
 
 
 select
@@ -148,7 +148,8 @@ from
     v_evaluation_chaud_resultat
 where
     id_qst_fille = 3
-    or id_qst_fille = 4
+    or id_qst_fille = 4;
+
 select
     id_qst_fille,
     qst_fille,
@@ -188,7 +189,7 @@ create table reponse_total(
 insert into reponse_total value('Oui');
 insert into reponse_total value('Non');
 
-select * from reponse_total cross join v_reponse_evaluationchaud
+select * from reponse_total cross join v_reponse_evaluationchaud;
 
 select
     re.groupe_id,

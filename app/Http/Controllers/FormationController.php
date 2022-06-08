@@ -73,7 +73,7 @@ class FormationController extends Controller
             // $domaine_col5 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*4).'');
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
             // $categorie = DB::select('select * from formations where status = 1 limit 5');
-            $module = DB::select('select md.*,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where  status = 2 and etat_id = 1 order by md.pourcentage desc limit 6 ');
+            $module = DB::select('select md.*,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where  status = 2 and etat_id = 1  limit 6 ');
             return view('referent.catalogue.formation', compact('devise','categorie', 'module','domaine_col1','domaine_col2','domaine_col3','domaine_col4'));
         }
     }

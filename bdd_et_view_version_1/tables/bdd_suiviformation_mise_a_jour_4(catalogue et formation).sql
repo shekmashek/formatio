@@ -74,7 +74,6 @@ CREATE TABLE formations (
 -- (15, 'Webmarketing', 6, '2021-11-17 04:08:53', '2021-11-17 04:08:53'),
 -- (16, 'PAO et Multimédia', 6, '2021-11-17 04:09:04', '2021-11-17 04:09:04');
 
-
 INSERT INTO `formations` (`id`, `nom_formation`, `domaine_id`, `created_at`, `updated_at`, `cfp_id`) VALUES
 (1, 'Stock', 1, NULL, NULL,NULL),
 (2, 'Import-export', 1, NULL, NULL,NULL),

@@ -20,8 +20,8 @@
                     else 'status_confirme' end
             when g.status = 1 then 'status_grise'
             when g.status = 0 then 'Créer'end class_status_groupe
-    from groupes g
-select * from v_projet_session  order by date_projet desc limit 0,3
+    from groupes g;
+select * from v_projet_session  order by date_projet desc limit 0,3;
 
 CREATE OR REPLACE VIEW v_detailmodule AS
     SELECT
@@ -77,7 +77,7 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         mf.domaine_id = dom.id
     join type_formations tf
         on tf.id = p.type_formation_id
-
+;
 
 select concat(SUBSTRING(nom_formateur, 1, 1),SUBSTRING(prenom_formateur, 1, 1)) as sans_photo from formateurs;
 
@@ -115,8 +115,7 @@ SELECT
     e.email_etp,
     e.site_etp,
     e.activiter AS activer_etp,
-    e.telephone_etp,
-    r.
+    e.telephone_etp
 FROM
     demmande_etp_cfp d
 JOIN cfps c ON

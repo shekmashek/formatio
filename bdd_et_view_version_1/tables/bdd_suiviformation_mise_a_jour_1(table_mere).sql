@@ -214,7 +214,7 @@ CREATE TABLE responsables_cfp(
   nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   sexe_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  date_naissance_resp_cfp date default current_timestamp(),
+  date_naissance_resp_cfp datetime default current_timestamp(),
   cin_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXXX',
   email_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,
