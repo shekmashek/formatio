@@ -411,7 +411,7 @@
     <div class="p-3 bg-body rounded ">
         <nav class="body_nav m-0">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-9">
                     <div class="d-flex m-0 p-0 height_default">
                         <a href="{{ route('liste_projet') }}" class="retour_projet mt-4"><i class='bx bxs-chevron-left p-0' style="font-size: 2rem;"></i></a>
                         <i class='bx bxs-book-open me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i>
@@ -480,7 +480,7 @@
 
                     </div>
                 </div>
-                <div class="col-lg-4 d-flex justify-content-end">
+                <div class="col-lg-3 d-flex justify-content-end">
                     @canany(['isReferent','isCFP'])
                         <div class="dropdown">
 
