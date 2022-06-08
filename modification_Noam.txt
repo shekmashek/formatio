@@ -39,3 +39,7 @@ DROP INDEX cin;
 
 ALTER TABLE chef_departements
 DROP INDEX cin;
+
+
+(-----------branch modif_detail_projet ):
+- recopier tout view facture dans bdd_suiviformation_view_4(facture view tena izy).sql

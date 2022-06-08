@@ -21,7 +21,7 @@
             border-radius: 5px;
             background-color: #637381;
             color: white;
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
             position: relative;
@@ -32,7 +32,7 @@
             border-radius: 5px;
             background-color: #00CDAC;
             color: white;
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
             position: relative;
@@ -43,7 +43,7 @@
             border-radius: 5px;
             background-color: #314755;
             color: white;
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
             position: relative;
@@ -54,7 +54,7 @@
             border-radius: 5px;
             background-color: #26a0da;
             color: white;
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
             position: relative;
@@ -65,7 +65,7 @@
             border-radius: 5px;
             background-color: #b31217;
             color: white;
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
             position: relative;
@@ -76,7 +76,7 @@
             border-radius: 5px;
             background-color: #1E9600;
             color: white;
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
             position: relative;
@@ -87,7 +87,7 @@
             border-radius: 5px;
             background-color: #2B32B2;
             color: white;
-            align-items: center margin: 0 auto;
+            align-items: center ;margin: 0 auto;
             padding-end: 1rem;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
@@ -99,7 +99,7 @@
             border-radius: 5px;
             background-color: rgb(15, 126, 145);
             color: whitesmoke;
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
             padding-top: 2.5px;
             padding-bottom: 2.5px;
             position: relative;
@@ -111,7 +111,7 @@
             background-color: #26a0da;
             color: rgb(255, 255, 255);
             /* width: 60%; */
-            align-items: center margin: 0 auto;
+            align-items: center; margin: 0 auto;
 
             padding: 0.3rem 0.5rem !important;
         }
@@ -375,11 +375,14 @@
                                     aria-labelledby="collapseprojet_{{ $prj->projet_id }}">
                                     <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                         <th> Session </th>
-                                        <th> Module </th>
+                                        <th>Module</th>
+                                        <th><i class="bx bx-dollar"></i> {{$ref}}</th>
                                         <th> <i class='bx bx-group'></i> </th>
                                         <th> Entreprise </th>
                                         <th> Modalité </th>
                                         <th> Date du projet</th>
+                                        <th>Ville</th>
+                                        
                                         <th> Statut </th>
                                         {{-- <th rowspan="2"></th> --}}
                                         {{-- @if ($prj->type_formation_id == 1)
@@ -387,7 +390,7 @@
                                         @endif --}}
                                         <th>Actions</th>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="text-center">
 
                                         @if ($prj->totale_session <= 0)
                                             <tr>
@@ -400,13 +403,29 @@
                                                         <td class="tbody_projet"> <a
                                                                 href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                         </td>
-                                                        <td class="text-start">{{ $pj->nom_module }}</td>
+                                                        <td>{{ $pj->nom_module }}</td>
                                                         <td class="text-end">
-                                                            @php
-                                                                echo $groupe->nombre_apprenant_session($pj->groupe_id);
-                                                            @endphp
+                                                            @if($pj->hors_taxe_net!=null) 
+                                                                <a href="{{route('detail_facture_etp',[$pj->cfp_id,$pj->num_facture])}}">
+                                                                {{number_format($pj->hors_taxe_net,0,","," ")}}
+                                                                </a>
+                                                            @else 
+                                                                @php
+                                                                    echo "<span>-</span>";
+                                                                @endphp
+                                                            @endif           
                                                         </td>
-                                                        <td class="text-start">
+                                                        <td>
+                                                            @if($pj->qte!=null)
+                                                                {{$pj->qte}}
+                                                            @else 
+                                                                @php
+                                                                    echo "<span>-</span>";
+                                                                @endphp
+                                                            @endif  
+                                                        </td>
+                                                        
+                                                        <td>
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
                                                                     {{ $etp->nom_etp }}
@@ -418,6 +437,13 @@
                                                             @php
                                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                                             @endphp
+                                                        </td>
+                                                        <td>
+                                                            @if($lieuFormation!=null)
+                                                                {{$lieuFormation[0]}}
+                                                            @else
+                                                                {{"-"}}
+                                                            @endif
                                                         </td>
                                                         <td align="center" style="min-width: 6rem;">
                                                             <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1">
@@ -1077,8 +1103,10 @@
                                 <th>Type de formation</th>
                                 <th> Session </th>
                                 <th> Module </th>
+                                <th><i class="bx bx-dollar"></i> {{$ref}}</th>
                                 <th> <i class='bx bx-group'></i> </th>
                                 <th>Date session</th>
+                                <th>Ville</th>
                                 <th> Centre de formation </th>
                                 {{-- <th> Date du projet</th> --}}
                                 <th>Modalité</th>
@@ -1110,16 +1138,39 @@
                                             @endphp
                                         </td>
                                         <td class="text-end">
-                                            @php
-                                                echo $groupe->nombre_apprenant_session($pj->groupe_id);
-                                            @endphp
+                                           @if($pj->hors_taxe_net!=null) 
+                                           <a href="{{route('detail_facture_etp',[$pj->cfp_id,$pj->num_facture])}}">
+                                           {{number_format($pj->hors_taxe_net,0,","," ")}}
+                                           </a>
+                                           @else 
+                                                @php
+                                                    echo "<span>-</span>";
+                                                @endphp
+                                           @endif           
                                         </td>
+                                       <td>
+                                        @if($pj->qte!=null)
+                                            {{$pj->qte}}
+                                        @else 
+                                            @php
+                                                echo "<span>-</span>";
+                                            @endphp
+                                        @endif  
+                                       </td>
                                         <td>
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                             @endphp
                                         </td>
-                                        <td class="text-start"> {{ $pj->nom_cfp }} </td>
+                                        <td>
+                                            @if($lieuFormation!=null)
+                                               {{$lieuFormation[0]}}
+                                            @else
+                                                {{"-"}}
+                                            @endif
+                                            
+                                        </td>
+                                        <td class="text-center"> {{ $pj->nom_cfp }} </td>
                                         {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
                                         <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
                                         <td class="tbody_projet">

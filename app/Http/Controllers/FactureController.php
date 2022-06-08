@@ -669,8 +669,9 @@ class FactureController extends Controller
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
-
+            
             $facture = $this->fonct->findWhere("v_liste_facture", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
+           
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$montant_totale->entreprise_id]);
             $facture_avoir = $this->fonct->findWhere(
                 "v_liste_facture",

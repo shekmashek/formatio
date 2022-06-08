@@ -397,17 +397,19 @@
         box-shadow: none;
         outline: none;
         position: relative;
-        align-items: center margin: 0 auto;
+        align-items: center; margin: 0 auto;
     }
 
 </style>
+    <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
         integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <script src="{{asset('assets/js/all.min.js')}}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+ <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" /> 
     <div class="p-3 bg-body rounded ">
         <nav class="body_nav m-0">
             <div class="row">
@@ -424,21 +426,91 @@
                     <div class="d-flex m-0 p-0 height_default">
                         <span class="text-dark ms-5" style="font-weight: bold;"> {{ $projet[0]->nom_groupe }} </span>
                         <i class='bx bx-time-five ms-3 me-1' style="font-size: 1rem;"></i>
-                        <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>
-                        {{-- @canany(['isCFP', 'isReferent'])
-                            <p class="m-0">Chiffre d'affaire HT : &nbsp;</p>
-                            <p class="text-dark mt-3"> <strong>@php
-                                echo number_format($prix->montant_session, 2, '.', ' ');
-                            @endphp Ar</strong> </p>
-                        @endcanany --}}
+                        <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>&nbsp;&nbsp;
                         <i class='bx bx-group ms-3' style="font-size: 1rem;"></i>
-                        <span class="m-0 ms-1"> apprenant inscrit : </span>
-                        <span class="text-dark ms-1"> {{ $nombre_stg }} </span>
+                        @if(count($dataMontantSession)>0)
+                            @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
+                                @if ($dataMontantSession[0]->qte >0)
+                                <span class="m-0 ms-1"> apprenant inscrit : {{$dataMontantSession[0]->qte}}</span> &nbsp;&nbsp;
+                                @else
+                                <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
+                                @endif
+                            @else{
+                                <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;git
+                            }
+                            @endif
+                        @else
+                            <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
+                        @endif 
+                        
+                        @can('isCFP')
+                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
+                            <p class="text-dark mt-3"> CA :<strong>
+                                @if(count($dataMontantSession)>0)
+                                    @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
+                                        @php 
+                                            $chiffre_affaire = ($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session);
+                                            echo number_format($chiffre_affaire,0,","," ");
+                                        @endphp
+                                    @else{
+                                        @php
+                                            echo "<span>-</span>";
+                                        @endphp &nbsp;
+                                    }
+                                    @endif
+                                @else
+                                @php
+                                    echo "<span>-</span>";
+                                @endphp&nbsp;
+                                @endif 
+                            {{$ref}}</strong> </p>&nbsp;&nbsp;
+                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
+                            <p class="text-dark mt-3"> FA : <strong>
+                                @if ($frais_annex !=null)
+                                    {{ number_format($frais_annex, 0, ',', ' ')}}
+                                @else
+                                @php
+                                echo "<span>-</span>";
+                            @endphp
+                                @endif 
+                                {{$ref}}</strong></p>
+                        @endcan
+                        @can('isReferent')
+                            <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
+                            <p class="text-dark mt-3"> CP : <strong>
+                                @if (count($dataMontantSession) >0)
+                                    {{ number_format($dataMontantSession[0]->hors_taxe, 0, ',', ' ')}}
+                                @else
+                                    @php
+                                        echo "<span>-</span>";
+                                    @endphp
+                                @endif
+                               
+                                          {{$ref}}</strong> </p>&nbsp;&nbsp;
+                            <p class="m-0"><i class="bx bx-dollar-circle mt-2"></i></p>&nbsp;
+                            <p class="text-dark mt-3"> FA : <strong id="frais_annex_entreprise">
+                                @php
+                                    $Totalfa = 0;
+                                @endphp
+                                @if (count($all_frais_annexe) > 0)
+                                    @foreach ($all_frais_annexe as $fraisAnnexe)
+                                        @php $Totalfa += $fraisAnnexe->montant; @endphp
+                                    @endforeach
+                                    @php
+                                        echo number_format($Totalfa, 0, ',', ' ');
+                                    @endphp
+                                @else
+                                    @php
+                                        echo "<span>-</span>";
+                                    @endphp
+                                @endif
+                            &nbsp;{{$ref}}</strong></p>
+                        @endcan
                         @if(count($lieu_formation)>0)
                             <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
                             <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
                             <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i>
-                            <span class="m-0 ms-1">{{ $lieu_formation[1] }}</span>
+                            <span class="m-0 ms-1">{{ $lieu_formation[1] }}</span>&nbsp;&nbsp;
                         @endif
 
                     </div>
@@ -923,7 +995,5 @@
                 x.style.display = "none";
             }
         }
-
-
     </script>
 @endsection
