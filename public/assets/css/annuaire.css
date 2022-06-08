@@ -391,3 +391,29 @@ color: #7635dc;
  display: grid;
  place-content: center;
 }
+
+.mode1 {
+    /* background: linear-gradient(to bottom right, #1976D2 0%, #283593 100%); */
+    color: #1c68c5;
+}
+
+.mode2 {
+    /* background: linear-gradient(to bottom right, #cddc39 0%, #8bc34a 100%); */
+    color: #7cb342;
+}
+
+.mode3 {
+    /* background: linear-gradient(to bottom right, #f4511e 0%, #b71c1c 100%); */
+    color: #c62828;
+}
+
+.mode4 {
+    /* background: linear-gradient(to bottom right, #e6ce6a 0%, #b7892b 100%); */
+    color: #f68401;
+}
+
+.mode5 {
+    /* background: linear-gradient(to bottom right, #ab47bc 0%, #4527a0 100%); */
+    color: #ffb300;
+}
+

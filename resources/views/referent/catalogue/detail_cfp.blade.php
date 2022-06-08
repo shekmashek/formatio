@@ -40,7 +40,27 @@
                         </div>
                         <div class="col-5">
                             <div class="row ps-5">
-                                <h4><a href="#">{{$cfp->nom}}</a></h4>
+                                <h4><a href="#">{{$cfp->nom}}</a>
+                                @foreach ($type_abonnement as $type)
+                                    @if($cfp->id == $type->cfp_id)
+                                        @if($type->type_abonnement_id == 1)
+                                            <sup><span class="mode1"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                        @if($type->type_abonnement_id == 2)
+                                            <sup><span class="mode2"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                        @if($type->type_abonnement_id == 3)
+                                            <sup><span class="mode3"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                        @if($type->type_abonnement_id == 4)
+                                            <sup><span class="mode4"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                        @if($type->type_abonnement_id == 5)
+                                            <sup><span class="mode5"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                        @endif
+                                    @endif
+                                @endforeach
+                                </h4>
                                 <p>{{$cfp->slogan}}</p>
                                 @if($avis_etoile[0]->pourcentage != null)
                                 <div class="d-flex flex-row">

@@ -14,9 +14,9 @@
                 @if(count($cfps) == null)
                     <h5>Les Organismes de Formations près de chez vous : aucun résultats</h5>
                 @elseif(count($cfps) == 1)
-                    <h5>Les Organismes de Formations près de chez vous : 1 résultat</h5>
+                    <h5>Les Organismes de Formations près de chez vous : <span class="nbr_cfp"> 1 résultat, {{count($collaboration)}} collaborés</span></h5>
                 @else
-                    <h5>Les Organismes de Formations près de chez vous : {{count($cfps)}} résultats</h5>
+                    <h5>Les Organismes de Formations près de chez vous : <span class="nbr_cfp">{{count($cfps)}} résultats, {{count($collaboration)}} collaborés</span></h5>
                 @endif
             </div>
             <div class="d-flex flex-row ">
@@ -147,7 +147,27 @@
                             </div>
                             <div class="col-3 ">
                                 <div class="row">
-                                    <h4><a href="{{route('detail_cfp',$cfp->id)}}">{{$cfp->nom}}</a></h4>
+                                <h4><a href="{{route('detail_cfp',$cfp->id)}}">{{$cfp->nom}}</a>
+                                    @foreach ($type_abonnement as $type)
+                                        @if($cfp->id == $type->cfp_id)
+                                            @if($type->type_abonnement_id == 1)
+                                                <sup><span class="mode1"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                            @if($type->type_abonnement_id == 2)
+                                                <sup><span class="mode2"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                            @if($type->type_abonnement_id == 3)
+                                                <sup><span class="mode3"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                            @if($type->type_abonnement_id == 4)
+                                                <sup><span class="mode4"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                            @if($type->type_abonnement_id == 5)
+                                                <sup><span class="mode5"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </h4>
                                     @if ($cfp->slogan!=null)
                                     <p>{{$cfp->slogan}}</p>
                                     @else
@@ -351,7 +371,7 @@
         $(".lien_filtre").click(function(e) {
             let id_alpha = e.target.id;
             var dataValue = getDataRequetTrie(".lien_filtre", id_alpha);
-            console.log(JSON.stringify(dataValue));
+            // console.log(JSON.stringify(dataValue));
             /*
             data: {
                     Alpha: id_alpha
@@ -369,7 +389,7 @@
                         let html = '';
 
                         for (let i = 0; i < userData['cfp'].length; i++) {
-                            // console.log(userData['cfp']);
+                            // console.log(userData['type']);
                             let url_detail_cfp = '{{ route("detail_cfp", ":id") }}';
                             url_detail_cfp = url_detail_cfp.replace(":id", userData['cfp'][i]['id']);
 
@@ -379,7 +399,27 @@
                             html +=     '</div>';
                             html +=     '<div class="col-3 detail_cfp">';
                             html +=         '<div class="row">';
-                            html +=             '<h4><a href="' + url_detail_cfp + '">' + userData['cfp'][i]['nom'] + '</a></h4>';
+                            html +=             '<h4><a href="' + url_detail_cfp + '">' + userData['cfp'][i]['nom'] + '</a>';
+                                                for (let l = 0; l < userData['type'].length; l++) {
+                                                    if (userData['cfp'][i]['id'] == userData['type'][l]['cfp_id']) {
+                                                        if (userData['type'][l]['type_abonnement_id'] == 1) {
+                            html +=                         '<sup><span class="mode1"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] == 2) {
+                            html +=                         '<sup><span class="mode2"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] == 3) {
+                            html +=                         '<sup><span class="mode3"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] == 4) {
+                            html +=                         '<sup><span class="mode4"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] == 5) {
+                            html +=                         '<sup><span class="mode5"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                    }
+                                                }
+                            html +=             '</h4>';
                                                     if (userData['cfp'][i]['slogan'] != null) {
                             html +=                     '<p>' + userData['cfp'][i]['slogan'] + '</p>';
                                                     } else {
@@ -496,6 +536,14 @@
                             } else {
                                 $(this).removeClass('activer_filtre').addClass("activer");
                             }
+
+                        }
+                        let counterCfp = userData['cfp'].length;
+                        $('.nbr_cfp').text('');
+                        if (counterCfp == 1) {
+                            $('.nbr_cfp').append(' 1 résultat');
+                        }else{
+                            $('.nbr_cfp').append(counterCfp+' résultats');
                         }
 
                         $("#result").empty();
