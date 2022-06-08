@@ -85,13 +85,13 @@
         <div class="mb-3 row text-end">
             <label for="nom" class="col-sm-2 col-form-label">Nom<sup>*</sup></label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="nom" name="nom" required>
+                <input type="text" class="form-control" id="nom" name="nom"  value="{{$resp_etp->nom_resp}} &nbsp; {{$resp_etp->prenom_resp}}" readonly required>
             </div>
         </div>
         <div class="mb-3 row text-end">
             <label for="mail" class="col-sm-2 col-form-label">Email<sup>*</sup></label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="mail" name="mail" required>
+                <input type="text" class="form-control" id="mail" name="mail" value="{{$resp_etp->email_resp}}" required readonly>
             </div>
         </div>
         <div class="mb-3 row text-end">

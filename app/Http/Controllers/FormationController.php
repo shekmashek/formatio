@@ -598,9 +598,12 @@ class FormationController extends Controller
         return view('referent.catalogue.domaine', compact('formations', 'modules', 'modules_counts', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4', 'nom_domaine', 'devise'));
     }
 
-    public function demande_devis_client(Request $request)
-    {
+    public function demande_devis_client(Request $request){
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $resp_etp = $fonct->findWhereMulitOne("responsables",["user_id"],[Auth::user()->id]);
 
+    //  dd($resp_etp);
         $id_module = $request->id;
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
