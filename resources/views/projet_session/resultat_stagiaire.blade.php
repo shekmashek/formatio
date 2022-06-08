@@ -140,7 +140,7 @@
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         color: #fff;
-        width: 300px;
+        /* width: 300px; */
         font-size:15px;
     }
     .label_acquis{
@@ -155,7 +155,7 @@
         width: 100%;
         height: 50px;
         background:linear-gradient(to right, #5d1cc5,#91d4e5);
-        
+
     }
     /* .information{
         width: 100%;
@@ -169,7 +169,7 @@
         width: 100%;
         height: 1900px;
     } */
-    
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
@@ -177,9 +177,9 @@
     window.onload = function(){
         document.getElementById('bobi').addEventListener("click",()=>{
             const test = document.getElementById('bob')
-            
+
             html2pdf().from(test).save();
-            
+
         })
     }
     function modifier_note(){
@@ -199,7 +199,7 @@
         document.getElementById('modifier_note').style.display = "none";
     }
 
-   
+
     function eval_stagiaire(stg,groupe_id){
         $.ajax({
             type: "GET",
@@ -216,7 +216,7 @@
                 var note_avant = data['note_avant'];
                 var module = data['module'];
                 if(note_avant == 1){
-                    $('#resultat_eval').html('');     
+                    $('#resultat_eval').html('');
 
                     var html = '<div class="row p-2">';
                     var html = '<div class="col-lg-12">'
@@ -255,9 +255,9 @@
                     $('#resultat_eval').html('');
                     var html = '<div class="d-flex mt-3 titre_projet p-1 mb-1" id="liste_vide"><span class="text-center">Vous devez faire le pre evaluation.</span> </div>' ;
                     $('#choix_stagiaire').hide();
-                    $('#validation_module').append(html); 
+                    $('#validation_module').append(html);
                 }
-                          
+
             },
             error: function(error) {
                 console.log(error);
@@ -361,8 +361,8 @@
     jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
     };
     save.onclick = (e) => html2pdf().set(opt).from(htmlpdf).save();
-   
-    
+
+
     </script>
 <script src="https://fonts.googleapis.com/css?family=Lato"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
@@ -372,11 +372,11 @@
 
 
 <div class="container  mt-3 p-2" id="bob"  >
-    
+
     <div class="row" >
         <div class="col-lg-12" >
-            
-            
+
+
             <div class="tete p-2" style="display: flex;">
                 @foreach ($logo as $g)
                 <img style="width: 100px;height:60px;margin-top:-10px" src="{{asset('images/CFP/Numerika19-01-2022.png')}}" alt="">
@@ -388,9 +388,9 @@
             <div class="information  p-4">
                 <div class="row">
                     @foreach ($module as $m )
-                       
-                   
-                    
+
+
+
                     <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
                         <p><i class="bx bxs-customize mb-1  mt-1 align-middle" style="font-size:22px;"></i> {{$m->nom_module}}</p>
                         <p><i class="bi bi-calendar-check-fill align-middle" style="font-size:18px;"></i> &nbsp; {{ \Carbon\Carbon::parse($m->date_debut)->format('d-m-Y')}} au {{ \Carbon\Carbon::parse($m->date_fin)->format('d-m-Y')}}</p>
@@ -402,7 +402,7 @@
                         <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : {{$m->telephone}}</p>
                     </div>
 
-                    
+
                     @foreach ($stage as $u)
                     <div class="col-lg-4 p-2" style="border-left: 3px solid gray">
                         <p><i class="bi bi-person-circle mt-3 align-middle" style="font-size:22px;"></i>&nbsp;Apprenant : {{$u->nom_stagiaire}} {{$u->prenom_stagiaire}} </p>
@@ -410,10 +410,10 @@
                         <p><i class="bi bi-phone align-middle" style="font-size:22px;"></i>&nbsp;Phone : {{$u->telephone_stagiaire}}</p>
                     </div>
                     @endforeach
-                        
-                    
+
+
                 </div>
-                
+
             </div>
             <div class="col-lg-12 mt-2 " >
                 <div class="description p-4">
@@ -429,7 +429,7 @@
                         <div class="col-lg-12 "></div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5 ms-2"> 
+                        <div class="col-lg-5 ms-2">
                             <div id="resultat_eval" class="mt-3"></div>
                             <script type="text/javascript">
                                 var id_stg = @php echo $stagiaire; @endphp;
@@ -448,13 +448,13 @@
                     </div>
                 </div>
                 {{-- <button  onclick="teste();" class="btn btn-info">Save</button>  --}}
-            
-            
-            </div>  
+
+
+            </div>
         </div>
     </div>
 </div>
 
 </div>
 
-@endsection 
+@endsection
