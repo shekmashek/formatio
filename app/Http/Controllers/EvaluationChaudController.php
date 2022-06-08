@@ -229,7 +229,6 @@ class EvaluationChaudController extends Controller
 
             // recommanderiez vous cette formation
             // q13
-
                 $res_q13 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? and point < 3 order by point desc',[$groupe,17]);
                 if(count($res_q13)<=0){
                     throw new Exception('Impossible de télécharger le pdf.');
