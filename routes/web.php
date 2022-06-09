@@ -1374,3 +1374,6 @@ Route::get('resultat_stagiaire/{groupe_id}','SessionController@competence_stagia
 Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploye');
 
 Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInfo');
+//plus d'avis
+Route::get('plus_avis','FormationController@plus_avis')->name('plus_avis');
+Route::get('plus_avis_module','FormationController@plus_avis_module')->name('plus_avis_module');

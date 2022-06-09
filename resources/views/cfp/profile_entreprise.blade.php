@@ -37,27 +37,27 @@
     <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
         <li class="nav-item" role="presentation">
           <a
-            class="nav-link "
+            class="nav-link active collabore"
             id="ex1-tab-1"
             data-mdb-toggle="tab"
             data-bs-toggle="tab"
             href="#ex1-tabs-1"
             role="tab"
             aria-controls="ex1-tabs-1"
-            aria-selected="false"
+            aria-selected="true"
             ><i class="bi bi-wallet-fill"></i>&nbsp;&nbsp;EN COLABORATION</a
           >
         </li>
         <li class="nav-item" role="presentation">
           <a
-            class="nav-link active"
+            class="nav-link"
             id="ex1-tab-2"
             data-mdb-toggle="tab"
             data-bs-toggle="tab"
             href="#ex1-tabs-2"
             role="tab"
             aria-controls="ex1-tabs-2"
-            aria-selected="true"
+            aria-selected="false"
             ><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;INVITATION</a
           >
         </li>

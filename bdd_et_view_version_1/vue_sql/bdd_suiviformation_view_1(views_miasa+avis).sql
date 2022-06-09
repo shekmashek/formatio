@@ -331,6 +331,14 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.status,
     m.cfp_id,
     m.etat_id,
+    m.created_at,
+    (
+    IFNULL(
+            (
+                DATEDIFF(m.created_at, NOW()) +6),
+                0
+            )
+    ) jours_restant,
     IFNULL(m.max, 0) AS max_pers,
     IFNULL(m.min, 0) AS min_pers,
     n.niveau,

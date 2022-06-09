@@ -74,7 +74,7 @@
                                     </div>
                                     <div>
                                         <select class="text-end titre_facture form-select  mb-2 m-0 " id="id_mode_financement" name="id_mode_financement" aria-label="Default select example">
-                                            <option onselected hidden value="0"> Mode de payement...</option>
+                                            <option onselected hidden value="0"> Mode de paiement...</option>
                                             @foreach ($mode_payement as $mod)
                                             <option value="{{$mod->id}}">{{$mod->description}}</option>
                                             @endforeach

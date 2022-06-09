@@ -62,8 +62,8 @@
                                                 @endphp
                                                 &nbsp;AR</span>&nbsp;HT
                                         </p>
-                                        @if($mod1->min != 0 && $mod1->max != 0)
-                                        <span>{{$mod1->min}}&nbsp;-&nbsp;{{$mod1->max}}&nbsp;personne</span>
+                                        @if($mod1->min_pers != 0 && $mod1->max_pers != 0)
+                                        <span>{{$mod1->min_pers}}&nbsp;-&nbsp;{{$mod1->max_pers}}&nbsp;personne</span>
                                         @endif
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                             </div>
                         </div>
                         <div class="new_btn_programme text-center">
-                            <button type="button" class="btn btn_competence non_pub" ><a href="{{route('session_inter', $mod1->id)}}">Créer une session inter</a></button>
+                            <button type="button" class="btn btn_competence non_pub" ><a href="{{route('session_inter', $mod1->module_id)}}">Créer une session inter</a></button>
                         </div>
                     </div>
                     @endif
@@ -137,8 +137,8 @@
                                                 @endphp
                                                 &nbsp;AR</span>&nbsp;HT
                                         </p>
-                                        @if($mod->min != 0 && $mod->max != 0)
-                                        <span>{{$mod->min}}&nbsp;-&nbsp;{{$mod->max}}&nbsp;personne</span>
+                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                        <span>{{$mod->min_pers}}&nbsp;-&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
                                         @endif
                                     </div>
                                 </div>
@@ -168,7 +168,7 @@
                         </div>
 
                         <div class="new_btn_programme text-center">
-                            <button type="button" class="btn btn_competence non_pub" id="{{$mod->id}}"><a href="{{route('session_inter', $mod->id)}}">Session Inter</a></button>
+                            <button type="button" class="btn btn_competence non_pub" id="{{$mod->module_id}}"><a href="{{route('session_inter', $mod->module_id)}}">Session Inter</a></button>
                         </div>
                     </div>
                     @endif

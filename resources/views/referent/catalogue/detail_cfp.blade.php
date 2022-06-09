@@ -58,10 +58,13 @@
                                         @if($type->type_abonnement_id == 5)
                                             <sup><span class="mode5"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
                                         @endif
+                                        @if($type->type_abonnement_id != 1 && $type->type_abonnement_id != 2 && $type->type_abonnement_id != 3 && $type->type_abonnement_id != 4 && $type->type_abonnement_id != 5 )
+
+                                        @endif
                                     @endif
                                 @endforeach
                                 </h4>
-                                <p>{{$cfp->slogan}}</p>
+                                <p>{{$cfp->slogan}}{{$cfp->id}}</p>
                                 @if($avis_etoile[0]->pourcentage != null)
                                 <div class="d-flex flex-row">
                                     @if($avis_etoile[0]->pourcentage != null)
@@ -300,14 +303,14 @@
                     <div class="col-12">
                         <h5 class="text-center mb-3">Horaires d'ouvertures</h5>
                         @if (count($horaire)>0)
-                        @foreach ($horaire as $cfp)
+                        @foreach ($horaire as $cfps)
 
                         <div class="row">
                             <div class="col-6">
-                                <p class="m-0 text-capitalize">{{$cfp->jours}}</p>
+                                <p class="m-0 text-capitalize">{{$cfps->jours}}</p>
                             </div>
                             <div class="col-6">
-                                <p class="m-0">{{date('H:i', strtotime($cfp->h_entree))}} - {{date('H:i', strtotime($cfp->h_sortie))}}</p>
+                                <p class="m-0">{{date('H:i', strtotime($cfps->h_entree))}} - {{date('H:i', strtotime($cfps->h_sortie))}}</p>
                             </div>
                         </div>
                         @endforeach
@@ -473,15 +476,72 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row ms-1">
+                    <div class="row ms-1 mb-3">
                         <p>{{ $avis->commentaire }}</p>
                     </div>
                     @endforeach
+                    @if(count($liste_avis_count) >= 10)
+                        <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$cfp->id}}">voir tous les avis</a></div>
+                    @endif
+                    <div class="newRowAvis"></div>
                 </div>
             </div>
         </div>
     </div>
 
-</section
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script>
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    $('.plus_avis').on('click', function(e){
+        let id = $(e.target).closest('.plus_avis').attr("id");
+
+        $.ajax({
+            type: "get"
+            ,url: "{{route('plus_avis')}}"
+            ,data:{
+                Id: id,
+            }
+            ,success: function(response){
+                let cfpData = response;
+                if (cfpData['liste_avis'] != null || undefined){
+                    let html = '';
+
+                    for (let i = 0; i < cfpData['liste_avis'].length; i++) {
+                        html += '<div class="row" id="avis">';
+                        html +=     '<div class="d-flex flex-row">';
+                        html +=         '<div class="col">';
+                        html +=             '<h6 class="mt-3 mb-0">'+cfpData['liste_avis'][i]['nom_stagiaire']+'.'+cfpData['liste_avis'][i]['prenom_stagiaire']+'</h6>';
+                        html +=         '</div>'
+                        html +=         '<div class="col">';
+                        html +=             '<p class="text-muted pt-5 pt-sm-3">'+cfpData['liste_avis'][i]['date_avis']+'</p>';
+                        html +=         '</div>'
+                        html +=         '<div class="col">';
+                        html +=             '<p class="text-left d-flex flex-row">';
+                        html +=                 '<div class="Stars" style="--note: '+cfpData['liste_avis'][i]['note']+';"></div>&nbsp;<span class="text-muted">'+cfpData['liste_avis'][i]['note']+'</span>';
+                        html +=             '</p>'
+                        html +=         '</div>'
+                        html +=     '</div>'
+                        html += '</div>'
+                        html += '<div class="row ms-1">';
+                        html +=     '<p>'+cfpData['liste_avis'][i]['commentaire']+'</p>';
+                        html += '</div>';
+                    }
+                    $('.newRowAvis').empty();
+                    $('.newRowAvis').append(html);
+                    $('.plus_avis').hide();
+                }else{
+                    alert('error');
+                }
+
+            }
+            ,error: function(error){
+                console.log(error);
+            },
+        });
+    });
+</script>
 
 @endsection

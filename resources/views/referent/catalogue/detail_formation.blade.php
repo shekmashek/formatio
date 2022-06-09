@@ -370,12 +370,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row ms-1">
+                            <div class="row ms-1 mb-3">
                                 <p>{{ $avis->commentaire }}</p>
                             </div>
-                            <hr>
                             @endforeach
-
+                            @if(count($liste_avis_count) >= 10)
+                                <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$infos[0]->module_id}}">voir tous les avis</a></div>
+                            @endif
+                            <div class="newRowAvis"></div>
                         </div>
                     </div>
                 </div>
@@ -671,5 +673,52 @@
         $("#prestation_textarea").val($("#prestation_id").html());
     });
 
+    $('.plus_avis').on('click', function(e){
+        let id = $(e.target).closest('.plus_avis').attr("id");
+
+        $.ajax({
+            type: "get"
+            ,url: "{{route('plus_avis_module')}}"
+            ,data:{
+                Id: id,
+            }
+            ,success: function(response){
+                let moduleData = response;
+                if (moduleData['liste_avis'] != null || undefined){
+                    let html = '';
+
+                    for (let i = 0; i < moduleData['liste_avis'].length; i++) {
+                        html += '<div class="row" id="avis">';
+                        html +=     '<div class="d-flex flex-row">';
+                        html +=         '<div class="col">';
+                        html +=             '<h6 class="mt-3 mb-0">'+moduleData['liste_avis'][i]['nom_stagiaire']+'.'+moduleData['liste_avis'][i]['prenom_stagiaire']+'</h6>';
+                        html +=         '</div>'
+                        html +=         '<div class="col">';
+                        html +=             '<p class="text-muted pt-5 pt-sm-3">'+moduleData['liste_avis'][i]['date_avis']+'</p>';
+                        html +=         '</div>'
+                        html +=         '<div class="col">';
+                        html +=             '<p class="text-left d-flex flex-row">';
+                        html +=                 '<div class="Stars" style="--note: '+moduleData['liste_avis'][i]['note']+';"></div>&nbsp;<span class="text-muted">'+moduleData['liste_avis'][i]['note']+'</span>';
+                        html +=             '</p>'
+                        html +=         '</div>'
+                        html +=     '</div>'
+                        html += '</div>'
+                        html += '<div class="row ms-1">';
+                        html +=     '<p>'+moduleData['liste_avis'][i]['commentaire']+'</p>';
+                        html += '</div>';
+                    }
+                    $('.newRowAvis').empty();
+                    $('.newRowAvis').append(html);
+                    $('.plus_avis').hide();
+                }else{
+                    alert('error');
+                }
+
+            }
+            ,error: function(error){
+                console.log(error);
+            },
+        });
+    });
 </script>
 @endsection
