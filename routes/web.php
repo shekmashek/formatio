@@ -141,6 +141,8 @@ Route::get('/information_formateur', 'ProfController@information_formateur')->na
 //route profile entreprise
 Route::get('/profile_entreprise/{id}', 'EntrepriseController@profile_entreprise')->name('profile_entreprise');
 //
+
+
 Route::get('/liste_entreprise/{id?}', 'EntrepriseController@create')->name('liste_entreprise');
 Route::get('/nouvelle_entreprise', 'EntrepriseController@return_view')->name('nouvelle_entreprise');
 Route::get('/edit_entreprise', 'EntrepriseController@edit')->name('edit_entreprise');
@@ -851,6 +853,8 @@ Route::post('mettre_fin_cfp_formateur', 'CollaborationController@mettre_fin_cfp_
 // Route::get('delete_cfp_formateur','CollaborationController@delete_cfp_formateur')->name('delete_cfp_formateur');
 
 Route::get('annulation_cfp_etp/{id}', 'CollaborationController@annulation_invitation_cfp_etp')->name('annulation_cfp_etp');
+
+Route::get('annulation_cfp_etp_notif', 'CollaborationController@refuser')->name('annulation_cfp_etp_notif');
 Route::get('annulation_etp_cfp/{id}', 'CollaborationController@annulation_invitation_etp_cfp')->name('annulation_etp_cfp');
 Route::get('annulation_formateur_cfp/{id}', 'CollaborationController@annulation_invitation_formateur_cfp')->name('annulation_formateur_cfp');
 Route::get('annulation_cfp_formateur/{id}', 'CollaborationController@annulation_invitation_cfp_formateur')->name('annulation_cfp_formateur');

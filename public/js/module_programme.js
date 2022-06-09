@@ -55,15 +55,11 @@ $(".suppression").on("click", function(e) {
       Id: id,
     },
     success: function(response) {
-      if (response.success) {
         $("#cours" + id).remove();
         // Display a success toast, with a title
-        toastr.success('Une cours à été supprimer 💪');
+        toastr.success('Une cours à été supprimer 💪 ');
 
         // window.location.reload();
-      } else {
-        alert("Error");
-      }
     },
     error: function(error) {
       console.log(error);

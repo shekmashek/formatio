@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
@@ -705,7 +706,7 @@
                                     </a>
                                     <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
                                         <div class="m-4 mt-2" role="tabpanel">
-                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab" style="font-size: 10px;">
                                                 <li class="nav-item ">
                                                     <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
                                                 </li>
@@ -762,8 +763,8 @@
                                     </a>
                                     <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
                                         <div class="m-4 mt-2" role="tabpanel">
-                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-                                                <li class="nav-item ">
+                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab" style="font-size: 10px;">
+                                                <li class="nav-item " >
                                                     <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
                                                 </li>
                                                 <li class="nav-item">
@@ -777,7 +778,48 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <ul>
-                                                                liste invitations en attente
+                                                                <p class="test_affiche1 mt-3 my-2" style="font-size: 12px"></p>
+                                                                {{-- @can('isCFP')
+                                                                @if (count($invitation_etp)<=0) <tr style="text-align:left">
+                                                                    <td > Aucun invitations en attente</td>
+                                                                    </tr>
+                                                                    @else
+                                                                    @foreach($invitation_etp as $invit_etp)
+                                                                        @if (count($invitation_etp)<=0) <tr style="text-align:left">
+                                                                            <td > Aucun invitations en attente</td>
+                                                                            </tr>
+                                                                        @else
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div align="left">
+                                                                                <strong>{{$invit_etp->nom_resp.' '.$invit_etp->prenom_resp}}</strong>
+                                                                                <p style="color: rgb(238, 150, 18)">{{$invit_etp->email_resp}}</p>
+                                
+                                                                        </td>
+                                                                        <td>
+                                                                            <div align="left">
+                                                                                <strong>{{$invit_etp->nom_etp}}</strong>
+                                                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$invit_etp->nom_secteur}})</strong></p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="{{ route('accept_cfp_etp',$invit_etp->id) }}">
+                                                                                <strong>
+                                                                                    <h5><i class="bx bxs-check-circle actions" title="Accepter"></i> accepter</h5>
+                                                                                </strong>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="{{ route('annulation_cfp_etp',$invit_etp->id) }}">
+                                                                                <strong>
+                                                                                    <h5><i class="bx bxs-x-circle actions" title="Refuser"></i> réfuser</h5>
+                                                                                </strong>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                    @endif
+                                                                    @endcan --}}
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -1348,11 +1390,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"
         integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script> --}}
     <script src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/apprendre.js')}}"></script>
+    <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <script type="text/javascript">
         //Pour chaque div de classe randomColor
         $(".randomColor").each(function() {
@@ -1360,22 +1407,72 @@
         $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
         })
 
+        toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+        }
+
         $(document).ready(function() {
             var pdp = "";
             $.ajax({
                 url: '{{ route("profile_resp") }}'
                 , type: 'get'
                 , success: function(response) {
-                    var userData = response;
+                    // var userData = JSON.parse(response);
+                    // alert(JSON.stringify(response.length));
+                    if(response.length == 0){
+                        // alert("eto");
+                        var html = "Aucun invitations en attente";
+                        $('.test_affiche1').append(html);
+                    }else{
+                        // alert("aiza");
+                        for (let i = 0; i < response['invitation'].length; i++){                                                           
+                            $('.test_affiche1').append('<li class="invitation_'+response['invitation'][i]['demmandeur_etp_id']+'"><span class="me-2">'+response['invitation'][i]['nom_resp']+'</span><span class="me-2">'+response['invitation'][i]['prenom_resp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['invitation'][i]['nom_secteur']+'</span> <button id="btn_'+response['invitation'][i]['id']+'" class="btn btn-outline-success btn-sm accepte">Accépter</button> <button id="ref_'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn btn-outline-danger btn-sm refuse" data-id="'+response['invitation'][i]['demmandeur_etp_id']+'">Réfuser</button></li>');
+                            
+                            $(".refuse").on("click", function(e) {
+                                let id = $(this).data("id");
+                                $.ajax({
+                                    type: "get",
+                                    url: " {{ route('annulation_cfp_etp_notif') }}",
+                                    data: {
+                                        Id: id,
+                                    },
+                                    success: function(response) {
+                                        // alert("success");
+                                        console.log(".invitation_" + id);
+                                        $(".invitation_" + id).remove();
+                                        toastr.success('Un invitation à été réfuser 💪 ');
+                                    },
+                                    error: function(error) {
+                                    console.log(error);
+                                    },
+                                });
+                                });
+                        }
+                    }
 
-                    if(userData['photo'] == 'oui'){
+
+                    if(response['photo'] == 'oui'){
                         var html = '<img src="{{asset(":?")}}" alt="user_profile" style="width : 70px; height : 70px; border: none; border-radius : 100%; display: grid; place-content: center">';
-                        html = html.replace(":?", userData['user']);
-                        // alert(JSON.stringify(userData));
+                        html = html.replace(":?", response['user']);
+                        // alert(JSON.stringify(response));
                         $('.photo_users').append(html);
                     }
-                    if(userData['photo'] == 'non'){
-                        var html = userData['user'][0]['nm']+''+userData['user'][0]['pr'];
+                    if(response['photo'] == 'non'){
+                        var html = response['user'][0]['nm']+''+response['user'][0]['pr'];
                         $('.photo_users').append(html);
                     }
                 }
@@ -1384,6 +1481,10 @@
                 }
             });
         });
+
+
+
+
 
         $(document).ready(function() {
             var pdp = "";

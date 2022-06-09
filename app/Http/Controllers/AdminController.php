@@ -111,10 +111,12 @@ class AdminController extends Controller
             return response()->json($data);
         }
     }
+
     public function profile_resp()
     {
         $id_user = Auth::user()->id;
         $fonct = new FonctionGenerique();
+        $entp = new entreprise();
 
         if (Gate::allows('isReferent')) {
             // $user = responsable::where('user_id', $id_user)->value('photos');
@@ -164,6 +166,18 @@ class AdminController extends Controller
         }
 
         if (Gate::allows('isCFP')) {
+            
+            // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
+            $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
+            $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
+            $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
+            $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
+            $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
+            
+            $entreprise = $entp->getEntreprise($etp2, $etp1);
+
+
             $user = $fonct->findWhereMulitOne(("v_responsable_cfp"),["user_id"],[$id_user])->photos_resp_cfp;
             $photo ='';
             if($user == null){
@@ -174,8 +188,9 @@ class AdminController extends Controller
                 $user = 'images/responsables/' . $user;
                 $photo = 'oui';
             }
-            // $user = 'CFP/' . $user;
-            return response()->json(['user'=>$user,'photo'=>$photo]);
+        //    return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$etp1]);
+        // return response()->json([$invitation_etp]);
+            return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$invitation_etp]);
         }
         if (Gate::allows('isStagiaire')) {
             $user = $fonct->findWhereMulitOne(("stagiaires"),["user_id"],[$id_user])->photos;
