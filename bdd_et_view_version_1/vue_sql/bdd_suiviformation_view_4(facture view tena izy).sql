@@ -396,6 +396,7 @@ WHERE
     v_groupe_projet_module.groupe_id = v_totale_participant_session.groupe_id AND
     type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
 
+
 CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     v_liste_facture_tmp.*,
     ROUND((

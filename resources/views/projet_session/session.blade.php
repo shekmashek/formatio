@@ -621,7 +621,7 @@
                             <div class="d-flex flex-row">
                                 @if(count($formateur_cfp)>0)
                                     <p class="p-0 mt-3 me-2 text-center"> Formateur(s) :&nbsp;</p>
-                                @endif
+                                @endif        
                                 @foreach ($formateur_cfp as $form)
                                     <img src="{{ asset('images/formateurs/' . $form->photos) }}" alt=""
                                         class="img_superpose mt-2" height="30px" width="30px" style="border-radius: 50%;">
