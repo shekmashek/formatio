@@ -56,7 +56,6 @@ class DemandeDevisController extends Controller
         $fonct = new FonctionGenerique();
         $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
         // dd( $etp_id );
-
         if (Gate::allows('isReferent')) {
             $module = $fonct->findWhereMulitOne("v_module",["id"],[$id_module]);
             $resp_cfp = $fonct->findWhereMulitOne("responsables_cfp",["cfp_id","prioriter"],[$id_cfp,"1"]);

@@ -23,7 +23,6 @@
                 @elseif(isset($quartier) && isset($ville) && isset($code_postal) && isset($region))
                 <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] - $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination '></i></a>
                 <a href="{{ route('annuaire+recherche+par+adresse',[($pagination["debut_aff"] + $pagination["nb_limit"]),$quartier,$ville,$code_postal,$region ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
-
                 @else
                 <a href="{{ route('annuaire',[($pagination["debut_aff"] - $pagination["nb_limit"]) ])}}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination '></i></a>
                 <a href="{{ route('annuaire',[($pagination["debut_aff"] + $pagination["nb_limit"]) ]) }}" role="button" style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination' ></i></a>
@@ -203,8 +202,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="filtrer mt-3">
                 <div class="row">
                     <div class="col">
@@ -215,9 +212,18 @@
                     </div>
                     <hr class="mt-2">
                     <div class="row mt-0 navigation_module">
+
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                      
+                        
                         <p>
-                            <a data-bs-toggle="collapse" href="#search_num_fact" role="button" aria-expanded="false" aria-controls="search_num_fact">Recherche par nom d'organisme</a>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#search_num_fact" aria-expanded="false" aria-controls="search_num_fact">
+
+                            Recherche par nom d'organisme
                         </p>
+                           
+                        </button>
+                       
                         <div class="collapse multi-collapse" id="search_num_fact">
                             <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('annuaire+recherche+par+entiter')}}" enctype="multipart/form-data">
                                 @csrf
@@ -225,10 +231,17 @@
                                 <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherche" />
                             </form>
                         </div>
+                       
+                 
                         <hr>
+                        
                         <p>
-                            <a data-bs-toggle="collapse" href="#detail_par_solde" role="button" aria-expanded="false" aria-controls="detail_par_solde">Recherche par adresse</a>
+
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#detail_par_solde" aria-expanded="false" aria-controls="detail_par_solde">
+                                Recherche par adresse
+                             
                         </p>
+                    </button>
                         <div class="collapse multi-collapse" id="detail_par_solde">
                             <form class="mt-1 mb-2 form_colab" action="{{route('annuaire+recherche+par+adresse')}}" method="GET" enctype="multipart/form-data">
                                 @csrf
