@@ -231,7 +231,7 @@ a:focus {
     border-radius: 5px;
 }
 .liste__formation__item:hover .liste__formation {
-    transform: scale(1.5s);
+    transform: scale(1.5s) !important;
 }
 .liste__formation h5 {
     color: #7635dc;
@@ -499,6 +499,10 @@ a:focus {
     color: #5433FF !important;
     background-color: rgba(255, 255, 255, 0.713);
   }
+
+    .mega_menu .dropdown-item:focus{
+        color: white !important;
+    }
 
 
 .icon_dom{
