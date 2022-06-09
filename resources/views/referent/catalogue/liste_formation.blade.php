@@ -76,7 +76,7 @@
             <h5 class="ms-5">{{count($infos)}} résultats</h5><br>
             @endif --}}
             @if(isset($nom_entiter))
-            <h5 class="ms-5">{{count($infos)}} résultat trouvé sur  &nbsp;{{$nom_entiter}}</h5><br>
+            <h5 class="ms-5">{{count($infos)}} résultat trouvé sur &nbsp;{{$nom_entiter}}</h5><br>
             @elseif(isset($nom_formation))
             <h5 class="ms-5">{{count($infos)}} résultat trouvé en &nbsp;{{$nom_formation}}</h5><br>
             @else
@@ -102,12 +102,12 @@
                 @elseif(isset($data_debut_filtre) && isset($data_fin_filtre))
                 <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
                     filtre activé <i class="fas fa-times"></i> </a>
-                 @elseif(isset($nom_entiter) )
+                @elseif(isset($nom_entiter) )
                 <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
                     filtre activé <i class="fas fa-times"></i> </a>
-                    @elseif(isset($nom_modalite) )
-                    <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
-                        filtre activé <i class="fas fa-times"></i> </a>
+                @elseif(isset($nom_modalite) )
+                <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
+                    filtre activé <i class="fas fa-times"></i> </a>
                 @endif
 
         </div>
@@ -254,17 +254,261 @@
                 <div class="collapse multi-collapse" id="intervale_prix">
                     <div class="row">
                         <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"SINGLE_PRIX")}}" enctype="multipart/form-data">
+    @csrf
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div align="center">
+        <button type="submit" class="btn_creer mt-2">Recherche</button>
+    </div>
+    </form>
+    </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#intervale_prix_grp" role="button" aria-expanded="false" aria-controls="intervale_prix_grp">Intervale de prix par groupe</a>
+    </p>
+    <div class="collapse multi-collapse" id="intervale_prix_grp">
+        <div class="row">
+            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"GROUPE_PRIX")}}" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div align="center">
+                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#intervale_hr" role="button" aria-expanded="false" aria-controls="intervale_hr">Intervale d'heure de formation</a>
+    </p>
+    <div class="collapse multi-collapse" id="intervale_hr">
+        <div class="row">
+            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"HR")}}" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_debut" class="form-label" align="left">Hr minimum <strong style="color:#ff0000;">*</strong></label>
+                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_fin" class="form-label" align="left"> Hr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div align="center">
+                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#intervale_jr" role="button" aria-expanded="false" aria-controls="intervale_jr">Intervale de jour de formation</a>
+    </p>
+    <div class="collapse multi-collapse" id="intervale_jr">
+        <div class="row">
+            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"DAY")}}" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_debut" class="form-label" align="left">Jr minimum <strong style="color:#ff0000;">*</strong></label>
+                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_fin" class="form-label" align="left"> Jr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div align="center">
+                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Organisme de formation <i class='bx icon_trie bxs-chevron-up'></i></a>
+    </p>
+    <div class="collapse multi-collapse" id="detail_par_etp">
+
+        <div class="row">
+            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"OF")}}" method="GET" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input autocomplete="off" list="list_of" class="form-control" name="nom_entiter" id="nom_entiter">
+                            <datalist id="list_of">
+                                @foreach ($organismes as $of)
+                                <option value="{{$of->nom}}">
+                                    @endforeach
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+
+    <p>
+        <a data-bs-toggle="collapse" href="#detail_comeptence" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_comeptence">Compétence à evaluer <i class='bx icon_trie bxs-chevron-up'></i></a>
+    </p>
+    <div class="collapse multi-collapse" id="detail_comeptence">
+
+        <div class="row">
+            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"COMPETENCE")}}" method="GET" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input autocomplete="off" list="competence" class="form-control" name="nom_entiter" id="nom_entiter">
+                            <datalist id="competence">
+                                @foreach ($competences as $compe)
+                                <option value="{{$compe->titre_competence}}">
+                                    @endforeach
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+
+
+    <p>
+        <a data-bs-toggle="collapse" href="#detail_formation" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_formation">Nom de formation <i class='bx icon_trie bxs-chevron-up'></i></a>
+    </p>
+    <div class="collapse multi-collapse" id="detail_formation">
+
+        <div class="row">
+            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"FORMATION")}}" method="GET" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input autocomplete="off" list="no_formation" class="form-control" name="nom_entiter" id="nom_entiter">
+                            <datalist id="no_formation">
+                                @foreach ($formations as $form)
+                                <option value="{{$form->nom_formation}}">
+                                    @endforeach
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">modalité <i class='bx icon_trie bxs-chevron-up'></i></a>
+    </p>
+    <div class="collapse multi-collapse" id="detail_par_status">
+        <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.modalite.filtre')}}" method="GET" enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <select class="form-select" name="nom_modalite" id="nom_modalite">
+                            <option value="En ligne">En ligne</option>
+                            <option value="Presentiel">Présentiel</option>
+                            <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr>
+
+    </div>
+    </div>
+    </div> --}}
+</section>
+
+{{-- =========================== nouveau filtre ============================= --}}
+<div class="filtrer mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0">Filtre par</p>
+        </div>
+        <div class="col text-end">
+            <h3><i style="font-size: 35px" class="bx bx-x " role="button" onclick="afficherFiltre();"></i></h3>
+        </div>
+        <hr class="mt-2">
+
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Intervale de prix par personne
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"SINGLE_PRIX")}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <label for="dte_debut" class="form-label" align="left">Solde min {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
                                         <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <label for="dte_fin" class="form-label" align="left"> Solde à max {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
                                         <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
                                     </div>
                                 </div>
@@ -275,12 +519,15 @@
                         </form>
                     </div>
                 </div>
-                <hr>
-                <p>
-                    <a data-bs-toggle="collapse" href="#intervale_prix_grp" role="button" aria-expanded="false" aria-controls="intervale_prix_grp">Intervale de prix par groupe</a>
-                </p>
-                <div class="collapse multi-collapse" id="intervale_prix_grp">
-                    <div class="row">
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Intervale de prix par groupe
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
                         <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"GROUPE_PRIX")}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -301,14 +548,18 @@
                                 <button type="submit" class="btn_creer mt-2">Recherche</button>
                             </div>
                         </form>
+                        </form>
                     </div>
                 </div>
-                <hr>
-                <p>
-                    <a data-bs-toggle="collapse" href="#intervale_hr" role="button" aria-expanded="false" aria-controls="intervale_hr">Intervale d'heure de formation</a>
-                </p>
-                <div class="collapse multi-collapse" id="intervale_hr">
-                    <div class="row">
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Intervale totale d'heure de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
                         <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"HR")}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -331,12 +582,15 @@
                         </form>
                     </div>
                 </div>
-                <hr>
-                <p>
-                    <a data-bs-toggle="collapse" href="#intervale_jr" role="button" aria-expanded="false" aria-controls="intervale_jr">Intervale de jour de formation</a>
-                </p>
-                <div class="collapse multi-collapse" id="intervale_jr">
-                    <div class="row">
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Intervale totale de jour de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
                         <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"DAY")}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -359,19 +613,22 @@
                         </form>
                     </div>
                 </div>
-                <hr>
-                <p>
-                    <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Organisme de formation <i class='bx icon_trie bxs-chevron-up'></i></a>
-                </p>
-                <div class="collapse multi-collapse" id="detail_par_etp">
+            </div>
 
-                    <div class="row">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFour">
+                        Organisme de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
                         <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"OF")}}" method="GET" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <input  autocomplete="off" list="list_of" class="form-control" name="nom_entiter" id="nom_entiter">
+                                        <input autocomplete="off" list="list_of" class="form-control" name="nom_entiter" id="nom_entiter">
                                         <datalist id="list_of">
                                             @foreach ($organismes as $of)
                                             <option value="{{$of->nom}}">
@@ -381,20 +638,21 @@
                                 </div>
                                 <div class="col-4">
                                     <button type="submit" class="btn_creer mt-2">Recherche</button>
-
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <hr>
+            </div>
 
-                <p>
-                    <a data-bs-toggle="collapse" href="#detail_comeptence" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_comeptence">Compétence à evaluer <i class='bx icon_trie bxs-chevron-up'></i></a>
-                </p>
-                <div class="collapse multi-collapse" id="detail_comeptence">
-
-                    <div class="row">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseFive">
+                        Compétence à evaluer
+                    </button>
+                </h2>
+                <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
                         <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"COMPETENCE")}}" method="GET" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -415,21 +673,22 @@
                         </form>
                     </div>
                 </div>
-                <hr>
+            </div>
 
-
-                <p>
-                    <a data-bs-toggle="collapse" href="#detail_formation" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_formation">Nom de formation <i class='bx icon_trie bxs-chevron-up'></i></a>
-                </p>
-                <div class="collapse multi-collapse" id="detail_formation">
-
-                    <div class="row">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSix">
+                        Nom de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
                         <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"FORMATION")}}" method="GET" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <input  autocomplete="off" list="no_formation" class="form-control" name="nom_entiter" id="nom_entiter">
+                                        <input autocomplete="off" list="no_formation" class="form-control" name="nom_entiter" id="nom_entiter">
                                         <datalist id="no_formation">
                                             @foreach ($formations as $form)
                                             <option value="{{$form->nom_formation}}">
@@ -439,305 +698,46 @@
                                 </div>
                                 <div class="col-4">
                                     <button type="submit" class="btn_creer mt-2">Recherche</button>
-
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <hr>
-                <p>
-                    <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">modalité <i class='bx icon_trie bxs-chevron-up'></i></a>
-                </p>
-                <div class="collapse multi-collapse" id="detail_par_status">
-                    <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.modalite.filtre')}}" method="GET" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <select class="form-select" name="nom_modalite" id="nom_modalite">
-                                        <option value="En ligne">En ligne</option>
-                                        <option value="Presentiel">Présentiel</option>
-                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
-                                    </select>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingHeight">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseHeight" aria-expanded="false" aria-controls="flush-collapseSeven">
+                        Modalité de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseHeight" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.modalite.filtre')}}" method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select class="form-select" name="nom_modalite" id="nom_modalite">
+                                            <option value="En ligne">En ligne</option>
+                                            <option value="Presentiel">Présentiel</option>
+                                            <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <button type="submit" class="btn_creer mt-2">Recherche</button>
-
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <hr>
-
-            </div>
-        </div>
-    </div> --}}
-</section>
-
- {{-- =========================== nouveau filtre ============================= --}}
-    <div class="filtrer mt-3">
-        <div class="row">
-            <div class="col">
-                <p class="m-0">Filtre par</p>
-            </div>
-            <div class="col text-end">
-                <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
-            </div>
-            <hr class="mt-2">
-
-
-            <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            Intervale de prix par personne
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"SINGLE_PRIX")}}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="dte_debut" class="form-label" align="left">Solde min {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
-                                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="dte_fin" class="form-label" align="left"> Solde à max {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
-                                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div align="center">
-                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                </div>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            Intervale de prix par groupe
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"GROUPE_PRIX")}}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
-                                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
-                                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div align="center">
-                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                </div>
-                            </form>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                            Intervale totale d'heure de formation
-                        </button>
-                    </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"HR")}}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="dte_debut" class="form-label" align="left">Hr minimum <strong style="color:#ff0000;">*</strong></label>
-                                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="dte_fin" class="form-label" align="left"> Hr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
-                                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div align="center">
-                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingFour">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
-                            Intervale totale de jour de formation
-                        </button>
-                    </h2>
-                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"DAY")}}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="dte_debut" class="form-label" align="left">Jr minimum <strong style="color:#ff0000;">*</strong></label>
-                                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="dte_fin" class="form-label" align="left"> Jr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
-                                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div align="center">
-                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingFive">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFour">
-                            Organisme de formation
-                        </button>
-                    </h2>
-                    <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"OF")}}" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input  autocomplete="off" list="list_of" class="form-control" name="nom_entiter" id="nom_entiter">
-                                            <datalist id="list_of">
-                                                @foreach ($organismes as $of)
-                                                <option value="{{$of->nom}}">
-                                                    @endforeach
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingSix">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseFive">
-                            Compétence à evaluer
-                        </button>
-                    </h2>
-                    <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"COMPETENCE")}}" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input autocomplete="off" list="competence" class="form-control" name="nom_entiter" id="nom_entiter">
-                                            <datalist id="competence">
-                                                @foreach ($competences as $compe)
-                                                <option value="{{$compe->titre_competence}}">
-                                                    @endforeach
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingSeven">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSix">
-                            Nom de formation
-                        </button>
-                    </h2>
-                    <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"FORMATION")}}" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input  autocomplete="off" list="no_formation" class="form-control" name="nom_entiter" id="nom_entiter">
-                                            <datalist id="no_formation">
-                                                @foreach ($formations as $form)
-                                                <option value="{{$form->nom_formation}}">
-                                                    @endforeach
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingHeight">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseHeight" aria-expanded="false" aria-controls="flush-collapseSeven">
-                            Modalité de formation
-                        </button>
-                    </h2>
-                    <div id="flush-collapseHeight" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.modalite.filtre')}}" method="GET" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <select class="form-select" name="nom_modalite" id="nom_modalite">
-                                                <option value="En ligne">En ligne</option>
-                                                <option value="Presentiel">Présentiel</option>
-                                                <option value="En ligne/Presentiel">En ligne/Présentiel</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <button type="submit" class="btn_creer mt-2">Recherche</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>
+
     </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">

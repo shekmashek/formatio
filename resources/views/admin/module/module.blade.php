@@ -20,7 +20,7 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item active">
-                <a href="#enCours" class="nav-link active" data-toggle="tab">Configurer Programme&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
+                <a href="#enCours" class="nav-link" data-toggle="tab">Configurer Programme&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
             </li>
             <li class="nav-item">
                 <a href="#nonPublies" class="nav-link" data-toggle="tab">Configurer Compétence&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>

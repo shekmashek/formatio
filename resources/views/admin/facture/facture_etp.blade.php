@@ -689,7 +689,8 @@
                                             <p class="m-0">Filtre par</p>
                                         </div>
                                         <div class="col text-end">
-                                            <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+                                            <h3><i style="font-size: 35px" class="bx bx-x " role="button" onclick="afficherFiltre();"></i></h3>
+
                                         </div>
                                         <hr class="mt-2">
 
