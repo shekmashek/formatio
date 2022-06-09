@@ -508,7 +508,7 @@ select
     join moduleformation mf
         on mf.module_id = g.module_id
     join niveau_etude niveau
-        on niveau.id = s.niveau_etude_id;
+        on niveau.id = s.niveau_etude_id order by groupe_id desc;
 
 
 create or replace view v_detail_presence as

@@ -959,7 +959,7 @@ class HomeController extends Controller
             }
             // fin pagination
             // dd($fin_page,$page,$stg_id);
-            $data = DB::select('select * from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc limit ? offset ?', [$stg_id, $nb_par_page, $offset]);
+            $data = DB::select('select * from v_stagiaire_groupe where stagiaire_id = ? order by groupe_id desc limit ? offset ?', [$stg_id, $nb_par_page, $offset]);
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
     }
