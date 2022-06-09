@@ -155,7 +155,7 @@ class FormationController extends Controller
 
         $nbPagination = null;
         $nom_formation = null;
-        $nb_limit = 2;
+        $nb_limit = 5;
 
         if (isset($nom_formation_pag)) {
             $nom_formation = $nom_formation_pag;
@@ -190,7 +190,7 @@ class FormationController extends Controller
         $pagination = $this->fonct->nb_liste_pagination($totale_module, $nbPagination, $nb_limit);
 
         $infos = DB::select($query, ["%" . $nom_formation . "%"]);
-
+// dd($infos);
         $organismes = DB::select('select * from cfps');
         $competences = DB::select('select * from competence_a_evaluers');
         $formations = DB::select('select * from formations');
@@ -650,7 +650,7 @@ class FormationController extends Controller
         $formations = DB::select('select * from formations where domaine_id = ?', [$domaine_id]);
         $modules = DB::select('select md.pourcentage,md.module_id, md.nom_module, md.formation_id,md.cfp_id, md.duree, md.duree_jour, md.prix, md.prix_groupe, md.modalite_formation, cfp.nom, vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id join formations as frmt on md.formation_id = frmt.id join domaines as dm on frmt.domaine_id = dm.id join cfps as cfp on md.cfp_id = cfp.id where md.status = 2 and md.etat_id = 1 and md.module_id = ?', [$id_module]);
         $modules_counts = DB::select('select count(*) as nb_modules, md.formation_id from modules as md join formations as frmt on md.formation_id = frmt.id where md.status = 2 and md.etat_id = 1 group by md.formation_id');
-        return view('referent.catalogue.demande_devis', compact('formations', 'modules', 'modules_counts', 'devise', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+        return view('referent.catalogue.demande_devis', compact('resp_etp','formations', 'modules', 'modules_counts', 'devise', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
     }
 
 
@@ -662,7 +662,7 @@ class FormationController extends Controller
 
         $nbPagination = null;
         $nom_entiter = null;
-        $nb_limit = 2;
+        $nb_limit = 5;
 
         if (isset($nom_entiter_pag)) {
             $nom_entiter = $nom_entiter_pag;
@@ -715,7 +715,7 @@ class FormationController extends Controller
         $nom_param = "";
 
         $nbPagination = null;
-        $nb_limit = 2;
+        $nb_limit = 5;
 
 
         if (isset($nbPagination_pag)) {
@@ -772,7 +772,7 @@ class FormationController extends Controller
         $nom_param = "";
 
         $nbPagination = null;
-        $nb_limit = 2;
+        $nb_limit = 5;
         $para = [];
         $opt = [];
         $val = [];
@@ -863,7 +863,7 @@ class FormationController extends Controller
         $nom_par_fin = "";
 
         $nbPagination = null;
-        $nb_limit = 2;
+        $nb_limit = 5;
 
 
         if (isset($nbPagination_pag)) {

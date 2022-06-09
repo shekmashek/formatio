@@ -70,7 +70,10 @@ class FactureController extends Controller
 
         $nb_limit = 10;
 
+        // public function getNbrePagination($nomTab, $col_para, $para = [], $opt = [], $val = [],$constraint)
+
         $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["cfp_id"], ["="], [$cfp_id], "AND");
+
         $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", ["cfp_id"], ["="], [$cfp_id], "AND");
         $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "cfp_id"], ["!=", "="], ["terminer", $cfp_id], "AND");
         $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "cfp_id"], ["=", "="], ["terminer", $cfp_id], "AND");
@@ -109,6 +112,7 @@ class FactureController extends Controller
 
     public function listeFacture_referent($nb_pag_full = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null)
     {
+
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $user_id = Auth::user()->id;
         $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
@@ -127,6 +131,7 @@ class FactureController extends Controller
 
         $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "entreprise_id"], ["=", "="], ["terminer", $entreprise_id], "AND");
         $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+        // public function findWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
 
         if ($nb_pag_full != null && $nb_pag_actif != null &&  $nbPagination_payer != null) {
 

@@ -366,6 +366,7 @@ WHERE
 
 CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
   v_facture.cfp_id,
+   v_facture.sum_acompte,
     v_facture.activiter,
      v_facture.entreprise_id,
     v_facture.num_facture,

@@ -1032,7 +1032,7 @@
                                                                                 <span>Montant à facturer<strong style="color:#ff0000;">*</strong></span>
                                                                             </div>
                                                                             <div class="col">
-                                                                                <input autocomplete="off" type="number" min="1" name="montant" class="form-control " required style="height: 50px;">
+                                                                                <input autocomplete="off" type="number" min="1" max="{{$actif->dernier_montant_ouvert}}" name="montant" class="form-control " required style="height: 50px;">
                                                                             </div>
                                                                         </div>
                                                                     </div>

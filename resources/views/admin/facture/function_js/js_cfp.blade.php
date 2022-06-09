@@ -254,7 +254,7 @@
                 html_tous += '<div class="modal-body">';
                 html_tous += '<form action="' + url_form_encaissement + '" id="formPayement" method="POST">';
                 html_tous += '@csrf';
-                html_tous += '<input autocomplete="off" type="text" value="' + full_facture[i_act].num_facture + '" name="num_facture" class="form-control formPayement" required="required" hidden> </div>';
+                html_tous += '<input autocomplete="off" type="text" value="' + full_facture[i_act].num_facture + '" min=1 max='+full_facture[i_act].dernier_montant_ouvert+' name="num_facture" class="form-control formPayement" required="required" hidden> </div>';
 
                 html_tous += '<div class="inputbox inputboxP mt-3  ms-1">';
                 html_tous += '<span>Description</span>';
@@ -485,7 +485,7 @@
                 html_actif += "  <a href=" + url_detail_facture + "> ";
 
                 if (facture_actif[i_actif].jour_restant > 0) {
-                    if ($facture_actif[i_actif].facture_encour == "en_cour") {
+                    if (facture_actif[i_actif].facture_encour == "en_cour") {
                         html_actif += '<div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white"> partiellement payé</html_actif+=div>';
                     } else {
                         html_actif += '<div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white"> envoyé </div>';
@@ -541,7 +541,7 @@
                 html_actif += '<form action="' + url_form_encaissement + '" id="formPayement" method="POST">';
 
                 html_actif += '  @csrf';
-                html_actif += '    <input autocomplete="off" type="text" value="' + facture_actif[i_actif].num_facture + '" name="num_facture" class="form-control formPayement" required="required" hidden>';
+                html_actif += '    <input autocomplete="off" type="text" value="' + facture_actif[i_actif].num_facture + '" max='+facture_actif[i_actif].dernier_montant_ouvert+' name="num_facture" class="form-control formPayement" required="required" hidden>';
                 html_actif += ' </div>';
                 html_actif += ' <div class="inputbox inputboxP mt-3  mx-1">';
                 html_actif += ' <div class="row">';
