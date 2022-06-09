@@ -363,7 +363,8 @@ Route::post('enregistrer_nouveau_etp_stagiaire', 'ParticipantController@nouvelle
 Route::resource('formation', 'FormationController')->except([
     'index', 'destroy', 'show'
 ]);
-Route::post('/delete_formation/{id}', 'FormationController@destroy')->name('destroy_formation');
+Route::post('/delete_formation', 'FormationController@destroy')->name('destroy_formation');
+Route::post('/update_formation', 'FormationController@update')->name('update_formation');
 Route::post('/show_formation/{id}', 'FormationController@show')->name('show_formation');
 Route::get('/liste_formation/{id?}', 'FormationController@index')->name('liste_formation');
 Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->name('nouvelle_formation');
@@ -371,6 +372,39 @@ Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->nam
 Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
 //route module_formations
 Route::get('/module', 'FormationController@module_formations')->name('module');
+ 
+// page creation formation
+Route::get('/nouveau_formation', 'FormationController@create')->name('nouveau_formation');
+
+// validation creation formation
+Route::post('/creer_formation', 'FormationController@store')->name('creer_formation');
+
+// liste CRUD
+Route::get('/crud_formation/{id?}', 'FormationController@listeCrud')->name('crud_formation');
+
+
+//route domaine
+Route::resource('domaine', 'FormationController')->except([
+    'index', 'destroy', 'show'
+]);
+Route::post('/delete_formation', 'FormationController@destroy')->name('destroy_formation');
+Route::post('/update_formation', 'FormationController@update')->name('update_formation');
+Route::post('/show_formation/{id}', 'FormationController@show')->name('show_formation');
+Route::get('/liste_formation/{id?}', 'FormationController@index')->name('liste_formation');
+Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->name('nouvelle_formation');
+//route categorie_formation
+Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
+//route module_formations
+Route::get('/module', 'FormationController@module_formations')->name('module');
+ 
+// page creation domaine
+Route::get('/nouveau_domaine', 'FormationController@create')->name('nouveau_domaine');
+
+// validation creation domaine
+Route::post('/creer_formation', 'FormationController@store')->name('creer_formation');
+
+// liste CRUD
+Route::get('/crud_formation/{id?}', 'FormationController@listeCrud')->name('crud_formation');
 
 //route ajout_categorie_formation
 Route::get('/ajout_categorie', 'FormationController@ajout_categorie')->name('ajout_categorie');
