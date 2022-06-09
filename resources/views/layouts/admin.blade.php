@@ -759,7 +759,7 @@
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                                         <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
-                                        <span class="badge_invitation">9</span>
+                                        <span class="badge_invitation"></span>
                                     </a>
                                     <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
                                         <div class="m-4 mt-2" role="tabpanel">
@@ -779,47 +779,6 @@
                                                         <div class="row">
                                                             <ul>
                                                                 <p class="test_affiche1 mt-3 my-2" style="font-size: 12px"></p>
-                                                                {{-- @can('isCFP')
-                                                                @if (count($invitation_etp)<=0) <tr style="text-align:left">
-                                                                    <td > Aucun invitations en attente</td>
-                                                                    </tr>
-                                                                    @else
-                                                                    @foreach($invitation_etp as $invit_etp)
-                                                                        @if (count($invitation_etp)<=0) <tr style="text-align:left">
-                                                                            <td > Aucun invitations en attente</td>
-                                                                            </tr>
-                                                                        @else
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div align="left">
-                                                                                <strong>{{$invit_etp->nom_resp.' '.$invit_etp->prenom_resp}}</strong>
-                                                                                <p style="color: rgb(238, 150, 18)">{{$invit_etp->email_resp}}</p>
-                                
-                                                                        </td>
-                                                                        <td>
-                                                                            <div align="left">
-                                                                                <strong>{{$invit_etp->nom_etp}}</strong>
-                                                                                <p style="color: rgb(126, 124, 121)"> <strong>({{$invit_etp->nom_secteur}})</strong></p>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a href="{{ route('accept_cfp_etp',$invit_etp->id) }}">
-                                                                                <strong>
-                                                                                    <h5><i class="bx bxs-check-circle actions" title="Accepter"></i> accepter</h5>
-                                                                                </strong>
-                                                                            </a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a href="{{ route('annulation_cfp_etp',$invit_etp->id) }}">
-                                                                                <strong>
-                                                                                    <h5><i class="bx bxs-x-circle actions" title="Refuser"></i> réfuser</h5>
-                                                                                </strong>
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    @endforeach
-                                                                    @endif
-                                                                    @endcan --}}
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -827,8 +786,7 @@
                                                 <div class="tab-pane fade" id="invitation_refuses">
                                                     <div class="container">
                                                         <div class="row">
-                                                            <ul>
-                                                                liste des invitations réfusées
+                                                            <ul class="test_affiche2 mt-3 my-2" style="font-size: 12px">
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -1431,17 +1389,46 @@
                 url: '{{ route("profile_resp") }}'
                 , type: 'get'
                 , success: function(response) {
+                    $('.badge_invitation').text("");
+                    $('.badge_invitation').append(response['invitation'].length);
+
                     // var userData = JSON.parse(response);
                     // alert(JSON.stringify(response.length));
-                    if(response.length == 0){
+                    if(response['invitation'].length == 0){
                         // alert("eto");
                         var html = "Aucun invitations en attente";
                         $('.test_affiche1').append(html);
+                        $('.test_affiche1').css('textAlign','center');
+
                     }else{
                         // alert("aiza");
                         for (let i = 0; i < response['invitation'].length; i++){                                                           
-                            $('.test_affiche1').append('<li class="invitation_'+response['invitation'][i]['demmandeur_etp_id']+'"><span class="me-2">'+response['invitation'][i]['nom_resp']+'</span><span class="me-2">'+response['invitation'][i]['prenom_resp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['invitation'][i]['nom_secteur']+'</span> <button id="btn_'+response['invitation'][i]['id']+'" class="btn btn-outline-success btn-sm accepte">Accépter</button> <button id="ref_'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn btn-outline-danger btn-sm refuse" data-id="'+response['invitation'][i]['demmandeur_etp_id']+'">Réfuser</button></li>');
+                            $('.test_affiche1').append('<li class="invitation_'+response['invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['invitation'][i]['nom_resp']+'</span><span class="me-2">'+response['invitation'][i]['prenom_resp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['invitation'][i]['nom_secteur']+'</span> <span id="'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn btn-sm accepte" title="accepter l\'invitation" role="button"><i class="bx bx-check-double bx_ajouter"></i></span> <span id="ref_'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn refuse" title="refuser l\'invitation" role="button" data-id="'+response['invitation'][i]['demmandeur_etp_id']+'"><i class="bx bx-x bx_supprimer"></i></span></li>');
                             
+                            $(".accepte").on("click", function(e) {
+                                let id = $(e.target).closest(".accepte").attr("id");
+                                // alert(id);
+                                $.ajax({
+                                    type: "get",
+                                    url: " {{ route('accept_invitation_cfp_etp_notif') }}",
+                                    data: {
+                                        Id: id,
+                                    },
+                                    success: function(response) {
+                                        
+                                        console.log(".invitation_" + id);
+                                        $(".invitation_" + id).remove();
+                                        $('.badge_invitation').text("");
+                                        $('.badge_invitation').append(i);
+                                        toastr.success('Une invitation a été accéptée');
+                                    },
+                                    error: function(error) {
+                                    console.log(error);
+                                    },
+                                });
+                            });
+
+
                             $(".refuse").on("click", function(e) {
                                 let id = $(this).data("id");
                                 $.ajax({
@@ -1452,24 +1439,26 @@
                                     },
                                     success: function(response) {
                                         // alert("success");
-                                        console.log(".invitation_" + id);
+                                        // console.log(".invitation_" + id);
                                         $(".invitation_" + id).remove();
-                                        toastr.success('Un invitation à été réfuser 💪 ');
+                                        $('.badge_invitation').text("");
+                                        $('.badge_invitation').append(i);
+                                        toastr.warning('Une invitation à été réfuser');
                                     },
                                     error: function(error) {
                                     console.log(error);
                                     },
                                 });
-                                });
+                            });
                         }
                     }
-
 
                     if(response['photo'] == 'oui'){
                         var html = '<img src="{{asset(":?")}}" alt="user_profile" style="width : 70px; height : 70px; border: none; border-radius : 100%; display: grid; place-content: center">';
                         html = html.replace(":?", response['user']);
                         // alert(JSON.stringify(response));
                         $('.photo_users').append(html);
+                        
                     }
                     if(response['photo'] == 'non'){
                         var html = response['user'][0]['nm']+''+response['user'][0]['pr'];
@@ -1482,21 +1471,22 @@
             });
         });
 
-
-
-
-
-        $(document).ready(function() {
-            var pdp = "";
+         $(document).ready(function() {
             $.ajax({
-                url: '{{ route("logos") }}'
+                url: '{{ route("aff_refuse_etp_cfp") }}'
                 , type: 'get'
                 , success: function(response) {
-                    var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
-                    html = html.replace(":?", userData);
+                    if(response['refuse_invitation'].length == 0){
+                        var html = 'Aucun invitations refusée';
+                        $('.test_affiche2').append(html);
+                        $('.test_affiche2').css('textAlign','center');
 
-                    $('.logo_etp_user').append(html);
+                    }else{
+                        // alert("aiza");
+                        for (let i = 0; i < response['refuse_invitation'].length; i++){                                                           
+                            $('.test_affiche2').append('<li class="invitation_'+response['refuse_invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['refuse_invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['refuse_invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['refuse_invitation'][i]['nom_secteur']+'</span></li>');
+                        }
+                    }
                 }
                 , error: function(error) {
                     console.log(error);
@@ -1508,6 +1498,9 @@
             e.stopPropagation();
         })
 
+    </script>
+    <script type="text/javascript">
+    
     </script>
 </body>
 

@@ -421,6 +421,28 @@ class CollaborationController extends Controller
         return $this->collaboration->accept_invitation_collaboration_cfp_etp($id);
     }
 
+    public function accept_invitation_cfp_etp_notif(Request $request)
+    {
+        $id = $request->Id;
+        $demande = $this->fonct->findWhereMulitOne("demmande_etp_cfp", ["demmandeur_etp_id"], [$id]);
+        $verify_exist = $this->fonct->findWhere("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$id, $demande->inviter_cfp_id]);
+        DB::beginTransaction();
+        try {
+            if (count($verify_exist) > 0) {
+                // DB::delete("delete from demmande_etp_cfp where demmandeur_etp_id = ? and inviter_cfp_id = ?", [$id, $demande->inviter_cfp_id]);
+                DB::update("update demmande_etp_cfp set activiter = 1 where demmandeur_etp_id = ?", [$id]);
+                DB::commit();
+            }
+            
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
+
+        return back();
+        // return $this->collaboration->accept_invitation_collaboration_cfp_etp($id);
+    }
+
     public function accept_invitation_formateur_cfp($id)
     {
         return $this->collaboration->accept_invitation_collaboration_formateur_cfp($id);

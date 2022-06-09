@@ -860,6 +860,9 @@ Route::get('annulation_formateur_cfp/{id}', 'CollaborationController@annulation_
 Route::get('annulation_cfp_formateur/{id}', 'CollaborationController@annulation_invitation_cfp_formateur')->name('annulation_cfp_formateur');
 
 Route::get('accept_cfp_etp/{id}', 'CollaborationController@accept_invitation_cfp_etp')->name('accept_cfp_etp');
+
+
+Route::get('accept_invitation_cfp_etp_notif', 'CollaborationController@accept_invitation_cfp_etp_notif')->name('accept_invitation_cfp_etp_notif');
 Route::get('accept_etp_cfp/{id}', 'CollaborationController@accept_invitation_etp_cfp')->name('accept_etp_cfp');
 Route::get('accept_formateur_cfp/{id}', 'CollaborationController@accept_invitation_formateur_cfp')->name('accept_formateur_cfp');
 Route::get('accept_cfp_formateur/{id}', 'CollaborationController@accept_invitation_cfp_formateur')->name('accept_cfp_formateur');
@@ -1059,6 +1062,8 @@ Route::post('role_manager', 'DepartementController@role_manager')->name('role_ma
 Route::get('admin_nom_etp', 'AdminController@get_name_etp')->name('admin_nom_etp');
 //route user profile responsable
 Route::get('profile_resp', 'AdminController@profile_resp')->name('profile_resp');
+//refuse invitation etp_cfp_
+Route::get('aff_refuse_etp_cfp', 'AdminController@aff_refuse_etp_cfp')->name('aff_refuse_etp_cfp');
 //route get_logo
 Route::get('logos', 'AdminController@logo')->name('logos');
 
