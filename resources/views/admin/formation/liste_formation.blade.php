@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-<p class="text_header m-0 mt-1">Formation</p>
+<p class="text_header m-0 mt-1">Domaine et Formation</p>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('css/facture.css')}}">
@@ -209,6 +209,11 @@
 
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <div class="container-fluid mt-5">
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
@@ -216,266 +221,205 @@
             <a href="#Domaines" class="nav-link active" data-toggle="tab">Domaines ({{count($domaine)}})</a>
         </li>
         <li class="nav-item">
-            <a href="#Formations" class="nav-link" data-toggle="tab">Formations ({{count($formation)}})</a>
+            <a href="#Formations" class="nav-link " data-toggle="tab">Formations ({{count($formation)}})</a>
         </li>
         </ul>
         <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
 
-        @if(isset($invoice_dte) && isset($due_dte))
-        <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
-            filtre activé <i class="fas fa-times"></i> </a>
-        @elseif(isset($solde_debut) && isset($solde_fin))
-        <a href="{{route('liste_facture')}}"><span class="btn_creer  text-center filter"><span style="position: relative; bottom: -0.2rem">
-                </span> filtre activé <i class="fas fa-times"></i></span>
-        </a>
-        @elseif(isset($num_fact))
-        <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
-            filtre activé <i class="fas fa-times"></i> </a>
-        @elseif(isset($entiter_id))
-        <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
-            filtre activé <i class="fas fa-times"></i> </a>
-        @elseif(isset($status))
-        <a href="{{route('liste_facture')}}" class="btn_creer text-center filter" role="button">
-            filtre activé <i class="fas fa-times"></i> </a>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="Domaines">
+                <a href="{{route('nouveau_domaine')}}" class="btn_nouveau">
+                    <i class="bx bx-plus-medical me-2"></i>
+                    Nouveau Domaine
+                </a>
+                <div class="col-md-12">
+                        <table class="table table-hover ">
+                            <thead>
+                                <tr>
+                                    <th style="max-width: 12%">nom &nbsp; <a class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
+                                    </th>
+                                    <th style="max-width: 12%">formations &nbsp; <a class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
+                                    </th>
+                                    <th style="max-width: 12%">Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="list_data_trie_tous">
+                                @if (count($domaine) > 0)
+                                @foreach ($domaine as $one_domaine)
 
-        @endif
-
-        <div class="tab-pane fade show active" id="Domaines">
-            <a href="{{route('nouveau_domaine')}}" class="btn_nouveau">
-                <i class="bx bx-plus-medical me-2"></i>
-                Nouveau Domaine
-            </a>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="tab-content" id="nav-tabContent">
-                            @if (isset($pour_list))
-                                @if ($pour_list == "TOUT")
-                                    <div class="tab-pane fade show active" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
+                                <tr>
+                                    <td>
+                                        <a href="{{route('detail_facture',$one_domaine->id)}}">
+                                            {{$one_domaine->nom_domaine}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('detail_facture',$one_domaine->id)}}">
+                                            {{$one_domaine->nom_domaine}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_domaine_{{$one_domaine->id}}"><i class='bx bx-edit bx_modifier'></i></a>
+                                        <a  href="" data-bs-toggle="modal" data-bs-target="#modal_delete_domaine_{{$one_domaine->id}}"><i class='bx bx-trash bx_supprimer'></i></a>
+                                    </td>
+                                    {{-- modal update  --}}
+                                        <div class="modal fade" id="modal_update_domaine_{{$one_domaine->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(75,181,67);">
+                                                        <h4 class="modal-title text-white">Avertissement !</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point de modifier une donnée, cette action est irréversible. Continuer ?</small>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-center">
+                                                        {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
+                                                        <form action="{{route('update_formation') }}"  method="POST">
+                                                            @csrf
+                                                            <input name="id" type="text" value="{{$one_domaine->id}}" hidden>
+                                                            <input name="nom_formation" type="text" value="{{$one_domaine->nom_formation}}" >
+                                                            <div class="mt-4 mb-4">
+                                                                <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                            </div>
+                                                        </form>
+                                                        <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- fin modal update --}}
+                                        {{-- modal delete  --}}
+                                        <div class="modal fade" id="modal_delete_domaine_{{$one_domaine->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(192, 37, 55);">
+                                                        <h4 class="modal-title text-white">Avertissement !</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-center">
+                                                        {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
+                                                        <form action="{{route('destroy_formation') }}"  method="POST">
+                                                            @csrf
+                                                            <input name="id" type="text" value="{{$one_domaine->id}}" hidden>
+                                                            <div class="mt-4 mb-4">
+                                                                <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                            </div>
+                                                            <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- fin modal delete --}}
+                                </tr>
+                                @endforeach
                                 @else
-                                    <div class="tab-pane fade" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
+                                <tr>
+                                    <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                                </tr>
                                 @endif
-                            @else
-                                <div class="tab-pane fade  show active" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
-                            @endif
-
-                                    {{------------------------------------------------------------------------------- pagination facture full--}}
-                                    {{-- @include("admin.facture.pagination_cfp.pagination_tout_facture") --}}
-
-                                    <table class="table table-hover ">
-                                        <thead>
-                                            <tr>
-                                                <th style="max-width: 12%">nom &nbsp; <a class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
-                                                </th>
-                                                <th style="max-width: 12%">formations &nbsp; <a class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
-                                                </th>
-                                                <th style="max-width: 12%">Action
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="list_data_trie_tous">
-                                            @if (count($domaine) > 0)
-                                            @foreach ($domaine as $one_domaine)
-
-                                            <tr>
-                                                <td>
-                                                    <a href="{{route('detail_facture',$one_domaine->id)}}">
-                                                        {{$one_domaine->nom_domaine}}
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="{{route('detail_facture',$one_domaine->id)}}">
-                                                        {{$one_domaine->nom_domaine}}
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_domaine_{{$one_domaine->id}}"><i class='bx bx-edit bx_modifier'></i></a>
-                                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_delete_domaine_{{$one_domaine->id}}"><i class='bx bx-trash bx_supprimer'></i></a>
-                                                </td>
-                                                {{-- modal update  --}}
-                                                    <div class="modal fade" id="modal_update_domaine_{{$one_domaine->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(75,181,67);">
-                                                                    <h4 class="modal-title text-white">Avertissement !</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point de modifier une donnée, cette action est irréversible. Continuer ?</small>
-                                                                </div>
-                                                                <div class="modal-footer justify-content-center">
-                                                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
-                                                                    <form action="{{route('update_formation') }}"  method="POST">
-                                                                        @csrf
-                                                                        <input name="id" type="text" value="{{$one_domaine->id}}" hidden>
-                                                                        <input name="nom_formation" type="text" value="{{$one_domaine->nom_formation}}" >
-                                                                        <div class="mt-4 mb-4">
-                                                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                                                                        </div>
-                                                                    </form>
-                                                                    <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {{-- fin modal update --}}
-                                                    {{-- modal delete  --}}
-                                                    <div class="modal fade" id="modal_delete_domaine_{{$one_domaine->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(192, 37, 55);">
-                                                                    <h4 class="modal-title text-white">Avertissement !</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                                                </div>
-                                                                <div class="modal-footer justify-content-center">
-                                                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
-                                                                    <form action="{{route('destroy_formation') }}"  method="POST">
-                                                                        @csrf
-                                                                        <input name="id" type="text" value="{{$one_domaine->id}}" hidden>
-                                                                        <div class="mt-4 mb-4">
-                                                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                                                                        </div>
-                                                                        <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {{-- fin modal delete --}}
-                                            </tr>
-                                            @endforeach
-                                            @else
-                                            <tr>
-                                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
-                                            </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </tbody>
+                        </table>
                 </div>
             </div>
-        </div>
-        <div class="tab-pane fade show" id="Formations">
-            <a href="{{route('nouveau_formation')}}" class="btn_nouveau">
-                <i class="bx bx-plus-medical me-2"></i>
-                Nouvelle formation
-            </a>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="tab-content" id="nav-tabContent">
-                            @if (isset($pour_list))
-                                @if ($pour_list == "TOUT")
-                                    <div class="tab-pane fade show active" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
-                                @else
-                                    <div class="tab-pane fade" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
-                                @endif
+            <div class="tab-pane fade show " id="Formations">
+                <a href="{{route('nouveau_formation')}}" class="btn_nouveau">
+                    <i class="bx bx-plus-medical me-2"></i>
+                    Nouvelle formation
+                </a>
+                <div class="col-md-12">
+                    <table class="table table-hover ">
+                        <thead>
+                            <tr>
+                                <th style="max-width: 12%">nom &nbsp; <a class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
+                                </th>
+                                <th style="max-width: 12%">Domaine &nbsp; <a class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
+                                </th>
+                                <th style="max-width: 12%">Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="list_data_trie_tous">
+                            @if (count($formation) > 0)
+                            @foreach ($formation as $one_formation)
+
+                            <tr>
+                                <td>
+                                    <a href="{{route('detail_facture',$one_formation->id)}}">
+                                        {{$one_formation->nom_formation}}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{route('detail_facture',$one_formation->id)}}">
+                                        {{$one_formation->nom_formation}}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_formation_{{$one_formation->id}}"><i class='bx bx-edit bx_modifier'></i></a>
+                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_delete_formation_{{$one_formation->id}}"><i class='bx bx-trash bx_supprimer'></i></a>
+                                </td>
+                                {{-- modal update  --}}
+                                    <div class="modal fade" id="modal_update_formation_{{$one_formation->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(75,181,67);">
+                                                    <h4 class="modal-title text-white">Avertissement !</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point de modifier une donnée, cette action est irréversible. Continuer ?</small>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
+                                                    <form action="{{route('mettre_fin_cfp_etp') }}"  method="POST">
+                                                        @csrf
+                                                        <input name="etp_id" type="text" value="{{$one_formation->nom_formation}}" >
+                                                        <div class="mt-4 mb-4">
+                                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                        </div>
+                                                    </form>
+                                                    <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- fin modal update --}}
+                                    {{-- modal delete  --}}
+                                    <div class="modal fade" id="modal_delete_formation_{{$one_formation->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(192, 37, 55);">
+                                                    <h4 class="modal-title text-white">Avertissement !</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
+                                                    <form action="{{route('mettre_fin_cfp_etp') }}"  method="POST">
+                                                        @csrf
+                                                        <input name="etp_id" type="text" value="{{$one_formation->id}}" hidden>
+                                                        <div class="mt-4 mb-4">
+                                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                        </div>
+                                                        <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- fin modal delete --}}
+                            </tr>
+                            @endforeach
                             @else
-                                <div class="tab-pane fade  show active" id="nav-tous" role="tabpanel" aria-labelledby="nav-tous-tab">
+                            <tr>
+                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                            </tr>
                             @endif
-
-                                    {{------------------------------------------------------------------------------- pagination facture full--}}
-                                    {{-- @include("admin.facture.pagination_cfp.pagination_tout_facture") --}}
-
-                                    <table class="table table-hover ">
-                                        <thead>
-                                            <tr>
-                                                <th style="max-width: 12%">nom &nbsp; <a class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
-                                                </th>
-                                                <th style="max-width: 12%">Domaine &nbsp; <a class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
-                                                </th>
-                                                <th style="max-width: 12%">Action
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="list_data_trie_tous">
-                                            @if (count($formation) > 0)
-                                            @foreach ($formation as $one_formation)
-
-                                            <tr>
-                                                <td>
-                                                    <a href="{{route('detail_facture',$one_formation->id)}}">
-                                                        {{$one_formation->nom_formation}}
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="{{route('detail_facture',$one_formation->id)}}">
-                                                        {{$one_formation->nom_formation}}
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_formation_{{$one_formation->id}}"><i class='bx bx-edit bx_modifier'></i></a>
-                                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_delete_formation_{{$one_formation->id}}"><i class='bx bx-trash bx_supprimer'></i></a>
-                                                </td>
-                                                {{-- modal update  --}}
-                                                    <div class="modal fade" id="modal_update_formation_{{$one_formation->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(75,181,67);">
-                                                                    <h4 class="modal-title text-white">Avertissement !</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point de modifier une donnée, cette action est irréversible. Continuer ?</small>
-                                                                </div>
-                                                                <div class="modal-footer justify-content-center">
-                                                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
-                                                                    <form action="{{route('mettre_fin_cfp_etp') }}"  method="POST">
-                                                                        @csrf
-                                                                        <input name="etp_id" type="text" value="{{$one_formation->nom_formation}}" >
-                                                                        <div class="mt-4 mb-4">
-                                                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                                                                        </div>
-                                                                    </form>
-                                                                    <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {{-- fin modal update --}}
-                                                    {{-- modal delete  --}}
-                                                    <div class="modal fade" id="modal_delete_formation_{{$one_formation->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(192, 37, 55);">
-                                                                    <h4 class="modal-title text-white">Avertissement !</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                                                </div>
-                                                                <div class="modal-footer justify-content-center">
-                                                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
-                                                                    <form action="{{route('mettre_fin_cfp_etp') }}"  method="POST">
-                                                                        @csrf
-                                                                        <input name="etp_id" type="text" value="{{$one_formation->id}}" hidden>
-                                                                        <div class="mt-4 mb-4">
-                                                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                                                                        </div>
-                                                                        <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {{-- fin modal delete --}}
-                                            </tr>
-                                            @endforeach
-                                            @else
-                                            <tr>
-                                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
-                                            </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
