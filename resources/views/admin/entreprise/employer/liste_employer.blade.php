@@ -146,6 +146,9 @@
 
         <div class="tab-content">
             <div class="m-5 tab-pane fade show active" id="emp-list" role="tabpanel" aria-labelledby="emp-list">
+                <p id="status_error" class="text-danger">
+
+                </p>
                 <table id="example" class="table " style="width:100%">
                     <thead>
                         <tr>
@@ -311,6 +314,7 @@
                                                     class="badge bg-success">Référent</span></label>
                                             <input class="form-check-input desactiver_referent" type="checkbox"
                                                 data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                date-user-actif="{{ $employe->activiter }}"
                                                 checked>
                                         </div>
                                     @else
@@ -321,7 +325,8 @@
                                                 </span>
                                             </label>
                                             <input class="form-check-input activer_referent" type="checkbox"
-                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                data-user-id='["{{ $employe->user_id }}","{{ $employe->activiter }}"]' value="{{ $employe->id }}"
+                                        
                                                 {{-- desactiver le bouton si l'employé n'est pas actif --}} @if ($employe->activiter != 1) disabled @endif>
                                         </div>
                                     @endif
@@ -369,7 +374,10 @@
                                 </form>
 
                             </div>
+                          
+
                         @empty
+
                         @endforelse
 
                     </tbody>
@@ -402,14 +410,7 @@
         {{-- <script src="{{ asset('js/employes_scripts.js') }}"></script> --}}
 
         <script>
-            // modal
-            // var myModal = document.getElementById('form-ajout')
-            // var myInput = document.getElementById('myInput')
-
-            // myModal.addEventListener('shown.bs.modal', function() {
-            //     myInput.focus()
-            // })
-
+            
             // dataTables
             $(document).ready(function() {
                 var table = $('#example').DataTable({
@@ -435,22 +436,37 @@
 
             // changer le status de référent -> activer
             $(".activer_referent").on('click', function(e) {
-                var user_id = $(this).data("user-id");
+                var data_id = $(this).data("user-id");
+                var user_id = data_id[0];
+                var user_actif = data_id[1];
                 var stg_id = $(this).val();
                 $.ajax({
                     type: "GET",
                     url: "employes.setReferent",
                     data: {
                         user_id: user_id,
-                        emp_id: stg_id
+                        emp_id: stg_id,
+                        user_actif: user_actif
                     },
                     success: function(response) {
                         console.log(response);
-                        window.location.reload();
+                        // window.location.reload();
+                        // don't reloead the page if json response have error
+                        if (response.error) {
+                            alert(response.error);
+                            // remove the attribute checked
+                            $(".activer_referent").removeAttr('checked');
+                            // uncheck the checkbox
+                            $(".activer_referent").prop('checked', false);
+
+                            document.getElementById("status_error") .innerHTML = response.error;
+                        } else {
+                            alert('pass');
+                            window.location.reload();
+                        }
                     },
                     error: function(response) {
                         console.log(error);
-                        console.log('erreur');
                     }
                 });
             });
@@ -458,13 +474,15 @@
             // changer le status de référent à désactiver
             $(".desactiver_referent").on('click', function(e) {
                 var user_id = $(this).data("user-id");
+                var user_actif = $(this).data("user-actif");
                 var stg_id = $(this).val();
                 $.ajax({
                     type: "GET",
                     url: "employes.unsetReferent",
                     data: {
                         user_id: user_id,
-                        emp_id: stg_id
+                        emp_id: stg_id,
+                        user_actif: user_actif
                     },
                     success: function(response) {
                         console.log(response);

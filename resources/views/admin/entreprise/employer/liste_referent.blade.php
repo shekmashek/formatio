@@ -186,7 +186,9 @@
                         </div>
                     @endif
                 @empty
-                       
+                       <div>
+                           
+                       </div>
                 @endforelse
 
             </tbody>

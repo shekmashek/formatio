@@ -127,7 +127,7 @@ class ParticipantController extends Controller
 
         $employe = new stagiaire();
         $user_id = $request->user_id;
-        // $user_actif = $request->user_actif;
+        $user_actif = $request->user_actif;
         $emp_id = $request->emp_id;
 
 
@@ -141,13 +141,15 @@ class ParticipantController extends Controller
         // $stagiaire = stagiaire::where('user_id', $user_id)->where('entreprise_id', $entreprise_id)->first();
 
         // setReferent() : méthode dans le model Stagiaire
-        $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);
-        // if ($user_actif == 1) {
-        //     $employe->setReferent($user_id, $emp_id, $entreprise_id);
-        // } else {
-        //     // return redirect()->back()->with('error', 'Cet employé n\'est pas actif');
-        //     return response()->json(['error' => 'Vous ne pouvez pas activer un stagiaire qui n\'est pas actif']);
-        // }
+        // $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);
+
+        // n'execute pas la requete si le stagiaire n'est pas actif
+        if ($user_actif == 1) {
+            $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);
+        } else {
+            // return redirect()->back()->with('error', 'Cet employé n\'est pas actif');
+            return response()->json(['error' => 'Vous ne pouvez pas mettre en référent un employé qui n\'est pas actif']);
+        }
 
 
         // restaurer le role_users de l'employé s'il a déjà été un referent mais désactivé
