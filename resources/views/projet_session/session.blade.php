@@ -400,6 +400,42 @@
         align-items: center; margin: 0 auto;
     }
 
+    /*info SESSION*/
+    .green{
+        color: #5e35b1;
+        border: 2px solid #43a047;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+
+    .red{
+        color: #5e35b1;
+        border: 2px solid #f4511e;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+
+    .yellow{
+        color: #5e35b1;
+        border: 2px solid #fdd835;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+
+    .saClass{
+        font-size: 21px; 
+        color: #637381;
+    }
+    .saSpan{
+        color: #637381;
+        font-size: 14px;
+    }
 </style>
     <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -521,14 +557,101 @@
                             <div class="chiffre_d_affaire m-0 p-0 me-3">
 
                                 <div class="d-flex flex-row">
-                                    <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>
+                                    <p class="p-0 mt-3 text-center">Entreprise client {{ $projet[0]->nom_etp }} </p>
                                     &nbsp;&nbsp;
                                     <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
-                                        class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                                        class="mt-2 showSessionEtp" height="30px" width="30px" style="border-radius: 50%; cursor: pointer"
+                                        data-id="{{ $projet[0]->entreprise_id }}" id="{{ $projet[0]->entreprise_id }}" onclick="afficherInfos();">&nbsp;
+                                </div>
+                            </div>
+                            <div class="chiffre_d_affaire m-0 p-0 me-3">
+                                @php
+                                    $etp = $groupe->info_resp_etp($projet[0]->entreprise_id);
+                                @endphp
+
+                                <div class="d-flex flex-row">
+                                    <p class="p-0 mt-3 text-center">Réferent de l'entreprise {{ $projet[0]->nom_etp }} </p>
+                                    &nbsp;&nbsp;
+                                    <span>
+                                        @if ($etp->photos == NULL or $etp->photos == '' or $etp->photos == 'XXXXXXX')
+                                            <td role="button" >
+                                                <span  class="randomColor m-auto mt-2 text-uppercase" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
+                                                    <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 15px; cursor: pointer"
+                                                    data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}} class="resp_etp">{{$etp->nomEtresp}}{{$etp->prenomEtpresp}}</span> 
+                                                </span>
+                                            </td>
+                                        @else
+                                            <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                                <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" src="{{asset("images/responsables/".$etp->photos)}}" style="width:30px;height:30px; border-radius:100% ;cursor: pointer"
+                                                data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}} class="resp_etp">
+                                            </td>
+                                        @endif
+                                    </span>
+                                    {{-- <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
+                                        class="mt-2 showSessionEtp" height="30px" width="30px" style="border-radius: 50%; cursor: pointer"
+                                        data-id="{{ $projet[0]->entreprise_id }}" id="{{ $projet[0]->entreprise_id }}" onclick="afficherInfos();">&nbsp; --}}
                                 </div>
                             </div>
                         @endif
-                        <div class="chiffre_d_affaire me-2">
+
+                        <div class="chiffre_d_affaire m-0 p-0 me-3">
+                            @php
+                                $of = $groupe->info_resp_of($projet[0]->cfp_id)
+                            @endphp
+
+                            <div class="d-flex flex-row">
+                                <p class="p-0 mt-3 text-center"> Organisme de formation
+                                    <span style="font-weight: 400; color: #000000">{{ $of->nom }}</span>
+                                </p>&nbsp;&nbsp;
+
+                                <div class="mt-1 text-center mb-3">
+                                    <span>
+                                        @if($of->logo == NULL or $of->logo == '' or $of->logo == 'XXXXXXX')
+                                            <td role="button" >
+                                                <span class="randomColor m-auto mt-2 text-uppercase" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
+                                                    <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 14px; cursor: pointer" 
+                                                    data-id={{$of->id}} id={{$of->id}}>
+                                                        {{$of->nomOfS}}
+                                                    </span> 
+                                                </span>
+                                            </td>
+                                        @else
+                                            <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                                <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" src="{{asset("images/CFP/".$of->logo)}}" style="width:30px;height:30px; border-radius:100%; cursor: pointer" 
+                                                data-id={{$of->id}} id={{$of->id}}>
+                                            </td>
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chiffre_d_affaire m-0 p-0 me-3">
+                            <div class="d-flex flex-row">
+                                <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
+                                    <span style="font-weight: 400; color: #000000">{{ $of->nom_resp_cfp }}</span>
+                                </p>&nbsp;&nbsp;
+                                <div class="mt-1 text-center mb-3">
+                                    <span>
+                                        @if($of->photos_resp_cfp == NULL or $of->photos_resp_cfp == '' or $of->photos_resp_cfp == 'XXXXXXX')
+                                            <td role="button" >
+                                                <span class="randomColor m-auto mt-2 text-uppercase" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
+                                                    <span data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 14px; cursor: pointer" 
+                                                    data-id={{$of->id}} id={{$of->id}}>
+                                                        {{$of->nomRespOf}}{{$of->prenomRespOf}}
+                                                    </span> 
+                                                </span>
+                                            </td>
+                                        @else
+                                            <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                                <img data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" src="{{asset("images/CFP/".$of->photos_resp_cfp)}}" style="width:120px;height:120px; border-radius:100%; cursor: pointer" 
+                                                data-id={{$of->id}} id={{$of->id}}>
+                                            </td>
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
+                        </div> 
+                        {{-- <div class="chiffre_d_affaire me-2">
 
                             <div class="d-flex flex-row">
                                 <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
@@ -536,7 +659,7 @@
                                 <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
                                     height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                             </div>
-                        </div>
+                        </div> --}}
                         @canany(['isCFP'])
                             <div class="chiffre_d_affaire">
                                 <div class="d-flex flex-row">
@@ -873,54 +996,553 @@
             </div>
         </section>
     </div>
+
+
+
+    {{-- Entreprise --}}
     <div class="infos mt-3">
         <div class="row">
+
             <div class="col">
-                <p class="m-0">infos</p>
+                <p class="m-0 text-center">INFORMATION</p>
             </div>
             <div class="col text-end">
-                <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                <i class="bx bx-x " role="button" onclick="afficherInfos();" style="padding: 10px;"></i>
             </div>
             <hr class="mt-2">
-            <div class="text-center mt-2">
-                @if ($type_formation_id == 1)
-                    <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" class="img-fluid text-center"
-                        style="width:120px;height:60px;" role="button" onclick="afficherInfos();">
-                    <div>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->nom_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->telephone_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong>{{ $projet[0]->email_etp }}</strong></p>
-                        <p class="p-0 m-0 text-center"> <strong> Adresse:{{ $projet[0]->adresse_rue }}
-                                {{ $projet[0]->adresse_quartier }} {{ $projet[0]->adresse_code_postal }}
-                                {{ $projet[0]->adresse_ville }} {{ $projet[0]->adresse_region }}</strong></p>
+
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1 || $type_formation_id == 2)
+                    <div class="mt-1 text-center mb-3">
+                        <span id="lEtp">
+                            
+                        </span>
+                    </div>
+                    <div class="mt-1 text-center">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                
+                                <p id="nEtp" style="color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+                                    
+                                </p>
+                                <p id="status">
+                                    
+                                </p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-donate-heart'></i></div>
+                            <div class="col-md-3">Statut</div>
+                            <div class="col-md">
+                                <span id="juridic" style="font-size: 14px;">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-credit-card-front' ></i></div>
+                            <div class="col-md-3">NIF</div>
+                            <div class="col-md">
+                                <span id="nif" style="font-size: 14px;">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-credit-card' ></i></div>
+                            <div class="col-md-3">STAT</div>
+                            <div class="col-md">
+                                <span id="stat" style="font-size: 14px;">
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-phone'></i></div>
+                            <div class="col-md-3">Tel</div>
+                            <div class="col-md">
+                                <span id="tel" style="font-size: 14px;">
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                            <div class="col-md-3">E-mail</div>
+                            <div class="col-md">
+                                <span id="mail">
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                            <div class="col-md-3">Adresse</div>
+                            <div class="col-md">
+                                <span id="adrlot"></span>
+                                <span id="adrlot2"></span>
+                                <span id="adrlot3"></span>
+                                <span id="adrlot4"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-globe' ></i></div>
+                            <div class="col-md-3">Site web</div>
+                            <div class="col-md">
+                                <span id="site">
+                                    
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 @endif
-
+                
             </div>
+    </div>
+    
+    {{--Responsable ETP--}}
+    <div class="offcanvas offcanvas-end" style="padding-top: 50px" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">INFORMATION</h5>
+            <hr>
 
-
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-    </div>
-    </div>
-    {{-- affiche prof --}}
-    <div class="prof mt-3">
-        <div class="row">
-            <div class="col">
-                <p class="m-0">Infos</p>
-            </div>
-            <div class="col text-end">
-                <i class="bx bx-x " role="button" onclick="afficherProf();"></i>
-            </div>
+        <div class="offcanvas-body">
             <hr class="mt-2">
-            <div class="text-center mt-2">
 
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1)
+                    <div class="mt-1 text-center mb-3">
+                        <span>
+                            @if($etp->photos == NULL or $etp->photos == '' or $etp->photos == 'XXXXXXX')
+                                <td role="button" >
+                                    <span  class="randomColor m-auto mt-2 text-uppercase" style="width:120px;height:120px; border-radius:100%; color:white; display: grid; place-content: center">
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: 18px">{{$etp->nomEtresp}} {{$etp->prenomEtpresp}}</span> 
+                                    </span>
+                                </td>
+                            @else
+                                <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                    <img src="{{asset("images/responsables/".$etp->photos)}}" style="width:120px;height:120px; border-radius:100%">
+                                </td>
+                            @endif
+                        </span>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-bookmark saClass'></i></div>
+                            <div class="col-md-3 saSpan">Matricule</div>
+                            <div class="col-md">
+                                <span id="nom" style="font-size: 14px;" class="saSpan">
+                                    @if ($etp->matricule == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $etp->matricule }}
+                                    @endif
+                                </span>
+                                <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-user saClass'></i></div>
+                            <div class="col-md-3 saSpan">Nom_prénoms</div>
+                            <div class="col-md">
+                                <span id="nomd" style="font-size: 14px;" class="saSpan">
+                                    @if ($etp->nom_resp  == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $etp->nom_resp }}&nbsp;&nbsp;{{ $etp->prenom_resp }}
+                                    @endif
+                                </span>
+                                <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-envelope saClass' ></i></div>
+                            <div class="col-md-3 saSpan">E-mail</div>
+                            <div class="col-md">
+                                <span id="matriculess" class="saSpan">
+                                    @if ($etp->email_resp == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $etp->email_resp }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-phone saClass' ></i></div>
+                            <div class="col-md-3 saSpan">Télephone</div>
+                            <div class="col-md">
+                                <span id="mail_stagiaire" class="saSpan">
+                                    @if ($etp->telephone_resp == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $etp->telephone_resp }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-location-plus saClass' ></i></div>
+                            <div class="col-md-3 saSpan">Adresse</div>
+                            <div class="col-md">
+                                <span id="mail_stagiaire" class="saSpan">
+                                    @if ($etp->adresse_quartier == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $etp->adresse_quartier }}
+                                        {{ $etp->adresse_lot }} {{ $etp->adresse_ville }}
+                                        {{ $etp->adresse_region }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                @endif
             </div>
-            <div>
-
-            </div>
-
         </div>
     </div>
+
+    {{--OF--}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="padding-top: 50px">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">INFORMATION</h5>
+            <hr>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <hr class="mt-2">
+
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1 || $type_formation_id == 2)
+                    <div class="mt-1 text-center mb-3">
+                        <span >
+                            @if($of->logo == NULL or $of->logo == '' or $of->logo == 'XXXXXXX')
+                                <td role="button" >
+                                    <span class="randomColor m-auto mt-2 text-uppercase" style="width:120px;height:120px; border-radius:100%; color:white; display: grid; place-content: center">
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: 18px">{{$of->nomOfS}}</span> 
+                                    </span>
+                                </td>
+                            @else
+                                <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                    <img src="{{asset("images/CFP/".$of->logo)}}" style="width:120px;height:120px; border-radius:100%">
+                                </td>
+                            @endif
+                        </span>
+                    </div>
+                    <div class="mt-1 text-center">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <p id="nomEtp" style="border-bottom: 3px solid rgb(137, 56, 243); color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+                                    {{ $of->nom }}
+                                </p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-credit-card-front saClass' ></i></div>
+                            <div class="col-md-3" id="saId">NIF</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ( $of->nif == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->nif }}
+                                    @endif
+                                    
+                                </span>
+                                <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-credit-card saClass' ></i></div>
+                            <div class="col-md-3" id="saId">STAT</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($of->stat == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->stat }}
+                                    @endif
+                                </span>
+                                <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-envelope saClass'></i></div>
+                            <div class="col-md-3" id="saId">E-mail</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($of->email == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->email }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-phone saClass'></i></div>
+                            <div class="col-md-3" id="saId">Télephone</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($of->telephone == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->telephone }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-location-plus saClass'></i></div>
+                            <div class="col-md-3" id="saId">Adresse</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($of->adresse_lot == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->adresse_quartier }}
+                                        {{ $of->adresse_ville }} {{ $of->adresse_code_postal }}
+                                        {{ $of->adresse_ville  }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-globe saClass'></i></div>
+                            <div class="col-md-3" id="saId">Site web</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($of->site_web == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->site_web }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                
+            </div>
+        </div>
+    </div>
+
+    {{--resp OF--}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" style="padding-top: 50px" id="test" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">INFORMATION</h5>
+            <hr>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <hr class="mt-2">
+
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1 || $type_formation_id == 2)
+                    <div class="mt-1 text-center mb-3">
+                        <span>
+                            @if($of->photos_resp_cfp == NULL or $of->photos_resp_cfp == '' or $of->photos_resp_cfp == 'XXXXXXX')
+                                <td role="button" >
+                                    <span class="randomColor m-auto mt-2 text-uppercase" style="width:120px;height:120px; border-radius:100%; color:white; display: grid; place-content: center">
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: 18px">{{$of->nomRespOf}} {{$of->prenomRespOf}}</span> 
+                                    </span>
+                                </td>
+                            @else
+                                <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                    <img src="{{asset("images/CFP/".$of->photos_resp_cfp)}}" style="width:120px;height:120px; border-radius:100%">
+                                </td>
+                            @endif
+                        </span>
+                    </div>
+                    <div class="mt-1 text-center">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <p id="nomEtp" style="border-bottom: 3px solid rgb(137, 56, 243); color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+                                    {{ $of->nom }}
+                                </p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-user saClass'></i></div>
+                            <div class="col-md-3" id="saId">Responsable</div>
+                            <div class="col-md">
+                                <span id="saId" style="font-size: 14px;">
+                                    @if ($of->nom_resp_cfp  == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->nom_resp_cfp }}&nbsp;&nbsp;{{ $of->prenom_resp_cfp }}
+                                    @endif
+                                </span>
+                                <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-envelope saClass'></i></div>
+                            <div class="col-md-3" id="saId">E-mail</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($of->email_resp_cfp == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->email_resp_cfp }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-phone saClass'></i></div>
+                            <div class="col-md-3" id="saId">Télephone</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($of->telephone_resp_cfp == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->telephone_resp_cfp }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-user-pin saClass' ></i></div>
+                            <div class="col-md-3" id="saId">Sexe</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($of->sexe_resp_cfp == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->sexe_resp_cfp }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-location-plus saClass'></i></div>
+                            <div class="col-md-3" id="saId">Adresse</div>
+                            <div class="col-md">
+                                <span id="saId">
+                                    @if ($of->adresse_lot == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->adresse_lot }}
+                                        {{ $of->adresse_quartier }} {{ $of->adresse_ville }}
+                                        {{ $of->adresse_code_postal }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                
+            </div>
+        </div>
     </div>
 
     {{-- keep nav in refresh --}}
@@ -997,5 +1619,60 @@
                 x.style.display = "none";
             }
         }
+    </script>
+
+    {{-- info session --}}
+    {{-- etp --}}
+    <script>
+        $('.showSessionEtp').on('click', function(){
+            var etpId = $(this).data("id");
+            // console.log(etpId);
+            $.ajax({
+                type: "get",
+                url: "/info/session/etp",
+                data: { Id: etpId},
+                dataType: "html",
+                success: function (response) {
+                    let userData = JSON.parse(response);
+                    // console.log(userData);
+                    for(let i = 0; i < userData.length; i++){
+                        let logo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:120px;border-radius:100%">';
+                        logo = logo.replace(":url_img", userData[i].logo);
+                        $("#lEtp").html(" ");
+                        $("#lEtp").append(logo);
+                        $("#status").text(userData[i].nom_statut);
+                        $("#nEtp").text(userData[i].nom_etp);
+                        $("#juridic").text(': '+userData[i].nom_type);
+                        $("#nif").text(': '+userData[i].nif);
+                        $("#stat").text(': '+userData[i].stat);
+                        $("#tel").text(': '+userData[i].telephone_etp);
+                        $("#mail").text(': '+userData[i].email_etp);
+                        $("#adrlot").text(': '+userData[i].adresse_lot);
+                        $("#adrlot2").text(userData[i].adresse_quartier);
+
+                        $("#adrlot3").text(userData[i].adresse_ville);
+                        $("#adrlot4").text(userData[i].adresse_region);
+                        $("#site").text(': '+userData[i].site_etp);
+                         
+                        
+                        var status = $('#status');
+                        // console.log(status);
+
+                        if(status.text() == "Premium"){
+                            status.addClass('green');
+                        }else if(status.text() == "Invité"){
+                            status.addClass('red');
+                        }else if(status.text() == "Pending"){
+                            status.addClass('yellow');
+                        }else{
+                            console.log('ereur');
+                        }
+                        
+                    }
+                }
+            });
+            
+        });
+
     </script>
 @endsection
