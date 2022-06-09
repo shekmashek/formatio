@@ -19,8 +19,8 @@
     </a>
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            <li class="nav-item active">
-                <a href="#enCours" class="nav-link active" data-toggle="tab">Configurer Programme&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
+            <li class="nav-item">
+                <a href="#enCours" class="nav-link" data-toggle="tab">Configurer Programme&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
             </li>
             <li class="nav-item">
                 <a href="#nonPublies" class="nav-link" data-toggle="tab">Configurer Compétence&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>
@@ -57,14 +57,27 @@
                                 </div>
                                 @else
                                 @foreach($mod_en_cours as $mod)
+
                                 <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
                                     <div class="row detail__formation__result new_card_module bg-light mb-3"
                                         id="border_premier">
+
                                         <div class=" detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-3 ">
-                                                    <span id="preview_module">
+                                                    <span id="preview_module" class="row ">
+                                                        @if($mod->jours_restant > 0)
+                                                        <div class="col-10">
+                                                            <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <span class="badge_nouveau">
+                                                                Nouveau
+                                                            </span>
+                                                        </div>
+                                                        @else
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                        @endif
                                                     </span>
                                                 </h4>
                                                 <span id="preview_categ"><span class=" acf-categorie"
@@ -213,8 +226,20 @@
                                         <div class=" detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-3">
-                                                    <span id="preview_module"><span
-                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
+                                                    <span id="preview_module" class="row ">
+                                                        @if($mod->jours_restant > 0)
+                                                        <div class="col-10">
+                                                            <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <span class="badge_nouveau">
+                                                                Nouveau
+                                                            </span>
+                                                        </div>
+                                                        @else
+                                                        <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                        @endif
+                                                    </span>
                                                 </h4>
                                                 <span id="preview_categ"><span class=" acf-categorie"
                                                         style="font-size: 0.850rem; color: #637381">{{$mod->nom_formation}}</span></span>
@@ -423,9 +448,20 @@
                                         <div class="col-lg-12 col-md-12 detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-2">
-                                                    <span id="preview_module"><span
-                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
-
+                                                    <span id="preview_module" class="row ">
+                                                        @if($mod->jours_restant > 0)
+                                                        <div class="col-10">
+                                                            <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <span class="badge_nouveau">
+                                                                Nouveau
+                                                            </span>
+                                                        </div>
+                                                        @else
+                                                        <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                        @endif
+                                                    </span>
                                                 </h4>
                                                 <span id="preview_categ"><span class=" acf-categorie"
                                                         style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
@@ -598,9 +634,20 @@
                                         <div class="col-lg-12 col-md-12 detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
                                                 <h4 class="mt-2">
-                                                    <span id="preview_module"><span
-                                                            class="acf-nom_module">{{$mod->nom_module}}</span></span>
-
+                                                    <span id="preview_module" class="row ">
+                                                        @if($mod->jours_restant > 0)
+                                                        <div class="col-10">
+                                                            <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <span class="badge_nouveau">
+                                                                Nouveau
+                                                            </span>
+                                                        </div>
+                                                        @else
+                                                        <span class="acf-nom_module">{{$mod->nom_module}}</span>
+                                                        @endif
+                                                    </span>
                                                 </h4>
                                                 <span id="preview_categ"><span class=" acf-categorie"
                                                         style="font-size: 0.850rem; color: #637381; margin-bottom: 5px">{{$mod->nom_formation}}</span></span>
@@ -1113,6 +1160,10 @@
 
     $('.redirect_tab').on('click', function (e) {
         localStorage.setItem('ActiveTabMod', '#hors_ligne');
+        // $("#hors_ligne").click(function() {
+        //     $("#nav-item").removeClass("active");
+        //     $(this).addClass("active");
+        // });
     });
 
     $('.mettre_en_ligne').on('click', function (e) {
@@ -1180,7 +1231,7 @@
                 console.log(error)
             }
         });
-     });
+    });
 
     //  (".non_en_ligne").on('click', function(e) {
     //     let id = $(e.target).closest('.non_en_ligne').attr("id");
@@ -1188,15 +1239,15 @@
     //     // $("#switch_"+id).prop('checked',false);
     //  });
 
-     $(".non_en_ligne").on('click', function(e) {
+    $(".non_en_ligne").on('click', function(e) {
         let id = $(e.target).closest('.non_en_ligne').attr("id");
         $("#switch_"+id).prop('checked',false);
-     });
+    });
 
-     $(".non_hors_ligne").on('click', function(e) {
+    $(".non_hors_ligne").on('click', function(e) {
         let id = $(e.target).closest('.non_hors_ligne').attr("id");
         $("#switch2_"+id).prop('checked',true);
-     });
+    });
 
     //  $(".non_hors_ligne").on('click', function(e) {
     //     $(".form-check-input").prop('checked',true);
@@ -1206,7 +1257,7 @@
     //     $(".form-check-input").prop('checked',false);
     //  });
 
-     $(".mettre_hors_ligne").on('click', function(e) {
+    $(".mettre_hors_ligne").on('click', function(e) {
         let id = e.target.id;
         $.ajax({
             method: "GET"
@@ -1220,7 +1271,9 @@
                 console.log(error)
             }
         });
-     });
+    });
+
+
 
 
 

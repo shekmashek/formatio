@@ -165,6 +165,9 @@
                                             @if($type->type_abonnement_id == 5)
                                                 <sup><span class="mode5"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
                                             @endif
+                                            @if($type->type_abonnement_id != 1 && $type->type_abonnement_id != 2 && $type->type_abonnement_id != 3 && $type->type_abonnement_id != 4 && $type->type_abonnement_id != 5 )
+
+                                            @endif
                                         @endif
                                     @endforeach
                                 </h4>
@@ -416,6 +419,9 @@
                                                         }
                                                         if (userData['type'][l]['type_abonnement_id'] == 5) {
                             html +=                         '<sup><span class="mode5"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] != 1 && userData['type'][l]['type_abonnement_id'] != 2 && userData['type'][l]['type_abonnement_id'] != 3 && userData['type'][l]['type_abonnement_id'] != 4 && userData['type'][l]['type_abonnement_id'] != 5){
+
                                                         }
                                                     }
                                                 }

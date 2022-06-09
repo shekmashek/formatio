@@ -824,3 +824,17 @@ font-size: 0.850rem;
 .apres_ajout_prog{
     color: blue !important;
 }
+
+.badge_nouveau{
+    padding: 10px 15px;
+    color: white !important;
+    background: linear-gradient(to bottom right, #ffeb3b 0%, #fbc02d 100%);
+    font-size: .8rem;
+    border: none;
+    /* border-radius: 30px; */
+    position: relative;
+    left: -25px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    display: inline-block;
+}

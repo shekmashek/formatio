@@ -369,28 +369,27 @@ tbody tr{
 }
 
 .navigation_module .nav-link {
-    color: #7635dc;
-    border: none;
+    color: #637381;
     padding: 5px;
-    background-color: #7535dc25;
-    border-radius: 5px;
-    border-width: 0;
     cursor: pointer;
     font-size: 0.900rem;
     transition: all 200ms;
     margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
 }
 
-.nav-tabs .nav-link.active {
-    background-color: rgba(172, 172, 172, 0.397);
+.nav-item.active .nav-link {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
     color: #7635dc;
-    border-radius: 5px;
 }
 
 .nav-tabs .nav-link:hover {
-    background-color: rgba(245, 243, 243, 0.418);
-    transform: scale(1.1);
-    border: rgba(128, 128, 128, 0.692) 1px solid;
+    background-color: rgb(245, 243, 243);
+
+    border: none;
 }
 .nav-tabs .nav-item a{
     text-decoration: none;
