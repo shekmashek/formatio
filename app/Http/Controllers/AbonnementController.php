@@ -641,6 +641,9 @@ class AbonnementController extends Controller
                 $abonnement->activite = 0;
                 $abonnement->type_arret = "";
 
+                // abonnement temporaire
+                $abonnement->categorie_paiement_id = rand(1,2);
+
                 $abonnement->save();
 
                 /**générer une facture*/
@@ -663,6 +666,10 @@ class AbonnementController extends Controller
                 $abonnement_cfp->cfp_id = $cfp_id;
                 $abonnement_cfp->activite = 0;
                 $abonnement_cfp->type_arret = "";
+
+                $abonnement_cfp->categorie_paiement_id = rand(1,2);
+                
+
                 $abonnement_cfp->save();
 
                 //générer une facture
