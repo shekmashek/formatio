@@ -379,6 +379,24 @@ class CollaborationController extends Controller
         return $this->collaboration->suprime_invitation_collaboration_cfp_etp($id);
     }
 
+    public function refuser(Request $request)
+    {
+        $id = $request->Id;
+        $data = $this->fonct->findWhereMulitOne("demmande_etp_cfp", ["demmandeur_etp_id"], [$id]);
+        // $id_cfp = DB::select('select * from demmande_etp_cfp where demmandeur_etp_id = ?',[$id]);
+        DB::insert('insert into refuse_demmande_etp_cfp (demmandeur_etp_id,inviter_cfp_id,activiter,created_at) values (?,?,?, NOW())',[$id,$data->inviter_cfp_id,0]);
+        DB::delete('delete from demmande_etp_cfp where demmandeur_etp_id = ?', [$id]);
+
+        // $this->collaboration->insert_invitation_refuser_etp_cfp($data->inviter_cfp_id, $data->demmandeur_etp_id);
+        // $this->collaboration->suprime_invitation_collaboration_cfp_etp($id);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
+
     public function annulation_invitation_formateur_cfp($id)
     {
         return $this->collaboration->suprime_invitation_collaboration_formateur_cfp($id);
@@ -401,6 +419,28 @@ class CollaborationController extends Controller
     public function accept_invitation_cfp_etp($id)
     {
         return $this->collaboration->accept_invitation_collaboration_cfp_etp($id);
+    }
+
+    public function accept_invitation_cfp_etp_notif(Request $request)
+    {
+        $id = $request->Id;
+        $demande = $this->fonct->findWhereMulitOne("demmande_etp_cfp", ["demmandeur_etp_id"], [$id]);
+        $verify_exist = $this->fonct->findWhere("demmande_etp_cfp", ["demmandeur_etp_id", "inviter_cfp_id"], [$id, $demande->inviter_cfp_id]);
+        DB::beginTransaction();
+        try {
+            if (count($verify_exist) > 0) {
+                // DB::delete("delete from demmande_etp_cfp where demmandeur_etp_id = ? and inviter_cfp_id = ?", [$id, $demande->inviter_cfp_id]);
+                DB::update("update demmande_etp_cfp set activiter = 1 where demmandeur_etp_id = ?", [$id]);
+                DB::commit();
+            }
+            
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+        }
+
+        return back();
+        // return $this->collaboration->accept_invitation_collaboration_cfp_etp($id);
     }
 
     public function accept_invitation_formateur_cfp($id)

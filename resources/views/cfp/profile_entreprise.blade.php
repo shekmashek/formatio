@@ -511,7 +511,7 @@
     
           {{-- Tab 1 content --}}
         </div>
-        <div class="tab-pane fade show active" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+        {{-- <div class="tab-pane fade show active" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
             <div class="row mt-2">
                 <div class="col-12 col-lg-6">
                     @if(Session::has('success'))
@@ -638,7 +638,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
           Tab 3 content
         </div>

@@ -70,7 +70,7 @@ class HomeController extends Controller
         $user_id = $request->id_user;
         $liste_role = DB::select('select * from v_user_role where user_id = ?', [$user_id]);
         return response()->json($liste_role);
-    }
+    } 
     //remplissage des info manquantes
     public function remplir_info_stagiaire(Request $request)
     {
@@ -385,7 +385,6 @@ class HomeController extends Controller
 
         if (Gate::allows('isReferentPrincipale')) {
 
-
             $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
 
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
@@ -397,7 +396,7 @@ class HomeController extends Controller
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
+                if ($colonnes[$i]->COLUMN_NAME != "genre_id"  and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "sexe_resp" and $colonnes[$i]->COLUMN_NAME != "fonction_resp" and  $colonnes[$i]->COLUMN_NAME != "user_id" and $colonnes[$i]->COLUMN_NAME != "entreprise_id" and   $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "activiter" and $colonnes[$i]->COLUMN_NAME != "prioriter" and   $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
@@ -726,7 +727,7 @@
                                     </a>
                                     <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
                                         <div class="m-4 mt-2" role="tabpanel">
-                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
+                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab" style="font-size: 10px;">
                                                 <li class="nav-item ">
                                                     <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
                                                 </li>
@@ -791,12 +792,12 @@
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                                         <span class=""><i class='bx bxs-message-add bx-burst-hover mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
-                                        <span class="badge_invitation">9</span>
+                                        <span class="badge_invitation"></span>
                                     </a>
                                     <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
                                         <div class="m-4 mt-2" role="tabpanel">
-                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-                                                <li class="nav-item ">
+                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab" style="font-size: 10px;">
+                                                <li class="nav-item " >
                                                     <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
                                                 </li>
                                                 <li class="nav-item">
@@ -810,7 +811,7 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <ul>
-                                                                liste invitations en attente
+                                                                <p class="test_affiche1 mt-3 my-2" style="font-size: 12px"></p>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -818,8 +819,7 @@
                                                 <div class="tab-pane fade" id="invitation_refuses">
                                                     <div class="container">
                                                         <div class="row">
-                                                            <ul>
-                                                                liste des invitations réfusées
+                                                            <ul class="test_affiche2 mt-3 my-2" style="font-size: 12px">
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -1381,11 +1381,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"
         integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script> --}}
     <script src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/apprendre.js')}}"></script>
+    <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <script type="text/javascript">
         //Pour chaque div de classe randomColor
         $(".randomColor").each(function() {
@@ -1393,22 +1398,103 @@
         $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
         })
 
+        toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+        }
+
         $(document).ready(function() {
             var pdp = "";
             $.ajax({
                 url: '{{ route("profile_resp") }}'
                 , type: 'get'
                 , success: function(response) {
-                    var userData = response;
+                    $('.badge_invitation').text("");
+                    $('.badge_invitation').append(response['invitation'].length);
 
-                    if(userData['photo'] == 'oui'){
-                        var html = '<img src="{{asset(":?")}}" alt="user_profile" style="width : 70px; height : 70px; border: none; border-radius : 100%; display: grid; place-content: center">';
-                        html = html.replace(":?", userData['user']);
-                        // alert(JSON.stringify(userData));
-                        $('.photo_users').append(html);
+                    // var userData = JSON.parse(response);
+                    // alert(JSON.stringify(response.length));
+                    if(response['invitation'].length == 0){
+                        // alert("eto");
+                        var html = "Aucun invitations en attente";
+                        $('.test_affiche1').append(html);
+                        $('.test_affiche1').css('textAlign','center');
+
+                    }else{
+                        // alert("aiza");
+                        for (let i = 0; i < response['invitation'].length; i++){                                                           
+                            $('.test_affiche1').append('<li class="invitation_'+response['invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['invitation'][i]['nom_resp']+'</span><span class="me-2">'+response['invitation'][i]['prenom_resp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['invitation'][i]['nom_secteur']+'</span> <span id="'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn btn-sm accepte" title="accepter l\'invitation" role="button"><i class="bx bx-check-double bx_ajouter"></i></span> <span id="ref_'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn refuse" title="refuser l\'invitation" role="button" data-id="'+response['invitation'][i]['demmandeur_etp_id']+'"><i class="bx bx-x bx_supprimer"></i></span></li>');
+                            
+                            $(".accepte").on("click", function(e) {
+                                let id = $(e.target).closest(".accepte").attr("id");
+                                // alert(id);
+                                $.ajax({
+                                    type: "get",
+                                    url: " {{ route('accept_invitation_cfp_etp_notif') }}",
+                                    data: {
+                                        Id: id,
+                                    },
+                                    success: function(response) {
+                                        
+                                        console.log(".invitation_" + id);
+                                        $(".invitation_" + id).remove();
+                                        $('.badge_invitation').text("");
+                                        $('.badge_invitation').append(i);
+                                        toastr.success('Une invitation a été accéptée');
+                                    },
+                                    error: function(error) {
+                                    console.log(error);
+                                    },
+                                });
+                            });
+
+
+                            $(".refuse").on("click", function(e) {
+                                let id = $(this).data("id");
+                                $.ajax({
+                                    type: "get",
+                                    url: " {{ route('annulation_cfp_etp_notif') }}",
+                                    data: {
+                                        Id: id,
+                                    },
+                                    success: function(response) {
+                                        // alert("success");
+                                        // console.log(".invitation_" + id);
+                                        $(".invitation_" + id).remove();
+                                        $('.badge_invitation').text("");
+                                        $('.badge_invitation').append(i);
+                                        toastr.warning('Une invitation à été réfuser');
+                                    },
+                                    error: function(error) {
+                                    console.log(error);
+                                    },
+                                });
+                            });
+                        }
                     }
-                    if(userData['photo'] == 'non'){
-                        var html = userData['user'][0]['nm']+''+userData['user'][0]['pr'];
+
+                    if(response['photo'] == 'oui'){
+                        var html = '<img src="{{asset(":?")}}" alt="user_profile" style="width : 70px; height : 70px; border: none; border-radius : 100%; display: grid; place-content: center">';
+                        html = html.replace(":?", response['user']);
+                        // alert(JSON.stringify(response));
+                        $('.photo_users').append(html);
+                        
+                    }
+                    if(response['photo'] == 'non'){
+                        var html = response['user'][0]['nm']+''+response['user'][0]['pr'];
                         $('.photo_users').append(html);
                     }
                 }
@@ -1418,17 +1504,22 @@
             });
         });
 
-        $(document).ready(function() {
-            var pdp = "";
+         $(document).ready(function() {
             $.ajax({
-                url: '{{ route("logos") }}'
+                url: '{{ route("aff_refuse_etp_cfp") }}'
                 , type: 'get'
                 , success: function(response) {
-                    var userData = response;
-                    var html = '<img src="{{asset("images/:?")}}" alt="logo" style="height : 45px; margin-top:4px; cursor: pointer;">';
-                    html = html.replace(":?", userData);
+                    if(response['refuse_invitation'].length == 0){
+                        var html = 'Aucun invitations refusée';
+                        $('.test_affiche2').append(html);
+                        $('.test_affiche2').css('textAlign','center');
 
-                    $('.logo_etp_user').append(html);
+                    }else{
+                        // alert("aiza");
+                        for (let i = 0; i < response['refuse_invitation'].length; i++){                                                           
+                            $('.test_affiche2').append('<li class="invitation_'+response['refuse_invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['refuse_invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['refuse_invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['refuse_invitation'][i]['nom_secteur']+'</span></li>');
+                        }
+                    }
                 }
                 , error: function(error) {
                     console.log(error);
@@ -1444,6 +1535,9 @@
             e.stopPropagation();
         });
 
+    </script>
+    <script type="text/javascript">
+    
     </script>
 </body>
 
