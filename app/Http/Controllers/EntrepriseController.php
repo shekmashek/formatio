@@ -66,7 +66,6 @@ class EntrepriseController extends Controller
             // $entreprises=entreprise::query()->findOrFail($cfp_id);
             // $entreprises=entreprise::findOrFail($entp);
 
-
             return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp'));
         }
         if (Gate::allows('isSuperAdmin')) {

@@ -28,7 +28,7 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
                 <div class="">
-                    <a class="nav-link   {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{route('liste_facture')}}">
+                    <a class="nav-link   {{ Route::currentRouteNamed('liste_facture') || Route::currentRouteNamed('liste_facture') ? 'active' : '' }}" href="{{url()->previous()}}">
                         Retour à la liste des factures</a></div>
             </li>
             @canany(['isCFP','isCFPrincipale'])

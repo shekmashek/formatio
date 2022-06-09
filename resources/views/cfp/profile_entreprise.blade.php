@@ -33,35 +33,35 @@
 
 
     @if(Session::has('error'))
-    
+
     <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
         <li class="nav-item" role="presentation">
           <a
-            class="nav-link "
+            class="nav-link active collabore"
             id="ex1-tab-1"
             data-mdb-toggle="tab"
             data-bs-toggle="tab"
             href="#ex1-tabs-1"
             role="tab"
             aria-controls="ex1-tabs-1"
-            aria-selected="false"
+            aria-selected="true"
             ><i class="bi bi-wallet-fill"></i>&nbsp;&nbsp;EN COLABORATION</a
           >
         </li>
         <li class="nav-item" role="presentation">
           <a
-            class="nav-link active"
+            class="nav-link"
             id="ex1-tab-2"
-            data-mdb-toggle="tab" 
+            data-mdb-toggle="tab"
             data-bs-toggle="tab"
             href="#ex1-tabs-2"
             role="tab"
             aria-controls="ex1-tabs-2"
-            aria-selected="true"
+            aria-selected="false"
             ><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;INVITATION</a
           >
         </li>
-    </ul>         
+    </ul>
     @elseif (Session::has('success'))
     <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
         <li class="nav-item" role="presentation">
@@ -81,7 +81,7 @@
           <a
             class="nav-link active"
             id="ex1-tab-2"
-            data-mdb-toggle="tab" 
+            data-mdb-toggle="tab"
             data-bs-toggle="tab"
             href="#ex1-tabs-2"
             role="tab"
@@ -90,7 +90,7 @@
             ><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;INVITATION</a
           >
         </li>
-    </ul>     
+    </ul>
     @else
     <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
         <li class="nav-item" role="presentation">
@@ -110,7 +110,7 @@
           <a
             class="nav-link"
             id="ex1-tab-2"
-            data-mdb-toggle="tab" 
+            data-mdb-toggle="tab"
             data-bs-toggle="tab"
             href="#ex1-tabs-2"
             role="tab"
@@ -119,12 +119,12 @@
             ><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;INVITATION</a
           >
         </li>
-    </ul> 
+    </ul>
     @endif
 
 
-    
-    
+
+
         {{-- <li class="nav-item" role="presentation">
           <a
             class="nav-link"
@@ -140,11 +140,11 @@
         </li> --}}
       </ul>
       <!-- Tabs navs -->
-      
+
       <!-- Tabs content -->
       @if(Session::has('error'))
       {{-- eto --}}
-      
+
       <div class="tab-content" id="ex1-content">
         <div
           class="tab-pane fade "
@@ -154,8 +154,8 @@
         >
           {{-- Tab 1 content --}}
             <div class="row">
-                
-            </div> 
+
+            </div>
             @if(Session::has('message'))
             <div class="alert alert-danger close">
                 <strong> {{Session::get('message')}}</strong>
@@ -170,7 +170,7 @@
                     </tr>
                 </thead>
                 <tbody id="data_collaboration" style="font-size: 15.5px;">
-    
+
                     @if (count($entreprise)<=0) <tr>
                         <td> Aucun entreprise collaborer</td>
                         </tr>
@@ -184,7 +184,7 @@
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                         </td>
-    
+
                            {{-- modal delete  --}}
                         <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -215,8 +215,8 @@
                     @endif
                 </tbody>
             </table>
-    
-    
+
+
           {{-- Tab 1 content --}}
         </div>
         <div class="tab-pane fade show active" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
@@ -265,13 +265,13 @@
                         </div>
                     </div>
                     <div class="tab-content" id="myTabContent">
-    
+
                         <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
                             <div class="table-responsive text-center">
-        
+
                                 <table class="table  table-borderless table-sm mt-4" >
                                     <tbody id="data_collaboration" >
-        
+
                                         @if (count($invitation_etp)<=0) <tr style="text-align:left">
                                             <td > Aucun invitations en attente</td>
                                             </tr>
@@ -282,7 +282,7 @@
                                                     <div align="left">
                                                         <strong>{{$invit_etp->nom_resp.' '.$invit_etp->prenom_resp}}</strong>
                                                         <p style="color: rgb(238, 150, 18)">{{$invit_etp->email_resp}}</p>
-        
+
                                                 </td>
                                                 <td>
                                                     <div align="left">
@@ -309,13 +309,13 @@
                                             @endif
                                     </tbody>
                                 </table>
-        
+
                             </div>
-        
+
                         </div>
-        
+
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        
+
                             <div class="table-responsive text-center">
                                 <table class="table  table-borderless table-sm mt-4">
                                     <tbody>
@@ -339,10 +339,10 @@
                                     </tbody>
                                 </table>
                             </div>
-        
-        
+
+
                         </div>
-        
+
                     </div>
                 </div>
             </div>
@@ -361,14 +361,14 @@
             </div>
             <hr class="mt-2">
             <div style="font-size: 13px">
-    
+
                 <div class="mt-1 text-center mb-3">
                     <span id="logo"></span>
                 </div>
                 <div class="mt-1 text-center">
                     <span id="nom_entreprise" style="color: #64b5f6; font-size: 22px; text-transform: uppercase; "></span>
                 </div>
-    
+
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
@@ -411,7 +411,7 @@
                         <div class="col-md">
                             <span id="email_etp"><span>
                     </div>
-    
+
                 </div>
                 <div class="mt-1">
                     <div class="row">
@@ -446,8 +446,8 @@
         >
           {{-- Tab 1 content --}}
             <div class="row">
-                
-            </div> 
+
+            </div>
             @if(Session::has('message'))
             <div class="alert alert-danger close">
                 <strong> {{Session::get('message')}}</strong>
@@ -462,21 +462,25 @@
                     </tr>
                 </thead>
                 <tbody id="data_collaboration" style="font-size: 15.5px;">
-    
+
                     @if (count($entreprise)<=0) <tr>
                         <td> Aucun entreprise collaborer</td>
                         </tr>
                     @else
                         @foreach($entreprise as $etp)
-                        <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
-                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
-                            <td role="button"  onclick="afficherInfos();">
-                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                        <tr>
+                            <td>
+                                <img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"
+                                data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" class="information"  onclick="afficherInfos();"><span class="ms-3">{{$etp->nom_etp}}</span>
+                            </td>
+                            <td >
+                                <img  src="{{asset("images/responsables/".$etp->photos_resp)}}"
+                                style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                             </td>
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                         </td>
-    
+
                            {{-- modal delete  --}}
                         <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -507,8 +511,8 @@
                     @endif
                 </tbody>
             </table>
-    
-    
+
+
           {{-- Tab 1 content --}}
         </div>
         {{-- <div class="tab-pane fade show active" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
@@ -557,13 +561,13 @@
                         </div>
                     </div>
                     <div class="tab-content" id="myTabContent">
-    
+
                         <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
                             <div class="table-responsive text-center">
-        
+
                                 <table class="table  table-borderless table-sm mt-4" >
                                     <tbody id="data_collaboration" >
-        
+
                                         @if (count($invitation_etp)<=0) <tr style="text-align:left">
                                             <td > Aucun invitations en attente</td>
                                             </tr>
@@ -574,7 +578,7 @@
                                                     <div align="left">
                                                         <strong>{{$invit_etp->nom_resp.' '.$invit_etp->prenom_resp}}</strong>
                                                         <p style="color: rgb(238, 150, 18)">{{$invit_etp->email_resp}}</p>
-        
+
                                                 </td>
                                                 <td>
                                                     <div align="left">
@@ -601,13 +605,13 @@
                                             @endif
                                     </tbody>
                                 </table>
-        
+
                             </div>
-        
+
                         </div>
-        
+
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        
+
                             <div class="table-responsive text-center">
                                 <table class="table  table-borderless table-sm mt-4">
                                     <tbody>
@@ -631,10 +635,10 @@
                                     </tbody>
                                 </table>
                             </div>
-        
-        
+
+
                         </div>
-        
+
                     </div>
                 </div>
             </div>
@@ -653,14 +657,14 @@
             </div>
             <hr class="mt-2">
             <div style="font-size: 13px">
-    
+
                 <div class="mt-1 text-center mb-3">
                     <span id="logo"></span>
                 </div>
                 <div class="mt-1 text-center">
                     <span id="nom_entreprise" style="color: #64b5f6; font-size: 22px; text-transform: uppercase; "></span>
                 </div>
-    
+
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
@@ -703,7 +707,7 @@
                         <div class="col-md">
                             <span id="email_etp"><span>
                     </div>
-    
+
                 </div>
                 <div class="mt-1">
                     <div class="row">
@@ -736,8 +740,8 @@
         >
           {{-- Tab 1 content --}}
             <div class="row">
-                
-            </div> 
+
+            </div>
             @if(Session::has('message'))
             <div class="alert alert-danger close">
                 <strong> {{Session::get('message')}}</strong>
@@ -752,21 +756,23 @@
                     </tr>
                 </thead>
                 <tbody id="data_collaboration" style="font-size: 15.5px;">
-    
+
                     @if (count($entreprise)<=0) <tr>
                         <td> Aucun entreprise collaborer</td>
                         </tr>
                     @else
                         @foreach($entreprise as $etp)
-                        <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
-                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
-                            <td role="button"  onclick="afficherInfos();">
+                        <tr >
+                            <td>
+                                <img class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();" src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:80px;height:80px;text-align:center; cursor: pointer">
+                                <span class="ms-3 information" style="cursor: pointer;" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();">{{$etp->nom_etp}}</span></td>
+                            <td>
                                 <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                             </td>
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                         </td>
-    
+
                            {{-- modal delete  --}}
                         <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -797,8 +803,8 @@
                     @endif
                 </tbody>
             </table>
-    
-    
+
+
           {{-- Tab 1 content --}}
         </div>
         <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
@@ -847,14 +853,14 @@
                         </div>
                     </div>
                     <div class="tab-content" id="myTabContent">
-    
+
                         <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
                             <div class="table-responsive text-center">
-        
+
                                 <table class="table  table-borderless table-sm mt-4" >
                                     <tbody id="data_collaboration" >
-        
-                                        @if (count($invitation_etp)<=0) 
+
+                                        @if (count($invitation_etp)<=0)
                                             <tr style="text-align:left">
                                             <td > Aucun invitations en attente</td>
                                             </tr>
@@ -865,7 +871,7 @@
                                                     <div align="left">
                                                         <strong>{{$invit_etp->nom_resp.' '.$invit_etp->prenom_resp}}</strong>
                                                         <p style="color: rgb(238, 150, 18)">{{$invit_etp->email_resp}}</p>
-        
+
                                                 </td>
                                                 <td>
                                                     <div align="left">
@@ -892,13 +898,13 @@
                                             @endif
                                     </tbody>
                                 </table>
-        
+
                             </div>
-        
+
                         </div>
-        
+
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        
+
                             <div class="table-responsive text-center">
                                 <table class="table  table-borderless table-sm mt-4">
                                     <tbody>
@@ -924,10 +930,10 @@
                                     </tbody>
                                 </table>
                             </div>
-        
-        
+
+
                         </div>
-        
+
                     </div>
                 </div>
             </div>
@@ -936,7 +942,8 @@
           Tab 3 content
         </div>
       </div>
-      <div class="infos mt-3">
+
+    <div class="infos mt-3">
         <div class="row">
             <div class="col">
                 <p class="m-0 text-center">INFORMATION</p>
@@ -946,18 +953,18 @@
             </div>
             <hr class="mt-2">
             <div style="font-size: 13px">
-    
+
                 <div class="mt-1 text-center mb-3">
                     <span id="logo"></span>
                 </div>
                 <div class="mt-1 text-center">
                     <span id="nom_entreprise" style="color: #64b5f6; font-size: 22px; text-transform: uppercase; "></span>
                 </div>
-    
+
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-user-gear"></i></div>
+                        <div class="col-md-1"><i class='bx bx-user'></i></div>
                         <div class="col-md-3">Responsable</div>
                         <div class="col-md">
                             <span id="nom_reponsable" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
@@ -968,7 +975,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
                         <div class="col-md-3">Adresse</div>
                         <div class="col-md">
                             <div class="row">
@@ -991,17 +998,17 @@
                 <div class="mt-2">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="col-md-1"><i class='bx bx-envelope'></i></div>
                         <div class="col-md-3">E-mail</div>
                         <div class="col-md">
                             <span id="email_etp"><span>
                     </div>
-    
+
                 </div>
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-phone"></i></div>
+                        <div class="col-md-1"><i class='bx bx-phone'></i></div>
                         <div class="col-md-3">Tel</div>
                         <div class="col-md">
                             <span id="telephone_etp"><span>
@@ -1011,7 +1018,7 @@
                 <div class="mt-1">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
+                        <div class="col-md-1"><i class='bx bx-globe'></i></div>
                         <div class="col-md-3">Site web</div>
                         <div class="col-md"><span id="site_etp"></span></div>
                     </div>
@@ -1022,9 +1029,9 @@
       @endif
 
 
-      
 
-      
+
+
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -1159,7 +1166,7 @@
                 //parcourir le premier tableau contenant les info sur les programmes
                 for (let $i = 0; $i < userData.length; $i++) {
 
-                    let url_photo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:60px">';
+                    let url_photo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:120px">';
                     url_photo = url_photo.replace(":url_img", userData[$i].logo_etp);
                     $("#logo").html(" ");
                     $("#logo").append(url_photo);

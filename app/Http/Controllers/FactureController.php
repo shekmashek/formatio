@@ -70,7 +70,10 @@ class FactureController extends Controller
 
         $nb_limit = 10;
 
+        // public function getNbrePagination($nomTab, $col_para, $para = [], $opt = [], $val = [],$constraint)
+
         $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["cfp_id"], ["="], [$cfp_id], "AND");
+
         $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", ["cfp_id"], ["="], [$cfp_id], "AND");
         $totale_pag_actif = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "cfp_id"], ["!=", "="], ["terminer", $cfp_id], "AND");
         $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "cfp_id"], ["=", "="], ["terminer", $cfp_id], "AND");
@@ -109,6 +112,7 @@ class FactureController extends Controller
 
     public function listeFacture_referent($nb_pag_full = null, $nb_pag_actif = null, $nbPagination_payer = null, $pour_list = null)
     {
+
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         $user_id = Auth::user()->id;
         $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
@@ -127,6 +131,7 @@ class FactureController extends Controller
 
         $totale_pag_payer = $this->fonct->getNbrePagination("v_facture_actif", "num_facture", ["facture_encour", "entreprise_id"], ["=", "="], ["terminer", $entreprise_id], "AND");
         $pagination_payer = $this->fonct->nb_liste_pagination($totale_pag_payer, $nbPagination_payer, $nb_limit);
+        // public function findWhereTrieOrderBy($nomTab, $para = [], $opt = [], $val = [], $tabOrderBy = [], $order, $nbPag, $nb_limit)
 
         if ($nb_pag_full != null && $nb_pag_actif != null &&  $nbPagination_payer != null) {
 
@@ -1112,6 +1117,7 @@ class FactureController extends Controller
         $this->fact->lectureFileProjet($path_file);
     }
 
+
     public function edit_facture($numero_fact)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
@@ -1139,7 +1145,14 @@ class FactureController extends Controller
             } else { // false
                 $taxes = $this->fonct->findWhereMulitOne("taxes", ["id"], [2]); // HT
             }
-            return view('admin.facture.edit_facture', compact('taxes','devise', 'init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
+
+            if ($montant_totale->rest_payer > 0) {
+                $lettre_montant = $this->fact->int2str($montant_totale->dernier_montant_ouvert);
+            } else {
+                $lettre_montant = $this->fact->int2str($montant_totale->net_ttc);
+            }
+
+            return view('admin.facture.edit_facture', compact('lettre_montant','taxes','devise', 'init_session', 'mode_payement', 'type_remise', 'projet', 'entreprise', 'type_facture', 'cfp', 'montant_totale', 'session', 'frais_annexes'));
         }
     }
 

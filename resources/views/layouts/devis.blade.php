@@ -46,7 +46,7 @@
                 @foreach ($devise as $dev )
                 <tr>
                     <td>{{$dev->devise}}&nbsp;</td>
-                    <td>{{$dev->description}}&nbsp;</td>
+                    <td>{{$dev->reference}}&nbsp;</td>
                     <td>
                         <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$dev->id}}">
                             <i class='bx bxs-edit-alt'  style="color: green"></i>
@@ -68,7 +68,7 @@
                                     <label for=""> Devise</label>
                                     <input type="text" class="form-control" required name="devise" value="{{$dev->devise}}">
                                     <label for=""> Déscription</label>
-                                    <input type="text" class="form-control" required name="description" value="{{$dev->description}}">
+                                    <input type="text" class="form-control" required name="description" value="{{$dev->reference}}">
                                     <input type="hidden" class="form-control" required name="id" value="{{$dev->id}}"> <br><br>
 
                                     </div>

@@ -397,46 +397,44 @@ WHERE
     type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
 
 
--- CREATE OR REPLACE VIEW v_liste_facture AS SELECT
---     factures.cfp_id,
---     (factures.projet_id) as projet_id,
---     factures.entreprise_id,
---     factures.type_facture_id,
---     (type_facture.description) description_type_facture,
---     (type_facture.reference) reference_facture,
---     factures.hors_taxe,
---     factures.groupe_entreprise_id,
---     v_groupe_projet_module.nom_projet,
---     v_groupe_projet_module.groupe_id,
---     v_groupe_projet_module.nom_groupe,
---     (v_groupe_projet_module.date_debut) date_debut_session,
---     v_groupe_projet_module.reference,
---     v_groupe_projet_module.nom_module,
---     v_totale_participant_session.nbre_participant,
---     invoice_date,
---     due_date,
---     tax_id,
---     (taxes.description) nom_taxe,
---     taxes.pourcent,
---     factures.devise,
---     (factures.description) description_facture,
---     other_message,
---     qte,
---     num_facture,
---     factures.activiter,
---     pu,
---     reference_bc,
---     type_financement_id,
---     (mode_financements.description) description_financement
--- FROM
---     factures,
---     v_groupe_projet_module,type_facture,v_totale_participant_session,
---     taxes,mode_financements
--- WHERE
---     factures.tax_id = taxes.id AND
---     factures.groupe_entreprise_id = v_groupe_projet_module.groupe_entreprise_id AND
---     v_groupe_projet_module.groupe_id = v_totale_participant_session.groupe_id AND
---     type_facture_id = type_facture.id AND factures.type_financement_id = mode_financements.id;
+
+
+
+
+CREATE OR REPLACE VIEW v_facture_existant_tmp AS SELECT
+  v_facture.cfp_id,
+   v_facture.sum_acompte,
+    v_facture.activiter,
+     v_facture.entreprise_id,
+    v_facture.num_facture,
+    v_facture.other_message,
+    v_facture.mode_financement_id,
+    v_facture.description_financement,
+        v_facture.description_type_facture,
+        v_facture.due_date,v_facture.invoice_date,
+        v_facture.projet_id,
+        (ROUND(v_facture.montant_brut_ht)) montant_brut_ht,
+        (ROUND(v_facture.remise)) remise,
+        (ROUND(v_facture.valeur_remise)) valeur_remise,
+        v_facture.description_remise,
+        v_facture.remise_id,
+        v_facture.reference_remise,
+        (ROUND(v_facture.net_commercial)) net_commercial,
+        (ROUND(v_facture.net_ht)) net_ht,
+        (ROUND(v_facture.tva)) tva,
+        (ROUND(v_facture.net_ttc)) net_ttc,
+        v_facture.type_facture_id,v_facture.reference_type_facture,
+        (ROUND(v_facture.rest_payer)) rest_payer,
+    (v_temp_facture.montant_facture) montant_total,
+    (v_temp_facture.payement) payement_totale,
+    (v_temp_facture.montant_ouvert) dernier_montant_ouvert,
+    (v_temp_facture.due_date) date_facture
+FROM
+    v_facture,
+    v_temp_facture
+WHERE
+    v_facture.cfp_id = v_temp_facture.cfp_id AND  v_facture.num_facture = v_temp_facture.num_facture
+    AND v_facture.entreprise_id = v_temp_facture.entreprise_id ;
 
 CREATE OR REPLACE VIEW v_liste_facture AS SELECT
     v_liste_facture_tmp.*,

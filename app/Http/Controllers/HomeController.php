@@ -70,7 +70,7 @@ class HomeController extends Controller
         $user_id = $request->id_user;
         $liste_role = DB::select('select * from v_user_role where user_id = ?', [$user_id]);
         return response()->json($liste_role);
-    } 
+    }
     //remplissage des info manquantes
     public function remplir_info_stagiaire(Request $request)
     {
@@ -735,7 +735,6 @@ class HomeController extends Controller
             }
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?', [$entreprise_id])[0]->nb_projet;
-
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
                 $offset = 0;
@@ -809,7 +808,6 @@ class HomeController extends Controller
             // $montant_facture = $this->fonct->findWhereMulitOne("v_facture_existant", ["cfp_id"], [$cfp_id]);
 
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;
-
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
                 $offset = 0;
@@ -889,7 +887,6 @@ class HomeController extends Controller
 
             // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
-
             // dd($data);
             return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
             // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));

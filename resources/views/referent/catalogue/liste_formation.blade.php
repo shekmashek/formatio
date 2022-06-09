@@ -1,9 +1,10 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text-white ms-5">Liste formation </h3>
+<h3 class="text-white ms-5">Liste formation </h3>
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
+
 <div class="row navigation_detail ">
     <div class="ps-5">
         <ul class="">
@@ -40,22 +41,22 @@
                             <div class="d-flex align-items-start flex-column flex-sm-row px-3 py-5">
                                 <div>
                                     @foreach ($domaine_col1 as $dom)
-                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
                                     @endforeach
                                 </div>
                                 <div>
                                     @foreach ($domaine_col2 as $dom)
-                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
                                     @endforeach
                                 </div>
                                 <div>
                                     @foreach ($domaine_col3 as $dom)
-                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
                                     @endforeach
                                 </div>
                                 <div>
                                     @foreach ($domaine_col4 as $dom)
-                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
+                                    <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
                                     @endforeach
                                 </div>
                             </div>
@@ -70,22 +71,45 @@
     <div class="container">
         <div class="row">
 
-            @if (count($infos)>0)
-                @if($nom_formation == null)
-                    <h5 class="ms-5">{{count($infos)}} résultats</h5><br>
-                @else
-                    @if (count($infos) == 1)
-                        <h5 class="ms-5">{{count($infos)}} résultat en&nbsp;{{$nom_formation}}</h5><br>
-                    @else
-                        <h5 class="ms-5">{{count($infos)}} résultats en&nbsp;{{$nom_formation}}</h5><br>
-                    @endif
-                @endif
+            {{-- @if (count($infos)>0) --}}
+            {{-- @if(!isset($nom_formation))
+            <h5 class="ms-5">{{count($infos)}} résultats</h5><br>
+            @endif --}}
+            @if(isset($nom_entiter))
+            <h5 class="ms-5">{{count($infos)}} résultat trouvé sur &nbsp;{{$nom_entiter}}</h5><br>
+            @elseif(isset($nom_formation))
+            <h5 class="ms-5">{{count($infos)}} résultat trouvé en &nbsp;{{$nom_formation}}</h5><br>
+            @else
+            <h5 class="ms-5">{{count($infos)}} résultats trouvé</h5><br>
             @endif
+
             @if(Session::has('success'))
             <div class="alert alert-success">
                 {{Session::get('success')}}
             </div>
             @endif
+
+            <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
+
+                {{-- =========== pagination module =============================================== --}}
+                @include("referent.catalogue.pagination.pagination_liste_formation")
+
+                <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+
+                @if(isset($nom_formation) )
+                <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
+                    filtre activé <i class="fas fa-times"></i> </a>
+                @elseif(isset($data_debut_filtre) && isset($data_fin_filtre))
+                <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
+                    filtre activé <i class="fas fa-times"></i> </a>
+                @elseif(isset($nom_entiter) )
+                <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
+                    filtre activé <i class="fas fa-times"></i> </a>
+                @elseif(isset($nom_modalite) )
+                <a href="{{route('result_formation')}}" class="btn_creer text-center filter" role="button">
+                    filtre activé <i class="fas fa-times"></i> </a>
+                @endif
+
         </div>
     </div>
 
@@ -102,7 +126,7 @@
                         <a href="{{route('detail_cfp',$info->cfp_id)}}" class="justify-content-center text-center">
                             <span class="mb-2 description">{{$info->nom}}</span><img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
                         </a>
-                        </div>
+                    </div>
                     <div class="col-3 liste__formation__content">
                         <a href="{{route('select_par_module',$info->module_id)}}">
                             <div class="liste__formation__item">
@@ -123,9 +147,9 @@
 
                                 <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5
                                     @if($info->total_avis != null)
-                                        ({{$info->total_avis}} avis)
+                                    ({{$info->total_avis}} avis)
                                     @else
-                                        (0 avis)
+                                    (0 avis)
                                     @endif
                                 </span>
                             </div>
@@ -151,59 +175,52 @@
                             </div>
                             <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
                             </div>
-                            <div ><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                            <div><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                             </div>
                         </div>
                     </div>
                     <div class="col text-center">
                         <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                         @if($info->prix_groupe != null)
-                            <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                        <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                         @endif
                     </div>
                     <div class="col">
                         <div class="mb-2 lien_clique"><a href="{{route('demande_devis_client',$info->module_id)}}" class="description ">Démander&nbsp;un&nbsp;devis</a></div>
-                        @if (count($datas) <= 0)
-
-                        @else
-                            @foreach ($datas as $data)
-                                @if($info->module_id == $data->module_id)
-                                    <div class="pt-1 lien_clique"><a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="description ">S'inscrire</a></div>
-                                @endif
-                            @endforeach
-                        @endif
-                    </div>
-                        @foreach ($datas as $data)
-                            @if($info->module_id == $data->module_id)
-                                @if (count($datas) <= 0)
-
-                                @else
-                                    <hr class = "mb-1 mt-2">
-                                    <div class="row w-100 justify-content-end">
-                                        <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates du Session Inter&nbsp;<i class="bx bx-caret-down caret-icon"></i>
-                                        </h6>
-                                    </div>
-                                    <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
-                                        <div class="row px-3 py-2">
-                                            <div class="col-2">
-                                                <p>Prochaines Sessions</p>
-                                            </div>
-                                            <div class="col-5 date text-center">
-                                                @foreach ($datas as $data)
-                                                    @if($info->module_id == $data->module_id)
-                                                        <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                            <div class="col-5 text-center">
-                                                <p class="">Cette thématique vous intéresse?<button type="button" class="btn_next ms-4"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button> </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
+                        @if (count($datas) <= 0) @else @foreach ($datas as $data) @if($info->module_id == $data->module_id)
+                            <div class="pt-1 lien_clique"><a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="description ">S'inscrire</a></div>
                             @endif
-                        @endforeach
+                            @endforeach
+                            @endif
                     </div>
+                    @foreach ($datas as $data)
+                    @if($info->module_id == $data->module_id)
+                    @if (count($datas) <= 0) @else <hr class="mb-1 mt-2">
+                        <div class="row w-100 justify-content-end">
+                            <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates du Session Inter&nbsp;<i class="bx bx-caret-down caret-icon"></i>
+                            </h6>
+                        </div>
+                        <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
+                            <div class="row px-3 py-2">
+                                <div class="col-2">
+                                    <p>Prochaines Sessions</p>
+                                </div>
+                                <div class="col-5 date text-center">
+                                    @foreach ($datas as $data)
+                                    @if($info->module_id == $data->module_id)
+                                    <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
+                                    @endif
+                                    @endforeach
+                                </div>
+                                <div class="col-5 text-center">
+                                    <p class="">Cette thématique vous intéresse?<button type="button" class="btn_next ms-4"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button> </p>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @endif
+                        @endforeach
+                </div>
                 @endforeach
                 @else
                 <h2 class="text-center">Aucun module pour cette formation 😅 !</h2>
@@ -216,7 +233,511 @@
             </div>
         </div>
     </div>
+
+
+
+
+    {{-- ============================== filtre taloha =========================== --}}
+    {{-- <div class="filtrer mt-3">
+        <div class="row">
+            <div class="col">
+                <p class="m-0">Filtre par</p>
+            </div>
+            <div class="col text-end">
+                <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
+            </div>
+            <hr class="mt-2">
+            <div class="row mt-0 navigation_module">
+                <p>
+                    <a data-bs-toggle="collapse" href="#intervale_prix" role="button" aria-expanded="false" aria-controls="intervale_prix">Intervale de prix par personne</a>
+                </p>
+                <div class="collapse multi-collapse" id="intervale_prix">
+                    <div class="row">
+                        <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"SINGLE_PRIX")}}" enctype="multipart/form-data">
+    @csrf
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div align="center">
+        <button type="submit" class="btn_creer mt-2">Recherche</button>
+    </div>
+    </form>
+    </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#intervale_prix_grp" role="button" aria-expanded="false" aria-controls="intervale_prix_grp">Intervale de prix par groupe</a>
+    </p>
+    <div class="collapse multi-collapse" id="intervale_prix_grp">
+        <div class="row">
+            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"GROUPE_PRIX")}}" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div align="center">
+                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#intervale_hr" role="button" aria-expanded="false" aria-controls="intervale_hr">Intervale d'heure de formation</a>
+    </p>
+    <div class="collapse multi-collapse" id="intervale_hr">
+        <div class="row">
+            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"HR")}}" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_debut" class="form-label" align="left">Hr minimum <strong style="color:#ff0000;">*</strong></label>
+                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_fin" class="form-label" align="left"> Hr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div align="center">
+                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#intervale_jr" role="button" aria-expanded="false" aria-controls="intervale_jr">Intervale de jour de formation</a>
+    </p>
+    <div class="collapse multi-collapse" id="intervale_jr">
+        <div class="row">
+            <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"DAY")}}" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_debut" class="form-label" align="left">Jr minimum <strong style="color:#ff0000;">*</strong></label>
+                            <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dte_fin" class="form-label" align="left"> Jr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                            <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div align="center">
+                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#detail_par_etp" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_par_etp">Organisme de formation <i class='bx icon_trie bxs-chevron-up'></i></a>
+    </p>
+    <div class="collapse multi-collapse" id="detail_par_etp">
+
+        <div class="row">
+            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"OF")}}" method="GET" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input autocomplete="off" list="list_of" class="form-control" name="nom_entiter" id="nom_entiter">
+                            <datalist id="list_of">
+                                @foreach ($organismes as $of)
+                                <option value="{{$of->nom}}">
+                                    @endforeach
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+
+    <p>
+        <a data-bs-toggle="collapse" href="#detail_comeptence" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_comeptence">Compétence à evaluer <i class='bx icon_trie bxs-chevron-up'></i></a>
+    </p>
+    <div class="collapse multi-collapse" id="detail_comeptence">
+
+        <div class="row">
+            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"COMPETENCE")}}" method="GET" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input autocomplete="off" list="competence" class="form-control" name="nom_entiter" id="nom_entiter">
+                            <datalist id="competence">
+                                @foreach ($competences as $compe)
+                                <option value="{{$compe->titre_competence}}">
+                                    @endforeach
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+
+
+    <p>
+        <a data-bs-toggle="collapse" href="#detail_formation" role="button" aria-expanded="false" class="entiter_filtre" aria-controls="detail_formation">Nom de formation <i class='bx icon_trie bxs-chevron-up'></i></a>
+    </p>
+    <div class="collapse multi-collapse" id="detail_formation">
+
+        <div class="row">
+            <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"FORMATION")}}" method="GET" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <input autocomplete="off" list="no_formation" class="form-control" name="nom_entiter" id="nom_entiter">
+                            <datalist id="no_formation">
+                                @foreach ($formations as $form)
+                                <option value="{{$form->nom_formation}}">
+                                    @endforeach
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn_creer mt-2">Recherche</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <p>
+        <a data-bs-toggle="collapse" href="#detail_par_status" role="button" aria-expanded="false" class="status_filtre" aria-controls="detail_par_status">modalité <i class='bx icon_trie bxs-chevron-up'></i></a>
+    </p>
+    <div class="collapse multi-collapse" id="detail_par_status">
+        <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.modalite.filtre')}}" method="GET" enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <select class="form-select" name="nom_modalite" id="nom_modalite">
+                            <option value="En ligne">En ligne</option>
+                            <option value="Presentiel">Présentiel</option>
+                            <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr>
+
+    </div>
+    </div>
+    </div> --}}
 </section>
+
+{{-- =========================== nouveau filtre ============================= --}}
+<div class="filtrer mt-3">
+    <div class="row">
+        <div class="col">
+            <p class="m-0">Filtre par</p>
+        </div>
+        <div class="col text-end">
+            <h3><i style="font-size: 35px" class="bx bx-x " role="button" onclick="afficherFiltre();"></i></h3>
+        </div>
+        <hr class="mt-2">
+
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Intervale de prix par personne
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"SINGLE_PRIX")}}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="dte_debut" class="form-label" align="left">Solde min {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="dte_fin" class="form-label" align="left"> Solde à max {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div align="center">
+                                <button type="submit" class="btn_creer mt-2">Recherche</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Intervale de prix par groupe
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"GROUPE_PRIX")}}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div align="center">
+                                <button type="submit" class="btn_creer mt-2">Recherche</button>
+                            </div>
+                        </form>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Intervale totale d'heure de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"HR")}}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="dte_debut" class="form-label" align="left">Hr minimum <strong style="color:#ff0000;">*</strong></label>
+                                        <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="dte_fin" class="form-label" align="left"> Hr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div align="center">
+                                <button type="submit" class="btn_creer mt-2">Recherche</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Intervale totale de jour de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('result_formation.filtre',"DAY")}}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="dte_debut" class="form-label" align="left">Jr minimum <strong style="color:#ff0000;">*</strong></label>
+                                        <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="dte_fin" class="form-label" align="left"> Jr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div align="center">
+                                <button type="submit" class="btn_creer mt-2">Recherche</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFour">
+                        Organisme de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"OF")}}" method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input autocomplete="off" list="list_of" class="form-control" name="nom_entiter" id="nom_entiter">
+                                        <datalist id="list_of">
+                                            @foreach ($organismes as $of)
+                                            <option value="{{$of->nom}}">
+                                                @endforeach
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseFive">
+                        Compétence à evaluer
+                    </button>
+                </h2>
+                <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"COMPETENCE")}}" method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input autocomplete="off" list="competence" class="form-control" name="nom_entiter" id="nom_entiter">
+                                        <datalist id="competence">
+                                            @foreach ($competences as $compe)
+                                            <option value="{{$compe->titre_competence}}">
+                                                @endforeach
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSix">
+                        Nom de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.entiter.filtre',"FORMATION")}}" method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input autocomplete="off" list="no_formation" class="form-control" name="nom_entiter" id="nom_entiter">
+                                        <datalist id="no_formation">
+                                            @foreach ($formations as $form)
+                                            <option value="{{$form->nom_formation}}">
+                                                @endforeach
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingHeight">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseHeight" aria-expanded="false" aria-controls="flush-collapseSeven">
+                        Modalité de formation
+                    </button>
+                </h2>
+                <div id="flush-collapseHeight" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form class="mt-1 mb-2 form_colab" action="{{route('result_formation.modalite.filtre')}}" method="GET" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select class="form-select" name="nom_modalite" id="nom_modalite">
+                                            <option value="En ligne">En ligne</option>
+                                            <option value="Presentiel">Présentiel</option>
+                                            <option value="En ligne/Presentiel">En ligne/Présentiel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn_creer mt-2">Recherche</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">

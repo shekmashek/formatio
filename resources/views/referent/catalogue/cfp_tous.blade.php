@@ -4,16 +4,23 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/annuaire.css')}}">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 {{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 
 <div class="container-fluid pt-4">
     <div class="row fix_top_row">
         <div class="d-flex flex-row justify-content-between">
             <div class="">
-                <h5>Les Organismes de Formations près de chez vous</h5>
+                @if(count($cfps) == null)
+                    <h5>Les Organismes de Formations près de chez vous : aucun résultats</h5>
+                @elseif(count($cfps) == 1)
+                    <h5>Les Organismes de Formations près de chez vous : <span class="nbr_cfp"> 1 résultat, {{count($collaboration)}} collaborés</span></h5>
+                @else
+                    <h5>Les Organismes de Formations près de chez vous : <span class="nbr_cfp">{{count($cfps)}} résultats, {{count($collaboration)}} collaborés</span></h5>
+                @endif
             </div>
             <div class="d-flex flex-row ">
-                <div class="d-flex flex-row "><span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span></div>
+                <div class="d-flex flex-row "><span class="nombre_pagination text-center filter"><span style="position: relative; top: .5rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span></div>
 
                 {{-- =============== condition pagination ==================== --}}
                 @if ($pagination["nb_limit"] >= $pagination["totale_pagination"])
@@ -114,14 +121,13 @@
                 </a>
                 @endif
 
-                        <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+                <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
             </div>
         </div>
     </div>
 </div>
 <section class="annuaire mb-5">
     <div class="container my-2">
-
             <div class="row mb-5 justify-content-center">
                 <div class="col-12 alphabet mb-2">
                     @foreach ($initial as $init)
@@ -132,6 +138,7 @@
             <div class="row">
                 <div class="col-12 justify-content-center px-5">
                     <div id="result">
+
                         @foreach ($cfps as $cfp)
                         <div class="row detail_content mb-4">
                             <div class="col-2 logo_content">
@@ -139,21 +146,74 @@
                             </div>
                             <div class="col-3 ">
                                 <div class="row">
-                                    <h4><a href="{{route('detail_cfp',$cfp->id)}}">{{$cfp->nom}}</a></h4>
+                                <h4><a href="{{route('detail_cfp',$cfp->id)}}">{{$cfp->nom}}</a>
+                                    @foreach ($type_abonnement as $type)
+                                        @if($cfp->id == $type->cfp_id)
+                                            @if($type->type_abonnement_id == 1)
+                                                <sup><span class="mode1"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                            @if($type->type_abonnement_id == 2)
+                                                <sup><span class="mode2"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                            @if($type->type_abonnement_id == 3)
+                                                <sup><span class="mode3"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                            @if($type->type_abonnement_id == 4)
+                                                <sup><span class="mode4"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                            @if($type->type_abonnement_id == 5)
+                                                <sup><span class="mode5"><i class='bx bxl-sketch'></i>{{$type->nom_type}}</span></sup>
+                                            @endif
+                                            @if($type->type_abonnement_id != 1 && $type->type_abonnement_id != 2 && $type->type_abonnement_id != 3 && $type->type_abonnement_id != 4 && $type->type_abonnement_id != 5 )
+
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </h4>
                                     @if ($cfp->slogan!=null)
                                     <p>{{$cfp->slogan}}</p>
                                     @else
                                     <p>------------</p>
                                     @endif
                                 </div>
+                                <div class="d-flex flex-row">
+                                    @foreach ($avis_etoile as $avis)
+                                        @if($avis->cfp_id == $cfp->id)
+                                            @if($avis->pourcentage != null)
+                                            <div class="d-flex flex-row">
+                                                @if($avis->pourcentage != null)
+                                                    <div class="Stars" style="--note: {{ $avis->pourcentage }};"></div>
+                                                @else
+                                                    <div class="Stars" style="--note: 0;"></div>
+                                                @endif
+                                            </div>
+                                            <div class="rating-box ms-2">
+                                                @if($avis->pourcentage != null)
+                                                    <span class="avis_verif"><span class="">{{ $avis->pourcentage }} / 5</span> ({{$avis->nb_avis}} avis)</span>
+                                                @else
+                                                    <span class="">0 sur 5 (0 avis)</span>
+                                                @endif
+                                            </div>
+                                            @endif
+                                        @else
+                                            <div class="d-flex flex-row">
+                                                <div class="Stars" style="--note: 0;"></div>
+                                            </div>
+                                            <div class="rating-box ms-2">
+                                                <span class="">0 sur 5 (0 avis)</span>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
-                            <div class="col-7">
+                            <div class="col-6">
                                 <div class="col d-flex flex-row mb-2">
-                                    <span class="btn_actions me-3" role="button"><a href="#"><i class="bx bx-mail-send"></i>Email</a></span>
-                                    <span class="btn_actions me-3 contact_action" role="button" data-bs-toggle="collapse" href="#contact_{{ $cfp->id }}" aria-expanded="false" aria-controls="collapseprojet"><i class="bx bx-phone"></i>Contact</span>
-                                    <span class="btn_actions me-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank"><i class="bx bx-globe"></i>Site
+                                    <span class="btn_fermer me-3" role="button"><a href="#"><i class="bx bx-mail-send me-2"></i>Email</a></span>
+                                    <span class="btn_fermer me-3 contact_action" role="button" data-bs-toggle="collapse" href="#contact_{{ $cfp->id }}" aria-expanded="false" aria-controls="collapseprojet"><i class="bx bx-phone me-2"></i>Contact</span>
+                                    <span class="btn_fermer me-3" role="button"><a href="https://{{$cfp->site_web}}" target="_blank"><i class="bx bx-globe me-2"></i>Site
                                             Web</a></span>
-                                    <span class="btn_actions" role="button"><a href="{{route('detail_cfp',$cfp->id)}}"><i class="bx bx-info-circle"></i>Formations</a></span>
+                                    <span class="btn_fermer me-5" role="button"><a href="{{route('detail_cfp',$cfp->id)}}"><i class="bx bx-info-circle me-2"></i>Formations</a></span>
+
                                 </div>
                                 <div class="contact collapse" id="contact_{{ $cfp->id }}">
                                     <div class="col-6 phone_detail">
@@ -165,7 +225,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <p class="mt-1 adresse"><i class="bx bxs-map"></i>
+                                <p class="mt-1 "><i class="bx bxs-map"></i>
                                     @if ($cfp->adresse_lot=!null)
                                     {{$cfp->adresse_lot}}
                                     @else
@@ -196,6 +256,21 @@
                                     -------
                                     @endif
                                 </p>
+                            </div>
+                            <div class="col-1">
+                                <span class="badges">
+                                    {{-- {{dd($collaboration)}} --}}
+                                    @foreach ($collaboration as $collab)
+                                        @if($collab->inviter_cfp_id == $cfp->id && $collab->activiter == 1)
+                                            <div class="main-wrapper">
+                                                <div class="badge green">
+                                                    <div class="circle"> <i class="bx bxs-badge-check"></i></div>
+                                                    <div class="ribbon">Collaboré</div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </span>
                             </div>
                         </div>
                         @endforeach
@@ -264,9 +339,8 @@
                     </div>
                 </div>
             </div>
-
+    </div>
 </section>
-</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr("content");
@@ -315,7 +389,7 @@
         $(".lien_filtre").click(function(e) {
             let id_alpha = e.target.id;
             var dataValue = getDataRequetTrie(".lien_filtre", id_alpha);
-            console.log(JSON.stringify(dataValue));
+            // console.log(JSON.stringify(dataValue));
             /*
             data: {
                     Alpha: id_alpha
@@ -328,14 +402,14 @@
                 , dataType: "html"
                 , success: function(response) {
                     let userData = JSON.parse(response);
-                    console.log(JSON.stringify(response));
-                    if (userData != null || undefined) {
+                    // console.log(JSON.stringify(userData['avis']));
+                    if (userData['cfp'] != null || undefined) {
                         let html = '';
 
-                        for (let i = 0; i < userData.length; i++) {
-                            console.log(userData);
+                        for (let i = 0; i < userData['cfp'].length; i++) {
+                            // console.log(userData['type']);
                             let url_detail_cfp = '{{ route("detail_cfp", ":id") }}';
-                            url_detail_cfp = url_detail_cfp.replace(":id", userData[i]['id']);
+                            url_detail_cfp = url_detail_cfp.replace(":id", userData['cfp'][i]['id']);
 
                             html += '<div class="row detail_content mb-5">';
                             html +=     '<div class="col-2 logo_content">';
@@ -343,33 +417,85 @@
                             html +=     '</div>';
                             html +=     '<div class="col-3 detail_cfp">';
                             html +=         '<div class="row">';
-                            html +=             '<h4><a href="' + url_detail_cfp + '">' + userData[i]['nom'] + '</a></h4>';
-                                                    if (userData[i]['slogan'] != null) {
-                            html +=                     '<p>' + userData[i]['slogan'] + '</p>';
+                            html +=             '<h4><a href="' + url_detail_cfp + '">' + userData['cfp'][i]['nom'] + '</a>';
+                                                for (let l = 0; l < userData['type'].length; l++) {
+                                                    if (userData['cfp'][i]['id'] == userData['type'][l]['cfp_id']) {
+                                                        if (userData['type'][l]['type_abonnement_id'] == 1) {
+                            html +=                         '<sup><span class="mode1"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] == 2) {
+                            html +=                         '<sup><span class="mode2"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] == 3) {
+                            html +=                         '<sup><span class="mode3"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] == 4) {
+                            html +=                         '<sup><span class="mode4"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] == 5) {
+                            html +=                         '<sup><span class="mode5"><i class="bx bxl-sketch"></i>'+userData['type'][l]['nom_type']+'</span></sup>';
+                                                        }
+                                                        if (userData['type'][l]['type_abonnement_id'] != 1 && userData['type'][l]['type_abonnement_id'] != 2 && userData['type'][l]['type_abonnement_id'] != 3 && userData['type'][l]['type_abonnement_id'] != 4 && userData['type'][l]['type_abonnement_id'] != 5){
+
+                                                        }
+                                                    }
+                                                }
+                            html +=             '</h4>';
+                                                    if (userData['cfp'][i]['slogan'] != null) {
+                            html +=                     '<p>' + userData['cfp'][i]['slogan'] + '</p>';
                                                     } else {
                             html +=                     '<p>--------</p>';
                                                     }
                             html +=         '</div>';
+                            html +=         '<div class="d-flex flex-row">';
+                                            for (let k = 0; k < userData['avis'].length; k++) {
+                                                if(userData['avis'][k]['cfp_id'] == userData['cfp'][i]['id']){
+                                                    if (userData['avis'][k]['pourcentage'] != null) {
+                            html +=                     '<div class="d-flex flex-row">';
+                                                            if (userData['avis'][k]['pourcentage'] != null) {
+                            html +=                             '<div class="Stars" style="--note: '+ userData['avis'][k]['pourcentage']+';"></div>';
+                                                            }else{
+                            html +=                             '<div class="Stars" style="--note: 0;"></div>';
+                                                            }
+                            html +=                     '</div>';
+                            html +=                     '<div class="rating-box ms-2">';
+                                                            if (userData['avis'][k]['pourcentage'] != null) {
+                            html +=                             '<span class="avis_verif"><span class="">'+ userData['avis'][k]['pourcentage']+' / 5</span> ('+ userData['avis'][k]['nb_avis']+' avis)</span>';
+                                                            }else{
+                            html +=                             '<span class="">0 sur 5 (0 avis)</span>';
+                                                            }
+                            html +=                     '</div>';
+                                                    }
+                                                }else{
+                            html +=                 '<div class="d-flex flex-row">';
+                            html +=                     '<div class="Stars" style="--note: 0;"></div>';
+                            html +=                 '</div>';
+                            html +=                 '<div class="rating-box ms-2">';
+                            html +=                     '<span class="">0 sur 5 (0 avis)</span>';
+                            html +=                 '</div>';
+                                                }
+                                            }
+                            html +=         '</div>';
                             html +=     '</div>';
 
-                            html +=     '<div class="col-7">';
+                            html +=     '<div class="col-6">';
                             html +=         '<div class="col d-flex flex-row mb-2">';
-                            html +=             '<span class="btn_actions" role="button">';
-                            html +=                 '<a href="#"><i class="bx bx-mail-send"></i>Email</a>';
+                            html +=             '<span class="btn_fermer" role="button">';
+                            html +=                 '<a href="#"><i class="bx bx-mail-send me-2"></i>Email</a>';
                             html +=             '</span>';
-                            html +=             '<span class="btn_actions ms-3 contact_action" role="button" data-bs-toggle="collapse"href="#contact_' + userData[i]['id'] + '" aria-expanded="false" aria-controls="collapseprojet"><i class="bx bx-phone"></i>Contact</span>';
-                            html +=             '<span class="btn_actions ms-3" role="button">';
-                            html +=                 '<a href="https://' + userData[i]['site_web'] + '" target="_blank"><i class="bx bx-globe"></i>Site Web</a>';
+                            html +=             '<span class="btn_fermer ms-3 contact_action" role="button" data-bs-toggle="collapse"href="#contact_' + userData['cfp'][i]['id'] + '" aria-expanded="false" aria-controls="collapseprojet"><i class="bx bx-phone me-2"></i>Contact</span>';
+                            html +=             '<span class="btn_fermer ms-3" role="button">';
+                            html +=                 '<a href="https://' + userData['cfp'][i]['site_web'] + '" target="_blank"><i class="bx bx-globe me-2"></i>Site Web</a>';
                             html +=             '</span>';
-                            html +=             '<span class="btn_actions ms-3" role="button">';
-                            html +=                 '<a href="' + url_detail_cfp + '"><i class="bx bx-info-circle"></i>Plus d\'infos</a>';
+                            html +=             '<span class="btn_fermer ms-3" role="button">';
+                            html +=                 '<a href="' + url_detail_cfp + '"><i class="bx bx-info-circle me-2"></i>Plus d\'infos</a>';
                             html +=             '</span>';
                             html +=         '</div>';
-                            html +=         '<div class="contact collapse" id="contact_' + userData[i]['id'] + '">';
+                            html +=         '<div class="contact collapse" id="contact_' + userData['cfp'][i]['id'] + '">';
                             html +=             '<div class="col-6 phone_detail">';
                             html +=                 '<span class="text-muted">Téléphone</span>';
-                                                        if (userData[i]['telephone'] != null) {
-                            html +=                         '<p class="m-0">' + userData[i]['telephone'] + '</p>';
+                                                        if (userData['cfp'][i]['telephone'] != null) {
+                            html +=                         '<p class="m-0">' + userData['cfp'][i]['telephone'] + '</p>';
                                                         } else {
                             html +=                         '<p class="m-0">--------</p>';
                                                         }
@@ -377,44 +503,68 @@
                             html +=         '</div>';
 
                             html +=         '<p class="mt-1 adresse"><i class="bx bxs-map"></i>';
-                                                if (userData[i]['adresse_lot'] = !null) {
-                            html +=                 '' + userData[i]['adresse_lot'] + '';
+                                                if (userData['cfp'][i]['adresse_lot'] = !null) {
+                            html +=                 '' + userData['cfp'][i]['adresse_lot'] + '';
                                                 } else {
                             html +=                 '------';
                                                 }
                             html +=             '&nbsp;';
-                                                if (userData[i]['adresse_quartier'] != null) {
-                            html +=                 '' + userData[i]['adresse_quartier'] + '';
+                                                if (userData['cfp'][i]['adresse_quartier'] != null) {
+                            html +=                 '' + userData['cfp'][i]['adresse_quartier'] + '';
                                                 } else {
                             html +=                 ' ------';
                                                 }
                             html +=             '&sbquo;&nbsp;';
-                                                if (userData[i]['adresse_ville'] != null) {
-                            html +=                 '' + userData[i]['adresse_ville'] + '';
+                                                if (userData['cfp'][i]['adresse_ville'] != null) {
+                            html +=                 '' + userData['cfp'][i]['adresse_ville'] + '';
                                                 } else {
                             html +=                 '-------';
                                                 }
                             html +=             '&nbsp;';
-                                                if (userData[i]['adresse_code_postal'] != null) {
-                            html +=                 '' + userData[i]['adresse_code_postal'] + '';
+                                                if (userData['cfp'][i]['adresse_code_postal'] != null) {
+                            html +=                 '' + userData['cfp'][i]['adresse_code_postal'] + '';
                                                 } else {
                             html +=                 '-------';
                                                 }
                             html +=             '&sbquo;&nbsp;';
-                                                if (userData[i]['adresse_region'] != null) {
-                            html +=                 '' + userData[i]['adresse_region'] + '';
+                                                if (userData['cfp'][i]['adresse_region'] != null) {
+                            html +=                 '' + userData['cfp'][i]['adresse_region'] + '';
                                                 }else {
                             html +=                 '-------';
                                                 }
                             html +=         '</p>';
                             html +=     '</div>';
+                            html +=     '<div class="col-1">';
+                            html +=         '<span class="badges">';
+                                                for (let j = 0; j < userData['collab'].length; j++) {
+                                                    if(userData['collab'][j]['inviter_cfp_id'] == userData['cfp'][i]['id'] && userData['collab'][j]['activiter'] == 1){
+                            html +=                     '<div class="main-wrapper">';
+                            html +=                         '<div class="badge green">';
+                            html +=                             '<div class="circle">';
+                            html +=                                 '<i class="bx bxs-badge-check"></i>';
+                            html +=                             '</div>';
+                            html +=                             '<div class="ribbon">Collaboré</div>';
+                            html +=                         '</div>';
+                            html +=                     '</div>';
+                                                    }
+                                                }
+                            html +=         '</span>';
+                            html +=     '</div>';
                             html += '</div>';
-                            html = html.replace(':?', userData[i]['logo']);
+                            html = html.replace(':?', userData['cfp'][i]['logo']);
                             if ($(this).hasClass('activer')) {
                                 $(this).removeClass('activer').addClass("activer_filtre");
                             } else {
                                 $(this).removeClass('activer_filtre').addClass("activer");
                             }
+
+                        }
+                        let counterCfp = userData['cfp'].length;
+                        $('.nbr_cfp').text('');
+                        if (counterCfp == 1) {
+                            $('.nbr_cfp').append(' 1 résultat');
+                        }else{
+                            $('.nbr_cfp').append(counterCfp+' résultats');
                         }
 
                         $("#result").empty();

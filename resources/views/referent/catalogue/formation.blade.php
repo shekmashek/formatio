@@ -5,7 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 <div class="row navigation_detail ">
-    <div class="ps-5 pt-3">
+    <div class="ps-5">
         <ul class="">
             <div class="row align-items-center">
                 <div class="col-3">
@@ -114,6 +114,9 @@
         </div>--}}
     </div>
     <div class="container mt-5">
+
+            </div>
+
         <h3 class="mb-5">Les formations les plus recherchées </h3>
         <div class="row">
             <div class="col-12 d-flex flex-wrap justify-content-cente">
@@ -163,6 +166,7 @@
             </div>
         </div>
     </div>
+
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />

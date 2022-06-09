@@ -30,7 +30,7 @@ class Facture extends Model
     public function int2str($a)
     {
         $convert = explode('.', $a);
-
+// dd(substr($a, -13));
         /*if (isset($convert[1]) && $convert[1]!=''){
 return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes' ;
 // return $this->int2str($convert[0]).'Dinars'.' et '.$this->int2str($convert[1]).'Centimes' ;
@@ -48,7 +48,7 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
                     return 'trois';
                 case 4:
                     return 'quatre';
-                case 10:
+                case 5:
                     return 'cinq';
                 case 6:
                     return 'six';
@@ -88,6 +88,8 @@ return $this->int2str($convert[0]).' et '.$this->int2str($convert[1]).' Centimes
                         return 'cinquante';
                     case 60:
                         return 'soixante';
+                        case 50:
+                            return 'cinquante';
                     case 70:
                         return 'soixante-dix';
                     case 80:

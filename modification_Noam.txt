@@ -41,5 +41,25 @@ ALTER TABLE chef_departements
 DROP INDEX cin;
 
 
-(-----------branch modif_detail_projet ):
-- recopier tout view facture dans bdd_suiviformation_view_4(facture view tena izy).sql
+------------- export_employer
+==> Collaboration:
+alter table refuse_demmande_etp_cfp add column resp_etp_id bigint(20) unsigned not null references responsables(id) on delete cascade;
+alter table refuse_demmande_etp_cfp add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
+
+alter table refuse_demmande_cfp_etp add column resp_etp_id bigint(20) unsigned not null references responsables(id) on delete cascade;
+alter table refuse_demmande_cfp_etp add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
+
+alter table demmande_formateur_cfp add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
+alter table demmande_cfp_formateur add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
+
+alter table demmande_etp_cfp add column resp_etp_id bigint(20) unsigned not null references responsables(id) on delete cascade;
+alter table demmande_etp_cfp add column resp_cfp_id bigint(20) unsigned;
+
+alter table demmande_cfp_etp add column resp_etp_id bigint(20) unsigned ;
+alter table demmande_cfp_etp add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
+
+-recopier tout view Collaboration bdd_suiviformation_view_5(collaboration).sql
+
+------------- 8 JIUN 2022 : export_employer:
+
+- récopier toutes les view factures

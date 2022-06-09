@@ -74,7 +74,7 @@
                                     </div>
                                     <div>
                                         <select class="text-end titre_facture form-select  mb-2 m-0 " id="id_mode_financement" name="id_mode_financement" aria-label="Default select example">
-                                            <option onselected hidden value="0"> Mode de payement...</option>
+                                            <option onselected hidden value="0"> Mode de paiement...</option>
                                             @foreach ($mode_payement as $mod)
                                             <option value="{{$mod->id}}">{{$mod->description}}</option>
                                             @endforeach
@@ -301,7 +301,7 @@
                             <div class="col-2">
                                 <span id="taxe_name" value="0"></span>
                             </div>
-                            <div class="col-2 text-end">
+                            <div  class="col-2 text-end pe-3">
                                 <input type="hidden" id="taxe_value">
                                 <p class="text-end" id="taxe" align="right"></p>
                             </div>
@@ -324,7 +324,15 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col">
+                                <p>Arretée la présente facture à la somme de: <span class="text-muted" id="chiffre_convert_letter"></span>{{" ".$devise->devise}}</p>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+
                         <hr>
+
                         <div class="row mb-2 g-0">
                             <div class="col-12 ">
                                 <h6 class="note_titre ms-2"><span> Notes et autres rémarques</span></h6>

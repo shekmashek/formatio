@@ -176,10 +176,12 @@
                                 <div class="col-1  text-end pe-0">
                                     <p align="right" name="totale_facture[]" class="m-0 text_prix">{{number_format($session[0]->hors_taxe,0,","," ")}}</p>
                                 </div>
-                                <div class="col-1 text-start pt-2">
+                                <div class="col-1 text-end pt-2">
                                     <a href="{{route('delete_session_facture',[$montant_totale->num_facture,$session[0]->groupe_entreprise_id])}}"><button id="removeRowMontant" type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></a>
                                 </div>
                             </div>
+
+
 
                             @if((count($session)-1)>0)
                             @for ($i=1;$i<count($session);$i+=1) <div class="row my-1" id="inputFormRowMontant">
@@ -266,558 +268,832 @@
                                 <h6 class="m-0"></h6>
                             </div>
 
+                            @if(count($frais_annexes)>0)
                             <div class="row my-1" id="inputFormRow">
-                                @if (count($frais_annexes)>0)
-
                                 <div class="col-3">
                                     <select class="form-select selectP input_section4" id="frais_annexe_id[]" name="frais_annexe_id[]" required>
-                                        @foreach ($frais_annexes as $frais)
-                                        <option value="{{$frais->frais_annexe_id}}">{{$frais->frais_annexe_description}}</option>
-
-                                        @endforeach
+                                        <option value="{{$frais_annexes[0]->frais_annexe_id}}">{{$frais_annexes[0]->frais_annexe_description}}</option>
                                     </select>
                                 </div>
 
                                 <div class="col-4">
-                                    <textarea name="description_annexe[]" id="description_annexe[]" class="text_description form-control" placeholder="déscription du frais annexe">{{$frais->frais_annexe_description}}</textarea>
+                                    <textarea name="description_annexe[]" id="description_annexe[]" class="text_description form-control" placeholder="déscription du frais annexe">{{$frais_annexes[0]->frais_annexe_description}}</textarea>
                                 </div>
 
                                 <div class="col-1">
-                                    <input type="number" min="1" value="{{$frais->qte}}" required class="form-control input_quantite annexe_qte" name="qte_annexe[]" id="qte_annexe[]">
+                                    <input type="number" min="1" value="{{$frais_annexes[0]->qte}}" required class="form-control input_quantite annexe_qte" name="qte_annexe[]" id="qte_annexe[]">
                                 </div>
 
                                 <div class="col-2">
-                                    <input type="number" min="0" value="{{$frais->pu}}" required name="montant_frais_annexe[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe[]" placeholder="0">
+                                    <input type="number" min="0" value="{{$frais_annexes[0]->pu}}" required name="montant_frais_annexe[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe[]" placeholder="0">
                                 </div>
 
                                 <div class="col-1 text-end">
-                                    <p align="right" name="totale_frais_annexe[]" class="text_prix">{{number_format($frais->hors_taxe,0,","," ")}}</p>
+                                    <p align="right" name="totale_frais_annexe[]" class="text_prix">{{number_format($frais_annexes[0]->hors_taxe,0,","," ")}}</p>
                                 </div>
 
                                 <div class="col-1 text-end pt-2">
                                     <p class="m-0"> </p>
-                                    <a href="{{route('delete_frais_annexe_facture',[$montant_totale->num_facture,$frais->frais_annexe_id])}}"> <button type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></a></span>
+                                    <a href="{{route('delete_frais_annexe_facture',[$montant_totale->num_facture,$frais_annexes[0]->frais_annexe_id])}}"> <button type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></a></span>
 
-                                </div>
-
-                                @endif
-                                <div id="newRow"></div>
-
-                                <div class="">
-                                    <p> <a role="button" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-1 g-0 p-2">
-
-                            <div class="row mb-3">
-                                <div class="col-8">
-                                </div>
-                                <div class="col-2">
-                                    <p>Montant Brut HT</p>
-                                </div>
-                                <div class="col-2 text-end pe-2">
-                                    <p align="right" id="totale_facture_ht"> {{number_format($montant_totale->montant_brut_ht,0,","," ")}}</p>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-8 d-flex flex-row justify-content-end">
-                                    <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" autocomplete="off" min="0" value="{{$montant_totale->valeur_remise}}" class="form-control input_tax" name="remise" id="remise">
-                                    <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label=" select example">
-                                        <option value="{{$montant_totale->remise_id}}" selected>{{$montant_totale->description_remise}}</option>
-                                        @foreach ($type_remise as $re)
-                                        <option value="{{$re->id}}">{{$re->description}}</option>
-                                        @endforeach
-
+                            @endif
+                            @if((count($frais_annexes)-1)>0)
+                            @for ($i=1;$i<count($frais_annexes);$i+=1) <div class="row my-1" id="inputFormRow">
+                                <div class="col-3">
+                                    <select class="form-select selectP input_section4" id="frais_annexe_id[]" name="frais_annexe_id[]" required>
+                                        <option value="{{$frais_annexes[$i]->frais_annexe_id}}">{{$frais_annexes[$i]->frais_annexe_description}}</option>
                                     </select>
                                 </div>
-                                <div class="col-1 ">
-                                </div>
-                                <div class="col-1 ">
-                                </div>
-                                <div class="col-2 text-end pe-2">
-                                    <p align="right" id="total_remise"> {{number_format($montant_totale->remise,0,","," ")}}</p>
-                                </div>
-                            </div>
 
-                            <div class="row  mb-1">
-                                <div class="col-2">
+                                <div class="col-4">
+                                    <textarea name="description_annexe[]" id="description_annexe[]" class="text_description form-control" placeholder="déscription du frais annexe">{{$frais_annexes[$i]->frais_annexe_description}}</textarea>
                                 </div>
-                                <div class="col-3">
-                                </div>
+
                                 <div class="col-1">
+                                    <input type="number" min="1" value="{{$frais_annexes[$i]->qte}}" required class="form-control input_quantite annexe_qte" name="qte_annexe[]" id="qte_annexe[]">
                                 </div>
-                                <div class="col-2">
-                                </div>
-                                <div class="col-2">
-                                    <span id="taxe_name" value="0">{{$taxes->description." (".$taxes->pourcent." %)"}}</span>
-                                </div>
-                                <div class="col-2 text-end">
-                                    <input type="hidden" id="taxe_value" value="{{$taxes->pourcent}}">
-                                    <p align="right" class="text-end" id="taxe"> {{number_format($montant_totale->tva,0,","," ")}}</p>
-                                </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <div class="col-8">
-                                </div>
                                 <div class="col-2">
-                                    <p> Net à payer TTC</p>
+                                    <input type="number" min="0" value="{{$frais_annexes[$i]->pu}}" required name="montant_frais_annexe[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe[]" placeholder="0">
                                 </div>
-                                <div class="col-2 text-end pe-2">
-                                    <p align="right" id="totale_facture_ttc">{{number_format($montant_totale->net_commercial,0,","," ")}}</p>
+
+                                <div class="col-1 text-end">
+                                    <p align="right" name="totale_frais_annexe[]" class="text_prix">{{number_format($frais_annexes[$i]->hors_taxe,0,","," ")}}</p>
                                 </div>
+
+                                <div class="col-1 text-end pt-2">
+                                    <p class="m-0"> </p>
+                                    <a href="{{route('delete_frais_annexe_facture',[$montant_totale->num_facture,$frais_annexes[$i]->frais_annexe_id])}}"> <button type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></a></span>
+                                </div>
+                        </div>
+                        @endfor
+                        @endif
+                        <div id="newRow"></div>
+
+                        <div class="">
+                            <p> <a role="button" id="addRow" value="0"><i class='bx bx-plus-medical me-2'></i>Ajouter un ou des frais annexes(s)</a> </p>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-1 g-0 p-2">
+
+                        <div class="row mb-3">
+                            <div class="col-8">
+                            </div>
+                            <div class="col-2">
+                                <p>Montant Brut HT</p>
+                            </div>
+                            <div class="col-2 text-end pe-2">
+                                <p align="right" id="totale_facture_ht"> {{number_format($montant_totale->montant_brut_ht,0,","," ")}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-8 d-flex flex-row justify-content-end">
+                                <p class="m-0 pt-3 text-end me-3">Remise</p> <input type="number" autocomplete="off" min="0" value="{{$montant_totale->valeur_remise}}" class="form-control input_tax" name="remise" id="remise">
+                                <select class="form-select selectP input_select text-end ms-2" id="type_remise_id" name="type_remise_id" aria-label=" select example">
+                                    <option value="{{$montant_totale->remise_id}}" selected>{{$montant_totale->description_remise}}</option>
+                                    @foreach ($type_remise as $re)
+                                    <option value="{{$re->id}}">{{$re->description}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <div class="col-1 ">
+                            </div>
+                            <div class="col-1 ">
+                            </div>
+                            <div class="col-2 text-end pe-2">
+                                <p align="right" id="total_remise"> {{number_format($montant_totale->remise,0,","," ")}}</p>
                             </div>
                         </div>
 
+                        <div class="row  mb-1">
+                            <div class="col-2">
+                            </div>
+                            <div class="col-3">
+                            </div>
+                            <div class="col-1">
+                            </div>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-2">
+                                <span id="taxe_name" value="0">{{$taxes->description." (".$taxes->pourcent." %)"}}</span>
+                            </div>
+                            <div class="col-2 text-end pe-3">
+                                <input type="hidden" id="taxe_value" value="{{$taxes->pourcent}}">
+                                <p align="right" class="text-end" id="taxe"> {{number_format($montant_totale->tva,0,","," ")}}</p>
+                            </div>
+                        </div>
 
-                        <hr>
-                        <div class="row mb-2 g-0">
-                            <div class="col-12 ">
-                                <h6 class="note_titre ms-2"><span> Notes et autres rémarques</span></h6>
-                                <textarea name="other_message" id="other_message" class="notes_texte" placeholder="'Vos commentaires ou descriptions'">
-                                {{$montant_totale->other_message}}
-                                </textarea>
+                        <div class="row mb-3">
+                            <div class="col-8">
+                            </div>
+                            <div class="col-2">
+                                <p> Net à payer TTC</p>
+                            </div>
+                            <div class="col-2 text-end pe-2">
+                                <p align="right" id="totale_facture_ttc">{{number_format($montant_totale->net_commercial,0,","," ")}}</p>
                             </div>
                         </div>
                     </div>
 
-                </section>
-                <section class="section5 mb-4">
-                    <div class="row header_facture">
-                        <h6 class="mb-0 changer_carret2 d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
-                            Informations légales
-                            <i class="bx bx-caret-down carret-icon text-end"></i>
-                        </h6>
-                        <div class="col-12 collapse" id="titre">
-                            <div class="row p-2 justify-content-center text-center">
-                                <p>NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
-                            </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>Arretée la présente facture à la somme de: <span class="text-muted" id="chiffre_convert_letter">{{$lettre_montant}}</span>{{" ".$devise->devise}}</p>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+
+                    <hr>
+                    <div class="row mb-2 g-0">
+                        <div class="col-12 ">
+                            <h6 class="note_titre ms-2"><span> Notes et autres rémarques</span></h6>
+                            <textarea name="other_message" id="other_message" class="notes_texte" placeholder="'Vos commentaires ou descriptions'">
+                            {{$montant_totale->other_message}}
+                            </textarea>
                         </div>
                     </div>
-                </section>
             </div>
-        </form>
+
+            </section>
+            <section class="section5 mb-4">
+                <div class="row header_facture">
+                    <h6 class="mb-0 changer_carret2 d-flex pt-2 justify-content-between" data-bs-toggle="collapse" href="#titre" aria-expanded="true" aria-controls="collapseprojet">
+                        Informations légales
+                        <i class="bx bx-caret-down carret-icon text-end"></i>
+                    </h6>
+                    <div class="col-12 collapse" id="titre">
+                        <div class="row p-2 justify-content-center text-center">
+                            <p>NIF: {{$cfp->nif}}&nbsp;&nbsp; STAT: {{$cfp->stat}}&nbsp;&nbsp; RCS: {{$cfp->rcs}} &nbsp;&nbsp; CIF: {{$cfp->cif}}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
     </div>
-    {{-- <script src="{{asset('js/facture.js')}}"></script> --}}
+    </form>
+</div>
+{{-- <script src="{{asset('js/facture.js')}}"></script> --}}
 
-    <script src="{{ asset('assets/js/jquery.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{asset('js/facture.js')}}"></script>
-    <script type="text/javascript">
-        function getCalcule() {
-            var qte = document.getElementsByName("qte[]");
-            var facture = document.getElementsByName("facture[]");
-            var totale_facture = document.getElementsByName("totale_facture[]");
-            var facture_new = document.getElementsByName("facture_new[]");
-            var totale_facture_new = document.getElementsByName("totale_facture_new[]");
-            var qte_new = document.getElementsByName("qte_new[]");
+<script src="{{ asset('assets/js/jquery.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{asset('js/facture.js')}}"></script>
+<script type="text/javascript">
+    function Unite(nombre) {
+        var unite;
+        switch (nombre) {
+            case 0:
+                unite = "zéro";
+                break;
+            case 1:
+                unite = "un";
+                break;
+            case 2:
+                unite = "deux";
+                break;
+            case 3:
+                unite = "trois";
+                break;
+            case 4:
+                unite = "quatre";
+                break;
+            case 5:
+                unite = "cinq";
+                break;
+            case 6:
+                unite = "six";
+                break;
+            case 7:
+                unite = "sept";
+                break;
+            case 8:
+                unite = "huit";
+                break;
+            case 9:
+                unite = "neuf";
+                break;
+        } //fin switch
+        return unite;
+    } //-----------------------------------------------------------------------
 
-            var remise = document.getElementById("remise");
-            var type_remise = document.getElementById("type_remise_id");
-            var total_remise = document.getElementById("total_remise");
-            var montant_frais_annexe = document.getElementsByName("montant_frais_annexe[]");
-            var totale_frais_annexe = document.getElementsByName("totale_frais_annexe[]");
-            var qte_annexe = document.getElementsByName("qte_annexe[]");
+    function Dizaine(nombre) {
+        switch (nombre) {
+            case 10:
+                dizaine = "dix";
+                break;
+            case 11:
+                dizaine = "onze";
+                break;
+            case 12:
+                dizaine = "douze";
+                break;
+            case 13:
+                dizaine = "treize";
+                break;
+            case 14:
+                dizaine = "quatorze";
+                break;
+            case 15:
+                dizaine = "quinze";
+                break;
+            case 16:
+                dizaine = "seize";
+                break;
+            case 17:
+                dizaine = "dix-sept";
+                break;
+            case 18:
+                dizaine = "dix-huit";
+                break;
+            case 19:
+                dizaine = "dix-neuf";
+                break;
+            case 20:
+                dizaine = "vingt";
+                break;
+            case 30:
+                dizaine = "trente";
+                break;
+            case 40:
+                dizaine = "quarante";
+                break;
+            case 50:
+                dizaine = "cinquante";
+                break;
+            case 60:
+                dizaine = "soixante";
+                break;
+            case 70:
+                dizaine = "soixante-dix";
+                break;
+            case 80:
+                dizaine = "quatre-vingt";
+                break;
+            case 90:
+                dizaine = "quatre-vingt-dix";
+                break;
+        } //fin switch
+        return dizaine;
+    }
 
-            var montant_frais_annexe_new = document.getElementsByName("montant_frais_annexe_new[]");
-            var totale_frais_annexe_new = document.getElementsByName("totale_frais_annexe_new[]");
-            var qte_annexe_new = document.getElementsByName("qte_annexe_new[]");
-            var calc_re = 0;
+    function NumberToLetter(nombre) {
+        var i, j, n, quotient, reste, nb;
+        var ch
+        var numberToLetter = '';
+        //__________________________________
 
-            var totale_facture_ht = document.getElementById("totale_facture_ht");
-            var totale_facture_ttc = document.getElementById("totale_facture_ttc");
-            var taxe_value = document.getElementById("taxe_value");
-            var taxe = document.getElementById("taxe");
+        if (nombre.toString().replace(/ /gi, "").length > 15) return "dépassement de capacité";
+        if (isNaN(nombre.toString().replace(/ /gi, ""))) return "Nombre non valide";
 
-            var calc_taxe = 0;
-            var totale = 0;
-            var totale_new = 0;
-            var totale_annexe = 0;
-            var totale_annexe_new = 0;
-            var ensemble = 0;
-            for (var i = 0; i < facture.length; i += 1) {
-                var sum = facture[i].value * qte[i].value;
-                sum = Math.ceil(sum);
-                totale_facture[i].innerHTML = sum;
-                totale_facture[i].innerHTML = totale_facture[i].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+        nb = parseFloat(nombre.toString().replace(/ /gi, ""));
+        if (Math.ceil(nb) != nb) return "Nombre avec virgule non géré.";
 
-                /*     totale_facture[i].innerHTML = number_format(sum, 0, ",", " "); */
-                totale += sum;
-            }
+        n = nb.toString().length;
+        switch (n) {
+            case 1:
+                numberToLetter = Unite(nb);
+                break;
+            case 2:
+                if (nb > 19) {
+                    quotient = Math.floor(nb / 10);
+                    reste = nb % 10;
+                    if (nb < 71 || (nb > 79 && nb < 91)) {
+                        if (reste == 0) numberToLetter = Dizaine(quotient * 10);
+                        if (reste == 1) numberToLetter = Dizaine(quotient * 10) + "-et-" + Unite(reste);
+                        if (reste > 1) numberToLetter = Dizaine(quotient * 10) + "-" + Unite(reste);
+                    } else numberToLetter = Dizaine((quotient - 1) * 10) + "-" + Dizaine(10 + reste);
+                } else numberToLetter = Dizaine(nb);
+                break;
+            case 3:
+                quotient = Math.floor(nb / 100);
+                reste = nb % 100;
+                if (quotient == 1 && reste == 0) numberToLetter = "cent";
+                if (quotient == 1 && reste != 0) numberToLetter = "cent" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = Unite(quotient) + " cents";
+                if (quotient > 1 && reste != 0) numberToLetter = Unite(quotient) + " cent " + NumberToLetter(reste);
+                break;
+            case 4:
+                quotient = Math.floor(nb / 1000);
+                reste = nb - quotient * 1000;
+                if (quotient == 1 && reste == 0) numberToLetter = "mille";
+                if (quotient == 1 && reste != 0) numberToLetter = "mille" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " mille";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " mille " + NumberToLetter(reste);
+                break;
+            case 5:
+                quotient = Math.floor(nb / 1000);
+                reste = nb - quotient * 1000;
+                if (quotient == 1 && reste == 0) numberToLetter = "mille";
+                if (quotient == 1 && reste != 0) numberToLetter = "mille" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " mille";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " mille " + NumberToLetter(reste);
+                break;
+            case 6:
+                quotient = Math.floor(nb / 1000);
+                reste = nb - quotient * 1000;
+                if (quotient == 1 && reste == 0) numberToLetter = "mille";
+                if (quotient == 1 && reste != 0) numberToLetter = "mille" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " mille";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " mille " + NumberToLetter(reste);
+                break;
+            case 7:
+                quotient = Math.floor(nb / 1000000);
+                reste = nb % 1000000;
+                if (quotient == 1 && reste == 0) numberToLetter = "un million";
+                if (quotient == 1 && reste != 0) numberToLetter = "un million" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " millions";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " millions " + NumberToLetter(reste);
+                break;
+            case 8:
+                quotient = Math.floor(nb / 1000000);
+                reste = nb % 1000000;
+                if (quotient == 1 && reste == 0) numberToLetter = "un million";
+                if (quotient == 1 && reste != 0) numberToLetter = "un million" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " millions";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " millions " + NumberToLetter(reste);
+                break;
+            case 9:
+                quotient = Math.floor(nb / 1000000);
+                reste = nb % 1000000;
+                if (quotient == 1 && reste == 0) numberToLetter = "un million";
+                if (quotient == 1 && reste != 0) numberToLetter = "un million" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " millions";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " millions " + NumberToLetter(reste);
+                break;
+            case 10:
+                quotient = Math.floor(nb / 1000000000);
+                reste = nb - quotient * 1000000000;
+                if (quotient == 1 && reste == 0) numberToLetter = "un milliard";
+                if (quotient == 1 && reste != 0) numberToLetter = "un milliard" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " milliards";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " milliards " + NumberToLetter(reste);
+                break;
+            case 11:
+                quotient = Math.floor(nb / 1000000000);
+                reste = nb - quotient * 1000000000;
+                if (quotient == 1 && reste == 0) numberToLetter = "un milliard";
+                if (quotient == 1 && reste != 0) numberToLetter = "un milliard" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " milliards";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " milliards " + NumberToLetter(reste);
+                break;
+            case 12:
+                quotient = Math.floor(nb / 1000000000);
+                reste = nb - quotient * 1000000000;
+                if (quotient == 1 && reste == 0) numberToLetter = "un milliard";
+                if (quotient == 1 && reste != 0) numberToLetter = "un milliard" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " milliards";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " milliards " + NumberToLetter(reste);
+                break;
+            case 13:
+                quotient = Math.floor(nb / 1000000000000);
+                reste = nb - quotient * 1000000000000;
+                if (quotient == 1 && reste == 0) numberToLetter = "un billion";
+                if (quotient == 1 && reste != 0) numberToLetter = "un billion" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " billions";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " billions " + NumberToLetter(reste);
+                break;
+            case 14:
+                quotient = Math.floor(nb / 1000000000000);
+                reste = nb - quotient * 1000000000000;
+                if (quotient == 1 && reste == 0) numberToLetter = "un billion";
+                if (quotient == 1 && reste != 0) numberToLetter = "un billion" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " billions";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " billions " + NumberToLetter(reste);
+                break;
+            case 15:
+                quotient = Math.floor(nb / 1000000000000);
+                reste = nb - quotient * 1000000000000;
+                if (quotient == 1 && reste == 0) numberToLetter = "un billion";
+                if (quotient == 1 && reste != 0) numberToLetter = "un billion" + " " + NumberToLetter(reste);
+                if (quotient > 1 && reste == 0) numberToLetter = NumberToLetter(quotient) + " billions";
+                if (quotient > 1 && reste != 0) numberToLetter = NumberToLetter(quotient) + " billions " + NumberToLetter(reste);
+                break;
+        } //fin switch
+        /*respect de l'accord de quatre-vingt*/
+        if (numberToLetter.substr(numberToLetter.length - "quatre-vingt".length, "quatre-vingt".length) == "quatre-vingt") numberToLetter = numberToLetter + "s";
 
-            for (var ii = 0; ii < facture_new.length; ii += 1) {
-                var sum_new = facture_new[ii].value * qte_new[ii].value;
-                sum_new = Math.ceil(sum_new);
-                totale_facture_new[ii].innerHTML = sum_new;
-                totale_facture_new[ii].innerHTML = totale_facture_new[ii].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+        return numberToLetter;
+    }
 
-                /*     totale_facture[i].innerHTML = number_format(sum, 0, ",", " "); */
-                totale += sum_new;
-            }
+    function getCalcule() {
+        var qte = document.getElementsByName("qte[]");
+        var facture = document.getElementsByName("facture[]");
+        var totale_facture = document.getElementsByName("totale_facture[]");
+        var facture_new = document.getElementsByName("facture_new[]");
+        var totale_facture_new = document.getElementsByName("totale_facture_new[]");
+        var qte_new = document.getElementsByName("qte_new[]");
 
-            for (var j = 0; j < montant_frais_annexe.length; j += 1) {
-                var sum_annexe = qte_annexe[j].value * montant_frais_annexe[j].value;
-                totale_annexe += sum_annexe;
-                totale_annexe = Math.ceil(totale_annexe);
-                totale_frais_annexe[j].innerHTML = sum_annexe;
-                totale_frais_annexe[j].innerHTML = totale_frais_annexe[j].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-            }
+        var remise = document.getElementById("remise");
+        var type_remise = document.getElementById("type_remise_id");
+        var total_remise = document.getElementById("total_remise");
+        var montant_frais_annexe = document.getElementsByName("montant_frais_annexe[]");
+        var totale_frais_annexe = document.getElementsByName("totale_frais_annexe[]");
+        var qte_annexe = document.getElementsByName("qte_annexe[]");
 
-            for (var jj = 0; jj < montant_frais_annexe_new.length; jj += 1) {
-                var sum_annexe_new = qte_annexe_new[jj].value * montant_frais_annexe_new[jj].value;
-                totale_annexe_new += sum_annexe_new;
-                totale_annexe_new = Math.ceil(totale_annexe_new);
-                totale_frais_annexe_new[jj].innerHTML = sum_annexe_new;
-                totale_frais_annexe_new[jj].innerHTML = totale_frais_annexe_new[jj].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-            }
+        var montant_frais_annexe_new = document.getElementsByName("montant_frais_annexe_new[]");
+        var totale_frais_annexe_new = document.getElementsByName("totale_frais_annexe_new[]");
+        var qte_annexe_new = document.getElementsByName("qte_annexe_new[]");
+        var calc_re = 0;
 
-            ensemble = totale + totale_annexe + totale_annexe_new;
-            ensemble = Math.ceil(ensemble);
-            totale_facture_ht.innerHTML = ensemble;
-            totale_facture_ht.innerHTML = totale_facture_ht.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+        var totale_facture_ht = document.getElementById("totale_facture_ht");
+        var totale_facture_ttc = document.getElementById("totale_facture_ttc");
+        var taxe_value = document.getElementById("taxe_value");
+        var taxe = document.getElementById("taxe");
 
-            if (type_remise.value == 1) { // MGA
-                calc_re = remise.value;
-                calc_re = Math.ceil(calc_re);
-                total_remise.innerHTML = "-" + calc_re;
-            }
-            if (type_remise.value == 2) { // %
-                calc_re = (ensemble * remise.value) / 100;
-                calc_re = Math.ceil(calc_re);
+        var chiffre_convert_letter = document.getElementById("chiffre_convert_letter");
 
-                total_remise.innerHTML = "-" + calc_re;
-            }
-            total_remise.innerHTML = total_remise.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+        var calc_taxe = 0;
+        var totale = 0;
+        var totale_new = 0;
+        var totale_annexe = 0;
+        var totale_annexe_new = 0;
+        var ensemble = 0;
+        for (var i = 0; i < facture.length; i += 1) {
+            var sum = facture[i].value * qte[i].value;
+            sum = Math.ceil(sum);
+            totale_facture[i].innerHTML = sum;
+            totale_facture[i].innerHTML = totale_facture[i].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
 
-            if (taxe_value.value > 0) {
-                calc_taxe = (ensemble * taxe_value.value) / 100;
-            }
-            calc_taxe = Math.ceil(calc_taxe);
-            taxe.innerHTML = calc_taxe;
-            taxe.innerHTML = taxe.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-
-            //TTC = TAXE+MONTANT_total-remise
-
-            totale_facture_ttc.innerHTML = Math.ceil(ensemble - calc_re + calc_taxe);
-            totale_facture_ttc.innerHTML = totale_facture_ttc.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
-
+            /*     totale_facture[i].innerHTML = number_format(sum, 0, ",", " "); */
+            totale += sum;
         }
-        /*=========================================================*/
-        $(document).ready(function() {
 
-            var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
-            if (total_frais_annexe_possible < 1) {
-                $(".titre_annexe").css("display", "none");
+        for (var ii = 0; ii < facture_new.length; ii += 1) {
+            var sum_new = facture_new[ii].value * qte_new[ii].value;
+            sum_new = Math.ceil(sum_new);
+            totale_facture_new[ii].innerHTML = sum_new;
+            totale_facture_new[ii].innerHTML = totale_facture_new[ii].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
 
-            } else {
-                $(".titre_annexe").css("display", "inline-block");
-            }
+            /*     totale_facture[i].innerHTML = number_format(sum, 0, ",", " "); */
+            totale += sum_new;
+        }
 
-            $(".changer_carret").on("click", function() {
-                if (
-                    $(this)
+        for (var j = 0; j < montant_frais_annexe.length; j += 1) {
+            var sum_annexe = qte_annexe[j].value * montant_frais_annexe[j].value;
+            totale_annexe += sum_annexe;
+            totale_annexe = Math.ceil(totale_annexe);
+            totale_frais_annexe[j].innerHTML = sum_annexe;
+            totale_frais_annexe[j].innerHTML = totale_frais_annexe[j].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+        }
+
+        for (var jj = 0; jj < montant_frais_annexe_new.length; jj += 1) {
+            var sum_annexe_new = qte_annexe_new[jj].value * montant_frais_annexe_new[jj].value;
+            totale_annexe_new += sum_annexe_new;
+            totale_annexe_new = Math.ceil(totale_annexe_new);
+            totale_frais_annexe_new[jj].innerHTML = sum_annexe_new;
+            totale_frais_annexe_new[jj].innerHTML = totale_frais_annexe_new[jj].innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+        }
+
+        ensemble = totale + totale_annexe + totale_annexe_new;
+        ensemble = Math.ceil(ensemble);
+        totale_facture_ht.innerHTML = ensemble;
+        totale_facture_ht.innerHTML = totale_facture_ht.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+        if (type_remise.value == 1) { // MGA
+            calc_re = remise.value;
+            calc_re = Math.ceil(calc_re);
+            total_remise.innerHTML = "-" + calc_re;
+        }
+        if (type_remise.value == 2) { // %
+            calc_re = (ensemble * remise.value) / 100;
+            calc_re = Math.ceil(calc_re);
+
+            total_remise.innerHTML = "-" + calc_re;
+        }
+        total_remise.innerHTML = total_remise.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+        if (taxe_value.value > 0) {
+            calc_taxe = (ensemble * taxe_value.value) / 100;
+        }
+        calc_taxe = Math.ceil(calc_taxe);
+        taxe.innerHTML = calc_taxe;
+        taxe.innerHTML = taxe.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+        //TTC = TAXE+MONTANT_total-remise
+
+        totale_facture_ttc.innerHTML = Math.ceil(ensemble - calc_re + calc_taxe);
+        totale_facture_ttc.innerHTML = totale_facture_ttc.innerHTML.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim();
+
+        var oke = (ensemble - calc_re + calc_taxe);
+        chiffre_convert_letter.innerHTML = NumberToLetter(oke);
+
+    }
+    /*=========================================================*/
+    $(document).ready(function() {
+
+        var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
+        if (total_frais_annexe_possible < 1) {
+            $(".titre_annexe").css("display", "none");
+
+        } else {
+            $(".titre_annexe").css("display", "inline-block");
+        }
+
+        $(".changer_carret").on("click", function() {
+            if (
+                $(this)
+                .find(".carret-icon")
+                .hasClass("bx-caret-down")
+            ) {
+                $(this)
                     .find(".carret-icon")
-                    .hasClass("bx-caret-down")
-                ) {
-                    $(this)
-                        .find(".carret-icon")
-                        .removeClass("bx-caret-down")
-                        .addClass("bx-caret-up");
-                } else {
-                    $(this)
-                        .find(".carret-icon")
-                        .removeClass("bx-caret-up")
-                        .addClass("bx-caret-down");
-                }
-            });
-
-            $(".changer_carret2").on("click", function() {
-                if (
-                    $(this)
-                    .find(".carret-icon")
-                    .hasClass("bx-caret-down")
-                ) {
-                    $(this)
-                        .find(".carret-icon")
-                        .removeClass("bx-caret-down")
-                        .addClass("bx-caret-up");
-                } else {
-                    $(this)
-                        .find(".carret-icon")
-                        .removeClass("bx-caret-up")
-                        .addClass("bx-caret-down");
-                }
-            });
-
-
-        });
-
-
-
-        // ========= show facture existe déjà
-        $(document).on('change', '#num_facture', function() {
-            var num_facture = $(this).val();
-            $.ajax({
-                url: '{{route("verifyFacture")}}'
-                , type: 'get'
-                , data: {
-                    num_facture: num_facture
-                }
-                , success: function(response) {
-                    var userData = response;
-
-                    if (userData.length > 0) {
-                        document.getElementById("num_facture_err").innerHTML = "Numero Facture est déjà utiliser!";
-                    } else {
-                        document.getElementById("num_facture_err").innerHTML = "";
-                    }
-
-                }
-                , error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
-
-        // ========= show reference bon de commande existe déjà
-        $(document).on('change', '#reference_bc', function() {
-            var reference_bc = $(this).val();
-            $.ajax({
-                url: '{{route("verifyReferenceBC")}}'
-                , type: 'get'
-                , data: {
-                    reference_bc: reference_bc
-                }
-                , success: function(response) {
-                    var userData = response;
-                    if (userData.length > 0) {
-                        document.getElementById("reference_bc_err").innerHTML = "Reference Bon de commande est déjà utiliser!";
-                    } else {
-                        document.getElementById("reference_bc_err").innerHTML = "";
-                    }
-
-                }
-                , error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
-
-
-        // ======== show session
-        $(document).on('change', '#projet_id', function() {
-            $(".session_id").empty();
-
-            var prj_id = $(this).val();
-            var entreprise_id = $("#entreprise_id").val();
-            $.ajax({
-                url: "{{route('groupe_projet')}}"
-                , type: 'get'
-                , data: {
-                    id: prj_id
-                    , entreprise_id: entreprise_id
-                }
-                , success: function(response2) {
-                    var userData2 = response2;
-                    $("#addRowMontant").val(userData2.length);
-                    if ($("#addRowMontant").val() > 1) {
-                        $("#addRowMontant").css("display", "inline-block");
-                    } else {
-                        $("#addRowMontant").css("display", "none");
-                    }
-                    if (userData2.length > 0) {
-                        for (var $i = 0; $i < userData2.length; $i++) {
-                            $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
-                        }
-                        document.getElementById("session_id_err").innerHTML = "";
-                    } else {
-                        document.getElementById("session_id_err").innerHTML = "Aucun session a été détecter";
-                    }
-                }
-            });
-
-        });
-
-
-        // add row
-        $(document).on('click', '#addRow', function() {
-            var test = ($(".row #inputFormRow").length + 1);
-            if (test < 1) {
-                $("#titres_services_annexe").css("display", "none");
+                    .removeClass("bx-caret-down")
+                    .addClass("bx-caret-up");
             } else {
-                $("#titres_services_annexe").css("display", "flex");
+                $(this)
+                    .find(".carret-icon")
+                    .removeClass("bx-caret-up")
+                    .addClass("bx-caret-down");
             }
-            $('#frais').empty();
-            $.ajax({
-                url: "{{route('frais_annexe')}}"
-                , type: 'get'
-                , success: function(response) {
-                    var userData = response;
-                    $("#addRow").val(userData.length);
-                    var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
-
-                    if ($("#addRow").val() > 1) {
-                        $("#addRow").css("display", "inline-block");
-                    } else {
-                        $("#addRow").css("display", "none");
-                    }
-                    if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
-
-                        $("#addRow").css("display", "inline-block");
-                        /*     for (var $i = 0; $i < userData.length; $i++) {
-                                 $("#frais").append('<option value="' + userData[$i].id + '">' + JSON.stringify(userData[$i].description) + '</option>');
-                             }*/
-                        var html = '';
-                        html += '<div class="row justify-content" id="inputFormRow">';
-                        html += '<div class="col-3">';
-                        html += '<select class="form-select selectP input_section4"  id="frais_annexe_id_new[]" name="frais_annexe_id_new[]" required>';
-
-                        for (var $i = 0; $i < userData.length; $i++) {
-                            html += '<option value="' + userData[$i].id + '">' + userData[$i].description + '</option>';
-                        }
-                        html += '</select>';
-                        html += '</div>';
-
-                        html += '<div class="col-4">';
-                        html += '  <textarea name="description_annexe_new[]" id="description_annexe_new[]" class="text_description form-control" placeholder="déscription du frais annexe"></textarea>';
-                        html += '</div>';
-
-                        html += '<div class="col-1">';
-                        html += '<input type="number" min="1" value="1" required class="form-control input_quantite annexe_qte" name="qte_annexe_new[]" id="qte_annexe_new[]">';
-                        html += '</div>';
-
-                        html += '<div class="col-2">';
-                        html += '<input type="number" min="0" value="0" required name="montant_frais_annexe_new[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe_new[]" placeholder="0">';
-                        html += '</div>';
-
-                        html += '<div class="col-1 text-end pe-0">';
-                        html += '<p name="totale_frais_annexe_new[]" class="text_prix" align="right">0</p>';
-                        html += '</div>';
-
-                        html += '<div class="col-1 text-start pt-2">';
-                        html += '<p class="m-0"><span>';
-                        html += '<button id="removeRow" type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></span>';
-                        html += '</div>';
-                        html += '</div><br>';
-
-                        $('#newRow').append(html);
-
-                        if (total_frais_annexe_possible >= ($("#addRow").val())) {
-                            $("#addRow").css("display", "none");
-                        }
-                    } else {
-                        $("#addRow").css("display", "none");
-
-                    }
-
-                }
-                , error: function(error) {
-                    console.log(error);
-                }
-            });
-
         });
 
-        // remove row
-        $(document).on('click', '#removeRow', function() {
-            $(this).closest('#inputFormRow').remove();
-            var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
-            if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
-                $("#addRow").css("display", "inline-block");
+        $(".changer_carret2").on("click", function() {
+            if (
+                $(this)
+                .find(".carret-icon")
+                .hasClass("bx-caret-down")
+            ) {
+                $(this)
+                    .find(".carret-icon")
+                    .removeClass("bx-caret-down")
+                    .addClass("bx-caret-up");
+            } else {
+                $(this)
+                    .find(".carret-icon")
+                    .removeClass("bx-caret-up")
+                    .addClass("bx-caret-down");
             }
-            getCalcule();
         });
 
 
-        // ============================ Montant=========================
+    });
 
-        $(document).on('click', '#addRowMontant', function() {
-            $('#montant').empty();
-            var id = $("#projet_id").val();
-            var etp_id = $("#entreprise_id").val();
 
-            var total_session_possible = ($(".row #inputFormRowMontant").length);
-            var totale_session = @php echo(count($init_session) - 1) @endphp;
 
-            if (total_session_possible < (totale_session)) {
-                $("#addRowMontant").css("display", "inline-block");
-                $.ajax({
-                    url: "{{route('groupe_projet_edit')}}"
-                    , type: 'get'
-                    , data: {
-                        num_facture: "@php echo $montant_totale->num_facture  @endphp"
-                        , id: id
-                        , entreprise_id: etp_id
-                    }
-                    , success: function(response) {
-                        var userData = response;
-                        var html = '';
-                        html += '<div class="row" id="inputFormRowMontant">';
-                        html += '<div class="col-2">';
-                        html += '</div>';
-                        html += '<div class="col-3">';
-                        html += '<select class="form-select selectP input_section4"  id="session_id_new[]" name="session_id_new[]" required>';
+    // ========= show facture existe déjà
+    $(document).on('change', '#num_facture', function() {
+        var num_facture = $(this).val();
+        $.ajax({
+            url: '{{route("verifyFacture")}}'
+            , type: 'get'
+            , data: {
+                num_facture: num_facture
+            }
+            , success: function(response) {
+                var userData = response;
 
-                        for (var $i = 0; $i < userData.length; $i++) {
-                            html += '<option value="' + userData[$i].groupe_entreprise_id + '">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
-                        }
-                        html += '</select>';
-                        html += '</div>';
-                        html += '<div class="col-1">';
-                        html += '<input type="number" min="1" value="1" required class="form-control input_quantite" name="qte_new[]" id="qte_new[]">';
-                        html += '</div>';
-                        html += '<div class="col-2">';
-                        html += '<input type="text" name="description_new[]" id="description_new[]" placeholder=" ex: personne ou groupe ou etc" class="form-control qte input_quantite" required>';
-                        html += '</div>';
-                        html += '<div class="col-2">';
-                        html += '<input type="number" min="0" value="0" required name="facture_new[]" class="somme_totale_montant form-control input_quantite2 montant_session_facture" id="facture_new[]" placeholder="0">';
-                        html += '</div>';
-                        html += '<div class="col-1 text-end">';
-                        html += '<p name="totale_facture_new[]" class="text_prix" align="right">0</p>';
-                        html += '</div>';
+                if (userData.length > 0) {
+                    document.getElementById("num_facture_err").innerHTML = "Numero Facture est déjà utiliser!";
+                } else {
+                    document.getElementById("num_facture_err").innerHTML = "";
+                }
 
-                        html += '<div class="col-1 text-start pt-2">';
-                        html += '<button id="removeRowMontant" type="button" class="btn icon_suppre_frais "><i class="fa fa-trash suppre_frais"></i></button></p>';
-                        html += '</div>';
-                        html += '</div><br>';
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
 
-                        $('#newRowMontant').append(html);
-                    }
-                    , error: function(error) {
-                        console.log(error);
-                    }
-                });
+    // ========= show reference bon de commande existe déjà
+    $(document).on('change', '#reference_bc', function() {
+        var reference_bc = $(this).val();
+        $.ajax({
+            url: '{{route("verifyReferenceBC")}}'
+            , type: 'get'
+            , data: {
+                reference_bc: reference_bc
+            }
+            , success: function(response) {
+                var userData = response;
+                if (userData.length > 0) {
+                    document.getElementById("reference_bc_err").innerHTML = "Reference Bon de commande est déjà utiliser!";
+                } else {
+                    document.getElementById("reference_bc_err").innerHTML = "";
+                }
 
-                if (total_session_possible + 1 >= (totale_session)) {
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
+
+    // ======== show session
+    $(document).on('change', '#projet_id', function() {
+        $(".session_id").empty();
+
+        var prj_id = $(this).val();
+        var entreprise_id = $("#entreprise_id").val();
+        $.ajax({
+            url: "{{route('groupe_projet')}}"
+            , type: 'get'
+            , data: {
+                id: prj_id
+                , entreprise_id: entreprise_id
+            }
+            , success: function(response2) {
+                var userData2 = response2;
+                $("#addRowMontant").val(userData2.length);
+                if ($("#addRowMontant").val() > 1) {
+                    $("#addRowMontant").css("display", "inline-block");
+                } else {
                     $("#addRowMontant").css("display", "none");
                 }
-            } else {
+                if (userData2.length > 0) {
+                    for (var $i = 0; $i < userData2.length; $i++) {
+                        $(".session_id").append('<option value="' + userData2[$i].groupe_entreprise_id + '">' + userData2[$i].nom_formation + '/ ' + userData2[$i].nom_module + '/ ' + userData2[$i].reference + "/ " + userData2[$i].nom_groupe + '</option>');
+                    }
+                    document.getElementById("session_id_err").innerHTML = "";
+                } else {
+                    document.getElementById("session_id_err").innerHTML = "Aucun session a été détecter";
+                }
+            }
+        });
+
+    });
+
+
+    // add row
+    $(document).on('click', '#addRow', function() {
+        var test = ($(".row #inputFormRow").length + 1);
+        if (test < 1) {
+            $("#titres_services_annexe").css("display", "none");
+        } else {
+            $("#titres_services_annexe").css("display", "flex");
+        }
+        $('#frais').empty();
+        $.ajax({
+            url: "{{route('frais_annexe')}}"
+            , type: 'get'
+            , success: function(response) {
+                var userData = response;
+                $("#addRow").val(userData.length);
+                var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
+
+                if ($("#addRow").val() > 1) {
+                    $("#addRow").css("display", "inline-block");
+                } else {
+                    $("#addRow").css("display", "none");
+                }
+                if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
+
+                    $("#addRow").css("display", "inline-block");
+                    /*     for (var $i = 0; $i < userData.length; $i++) {
+                             $("#frais").append('<option value="' + userData[$i].id + '">' + JSON.stringify(userData[$i].description) + '</option>');
+                         }*/
+                    var html = '';
+                    html += '<div class="row justify-content" id="inputFormRow">';
+                    html += '<div class="col-3">';
+                    html += '<select class="form-select selectP input_section4"  id="frais_annexe_id_new[]" name="frais_annexe_id_new[]" required>';
+
+                    for (var $i = 0; $i < userData.length; $i++) {
+                        html += '<option value="' + userData[$i].id + '">' + userData[$i].description + '</option>';
+                    }
+                    html += '</select>';
+                    html += '</div>';
+
+                    html += '<div class="col-4">';
+                    html += '  <textarea name="description_annexe_new[]" id="description_annexe_new[]" class="text_description form-control" placeholder="déscription du frais annexe"></textarea>';
+                    html += '</div>';
+
+                    html += '<div class="col-1">';
+                    html += '<input type="number" min="1" value="1" required class="form-control input_quantite annexe_qte" name="qte_annexe_new[]" id="qte_annexe_new[]">';
+                    html += '</div>';
+
+                    html += '<div class="col-2">';
+                    html += '<input type="number" min="0" value="0" required name="montant_frais_annexe_new[]" class="somme_totale_montant form-control input_quantite2 frais_annexe" id="montant_frais_annexe_new[]" placeholder="0">';
+                    html += '</div>';
+
+                    html += '<div class="col-1 text-end">';
+                    html += '<p name="totale_frais_annexe_new[]" class="text_prix" align="right">0</p>';
+                    html += '</div>';
+
+                    html += '<div class="col-1 text-end pt-2">';
+                    html += '<p class="m-0"><span>';
+                    html += '<button id="removeRow" type="button" class="btn icon_suppre_frais"><i class="fa fa-trash"></i></button></span>';
+                    html += '</div>';
+                    html += '</div><br>';
+
+                    $('#newRow').append(html);
+
+                    if (total_frais_annexe_possible >= ($("#addRow").val())) {
+                        $("#addRow").css("display", "none");
+                    }
+                } else {
+                    $("#addRow").css("display", "none");
+
+                }
+
+            }
+            , error: function(error) {
+                console.log(error);
+            }
+        });
+
+    });
+
+    // remove row
+    $(document).on('click', '#removeRow', function() {
+        $(this).closest('#inputFormRow').remove();
+        var total_frais_annexe_possible = ($(".row #inputFormRow").length + 1);
+        if (total_frais_annexe_possible < ($("#addRow").val() + 1)) {
+            $("#addRow").css("display", "inline-block");
+        }
+        getCalcule();
+    });
+
+
+    // ============================ Montant=========================
+
+    $(document).on('click', '#addRowMontant', function() {
+        $('#montant').empty();
+        var id = $("#projet_id").val();
+        var etp_id = $("#entreprise_id").val();
+
+        var total_session_possible = ($(".row #inputFormRowMontant").length);
+        var totale_session = @php echo(count($init_session) - 1) @endphp;
+
+        if (total_session_possible < (totale_session)) {
+            $("#addRowMontant").css("display", "inline-block");
+            $.ajax({
+                url: "{{route('groupe_projet_edit')}}"
+                , type: 'get'
+                , data: {
+                    num_facture: "@php echo $montant_totale->num_facture  @endphp"
+                    , id: id
+                    , entreprise_id: etp_id
+                }
+                , success: function(response) {
+                    var userData = response;
+                    var html = '';
+                    html += '<div class="row" id="inputFormRowMontant">';
+                    html += '<div class="col-2">';
+                    html += '</div>';
+                    html += '<div class="col-3">';
+                    html += '<select class="form-select selectP input_section4"  id="session_id_new[]" name="session_id_new[]" required>';
+
+                    for (var $i = 0; $i < userData.length; $i++) {
+                        html += '<option value="' + userData[$i].groupe_entreprise_id + '">' + userData[$i].nom_formation + '/ ' + userData[$i].nom_module + '/ ' + userData[$i].reference + '/ ' + userData[$i].nom_groupe + '</option>';
+                    }
+                    html += '</select>';
+                    html += '</div>';
+                    html += '<div class="col-1">';
+                    html += '<input type="number" min="1" value="1" required class="form-control input_quantite" name="qte_new[]" id="qte_new[]">';
+                    html += '</div>';
+                    html += '<div class="col-2">';
+                    html += '<input type="text" name="description_new[]" id="description_new[]" placeholder=" ex: personne ou groupe ou etc" class="form-control qte input_quantite" required>';
+                    html += '</div>';
+                    html += '<div class="col-2">';
+                    html += '<input type="number" min="0" value="0" required name="facture_new[]" class="somme_totale_montant form-control input_quantite2 montant_session_facture" id="facture_new[]" placeholder="0">';
+                    html += '</div>';
+                    html += '<div class="col-1 text-end">';
+                    html += '<p name="totale_facture_new[]" class="text_prix" align="right">0</p>';
+                    html += '</div>';
+
+                    html += '<div class="col-1 text-start pt-2">';
+                    html += '<button id="removeRowMontant" type="button" class="btn icon_suppre_frais "><i class="fa fa-trash suppre_frais"></i></button></p>';
+                    html += '</div>';
+                    html += '</div><br>';
+
+                    $('#newRowMontant').append(html);
+                }
+                , error: function(error) {
+                    console.log(error);
+                }
+            });
+
+            if (total_session_possible + 1 >= (totale_session)) {
                 $("#addRowMontant").css("display", "none");
             }
+        } else {
+            $("#addRowMontant").css("display", "none");
+        }
 
-        });
+    });
 
-        // remove row
-        $(document).on('click', '#removeRowMontant', function() {
-            $(this).closest('#inputFormRowMontant').remove();
-            var total_session_possible = ($(".row #inputFormRowMontant").length);
-            var totale_session = @php echo count($init_session) @endphp;
+    // remove row
+    $(document).on('click', '#removeRowMontant', function() {
+        $(this).closest('#inputFormRowMontant').remove();
+        var total_session_possible = ($(".row #inputFormRowMontant").length);
+        var totale_session = @php echo count($init_session) @endphp;
 
-            if (total_session_possible < totale_session) {
-                $("#addRowMontant").css("display", "inline-block");
-            } else {
-                $("#addRowMontant").css("display", "none");
-            }
-            getCalcule();
-        });
+        if (total_session_possible < totale_session) {
+            $("#addRowMontant").css("display", "inline-block");
+        } else {
+            $("#addRowMontant").css("display", "none");
+        }
+        getCalcule();
+    });
 
 
 
-        $(document).on("keyup change", ".services_factures", function() {
-            getCalcule();
-        });
+    $(document).on("keyup change", ".services_factures", function() {
+        getCalcule();
+    });
 
-    </script>
-    @endsection
+</script>
+@endsection

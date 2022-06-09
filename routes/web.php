@@ -379,7 +379,7 @@ Route::get('/ajout_categorie', 'FormationController@ajout_categorie')->name('ajo
 //route ajout_module_formation
 Route::get('/ajout_module', 'FormationController@ajout_module')->name('ajout_module');
 //route catalogue de formation
-Route::get('result__formation', 'FormationController@rechercheParModule')->name('result_formation');
+Route::get('result_formation/{nbPag?}/{nom_formation?}', 'FormationController@rechercheParModule')->name('result_formation');
 Route::get('affichage_formation/{id}', 'FormationController@affichage_formation')->name('affichage_formation');
 Route::get('search__formation', 'FormationController@getModulesParReference')->name('search__formation');
 Route::get('domaine_formation', 'FormationController@formation_domaine')->name('domaine_formation');
@@ -406,6 +406,17 @@ Route::get('annuaire+recherche+par+adresse/{page?}/{qter?}/{vlle?}/{postal?}/{re
 Route::resource('module', 'ModuleController')->except([
     'index', 'edit', 'destroy', 'update', 'create'
 ]);
+
+
+// ============== Filtre module côté Client========================
+Route::get('result_formation.filtre/{type_filtre?}/{nbPag?}/{data_min?}/{data_max?}', 'FormationController@filtre_par')->name('result_formation.filtre');
+Route::get('result_formation.entiter.filtre/{type_filtre?}/{nbPag?}/{nom_entiter?}', 'FormationController@filtre_par_nom')->name('result_formation.entiter.filtre');
+Route::get('result_formation.modalite.filtre/{nbPag?}/{nom_entiter?}', 'FormationController@filtre_par_modaliter')->name('result_formation.modalite.filtre');
+
+
+// ============== Fin Filtrecôté Client =============================
+
+
 Route::get('afficher_module','ModuleController@affichage')->name('afficher_module');
 Route::get('/liste_module/{id?}/{page?}/{index?}','ModuleController@index')->name('liste_module');
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
@@ -1376,3 +1387,6 @@ Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInf
 
 Route::get('resultat_evaluation/{groupe_id}','EvaluationChaudController@evaluation_chaud_pdf')->name('resultat_evaluation');
 Route::get('/raport','SessionController@fiche')->name('fichePDF');
+//plus d'avis
+Route::get('plus_avis','FormationController@plus_avis')->name('plus_avis');
+Route::get('plus_avis_module','FormationController@plus_avis_module')->name('plus_avis_module');
