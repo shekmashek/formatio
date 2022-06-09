@@ -70,6 +70,11 @@ from
     join cfps cfp on p.cfp_id = cfp.id
     left join v_formateur_projet prof on g.id = prof.groupe_id
     left join v_groupe_entreprise vpe on g.id = vpe.groupe_id
+
+
+
+
+
     
     
 
