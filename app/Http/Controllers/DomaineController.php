@@ -15,20 +15,20 @@ use App\Models\FonctionGenerique;
 use App\responsable_cfp;
 use App\demande_devis;
 
-class FormationController extends Controller
+class DomaineController extends Controller
 {
 
     public function __construct()
     {
         $this->fonct = new FonctionGenerique();
-        $this->formation = new formation();
+        $this->domaine = new domaine();
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
-    
+
     public function index($id = null)
     {
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
@@ -82,23 +82,14 @@ class FormationController extends Controller
     }
 
     public function listeCrud($id = null){
-        $id_user = Auth::user()->id;
         $domaine = Domaine::all();
         $formation  = formation::all();
-        $fact = "Facture";
-        return view("admin.formation.liste_formation",compact('id_user','fact','formation','domaine'));
+        return view("admin.formation.liste_formation",compact('formation','domaine'));
     }
 
-
-    public function nouvelle_formation()
-    {
-        $domaine = Domaine::all();
-        return view('admin.formation.nouvelleFormation', compact('domaine'));
-    }
 
     public function create(){
-        $liste_domaine = DB::select('select * from domaines');
-        return view('superadmin.nouveau_formation', compact('liste_domaine'));
+        return view('superadmin.nouveau_domaine');
     }
 
     public function store(Request $request)
@@ -106,23 +97,20 @@ class FormationController extends Controller
         //condition de validation de formulaire
         $request->validate(
             [
-                'nom_formation' => ["required"]
+                'nom_domaine' => ["required"]
             ],
             [
-                'nom_formation.required' => 'Veuillez remplir le champ'
+                'nom_domaine.required' => 'Veuillez remplir le champ'
             ]
         );
-
         //enregistrer les formations dans la bdd
-        $formation = new formation();
-        $formation->nom_formation = $request->nom_formation;
-        $formation->domaine_id = $request->domaine_id;
-        $formation->save();
+        $domaine = new domaine();
+        $domaine->nom_domaine = $request->nom_domaine;
+        $domaine->save();
 
         // redirection
-        $liste_domaine = Domaine::all();
-        $message = 'La formation a bien été ajoutée';
-        return view('superadmin.nouveau_formation', compact('liste_domaine','message'));
+        $message = 'Le domaine a bien été ajoutée. <a href="crud_formation#Domaines"> Voir la liste</a>';
+        return view('superadmin.nouveau_domaine', compact('message'));
 
     }
 
@@ -133,13 +121,6 @@ class FormationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
-    {
-        $maj = formation::where('id', $id)->update(['nom_formation' => $request->nom_formation]);
-        $id_module = formation::where('id', $id)->value('domaine_id');
-        $maj_domaine = Domaine::where('id', $id_module)->update(['nom_domaine' => $request->domaine]);
-        return back();
-    }
 
     public function edit($id)
     {
@@ -148,14 +129,14 @@ class FormationController extends Controller
 
     public function update(Request $request)
     {
-        formation::where('id', $request->id)->update(['nom_formation' => $request->nom_formation]);        
+        formation::where('id', $request->id)->update(['nom_domaine' => $request->nom_domaine]);        
         return back();
     }
 
     public function destroy(Request $request)
     {
         $id = $request->id;
-        DB::delete('delete from formations where id = ?', [$id]);
+        DB::delete('delete from domaines where id = ?', [$id]);
         return back();
     }
 }

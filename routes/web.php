@@ -384,27 +384,19 @@ Route::get('/crud_formation/{id?}', 'FormationController@listeCrud')->name('crud
 
 
 //route domaine
-Route::resource('domaine', 'FormationController')->except([
+Route::resource('domaine', 'DomaineController')->except([
     'index', 'destroy', 'show'
 ]);
-Route::post('/delete_formation', 'FormationController@destroy')->name('destroy_formation');
-Route::post('/update_formation', 'FormationController@update')->name('update_formation');
-Route::post('/show_formation/{id}', 'FormationController@show')->name('show_formation');
-Route::get('/liste_formation/{id?}', 'FormationController@index')->name('liste_formation');
-Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->name('nouvelle_formation');
-//route categorie_formation
-Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
-//route module_formations
-Route::get('/module', 'FormationController@module_formations')->name('module');
- 
+Route::post('/delete_domaine', 'DomaineController@destroy')->name('destroy_domaine');
+Route::post('/update_domaine', 'DomaineController@update')->name('update_domaine');
+Route::post('/show_domaine/{id}', 'DomaineController@show')->name('show_domaine');
+Route::get('/liste_domaine/{id?}', 'DomaineController@index')->name('liste_domaine');
 // page creation domaine
-Route::get('/nouveau_domaine', 'FormationController@create')->name('nouveau_domaine');
-
+Route::get('/nouveau_domaine', 'DomaineController@create')->name('nouveau_domaine');
 // validation creation domaine
-Route::post('/creer_formation', 'FormationController@store')->name('creer_formation');
-
+Route::post('/creer_domaine', 'DomaineController@store')->name('creer_domaine');
 // liste CRUD
-Route::get('/crud_formation/{id?}', 'FormationController@listeCrud')->name('crud_formation');
+Route::get('/crud_formation/{id?}', 'DomaineController@listeCrud')->name('crud_formation');
 
 //route ajout_categorie_formation
 Route::get('/ajout_categorie', 'FormationController@ajout_categorie')->name('ajout_categorie');

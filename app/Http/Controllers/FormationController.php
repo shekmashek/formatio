@@ -120,7 +120,7 @@ class FormationController extends Controller
 
         // redirection
         $liste_domaine = Domaine::all();
-        $message = 'La formation a bien été ajoutée';
+        $message = 'La formation a bien été ajoutée. <a href="crud_formation#Formations"> Voir la liste</a>';
         return view('superadmin.nouveau_formation', compact('liste_domaine','message'));
 
     }
