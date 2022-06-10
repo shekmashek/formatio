@@ -77,9 +77,16 @@
     <div class="content_formation px-5 pt-1">
         <h4 class="mt-3 mb-3">Les thématiques Inter / Intra de la formation {{$nom_domaine[0]->nom_domaine}}</h4>
         <ul>
-            @foreach ($formations as $frmt)
-            <li class="encre"><a href="#encre_{{$frmt->id}}" ><i class='bx bxs-chevron-right bx_modifier me-2 mb-2'></i>{{$frmt->nom_formation}}</a></li>
-            @endforeach
+            @if($formations == null)
+                @foreach ($formations_sans_module as $frm)
+                    <li class="encre"><a><i class='bx bxs-chevron-right bx_modifier me-2 mb-2'></i>{{$frm->nom_formation}}</a></li>
+                @endforeach
+                <h3 class="text-center">Aucuns modules mis en ligne pour cette thématique😅</h3>
+            @else
+                @foreach ($formations as $frmt)
+                    <li class="encre"><a href="#encre_{{$frmt->id}}" ><i class='bx bxs-chevron-right bx_modifier me-2 mb-2'></i>{{$frmt->nom_formation}}</a></li>
+                @endforeach
+            @endif
         </ul>
     </div>
     <div class="content_modules mt-5">

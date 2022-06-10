@@ -593,8 +593,9 @@ class FormationController extends Controller
         $domaine_id = $request->id;
         // $modules = DB::select('select md.id, md.nom_module, md.formation_id,md.cfp_id, md.duree, md.duree_jour, md.prix, md.prix_groupe, md.modalite_formation, cfp.nom from modules as md join formations as frmt on md.formation_id = frmt.id join domaines as dm on frmt.domaine_id = dm.id join cfps as cfp on md.cfp_id = cfp.id where md.status = 2 and md.etat_id = 1');
         // $formations = DB::select('select * from formations where domaine_id = ?', [$domaine_id]);
-        $formations = DB::select('select frmt.nom_formation,frmt.id from formations as frmt join modules as md on frmt.id = md.formation_id join domaines as dm on frmt.domaine_id = dm.id where dm.id = ? and md.etat_id = 1 group by frmt.nom_formation,frmt.id', [$domaine_id]);
-        // dd($formations);
+        $formations = DB::select('select frmt.nom_formation,frmt.id from formations as frmt join modules as md on frmt.id = md.formation_id join domaines as dm on frmt.domaine_id = dm.id where dm.id = ? and md.etat_id = 1 group by frmt.nom_formation,frmt.id',[$domaine_id]);
+        $formations_sans_module = DB::select('select frmt.nom_formation,frmt.id from formations as frmt join domaines as dm on frmt.domaine_id = dm.id where dm.id = ? group by frmt.nom_formation,frmt.id',[$domaine_id]);
+        // dd($formations_sans_module);
         $test = 4;
         $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
         $offset = round($domaines_count[0]->nb_domaines / $test);
@@ -610,7 +611,7 @@ class FormationController extends Controller
         // $formation_id = $formations[0]->id;
         $modules_counts = DB::select('select count(*) as nb_modules, md.formation_id from modules as md join formations as frmt on md.formation_id = frmt.id where md.status = 2 and md.etat_id = 1 group by md.formation_id');
         // dd($modules_counts);
-        return view('referent.catalogue.domaine', compact('formations', 'modules', 'modules_counts', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4', 'nom_domaine', 'devise'));
+        return view('referent.catalogue.domaine', compact('formations', 'modules', 'modules_counts', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4','nom_domaine','devise','formations_sans_module'));
     }
 
     public function demande_devis_client(Request $request){

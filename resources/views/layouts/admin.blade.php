@@ -1040,8 +1040,8 @@
                             </span>
                         </div>
                         <div class="pdp_profil mt-3" id="box_profil">
-                            <div class="container pdp_profil_card ">
-                                <div class="card">
+                            <div class="container pdp_profil_card " >
+                                <div class="card" >
                                     <div class="card-title">
                                         <div class="row">
                                             <div class="col-12 pt-3">
@@ -1534,6 +1534,19 @@
         $('.prevent_affichage2').on('click', function(e){
             e.stopPropagation();
         });
+
+        // $(document).on('click', function(e) {
+        //     var container = $("#box_profil");
+        //     if ($(e.target).closest(container).length) {
+        //         container.show();
+        //     }
+        // });
+        // $(document).on('click', function(e) {
+        //     var container = $("#box_profil");
+        //     if (!$(e.target).closest(container).length) {
+        //         container.hide();
+        //     }
+        // });
 
     </script>
     <script type="text/javascript">

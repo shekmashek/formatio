@@ -335,7 +335,7 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
     (
     IFNULL(
             (
-                DATEDIFF(m.created_at, NOW()) +6),
+                DATEDIFF(m.created_at, NOW()) +3),
                 0
             )
     ) jours_restant,

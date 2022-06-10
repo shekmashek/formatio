@@ -59,7 +59,7 @@
                                 @foreach($mod_en_cours as $mod)
 
                                 <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light mb-3"
+                                    <div class="row detail__formation__result new_card_module bg-light mb-3 ribbon"
                                         id="border_premier">
 
                                         <div class=" detail__formation__result__content">
@@ -71,9 +71,7 @@
                                                             <span class="acf-nom_module">{{$mod->nom_module}}</span>
                                                         </div>
                                                         <div class="col-2">
-                                                            <span class="badge_nouveau">
-                                                                Nouveau
-                                                            </span>
+                                                            <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
                                                         </div>
                                                         @else
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
@@ -221,7 +219,7 @@
                                 @else
                                 @foreach($mod_non_publies as $mod)
                                 <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light mb-3"
+                                    <div class="row detail__formation__result new_card_module bg-light mb-3 ribbon"
                                         id="border_premier">
                                         <div class=" detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
@@ -232,9 +230,7 @@
                                                             <span class="acf-nom_module">{{$mod->nom_module}}</span>
                                                         </div>
                                                         <div class="col-2">
-                                                            <span class="badge_nouveau">
-                                                                Nouveau
-                                                            </span>
+                                                            <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
                                                         </div>
                                                         @else
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
@@ -443,7 +439,7 @@
                                 @else
                                 @foreach($mod_hors_ligne as $mod)
                                 <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
+                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2 ribbon"
                                         id="border_premier">
                                         <div class="col-lg-12 col-md-12 detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
@@ -454,9 +450,7 @@
                                                             <span class="acf-nom_module">{{$mod->nom_module}}</span>
                                                         </div>
                                                         <div class="col-2">
-                                                            <span class="badge_nouveau">
-                                                                Nouveau
-                                                            </span>
+                                                            <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
                                                         </div>
                                                         @else
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
@@ -629,7 +623,7 @@
                                 @else
                                 @foreach($mod_publies as $mod)
                                 <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 list_module">
-                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2"
+                                    <div class="row detail__formation__result new_card_module bg-light justify-content-space-between py-3 px-2 ribbon"
                                         id="border_premier">
                                         <div class="col-lg-12 col-md-12 detail__formation__result__content">
                                             <div class="detail__formation__result__item ">
@@ -640,9 +634,7 @@
                                                             <span class="acf-nom_module">{{$mod->nom_module}}</span>
                                                         </div>
                                                         <div class="col-2">
-                                                            <span class="badge_nouveau">
-                                                                Nouveau
-                                                            </span>
+                                                            <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
                                                         </div>
                                                         @else
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
