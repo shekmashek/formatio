@@ -314,8 +314,8 @@
                     </thead>
                     <tbody>
                         @forelse ($employers as $employe)
-                            <tr data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew">
-                                <td class="align-middle id">
+                            <tr >
+                                <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();">
 
                                     @if ($employe->activiter == 1)
                                         <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
@@ -348,16 +348,16 @@
                                             {{-- initials --}}
                                                             <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
                                                                 <span class="align-middle text-center profile-initial" style="position:relative;">
-                                                                    <b>{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
+                                                                    <b data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew" style="cursor: pointer">{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
                                                                 </span>
                                                             </div>
                                                         @else
-                                                                <img src="{{ asset('images/stagiaires/' . $employe->photos) }}"
+                                                                <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" src="{{ asset('images/stagiaires/' . $employe->photos) }}"
                                                                 alt="Image non chargée" style="width: 45px; height: 45px"
-                                                                class="rounded-circle" />
+                                                                class="rounded-circle empNew" />
                                                         @endif
                                                     <div class="ms-3">
-                                                        <p class="fw-normal mb-1 text-purple ">
+                                                        <p class="fw-normal mb-1 text-purple empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
                                                         {{-- <p class="fw-bold mb-1 text-purple "> --}}
                                                             {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
                                                         <p class="text-muted mb-0">{{ $employe->fonction_stagiaire }}</p>
@@ -365,7 +365,7 @@
                                                 </div>
                                             </td>
 
-                                            <td class="align-middle text-start">
+                                            <td class="align-middle text-start empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
 
                                                 <div class="ms-3">
                                                     <p class="mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
@@ -622,8 +622,17 @@
                         for (let $i = 0; $i < userData.length; $i++) {
                             let url_photo = '<img src="{{asset("images/stagiaires/:url_img")}}" style="height80px; width:80px;">';
                             url_photo = url_photo.replace(":url_img", userData[$i].photos);
-                            $("#donner").html(" ");
-                            $("#donner").append(url_photo);
+                            var nom = (userData[$i].nom_stagiaire).substr(0, 1);
+                            var prenom = (userData[$i].prenom_stagiaire).substr(0, 1);
+
+                            if(userData[$i].photos == null){
+                                $('#donner').html(" ");
+                                $('#donner').append('<p style="background-color: #5c6bc0; width: 80px; height: 80px; border-radius: 50%; padding: 30px; color: white; font-weight: 700; font-size: 14px; marging-bottom: 20px; position: relative; left: 40%"><span>'+nom+prenom+'</span></p>');
+                            }else{
+                                $("#donner").html(" ");
+                                $("#donner").append(url_photo);
+                            }
+
                             $("#matricule").text(': '+userData[$i].matricule);
                             $("#nom").text(': '+userData[$i].nom_stagiaire);
                             $("#prenom").text(userData[$i].prenom_stagiaire);
@@ -634,6 +643,12 @@
                         }
                     }
                 });
+            });
+        </script>
+        <script>
+            $(".randomColor").each(function() {
+            //On change la couleur de fond au hasard  
+                $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
             });
         </script>
 
