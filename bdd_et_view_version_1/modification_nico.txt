@@ -238,5 +238,5 @@ CREATE OR REPLACE VIEW v_pourcentage_total_module_cfp AS SELECT
     join moduleformation as md on vpa.module_id = md.module_id
     where md.module_id = vpa.module_id;
 
----------- 9 juin ----------------
+---------- 10 juin ----------------
 recréer vue moduleformation dans bdd_suiviformation_view_1(views_miasa+avis)

@@ -18,7 +18,7 @@
     color: #7635dc !important;
 }
 
-.detail__formation__result h4 span{
+.detail__formation__result h4 .acf-nom_module{
     font-size: 1rem;
     font-weight: 500;
     color: #7635dc !important;
@@ -825,16 +825,58 @@ font-size: 0.850rem;
     color: blue !important;
 }
 
-.badge_nouveau{
-    padding: 10px 15px;
-    color: white !important;
-    background: linear-gradient(to bottom right, #ffeb3b 0%, #fbc02d 100%);
-    font-size: .8rem;
-    border: none;
-    /* border-radius: 30px; */
+.ribbon {
     position: relative;
-    left: -25px;
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    display: inline-block;
-}
+    margin-bottom: 30px;
+    background-size: cover;
+    color: white;
+  }
+  .ribbon1 {
+    position: absolute;
+    top: -6.1px;
+    right: 10px;
+  }
+  .ribbon1:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    left: -8.5px;
+    bottom: -10.1px;
+    border-left: 53px solid transparent;
+    border-right: 53px solid transparent;
+    border-top: 10px solid #01b5af;
+  }
+  .ribbon1 span {
+    position: relative;
+    display: block;
+    text-align: center;
+    background: linear-gradient(60deg, #02AAB0,#00CDAC);
+    font-size: 14px;
+    line-height: 1;
+    padding: 12px 8px 10px;
+    border-top-right-radius: 8px;
+    width: 90px;
+    color: white;
+
+  }
+  .ribbon1 span:before, .ribbon1 span:after {
+    position: absolute;
+    content: "";
+  }
+  .ribbon1 span:before {
+   height: 6px;
+   width: 6px;
+   left: -6px;
+   top: 0;
+   background: linear-gradient(60deg, #02AAB0,#00CDAC);
+
+  }
+  .ribbon1 span:after {
+   height: 6px;
+   width: 8px;
+   left: -8px;
+   top: 0;
+   border-radius: 8px 8px 0 0;
+   background: linear-gradient(60deg, #02AAB0,#00CDAC);
+  }
