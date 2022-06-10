@@ -129,7 +129,8 @@ class DomaineController extends Controller
 
     public function update(Request $request)
     {
-        formation::where('id', $request->id)->update(['nom_domaine' => $request->nom_domaine]);        
+        // dd($request->nom_domaine);
+        domaine::where('id', $request->id)->update(['nom_domaine' => $request->nom_domaine]);        
         return back();
     }
 

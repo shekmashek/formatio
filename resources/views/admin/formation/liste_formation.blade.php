@@ -275,10 +275,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
                                                         {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
-                                                        <form action="{{route('update_domaine') }}"  method="POST">
+                                                        <form action="{{route('modifier_domaine') }}"  method="POST">
                                                             @csrf
                                                             <input name="id" type="text" value="{{$one_domaine->id}}" hidden>
-                                                            <input name="nom_formation" type="text" value="{{$one_domaine->nom_formation}}" >
+                                                            <input name="nom_domaine" type="text" value="{{$one_domaine->nom_domaine}}" >
                                                             <div class="mt-4 mb-4">
                                                                 <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
                                                             </div>
@@ -375,7 +375,8 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                                     {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
                                                     <form action="{{route('update_formation') }}"  method="POST">
                                                         @csrf
-                                                        <input name="etp_id" type="text" value="{{$one_formation->nom_formation}}" >
+                                                        <input name="id" type="text" value="{{$one_formation->id}}" hidden>
+                                                        <input name="nom_formation" type="text" value="{{$one_formation->nom_formation}}" >
                                                         <div class="mt-4 mb-4">
                                                             <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
                                                         </div>
@@ -400,7 +401,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                                     {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
                                                     <form action="{{route('destroy_formation') }}"  method="POST">
                                                         @csrf
-                                                        <input name="etp_id" type="text" value="{{$one_formation->id}}" hidden>
+                                                        <input name="id" type="text" value="{{$one_formation->id}}" hidden>
                                                         <div class="mt-4 mb-4">
                                                             <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
                                                         </div>

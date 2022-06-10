@@ -8,6 +8,6 @@ class Domaine extends Model
 {
     protected $table = "domaines";
     protected $fillable = [
-        'nom_domaine'
+        'nom_domaine','id'
     ];
 }

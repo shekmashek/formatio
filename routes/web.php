@@ -388,7 +388,7 @@ Route::resource('domaine', 'DomaineController')->except([
     'index', 'destroy', 'show'
 ]);
 Route::post('/delete_domaine', 'DomaineController@destroy')->name('destroy_domaine');
-Route::post('/update_domaine', 'DomaineController@update')->name('update_domaine');
+Route::post('/modifier_domaine', 'DomaineController@update')->name('modifier_domaine');
 Route::post('/show_domaine/{id}', 'DomaineController@show')->name('show_domaine');
 Route::get('/liste_domaine/{id?}', 'DomaineController@index')->name('liste_domaine');
 // page creation domaine
