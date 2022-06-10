@@ -75,7 +75,7 @@
                                     class="photo">{{ $form->numero_formateur }}</li>
                         @endif
                     @endforeach
-                    
+
                 </ul>
                     <label for=""><strong>Lieu :</strong>&nbsp;
                         @foreach ($lieux as $lieu)
@@ -92,7 +92,7 @@
                             }elseif ($info->difference != null && $info->nb_detail > 1) {
                                 echo $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
                             }
-                        @endphp  
+                        @endphp
                     </label><br><br>
                     <label for=""><strong>Date - Heure:</strong><br><br>
                         @for ($j = 0; $j < count($date_groupe); $j++)
@@ -121,7 +121,7 @@
                                         <td> <img src="{{ public_path('images/stagiaires/' . $stagiaires[$k]->photos) }}"
                                                 width="50px" class="photo" alt=""></td>
                                     @else
-                                        <td><span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $stagiaires[$k]->sans_photo }}</span></td>
+                                        <td><span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $stagiaires[$k]->sans_photos }}</span></td>
                                     @endif
                                     <td>{{ $stagiaires[$k]->matricule }}</td>
                                     <td>{{ $stagiaires[$k]->nom_stagiaire }} {{ $stagiaires[$k]->prenom_stagiaire }}</td>
