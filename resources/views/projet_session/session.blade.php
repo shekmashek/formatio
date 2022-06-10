@@ -19,10 +19,6 @@
         border-right:.2rem solid  #7635dc;
     }
 
-    /* .nav-item .nav-link.active {
-        border-bottom: none !important;
-    } */
-
     .nav-tabs .nav-link:hover {
         background-color: rgb(245, 243, 243);
         transform: scale(1.1);
@@ -413,7 +409,7 @@
     <div class="p-3 bg-body rounded ">
         <nav class="body_nav m-0">
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-8">
                     <div class="d-flex m-0 p-0 height_default">
                         <a href="{{ route('liste_projet') }}" class="retour_projet mt-4"><i class='bx bxs-chevron-left p-0' style="font-size: 2rem;"></i></a>
                         <i class='bx bxs-book-open me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i>
@@ -428,9 +424,7 @@
                         <i class='bx bx-time-five ms-3 me-1' style="font-size: 1rem;"></i>
                         <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>&nbsp;&nbsp;
                         <i class='bx bx-group ms-3' style="font-size: 1rem;"></i>
-                        <span class="m-0 ms-1"> apprenant inscrit : {{ $nombre_stg }}</span>
-                        <span class="text-dark ms-1"> </span>
-                        {{-- @if(count($dataMontantSession)>0)
+                        @if(count($dataMontantSession)>0)
                             @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
                                 @if ($dataMontantSession[0]->qte >0)
                                 <span class="m-0 ms-1"> apprenant inscrit : {{$dataMontantSession[0]->qte}}</span> &nbsp;&nbsp;
@@ -443,9 +437,9 @@
                             @endif
                         @else
                             <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
-                        @endif --}}
+                        @endif
 
-                        {{-- @can('isCFP')
+                        @can('isCFP')
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> CA :<strong>
                                 @if(count($dataMontantSession)>0)
@@ -476,8 +470,8 @@
                             @endphp
                                 @endif
                                 {{$ref}}</strong></p>
-                        @endcan --}}
-                        {{-- @can('isReferent')
+                        @endcan
+                        @can('isReferent')
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
                             <p class="text-dark mt-3"> CP : <strong>
                                 @if (count($dataMontantSession) >0)
@@ -507,7 +501,7 @@
                                     @endphp
                                 @endif
                             &nbsp;{{$ref}}</strong></p>
-                        @endcan --}}
+                        @endcan
                         @if(count($lieu_formation)>0)
                             <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
                             <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
@@ -554,7 +548,7 @@
 
                     </div>
                 </div>
-                <div class="col-lg-3 d-flex justify-content-end">
+                <div class="col-lg-4 d-flex justify-content-end">
                     @canany(['isReferent','isCFP'])
                         <div class="dropdown">
 

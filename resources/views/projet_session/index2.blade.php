@@ -376,8 +376,8 @@
                                     <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                         <th> Session </th>
                                         <th>Module</th>
-                                        {{-- <th><i class="bx bx-dollar"></i> {{$ref}}</th>
-                                        <th> <i class='bx bx-group'></i> </th> --}}
+                                        <th><i class="bx bx-dollar"></i> {{$ref}}</th>
+                                        <th> <i class='bx bx-group'></i> </th>
                                         <th> Entreprise </th>
                                         <th> Modalité </th>
                                         <th> Date du projet</th>
@@ -404,7 +404,7 @@
                                                                 href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                         </td>
                                                         <td>{{ $pj->nom_module }}</td>
-                                                        {{-- <td class="text-end">
+                                                        <td class="text-end">
                                                             @if($pj->hors_taxe_net!=null)
                                                                 <a href="{{route('detail_facture_etp',[$pj->cfp_id,$pj->num_facture])}}">
                                                                 {{number_format($pj->hors_taxe_net,0,","," ")}}
@@ -414,8 +414,8 @@
                                                                     echo "<span>-</span>";
                                                                 @endphp
                                                             @endif
-                                                        </td> --}}
-                                                        {{-- <td>
+                                                        </td>
+                                                        <td>
                                                             @if($pj->qte!=null)
                                                                 {{$pj->qte}}
                                                             @else
@@ -423,7 +423,7 @@
                                                                     echo "<span>-</span>";
                                                                 @endphp
                                                             @endif
-                                                        </td> --}}
+                                                        </td>
 
                                                         <td>
                                                             @foreach ($entreprise as $etp)
@@ -479,7 +479,6 @@
                                                                     <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static" style="cursor: pointer;">Modifier</span></li>
                                                                 @endcan
                                                                 <li class="action_projet"><a class="dropdown-item" href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
-                                                                <li class="action_projet"><a class="dropdown-item" href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
                                                                 @if ($prj->type_formation_id == 1)
                                                                     <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank">Rapport</a></li>
                                                                 @endif
@@ -1103,8 +1102,8 @@
                                 <th>Type de formation</th>
                                 <th> Session </th>
                                 <th> Module </th>
-                                {{-- <th><i class="bx bx-dollar"></i> {{$ref}}</th>
-                                <th> <i class='bx bx-group'></i> </th> --}}
+                                <th><i class="bx bx-dollar"></i> {{$ref}}</th>
+                                <th> <i class='bx bx-group'></i> </th>
                                 <th>Date session</th>
                                 <th>Ville</th>
                                 <th> Centre de formation </th>
@@ -1137,7 +1136,7 @@
                                                 echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
-                                        {{-- <td class="text-end">
+                                        <td class="text-end">
                                            @if($pj->hors_taxe_net!=null)
                                            <a href="{{route('detail_facture_etp',[$pj->cfp_id,$pj->num_facture])}}">
                                            {{number_format($pj->hors_taxe_net,0,","," ")}}
@@ -1156,7 +1155,7 @@
                                                 echo "<span>-</span>";
                                             @endphp
                                         @endif
-                                       </td> --}}
+                                       </td>
                                         <td>
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
@@ -1182,7 +1181,6 @@
                                             <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                             <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
                                                 <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
-                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
                                               </ul>
                                         </td>
                                     </tr>
@@ -1209,7 +1207,6 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th></th>
                             </thead>
                             <tbody class="">
                                 @foreach ($data as $pj)
@@ -1229,17 +1226,14 @@
                                         <td> {{ $pj->nom_cfp }} </td>
                                         <td> {{ $pj->nom_formation }} </td>
                                         <td> {{ $pj->nom_module }} </td>
-                                        @php
-                                            $statut_eval = $groupe->statut_valuation_chaud($pj->groupe_id,$pj->stagiaire_id);
-                                        @endphp
                                         <td class="p-0"><a
                                                 href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}"
                                                 class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i
                                                         class="bx bxs-file-pdf"></i>PDF</button></a></td>
                                         <td>
-                                            @if ($statut_eval == 0)
+                                            @if ($pj->statut_eval == 0)
                                                 <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn pb-2" style="color: #ffffff !important">Evaluation</button></a>
-                                            @elseif ($statut_eval == 1)
+                                            @elseif ($pj->statut_eval == 1)
                                                 <p class="mt-3" style="color: green">Evaluation terminé</p>
                                             @endif
 
@@ -1249,7 +1243,6 @@
 
                                             </a>
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </tbody>
