@@ -251,6 +251,42 @@
         .btn_eval_stg:hover{
             background-color: #262b86;
         }
+            /*info SESSION*/
+    .green{
+        color: #5e35b1;
+        border: 2px solid #43a047;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+
+    .red{
+        color: #5e35b1;
+        border: 2px solid #f4511e;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+
+    .yellow{
+        color: #5e35b1;
+        border: 2px solid #fdd835;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+
+    .saClass{
+        font-size: 21px; 
+        color: #637381;
+    }
+    .saSpan{
+        color: #637381;
+        font-size: 14px;
+    }
     </style>
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
@@ -428,7 +464,9 @@
                                                         <td>
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    {{ $etp->nom_etp }}
+                                                                    
+                                                                    <a href="#" class="information myEtpStyle" data-id="{{ $etp->groupe_id }}" id="{{ $etp->groupe_id }}"
+                                                                        onclick="afficherInfos();">{{ $etp->nom_etp }}</a>
                                                                 @endif
                                                             @endforeach
                                                         </td>
@@ -1361,6 +1399,218 @@
                         @endcanany
                     </div>
                 </div>
+
+                {{-- info etp --}}
+                {{-- <div class="infos mt-3">
+                    <div class="row">
+                        <div class="col">
+                            <p class="m-0 text-center">INFORMATION</p>
+                        </div>
+                        <div class="col text-end">
+                            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                        </div>
+                        <hr class="mt-2">
+                        <div style="font-size: 13px">
+    
+                            <div class="mt-1 text-center mb-3">
+                                <span id="logo"></span>
+                            </div>
+                            <div class="mt-1 text-center">
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10">
+                                        <p id="nom_entreprise" style="color: #64b5f6; font-size: 22px; text-transform: uppercase; border-bottom: 3px solid rgb(137, 56, 243);"></p>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                            </div>
+    
+                            <div class="mt-1">
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1"><i class='bx bx-user'></i></div>
+                                    <div class="col-md-3">Responsable</div>
+                                    <div class="col-md">
+                                        <span id="nom_reponsable" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                                        <span id="prenom_responsable" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="mt-2">
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1"><i class='bx bx-envelope'></i></div>
+                                    <div class="col-md-3">E-mail</div>
+                                    <div class="col-md">
+                                        <span id="email_etp"><span>
+                                </div>
+    
+                            </div>
+                            <div class="mt-1">
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1"><i class='bx bx-phone'></i></div>
+                                    <div class="col-md-3">Tel</div>
+                                    <div class="col-md">
+                                        <span id="telephone_etp"><span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-1">
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
+                                    <div class="col-md-3">Adresse</div>
+                                    <div class="col-md">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span id="adrlot"></span>
+                                            </div>
+                                            <div class="com-md-12">
+                                                <span id="adrlot2"></span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <span id="adrlot3"></span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <span id="adrlot4"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-1">
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1"><i class='bx bx-globe'></i></div>
+                                    <div class="col-md-3">Site web</div>
+                                    <div class="col-md"><span id="site_etp"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+
+                    {{-- Entreprise --}}
+                <div class="infos mt-3">
+                    <div class="row">
+
+                        <div class="col">
+                            <p class="m-0 text-center">INFORMATION</p>
+                        </div>
+                        <div class="col text-end">
+                            <i class="bx bx-x " role="button" onclick="afficherInfos();" style="padding: 10px;"></i>
+                        </div>
+                        <hr class="mt-2">
+
+                        <div class="mt-2" style="font-size:14px">
+                                <div class="mt-1 text-center mb-3">
+                                    <span id="lEtp">
+                                        
+                                    </span>
+                                </div>
+                                <div class="mt-1 text-center">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-10">
+                                            
+                                            <p id="nEtp" style="color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+                                                
+                                            </p>
+                                            <p id="status">
+                                                
+                                            </p>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-donate-heart'></i></div>
+                                        <div class="col-md-3">Statut</div>
+                                        <div class="col-md">
+                                            <span id="juridic" style="font-size: 14px;">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-credit-card-front' ></i></div>
+                                        <div class="col-md-3">NIF</div>
+                                        <div class="col-md">
+                                            <span id="nif" style="font-size: 14px;">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-credit-card' ></i></div>
+                                        <div class="col-md-3">STAT</div>
+                                        <div class="col-md">
+                                            <span id="stat" style="font-size: 14px;">
+                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-phone'></i></div>
+                                        <div class="col-md-3">Tel</div>
+                                        <div class="col-md">
+                                            <span id="tel" style="font-size: 14px;">
+                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                                        <div class="col-md-3">E-mail</div>
+                                        <div class="col-md">
+                                            <span id="mail">
+                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                                        <div class="col-md-3">Adresse</div>
+                                        <div class="col-md">
+                                            <span id="adrlot"></span>
+                                            <span id="adrlot2"></span>
+                                            <span id="adrlot3"></span>
+                                            <span id="adrlot4"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-1"><i class='bx bx-globe' ></i></div>
+                                        <div class="col-md-3">Site web</div>
+                                        <div class="col-md">
+                                            <span id="site">
+                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>                            
+                        </div>
+                </div>
+
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
                 <script src="{{ asset('js/index2.js') }}"></script>
                 <script>
@@ -1405,5 +1655,59 @@
                     // });
 
                     localStorage.setItem('activeTab', 'detail');
+                </script>
+
+                {{--info etp --}}
+                <script>
+                    $('.information').on('click', function(){
+                        var etpId = $(this).data("id");
+                        // console.log(etpId);
+                        $.ajax({
+                            type: "get",
+                            url: "/info/session/etp",
+                            data: { Id: etpId},
+                            dataType: "html",
+                            success: function (response) {
+                                let userData = JSON.parse(response);
+                                // console.log(userData);
+                                for(let i = 0; i < userData.length; i++){
+                                    let logo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:120px;border-radius:100%">';
+                                    logo = logo.replace(":url_img", userData[i].logo);
+                                    $("#lEtp").html(" ");
+                                    $("#lEtp").append(logo);
+                                    $("#status").text(userData[i].nom_statut);
+                                    $("#nEtp").text(userData[i].nom_etp);
+                                    $("#juridic").text(': '+userData[i].nom_type);
+                                    $("#nif").text(': '+userData[i].nif);
+                                    $("#stat").text(': '+userData[i].stat);
+                                    $("#tel").text(': '+userData[i].telephone_etp);
+                                    $("#mail").text(': '+userData[i].email_etp);
+                                    $("#adrlot").text(': '+userData[i].adresse_lot);
+                                    $("#adrlot2").text(userData[i].adresse_quartier);
+
+                                    $("#adrlot3").text(userData[i].adresse_ville);
+                                    $("#adrlot4").text(userData[i].adresse_region);
+                                    $("#site").text(': '+userData[i].site_etp);
+                                    
+                                    
+                                    var status = $('#status');
+                                    // console.log(status);
+
+                                    if(status.text() == "Premium"){
+                                        status.addClass('green');
+                                    }else if(status.text() == "Invité"){
+                                        status.addClass('red');
+                                    }else if(status.text() == "Pending"){
+                                        status.addClass('yellow');
+                                    }else{
+                                        console.log('ereur');
+                                    }
+                                    
+                                }
+                            }
+                        });
+                        
+                    });
+
                 </script>
             @endsection

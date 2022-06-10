@@ -1539,4 +1539,15 @@ class HomeController extends Controller
         $suppression->supprimer_iframe('iframe_cfp', 'cfp_id', $id_cfp);
         return back();
     }
+
+    public function etpInfoNew($id_grp){
+        $etp = DB::table('entreprises')
+                ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+                ->join('v_groupe_entreprise', 'v_groupe_entreprise.entreprise_id', 'entreprises.id')
+                ->select('*')
+                ->where('groupe_id', $id_grp)
+                ->get();
+
+        return response()->json($etp);
+    }
 }

@@ -315,7 +315,7 @@
                     <tbody>
                         @forelse ($employers as $employe)
                             <tr >
-                                <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();">
+                                <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
 
                                     @if ($employe->activiter == 1)
                                         <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
@@ -353,14 +353,14 @@
                                                             </div>
                                                         @else
                                                                 <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" src="{{ asset('images/stagiaires/' . $employe->photos) }}"
-                                                                alt="Image non chargée" style="width: 45px; height: 45px"
+                                                                alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
                                                                 class="rounded-circle empNew" />
                                                         @endif
                                                     <div class="ms-3">
                                                         <p class="fw-normal mb-1 text-purple empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
                                                         {{-- <p class="fw-bold mb-1 text-purple "> --}}
                                                             {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
-                                                        <p class="text-muted mb-0">{{ $employe->fonction_stagiaire }}</p>
+                                                        <p class="text-muted mb-0 empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">{{ $employe->fonction_stagiaire }}</p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -546,7 +546,6 @@
                 </div> --}}
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
                         <div class="col-md-1"><i class='bx bx-user'></i></div>
                         <div class="col-md-3">Nom_prénoms</div>
                         <div class="col-md">
@@ -557,7 +556,6 @@
                 </div>
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
                         <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
                         <div class="col-md-3">Matricule</div>
                         <div class="col-md">
@@ -567,7 +565,6 @@
                 </div>
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
                         <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
                         <div class="col-md-3">E-mail</div>
                         <div class="col-md"><span id="mail_stagiaire"></span></div>
@@ -575,7 +572,6 @@
                 </div>
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
                         <div class="col-md-1"><i class='bx bx-phone' ></i></div>
                         <div class="col-md-3">Télephone</div>
                         <div class="col-md">
@@ -585,21 +581,12 @@
                 </div>
                 <div class="mt-1">
                     <div class="row">
-                        <div class="col-md-1"></div>
                         <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
                         <div class="col-md-3">Adresse</div>
                         <div class="col-md"><span id="adresse"></span></div>
                     </div>
 
                 </div>
-                {{-- <div class="mt-1">
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-1"><i class="fa-solid fa-globe"></i></div>
-                        <div class="col-md-3">Code postal</div>
-                        <div class="col-md"><span id="code_postal"></span></div>
-                    </div>
-                </div> --}}
             </div>
         </div>
 

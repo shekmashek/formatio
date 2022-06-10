@@ -1361,3 +1361,4 @@ Route::get('/raport','SessionController@fiche')->name('fichePDF');
 //Affiche infos SESSION
 //etp
 Route::get('/info/session/etp/{id?}', 'SessionController@infoSessionEtp');
+Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');

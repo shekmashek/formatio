@@ -587,9 +587,6 @@
                                             </td>
                                         @endif
                                     </span>
-                                    {{-- <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
-                                        class="mt-2 showSessionEtp" height="30px" width="30px" style="border-radius: 50%; cursor: pointer"
-                                        data-id="{{ $projet[0]->entreprise_id }}" id="{{ $projet[0]->entreprise_id }}" onclick="afficherInfos();">&nbsp; --}}
                                 </div>
                             </div>
                         @endif
@@ -643,7 +640,7 @@
                                             </td>
                                         @else
                                             <td class="td_hover" role="button" style="display: grid; place-content: center">
-                                                <img data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" src="{{asset("images/CFP/".$of->photos_resp_cfp)}}" style="width:120px;height:120px; border-radius:100%; cursor: pointer" 
+                                                <img data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" src="{{asset("images/CFP/".$of->photos_resp_cfp)}}" style="width: 30px;height: 30px; border-radius:100%; cursor: pointer" 
                                                 data-id={{$of->id}} id={{$of->id}}>
                                             </td>
                                         @endif
@@ -651,15 +648,7 @@
                                 </div>
                             </div>
                         </div> 
-                        {{-- <div class="chiffre_d_affaire me-2">
 
-                            <div class="d-flex flex-row">
-                                <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
-                                    {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
-                                <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
-                                    height="30px" width="30px" style="border-radius: 50%;">&nbsp;
-                            </div>
-                        </div> --}}
                         @canany(['isCFP'])
                             <div class="chiffre_d_affaire">
                                 <div class="d-flex flex-row">
