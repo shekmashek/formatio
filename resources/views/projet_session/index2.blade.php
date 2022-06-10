@@ -465,7 +465,7 @@
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
                                                                     
-                                                                    <a href="#" class="information myEtpStyle" data-id="{{ $etp->groupe_id }}" id="{{ $etp->groupe_id }}"
+                                                                    <a href="#" class="information myEtpStyle" data-id="{{ $etp->entreprise_id }}" id="{{ $etp->entreprise_id }}"
                                                                         onclick="afficherInfos();">{{ $etp->nom_etp }}</a>
                                                                 @endif
                                                             @endforeach
@@ -1400,99 +1400,7 @@
                     </div>
                 </div>
 
-                {{-- info etp --}}
-                {{-- <div class="infos mt-3">
-                    <div class="row">
-                        <div class="col">
-                            <p class="m-0 text-center">INFORMATION</p>
-                        </div>
-                        <div class="col text-end">
-                            <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
-                        </div>
-                        <hr class="mt-2">
-                        <div style="font-size: 13px">
-    
-                            <div class="mt-1 text-center mb-3">
-                                <span id="logo"></span>
-                            </div>
-                            <div class="mt-1 text-center">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <p id="nom_entreprise" style="color: #64b5f6; font-size: 22px; text-transform: uppercase; border-bottom: 3px solid rgb(137, 56, 243);"></p>
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                </div>
-                            </div>
-    
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-user'></i></div>
-                                    <div class="col-md-3">Responsable</div>
-                                    <div class="col-md">
-                                        <span id="nom_reponsable" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
-                                        <span id="prenom_responsable" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div class="mt-2">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-envelope'></i></div>
-                                    <div class="col-md-3">E-mail</div>
-                                    <div class="col-md">
-                                        <span id="email_etp"><span>
-                                </div>
-    
-                            </div>
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-phone'></i></div>
-                                    <div class="col-md-3">Tel</div>
-                                    <div class="col-md">
-                                        <span id="telephone_etp"><span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-location-plus'></i></div>
-                                    <div class="col-md-3">Adresse</div>
-                                    <div class="col-md">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span id="adrlot"></span>
-                                            </div>
-                                            <div class="com-md-12">
-                                                <span id="adrlot2"></span>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <span id="adrlot3"></span>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <span id="adrlot4"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-globe'></i></div>
-                                    <div class="col-md-3">Site web</div>
-                                    <div class="col-md"><span id="site_etp"></span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
-                    {{-- Entreprise --}}
+                {{--info Entreprise --}}
                 <div class="infos mt-3">
                     <div class="row">
 
@@ -1529,7 +1437,7 @@
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-1"><i class='bx bx-donate-heart'></i></div>
-                                        <div class="col-md-3">Statut</div>
+                                        <div class="col-md-3">Type</div>
                                         <div class="col-md">
                                             <span id="juridic" style="font-size: 14px;">
                                             </span>
@@ -1664,7 +1572,7 @@
                         // console.log(etpId);
                         $.ajax({
                             type: "get",
-                            url: "/info/session/etp",
+                            url: "/info/etp",
                             data: { Id: etpId},
                             dataType: "html",
                             success: function (response) {
@@ -1694,10 +1602,13 @@
                                     // console.log(status);
 
                                     if(status.text() == "Premium"){
+                                        status.removeClass();
                                         status.addClass('green');
                                     }else if(status.text() == "Invité"){
+                                        status.removeClass();
                                         status.addClass('red');
                                     }else if(status.text() == "Pending"){
+                                        status.removeClass();
                                         status.addClass('yellow');
                                     }else{
                                         console.log('ereur');

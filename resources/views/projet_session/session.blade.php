@@ -1026,7 +1026,7 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-1"><i class='bx bx-donate-heart'></i></div>
-                            <div class="col-md-3">Statut</div>
+                            <div class="col-md-3">Type</div>
                             <div class="col-md">
                                 <span id="juridic" style="font-size: 14px;">
                                 </span>
@@ -1114,13 +1114,10 @@
     <div class="offcanvas offcanvas-end" style="padding-top: 50px" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
-            <hr>
-
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+        <hr style="margin-top: 0.1px">
         <div class="offcanvas-body">
-            <hr class="mt-2">
-
             <div class="mt-2" style="font-size:14px">
                 @if ($type_formation_id == 1)
                     <div class="mt-1 text-center mb-3">
@@ -1244,12 +1241,10 @@
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="padding-top: 50px">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
-            <hr>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+        <hr style="margin-top: 0.1px">
         <div class="offcanvas-body">
-            <hr class="mt-2">
-
             <div class="mt-2" style="font-size:14px">
                 @if ($type_formation_id == 1 || $type_formation_id == 2)
                     <div class="mt-1 text-center mb-3">
@@ -1276,6 +1271,24 @@
                                 </p>
                             </div>
                             <div class="col-md-1"></div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-donate-heart'></i></div>
+                            <div class="col-md-3">Type</div>
+                            <div class="col-md">
+                                <span>
+                                    @if ( $of->nom_type == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $of->nom_type }}
+                                    @endif
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="mt-1">
@@ -1401,12 +1414,10 @@
     <div class="offcanvas offcanvas-end" tabindex="-1" style="padding-top: 50px" id="test" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
-            <hr>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+        <hr style="margin-top: 0.1px">
         <div class="offcanvas-body">
-            <hr class="mt-2">
-
             <div class="mt-2" style="font-size:14px">
                 @if ($type_formation_id == 1 || $type_formation_id == 2)
                     <div class="mt-1 text-center mb-3">
@@ -1623,7 +1634,7 @@
                 dataType: "html",
                 success: function (response) {
                     let userData = JSON.parse(response);
-                    // console.log(userData);
+                    console.log(userData);
                     for(let i = 0; i < userData.length; i++){
                         let logo = '<img src="{{asset("images/entreprises/:url_img")}}" style="width:120px;height:120px;border-radius:100%">';
                         logo = logo.replace(":url_img", userData[i].logo);
