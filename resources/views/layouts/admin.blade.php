@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
 </head>
 
 <body>
@@ -543,8 +544,18 @@
                     <i class="bx bx-menu" id="btn_menu" role="button" onclick="clickSidebar();"></i>
                 </div> --}}
                 <div class="col-3 d-flex flex-row padding_logo">
-                    <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt=""
-                            class="img-fluid menu_logo me-3"></span>@yield('title')
+                    {{-- <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt=""
+                            class="img-fluid menu_logo me-3"></span>@yield('title') --}}
+                            <a href="/home" class="teste">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <div class="titre">
+                                    <i >F</i>
+                                </div>
+
+                            </a>
                 </div>
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
                     @canany(['isReferent','isStagiaire','isManager'])
@@ -1435,9 +1446,9 @@
 
                     }else{
                         // alert("aiza");
-                        for (let i = 0; i < response['invitation'].length; i++){                                                           
+                        for (let i = 0; i < response['invitation'].length; i++){
                             $('.test_affiche1').append('<li class="invitation_'+response['invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['invitation'][i]['nom_resp']+'</span><span class="me-2">'+response['invitation'][i]['prenom_resp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['invitation'][i]['nom_secteur']+'</span> <span id="'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn btn-sm accepte" title="accepter l\'invitation" role="button"><i class="bx bx-check-double bx_ajouter"></i></span> <span id="ref_'+response['invitation'][i]['demmandeur_etp_id']+'" class="btn refuse" title="refuser l\'invitation" role="button" data-id="'+response['invitation'][i]['demmandeur_etp_id']+'"><i class="bx bx-x bx_supprimer"></i></span></li>');
-                            
+
                             $(".accepte").on("click", function(e) {
                                 let id = $(e.target).closest(".accepte").attr("id");
                                 // alert(id);
@@ -1448,7 +1459,7 @@
                                         Id: id,
                                     },
                                     success: function(response) {
-                                        
+
                                         console.log(".invitation_" + id);
                                         $(".invitation_" + id).remove();
                                         $('.badge_invitation').text("");
@@ -1491,7 +1502,7 @@
                         html = html.replace(":?", response['user']);
                         // alert(JSON.stringify(response));
                         $('.photo_users').append(html);
-                        
+
                     }
                     if(response['photo'] == 'non'){
                         var html = response['user'][0]['nm']+''+response['user'][0]['pr'];
@@ -1516,7 +1527,7 @@
 
                     }else{
                         // alert("aiza");
-                        for (let i = 0; i < response['refuse_invitation'].length; i++){                                                           
+                        for (let i = 0; i < response['refuse_invitation'].length; i++){
                             $('.test_affiche2').append('<li class="invitation_'+response['refuse_invitation'][i]['demmandeur_etp_id']+' text-center"><span class="me-2">'+response['refuse_invitation'][i]['email_etp']+'</span>|&nbsp;&nbsp;<span class="me-2">'+response['refuse_invitation'][i]['nom_etp']+'</span>|&nbsp;&nbsp;<span>'+response['refuse_invitation'][i]['nom_secteur']+'</span></li>');
                         }
                     }
@@ -1550,7 +1561,7 @@
 
     </script>
     <script type="text/javascript">
-    
+
     </script>
 </body>
 
