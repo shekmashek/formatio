@@ -432,7 +432,6 @@ class FormationController extends Controller
             $totaleData = $this->fonct->getNbrePagination("cfps", "id", ["upper(nom)"], ["LIKE"], ["%" . $nom_entiter . "%"], "AND");
             $pagination = $this->formation->nb_entiter_pagination($nom_entiter,  $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
-           
             return view('referent.catalogue.cfp_tous', compact('nom_entiter', 'secteurs', 'cfps', 'pagination', 'initial'));
         }
     }
@@ -626,7 +625,7 @@ class FormationController extends Controller
     }
     public function liste_demande_devis(){
         $id_user = Auth::user()->id;
-        $id_cfp = responsable_cfp::where('user_id', $id_user)->value('id');
+        $id_cfp = responsable_cfp::where('user_id', $id_user)->value('cfp_id');
         $liste=DB::select('select *  from v_liste_demande_devis where cfp_id=?',[$id_cfp]);
         // dd($liste);
         return view('referent.catalogue.liste_demande_devis',compact('liste'));
