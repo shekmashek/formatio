@@ -84,6 +84,11 @@
 /* liste */
 
 /* error et success */
+
+.p-2.actif-status {
+    padding: 0.4rem!important;
+}
+
 .bg-success {
     background-color: #00b900!important;
 }
@@ -92,7 +97,7 @@
 .badge.bg-success{
     opacity: 0.7;
     background-color: #64ff599d!important;
-    color: #008b35;
+    color: #00742c;
     padding: 5px 10px;
 }
 .badge.bg-secondary {

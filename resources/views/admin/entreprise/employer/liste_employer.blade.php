@@ -66,9 +66,10 @@
                 border: 1px solid #9359ff;
                 background-color: #9359ff !important;
                 padding: 0.3rem 0.7rem;
-                /* color: #9359ff; */
+                /* color: #59ff90; */
                 margin: 0 0.5rem;
                 font-size: small;
+                color: white!important;
                 transition: 0.3s;
             }
 
@@ -172,13 +173,8 @@
                         @forelse ($employers as $employe)
                             <tr>
                                 <td class="align-middle id">
-
-                                    @if ($employe->activiter == 1)
-                                        <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
-                                    @else
-                                        <span class="text-danger"> <i class="bx bxs-circle"></i> </span>
-                                    @endif
-                                    {{ $employe->matricule }}
+                                    
+                                    # {{ $employe->matricule }}
                                 </td>
 
 
@@ -196,7 +192,7 @@
                                                 </i>
                                                 <span
                                                     class="opacity-100 position-absolute bottom-0 mt-3 top-50 
-                                                    start-50 ms-3 translate-middle p-2 border border-light 
+                                                    start-50 ms-3 translate-middle p-2 border-light actif-status
                                                     rounded-circle
                                                     @if ($employe->activiter == 1) 
                                                         bg-success
@@ -238,7 +234,7 @@
                                                     class="rounded-circle" />
                                                 <span
                                                     class="opacity-100 position-absolute bottom-0 mt-3 top-50 start-50 ms-3 
-                                                    translate-middle p-2 border 
+                                                    translate-middle p-2 border actif-status
                                                     border-light rounded-circle
                                                     @if ($employe->activiter == 1) 
                                                         bg-success
