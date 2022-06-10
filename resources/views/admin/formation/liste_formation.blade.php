@@ -183,25 +183,24 @@
         top: .4rem;
         margin-right: .3rem;
     }
-
+/* 
     .pagination {
+        float: center;
         background-clip: text;
-        margin-right: .3rem;
-        font-size: 2rem;
         position: relative;
-        top: .7rem;
+        margin: auto;
     }
 
-    .pagination:hover {
+    .pagination:hover .pagination:active {
         color: #000000;
         background-color: rgb(239, 239, 239);
         border-radius: 1.3rem;
     }
-
+    
     .nombre_pagination {
         color: #626262;
 
-    }
+    } */
 
     .color-text-trie {
         color: blue;
@@ -218,10 +217,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
         <li class="nav-item">
-            <a href="#Domaines" class="nav-link active" data-toggle="tab">Domaines ({{count($domaine)}})</a>
+            <a href="#Domaines" class="nav-link active" data-toggle="tab">Domaines</a>
         </li>
         <li class="nav-item">
-            <a href="#Formations" class="nav-link " data-toggle="tab">Formations ({{count($formation)}})</a>
+            <a href="#Formations" class="nav-link " data-toggle="tab">Formations</a>
         </li>
         </ul>
         <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
@@ -233,96 +232,102 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                     Nouveau Domaine
                 </a>
                 <div class="col-md-12">
-                        <table class="table table-hover ">
-                            <thead>
-                                <tr>
-                                    <th style="max-width: 12%">nom &nbsp; <a class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
-                                    </th>
-                                    <th style="max-width: 12%">formations &nbsp; <a class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
-                                    </th>
-                                    <th style="max-width: 12%">Action
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="list_data_trie_tous">
-                                @if (count($domaine) > 0)
-                                @foreach ($domaine as $one_domaine)
+                    <table class="table table-hover ">
+                        <thead>
+                            <tr>
+                                <th style="max-width: 12%">nom &nbsp; <a class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
+                                </th>
+                                <th style="max-width: 12%">formations &nbsp; <a class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a>
+                                </th>
+                                <th style="max-width: 12%">Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="list_data_trie_tous">
+                            @if (count($domaine) > 0)
+                            @foreach ($domaine as $one_domaine)
 
-                                <tr>
-                                    <td>
-                                        <a href="{{route('detail_facture',$one_domaine->id)}}">
-                                            {{$one_domaine->nom_domaine}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{route('detail_facture',$one_domaine->id)}}">
-                                            {{$one_domaine->nom_domaine}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_domaine_{{$one_domaine->id}}"><i class='bx bx-edit bx_modifier'></i></a>
-                                        <a  href="" data-bs-toggle="modal" data-bs-target="#modal_delete_domaine_{{$one_domaine->id}}"><i class='bx bx-trash bx_supprimer'></i></a>
-                                    </td>
-                                    {{-- modal update  --}}
-                                        <div class="modal fade" id="modal_update_domaine_{{$one_domaine->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(75,181,67);">
-                                                        <h4 class="modal-title text-white">Avertissement !</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point de modifier une donnée, cette action est irréversible. Continuer ?</small>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-center">
-                                                        {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
-                                                        <form action="{{route('modifier_domaine') }}"  method="POST">
-                                                            @csrf
-                                                            <input name="id" type="text" value="{{$one_domaine->id}}" hidden>
-                                                            <input name="nom_domaine" type="text" value="{{$one_domaine->nom_domaine}}" >
-                                                            <div class="mt-4 mb-4">
-                                                                <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                                                            </div>
-                                                        </form>
+                            <tr>
+                                <td>
+                                    <a href="{{route('detail_facture',$one_domaine->id)}}">
+                                        {{$one_domaine->nom_domaine}}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{route('detail_facture',$one_domaine->id)}}">
+                                        @foreach ($one_domaine->formation as $one_domaine_formation)
+                                            {{$one_domaine_formation->nom_formation.", "}}
+                                        @endforeach
+                                    </a>
+                                </td>
+                                <td>
+                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_domaine_{{$one_domaine->id}}"><i class='bx bx-edit bx_modifier'></i></a>
+                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_delete_domaine_{{$one_domaine->id}}"><i class='bx bx-trash bx_supprimer'></i></a>
+                                </td>
+                                {{-- modal update  --}}
+                                    <div class="modal fade" id="modal_update_domaine_{{$one_domaine->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(75,181,67);">
+                                                    <h4 class="modal-title text-white">Avertissement !</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point de modifier une donnée, cette action est irréversible. Continuer ?</small>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
+                                                    <form action="{{route('modifier_domaine') }}"  method="POST">
+                                                        @csrf
+                                                        <input name="id" type="text" value="{{$one_domaine->id}}" hidden>
+                                                        <input name="nom_domaine" type="text" value="{{$one_domaine->nom_domaine}}" >
+                                                        <div class="mt-4 mb-4">
+                                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                        </div>
+                                                    </form>
+                                                    <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- fin modal update --}}
+                                    {{-- modal delete  --}}
+                                    <div class="modal fade" id="modal_delete_domaine_{{$one_domaine->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header d-flex justify-content-center" style="background-color:rgb(192, 37, 55);">
+                                                    <h4 class="modal-title text-white">Avertissement !</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
+                                                    <form action="{{route('destroy_domaine') }}"  method="POST">
+                                                        @csrf
+                                                        <input name="id" type="text" value="{{$one_domaine->id}}" hidden>
+                                                        <div class="mt-4 mb-4">
+                                                            <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
+                                                        </div>
                                                         <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- fin modal update --}}
-                                        {{-- modal delete  --}}
-                                        <div class="modal fade" id="modal_delete_domaine_{{$one_domaine->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header d-flex justify-content-center" style="background-color:rgb(192, 37, 55);">
-                                                        <h4 class="modal-title text-white">Avertissement !</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <small>Vous <span style="color: rgb(194, 39, 39)"> êtes </span>sur le point d'effacer une donnée, cette action est irréversible. Continuer ?</small>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-center">
-                                                        {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Non </button> --}}
-                                                        <form action="{{route('destroy_domaine') }}"  method="POST">
-                                                            @csrf
-                                                            <input name="id" type="text" value="{{$one_domaine->id}}" hidden>
-                                                            <div class="mt-4 mb-4">
-                                                                <button type="submit" class="btn btn_creer btnP px-3">Oui</button>
-                                                            </div>
-                                                            <button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Non</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{-- fin modal delete --}}
-                                </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
-                                </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                                    </div>
+                                    {{-- fin modal delete --}}
+                            </tr>
+                            @endforeach
+                            
+                            @else
+                            <tr>
+                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center">
+                    {{ $domaine->onEachSide(2)->links() }}
                 </div>
             </div>
             <div class="tab-pane fade show " id="Formations">
@@ -354,7 +359,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                 </td>
                                 <td>
                                     <a href="{{route('detail_facture',$one_formation->id)}}">
-                                        {{$one_formation->nom_formation}}
+                                        {{$one_formation->domaine->nom_domaine}}
                                     </a>
                                 </td>
                                 <td>
@@ -422,10 +427,24 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                         </tbody>
                     </table>
                 </div>
+                <div class="d-flex justify-content-center">
+                    {{ $formation->onEachSide(1)->links() }}
+                </div>
             </div>
         </div>
     </div>
 </div>
+{{-- <script>
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    let lien = ($(e.target).attr('href'));  
+    localStorage.setItem('collaboration', lien);
+});
+let Tabactive = localStorage.getItem('collaboration');console.log(Tabactive);
+if(Tabactive){
+    $('#myTab a[href="' + Tabactive + '"]').tab('show');
+}
+</script> --}}
+
         {{-- inmportation fonction js pour cfp --}} 
         {{-- @include("admin.facture.function_js.js_cfp")  --}}
 @endsection

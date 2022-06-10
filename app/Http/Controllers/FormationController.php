@@ -81,13 +81,10 @@ class FormationController extends Controller
     }
 
     public function listeCrud($id = null){
-        $id_user = Auth::user()->id;
-        $domaine = Domaine::all();
-        $formation  = formation::all();
-        $fact = "Facture";
+        $domaine = Domaine::paginate(10, ['*'], 'domaine');
+        $formation  = formation::paginate(10, ['*'], 'formation');
         return view("admin.formation.liste_formation",compact('id_user','fact','formation','domaine'));
     }
-
 
     public function nouvelle_formation()
     {

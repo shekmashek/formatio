@@ -82,11 +82,10 @@ class DomaineController extends Controller
     }
 
     public function listeCrud($id = null){
-        $domaine = Domaine::all();
-        $formation  = formation::all();
+        $domaine = Domaine::paginate(10, ['*'], 'domaine');
+        $formation  = formation::paginate(10, ['*'], 'formation');
         return view("admin.formation.liste_formation",compact('formation','domaine'));
     }
-
 
     public function create(){
         return view('superadmin.nouveau_domaine');
