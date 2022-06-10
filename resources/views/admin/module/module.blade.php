@@ -3,6 +3,7 @@
 <p class="text_header m-0 mt-1">Modules</p>
 @endsection
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -10,6 +11,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+
 <div class="container-fluid pb-1">
 
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();">
