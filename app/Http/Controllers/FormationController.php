@@ -83,7 +83,7 @@ class FormationController extends Controller
     public function listeCrud($id = null){
         $domaine = Domaine::paginate(10, ['*'], 'domaine');
         $formation  = formation::paginate(10, ['*'], 'formation');
-        return view("admin.formation.liste_formation",compact('id_user','fact','formation','domaine'));
+        return view("admin.formation.liste_formation",compact('formation','domaine'));
     }
 
     public function nouvelle_formation()

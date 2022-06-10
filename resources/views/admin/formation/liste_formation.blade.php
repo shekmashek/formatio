@@ -216,12 +216,12 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <div class="container-fluid mt-5">
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-        <li class="nav-item">
-            <a href="#Domaines" class="nav-link active" data-toggle="tab">Domaines</a>
-        </li>
-        <li class="nav-item">
-            <a href="#Formations" class="nav-link " data-toggle="tab">Formations</a>
-        </li>
+            <li class="nav-item">
+                <a href="#Domaines" class="nav-link active" data-toggle="tab">Domaines</a>
+            </li>
+            <li class="nav-item">
+                <a href="#Formations" class="nav-link " data-toggle="tab">Formations</a>
+            </li>
         </ul>
         <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
 
@@ -255,9 +255,12 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                 </td>
                                 <td>
                                     <a href="{{route('detail_facture',$one_domaine->id)}}">
+                                        @if ($one_domaine->formation)
                                         @foreach ($one_domaine->formation as $one_domaine_formation)
                                             {{$one_domaine_formation->nom_formation.", "}}
                                         @endforeach
+                                        @else {{"-"}}
+                                        @endif
                                     </a>
                                 </td>
                                 <td>
@@ -359,7 +362,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                 </td>
                                 <td>
                                     <a href="{{route('detail_facture',$one_formation->id)}}">
-                                        {{$one_formation->domaine->nom_domaine}}
+                                        {{($one_formation->domaine)?$one_formation->domaine->nom_domaine : "-"}}
                                     </a>
                                 </td>
                                 <td>
@@ -434,17 +437,14 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         </div>
     </div>
 </div>
-{{-- <script>
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-    let lien = ($(e.target).attr('href'));  
-    localStorage.setItem('collaboration', lien);
-});
-let Tabactive = localStorage.getItem('collaboration');console.log(Tabactive);
-if(Tabactive){
-    $('#myTab a[href="' + Tabactive + '"]').tab('show');
-}
-</script> --}}
-
-        {{-- inmportation fonction js pour cfp --}} 
-        {{-- @include("admin.facture.function_js.js_cfp")  --}}
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        let lien = ($(e.target).attr('href'));  
+        localStorage.setItem('collaboration', lien);
+    });
+    let Tabactive = localStorage.getItem('collaboration');
+    if(Tabactive){
+        $('#myTab a[href="' + Tabactive + '"]').tab('show');
+    }
+</script>
 @endsection
