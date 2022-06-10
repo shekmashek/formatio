@@ -538,7 +538,7 @@
                 <div class="col-3 d-flex flex-row padding_logo">
                     {{-- <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt=""
                             class="img-fluid menu_logo me-3"></span>@yield('title') --}}
-                    <a href="" class="teste">
+                    <a href="/home" class="teste">
                         <span></span>
                         <span></span>
                         <span></span>
