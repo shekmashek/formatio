@@ -943,6 +943,8 @@
         </div>
       </div>
 
+
+      {{-- div info en offcanvas --}}
     <div class="infos mt-3">
         <div class="row">
             <div class="col">
@@ -955,7 +957,16 @@
             <div style="font-size: 13px">
     
                 <div class="mt-1 text-center mb-3">
-                    <span id="logo"></span>
+                    <div class="">
+                        
+                        <div id="logo" class="position-relative my-0 mx-auto" style="width: fit-content">
+                            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                                <span class="">New alerts</span>
+                            </span>
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="mt-1 text-center">
                     <span id="nom_entreprise" style="color: #64b5f6; font-size: 22px; text-transform: uppercase; "></span>
@@ -1170,6 +1181,7 @@
                     url_photo = url_photo.replace(":url_img", userData[$i].logo_etp);
                     $("#logo").html(" ");
                     $("#logo").append(url_photo);
+                    $("#logo").append('<span class="position-absolute bottom-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"><span class="visually-hidden">New alerts</span></span>');
                     $("#nom_entreprise").text(userData[$i].nom_etp);
                     $("#nom_reponsable").text(': '+userData[$i].nom_resp);
                     $("#prenom_responsable").text(userData[$i].prenom_resp);
