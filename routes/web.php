@@ -1390,3 +1390,12 @@ Route::get('/raport','SessionController@fiche')->name('fichePDF');
 //plus d'avis
 Route::get('plus_avis','FormationController@plus_avis')->name('plus_avis');
 Route::get('plus_avis_module','FormationController@plus_avis_module')->name('plus_avis_module');
+
+//Affiche infos SESSION
+//etp
+Route::get('/info/session/etp', 'SessionController@infoSessionEtp');
+Route::get('/info/etp', 'SessionController@infoEtp');
+Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
+
+
+Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
