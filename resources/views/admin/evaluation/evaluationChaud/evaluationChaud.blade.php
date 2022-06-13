@@ -64,8 +64,15 @@
         </div>
     @endif
     <div class="row ms-2 me-2">
+        
         <form method="POST" action="{{ route('createEvaluationChaud', [$data->groupe_id]) }}">
             @csrf
+            <div class="col-md-12 mb-2">
+                <div class="form-check form-switch d-flex justify-content-start">
+                    <label class="form-check-label me-5" for="">Rendre anonyme cette évaluation </label>
+                    <input class="form-check-input" name="anonyme" type="checkbox" id="flexSwitchCheckDefault" value="true">
+                </div>
+            </div>
             <div class="col-md-12 card  p-3 mb-1 bg-body rounded">
 
                 @foreach ($qst_mere as $qst_mere)

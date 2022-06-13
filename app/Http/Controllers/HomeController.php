@@ -836,7 +836,7 @@ class HomeController extends Controller
             if(count($lieu_formation)>0){
                 $lieuFormation = explode(',',$lieu_formation[0]->lieu);
             }
-            $ref = DB::select('select * from devise')[0]->reference;
+            $ref = DB::select('select * from devise')[0]->description;
 
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
 
