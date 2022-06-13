@@ -24,6 +24,34 @@
        box-shadow: 0 5px 30px rgba(0, 0, 0, .1);
        
     }
+    @media screen and (max-width: 990px){
+        .img{
+            /* width: 500px; */
+            display: none;
+            
+        }
+        
+        .pass{
+            position: relative;
+            padding: 100px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, .1);
+            margin-top: 50px;
+            margin-left: 15%;
+            /* background: #000; */
+            /* position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%); */
+        }
+        body{ 
+            margin: 0;
+            padding: 0;
+        }
+        .soratra{
+            
+            margin-top: -100px;
+        }
+    }
 </style>
 <body>
     <div class="container-fluid">
@@ -38,7 +66,7 @@
                     <img class="img-fluid forgot"  src="{{asset('images/forgot-password-v2.9faba3c1.svg')}}" alt="">
                 </div>
             </div>
-            <div class="col-12 col-lg-4 " style="padding-right: 120px;">
+            <div class="col-12 col-lg-4 form" style="padding-right: 120px;">
                 <form method="POST" action="{{ route('password.email') }}">
                 @csrf
                     <div class="pass">
@@ -61,7 +89,7 @@
                         <button type="submit" role="button" class="btn btn-block mt-4" style="background-color: #7367f0;color: white;width: 100%;">Envoyer le lien de réinitialisation</button>
                         
                     </div>
-                    <div class="mt-3" style="text-align: center;"><a href="/sign-in"  style="text-decoration: none;color:#7367f0;font-size: 15px;"> Retour à la connexion</a></div>
+                    <div class="mt-3 soratra" style="text-align: center;"><a href="/sign-in"  style="text-decoration: none;color:#7367f0;font-size: 15px;"> Retour à la connexion</a></div>
                 </form>
             </div>
         </div>

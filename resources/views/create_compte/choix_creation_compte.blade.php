@@ -31,7 +31,7 @@
 <body>
     <div class="container">
         <div class="row">
-            
+            <img src="{{asset('images/38435-register.gif')}}" alt="">
         </div>
     </div>
 </body>
