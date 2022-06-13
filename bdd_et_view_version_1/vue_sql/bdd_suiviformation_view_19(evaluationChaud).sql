@@ -67,7 +67,7 @@ select
     total_stagiaire,
     qf.point_max
 from
-    v_reponse_evaluationchaud re
+     v_reponse_evaluationchaud re
     join v_nombre_stagiaire_groupe nsg on re.groupe_id = nsg.groupe_id
     join question_fille qf on re.id_qst_fille = qf.id
 group by
@@ -77,6 +77,7 @@ group by
     qf.qst_fille,
     qf.point_max,
     nsg.total_stagiaire;
+
 
 create
 or replace view v_question_fille_point as
@@ -107,6 +108,46 @@ select
     qfp.qst_fille,
     qfp.point,
     ifnull(ec.points, 0) as point_eval,
+    ifnull(ec.nombre_stg, 0) as nombre_stg,
+    ifnull(ec.total_stagiaire, 0) as total_stagiaire,
+    ifnull(
+        ROUND(
+            (
+                (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
+            ) * 10,
+            1
+        ),
+        0
+    ) as note_sur_10,
+    ifnull(
+        ROUND(
+            (
+                (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
+            ) * 100,
+            1
+        ),
+        0
+    ) as pourcentage
+from
+    v_question_fille_point qfp
+    left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille and qfp.point = ec.points
+    group by 
+        qfp.groupe_id,
+        qfp.id_qst_fille,
+        qfp.qst_fille,
+        qfp.point,
+        ec.points,
+        ec.nombre_stg,
+        ec.total_stagiaire;
+
+
+
+select
+    qfp.groupe_id,
+    qfp.id_qst_fille,
+    qfp.qst_fille,
+    qfp.point,
+    ifnull(ec.points, 0) as point_eval,
     qfp.point_max,
     ifnull(ec.nombre_stg, 0) as nombre_stg,
     ifnull(ec.total_stagiaire, 0) as total_stagiaire,
@@ -130,8 +171,14 @@ select
     ) as pourcentage
 from
     v_question_fille_point qfp
-    left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille
-    and qfp.point = ec.points
+    left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille and qfp.point = ec.points
+    group by 
+        qfp.groupe_id,
+        qfp.id_qst_fille,
+        qfp.qst_fille,
+        qfp.point,
+        qfp.point_max
+
 
 
 select
