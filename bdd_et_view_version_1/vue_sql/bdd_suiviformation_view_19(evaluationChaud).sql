@@ -142,41 +142,4 @@ from
 
 
 
-select
-    qfp.groupe_id,
-    qfp.id_qst_fille,
-    qfp.qst_fille,
-    qfp.point,
-    ifnull(ec.points, 0) as point_eval,
-    qfp.point_max,
-    ifnull(ec.nombre_stg, 0) as nombre_stg,
-    ifnull(ec.total_stagiaire, 0) as total_stagiaire,
-    ifnull(
-        ROUND(
-            (
-                (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
-            ) * 10,
-            1
-        ),
-        0
-    ) as note_sur_10,
-    ifnull(
-        ROUND(
-            (
-                (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
-            ) * 100,
-            1
-        ),
-        0
-    ) as pourcentage
-from
-    v_question_fille_point qfp
-    left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille and qfp.point = ec.points
-    group by 
-        qfp.groupe_id,
-        qfp.id_qst_fille,
-        qfp.qst_fille,
-        qfp.point,
-        qfp.point_max
-
 
