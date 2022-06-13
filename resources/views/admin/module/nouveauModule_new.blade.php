@@ -179,7 +179,7 @@
                                 @csrf
                                 <div id="newProg"></div>
                                 <div class="form-row d-flex flex-row">
-                                    <input type="hidden" value="{{$id}}" name="id_module">
+                                    <input type="hidden" value="{{$id[0]->id}}" name="id_module">
                                     <button type="submit" class="btn btn_enregistrer me-4" id="nouveau_prg"
                                         style="display:none"><i class='bx bx-check me-1'></i>Enregistrer</button>
                                     <button type="button" id="addProg" class="btn_nouveau btn">
@@ -326,7 +326,7 @@
             {{-- FIXME:mise en forme de design --}}
             <div class="col-lg-3 g-0 p-0 m-0">
 
-                @if($competences != null)
+                {{-- @if($competences == null) --}}
                 <div class="row g-0 competence_box mb-3 ">
                     <h5 class="text-center py-2">Compétences à Acquérir</h5>
                         @foreach ($competences as $comp)
@@ -340,22 +340,22 @@
                         </div>
                         @endforeach
                         <div class="text-center mb-3">
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id}}" id="{{$id}}" title="ajouter une nouvelle competence">
+                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id[0]->id}}" id="{{$id[0]->id}}" title="ajouter une nouvelle competence">
                                 <i class='bx bx-plus-medical bx_ajouter'></i>
                             </span>
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id}}" id="{{$id}}" title="modifier les competence">
+                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id[0]->id}}" id="{{$id[0]->id}}" title="modifier les competence">
                                 <i class='bx bx-edit bx_modifier'></i>
                             </span>
                         </div>
                 </div>
-                @endif
+                {{-- @endif --}}
                 <div>
-                    <div class="modal fade" id="ModalCompetence_{{$id}}">
+                    <div class="modal fade" id="ModalCompetence_{{$id[0]->id}}">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('ajout_competence')}}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="id" id="id" value="{{$id}}">
+                                    <input type="hidden" name="id" id="id" value="{{$id[0]->id}}">
                                     <div class="modal-header">
                                         <h6>Compétences a évaluer</h6>
                                     </div>
@@ -410,12 +410,12 @@
                 </div>
                 <div>
                     <?php $i=0 ?>
-                    <div class="modal fade" id="Modal_{{$id}}">
+                    <div class="modal fade" id="Modal_{{$id[0]->id}}">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modifier_competence')}}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="id" id="id" value="{{$id}}">
+                                    <input type="hidden" name="id" id="id" value="{{$id[0]->id}}">
                                     <div class="modal-header">
                                         <h6>Compétences a évaluer</h6>
                                     </div>

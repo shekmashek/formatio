@@ -44,6 +44,8 @@ class ModuleController extends Controller
         $infos =null;
         $categorie=null;
         $id_user = Auth::user()->id;
+        $domaine = $fonct->findAll("domaines");
+        $liste = formation::orderBy('nom_formation')->get();
 
         // $cfp_id = cfp::where('user_id', $id_user)->value('id');
         if (Gate::allows('isCFP')) {
@@ -65,7 +67,7 @@ class ModuleController extends Controller
                 return view('admin.module.guide');
             } else {
                 // return view('admin.module.module', compact('devise','infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
-                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp', 'mod_hors_ligne'));
+                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp', 'mod_hors_ligne','domaine','liste'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -129,6 +131,64 @@ class ModuleController extends Controller
         return view('admin.module.nouveauModule', compact('domaine', 'liste', 'niveau','devise'));
     }
 
+    public function create_new(Request $request)
+    {
+        $fonct = new FonctionGenerique();
+        // $niveau = Niveau::all();
+        $id_user = Auth::user()->id;
+        $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+        $categorie = $request->categorie;
+        // dd($categorie);
+        $nom_module = 'Titre/Nom de votre module';
+        $description = 'Description courte du module';
+        $heure = 12;
+        $jour = 2;
+        $modalite = 'Presentiel';
+        $prix = 400000;
+        $prix_groupe = 5000000;
+        $prerequis = 'Les préréquis pour suivre la formation';
+        $reference = 'Ref';
+        $objectif = 'Objectif de la formation';
+        $materiel = 'Les matériels necessaires pour suivre la formation';
+        $bon_a_savoir = 'Bon à savoir pour pouvoir suivre la formation';
+        $cible = 'Le public cible du formation';
+        $prestation = 'Préstation pédagogique par rapport au formation';
+        $min_pers = 5;
+        $max_pers = 10;
+        $level = 1;
+        $new_mod = DB::insert('insert into modules(reference,nom_module,formation_id,prix,prix_groupe,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id,created_at)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,NOW())', [$reference, $nom_module, $categorie, $prix,$prix_groupe, $heure, $jour, $prerequis, $objectif, $description, $modalite, $materiel, $level, $cible, $bon_a_savoir, $prestation, $min_pers, $max_pers, $cfp_id]);
+
+        return redirect()->route('nouveau_module_update');
+    }
+
+    public function update_new(){
+        $fonct = new FonctionGenerique();
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
+        $id = DB::select('select id from modules  order by id desc limit 1');
+        $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id[0]->id . ') as moduleExiste');
+        //on verifie si moduleformation contient le module_id
+        if ($test[0]->moduleExiste == 1) {
+            // $infos = DB::select('select * from moduleformation where formation_id = ?',[$id]);
+            $infos = DB::select('select * from moduleformation where module_id = ?', [$id[0]->id]);
+            // dd($infos);
+            $nb = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.formation_id = ? group by mf.formation_id', [$id[0]->id]);
+            if ($nb == null) {
+                $nb_avis = 0;
+            } else {
+                $nb_avis = $nb[0]->nb_avis;
+            }
+
+            $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id[0]->id]);
+            $programmes = DB::select('select * from programmes where module_id = ?', [$id[0]->id]);
+            $competences = DB::select('select * from competence_a_evaluers where module_id = ?', [$id[0]->id]);
+            $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id[0]->id]);
+            $niveau = DB::select('select * from niveaux');
+            // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id[0]->id]);
+            return view('admin.module.nouveauModule_new', compact('devise','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'id', 'competences','niveau'));
+        } else return redirect()->route('liste_module');
+    }
+
     public function get_formation(Request $req)
     {
         $fonct = new FonctionGenerique();
@@ -172,7 +232,7 @@ class ModuleController extends Controller
                 'heure.required' => 'Veuillez remplir le champ',
                 'jour.required' => 'Veuillez remplir le champ',
                 'prerequis.required' => 'Veuillez remplir le champ',
-                'objectif.requires' => 'Veuillez remplir le champ',
+                'objectif.required' => 'Veuillez remplir le champ',
                 'description.required' => 'Veuillez remplir le champ',
                 'materiel.required' => 'Veuillez remplir le champ',
                 'bon_a_savoir.required' => 'Veuillez remplir le champ',

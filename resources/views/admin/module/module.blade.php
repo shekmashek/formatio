@@ -4,6 +4,7 @@
 @endsection
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/inputControlModules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
     integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
@@ -19,11 +20,11 @@
     </a>
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="#enCours" class="nav-link" data-toggle="tab">Configurer Programme&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
-            </li>
+            </li> --}}
             <li class="nav-item">
-                <a href="#nonPublies" class="nav-link" data-toggle="tab">Configurer Compétence&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>
+                <a href="#nonPublies" class="nav-link" data-toggle="tab">Modules non configurés&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>
             </li>
             <li class="nav-item">
                 <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
@@ -32,7 +33,7 @@
                 <a href="#publies" class="nav-link" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
             </li>
             <li class="">
-                <a href="{{route('nouveau_module')}}" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
+                <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
             </li>
         </ul>
 
@@ -52,7 +53,7 @@
                                 @if($mod_en_cours == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button" ><i
+                                    <a class="text-center mt-5" href="{{route('nouveau_module_new')}}" role="button" ><i
                                             class='bx bx-layer-plus icon_vide' title="ajouter un nouveau module"></i></a>
                                 </div>
                                 @else
@@ -185,6 +186,7 @@
                                             </div>
                                         </div>
 
+
                                         @endcanany
                                     </div>
                                 </div>
@@ -213,7 +215,7 @@
                                 @if($mod_non_publies == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
+                                    <a class="text-center mt-5" href="{{route('nouveau_module_new')}}" role="button"><i
                                             class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
@@ -433,7 +435,7 @@
                                 @if($mod_hors_ligne == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
+                                    <a class="text-center mt-5" href="{{route('nouveau_module_new')}}" role="button"><i
                                             class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
@@ -617,7 +619,7 @@
                                 @if($mod_publies == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module')}}" role="button"><i
+                                    <a class="text-center mt-5" href="{{route('nouveau_module_new')}}" role="button"><i
                                             class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
@@ -781,6 +783,45 @@
                                 @endforeach
                                 @endif
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="modal fade" id="nouveau_module" tabindex="-1"
+                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <form action="{{route('nouveau_module_new')}}" method="POST" id="frm_new_module">
+                                @csrf
+                                <div class="modal-header .avertissement  d-flex justify-content-center"
+                                    style="color: white">
+                                    <h6 class="modal-title">Domaine de Formation</h6>
+                                </div>
+                                <div class="modal-body mb-3">
+                                    <div class="form-group" >
+                                        <label for="acf-domaine" class="form-control-placeholder mb-2">Domaine de Formation</label>
+                                        <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 40px;" required>
+                                            <option value="null" disable selected hidden>Choisissez la
+                                                domaine de formation ...</option>
+                                            @foreach($domaine as $do)
+                                            <option value="{{$do->id}}" data-value="{{$do->nom_domaine}}">
+                                                {{$do->nom_domaine}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-3" >
+                                        <label for="acf-categorie" class="form-control-placeholder mb-2">Thématique par Domaine</label>
+                                        <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 40px;" required>
+                                        </select>
+                                        <span style="" id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</span>
+
+                                    </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                                    <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Créer votre module</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -1141,6 +1182,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="{{asset('js/modules.js')}}"></script>
 <script >
+
+$("#acf-domaine").change(function() {
+    var id = $(this).val();
+    $(".categ").empty();
+    $(".categ").append(
+        '<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>'
+    );
+
+    $.ajax({
+        url: "/get_formation",
+        type: "get",
+        data: {
+            id: id,
+        },
+        success: function(response) {
+            var userData = response;
+
+            if (userData.length > 0) {
+                document.getElementById("domaine_id_err").innerHTML = "";
+                for (var $i = 0; $i < userData.length; $i++) {
+                    $(".categ").append(
+                        '<option value="' +
+                            userData[$i].id +
+                            '" data-value="' +
+                            userData[$i].nom_formation +
+                            '" >' +
+                            userData[$i].nom_formation +
+                            "</option>"
+                    );
+                }
+            } else {
+                document.getElementById("domaine_id_err").innerHTML =
+                    "choisir le type de domaine valide pour avoir ses formations";
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        },
+    });
+});
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
         localStorage.setItem('ActiveTabMod', lien);
