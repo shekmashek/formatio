@@ -82,8 +82,8 @@ class DomaineController extends Controller
     }
 
     public function listeCrud($id = null){
-        $domaine = Domaine::paginate(10, ['*'], 'domaine');
-        $formation  = formation::paginate(10, ['*'], 'formation');
+        $domaine = Domaine::orderBy('nom_domaine', 'asc')->paginate(10, ['*'], 'domaine');
+        $formation  = formation::orderBy('nom_formation', 'asc')->paginate(10, ['*'], 'formation');
         return view("admin.formation.liste_formation",compact('formation','domaine'));
     }
 
@@ -129,7 +129,7 @@ class DomaineController extends Controller
     public function update(Request $request)
     {
         // dd($request->nom_domaine);
-        domaine::where('id', $request->id)->update(['nom_domaine' => $request->nom_domaine]);        
+        domaine::where('id', $request->id)->update(['nom_domaine' => $request->nom_domaine]);
         return back();
     }
 
