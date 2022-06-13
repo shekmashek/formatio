@@ -111,6 +111,7 @@ class SessionController extends Controller
         $user_id = Auth::user()->id;
         $id = request()->id_session;
         $type_formation_id = request()->type_formation;
+        
         // ???--mbola tsy mety
         $test = DB::select('select count(id) as nombre from details where groupe_id = ?',[$id])[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
@@ -140,8 +141,6 @@ class SessionController extends Controller
             // $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $requette = $projet->requette_detail_session_of($cfp_id,$id);
             $datas = DB::select($requette);
-
-
             // dd($datas);
             if($type_formation_id  == 1){
                 $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
@@ -162,7 +161,16 @@ class SessionController extends Controller
                 }
             }
 
-         
+            if(count($dataMontantSession)>0){
+                if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id){
+                    $dataMontantSession[0]->qte = $dataMontantSession[0]->qte;
+                    $dataMontantSession[0]->hors_taxe = $dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session;
+                }
+                else{
+                    $dataMontantSession[0]->qte = null;
+                    $dataMontantSession[0]->hors_taxe=null;
+                }
+            }
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
             $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
@@ -187,7 +195,7 @@ class SessionController extends Controller
             
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
             
-            $frais_annex = DB::select("select * from v_montant_frais_annexe where entreprise_id=?",[$etp_id]);
+            $frais_annex = DB::select("select * from v_montant_frais_annexe where entreprise_id=? AND projet_id=?",[$etp_id,$projet[0]->projet_id]);
                 
                  for($i=0;$i<count($dataMontantSession);$i+=1){
                     $frais_annex = DB::select("select * from v_montant_frais_annexe where entreprise_id=? AND projet_id=? AND cfp_id=? AND entreprise_id=? AND num_facture=?",[$etp_id,$dataMontantSession[0]->projet_id,$dataMontantSession[0]->cfp_id,$dataMontantSession[0]->entreprise_id,$dataMontantSession[0]->num_facture]);
@@ -261,9 +269,22 @@ class SessionController extends Controller
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
         $cfp_id = $resp->cfp_id;
-        $data = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
-        return response()->json($data);
+        $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
+        $salles = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);  
+          
+        return response()->json(array('formateur'=>$formateur,'salles'=>$salles));
+        // return response()->json($data);
     }
+
+
+    // public function getSalleFormation(){
+    //     $user_id = Auth::user()->id;
+    //     $fonct = new FonctionGenerique();
+    //     $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+    //     $cfp_id = $resp->cfp_id;
+    //     $data = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
+    //     return response()->json($data);
+    // }
 
     public function getStagiaires(Request $request){
         $search = $request->search;

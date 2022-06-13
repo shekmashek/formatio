@@ -405,10 +405,8 @@
                                                         </td>
                                                         <td>{{ $pj->nom_module }}</td>
                                                         <td class="text-end">
-                                                            @if($pj->hors_taxe_net!=null) 
-                                                                <a href="{{route('detail_facture_etp',[$pj->cfp_id,$pj->num_facture])}}">
+                                                            @if($pj->hors_taxe_net!=null)
                                                                 {{number_format($pj->hors_taxe_net,0,","," ")}}
-                                                                </a>
                                                             @else 
                                                                 @php
                                                                     echo "<span>-</span>";
@@ -1138,9 +1136,7 @@
                                         </td>
                                         <td class="text-end">
                                            @if($pj->hors_taxe_net!=null) 
-                                           <a href="{{route('detail_facture_etp',[$pj->cfp_id,$pj->num_facture])}}">
                                            {{number_format($pj->hors_taxe_net,0,","," ")}}
-                                           </a>
                                            @else 
                                                 @php
                                                     echo "<span>-</span>";

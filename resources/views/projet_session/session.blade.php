@@ -425,15 +425,10 @@
                         <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>&nbsp;&nbsp;
                         <i class='bx bx-group ms-3' style="font-size: 1rem;"></i>
                         @if(count($dataMontantSession)>0)
-                            @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
-                                @if ($dataMontantSession[0]->qte >0)
+                            @if ($dataMontantSession[0]->qte != null)
                                 <span class="m-0 ms-1"> apprenant inscrit : {{$dataMontantSession[0]->qte}}</span> &nbsp;&nbsp;
-                                @else
+                            @else
                                 <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
-                                @endif
-                            @else{
-                                <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;git
-                            }
                             @endif
                         @else
                             <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
@@ -443,11 +438,8 @@
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> CA :<strong>
                                 @if(count($dataMontantSession)>0)
-                                    @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
-                                        @php 
-                                            $chiffre_affaire = ($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session);
-                                            echo number_format($chiffre_affaire,0,","," ");
-                                        @endphp
+                                    @if( $dataMontantSession[0]->hors_taxe != null)
+                                       {{number_format($dataMontantSession[0]->hors_taxe,0,","," ")}}
                                     @else{
                                         @php
                                             echo "<span>-</span>";
