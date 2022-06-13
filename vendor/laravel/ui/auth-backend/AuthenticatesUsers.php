@@ -130,7 +130,7 @@ trait AuthenticatesUsers
         // dd($user);
         $user->loged = 1;
         $user->update(['loged' => 1]);
-        dd($user);
+        // dd($user);
 
     }
 
