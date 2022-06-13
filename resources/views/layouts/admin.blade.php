@@ -546,7 +546,6 @@
                         <div class="titre">
                             <i >F</i>
                         </div>
-                        
                     </a>
                 </div>
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
