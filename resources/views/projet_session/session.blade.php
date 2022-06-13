@@ -1112,7 +1112,7 @@
     </div>
 
     {{--Responsable ETP--}}
-    <div class="offcanvas offcanvas-end" style="padding-top: 50px" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas offcanvas-end" style="padding-top: 50px" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -1265,7 +1265,7 @@
     </div>
 
     {{--OF--}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="padding-top: 50px">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="padding-top: 50px" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -1438,7 +1438,7 @@
     </div>
 
     {{--resp OF--}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" style="padding-top: 50px" id="test" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" style="padding-top: 50px" id="test" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -1545,24 +1545,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-user-pin saClass' ></i></div>
-                            <div class="col-md-3" id="saId">Sexe</div>
-                            <div class="col-md">
-                                <span id="saId">
-                                    @if ($of->sexe_resp_cfp == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $of->sexe_resp_cfp }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div> --}}
+
                     <div class="mt-1">
                         <div class="row">
                             <div class="col-md-1"></div>
