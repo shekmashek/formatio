@@ -84,20 +84,28 @@
             display: none;
             
         }
+        
         .form{
-            margin-top:0px;
-            padding: 200px;
+            position: relative;
+            padding: 100px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, .1);
+            margin-top: 50px;
             /* background: #000; */
             /* position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%); */
         }
+        body{ 
+            margin: 0;
+            padding: 0;
+        }
     }
-    @media screen and (max-width: 1200px){
+    @media screen and (min-width:990px) and (max-width: 1200px) {
         .img{
-            width: 500px;
+            width: 400px;
             margin-top: 20%;
+            
             /* display: none; */
         }
         .form{
@@ -105,26 +113,18 @@
             
         } 
     }
+    
 </style>
 <body>
     <div class="col-3 d-flex flex-row padding_logo" style="margin-left: 50px;">
         
-        <a href="/home" class="teste" style="margin-top:-150px;width:70px;height:70px">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <div class="titre">
-                <i >F</i>
-            </div>
-        </a>
     </div>
     <div class="container-fluid">
         
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 tt">
                 <div class="img">
-                    <img class="img-fluid" style="width: 700px" src="{{asset('images/76888-color-data-analysis.gif')}}" alt="">
+                    <img class="img-fluid" style="width: 600px" src="{{asset('images/76888-color-data-analysis.gif')}}" alt="">
                 </div>
             </div>
             <div class="col-lg-4">
@@ -147,7 +147,7 @@
                             
                         </div>
                         <div class="input-group">
-                            <input type="password" name="password" id="password" id="mseho" class="form-control" aria-label="Amount (to the nearest dollar)">
+                            <input type="password" name="password" id="password"  class="form-control" aria-label="Amount (to the nearest dollar)">
                             <div class="input-group-append">
                             <span class="input-group-text" style="height: 35px;"><i class="fa-solid fa-eye align-middle" onclick="affiche()" ></i></span>
                             
@@ -171,15 +171,13 @@
 </body>
 <script>
     function affiche(){
-        var a = document.getElementById('mseho');
-        if (a.type === "password")
-        { 
-        a.type = "text"; 
-        } 
-        else
-        { 
-        a.type = "password"; 
-        } 
-            }
+        
+        var input = document.getElementById("password");
+        if (input.type === "password") {
+            input.type = 'text'
+        } else {
+            input.type = 'password'
+        }
+    }    
 </script>
 </html>

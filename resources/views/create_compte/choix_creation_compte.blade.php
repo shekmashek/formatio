@@ -1,54 +1,38 @@
-@extends('create_compte.header')
-@section('content')
-<div class="container-fluid">
-    <div class="row info_choix">
-        <div class="col-6 choix_compte">
-            {{-- <div class="row">
-                <div class=" d-flex flex-row justify-content-center">
-                    <div class="me-4">
-                        <h3>UpSkills</h3>
-                    </div>
-                    <div>
-                        <p class="separateur">|</p>
-                    </div>
-                    <div class="ms-4">
-                        <h3>formation.mg</h3>
-                    </div>
-                </div>
-            </div> --}}
-            <div class="row">
-                <p class="flex-wrap text_inscript text-center">
-                    Inscrivez votre organisme de formation et votre entreprise gratuitement sur notre plateforme
-                </p>
-            </div>
-            <div class="row content_choice">
-                <p class="text-center txt_commencer">Commençons votre inscription</p>
-                {{-- <p class="mb-5"><span class="vous_etes">Vous êtes?</span><br>Plateforme pour les centres de formation. Si vous cherchez une formation inscrivez-vous en tant que entreprise.</p> --}}
-                <p class="mb-5 text-center">Choisissez votre type d'organisation</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Formation.mg</title>
+</head>
+<style>
+   body {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
 
-                <div class="col-6 text-center icon_choice">
-                    <a href="{{route('create+compte+client/OF')}}" role="button">
-                        <p class="txt_titre fs-5">Organisme de Formation</p>
-                        <i class='bx bxs-home'></i>
-                    </a>
-                </div>
-                <div class="col-6 text-center icon_choice">
-                    <a href="{{route('create+compte+client/employeur')}}" class="" role="button">
-                        <p class="txt_titre etp_txt fs-5">Entreprise</p>
-                        <i class='bx bxs-city'></i>
-                    </a>
-                </div>
-                <div class="text-center">
-                    <p style="font-size: 14px" class="mt-2">Vous avez un compte? Connectez-vous <a href="{{route('sign-in')}}" style="color: blue">ici.</a> Vous voulez revenir à l'accueil?  Appuyez sur <a href="{{route('accueil_perso')}}" style="color: blue">accueil</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 image_accueil">
-            <div class="text-center ">
-                <img src="{{asset('img/logo_formation/logo_fmg7635dc trans.png')}}" alt="logo" class="img-fluid" width="300px" height="300px">
-            </div>
-            <h3 class="text-center  mt-2">formation.mg</h3>
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+</style>
+<body>
+    <div class="container">
+        <div class="row">
+            
         </div>
     </div>
-</div>
-@endsection
+</body>
+</html>

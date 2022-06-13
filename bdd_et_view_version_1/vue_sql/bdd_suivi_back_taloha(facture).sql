@@ -313,7 +313,7 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
     factures.cfp_id,
     (factures.id) facture_id,
     factures.num_facture,
-    entreprise_id,
+    
     other_message,
     (
         DATEDIFF(
@@ -341,7 +341,7 @@ CREATE OR REPLACE VIEW v_facture_actif AS SELECT
     GROUP BY
         factures.id,
         factures.cfp_id,
-        entreprise_id,
+        
         factures.num_facture,
         factures.other_message,
         facture_encour,
@@ -355,7 +355,7 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
 (factures.id) facture_id,
     factures.cfp_id,
     factures.num_facture,
-    entreprise_id,
+    
     other_message,
     (
         DATEDIFF(
@@ -384,7 +384,7 @@ CREATE OR REPLACE VIEW v_facture_inactif AS SELECT
         factures.id,
         factures.cfp_id,
         factures.num_facture,
-        entreprise_id,
+        
         factures.other_message,
         facture_encour,
         v_facture_existant.due_date,v_facture_existant.invoice_date,
