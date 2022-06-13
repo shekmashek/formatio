@@ -3,6 +3,7 @@
 namespace App\Providers;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,9 +17,9 @@ class AppServiceProvider extends ServiceProvider
         //
     }
     public function boot()
-{
-    Schema::defaultStringLength(191);
-}
+    {
+        Schema::defaultStringLength(191);
+    }
 
     /**
      * Bootstrap any application services.

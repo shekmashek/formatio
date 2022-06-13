@@ -11,7 +11,7 @@ class Formation extends Model
 {
     protected $table = "formations";
     protected $fillable = [
-        'id','nom_formation','cfp_id','domaine_id','formation_id'
+        'id','nom_formation','domaine_id','formation_id'
     ];
     public function domaine(){
         return $this->belongsTo('App\Domaine');

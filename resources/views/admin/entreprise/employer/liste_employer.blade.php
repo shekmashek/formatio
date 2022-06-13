@@ -385,33 +385,32 @@
 
                                             <td class="align-middle text-center text-secondary">
 
-                                                @if ($employe->activiter == 1)
-                                                    <div class="form-check form-switch">
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked"><span
-                                                                class="badge bg-success">actif</span></label>
-                                                        <input class="form-check-input desactiver_stg" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
-                                                            checked>
-                                                    </div>
-                                                        @else
-                                                    <div class="form-check form-switch">
-                                                        <label class="form-check-label"
-                                                            for="flexSwitchCheckChecked">
-                                                            <span class="badge bg-danger">
-                                                                inactif
-                                                            </span>
-                                                        </label>
-                                                        <input class="form-check-input activer_stg" type="checkbox"
-                                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
-                                                    </div>
-                                                        @endif
-
-                                            </td>
-                                            <td class="align-middle text-center text-secondary">
-                                                <button type="button" class="btn " data-bs-toggle="modal"
-                                                    data-bs-target="#delete_emp_{{ $employe->id }}">
-                                                    <i class=' bx bxs-trash' style='color:#e21717'></i>
-                                            </button>
+                                            @if ($employe->activiter == 1)
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                                            class="badge bg-success">actif</span></label>
+                                                    <input class="form-check-input desactiver_stg" type="checkbox"
+                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                        checked>
+                                                </div>
+                                            @else
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label"
+                                                        for="flexSwitchCheckChecked">
+                                                        <span class="badge bg-danger">
+                                                            inactif
+                                                        </span>
+                                                    </label>
+                                                    <input class="form-check-input activer_stg" type="checkbox"
+                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                </div>
+                                            @endif
+                                    </td>
+                                    <td class="align-middle text-center text-secondary">
+                                        <button type="button" class="btn " data-bs-toggle="modal"
+                                            data-bs-target="#delete_emp_{{ $employe->id }}">
+                                            <i class=' bx bxs-trash' style='color:#e21717'></i>
+                                    </button>
                                 </td>
 
                             </tr>
@@ -591,11 +590,13 @@
         </div>
 
 
-        <script src="{{ asset('assets/js/jquery.js') }}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <script>
+
+
             $('.empNew').on('click', function(){
                 var user_id = $(this).data("id");
                 console.log(user_id);
@@ -634,7 +635,7 @@
         </script>
         <script>
             $(".randomColor").each(function() {
-            //On change la couleur de fond au hasard  
+            //On change la couleur de fond au hasard
                 $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
             });
         </script>

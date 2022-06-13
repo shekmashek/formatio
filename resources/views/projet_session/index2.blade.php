@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
 
     <style>
+        /* .myEtpStyle:hover{
+            text-decoration: underline;
+            color: darkorchid;
+        } */
         .dropdown-item.active{
             background-color: transparent !important;
         }
