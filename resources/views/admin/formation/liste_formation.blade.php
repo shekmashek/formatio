@@ -183,7 +183,7 @@
         top: .4rem;
         margin-right: .3rem;
     }
-/* 
+/*
     .pagination {
         float: center;
         background-clip: text;
@@ -196,7 +196,7 @@
         background-color: rgb(239, 239, 239);
         border-radius: 1.3rem;
     }
-    
+
     .nombre_pagination {
         color: #626262;
 
@@ -320,7 +320,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                     {{-- fin modal delete --}}
                             </tr>
                             @endforeach
-                            
+
                             @else
                             <tr>
                                 <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
@@ -330,7 +330,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                     </table>
                 </div>
                 <div class="d-flex justify-content-center">
-                    {{ $domaine->onEachSide(2)->links() }}
+                    {{ $domaine->onEachSide(1)->links() }}
                 </div>
             </div>
             <div class="tab-pane fade show " id="Formations">
@@ -439,7 +439,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </div>
 <script>
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        let lien = ($(e.target).attr('href'));  
+        let lien = ($(e.target).attr('href'));
         localStorage.setItem('collaboration', lien);
     });
     let Tabactive = localStorage.getItem('collaboration');
