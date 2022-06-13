@@ -234,17 +234,10 @@ class SessionController extends Controller
             // dd($formateur_cfp);
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
 
-<<<<<<< HEAD
-            $drive = new getImageModel();
-            $drive->create_folder($cfp_nom);
-            $drive->create_sub_folder($cfp_nom, "Mes documents");
-
-=======
             // $drive = new getImageModel();
             // $drive->create_folder($cfp_nom);
             // $drive->create_sub_folder($cfp_nom, "Mes documents");
->>>>>>> b199dd00cc69ba309c97c9d45693d7863bab8bcf
-            $documents = $drive->file_list($cfp_nom,"Mes documents");
+            // $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
         if(Gate::allows('isReferent')){
@@ -745,9 +738,5 @@ class SessionController extends Controller
     }
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b199dd00cc69ba309c97c9d45693d7863bab8bcf
 
 }

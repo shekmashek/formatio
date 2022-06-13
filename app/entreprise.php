@@ -14,6 +14,12 @@ class entreprise extends Model
         
     ];
 
+
+    public function abonnement()
+    {
+        return $this->hasMany('App\abonnement');
+    }
+
     public function secteur()
     {
         return $this->belongsTo('App\Secteur');

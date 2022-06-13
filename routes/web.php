@@ -29,7 +29,7 @@ Route::get('contacts', function () {
 });
 //Rout send email
 Route::post('/envoyer', 'SendEmailController@sendMail')->name('contact');
-Route::post('/mail_demande_devis', 'Send_devis_mail@mail_demande_devis')->name('mail_demande_devis');
+// Route::post('/mail_demande_devis', 'Send_devis_mail@mail_demande_devis')->name('mail_demande_devis');
 Route::get('demande_dev',function (){
     return view('test_demande_devis');
 });
@@ -964,7 +964,7 @@ Route::post('enregistrement_branche', 'DepartementController@enregistrement_bran
 Route::get('affiche_departement', 'DepartementController@liste_dep')->name('affiche_departement');
 // ======= export excel copier coller participant
 Route::get('export_excel_new_participant','ParticipantController@teste')->name('export_excel_new_participant');
-Route::get('show_excel','ViexExcelController@index')->name('show_excel');
+// Route::get('show_excel','ViewExcelController@index')->name('show_excel');
 // Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
 Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep');
 
