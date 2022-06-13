@@ -253,7 +253,7 @@ class SessionController extends Controller
         //--modalite de formation
         $modalite = DB::select('select modalite from groupes where id = ?',[$id])[0]->modalite;
         $devise = DB::select('select * from devise')[0]->devise;
-        $ref = DB::select('select * from devise')[0]->reference;
+        $ref = DB::select('select * from devise')[0]->description;
         $lieu_formation = DB::select('select projet_id,groupe_id,lieu from details where groupe_id = ? AND projet_id=? group by projet_id,groupe_id,lieu', [$projet[0]->groupe_id,$projet[0]->projet_id]);
 
         if(count($lieu_formation)>0){
