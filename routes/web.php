@@ -56,6 +56,13 @@ Route::get('/user', function () {
 });
 // route recheche personne qui suivi une formation dans une entreprise
 Route::get('recherche_input', 'RecherchemultiController@recherche')->name('recherche_input');
+
+// a temporary home route to dd('connected')
+// Route::get('/home', function () {
+//     dd('connected');
+//     return view('home');
+// });
+
 Route::get('/home/{id?}', 'HomeController@index')->name('home');
 Route::get('/hometdbf/{id?}', 'HomeControllerTDBF@index')->name('hometdbf');
 Route::get('/hometdbq/{id?}', 'HomeControllerTDBQ@index')->name('hometdbq');

@@ -125,8 +125,13 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
-        
+        $loged_user = Auth::user();
+        $user = User::where('id', $loged_user->id)->first();
+        // dd($user);
+        $user->loged = 1;
+        $user->update(['loged' => 1]);
+        dd($user);
+
     }
 
     /**
