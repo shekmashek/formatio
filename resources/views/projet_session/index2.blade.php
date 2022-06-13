@@ -251,42 +251,11 @@
         .btn_eval_stg:hover{
             background-color: #262b86;
         }
-            /*info SESSION*/
-    .green{
-        color: #5e35b1;
-        border: 2px solid #43a047;
-        border-radius: 2px;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 4px;
-    }
 
-    .red{
-        color: #5e35b1;
-        border: 2px solid #f4511e;
-        border-radius: 2px;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 4px;
-    }
-
-    .yellow{
-        color: #5e35b1;
-        border: 2px solid #fdd835;
-        border-radius: 2px;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 4px;
-    }
-
-    .saClass{
-        font-size: 21px; 
-        color: #637381;
-    }
-    .saSpan{
-        color: #637381;
-        font-size: 14px;
-    }
+        .detail_session{
+            color: #5433FF;
+            text-align: center;
+        }
     </style>
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
@@ -436,7 +405,7 @@
                                             @foreach ($data as $pj)
                                                 @if ($prj->projet_id == $pj->projet_id)
                                                     <tr>
-                                                        <td class="tbody_projet"> <a
+                                                        <td class="detail_session"> <a
                                                                 href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                         </td>
                                                         <td>{{ $pj->nom_module }}</td>
@@ -464,14 +433,14 @@
                                                         <td>
                                                             @foreach ($entreprise as $etp)
                                                                 @if ($etp->groupe_id == $pj->groupe_id)
-                                                                    
+
                                                                     <a href="#" class="information myEtpStyle" data-id="{{ $etp->entreprise_id }}" id="{{ $etp->entreprise_id }}"
                                                                         onclick="afficherInfos();">{{ $etp->nom_etp }}</a>
                                                                 @endif
                                                             @endforeach
                                                         </td>
                                                         <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
-                                                        <td>
+                                                        <td class="tbody_projet">
                                                             @php
                                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                                             @endphp
@@ -1072,7 +1041,7 @@
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
-                                        <td class="tbody_projet">
+                                        <td class="detail_session">
                                             <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
@@ -1167,7 +1136,7 @@
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
-                                        <td class="tbody_projet"> <a
+                                        <td class="detail_session"> <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
                                         <td class="text-start">
@@ -1193,9 +1162,8 @@
                                             @php
                                                 echo "<span>-</span>";
                                             @endphp
-                                        @endif
-                                       </td> --}}
-                                        <td>
+                                        </td>
+                                        <td class="tbody_projet">
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                             @endphp
@@ -1259,7 +1227,7 @@
                                                 echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
-                                        <td>
+                                        <td class="tbody_projet">
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                             @endphp
@@ -1415,19 +1383,19 @@
                         <div class="mt-2" style="font-size:14px">
                                 <div class="mt-1 text-center mb-3">
                                     <span id="lEtp">
-                                        
+
                                     </span>
                                 </div>
                                 <div class="mt-1 text-center">
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
-                                            
+
                                             <p id="nEtp" style="color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
-                                                
+
                                             </p>
                                             <p id="status">
-                                                
+
                                             </p>
                                         </div>
                                         <div class="col-md-1"></div>
@@ -1462,7 +1430,7 @@
                                         <div class="col-md-3">STAT</div>
                                         <div class="col-md">
                                             <span id="stat" style="font-size: 14px;">
-                                                
+
                                             </span>
                                         </div>
                                     </div>
@@ -1474,7 +1442,7 @@
                                         <div class="col-md-3">Tel</div>
                                         <div class="col-md">
                                             <span id="tel" style="font-size: 14px;">
-                                                
+
                                             </span>
                                         </div>
                                     </div>
@@ -1486,7 +1454,7 @@
                                         <div class="col-md-3">E-mail</div>
                                         <div class="col-md">
                                             <span id="mail">
-                                                
+
                                             </span>
                                         </div>
                                     </div>
@@ -1511,11 +1479,11 @@
                                         <div class="col-md-3">Site web</div>
                                         <div class="col-md">
                                             <span id="site">
-                                                
+
                                             </span>
                                         </div>
                                     </div>
-                                </div>                            
+                                </div>
                         </div>
                 </div>
 
@@ -1596,8 +1564,8 @@
                                     $("#adrlot3").text(userData[i].adresse_ville);
                                     $("#adrlot4").text(userData[i].adresse_region);
                                     $("#site").text(': '+userData[i].site_etp);
-                                    
-                                    
+
+
                                     var status = $('#status');
                                     // console.log(status);
 
@@ -1613,11 +1581,11 @@
                                     }else{
                                         console.log('ereur');
                                     }
-                                    
+
                                 }
                             }
                         });
-                        
+
                     });
 
                 </script>

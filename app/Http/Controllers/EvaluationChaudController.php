@@ -118,7 +118,7 @@ class EvaluationChaudController extends Controller
     }
 
     public function evaluation_chaud_pdf(Request $request){
-        try{
+        // try{
             $eval = new EvaluationChaud();
             $groupe = $request->groupe_id;
             // preparation de la formation
@@ -129,6 +129,7 @@ class EvaluationChaudController extends Controller
                 if(count($res_q1)<=0 || count($note_10_q1) <= 0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }
+                
             //
             // q2
                 $res_q2 = $eval->pourcentage_point($groupe,4);
@@ -136,6 +137,7 @@ class EvaluationChaudController extends Controller
                 if(count($res_q2)<=0 || count($note_10_q2) <= 0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }
+                // dd($res_q2,$note_10_q2);
             //
                 // $somme_note_1 = DB::select('select sum(note_sur_10)/? as note from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? or id_qst_fille = ?',[2,$groupe,3,4]);
             // end
@@ -265,8 +267,8 @@ class EvaluationChaudController extends Controller
             return view('admin.evaluation.evaluationChaud.resultat_evaluation_chaud_pdf',compact('session','res_q1','note_10_q1','res_q2','note_10_q2','res_q3','note_10_q3','res_q4','note_10_q4','res_q5','note_10_q5','res_q6','note_10_q6','res_q7','res_q8','note_10_q8',
             'res_q9','note_10_q9','res_q10','note_10_q10','res_q11','note_10_q11','res_q12','note_10_q12','res_q13','res_q14','res_q15'));
             // return $pdf->download('Resulat_evaluation_a_chaud.pdf');
-        }catch(Exception $e){
-            return back()->with('pdf_error','Evaluation à chaud pas encore disponible.');
-        }
+        // }catch(Exception $e){
+        //     return back()->with('pdf_error','Evaluation à chaud pas encore disponible.');
+        // }
     }
 }

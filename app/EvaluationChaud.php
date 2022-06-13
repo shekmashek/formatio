@@ -287,7 +287,46 @@ public function insert_desc_champ_reponse($desc,$id_qst_fille,$nb_max){
 
 
     public function pourcentage_point($groupe,$id_qst){
-        return DB::select('select id_qst_fille,qst_fille,nombre_stg,point,note_sur_10,pourcentage,total_stagiaire from v_evaluation_chaud_resultat where id_qst_fille = ? and groupe_id = ? order by point desc',[$id_qst,$groupe]);
+        return DB::select('select groupe_id,id_qst_fille,qst_fille,nombre_stg,note_sur_10,pourcentage from v_evaluation_chaud_resultat where id_qst_fille = ? and groupe_id = ? order by point desc',[$id_qst,$groupe]);
+    //     return DB::select('
+    //     select
+    //     qfp.groupe_id,
+    //     qfp.id_qst_fille,
+    //     qfp.qst_fille,
+    //     qfp.point,
+    //     ifnull(ec.points, 0) as point_eval,
+    //     qfp.point_max,
+    //     ifnull(ec.nombre_stg, 0) as nombre_stg,
+    //     ifnull(ec.total_stagiaire, 0) as total_stagiaire,
+    //     ifnull(
+    //         ROUND(
+    //             (
+    //                 (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
+    //             ) * 10,
+    //             1
+    //         ),
+    //         0
+    //     ) as note_sur_10,
+    //     ifnull(
+    //         ROUND(
+    //             (
+    //                 (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
+    //             ) * 100,
+    //             1
+    //         ),
+    //         0
+    //     ) as pourcentage
+    // from
+    //     v_question_fille_point qfp
+    //     left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille and qfp.point = ec.points
+    //     where qfp.groupe_id = ? and qfp.id_qst_fille = ?
+    //     group by 
+    //         qfp.groupe_id,
+    //         qfp.id_qst_fille,
+    //         qfp.qst_fille,
+    //         qfp.point,
+    //         qfp.point_max;
+    //     ',[$groupe,$id_qst]);
     }
 
     public function note_question($groupe,$id_qst){
