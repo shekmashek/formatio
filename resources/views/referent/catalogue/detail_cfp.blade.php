@@ -64,7 +64,7 @@
                                     @endif
                                 @endforeach
                                 </h4>
-                                <p>{{$cfp->slogan}}{{$cfp->id}}</p>
+                                <p>{{$cfp->slogan}}</p>
                                 @if($avis_etoile[0]->pourcentage != null)
                                 <div class="d-flex flex-row">
                                     @if($avis_etoile[0]->pourcentage != null)
