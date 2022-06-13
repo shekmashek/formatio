@@ -130,7 +130,7 @@ select
     ) as pourcentage
 from
     v_question_fille_point qfp
-    left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille and qfp.point = ec.points
+    left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille and qfp.point = ec.points and qfp.groupe_id = ec.groupe_id
     group by 
         qfp.groupe_id,
         qfp.id_qst_fille,
@@ -180,84 +180,3 @@ from
         qfp.point_max
 
 
-
-select
-    id_qst_fille,
-    sum(note_sur_10) as note
-from
-    v_evaluation_chaud_resultat
-group by
-    id_qst_fille;
-
-select
-    sum(note_sur_10) / 2 as note
-from
-    v_evaluation_chaud_resultat
-where
-    id_qst_fille = 3
-    or id_qst_fille = 4
-select
-    id_qst_fille,
-    qst_fille,
-    nombre_stg,
-    point,
-    note_sur_10,
-    pourcentage
-from
-    v_evaluation_chaud_resultat
-where
-    id_qst_fille = 3
-order by
-    point desc;
-
-select
-    *
-from
-    v_evaluation_chaud_resultat
-where
-    id_qst_fille = 10
-    and point < 4;
-
-select
-    id_qst_fille,
-    sum(note_sur_10) as note
-from
-    v_evaluation_chaud_resultat
-where
-    id_qst_fille = 10
-group by
-    id_qst_fille;
-
-create table reponse_total(
-    reponse text
-);
-
-insert into reponse_total value('Oui');
-insert into reponse_total value('Non');
-
-select * from reponse_total cross join v_reponse_evaluationchaud
-
-select
-    re.groupe_id,
-    count(r.stagiaire_id) as nombre_stg,
-    ifnull(
-        ROUND(
-            (
-                (count(r.stagiaire_id) * case when r.desc_champ = 'Oui' then 2 when r.desc_champ = 'Non' then 1 else 0 end) /(nsg.total_stagiaire * 2)
-            ) * 100,
-            1
-        ),
-        0
-    ) as note_sur_10,
-    re.reponse
-from
-    (select * from reponse_total cross join v_reponse_evaluationchaud) as re
-left join v_reponse_evaluationchaud r on r.groupe_id = re.groupe_id and re.reponse = r.desc_champ
-join v_nombre_stagiaire_groupe nsg on nsg.groupe_id = re.groupe_id
-where
-    re.id_qst_fille = 17
-group by
-    nsg.groupe_id,
-    re.reponse order by desc_champ desc;
-
-select reponse_desc_champ,case when statut = 0 then concat(nom_stagiaire,' ',prenom_stagiaire) when statut = 1 then 'Anonyme' end stagiaire from v_reponse_evaluationchaud re join stagiaires s on s.id = re.stagiaire_id where groupe_id = 28 and id_qst_fille = 20

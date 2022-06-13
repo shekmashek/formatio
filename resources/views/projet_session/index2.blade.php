@@ -251,6 +251,11 @@
         .btn_eval_stg:hover{
             background-color: #262b86;
         }
+
+        .detail_session{
+            color: #5433FF;
+            text-align: center;
+        }
     </style>
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
@@ -397,7 +402,7 @@
                                             @foreach ($data as $pj)
                                                 @if ($prj->projet_id == $pj->projet_id)
                                                     <tr>
-                                                        <td class="tbody_projet"> <a
+                                                        <td class="detail_session"> <a
                                                                 href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                                         </td>
                                                         <td class="text-start">{{ $pj->nom_module }}</td>
@@ -414,7 +419,7 @@
                                                             @endforeach
                                                         </td>
                                                         <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
-                                                        <td>
+                                                        <td class="tbody_projet">
                                                             @php
                                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                                             @endphp
@@ -1008,7 +1013,7 @@
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
-                                        <td class="tbody_projet">
+                                        <td class="detail_session">
                                             <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
@@ -1101,7 +1106,7 @@
                                                 &nbsp;&nbsp;
                                             @endif
                                         </td>
-                                        <td class="tbody_projet"> <a
+                                        <td class="detail_session"> <a
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
                                         <td class="text-start">
@@ -1114,7 +1119,7 @@
                                                 echo $groupe->nombre_apprenant_session($pj->groupe_id);
                                             @endphp
                                         </td>
-                                        <td>
+                                        <td class="tbody_projet">
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                             @endphp
@@ -1170,7 +1175,7 @@
                                                 echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
-                                        <td>
+                                        <td class="tbody_projet">
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
                                             @endphp
