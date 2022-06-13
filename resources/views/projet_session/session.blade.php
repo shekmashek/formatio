@@ -1434,7 +1434,7 @@
     </div>
 
     {{--resp OF--}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" style="padding-top: 50px" id="test" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="test" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
