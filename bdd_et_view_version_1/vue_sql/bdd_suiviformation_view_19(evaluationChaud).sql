@@ -100,6 +100,7 @@ from
     ) as t on t.id_qst_fille = qf.id;
 
 
+
 create
 or replace view v_evaluation_chaud_resultat as
 select
@@ -139,7 +140,3 @@ from
         ec.points,
         ec.nombre_stg,
         ec.total_stagiaire;
-
-
-
-
