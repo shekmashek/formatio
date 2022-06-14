@@ -311,12 +311,14 @@ class SessionController extends Controller
         $id = $request->Id;
         $etp = $request->etp;
         $groupe = $request->groupe;
-        $stagiaire = DB::select('select id from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+        // $stagiaire = DB::select('select id from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+        $stagiaire = DB::select('select * from stagiaires where matricule like "%'.$id.'%" or nom_stagiaire like "%'.$id.'%" or prenom_stagiaire like "%'.$id.'%" and entreprise_id='.$etp);
+        
         $existe = 0;
         if(count($stagiaire) > 0){
-            $stg_id = DB::select('select id from stagiaires where matricule = ?',[$id])[0]->id;
+            $stg_id = DB::select('select * from stagiaires where matricule like "%'.$id.'%" or nom_stagiaire like "%'.$id.'%" or prenom_stagiaire like "%'.$id.'%"')[0]->id;
             $existe = DB::select('select count(stagiaire_id) as nombre from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$stg_id,$groupe])[0]->nombre;
-            $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+            $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule like "%'.$id.'%" or nom_stagiaire like "%'.$id.'%" or prenom_stagiaire like "%'.$id.'%" and entreprise_id ='.$etp);
             return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]);
         }else{
             return response()->json(['status'=>'400']);
