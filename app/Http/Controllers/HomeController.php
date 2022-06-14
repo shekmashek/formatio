@@ -201,12 +201,25 @@ class HomeController extends Controller
             return redirect()->route('calendrier');
         }
         if (Gate::allows('isManagerPrincipale')) {
+
             return redirect()->route('calendrier');
         }
         if (Gate::allows('isStagiairePrincipale')) {
+
             //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
             $testNull = DB::select('select * from stagiaires where user_id  = ? ', [Auth::user()->id]);
+
+            $etp_ab = DB::select('select * from v_statut_compte_entreprise where id = ?', [$testNull[0]->entreprise_id]);
+            if($etp_ab[0]->statut_compte_id == 1 && $etp_ab[0]->statut_compte_id == 3 ){
+                $message = "Vous êtes en mode ".$etp_ab[0]->nom_statut;
+                $test = 0;
+            }
+            if($etp_ab[0]->statut_compte_id == 2){
+                $message = "Vous êtes en mode ".$etp_ab[0]->nom_statut;
+                $test = 1;
+            }
+
 
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
 
@@ -262,7 +275,7 @@ class HomeController extends Controller
         }
 
         if (Gate::allows('isCFPPrincipale')) {
-         
+
             $fonct = new FonctionGenerique();
 
             $user_id = Auth::user()->id;
@@ -344,7 +357,7 @@ class HomeController extends Controller
             }
             //date now
             $dtNow = Carbon::today()->toDateString();
-           
+
             $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
             if ($cfp_ab != null && $cfp_ab[0]->status != "Désactivé" &&  $cfp_ab[0]->status != "En attente") {
 
@@ -354,7 +367,7 @@ class HomeController extends Controller
                     $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
                     $message = "Vous êtes en mode ".$statut_compte->nom_statut;
                     $test = 0;
-                } 
+                }
                 else{
                     setlocale(LC_TIME, "fr_FR");
                     $j1 = strftime('%d', strtotime($cfp_ab[0]->due_date));
@@ -364,12 +377,12 @@ class HomeController extends Controller
                     $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
                     $message = "Vous êtes en mode ".$statut_compte->nom_statut;
                     $test = 1;
-                }    
+                }
             } else {
                 $test = 0;
                 $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
                 $message = "Vous êtes en mode ".$statut_compte->nom_statut;
-            }   
+            }
 
             return view('cfp.dashboard_cfp.dashboard', compact('vue','test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler'));
         }
@@ -440,7 +453,7 @@ class HomeController extends Controller
                         $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
                         $message = "Vous êtes en mode ".$statut_compte->nom_statut;
                         $test = 0;
-                    } 
+                    }
                     else{
                         setlocale(LC_TIME, "fr_FR");
                         $j1 = strftime('%d', strtotime($etp_ab[0]->due_date));
@@ -450,7 +463,7 @@ class HomeController extends Controller
                         $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
                         $message = "Vous êtes en mode ".$statut_compte->nom_statut;
                         $test = 1;
-                    }        
+                    }
                 }
                 else {
                     $test = 0;
