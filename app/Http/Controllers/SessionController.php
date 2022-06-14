@@ -722,5 +722,4 @@ class SessionController extends Controller
                 
         return response()->json($info);
     }
-
 }
