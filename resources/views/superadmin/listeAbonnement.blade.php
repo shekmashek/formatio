@@ -13,6 +13,7 @@
         integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
     <div class="container-fluid">
         {{-- <div class="col-md">
@@ -23,13 +24,13 @@
         <div class="m-4" role="tabpanel">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item active">
-                    <a href="#service" class="nav-link active" data-toggle="tab">Historique des services</a>
+                    <a href="#service" class="nav-link active" data-toggle="tab"><i class="bi bi-list-task"></i>&nbsp;&nbsp;Historique des services</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#abonnement" class="nav-link " data-toggle="tab">Abonnements</a>
+                    <a href="#abonnement" class="nav-link " data-toggle="tab"><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;Abonnements</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#facture" class="nav-link" data-toggle="tab">Factures</a>
+                    <a href="#facture" class="nav-link" data-toggle="tab"><i class="bi bi-receipt"></i>&nbsp;&nbsp;Factures</a>
                 </li>
             </ul>
 

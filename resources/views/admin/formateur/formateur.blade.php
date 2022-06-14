@@ -94,7 +94,7 @@
     <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
         <li class="nav-item" role="presentation">
           <a
-            class="nav-link "
+            class="nav-link active"
             id="ex1-tab-1"
             data-mdb-toggle="tab"
             data-bs-toggle="tab"
@@ -107,7 +107,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <a
-            class="nav-link active"
+            class="nav-link"
             id="ex1-tab-2"
             data-mdb-toggle="tab"
             data-bs-toggle="tab"
