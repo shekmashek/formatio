@@ -201,12 +201,25 @@ class HomeController extends Controller
             return redirect()->route('calendrier');
         }
         if (Gate::allows('isManagerPrincipale')) {
+
             return redirect()->route('calendrier');
         }
         if (Gate::allows('isStagiairePrincipale')) {
+
             //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
             $testNull = DB::select('select * from stagiaires where user_id  = ? ', [Auth::user()->id]);
+
+            $etp_ab = DB::select('select * from v_statut_compte_entreprise where id = ?', [$testNull[0]->entreprise_id]);
+            if($etp_ab[0]->statut_compte_id == 1 && $etp_ab[0]->statut_compte_id == 3 ){
+                $message = "Vous êtes en mode ".$etp_ab[0]->nom_statut;
+                $test = 0;
+            }
+            if($etp_ab[0]->statut_compte_id == 2){
+                $message = "Vous êtes en mode ".$etp_ab[0]->nom_statut;
+                $test = 1;
+            }
+
 
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
 
@@ -344,17 +357,27 @@ class HomeController extends Controller
             }
             //date now
             $dtNow = Carbon::today()->toDateString();
-            $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
 
+            $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
             if ($cfp_ab != null && $cfp_ab[0]->status != "Désactivé" &&  $cfp_ab[0]->status != "En attente") {
-                setlocale(LC_TIME, "fr_FR");
-                $j1 = strftime('%d', strtotime($cfp_ab[0]->due_date));
-                $j2 = strftime('%d', strtotime($dtNow));
-                $jour_restant = $j2 - $j1;
-                // $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
-                $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
-                $message = "Vous êtes en mode ".$statut_compte->nom_statut;
-                $test = 1;
+
+                if($cfp_ab[0]->date_fin == $dtNow){
+                    DB::update('update abonnement_cfps set status = ?,type_arret = ?,activite = ? where cfp_id = ?', ['Désactivé','fin abonnement',0,$cfp_id]);
+                    DB::update('update cfps set statut_compte_id = ? where id = ?',[3,$cfp_id]);
+                    $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
+                    $message = "Vous êtes en mode ".$statut_compte->nom_statut;
+                    $test = 0;
+                }
+                else{
+                    setlocale(LC_TIME, "fr_FR");
+                    $j1 = strftime('%d', strtotime($cfp_ab[0]->due_date));
+                    $j2 = strftime('%d', strtotime($dtNow));
+                    $jour_restant = $j2 - $j1;
+                    // $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                    $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
+                    $message = "Vous êtes en mode ".$statut_compte->nom_statut;
+                    $test = 1;
+                }
             } else {
                 $test = 0;
                 $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_cfp",["id"],[$cfp_id]);
@@ -424,15 +447,23 @@ class HomeController extends Controller
                 $dtNow = Carbon::today()->toDateString();
                 $etp_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$etp_id]);
                 if ($etp_ab != null && $etp_ab[0]->status != "Désactivé" &&  $etp_ab[0]->status != "En attente" ) {
-
-                    setlocale(LC_TIME, "fr_FR");
-                    $j1 = strftime('%d', strtotime($etp_ab[0]->due_date));
-                    $j2 = strftime('%d', strtotime($dtNow));
-                    $jour_restant = $j2 - $j1;
-                    // $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
-                    $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
-                    $message = "Vous êtes en mode ".$statut_compte->nom_statut;
-                    $test = 1;
+                    if($etp_ab[0]->date_fin == $dtNow){
+                        DB::update('update abonnement_cfps set status = ?,type_arret = ?,activite = ? where cfp_id = ?', ['Désactivé','fin abonnement',0,$cfp_id]);
+                        DB::update('update cfps set statut_compte_id = ? where id = ?',[3,$cfp_id]);
+                        $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
+                        $message = "Vous êtes en mode ".$statut_compte->nom_statut;
+                        $test = 0;
+                    }
+                    else{
+                        setlocale(LC_TIME, "fr_FR");
+                        $j1 = strftime('%d', strtotime($etp_ab[0]->due_date));
+                        $j2 = strftime('%d', strtotime($dtNow));
+                        $jour_restant = $j2 - $j1;
+                        // $message = "Il vous reste " . $jour_restant . " jours pour payer votre abonnement";
+                        $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
+                        $message = "Vous êtes en mode ".$statut_compte->nom_statut;
+                        $test = 1;
+                    }
                 }
                 else {
                     $test = 0;
