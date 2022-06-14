@@ -1166,7 +1166,7 @@
                                             @php
                                                 echo "<span>-</span>";
                                             @endphp
-                                        </td>
+                                         </td> --}}
                                         <td class="tbody_projet">
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
