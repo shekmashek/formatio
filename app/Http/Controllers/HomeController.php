@@ -623,7 +623,7 @@ class HomeController extends Controller
     {
         $user_id = Auth::user()->id;
         $nb_par_page = 5;
-       
+
         if ($page == null) {
             $page = 1;
         }
@@ -658,7 +658,7 @@ class HomeController extends Controller
             }
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             $data = DB::select('select * from v_groupe_projet_entreprise where entreprise_id = ? and cfp_id=?', [$entreprise_id, $cfp_id]);
-            
+
             return view('projet_session.index2', compact('data', 'stagiaires', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
@@ -714,7 +714,7 @@ class HomeController extends Controller
         $type_formation_id = $request->type_formation;
         $data = [];
         $nb_par_page = 5;
-        $ref = DB::select('select * from devise')[0]->reference;
+        $ref = DB::select('select * from devise')[0]->devise;
         if ($page == null) {
             $page = 1;
         }
@@ -736,7 +736,7 @@ class HomeController extends Controller
                 $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
             }
             // pagination
-            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?', [$entreprise_id])[0]->nb_projet;   
+            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?', [$entreprise_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
                 $offset = 0;
@@ -758,7 +758,7 @@ class HomeController extends Controller
             // fin pagination
             $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
             $data = DB::select($sql);
-            
+
             for($i=0;$i<count($data);$i+=1){
                 $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
                 [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
@@ -778,7 +778,7 @@ class HomeController extends Controller
                 $lieuFormation = explode(',',$lieu_formations[0]->lieu);
             }else{
                 $lieuFormation = null;
-            }   
+            }
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
@@ -790,7 +790,7 @@ class HomeController extends Controller
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-           
+
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
@@ -812,14 +812,14 @@ class HomeController extends Controller
             }
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request, $nb_par_page, $offset);
             $projet = DB::select($sql);
-            
+
             $lieu_formation =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$cfp_id]);
             if(count($lieu_formation)>0){
                 $lieuFormation = explode(',',$lieu_formation[0]->lieu);
             }
             else{
                 $lieuFormation = null;
-            }      
+            }
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
 
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
@@ -830,19 +830,19 @@ class HomeController extends Controller
                     $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,1);
                     $data[$i]->qte = $dataMontantSession[0]->qte;
                     $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
-                
+
                 } else {
                     $data[$i]->hors_taxe_net = null;
                     $data[$i]->qte =null;
                     $data[$i]->num_facture = null;
                 }
-                
+
             }
-            
+
             $type_formation = DB::select('select * from type_formations');
 
             $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
-            
+
             $module = $fonct->findWhere("v_module", ['cfp_id', 'status'], [$cfp_id, 2]);
             $payement = $fonct->findAll("type_payement");
 
@@ -911,7 +911,7 @@ class HomeController extends Controller
                 $debut = (($page - 1) * $nb_par_page) + 1;
                 $fin =  $page * $nb_par_page;
             }
-            
+
             $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc limit ? offset ?', [$stg_id, $nb_par_page, $offset]);
             return view('projet_session.index2', compact('data', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
@@ -1479,7 +1479,7 @@ class HomeController extends Controller
         $iframe = $request->n_iframe_cfp;
         $cfp = $request->id_cfp;
         $modification = new FonctionGenerique();
-        $modification->update_iframe('iframe_cfp', 'iframe', 'cfp_id', $cfp, $iframe); 
+        $modification->update_iframe('iframe_cfp', 'iframe', 'cfp_id', $cfp, $iframe);
         return back();
     }
     //suppression
