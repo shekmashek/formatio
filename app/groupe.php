@@ -160,8 +160,8 @@ class Groupe extends Model
 
         $info = DB::table('cfps')
                 ->join('responsables_cfp', 'responsables_cfp.cfp_id', 'cfps.id')
-                ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.cfp_id', 'cfps.id')
-                ->join('v_abonnement_facture', 'v_abonnement_facture.cfp_id', 'cfps.id')
+                ->leftJoin('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.cfp_id', 'cfps.id')
+                ->leftjoin('v_abonnement_facture', 'v_abonnement_facture.cfp_id', 'cfps.id')
                 ->select(DB::raw('substr(responsables_cfp.nom_resp_cfp, 1, 1) as nomRespOf'), DB::raw('substr(responsables_cfp.prenom_resp_cfp, 1, 1) as prenomRespOf'),
                         DB::raw('substr(cfps.nom, 1, 2) as nomOfS'),
                         'cfps.id', 'cfps.nif', 'cfps.stat', 'cfps.nom', 'cfps.adresse_lot', 'cfps.adresse_quartier',
@@ -174,7 +174,6 @@ class Groupe extends Model
                 ->where('v_groupe_projet_entreprise.cfp_id', $id_of)
 
                 ->get()[0];
-
         return $info;
     }
 }
