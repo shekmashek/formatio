@@ -591,62 +591,13 @@
                                 </div>
                             </div>
                         @endif
-
-                        <div class="chiffre_d_affaire m-0 p-0 me-3">
-                            @php
-                                $of = $groupe->info_resp_of($projet[0]->cfp_id)
-                            @endphp
+                        <div class="chiffre_d_affaire me-2">
 
                             <div class="d-flex flex-row">
-                                <p class="mt-2 text-center"> Organisme de formation
-                                    <span style="font-weight: 400; color: #000000">{{ $of->nom }}</span>
-                                </p>&nbsp;&nbsp;
-
-                                <div class="text-center">
-                                    <span>
-                                        @if($of->logo == NULL or $of->logo == '' or $of->logo == 'XXXXXXX')
-                                            <td role="button" >
-                                                <span class="randomColor m-auto mt-2 text-uppercase" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
-                                                    <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 14px; cursor: pointer"
-                                                    data-id={{$of->id}} id={{$of->id}} class="ofs">
-                                                        {{$of->nomOfS}}
-                                                    </span>
-                                                </span>
-                                            </td>
-                                        @else
-                                            <td class="td_hover" role="button" style="display: grid; place-content: center">
-                                                <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" src="{{asset("images/CFP/".$of->logo)}}" style="width:30px;height:30px; border-radius:100%; cursor: pointer"
-                                                data-id={{$of->id}} id={{$of->id}} class="mt-2 ofs">
-                                            </td>
-                                        @endif
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chiffre_d_affaire m-0 p-0 me-3">
-                            <div class="d-flex flex-row">
-                                <p class="mt-2 text-center"> Responsable de l'organisme de formation
-                                    <span style="font-weight: 400; color: #000000">{{ $of->nom_resp_cfp }}</span>
-                                </p>&nbsp;&nbsp;
-                                <div class="text-center">
-                                    <span>
-                                        @if($of->photos_resp_cfp == NULL or $of->photos_resp_cfp == '' or $of->photos_resp_cfp == 'XXXXXXX')
-                                            <td role="button" >
-                                                <span class="randomColor m-auto mt-2 text-uppercase" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
-                                                    <span data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 14px; cursor: pointer"
-                                                    data-id={{$of->id}} id={{$of->id}} class="ofsResp">
-                                                        {{$of->nomRespOf}}{{$of->prenomRespOf}}
-                                                    </span>
-                                                </span>
-                                            </td>
-                                        @else
-                                            <td class="td_hover" role="button" style="display: grid; place-content: center">
-                                                <img data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" src="{{asset("images/CFP/".$of->photos_resp_cfp)}}" style="width: 30px;height: 30px; border-radius:100%; cursor: pointer"
-                                                data-id={{$of->id}} id={{$of->id}} class="mt-2 ofsResp">
-                                            </td>
-                                        @endif
-                                    </span>
-                                </div>
+                                <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
+                                    {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
+                                <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
+                                    height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                             </div>
                         </div>
 
