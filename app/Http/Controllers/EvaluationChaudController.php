@@ -129,7 +129,7 @@ class EvaluationChaudController extends Controller
                 if(count($res_q1)<=0 || count($note_10_q1) <= 0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }
-                
+
             //
             // q2
                 $res_q2 = $eval->pourcentage_point($groupe,4);
@@ -180,7 +180,7 @@ class EvaluationChaudController extends Controller
 
             //le rythme de la formation
             // q7
-                $res_q7 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? and point < 4',[$groupe,10]);
+                $res_q7 = DB::select('select * from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? and point < 4 order by point desc',[$groupe,10]);
                 if(count($res_q7)<=0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }
