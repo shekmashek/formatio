@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use Excel;
 use FontLib\Exception\FontNotFoundException;
 use Illuminate\Support\Facades\DB;
+use Svg\Tag\Rect;
 
 class ModuleController extends Controller
 {
@@ -135,10 +136,31 @@ class ModuleController extends Controller
     {
         $fonct = new FonctionGenerique();
         // $niveau = Niveau::all();
-        $id_user = Auth::user()->id;
         $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $categorie = $request->categorie;
-        // dd($categorie);
+        $list_prog = array();
+        $list_cours = array();
+        $list_comp = array ();
+        $np = 6;
+        $npc = 4;
+        $nc = 4;
+        // for($j = 1; $j < $np; $j++){
+        // $list_prog[$j] = array(
+        //     "titre" => "Programme ".$j,
+        //     );
+        //     for($k = 1; $k < $npc; $k++){
+        //         $list_cours[$j][$k] = array(
+        //             "titre_cours" => "Cours ".$k,
+        //             "programme_id" => $j
+        //         );
+        //     }
+        // }
+        // for($i = 1; $i < $nc; $i++){
+        //     $list_comp[$i] = array(
+        //         "titre_competence" => "Competence ".$i,
+        //         "objectif" => "10"
+        //     );
+        // }
         $nom_module = 'Titre/Nom de votre module';
         $description = 'Description courte du module';
         $heure = 12;
@@ -157,8 +179,25 @@ class ModuleController extends Controller
         $max_pers = 10;
         $level = 1;
         $new_mod = DB::insert('insert into modules(reference,nom_module,formation_id,prix,prix_groupe,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id,created_at)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,NOW())', [$reference, $nom_module, $categorie, $prix,$prix_groupe, $heure, $jour, $prerequis, $objectif, $description, $modalite, $materiel, $level, $cible, $bon_a_savoir, $prestation, $min_pers, $max_pers, $cfp_id]);
+        $id = DB::select('select id from modules order by id desc limit 1');
+        $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id[0]->id . ') as moduleExiste');
+        for ($l = 1; $l < $np; $l++) {
+            if (! isset($list_prog[$l])) {
+                $prog = DB::insert('insert into programmes(titre,module_id) values(?,?)', [$list_prog[$l], $id[0]->id]);
+                $id_prog = DB::select('select id from programmes order by id desc limit 1')[0]->id;
+                for ($m = 1; $m < $npc; $m++) {
 
-        return redirect()->route('nouveau_module_update');
+                    if ($list_cours['titre_cours'][$l][$m] != null) {
+                        $cours = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)', ['Cours '.$l[$m], $id_prog]);
+                    }
+                }
+            }
+        }
+        for($n = 1; $n < $nc; $n++){
+            $comp = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',['Competence '.$n,10,$id[0]->id]);
+        }
+        // dd($list_comp);
+        // return redirect()->route('nouveau_module_update');
     }
 
     public function update_new(){
@@ -167,6 +206,7 @@ class ModuleController extends Controller
 
         $id = DB::select('select id from modules  order by id desc limit 1');
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id[0]->id . ') as moduleExiste');
+        // dd($id,$test);
         //on verifie si moduleformation contient le module_id
         if ($test[0]->moduleExiste == 1) {
             // $infos = DB::select('select * from moduleformation where formation_id = ?',[$id]);
@@ -187,6 +227,13 @@ class ModuleController extends Controller
             // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id[0]->id]);
             return view('admin.module.nouveauModule_new', compact('devise','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'id', 'competences','niveau'));
         } else return redirect()->route('liste_module');
+    }
+
+    public function destroy_new(Request $req){
+        // dd($req);
+        // $test =  DB::de('select * from moduleformation where module_id = ?',[$req->id]);
+        DB::delete('delete from modules where id = ? ',[$req->id]);
+        return redirect()->route('liste_module');
     }
 
     public function get_formation(Request $req)

@@ -830,53 +830,121 @@ font-size: 0.850rem;
     margin-bottom: 30px;
     background-size: cover;
     color: white;
-  }
-  .ribbon1 {
-    position: absolute;
-    top: -6.1px;
-    right: 10px;
-  }
-  .ribbon1:after {
-    position: absolute;
-    content: "";
-    width: 0;
-    height: 0;
-    left: -8.5px;
-    bottom: -10.1px;
-    border-left: 53px solid transparent;
-    border-right: 53px solid transparent;
-    border-top: 10px solid #01b5af;
-  }
-  .ribbon1 span {
-    position: relative;
-    display: block;
-    text-align: center;
+    }
+    .ribbon1 {
+        position: absolute;
+        top: -6.1px;
+        right: 10px;
+    }
+    .ribbon1:after {
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 0;
+        left: -8.5px;
+        bottom: -10.1px;
+        border-left: 53px solid transparent;
+        border-right: 53px solid transparent;
+        border-top: 10px solid #01b5af;
+    }
+    .ribbon1 span {
+        position: relative;
+        display: block;
+        text-align: center;
+        background: linear-gradient(60deg, #02AAB0,#00CDAC);
+        font-size: 14px;
+        line-height: 1;
+        padding: 12px 8px 10px;
+        border-top-right-radius: 8px;
+        width: 90px;
+        color: white;
+
+    }
+    .ribbon1 span:before, .ribbon1 span:after {
+        position: absolute;
+        content: "";
+    }
+    .ribbon1 span:before {
+    height: 6px;
+    width: 6px;
+    left: -6px;
+    top: 0;
     background: linear-gradient(60deg, #02AAB0,#00CDAC);
-    font-size: 14px;
-    line-height: 1;
-    padding: 12px 8px 10px;
-    border-top-right-radius: 8px;
-    width: 90px;
+
+    }
+    .ribbon1 span:after {
+    height: 6px;
+    width: 8px;
+    left: -8px;
+    top: 0;
+    border-radius: 8px 8px 0 0;
+    background: linear-gradient(60deg, #02AAB0,#00CDAC);
+    }
+
+#popup{
+    height : auto;
+    background-color: rgba(255, 166, 0, 0.125);
+    position: relative;
+    width: 70%;
+    margin: auto;
+    border:2px solid orange;
+    border-radius: 5px;
+    text-align: center;
+    padding: 15px;
+    color: orange;
+}
+
+#popup a:hover{
+    text-decoration: underline;
+}
+
+.aide_pogramme {
+    position: relative;
+    top: 15px;
+    padding: 5px;
+}
+
+.aide_competence {
+    position: relative;
+    /* top: 15px; */
+    padding: 5px 5px 5px 10.7px;
     color: white;
+}
 
-  }
-  .ribbon1 span:before, .ribbon1 span:after {
+.text_aide {
+    visibility: hidden;
+    width: 300px;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: grey;
+    border-radius: 5px;
+    padding: 10px;
+
+    /* Position the tooltip */
     position: absolute;
-    content: "";
-  }
-  .ribbon1 span:before {
-   height: 6px;
-   width: 6px;
-   left: -6px;
-   top: 0;
-   background: linear-gradient(60deg, #02AAB0,#00CDAC);
+    z-index: 1;
+}
+.text_aide {
+    visibility: hidden;
+    width: 300px;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    color: grey;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    text-transform: none;
+    text-align: start;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
 
-  }
-  .ribbon1 span:after {
-   height: 6px;
-   width: 8px;
-   left: -8px;
-   top: 0;
-   border-radius: 8px 8px 0 0;
-   background: linear-gradient(60deg, #02AAB0,#00CDAC);
-  }
+.aide_pogramme.active .text_aide{
+    visibility: visible;
+}
+.aide_competence.active .text_aide{
+    visibility: visible;
+}
+
+

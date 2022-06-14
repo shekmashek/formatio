@@ -800,7 +800,6 @@
                                 </div>
                                 <div class="modal-body mb-3">
                                     <div class="form-group" >
-                                        <label for="acf-domaine" class="form-control-placeholder mb-2">Domaine de Formation</label>
                                         <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 40px;" required>
                                             <option value="null" disable selected hidden>Choisissez la
                                                 domaine de formation ...</option>
@@ -809,13 +808,13 @@
                                                 {{$do->nom_domaine}}</option>
                                             @endforeach
                                         </select>
+                                        <label for="acf-domaine" class="form-control-placeholder mb-2">Domaine de Formation</label>
                                     </div>
                                     <div class="form-group mt-3" >
-                                        <label for="acf-categorie" class="form-control-placeholder mb-2">Thématique par Domaine</label>
                                         <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 40px;" required>
                                         </select>
+                                        <label for="acf-categorie" class="form-control-placeholder mb-2">Thématique par Domaine</label>
                                         <span style="" id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</span>
-
                                     </div>
                                 <div class="modal-footer justify-content-center">
                                     <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
@@ -1186,9 +1185,9 @@
 $("#acf-domaine").change(function() {
     var id = $(this).val();
     $(".categ").empty();
-    $(".categ").append(
-        '<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>'
-    );
+    // $(".categ").append(
+    //     '<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>'
+    // );
 
     $.ajax({
         url: "/get_formation",

@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlModules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modif_programme.css')}}">
-<div class="row navigation_detail">
+<div class="row navigation_detail mb-5">
     <div class="ps-5 col justify-content-between d-flex flex-row">
         <div>
             <ul class="d-flex flex-row">
@@ -18,12 +18,19 @@
             </ul>
         </div>
         <div>
+            <a href="{{route('annuler_new_mod',$infos[0]->module_id)}}" class="text-primary retour_back btn_annuler"><i class='bx bx-x me-1'></i>annuler</a>
             <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
             href="{{route('liste_module')}}">
             <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
-        </a>
+            </a>
         </div>
     </div>
+</div>
+{{-- <div style="display: none" id="popup"></div> --}}
+<div id="popup">
+    Bonjour, pour pouvoir créer votre module de formation, veuillez modifier le template ci-dessous afin de l'enregistrer. <br>
+    Ceci est un aperçu de présentation de votre module quand il sera mis en ligne. Pour annuler cette création cliquer <a href="{{route('annuler_new_mod',$infos[0]->module_id)}}" class="text-primary retour_back">ici.</a><br>
+    Si vous ne modifier pas vos informations, il sera présenter comme tel. Veuillez à bien vérifier 👀 !
 </div>
 <section class="detail__formation">
     <div class="container py-4 bg-light">
@@ -172,7 +179,15 @@
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row detail__formation__item__left">
-                    <h3 class="pt-3 pb-3">Programme de la formation</h3>
+                    <div class="d-flex flex-row">
+                        <h3 class="pt-3 pb-3">Programme de la formation </h3>
+                        <span class="aide_pogramme"><i class='bx bx-help-circle text-muted'></i>
+                            <div class="text_aide">
+                                <p>Le programme doit décrire les différentes étapes que le stagiaire aura à parcourir pour atteindre son objectif en termes d’acquisition de compétences, de savoirs et de savoir-faire.</p>
+                            </div>
+                        </span>
+                    </div>
+
                     <div class="col-lg-12">
                         <div class="row detail__formation__item__left">
                             <form action="{{route('insert_prog_cours')}}" method="POST" class="w-100">
@@ -328,7 +343,17 @@
 
                 {{-- @if($competences == null) --}}
                 <div class="row g-0 competence_box mb-3 ">
-                    <h5 class="text-center py-2">Compétences à Acquérir</h5>
+
+                    <div class="d-flex justify-content-between">
+                        <h5 class="text-center py-2 ps-1">Compétences à Acquérir
+                        <span class="aide_competence"><i class='bx bx-help-circle '></i>
+                            <div class="text_aide">
+                                <p>Attribuez des compétences à vos intervenants et à vos programmes de formation pour faciliter le suivi de vos formations. <br>
+                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i></p>
+                            </div>
+                        </span>
+                    </h5>
+                    </div>
                         @foreach ($competences as $comp)
                         <div class="row text-start g-0 px-1" id="competence_{{$comp->id}}">
                             <div class="col-1">
@@ -767,11 +792,47 @@
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
+    $('.retour_back').on('click', function (e) {
+        localStorage.setItem('ActiveTabMod', '#publies');
+    });
+    // localStorage.setItem('popupShown', 'true');
+
+    if(localStorage.getItem('popState') != 'shown'){
+        $("#popup").delay(200).fadeIn();
+        localStorage.setItem('popState','shown');
+    }
+
+    $('#popup').click(function(e) // You are clicking the close button
+    {
+        $('#popup').fadeOut(); // Now the pop up is hiden.
+    });
+
+    if(localStorage.getItem('popState') == 'shown'){
+        $("#popup").hide();
+    }
+
+    $('.aide_pogramme').click(function(e){
+        if (this.classList.contains('active')) {
+            this.classList.remove('active');
+        } else {
+            this.classList.add('active');
+        }
+    });
+
+    $('.aide_competence').click(function(e){
+        if (this.classList.contains('active')) {
+            this.classList.remove('active');
+        } else {
+            this.classList.add('active');
+        }
+    });
+
     var toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
         ['code-block'],
