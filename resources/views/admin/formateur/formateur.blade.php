@@ -126,7 +126,7 @@
                     {{-- <div class="shadow p-3 mb-5 bg-body rounded "> --}}
                         <div class="row">
                             <div class="col-md-6">
-                                <h4>Formateurs déjà collaboré</h4>
+                                <span style="font-size:16px">Formateurs déjà collaboré</span>
                             </div>
                             <div class="col-md-6">
                                 <div class="">
