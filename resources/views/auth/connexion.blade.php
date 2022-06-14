@@ -124,7 +124,7 @@
         <div class="row">
             <div class="col-lg-8 tt">
                 <div class="img">
-                    <img class="img-fluid" style="width: 600px" src="{{asset('images/76888-color-data-analysis.gif')}}" alt="">
+                    <img class="img-fluid" style="width: 600px" src="{{asset('images/izi.png')}}" alt="">
                 </div>
             </div>
             <div class="col-lg-4">
@@ -159,7 +159,7 @@
                             @enderror
                         </div>
                         <a href="{{ route('password.request') }}" >Mot de passe oublie?</a>
-                        <button id="tes" class=" btn btn-info btn-block mt-2" style="width:100%;background-color: #7367f0;color: white;"> Se connecter</button>
+                        <button type="submit" id="tes"    class=" btn btn-info btn-block mt-2" style="width:100%;background-color: #7367f0;color: white;"> Se connecter</button>
                     </form>
                     <p class="text-center mt-2"> Nouveaux dans le plateforme? <a href="{{route('create+compte+client')}}">Crée une compte</a> </p>
                 </div>
