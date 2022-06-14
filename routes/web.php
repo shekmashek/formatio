@@ -161,6 +161,9 @@ Route::resource('utilisateur', 'UtilisateurControlleur')->except([
 ]);
 Route::get('/show_stagiaire/{id?}','UtilisateurControlleur@show_stagiaire')->name('show_stagiaire');
 Route::get('/liste_utilisateur/{id?}/{page?}','UtilisateurControlleur@index')->name('liste_utilisateur');
+
+Route::get('/liste_utilisateur/{id?}/{page?}/{order?}/{nom_ordre?}','UtilisateurControlleur@order_etp')->name('liste_utilisateur');
+
 // Route::get('/show_etp/{id?}','UtilisateurControlleur@show_etp')->name('show_etp');
 Route::get('/utilisateur_stagiaire/{id?}','UtilisateurControlleur@create')->name('utilisateur_stagiaire');
 Route::get('/utilisateur_formateur','UtilisateurControlleur@liste_formateur')->name('utilisateur_formateur');
