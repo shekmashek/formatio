@@ -723,25 +723,4 @@ class SessionController extends Controller
         return response()->json($info);
     }
 
-    // public function info_resp_of($id_of){
-    //     $info = DB::table('cfps')
-    //             ->join('responsables_cfp', 'responsables_cfp.cfp_id', 'cfps.id')
-    //             ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.cfp_id', 'cfps.id')
-    //             ->join('v_abonnement_facture', 'v_abonnement_facture.cfp_id', 'cfps.id')
-    //             ->select(DB::raw('substr(responsables_cfp.nom_resp_cfp, 1, 1) as nomRespOf'), DB::raw('substr(responsables_cfp.prenom_resp_cfp, 1, 1) as prenomRespOf'),
-    //                     DB::raw('substr(cfps.nom, 1, 2) as nomOfS'),
-    //                     'cfps.id', 'cfps.nif', 'cfps.stat', 'cfps.nom', 'cfps.adresse_lot', 'cfps.adresse_quartier',
-    //                     'cfps.adresse_code_postal', 'cfps.adresse_ville', 'cfps.adresse_region', 'cfps.email', 'cfps.telephone', 'cfps.logo',
-    //                     'cfps.site_web', 'responsables_cfp.nom_resp_cfp', 'responsables_cfp.prenom_resp_cfp', 'responsables_cfp.email_resp_cfp',
-    //                     'responsables_cfp.sexe_resp_cfp', 'responsables_cfp.fonction_resp_cfp', 'responsables_cfp.adresse_lot',
-    //                     'responsables_cfp.adresse_quartier', 'responsables_cfp.adresse_code_postal', 'responsables_cfp.adresse_ville',
-    //                     'responsables_cfp.adresse_region', 'responsables_cfp.photos_resp_cfp', 'responsables_cfp.telephone_resp_cfp',
-    //                     'v_abonnement_facture.nom_type')
-    //             ->where('v_groupe_projet_entreprise.cfp_id', $id_of)
-
-    //             ->get()[1];
-
-    //     dd($info);
-    // }
-
 }

@@ -136,35 +136,27 @@ class Groupe extends Model
     //info SESSION
     public function info_resp_etp($id_etp){
 
-        $info = DB::table('entreprises')
-                ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
-                ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
-                ->select(DB::raw('substr(entreprises.nom_etp, 1, 2) as nomEtpS') ,DB::raw('substr(responsables.nom_resp, 1, 1) as nomEtresp'), DB::raw('substr(responsables.prenom_resp, 1, 1) as prenomEtpresp'), 'entreprises.logo',
-                'entreprises.nif', 'entreprises.stat', 'entreprises.email_etp', 'entreprises.site_etp', 'entreprises.telephone_etp' ,
-                'responsables.photos', 'responsables.matricule', 'responsables.nom_resp', 'responsables.prenom_resp',
-                'responsables.email_resp', 'responsables.telephone_resp', 'responsables.adresse_quartier', 'responsables.adresse_lot',
-                'responsables.adresse_ville', 'responsables.adresse_region', 'v_groupe_projet_entreprise.entreprise_id'
-                )
-                ->where('v_groupe_projet_entreprise.entreprise_id', $id_etp)
-                ->get()[0];
+        $info = DB::table('statut_compte')
+            ->join('entreprises', 'entreprises.statut_compte_id', 'statut_compte.id')
+            ->join('abonnements', 'abonnements.entreprise_id', 'entreprises.id')
+            ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+            ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
+            ->join('v_abonnement_facture_entreprise', 'v_abonnement_facture_entreprise.entreprise_id', 'entreprises.id')
+            ->select(DB::raw('substr(entreprises.nom_etp, 1, 2) as nomEtpS') ,DB::raw('substr(responsables.nom_resp, 1, 1) as nomEtresp'),
+                    DB::raw('substr(responsables.prenom_resp, 1, 1) as prenomEtpresp'), 'entreprises.logo',
+                    'entreprises.nif', 'entreprises.stat', 'entreprises.email_etp', 'entreprises.site_etp', 'entreprises.telephone_etp' ,
+                    'responsables.photos', 'responsables.matricule', 'responsables.nom_resp', 'responsables.prenom_resp',
+                    'responsables.email_resp', 'responsables.telephone_resp', 'responsables.adresse_quartier', 'responsables.adresse_lot',
+                    'responsables.adresse_ville', 'responsables.adresse_region',
+                    'v_groupe_projet_entreprise.entreprise_id', 'entreprises.statut_compte_id', 'v_abonnement_facture_entreprise.nom_type',
+                    'statut_compte.nom_statut', 'entreprises.nom_etp')
+            ->where('v_groupe_projet_entreprise.entreprise_id', $id_etp)
+            ->get()[0];
 
         return $info;
     }
 
     public function info_resp_of($id_of){
-        // $info = DB::table('cfps')
-        //         ->join('responsables_cfp', 'responsables_cfp.cfp_id', 'cfps.id')
-        //         ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.cfp_id', 'cfps.id')
-        //         ->select(DB::raw('substr(responsables_cfp.nom_resp_cfp, 1, 1) as nomRespOf'), DB::raw('substr(responsables_cfp.prenom_resp_cfp, 1, 1) as prenomRespOf'),
-        //         DB::raw('substr(cfps.nom, 1, 2) as nomOfS'),
-        //         'cfps.id', 'cfps.nif', 'cfps.stat', 'cfps.nom', 'cfps.adresse_lot', 'cfps.adresse_quartier',
-        //         'cfps.adresse_code_postal', 'cfps.adresse_ville', 'cfps.adresse_region', 'cfps.email', 'cfps.telephone', 'cfps.logo',
-        //         'cfps.site_web', 'responsables_cfp.nom_resp_cfp', 'responsables_cfp.prenom_resp_cfp', 'responsables_cfp.email_resp_cfp',
-        //         'responsables_cfp.sexe_resp_cfp', 'responsables_cfp.fonction_resp_cfp', 'responsables_cfp.adresse_lot',
-        //         'responsables_cfp.adresse_quartier', 'responsables_cfp.adresse_code_postal', 'responsables_cfp.adresse_ville',
-        //         'responsables_cfp.adresse_region', 'responsables_cfp.photos_resp_cfp', 'responsables_cfp.telephone_resp_cfp')
-        //         ->where('v_groupe_projet_entreprise.cfp_id', $id_of)
-        //         ->get()[0];
 
         $info = DB::table('cfps')
                 ->join('responsables_cfp', 'responsables_cfp.cfp_id', 'cfps.id')
