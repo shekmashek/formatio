@@ -13,7 +13,7 @@
     .img{
         position: relative;
         margin-left: 19%;
-        margin-top: 8%;
+        margin-top: 15%;
         height: 100%;
         
     }
