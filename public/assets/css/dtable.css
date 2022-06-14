@@ -82,12 +82,34 @@
 /* Style d'ajout d'employe */
 
 /* liste */
-
-/* error et success */
-
 .p-2.actif-status {
     padding: 0.4rem!important;
 }
+
+/* .status_case {
+    padding: 20px!important;
+    width: fit-content!important;
+
+}
+.status_case div input[type="checkbox"] {
+    display: none!important;
+    transition: 0.3s!important;
+}
+
+.status_case div.form-check div.form-switch {
+    padding-left: 0!important;
+} */
+
+
+/* .status_case:hover div input[type="checkbox"] {
+    display: block!important;
+    transition: 1s;
+} */
+
+
+/* error et success */
+
+
 
 .bg-success {
     background-color: #00b900!important;

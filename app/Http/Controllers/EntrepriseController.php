@@ -91,6 +91,7 @@ class EntrepriseController extends Controller
         $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$id]);
         $entreprises=$fonct->concatTwoList($etp1,$etp2);
 
+        // dd($entreprises);
       return response()->json($entreprises);
 
 

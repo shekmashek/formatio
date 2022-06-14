@@ -18,6 +18,9 @@ copier le script create table coupon dans abonnement
 --31mai
 copier le script alter table add coupon_id dans abonnement
 recopier les view abonnement
+--14juin
+ALTER TABLE `users` ADD `loged` BOOLEAN DEFAULT 0
+
 
 
 

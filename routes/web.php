@@ -29,7 +29,7 @@ Route::get('contacts', function () {
 });
 //Rout send email
 Route::post('/envoyer', 'SendEmailController@sendMail')->name('contact');
-Route::post('/mail_demande_devis', 'Send_devis_mail@mail_demande_devis')->name('mail_demande_devis');
+// Route::post('/mail_demande_devis', 'Send_devis_mail@mail_demande_devis')->name('mail_demande_devis');
 Route::get('demande_dev',function (){
     return view('test_demande_devis');
 });
@@ -56,6 +56,8 @@ Route::get('/user', function () {
 });
 // route recheche personne qui suivi une formation dans une entreprise
 Route::get('recherche_input', 'RecherchemultiController@recherche')->name('recherche_input');
+
+
 Route::get('/home/{id?}', 'HomeController@index')->name('home');
 Route::get('/hometdbf/{id?}', 'HomeControllerTDBF@index')->name('hometdbf');
 Route::get('/hometdbq/{id?}', 'HomeControllerTDBQ@index')->name('hometdbq');
@@ -374,7 +376,7 @@ Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->nam
 Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
 //route module_formations
 Route::get('/module', 'FormationController@module_formations')->name('module');
- 
+
 // page creation formation
 Route::get('/nouveau_formation', 'FormationController@create')->name('nouveau_formation');
 
@@ -770,9 +772,14 @@ Route::get('employes.export.verify_matricule_stg','ParticipantController@verify_
 Route::get('employes.export.verify_email_stg','ParticipantController@verify_email_stg')->name('employes.export.verify_email_stg');
 Route::get('employes.export.verify_cin_stg','ParticipantController@verify_cin_stg')->name('employes.export.verify_cin_stg');
 
-Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->name('employes.liste.activer');
+
 Route::get('employes.new','ParticipantController@new_emp')->name('employes.new');
+
+// routes d'activation dees employés
+Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->name('employes.liste.activer');
 Route::get('employes.liste.desactiver','ParticipantController@desactiver_stagiaire')->name('employes.liste.desactiver');
+Route::get('employes.setReferent', 'ParticipantController@setReferent')->name('employes.setReferent');
+Route::get('employes.unsetReferent', 'ParticipantController@unsetReferent')->name('employes.unsetReferent');
 
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement', 'ChefDepartementController');
@@ -1008,7 +1015,7 @@ Route::post('enregistrement_branche', 'DepartementController@enregistrement_bran
 Route::get('affiche_departement', 'DepartementController@liste_dep')->name('affiche_departement');
 // ======= export excel copier coller participant
 Route::get('export_excel_new_participant','ParticipantController@teste')->name('export_excel_new_participant');
-Route::get('show_excel','ViexExcelController@index')->name('show_excel');
+// Route::get('show_excel','ViewExcelController@index')->name('show_excel');
 // Route::post('save_multi_stagiaire_exproter_excel','ParticipantController@save_multi_stagiaire')->name('save_multi_stagiaire_exproter_excel');
 Route::get('affiche_dep','EntrepriseController@affiche_dep')->name('affiche_dep');
 
@@ -1424,14 +1431,6 @@ Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
 
 
 
-
-
-
-
-
-
-
-
 Route::get('/raport','SessionController@fiche')->name('fichePDF');
 //plus d'avis
 Route::get('plus_avis','FormationController@plus_avis')->name('plus_avis');
@@ -1445,3 +1444,6 @@ Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
 
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
+
+// ROUTES DONNEES JSON
+Route::get('/getDomains', 'ProfController@getDomains')->name('getDomains');

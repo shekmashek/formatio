@@ -2,34 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\branche;
-use App\chefDepartement;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 use PDF;
-use App\Departement;
-use App\DepartementEntreprise;
-use App\entreprise;
-use App\stagiaire;
-use App\User;
-use App\responsable;
-use App\Models\getImageModel;
-use Illuminate\Support\Facades\File;
-use App\Models\FonctionGenerique;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
+use Excel;
 use Image;
+use App\User;
+use App\branche;
+use App\stagiaire;
+use Carbon\Carbon;
+use App\entreprise;
+use App\Departement;
+use App\Service;
+use App\NiveauEtude;
+use App\responsable;
+use App\chefDepartement;
+use Illuminate\Http\Request;
+use App\Models\getImageModel;
+use App\DepartementEntreprise;
+use App\Models\FonctionGenerique;
+use App\Exports\ParticipantExport;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 
 /* ====================== Exportation Excel ============= */
-use App\Exports\ParticipantExport;
-use Excel;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\URL;
-use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+// use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
 
 class ParticipantController extends Controller
 {
@@ -72,8 +74,95 @@ class ParticipantController extends Controller
         $service = db::select('select * from v_departement_service_entreprise where departement_entreprise_id = ? ', [$req->id]);
         return response()->json($service);
     }
+    public function getDepartments () {
+        $departments = DepartementEntreprise::all();
+        return response()->json($departments);
+    }
 
 
+    // set/unset référent
+    public function setReferent (Request $request) {
+
+        $employe = new stagiaire();
+        $user_id = $request->user_id;
+        $user_actif = $request->user_actif;
+        $emp_id = $request->emp_id;
+
+
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+        }
+
+        // $stagiaire = stagiaire::where('user_id', $user_id)->where('entreprise_id', $entreprise_id)->first();
+
+        // setReferent() : méthode dans le model Stagiaire
+        // $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);
+
+        // n'execute pas la requete si le stagiaire n'est pas actif
+        if ($user_actif == 1) {
+            $ref_status = $employe->setReferent($user_id, $emp_id, $entreprise_id);
+        } else {
+            // return redirect()->back()->with('error', 'Cet employé n\'est pas actif');
+            return response()->json(['error' => 'Vous ne pouvez pas mettre en référent un employé qui n\'est pas actif']);
+        }
+
+
+        // restaurer le role_users de l'employé s'il a déjà été un referent mais désactivé
+        // utilisation du softdelete
+        $deleted_role_user = RoleUser::withTrashed()
+                                    ->where('user_id', $user_id)
+                                    ->where('role_id', 2);
+
+        if ($deleted_role_user->exists()) {
+            $deleted_role_user->restore();
+        } else {
+            RoleUser::updateOrInsert(
+                ['user_id' => $user_id, 'role_id' => 2]
+            );
+        }    
+
+
+        
+        return response()->json($ref_status);
+        
+
+    }
+
+    public function unsetReferent (Request $request) {
+
+        // $employe = new stagiaire();
+        $user_id = $request->user_id;
+        $emp_id = $request->emp_id;
+
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+        }
+        if (Gate::allows('isManager')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+        }
+
+        $employe = stagiaire::where('user_id', $user_id)->where('entreprise_id', $entreprise_id)->first();
+        DB::table('stagiaires')
+            ->where('user_id', $user_id)
+            ->where('entreprise_id', $entreprise_id)
+            ->update([
+                'status_referent' => 0
+            ]);
+
+
+            // supression avec soft delete
+            RoleUser::where('user_id', $user_id)
+                    ->where('role_id', 2)
+                    ->delete();
+
+        $ref_status = $employe->status_referent;
+        return response()->json($ref_status);
+
+
+    }
 
     public function desactiver_stagiaire(Request $req)
     {
@@ -124,106 +213,35 @@ class ParticipantController extends Controller
         return view('admin.entreprise.employer.nouveau_employer');
     }
 
-    public function liste_employer($paginations = null)
+    public function liste_employer()
     {
         $entreprise_id = 0;
-        $nb_limit = 10;
         $user_id = Auth::user()->id;
-        $piasa = null;
-        $employers = [];
-        $responsables = [];
-        $chefs = [];
 
         if (Gate::allows('isReferent')) {
-            $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [$user_id])->entreprise_id;
+            $entreprise_id = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id])->entreprise_id;
         }
         if (Gate::allows('isManager')) {
-            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
+            $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id])->entreprise_id;
         }
-        $totale_pag_stg = $this->fonct->getNbrePagination("stagiaires", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
-        $totale_pag_resp = $this->fonct->getNbrePagination("responsables", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
-        $totale_pag_chef = $this->fonct->getNbrePagination("chef_departements", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+       
+        
+        $employers = Stagiaire::where('entreprise_id', $entreprise_id)->get();
+        $entreprise = Entreprise::find($entreprise_id);    
+        $departements = DepartementEntreprise::where('entreprise_id', $entreprise_id)->get();
 
-        $totale_pag = ($totale_pag_stg + $totale_pag_resp);
+        // $departement = DepartementEntreprise::find(1);
 
-        // $totale_pag =  $totale_pag_stg;
+        $niveaux_etude = NiveauEtude::all();
+        $services = Service::all();
+        // $services = $departement->services;
+        // dd($services);
 
-        $service = $this->fonct->findWhere("v_departement_service_entreprise", ["entreprise_id"], [$entreprise_id]);
-
-        if ($paginations != null) {
-
-            if ($paginations <= 0) {
-                $paginations = 1;
-            }
-            $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-            $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-            $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-
-            $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
-        } else {
-            if ($paginations <= 0) {
-                $paginations = 1;
-            }
-            $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
-            $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
-            $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
-
-            $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
-        }
-
-        for ($i = 0; $i < count($piasa); $i += 1) {
-            if (count($service) > 0) {
-                for ($j = 0; $j < count($service); $j += 1) {
-                    if ($piasa[$i]->service_id != null && $piasa[$i]->service_id == $service[$j]->service_id) {
-                        $piasa[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
-                        $piasa[$i]->nom_service = $service[$j]->nom_service;
-                        $piasa[$i]->nom_departement = $service[$j]->nom_departement;
-                    }
-                }
-            } else {
-                $piasa[$i]->departement_entreprise_id = null;
-                $piasa[$i]->nom_service = null;
-                $piasa[$i]->nom_departement = null;
-            }
-            $employers[] = $piasa[$i];
-        }
-
-        for ($i = 0; $i < count($resp); $i += 1) {
-            if (count($service) > 0) {
-                for ($j = 0; $j < count($service); $j += 1) {
-                    if ($resp[$i]->service_id != null && $resp[$i]->service_id == $service[$j]->service_id) {
-                        $resp[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
-                        $resp[$i]->nom_service = $service[$j]->nom_service;
-                        $resp[$i]->nom_departement = $service[$j]->nom_departement;
-                    }
-                }
-            } else {
-                $resp[$i]->departement_entreprise_id = null;
-                $resp[$i]->nom_service = null;
-                $resp[$i]->nom_departement = null;
-            }
-            $responsables[] = $resp[$i];
-        }
-
-        // for ($i = 0; $i < count($sefo); $i += 1) {
-        //     if (count($service) > 0) {
-        //         for ($j = 0; $j < count($service); $j += 1) {
-        //             if ($sefo[$i]->service_id != null && $sefo[$i]->service_id == $service[$j]->service_id) {
-        //                 $sefo[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
-        //                 $sefo[$i]->nom_service = $service[$j]->nom_service;
-        //                 $sefo[$i]->nom_departement = $service[$j]->nom_departement;
-        //             }
-        //         }
-        //     } else {
-        //         $sefo[$i]->departement_entreprise_id = null;
-        //         $sefo[$i]->nom_service = null;
-        //         $sefo[$i]->nom_departement = null;
-        //     }
-        //     $chefs[] = $sefo[$i];
-        // }
+        // $employe = stagiaire::find(22);
+        // dd($employe->user->loged);
 
 
-        return view("admin.entreprise.employer.liste_employer", compact('responsables', 'employers', 'pagination'));
+        return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise', 'niveaux_etude', 'departements', 'services'));
     }
 
     public function index()
