@@ -772,6 +772,7 @@ class ComposerStaticInita81baad5868038acf1fdb1c7166dfd6c
         'App\\Models\\excel\\ResponsableExcel' => __DIR__ . '/../..' . '/app/Models/excel/ResponsableExcel.php',
         'App\\Models\\getImageModel' => __DIR__ . '/../..' . '/app/Models/getImageModel.php',
         'App\\Niveau' => __DIR__ . '/../..' . '/app/Niveau.php',
+        'App\\NiveauEtude' => __DIR__ . '/../..' . '/app/NiveauEtude.php',
         'App\\Notifications\\MailResetPasswordNotification' => __DIR__ . '/../..' . '/app/Notifications/MailResetPasswordNotification.php',
         'App\\NouveauCompte' => __DIR__ . '/../..' . '/app/NouveauCompte.php',
         'App\\PlanFormation' => __DIR__ . '/../..' . '/app/PlanFormation.php',

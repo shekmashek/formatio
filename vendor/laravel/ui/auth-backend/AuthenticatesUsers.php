@@ -125,9 +125,11 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
+        // obtenir l'user authentifié
         $loged_user = Auth::user();
+
+        // chercher cet utilisateur dans la base de donnée et actualiser sont status à 1
         $user = User::where('id', $loged_user->id)->first();
-        // dd($user);
         $user->loged = 1;
         $user->update(['loged' => 1]);
         // dd($user);

@@ -12,6 +12,16 @@ class Stagiaire extends Model
     protected $fillable = [
         'nom_stagiaire', 'prenom_stagiaire', 'genre_stagiaire', 'fonction_stagiaire', 'mail_stagiaire', 'telephone_stagiaire', 'entreprise_id', 'user_id', 'photos', 'service_id', 'cin', 'date_delivrance', 'date_naissance', 'adresse', 'niv_etude'
     ];
+
+    public function niveau_etude(){
+        return $this->hasOne(Niveau::class, 'niveau_etude_id');
+    }
+
+    public function service ()
+    {
+        return $this->belongsTo('App\Service', 'service_id');
+    }
+
     public function departement()
     {
         return $this->belongsTo('App\Departement');
@@ -19,8 +29,9 @@ class Stagiaire extends Model
 
     public function entreprise()
     {
-        return $this->belongsTo('App\entreprise');
+        return $this->belongsTo('App\Entreprise', 'entreprise_id');
     }
+
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -72,5 +83,9 @@ class Stagiaire extends Model
     public function activer($user_id, $emp_id,$entreprise_id){
         DB::update("UPDATE stagiaires SET activiter=TRUE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
         return ["status" =>"desactiver"];
+    }
+    public function setReferent($user_id, $emp_id,$entreprise_id){
+        DB::update("UPDATE stagiaires SET status_referent=TRUE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
+        return ["status" =>"referent"];
     }
 }
