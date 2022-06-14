@@ -65,16 +65,22 @@ class GroupeController extends Controller
 
     public function createInter()
     {
-        $fonct = new FonctionGenerique();
-        $formations = [];
-        $modules = [];
-        $user_id = Auth::user()->id;
-        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-        $type_formation = request()->type_formation;
-        $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
-        $modules = $fonct->findWhere("moduleformation", ["cfp_id", "status", "etat_id"], [$cfp_id, 2, 1]);
-        // dd($formations,$modules);
-        return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
+        try{
+            $fonct = new FonctionGenerique();
+            $formations = [];
+            $modules = [];
+            $user_id = Auth::user()->id;
+            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+            $type_formation = request()->type_formation;
+            $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
+            $modules = $fonct->findWhere("moduleformation", ["cfp_id", "status", "etat_id"], [$cfp_id, 2, 1]);
+            if(count($formations) < 1 || count($modules) < 1){
+                throw new Exception("Vous n'avez pas de module de formation.");
+            }
+            return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
+        }catch(Exception $e){
+            return redirect()->back()->with('error_inter', $e->getMessage());
+        }
     }
 
     public function sessionInter($id)

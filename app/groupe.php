@@ -112,7 +112,7 @@ class Groupe extends Model
     }
 
     public function module_projet($projet_id){
-        return DB::select('select groupe_id,nom_module from v_groupe_projet_module where projet_id = ? group by nom_module',[$projet_id]);
+        return DB::select('select nom_module from v_groupe_projet_module where projet_id = ? group by nom_module',[$projet_id]);
     }
 
 
@@ -131,29 +131,6 @@ class Groupe extends Model
         }else{
             return 0;
         }
-    }
-
-    //info SESSION
-    public function info_resp_etp($id_etp){
-
-        $info = DB::table('statut_compte')
-            ->join('entreprises', 'entreprises.statut_compte_id', 'statut_compte.id')
-            ->join('abonnements', 'abonnements.entreprise_id', 'entreprises.id')
-            ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
-            ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
-            ->join('v_abonnement_facture_entreprise', 'v_abonnement_facture_entreprise.entreprise_id', 'entreprises.id')
-            ->select(DB::raw('substr(entreprises.nom_etp, 1, 2) as nomEtpS') ,DB::raw('substr(responsables.nom_resp, 1, 1) as nomEtresp'),
-                    DB::raw('substr(responsables.prenom_resp, 1, 1) as prenomEtpresp'), 'entreprises.logo',
-                    'entreprises.nif', 'entreprises.stat', 'entreprises.email_etp', 'entreprises.site_etp', 'entreprises.telephone_etp' ,
-                    'responsables.photos', 'responsables.matricule', 'responsables.nom_resp', 'responsables.prenom_resp',
-                    'responsables.email_resp', 'responsables.telephone_resp', 'responsables.adresse_quartier', 'responsables.adresse_lot',
-                    'responsables.adresse_ville', 'responsables.adresse_region',
-                    'v_groupe_projet_entreprise.entreprise_id', 'entreprises.statut_compte_id', 'v_abonnement_facture_entreprise.nom_type',
-                    'statut_compte.nom_statut', 'entreprises.nom_etp')
-            ->where('v_groupe_projet_entreprise.entreprise_id', $id_etp)
-            ->get()[0];
-
-        return $info;
     }
 
 }
