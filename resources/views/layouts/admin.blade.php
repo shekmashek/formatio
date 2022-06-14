@@ -129,6 +129,13 @@
 
             </li>
             <li>
+                <a href="{{route('crud_formation')}}" class="d-flex nav_linke">
+                    <i class='bx bx-grid'></i>
+                    <span class="links_name">Domaine&Formation</span>
+                </a>
+
+            </li> 
+            <li>
                 <a href="{{ route('taxes') }}" class="d-flex nav_linke">
                     <i class='bx bx-spreadsheet'></i>
                     <span class="links_name">Taxe</span>
@@ -859,6 +866,9 @@
                                         </a></li>
                                         <li><a class="dropdown-item" href="{{route('nouveau_coupon')}}"> <i
                                             class='bx bx-money '></i>&nbsp;Nouveau coupon
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="nouveau_formation"> <i
+                                        class='bx bx-cross '></i>&nbsp;Nouvelle formation
                                     </a></li>
                                 </ul>
                             </div>

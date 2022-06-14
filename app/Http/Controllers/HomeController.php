@@ -346,7 +346,7 @@ class HomeController extends Controller
             $dtNow = Carbon::today()->toDateString();
             $cfp_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$cfp_id]);
 
-            if ($cfp_ab != null && $cfp_ab[0]->status != "Désactivé") {
+            if ($cfp_ab != null && $cfp_ab[0]->status != "Désactivé" &&  $cfp_ab[0]->status != "En attente") {
                 setlocale(LC_TIME, "fr_FR");
                 $j1 = strftime('%d', strtotime($cfp_ab[0]->due_date));
                 $j2 = strftime('%d', strtotime($dtNow));
@@ -423,7 +423,8 @@ class HomeController extends Controller
                 //date now
                 $dtNow = Carbon::today()->toDateString();
                 $etp_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$etp_id]);
-                if ($etp_ab != null && $etp_ab[0]->status != "Désactivé") {
+                if ($etp_ab != null && $etp_ab[0]->status != "Désactivé" &&  $etp_ab[0]->status != "En attente" ) {
+
                     setlocale(LC_TIME, "fr_FR");
                     $j1 = strftime('%d', strtotime($etp_ab[0]->due_date));
                     $j2 = strftime('%d', strtotime($dtNow));
@@ -432,7 +433,8 @@ class HomeController extends Controller
                     $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
                     $message = "Vous êtes en mode ".$statut_compte->nom_statut;
                     $test = 1;
-                } else {
+                }
+                else {
                     $test = 0;
                     $statut_compte = $fonct->findWhereMulitOne("v_statut_compte_entreprise",["id"],[$etp_id]);
                     $message = "Vous êtes en mode ".$statut_compte->nom_statut;
@@ -791,7 +793,7 @@ class HomeController extends Controller
                 $lieuFormation = explode(',  ',$lieu_formations[0]->lieu);
             }
             $prix_formation = DB::select('select cfp_id,projet_id,entreprise_id,module_id,modalite_formation,prix FROM v_groupe_projet_module GROUP BY entreprise_id,projet_id;');
-            $ref = DB::select('select * from devise')[0]->reference;
+            $ref = DB::select('select * from devise')[0]->description;
 
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data','prix_formation','ref','stagiaires','lieu_formations','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
@@ -836,7 +838,7 @@ class HomeController extends Controller
             if(count($lieu_formation)>0){
                 $lieuFormation = explode(',',$lieu_formation[0]->lieu);
             }
-            $ref = DB::select('select * from devise')[0]->reference;
+            $ref = DB::select('select * from devise')[0]->description;
 
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
 
@@ -1534,5 +1536,16 @@ class HomeController extends Controller
         $suppression = new FonctionGenerique();
         $suppression->supprimer_iframe('iframe_cfp', 'cfp_id', $id_cfp);
         return back();
+    }
+
+    public function etpInfoNew($id_grp){
+        $etp = DB::table('entreprises')
+                ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+                ->join('v_groupe_entreprise', 'v_groupe_entreprise.entreprise_id', 'entreprises.id')
+                ->select('*')
+                ->where('groupe_id', $id_grp)
+                ->get();
+
+        return response()->json($etp);
     }
 }

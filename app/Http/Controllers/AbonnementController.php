@@ -242,7 +242,7 @@ class AbonnementController extends Controller
             // facture du mois suivant
             $facture_suivant = [];
             for ($i=0; $i < count($facture); $i++) {
-               array_push($facture_suivant,  date('Y-m-d', strtotime($facture[$i]->invoice_date. ' + 31 days')));
+               array_push($facture_suivant,  date('Y-m-d', strtotime($facture[$i]->invoice_date. ' + 30 days')));
             }
             //generation nouvelle facture chaque mois si l'utilisateur a choisi l'offre mensuel
             $max_id_facture = $this->abonnement_model->findMax('v_abonnement_facture_entreprise','facture_id');
@@ -261,7 +261,7 @@ class AbonnementController extends Controller
                     // if($dernier_facture[0]->categorie_paiement_id == 1){
                     $mois_dernier = $dernier_facture[0]->invoice_date;
                     $dt = Carbon::today()->toDateString();
-                    $mois_suivant =  date('Y-m-d', strtotime($mois_dernier. ' + 31 days'));
+                    $mois_suivant =  date('Y-m-d', strtotime($mois_dernier. ' + 30 days'));
                     $due_suivant =  date('Y-m-d', strtotime($mois_suivant. ' + 15 days'));
 
                     //si on est au mois suivant par rapport à la dernière facture, on regénère une nouvelle factur

@@ -115,12 +115,7 @@ class ProfController extends Controller
     }
     public function information_formateur(Request $request)
     {
-        $fonct = new FonctionGenerique();
         $id = $request->Id;
-        // $user_id = Auth::user()->id;
-        // dd($user_id);
-        // $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
-
         $formateur = DB::select("select * from v_demmande_cfp_formateur where formateur_id = ?", [$id]);
 
         return response()->json($formateur);
@@ -174,9 +169,9 @@ class ProfController extends Controller
         /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le formateur à ajouter */
         $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::id()])->cfp_id;
         $nb_formateur = $this->fonct->findWhere("demmande_cfp_formateur",["demmandeur_cfp_id"],[$cfp_id]);
-        /**annee courante */
-        $current_year = Carbon::now();
-        $date_dem = DB::select('SELECT * from demmande_cfp_formateur where YEAR(created_at) = ? ',[$current_year]);
+        /**mois courante */
+        $current_month = Carbon::now()->month;
+        $date_dem = DB::select('SELECT * from demmande_cfp_formateur where YEAR(created_at) = ? ',[$current_month]);
         $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
         if($abonnement_cfp != null){
             if($abonnement_cfp[0]->nb_formateur == count($nb_formateur) && $abonnement_cfp[0]->illimite == 0)  return back()->with('error', "Vous avez atteint le nombre maximum de formateur, veuillez upgrader votre compte pour ajouter plus de formateur");

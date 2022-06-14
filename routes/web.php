@@ -368,7 +368,8 @@ Route::post('enregistrer_nouveau_etp_stagiaire', 'ParticipantController@nouvelle
 Route::resource('formation', 'FormationController')->except([
     'index', 'destroy', 'show'
 ]);
-Route::post('/delete_formation/{id}', 'FormationController@destroy')->name('destroy_formation');
+Route::post('/delete_formation', 'FormationController@destroy')->name('destroy_formation');
+Route::post('/update_formation', 'FormationController@update')->name('update_formation');
 Route::post('/show_formation/{id}', 'FormationController@show')->name('show_formation');
 Route::get('/liste_formation/{id?}', 'FormationController@index')->name('liste_formation');
 Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->name('nouvelle_formation');
@@ -376,6 +377,31 @@ Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->nam
 Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
 //route module_formations
 Route::get('/module', 'FormationController@module_formations')->name('module');
+ 
+// page creation formation
+Route::get('/nouveau_formation', 'FormationController@create')->name('nouveau_formation');
+
+// validation creation formation
+Route::post('/creer_formation', 'FormationController@store')->name('creer_formation');
+
+// liste CRUD
+Route::get('/crud_formation/{id?}', 'FormationController@listeCrud')->name('crud_formation');
+
+
+//route domaine
+Route::resource('domaine', 'DomaineController')->except([
+    'index', 'destroy', 'show'
+]);
+Route::post('/delete_domaine', 'DomaineController@destroy')->name('destroy_domaine');
+Route::post('/modifier_domaine', 'DomaineController@update')->name('modifier_domaine');
+Route::post('/show_domaine/{id}', 'DomaineController@show')->name('show_domaine');
+Route::get('/liste_domaine/{id?}', 'DomaineController@index')->name('liste_domaine');
+// page creation domaine
+Route::get('/nouveau_domaine', 'DomaineController@create')->name('nouveau_domaine');
+// validation creation domaine
+Route::post('/creer_domaine', 'DomaineController@store')->name('creer_domaine');
+// liste CRUD
+Route::get('/crud_formation/{id?}', 'DomaineController@listeCrud')->name('crud_formation');
 
 //route ajout_categorie_formation
 Route::get('/ajout_categorie', 'FormationController@ajout_categorie')->name('ajout_categorie');
@@ -1389,7 +1415,36 @@ Route::get('/newAfficheInfo/employe/{id_emp}', 'ParticipantController@infoEmploy
 Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInfo');
 
 Route::get('resultat_evaluation/{groupe_id}','EvaluationChaudController@evaluation_chaud_pdf')->name('resultat_evaluation');
+Route::get('/detail_session_info/{etp_id}', 'SessionController@infoEtpCom');
+Route::get('/detail_session_of/{cfp_id}', 'SessionController@infoOf');
+
+Route::get('/detail_session_resp_cfp/{id}', 'SessionController@info_resp_cfp');
+Route::get('/detail_formateur_new', 'SessionController@formateurInfo');
+
+
+
+Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/raport','SessionController@fiche')->name('fichePDF');
 //plus d'avis
 Route::get('plus_avis','FormationController@plus_avis')->name('plus_avis');
 Route::get('plus_avis_module','FormationController@plus_avis_module')->name('plus_avis_module');
+
+//Affiche infos SESSION
+//etp
+Route::get('/info/session/etp', 'SessionController@infoSessionEtp');
+Route::get('/info/etp', 'SessionController@infoEtp');
+Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
+
+
+Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');

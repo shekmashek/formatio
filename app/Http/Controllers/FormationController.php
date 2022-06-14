@@ -80,15 +80,21 @@ class FormationController extends Controller
         }
     }
 
-    public function create()
-    {
-        //
+    public function listeCrud($id = null){
+        $domaine = Domaine::orderBy('nom_domaine', 'asc')->paginate(10, ['*'], 'domaine');
+        $formation  = formation::orderBy('nom_formation', 'asc')->paginate(10, ['*'], 'formation');
+        return view("admin.formation.liste_formation",compact('formation','domaine'));
     }
 
     public function nouvelle_formation()
     {
         $domaine = Domaine::all();
         return view('admin.formation.nouvelleFormation', compact('domaine'));
+    }
+
+    public function create(){
+        $liste_domaine = DB::select('select * from domaines');
+        return view('superadmin.nouveau_formation', compact('liste_domaine'));
     }
 
     public function store(Request $request)
@@ -102,20 +108,18 @@ class FormationController extends Controller
                 'nom_formation.required' => 'Veuillez remplir le champ'
             ]
         );
-        $id_user = Auth::user()->id;
-
-        $id_cfp = cfp::where('user_id', $id_user)->value('id');
-
 
         //enregistrer les formations dans la bdd
         $formation = new formation();
         $formation->nom_formation = $request->nom_formation;
-        $formation->domaine_id = $request->domaine;
-        $formation->cfp_id = $id_cfp;
-
+        $formation->domaine_id = $request->domaine_id;
         $formation->save();
 
-        return redirect()->route('liste_formation');
+        // redirection
+        $liste_domaine = Domaine::all();
+        $message = 'La formation a bien été ajoutée. <a href="crud_formation#Formations"> Voir la liste</a>';
+        return view('superadmin.nouveau_formation', compact('liste_domaine','message'));
+
     }
 
 
@@ -138,14 +142,15 @@ class FormationController extends Controller
         //
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        formation::where('id', $request->id)->update(['nom_formation' => $request->nom_formation]);
+        return back();
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request)
     {
-        // $del = formation::where('id', $id)->delete();
+        $id = $request->id;
         DB::delete('delete from formations where id = ?', [$id]);
         return back();
     }

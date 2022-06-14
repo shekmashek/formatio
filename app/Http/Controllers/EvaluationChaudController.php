@@ -118,7 +118,7 @@ class EvaluationChaudController extends Controller
     }
 
     public function evaluation_chaud_pdf(Request $request){
-        try{
+         try{
             $eval = new EvaluationChaud();
             $groupe = $request->groupe_id;
             // preparation de la formation
@@ -129,6 +129,7 @@ class EvaluationChaudController extends Controller
                 if(count($res_q1)<=0 || count($note_10_q1) <= 0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }
+
             //
             // q2
                 $res_q2 = $eval->pourcentage_point($groupe,4);
@@ -136,6 +137,7 @@ class EvaluationChaudController extends Controller
                 if(count($res_q2)<=0 || count($note_10_q2) <= 0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }
+                // dd($res_q2,$note_10_q2);
             //
                 // $somme_note_1 = DB::select('select sum(note_sur_10)/? as note from v_evaluation_chaud_resultat where groupe_id = ? and id_qst_fille = ? or id_qst_fille = ?',[2,$groupe,3,4]);
             // end

@@ -119,20 +119,20 @@
                                 </tr>
                                 @else
                                 @foreach($formateur as $frm)
-                                <tr class="informm" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}">
+                                <tr>
                                     @if($frm->photos == NULL or $frm->photos == '' or $frm->photos == 'XXXXXXX')
                                         <td ><span  class="randomColor text-uppercase" style="padding: 15px; border-radius:100%; color:white;"> {{$frm->n}} {{$frm->p}} </span></td>
                                         <td><span>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</td>
                                     @else
-                                        <td role="button" onclick="afficherInfos();"><img src="{{asset("images/formateurs/".$frm->photos)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3"></span></td>
+                                        <td role="button" class="informm" data-id="{{$frm->formateur_id}}" id="{{$frm->formateur_id}}" onclick="afficherInfos();"><img src="{{asset("images/formateurs/".$frm->photos)}}" style="height:50px; width:50px;border-radius:100%"><span class="ms-3"></span></td>
                                         <td><span>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</td>
                                     @endif
-                                    <td role="button" onclick="afficherInfos();" style="vertical-align: middle">
+                                    <td style="vertical-align: middle">
                                         @php
                                             echo $groupe->formatting_phone($frm->numero_formateur);  
                                         @endphp
                                     </td>
-                                    <td role="button" onclick="afficherInfos();" style="vertical-align: middle">{{$frm->mail_formateur}}</td>
+                                    <td style="vertical-align: middle">{{$frm->mail_formateur}}</td>
                                     {{-- <td>
                                         <div align="left">
                                             <strong>{{$frm->nom_formateur.' '.$frm->prenom_formateur}}</strong>
