@@ -11,8 +11,8 @@
             {{-- Nouveau apreanant --}}
             <section class="section_recherche m-0 p-2">
                 <div class="d-flex py-1 align-items-center align-content-center">
-                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule : </p>&nbsp;
-                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="matricule_search_input form-control">
+                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule ou son nom : </p>&nbsp;
+                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ou le nom ici . . ." class="matricule_search_input form-control">
                     <input type="hidden" id="id_entreprise" value="{{ $entreprise_id }}">
                     <button type="submit" class="btn btn-outline-secondary m-0 rechercher">
                         <i class="fa fa-search m-0"></i>
@@ -38,8 +38,8 @@
             {{-- Nouveau apreanant --}}
             <section class="section_recherche m-0 p-2">
                 <div class="d-flex py-1 align-items-center align-content-center">
-                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule :</p>&nbsp;
-                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ici . . ." class="matricule_search_input form-control">
+                    <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule ou son nom :</p>&nbsp;
+                    <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ou le nom  . . ." class="matricule_search_input form-control">
                     <input type="hidden" id="id_entreprise" value="{{ $entreprise_id }}">
                     <button type="submit" class="btn btn-outline-secondary m-0 rechercher">
                         <i class="fa fa-search"></i>
@@ -345,7 +345,7 @@ td{
                     $("#fonction").val('');
                     $(".span_ajout").hide();
                     $("#image_stg").html('');
-                    $('#ajout_stg_mat').append('<span style="color:red">Matricule introuvable</span>');
+                    $('#ajout_stg_mat').append('<span style="color:red">Matricule ou Nom introuvable</span>');
                 }
            },
            error:function(error){
