@@ -791,7 +791,7 @@ class HomeController extends Controller
                 $lieuFormation = explode(',  ',$lieu_formations[0]->lieu);
             }
             $prix_formation = DB::select('select cfp_id,projet_id,entreprise_id,module_id,modalite_formation,prix FROM v_groupe_projet_module GROUP BY entreprise_id,projet_id;');
-            $ref = DB::select('select * from devise')[0]->reference;
+            $ref = DB::select('select * from devise')[0]->description;
 
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data','prix_formation','ref','stagiaires','lieu_formations','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
@@ -836,7 +836,7 @@ class HomeController extends Controller
             if(count($lieu_formation)>0){
                 $lieuFormation = explode(',',$lieu_formation[0]->lieu);
             }
-            $ref = DB::select('select * from devise')[0]->reference;
+            $ref = DB::select('select * from devise')[0]->description;
 
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
 
