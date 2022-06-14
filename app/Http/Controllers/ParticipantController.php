@@ -131,7 +131,7 @@ class ParticipantController extends Controller
 
     }
 
-public function unsetReferent (Request $request) {
+    public function unsetReferent (Request $request) {
 
         // $employe = new stagiaire();
         $user_id = $request->user_id;
@@ -236,6 +236,10 @@ public function unsetReferent (Request $request) {
         $services = Service::all();
         // $services = $departement->services;
         // dd($services);
+
+        // $employe = stagiaire::find(22);
+        // dd($employe->user->loged);
+
 
         return view("admin.entreprise.employer.liste_employer",compact('employers', 'entreprise', 'niveaux_etude', 'departements', 'services'));
     }

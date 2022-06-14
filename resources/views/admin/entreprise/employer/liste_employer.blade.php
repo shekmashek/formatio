@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Liste des employés</p>
+    Liste des employés
 @endsection
 @section('content')
     @push('extra-css')
@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap.min.css">
-        <link rel="stylesheet" href="{{ asset('assets/css/inputControl.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/dtable.css') }}">
 
         <style>
             .table-head {
@@ -187,16 +187,19 @@
 
                                             {{-- grey color --}}
                                             <span class=" position-relative">
-                                                <i class='bx bx-user-circle profile-holder'
+                                                <i class='bx bx-user-circle profile-holder text-gray-100'
                                                     style="width: 45px; height: 45px">
                                                 </i>
+
                                                 <span
                                                     class="opacity-100 position-absolute bottom-0 mt-3 top-50 
                                                     start-50 ms-3 translate-middle p-2 border-light actif-status
                                                     rounded-circle
-                                                    @if ($employe->activiter == 1) 
+                                                    @if ($employe->user->loged == 0)
+                                                        bg-secondary
+                                                    @elseif ($employe->user->loged == 1 && $employe->activiter == 1) 
                                                         bg-success
-                                                    @else
+                                                    @elseif($employe->user->loged == 1 && $employe->activiter == 0)
                                                         bg-danger 
                                                     @endif
                                                     ">
@@ -236,9 +239,11 @@
                                                     class="opacity-100 position-absolute bottom-0 mt-3 top-50 start-50 ms-3 
                                                     translate-middle p-2 border actif-status
                                                     border-light rounded-circle
-                                                    @if ($employe->activiter == 1) 
+                                                    @if ($employe->user->loged == 0)
+                                                        bg-secondary
+                                                    @elseif ($employe->user->loged == 1 && $employe->activiter == 1) 
                                                         bg-success
-                                                    @else
+                                                    @elseif($employe->user->loged == 1 && $employe->activiter == 0)
                                                         bg-danger 
                                                     @endif
                                                 ">
@@ -277,26 +282,40 @@
                                 <td class="align-middle text-center text-secondary">
                                     {{ $employe->created_at->format('d M Y h:m') }}
                                 </td>
-                                <td class="align-middle text-center text-secondary">
+                                <td class="align-middle text-center text-secondary status_case">
 
-                                    @if ($employe->activiter == 1)
+                                    @if ($employe->activiter == 1 && $employe->user->loged == 1)
                                         <div class="form-check form-switch">
                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span
                                                     class="badge bg-success">actif</span></label>
                                             <input class="form-check-input desactiver_stg" type="checkbox"
                                                 data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
                                                 checked>
-                                        </div>
-                                    @else
-                                        <div class="form-check form-switch">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked">
-                                                <span class="badge bg-danger">
-                                                    inactif
-                                                </span>
-                                            </label>
-                                            <input class="form-check-input activer_stg" type="checkbox"
-                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
-                                        </div>
+                                        </div>                                   
+
+                                    @elseif ($employe->activiter == 0 && $employe->user->loged == 1)
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">
+                                            <span class="badge bg-danger">
+                                                Désactivé
+                                            </span>
+                                        </label>
+                                        <input class="form-check-input activer_stg" type="checkbox"
+                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                    </div>
+
+                                    @elseif ($employe->user->loged == 0)
+
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">
+                                            <span class="badge bg-secondary">
+                                                inactif
+                                            </span>
+                                        </label>
+                                        <input class="form-check-input activer_stg display-0" type="checkbox"
+                                            data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                    </div>
+     
                                     @endif
 
                                     
@@ -304,7 +323,7 @@
                                 </td>
 
                                 {{-- status référent --}}
-                                <td class="align-middle text-center text-secondary">
+                                <td class="align-middle text-center text-secondary status_case">
 
                                     @if ($employe->status_referent == 1)
                                         <div class="form-check form-switch">
@@ -448,8 +467,7 @@
                     },
                     success: function(response) {
                         console.log(response);
-                        // window.location.reload();
-                        // don't reloead the page if json response have error
+
                         if (response.error) {
                             alert(response.error);
                             // remove the attribute checked

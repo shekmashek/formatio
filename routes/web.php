@@ -57,11 +57,6 @@ Route::get('/user', function () {
 // route recheche personne qui suivi une formation dans une entreprise
 Route::get('recherche_input', 'RecherchemultiController@recherche')->name('recherche_input');
 
-// a temporary home route to dd('connected')
-// Route::get('/home', function () {
-//     dd('connected');
-//     return view('home');
-// });
 
 Route::get('/home/{id?}', 'HomeController@index')->name('home');
 Route::get('/hometdbf/{id?}', 'HomeControllerTDBF@index')->name('hometdbf');
@@ -738,9 +733,14 @@ Route::get('employes.export.verify_matricule_stg','ParticipantController@verify_
 Route::get('employes.export.verify_email_stg','ParticipantController@verify_email_stg')->name('employes.export.verify_email_stg');
 Route::get('employes.export.verify_cin_stg','ParticipantController@verify_cin_stg')->name('employes.export.verify_cin_stg');
 
-Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->name('employes.liste.activer');
+
 Route::get('employes.new','ParticipantController@new_emp')->name('employes.new');
+
+// routes d'activation dees employés
+Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->name('employes.liste.activer');
 Route::get('employes.liste.desactiver','ParticipantController@desactiver_stagiaire')->name('employes.liste.desactiver');
+Route::get('employes.setReferent', 'ParticipantController@setReferent')->name('employes.setReferent');
+Route::get('employes.unsetReferent', 'ParticipantController@unsetReferent')->name('employes.unsetReferent');
 
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement', 'ChefDepartementController');
@@ -1385,12 +1385,7 @@ Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
 
 
 
-
-
-
-
-
-
-
-
 Route::get('/raport','SessionController@fiche')->name('fichePDF');
+
+// ROUTES DONNEES JSON
+Route::get('/getDomains', 'ProfController@getDomains')->name('getDomains');
