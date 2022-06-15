@@ -151,7 +151,7 @@ CREATE TABLE stagiaires (
 
 CREATE TABLE `historique_stagiaires` (
   `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
-  stagiaire_id bigint(20) unsigned not null references stagiaires(id) on delete cascade,
+  stagiaire_id bigint(20) unsigned not null references employers(id) on delete cascade,
   ancien_entreprise_id bigint(20) unsigned not null references entreprises(id) on delete cascade,
   ancien_departement_id bigint(20) unsigned not null references departement_entreprises(id) on delete cascade,
   nouveau_entreprise_id bigint(20) unsigned not null,

@@ -73,7 +73,7 @@ CREATE OR REPLACE VIEW v_detailmoduleformationprojetformateur AS SELECT
     (f.adresse) adresse_formateur,
     f.cin,
     f.specialite,
-    f.niveau_etude_id,
+    f.niveau,
     (f.activiter) activiter_formateur,
     pj.id,
     pj.nom_projet,
@@ -439,25 +439,25 @@ create or replace view v_departement_service_entreprise as
     join departement_entreprises de on s.departement_entreprise_id = de.id;
 
 CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
-    emp.id AS stagiaire_id,
-    emp.matricule_emp as matricule,
-    emp.nom_emp as nom_stagiaire,
-    emp.prenom_emp as prenom_stagiaire,
-    emp.genre_id as genre_stagiaire,
-    emp.fonction_emp as fonction_stagiaire,
-    emp.email_emp as mail_stagiaire,
-    emp.telephone_emp as telephone_stagiaire,
-    emp.user_id as user_id,
-    emp.photos as photos,
-    emp.cin_emp as cin,
-    emp.date_naissance_emp as date_naissance,
-    emp.activiter as activiter,
-    emp.branche_id as branche_id,
-    emp.adresse_quartier as quartier,
-    emp.adresse_code_postal as code_postal,
-    emp.adresse_ville as ville,
-    emp.adresse_region as region,
-    emp.adresse_lot as lot,
+    stg.id AS stagiaire_id,
+    stg.matricule,
+    stg.nom_stagiaire,
+    stg.prenom_stagiaire,
+    stg.genre_stagiaire,
+    stg.fonction_stagiaire,
+    stg.mail_stagiaire,
+    stg.telephone_stagiaire,
+    stg.user_id,
+    stg.photos,
+    stg.cin,
+    stg.date_naissance,
+    stg.activiter,
+    stg.branche_id,
+    stg.quartier,
+    stg.code_postal,
+    stg.ville,
+    stg.region,
+    stg.lot,
     b.nom_branche,
     e.nom_etp,
     e.adresse_rue,
@@ -480,22 +480,17 @@ CREATE OR REPLACE VIEW v_stagiaire_entreprise AS SELECT
     niveau.niveau_etude,
     gr.genre
 FROM
-    employers as emp
+    stagiaires as stg
     join entreprises e
-    on emp.entreprise_id = e.id
+    on stg.entreprise_id = e.id
     left join v_departement_service_entreprise ds
-    on ds.service_id = emp.service_id
+    on ds.service_id = stg.service_id
     left join branches b
-    on b.id = emp.branche_id
+    on b.id = stg.branche_id
     join niveau_etude niveau
-    on niveau.id = emp.niveau_etude_id
+    on niveau.id = stg.niveau_etude_id
     join genre gr
-    on gr.id = emp.genre_id
-    join users
-    on users.id = emp.user_id
-    join role_users
-    on role_users.user_id = emp.user_id
-WHERE role_users.role_id = 3;
+    on gr.id = stg.genre_stagiaire;
 
 -- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
 --     stg.id AS stagiaire_id,
