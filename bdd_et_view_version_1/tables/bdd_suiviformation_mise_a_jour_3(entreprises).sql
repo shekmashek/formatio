@@ -163,5 +163,36 @@ CREATE TABLE `historique_stagiaires` (
   `particulier` boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE employers (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  matricule_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  nom_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  prenom_emp varchar(255) COLLATE utf8mb4_unicode_ci,
+  date_naissance_emp date DEFAULT current_timestamp(),
+  cin_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  email_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  telephone_emp varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXX',
+  fonction_emp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXX',
+  poste_emp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  service_id bigint(20) UNSIGNED,
+  branche_id bigint(20) UNSIGNED ,
+  genre_id bigint(20) unsigned DEFAULT 1  REFERENCES genre(id),
+  departement_entreprises_id bigint(20) UNSIGNED,
+  adresse_quartier varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_code_postal varchar(30) COLLATE utf8mb4_unicode_ci  default 'XXX',
+  adresse_lot varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_ville varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  adresse_region varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  photos varchar(255) COLLATE utf8mb4_unicode_ci,
+  entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
+ niveau_etude_id bigint(20) UNSIGNED NOT NULL DEFAULT 1 REFERENCES niveau_etude(id) ON DELETE CASCADE,
+  activiter boolean not null default true,
+  prioriter boolean not null default false,
+  url_photo VARCHAR(155),
+  created_at timestamp  DEFAULT current_timestamp(),
+  updated_at timestamp  DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 

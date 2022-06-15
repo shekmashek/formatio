@@ -204,7 +204,7 @@ CREATE TABLE modules (
   prix_groupe int(11) NULL,
   status int(11) default 0,
   bon_a_savoir TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

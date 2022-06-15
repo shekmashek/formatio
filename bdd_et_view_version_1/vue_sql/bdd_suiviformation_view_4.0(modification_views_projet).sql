@@ -392,18 +392,18 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
     SELECT
         dm.*,
         pg.stagiaire_id,
-        s.matricule,
-        s.nom_stagiaire,
-        s.prenom_stagiaire,
-        s.genre_stagiaire,
-        s.fonction_stagiaire,
-        s.mail_stagiaire,
-        s.telephone_stagiaire,
+        s.matricule_emp as matricule,
+        s.nom_emp as nom_stagiaire,
+        s.prenom_emp as prenom_stagiaire,
+        s.genre_id as genre_stagiaire,
+        s.fonction_emp as fonction_stagiaire,
+        s.email_emp as mail_stagiaire,
+        s.telephone_emp as telephone_stagiaire,
         s.user_id AS user_id_stagiaire,
         s.service_id as departement_id,
-        s.cin,
-        s.date_naissance,
-        (s.lot) adresse,
+        s.cin_emp as cin,
+        s.date_naissance_emp as date_naissance,
+        (s.adresse_lot) adresse,
         s.niveau_etude_id,
         s.activiter AS activiter_stagiaire,
         s.branche_id
@@ -411,7 +411,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         participant_groupe pg
     JOIN v_detailmodule dm ON
         pg.groupe_id = dm.groupe_id
-    JOIN stagiaires s ON
+    JOIN employers s ON
         s.id = pg.stagiaire_id;
 
 
@@ -469,23 +469,23 @@ select
         g.status,
         g.activiter as activiter_groupe,
         s.id as stagiaire_id,
-        s.matricule,
-        s.nom_stagiaire,
-        s.prenom_stagiaire,
-        s.genre_stagiaire,
-        s.fonction_stagiaire,
-        s.mail_stagiaire,
-        s.telephone_stagiaire,
+        s.matricule_emp as matricule,
+        s.nom_emp as nom_stagiaire,
+        s.prenom_emp as prenom_stagiaire,
+        s.genre_id as genre_stagiaire,
+        s.fonction_emp as fonction_stagiaire,
+        s.email_emp as mail_stagiaire,
+        s.telephone_emp as telephone_stagiaire,
         s.entreprise_id,
         s.user_id,
         s.photos,
-        concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photos,
+        concat(SUBSTRING(s.nom_emp, 1, 1),SUBSTRING(s.prenom_emp, 1, 1)) as sans_photos,
         (s.service_id) departement_id,
-        s.cin,
+        s.cin_emp as cin,
         niveau.id as niveau_etude_id,
         niveau.niveau_etude,
-        s.date_naissance,
-        (s.lot) adresse,
+        s.date_naissance_emp as date_naissance,
+        (s.adresse_lot) adresse,
         s.activiter as activiter_stagiaire,
         s.branche_id,
         ifnull(d.nom_departement,' ') as nom_departement,
@@ -501,7 +501,7 @@ select
         groupes g
     on g.id = p.groupe_id
     join
-        stagiaires s
+        employers s
         on s.id = p.stagiaire_id
     left join v_departement_service_entreprise d
         on s.service_id = d.service_id
@@ -537,52 +537,52 @@ create or replace view v_detail_presence as
 
 
 
-CREATE OR REPLACE VIEW v_stagiaire_entreprise AS
-SELECT
-    stg.id AS stagiaire_id,
-    stg.matricule,
-    stg.nom_stagiaire,
-    stg.prenom_stagiaire,
-    stg.genre_stagiaire,
-    stg.titre,
-    stg.fonction_stagiaire,
-    stg.mail_stagiaire,
-    stg.telephone_stagiaire,
-    stg.user_id,
-    stg.photos,
-    stg.cin,
-    stg.date_naissance,
-    stg.niveau_etude_id,
-    stg.activiter,
-    stg.branche_id,
-    stg.quartier,
-    stg.code_postal,
-    stg.ville,
-    stg.region,
-    stg.lot,
-    e.nom_etp,
-    e.adresse_rue,
-    e.adresse_quartier,
-    e.adresse_code_postal,
-    e.adresse_ville,
-    e.adresse_region,
-    e.logo,
-    e.nif,
-    e.stat,
-    e.rcs,
-    e.cif,
-    e.secteur_id,
-    e.email_etp,
-    e.site_etp,
-    (e.activiter) activiter_etp,
-    e.telephone_etp,
-    ds.*
-FROM
-    stagiaires as stg
-    join entreprises e
-    on stg.entreprise_id = e.id
-    join v_departement_service_entreprise ds
-    on ds.service_id = stg.service_id;
+-- CREATE OR REPLACE VIEW v_stagiaire_entreprise AS
+-- SELECT
+--     stg.id AS stagiaire_id,
+--     stg.matricule,
+--     stg.nom_stagiaire,
+--     stg.prenom_stagiaire,
+--     stg.genre_stagiaire,
+--     stg.titre,
+--     stg.fonction_stagiaire,
+--     stg.mail_stagiaire,
+--     stg.telephone_stagiaire,
+--     stg.user_id,
+--     stg.photos,
+--     stg.cin,
+--     stg.date_naissance,
+--     stg.niveau_etude_id,
+--     stg.activiter,
+--     stg.branche_id,
+--     stg.quartier,
+--     stg.code_postal,
+--     stg.ville,
+--     stg.region,
+--     stg.lot,
+--     e.nom_etp,
+--     e.adresse_rue,
+--     e.adresse_quartier,
+--     e.adresse_code_postal,
+--     e.adresse_ville,
+--     e.adresse_region,
+--     e.logo,
+--     e.nif,
+--     e.stat,
+--     e.rcs,
+--     e.cif,
+--     e.secteur_id,
+--     e.email_etp,
+--     e.site_etp,
+--     (e.activiter) activiter_etp,
+--     e.telephone_etp,
+--     ds.*
+-- FROM
+--     stagiaires as stg
+--     join entreprises e
+--     on stg.entreprise_id = e.id
+--     join v_departement_service_entreprise ds
+--     on ds.service_id = stg.service_id;
 
 
 
@@ -590,27 +590,26 @@ FROM
 create or replace view v_detail_presence_stagiaire as
     select
         dp.*,
-        stg.matricule,
-        stg.nom_stagiaire,
-        stg.prenom_stagiaire,
-        stg.genre_stagiaire,
-        stg.titre,
-        stg.fonction_stagiaire,
-        stg.mail_stagiaire,
-        stg.telephone_stagiaire,
+        stg.matricule_emp as matricule,
+        stg.nom_emp as nom_stagiaire,
+        stg.prenom_emp as prenom_stagiaire,
+        stg.genre_id as genre_stagiaire,
+        stg.fonction_emp as fonction_stagiaire,
+        stg.email_emp as mail_stagiaire,
+        stg.telephone_emp as telephone_stagiaire,
         stg.user_id,
         stg.photos,
-        stg.cin,
-        stg.date_naissance,
+        stg.cin_emp as cin,
+        stg.date_naissance_emp as date_naissance,
         stg.activiter,
         stg.branche_id,
-        stg.quartier,
-        stg.code_postal,
-        stg.ville,
-        stg.region,
-        stg.lot
+        stg.adresse_quartier as quartier,
+        stg.adresse_code_postal as code_postal,
+        stg.adresse_ville as ville,
+        stg.adresse_region as region,
+        stg.adresse_lot as lot
     from v_detail_presence dp
-    join stagiaires stg on dp.stagiaire_id = stg.id;
+    join employers stg on dp.stagiaire_id = stg.id;
 
 
 create or replace view v_participant_groupe_detail as

@@ -12,7 +12,7 @@ INSERT INTO genre (id,genre, created_at, updated_at) VALUES
 CREATE TABLE roles (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   role_name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+  role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT  current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
