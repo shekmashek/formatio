@@ -49,7 +49,7 @@ class ParticipantController extends Controller
 
         $funct = new FonctionGenerique();
         $emps = $funct->filtreEmployeNew($user_id);
-        
+
         return response()->json($emps);
     }
 
@@ -62,7 +62,7 @@ class ParticipantController extends Controller
                     ->where('user_id', '=', $id_emp)
                     ->where('entreprise_id', '=', $id)
                     ->get();
-        
+
         return response()->json($responsable);
     }
     //end newAfficheInfo
@@ -1283,11 +1283,11 @@ class ParticipantController extends Controller
         $totale_valide = 0;
         for ($i = 0; $i < count($req["matricule_"]); $i += 1) {
 
-            $doner["matricule"] = $req["matricule_"][$i];
-            $doner["nom"]  = $req["nom_"][$i];
-            $doner["prenom"]  = $req["prenom_"][$i];
-            $doner["cin"]  = $req["cin_"][$i];
-            $doner["email"]  = $req["email_"][$i];
+            $doner["matricule_emp"] = $req["matricule_"][$i];
+            $doner["nom_emp"]  = $req["nom_"][$i];
+            $doner["prenom_emp"]  = $req["prenom_"][$i];
+            $doner["cin_emp"]  = $req["cin_"][$i];
+            $doner["email_emp"]  = $req["email_"][$i];
             // $doner["tel"]  = $req["tel_"][$i];
             if ($req["matricule_"][$i] != null && $req["nom_"][$i] != null) {
                 $totale_valide += 1;
@@ -1315,7 +1315,7 @@ class ParticipantController extends Controller
 
                             $stg->insert_multi($doner, $user_stg_id, $entreprise_id);
 
-                            Mail::to($doner['email'])->send(new save_new_compte_stagiaire_Mail($doner["nom"] . ' ' . $doner["prenom"], $doner['email'], $etp->nom_etp));
+                            Mail::to($doner['email_emp'])->send(new save_new_compte_stagiaire_Mail($doner["nom_emp"] . ' ' . $doner["prenom_emp"], $doner['email_emp'], $etp->nom_etp));
                         }
                     } else {
                         return back()->with('error', "erreur,l'une des données existes déjà!");

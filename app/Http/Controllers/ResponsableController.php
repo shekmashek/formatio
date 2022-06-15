@@ -696,24 +696,7 @@ class ResponsableController extends Controller
             else{
                 if ($input != null) {
 
-                    responsable::where('id', $id)
-                        ->update([
-                            'nom_resp' => $nom,
-                            'prenom_resp' => $prenom,
-                            'fonction_resp' => $fonction,
-                            'email_resp' => $mail,
-                            'telephone_resp' => $phone,
-                            'date_naissance_resp' => $date_naiss,
-                            'genre_id' => $genre,
-                            'cin_resp' => $cin,
-                            'adresse_lot' => $lot,
-                            'adresse_code_postal' => $code_postal,
-                            'adresse_quartier' => $quartier,
-                            'adresse_ville' => $ville,
-                            'adresse_region' => $region,
-                            'poste_resp' => $poste,
-                            'photos' => $input
-                        ]);
+                    DB::update('update employers set nom_emp = ? , prenom_emp = ?, date_naissance_emp = ?, cin_emp = ?,email_emp = ?,telephone_emp = ?,fonction_emp = ?,poste_emp = ?,genre_id = ?,adresse_lot = ?,adresse_ville = ?,adresse_region = ?', ['John']);
 
                 } else {
                     responsable::where('id', $id)
