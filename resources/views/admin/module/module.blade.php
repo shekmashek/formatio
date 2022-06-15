@@ -3,6 +3,7 @@
 <p class="text_header m-0 mt-1">Modules</p>
 @endsection
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"

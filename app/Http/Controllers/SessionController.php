@@ -112,6 +112,7 @@ class SessionController extends Controller
         $id = request()->id_session;
 
         $type_formation_id = request()->type_formation;
+
         // ???--mbola tsy mety
         $test = DB::select('select count(id) as nombre from details where groupe_id = ?',[$id])[0]->nombre;
         $nombre_stg = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?',[$id])[0]->nombre;
@@ -128,7 +129,8 @@ class SessionController extends Controller
         $projet = new projet();
         $frais_annex = null;
         $module_session = DB::select('select reference,nom_module, module_id from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
-        $dataMontantSession = DB::select("select * from v_liste_facture where groupe_id=?",[$id]);
+        $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where groupe_id=?",[$id]);
+
         if(Gate::allows('isCFP')){
             $drive = new getImageModel();
 
@@ -142,8 +144,6 @@ class SessionController extends Controller
             // $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
             $requette = $projet->requette_detail_session_of($cfp_id,$id);
             $datas = DB::select($requette);
-
-
             // dd($datas);
             if($type_formation_id  == 1){
                 $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id","groupe_id"], [$cfp_id,$id]);
@@ -153,18 +153,27 @@ class SessionController extends Controller
                 $projet = $fonct->findWhere("v_projet_session_inter", ["cfp_id","groupe_id"], [$cfp_id,$id]);
                 $entreprise_id = null;
             }
-            // $frais_annex = DB::select("select * from v_montant_frais_annexe where cfp_id=?",[$cfp_id]);
+            $frais_annex = DB::select("select * from v_montant_frais_annexe where cfp_id=?",[$cfp_id]);
 
-            // if(count($frais_annex)>0){
-            //     if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id && $frais_annex[0]->groupe_id == $projet[0]->groupe_id && $frais_annex[0]->groupe_entreprise_id == $projet[0]->groupe_entreprise_id && $frais_annex[0]->projet_id == $projet[0]->projet_id){
-            //         $frais_annex[0] = $frais_annex[0]->hors_taxe;
-            //     }
-            //     else{
-            //         $frais_annex[0] =null;
-            //     }
-            // }
+            if(count($frais_annex)>0){
+                if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id  && $frais_annex[0]->projet_id == $projet[0]->projet_id){
+                    $frais_annex[0] = $frais_annex[0]->hors_taxe;
+                }
+                else{
+                    $frais_annex[0] =null;
+                }
+            }
 
-
+            if(count($dataMontantSession)>0){
+                if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id){
+                    $dataMontantSession[0]->qte = $dataMontantSession[0]->qte;
+                    $dataMontantSession[0]->hors_taxe = $dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session;
+                }
+                else{
+                    $dataMontantSession[0]->qte = null;
+                    $dataMontantSession[0]->hors_taxe=null;
+                }
+            }
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
             $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
@@ -193,16 +202,16 @@ class SessionController extends Controller
 
             $projet = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id","groupe_id"], [$etp_id,$id]);
 
-            // $frais_annex = DB::select("select * from v_montant_frais_annexe where entreprise_id=?",[$etp_id]);
+            $frais_annex = DB::select("select * from v_montant_frais_annexe where entreprise_id=? AND projet_id=?",[$etp_id,$projet[0]->projet_id]);
 
-            //      for($i=0;$i<count($dataMontantSession);$i+=1){
-            //         $frais_annex = DB::select("select * from v_montant_frais_annexe where entreprise_id=? AND projet_id=? AND cfp_id=? AND entreprise_id=? AND num_facture=?",[$etp_id,$dataMontantSession[0]->projet_id,$dataMontantSession[0]->cfp_id,$dataMontantSession[0]->entreprise_id,$dataMontantSession[0]->num_facture]);
-            //         if(count($frais_annex)>0){
-            //             $dataMontantSession[$i]->hors_taxe = ($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session) + $frais_annex[0]->hors_taxe;
-            //         } else {
-            //             $dataMontantSession[$i]->hors_taxe =  $dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session;
-            //         }
-            //     }
+                 for($i=0;$i<count($dataMontantSession);$i+=1){
+                    $frais_annex = DB::select("select * from v_montant_frais_annexe where entreprise_id=? AND projet_id=? AND cfp_id=? AND entreprise_id=? AND num_facture=?",[$etp_id,$dataMontantSession[0]->projet_id,$dataMontantSession[0]->cfp_id,$dataMontantSession[0]->entreprise_id,$dataMontantSession[0]->num_facture]);
+                    if(count($frais_annex)>0){
+                        $dataMontantSession[$i]->hors_taxe = ($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session) + $frais_annex[0]->hors_taxe;
+                    } else {
+                        $dataMontantSession[$i]->hors_taxe =  $dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session;
+                    }
+                }
 
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
             $frais_annexe = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id]);
@@ -226,7 +235,6 @@ class SessionController extends Controller
             $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
             // $datas = $fonct->findWhere("v_detailmodule", ["cfp_id","formateur_id","groupe_id"], [$cfp_id,$formateur_id,$id]);
             $datas = $fonct->findWhere("v_detail_session", ["cfp_id","groupe_id"], [$cfp_id,$id]);
-
             // $datas = $projet->detail_session_formateur($cfp_id,$id,$formateur_id);
             // $datas = DB::select($requette);
 
@@ -253,18 +261,13 @@ class SessionController extends Controller
         //--modalite de formation
         $modalite = DB::select('select modalite from groupes where id = ?',[$id])[0]->modalite;
         $devise = DB::select('select * from devise')[0]->devise;
-        $ref = DB::select('select * from devise')[0]->description;
+        $ref = DB::select('select * from devise')[0]->devise;
         $lieu_formation = DB::select('select projet_id,groupe_id,lieu from details where groupe_id = ? AND projet_id=? group by projet_id,groupe_id,lieu', [$projet[0]->groupe_id,$projet[0]->projet_id]);
 
         if(count($lieu_formation)>0){
-            $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
+            $lieu_formation = explode(',',$lieu_formation[0]->lieu);
         }
-
-
-        return view('projet_session.session', compact('id','ref','test','projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation','frais_annexe'));
-        // return view('projet_session.session', compact('id','ref','test','dataMontantSession','frais_annex','projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation','frais_annexe'));
-
-
+        return view('projet_session.session', compact('id','ref','test','dataMontantSession','frais_annex','projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation','frais_annexe'));
 
     }
 
@@ -273,9 +276,22 @@ class SessionController extends Controller
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
         $cfp_id = $resp->cfp_id;
-        $data = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
-        return response()->json($data);
+        $formateur = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id","activiter_demande"], [$cfp_id,1]);
+        $salles = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
+
+        return response()->json(array('formateur'=>$formateur,'salles'=>$salles));
+        // return response()->json($data);
     }
+
+
+    // public function getSalleFormation(){
+    //     $user_id = Auth::user()->id;
+    //     $fonct = new FonctionGenerique();
+    //     $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+    //     $cfp_id = $resp->cfp_id;
+    //     $data = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
+    //     return response()->json($data);
+    // }
 
     public function getStagiaires(Request $request){
         $search = $request->search;
@@ -302,12 +318,14 @@ class SessionController extends Controller
         $id = $request->Id;
         $etp = $request->etp;
         $groupe = $request->groupe;
-        $stagiaire = DB::select('select id from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+        // $stagiaire = DB::select('select id from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+        $stagiaire = DB::select('select * from stagiaires where matricule like "%'.$id.'%" or nom_stagiaire like "%'.$id.'%" or prenom_stagiaire like "%'.$id.'%" and entreprise_id='.$etp);
+
         $existe = 0;
         if(count($stagiaire) > 0){
-            $stg_id = DB::select('select id from stagiaires where matricule = ?',[$id])[0]->id;
+            $stg_id = DB::select('select * from stagiaires where matricule like "%'.$id.'%" or nom_stagiaire like "%'.$id.'%" or prenom_stagiaire like "%'.$id.'%"')[0]->id;
             $existe = DB::select('select count(stagiaire_id) as nombre from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$stg_id,$groupe])[0]->nombre;
-            $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
+            $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule like "%'.$id.'%" or nom_stagiaire like "%'.$id.'%" or prenom_stagiaire like "%'.$id.'%" and entreprise_id ='.$etp);
             return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]);
         }else{
             return response()->json(['status'=>'400']);
@@ -722,26 +740,4 @@ class SessionController extends Controller
 
         return response()->json($info);
     }
-
-    // public function info_resp_of($id_of){
-    //     $info = DB::table('cfps')
-    //             ->join('responsables_cfp', 'responsables_cfp.cfp_id', 'cfps.id')
-    //             ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.cfp_id', 'cfps.id')
-    //             ->join('v_abonnement_facture', 'v_abonnement_facture.cfp_id', 'cfps.id')
-    //             ->select(DB::raw('substr(responsables_cfp.nom_resp_cfp, 1, 1) as nomRespOf'), DB::raw('substr(responsables_cfp.prenom_resp_cfp, 1, 1) as prenomRespOf'),
-    //                     DB::raw('substr(cfps.nom, 1, 2) as nomOfS'),
-    //                     'cfps.id', 'cfps.nif', 'cfps.stat', 'cfps.nom', 'cfps.adresse_lot', 'cfps.adresse_quartier',
-    //                     'cfps.adresse_code_postal', 'cfps.adresse_ville', 'cfps.adresse_region', 'cfps.email', 'cfps.telephone', 'cfps.logo',
-    //                     'cfps.site_web', 'responsables_cfp.nom_resp_cfp', 'responsables_cfp.prenom_resp_cfp', 'responsables_cfp.email_resp_cfp',
-    //                     'responsables_cfp.sexe_resp_cfp', 'responsables_cfp.fonction_resp_cfp', 'responsables_cfp.adresse_lot',
-    //                     'responsables_cfp.adresse_quartier', 'responsables_cfp.adresse_code_postal', 'responsables_cfp.adresse_ville',
-    //                     'responsables_cfp.adresse_region', 'responsables_cfp.photos_resp_cfp', 'responsables_cfp.telephone_resp_cfp',
-    //                     'v_abonnement_facture.nom_type')
-    //             ->where('v_groupe_projet_entreprise.cfp_id', $id_of)
-
-    //             ->get()[1];
-
-    //     dd($info);
-    // }
-
 }

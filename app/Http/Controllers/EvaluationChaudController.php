@@ -118,7 +118,7 @@ class EvaluationChaudController extends Controller
     }
 
     public function evaluation_chaud_pdf(Request $request){
-        try{
+         try{
             $eval = new EvaluationChaud();
             $groupe = $request->groupe_id;
             // preparation de la formation
@@ -129,7 +129,7 @@ class EvaluationChaudController extends Controller
                 if(count($res_q1)<=0 || count($note_10_q1) <= 0){
                     throw new Exception('Impossible de télécharger le pdf.');
                 }
-                
+
             //
             // q2
                 $res_q2 = $eval->pourcentage_point($groupe,4);

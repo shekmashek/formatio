@@ -24,7 +24,50 @@
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
 </head>
+<style>
+    .nav_linke:hover {
+        background-color: #7635dc;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+    }
+    .nav_linke.active {
+        background-color: #7635dc;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+        cursor: pointer;
+    }
+    .nav_linke:hover.nav_linke.active {
+        background-color: #7635dc;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+    }
+    .nav_linke.active .links_name{
+        color: white;
+    }
+    .nav_linke.active .bx{
+        color: white;
+    }
 
+
+    .btn_racourcis:hover {
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+    }
+    .btn_racourcis.active {
+        background-color: #7635dc;
+        border-radius: 10px 10px 10px 10px;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+        cursor: pointer;
+    }
+    .btn_racourcis.active .text_racourcis{
+        color: white;
+    }
+    .btn_racourcis.active .bx{
+        color: white;
+    }
+    .btn_racourcis.active :hover .text_racourcis{
+        color: white;
+    }
+    .btn_racourcis.active :hover .bx{
+        color: white;
+    }
+</style>
 <body>
     <div class="sidebar active">
         {{-- <div class="logo_content">
@@ -34,10 +77,9 @@
             </div>
 
         </div> --}}
-        <ul class="nav_list mb-5" id="menu">
-
+        <ul class="nav nav_list mb-5" id="menu">
             <li>
-                <a href="{{ route('home') }}" class="d-flex active nav_linke">
+                <a href="{{ route('home') }}" class="nav_linke" id="accueil">
                     <i class="bx bxs-dashboard"></i>
                     <span class="links_name">Accueil</span>
                 </a>
@@ -133,7 +175,7 @@
                     <span class="links_name">Domaine&Formation</span>
                 </a>
 
-            </li> 
+            </li>
             <li>
                 <a href="{{ route('taxes') }}" class="d-flex nav_linke">
                     <i class='bx bx-spreadsheet'></i>
@@ -1388,7 +1430,7 @@
         {{-- footer --}}
     </div>
 
-    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></s>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -1569,9 +1611,23 @@
         //     }
         // });
 
-    </script>
-    <script type="text/javascript">
 
+    $(".nav .nav_linke").on("click", function(e){
+        localStorage.setItem('indiceSidebar', this);
+        $('a.active').removeClass('active');
+    });
+
+    $(".btn_racourcis a").on("click", function(e){
+        localStorage.setItem('indiceSidebar', this);
+        $('a.active').removeClass('active');
+    });
+
+    if(!(localStorage.getItem('indiceSidebar')))localStorage.setItem('indiceSidebar', document.getElementById("accueil").href);
+    let Tabactive = localStorage.getItem('indiceSidebar');
+    if(Tabactive){
+        ($('a[href="' + Tabactive + '"]').closest('a')).addClass('active');
+        ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
+    }
     </script>
 </body>
 

@@ -469,9 +469,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
-        localStorage.setItem('collaboration', lien);
+        localStorage.setItem('indiceListeFormation', lien);
     });
-    let Tabactive = localStorage.getItem('collaboration');
+    let Tabactive = localStorage.getItem('indiceListeFormation');
     if(Tabactive){
         $('#myTab a[href="' + Tabactive + '"]').tab('show');
     }

@@ -30,7 +30,7 @@
 
         .container_code{
           padding-right: 15px;
-          padding-left: 15px; 
+          padding-left: 15px;
         }
 
         .text_center{
@@ -759,7 +759,7 @@
         <div class="">
             <span style="color: rgb(100, 100, 100)"><b>Préparation de la formation</b></span>
             <div class="marge_top">
-            
+
             <div class="row_flex">
                 <div class=" text_11">
                 <span id="texte">Les objectifs de la formation ont-ils été clairement annoncés ?</span>
@@ -835,7 +835,7 @@
                         <td class="text-right"><span class="rating-label">{{ $res_q1[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q1[3]->pourcentage }}%</span>
                         </td>
                     </tr>
-                    
+
                 </table>
             </div>
             <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
@@ -890,7 +890,7 @@
                     </tr>
                 </table>
             </div>
-            
+
         </div>
         <div class="col-lg-4">
             <div class="table-rating-bar justify-content-center">
@@ -1009,7 +1009,7 @@
         <div class="">
             <span style="color: rgb(100, 100, 100)"><b>Déroulement de la formation</b></span>
             <div class="marge_top">
-            
+
             <div class="row_flex">
                 <div class=" text_11">
                 <span id="texte">Le formateur était-il clair et dynamique ?</span>
@@ -1096,7 +1096,7 @@
                         <td class="text-right"><span class="rating-label">{{ $res_q4[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q4[3]->pourcentage }}%</span>
                         </td>
                     </tr>
-                    
+
                 </table>
             </div>
             <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
@@ -1203,7 +1203,7 @@
                     </tr>
                 </table>
             </div>
-            
+
         </div>
         <div class="col-lg-4">
             <div class="table-rating-bar justify-content-center">
@@ -1288,7 +1288,7 @@
         <div class="">
         <span style="color: rgb(100, 100, 100)"><b>Contenu de la formation </b></span>
         <div class="marge_top">
-            
+
             <div class="row_flex">
             <div class=" text_11">
                 <span id="texte">Le programme était-il clair et précis ?</span>
@@ -1375,7 +1375,7 @@
                     <td class="text-right"><span class="rating-label">{{ $res_q8[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q8[3]->pourcentage }}%</span>
                     </td>
                 </tr>
-                
+
             </table>
             </div>
             <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
@@ -1482,7 +1482,7 @@
                 </tr>
             </table>
             </div>
-        
+
         </div>
         <div class="col-lg-4">
         <div class="table-rating-bar justify-content-center">
@@ -1508,7 +1508,7 @@
             <div class="">
             <span style="color: rgb(100, 100, 100)"><b>Efficacité de la formation</b></span>
             <div class="marge_top">
-                
+
                 <div class="row_flex">
                 <div class=" text_11">
                     <span id="texte">Cette formation améliore t-elle vos compétences ?</span>
@@ -1584,7 +1584,7 @@
                         <td class="text-right"><span class="rating-label">{{ $res_q11[3]->nombre_stg }}</span>&nbsp;<span class="text-muted">{{ $res_q11[3]->pourcentage }}%</span>
                         </td>
                     </tr>
-                    
+
                 </table>
                 </div>
                 <div class="table-rating-bar justify-content-center" style=" margin-top: 5px">
@@ -1639,7 +1639,7 @@
                     </tr>
                 </table>
                 </div>
-            
+
             </div>
             <div class="col-lg-4">
             <div class="table-rating-bar justify-content-center">
@@ -1737,8 +1737,8 @@
     $(document).on('click','.get_pdf',function(){
         const rapport = document.getElementById('statistique');
         var opt = {
-            margin: 0.3,
-            width : 400,
+            margin: 0.2,
+            width : 360,
             filename:'rapport_evaluation_a_chaud.pdf',
             pagebreak : { mode: ['avoid-all','css', 'legacy']},
             image:        { type: 'jpeg', quality: 0.98 },
@@ -1746,6 +1746,6 @@
         };
             html2pdf().set(opt).from(rapport).save();
     });
-    
+
 </script>
 @endsection

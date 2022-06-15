@@ -46,6 +46,7 @@ Route::get('/projet_session', function () {
 Route::get('detail_session/{id_session?}/{type_formation?}', 'SessionController@detail_session')->name('detail_session');
 
 Route::get('all_formateurs', 'SessionController@getFormateur')->name('all_formateurs');
+// Route::get('tous_salle_formation','SessionController@getSalleFormation')->name('tous_salle_formation');
 // end
 
 
@@ -374,7 +375,7 @@ Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->nam
 Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
 //route module_formations
 Route::get('/module', 'FormationController@module_formations')->name('module');
- 
+
 // page creation formation
 Route::get('/nouveau_formation', 'FormationController@create')->name('nouveau_formation');
 
