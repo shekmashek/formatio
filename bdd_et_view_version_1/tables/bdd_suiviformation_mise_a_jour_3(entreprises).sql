@@ -82,7 +82,7 @@ CREATE TABLE chef_departements (
 CREATE TABLE `chef_dep_entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `departement_entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES departement_entreprises(id) ON DELETE CASCADE,
-  `chef_departement_id` bigint(20) UNSIGNED NOT NULL REFERENCES chef_departements(id) ON DELETE CASCADE,
+  `chef_departement_id` bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
   `created_at` timestamp default current_timestamp(),
   `updated_at` timestamp default current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
