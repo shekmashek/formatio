@@ -46,6 +46,7 @@ Route::get('/projet_session', function () {
 Route::get('detail_session/{id_session?}/{type_formation?}', 'SessionController@detail_session')->name('detail_session');
 
 Route::get('all_formateurs', 'SessionController@getFormateur')->name('all_formateurs');
+// Route::get('tous_salle_formation','SessionController@getSalleFormation')->name('tous_salle_formation');
 // end
 
 

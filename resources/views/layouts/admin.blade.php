@@ -24,7 +24,9 @@
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
 </head>
+<style>
 
+</style>
 <body>
     <div class="sidebar active">
         {{-- <div class="logo_content">
@@ -133,7 +135,7 @@
                     <span class="links_name">Domaine&Formation</span>
                 </a>
 
-            </li> 
+            </li>
             <li>
                 <a href="{{ route('taxes') }}" class="d-flex nav_linke">
                     <i class='bx bx-spreadsheet'></i>

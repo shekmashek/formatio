@@ -465,32 +465,22 @@
                         <i class='bx bx-time-five ms-3 me-1' style="font-size: 1rem;"></i>
                         <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>&nbsp;&nbsp;
                         <i class='bx bx-group ms-3' style="font-size: 1rem;"></i>
-                        <span class="m-0 ms-1"> apprenant inscrit : {{ $nombre_stg }}</span>
-                        <span class="text-dark ms-1"> </span>
-                        {{-- @if(count($dataMontantSession)>0)
-                            @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
-                                @if ($dataMontantSession[0]->qte >0)
+                        @if(count($dataMontantSession)>0)
+                            @if ($dataMontantSession[0]->qte != null)
                                 <span class="m-0 ms-1"> apprenant inscrit : {{$dataMontantSession[0]->qte}}</span> &nbsp;&nbsp;
-                                @else
+                            @else
                                 <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
-                                @endif
-                            @else{
-                                <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;git
-                            }
                             @endif
                         @else
                             <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
-                        @endif --}}
+                        @endif
 
-                        {{-- @can('isCFP')
+                        @can('isCFP')
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> CA :<strong>
                                 @if(count($dataMontantSession)>0)
-                                    @if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id)
-                                        @php
-                                            $chiffre_affaire = ($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session);
-                                            echo number_format($chiffre_affaire,0,","," ");
-                                        @endphp
+                                    @if( $dataMontantSession[0]->hors_taxe != null)
+                                       {{number_format($dataMontantSession[0]->hors_taxe,0,","," ")}}
                                     @else{
                                         @php
                                             echo "<span>-</span>";
@@ -513,8 +503,8 @@
                             @endphp
                                 @endif
                                 {{$ref}}</strong></p>
-                        @endcan --}}
-                        {{-- @can('isReferent')
+                        @endcan
+                    @can('isReferent')
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
                             <p class="text-dark mt-3"> CP : <strong>
                                 @if (count($dataMontantSession) >0)
@@ -544,7 +534,7 @@
                                     @endphp
                                 @endif
                             &nbsp;{{$ref}}</strong></p>
-                        @endcan --}}
+                        @endcan
                         @if(count($lieu_formation)>0)
                             <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
                             <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
@@ -591,62 +581,13 @@
                                 </div>
                             </div>
                         @endif
-
-                        <div class="chiffre_d_affaire m-0 p-0 me-3">
-                            @php
-                                $of = $groupe->info_resp_of($projet[0]->cfp_id)
-                            @endphp
+                        <div class="chiffre_d_affaire me-2">
 
                             <div class="d-flex flex-row">
-                                <p class="mt-2 text-center"> Organisme de formation
-                                    <span style="font-weight: 400; color: #000000">{{ $of->nom }}</span>
-                                </p>&nbsp;&nbsp;
-
-                                <div class="text-center">
-                                    <span>
-                                        @if($of->logo == NULL or $of->logo == '' or $of->logo == 'XXXXXXX')
-                                            <td role="button" >
-                                                <span class="randomColor m-auto mt-2 text-uppercase" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
-                                                    <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 14px; cursor: pointer"
-                                                    data-id={{$of->id}} id={{$of->id}} class="ofs">
-                                                        {{$of->nomOfS}}
-                                                    </span>
-                                                </span>
-                                            </td>
-                                        @else
-                                            <td class="td_hover" role="button" style="display: grid; place-content: center">
-                                                <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" src="{{asset("images/CFP/".$of->logo)}}" style="width:30px;height:30px; border-radius:100%; cursor: pointer"
-                                                data-id={{$of->id}} id={{$of->id}} class="mt-2 ofs">
-                                            </td>
-                                        @endif
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chiffre_d_affaire m-0 p-0 me-3">
-                            <div class="d-flex flex-row">
-                                <p class="mt-2 text-center"> Responsable de l'organisme de formation
-                                    <span style="font-weight: 400; color: #000000">{{ $of->nom_resp_cfp }}</span>
-                                </p>&nbsp;&nbsp;
-                                <div class="text-center">
-                                    <span>
-                                        @if($of->photos_resp_cfp == NULL or $of->photos_resp_cfp == '' or $of->photos_resp_cfp == 'XXXXXXX')
-                                            <td role="button" >
-                                                <span class="randomColor m-auto mt-2 text-uppercase" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
-                                                    <span data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 14px; cursor: pointer"
-                                                    data-id={{$of->id}} id={{$of->id}} class="ofsResp">
-                                                        {{$of->nomRespOf}}{{$of->prenomRespOf}}
-                                                    </span>
-                                                </span>
-                                            </td>
-                                        @else
-                                            <td class="td_hover" role="button" style="display: grid; place-content: center">
-                                                <img data-bs-toggle="offcanvas" data-bs-target="#test" aria-controls="offcanvasRight" src="{{asset("images/CFP/".$of->photos_resp_cfp)}}" style="width: 30px;height: 30px; border-radius:100%; cursor: pointer"
-                                                data-id={{$of->id}} id={{$of->id}} class="mt-2 ofsResp">
-                                            </td>
-                                        @endif
-                                    </span>
-                                </div>
+                                <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
+                                    {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
+                                <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
+                                    height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                             </div>
                         </div>
 
@@ -1263,7 +1204,7 @@
     </div>
 
     {{--OF--}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -1431,10 +1372,10 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{--resp OF--}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="test" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="test" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -1566,7 +1507,7 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- keep nav in refresh --}}
     <script>
