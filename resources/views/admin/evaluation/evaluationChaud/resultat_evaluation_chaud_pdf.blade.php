@@ -1737,7 +1737,7 @@
     $(document).on('click','.get_pdf',function(){
         const rapport = document.getElementById('statistique');
         var opt = {
-            margin: 0.2,
+            margin: 0.3,
             width : 400,
             filename:'rapport_evaluation_a_chaud.pdf',
             mode: ['css', 'legacy'],
