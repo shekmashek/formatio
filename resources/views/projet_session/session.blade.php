@@ -553,6 +553,7 @@
                                 @php
                                     $Totalfa = 0;
                                 @endphp
+                                <span>
                                 @if (count($all_frais_annexe) > 0)
                                     @foreach ($all_frais_annexe as $fraisAnnexe)
                                         @php $Totalfa += $fraisAnnexe->montant; @endphp
@@ -562,9 +563,10 @@
                                     @endphp
                                 @else
                                     @php
-                                        echo "<span>-</span>";
+                                        echo "-";
                                     @endphp
                                 @endif
+                                </span>
                             &nbsp;{{$ref}}</strong></p>
                         @endcan
                     </div>
