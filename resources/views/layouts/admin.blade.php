@@ -45,7 +45,6 @@
         color: white;
     }
 
-
     .btn_racourcis:hover {
         box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
     }
@@ -59,12 +58,6 @@
         color: white;
     }
     .btn_racourcis.active .bx{
-        color: white;
-    }
-    .btn_racourcis.active :hover .text_racourcis{
-        color: white;
-    }
-    .btn_racourcis.active :hover .bx{
         color: white;
     }
 </style>
