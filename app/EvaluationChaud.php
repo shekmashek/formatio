@@ -71,13 +71,13 @@ class EvaluationChaud extends Model
         return $verify[0]->verify;
     }
 
-    public function insert($point,$reponse,$id_desc_champ,$id_stag,$groupe_id,$cfp_id){
+    public function insert($point,$reponse,$id_desc_champ,$id_stag,$groupe_id,$cfp_id,$anonyme){
 
         DB::beginTransaction();
 
         try {
-            DB::insert("insert into reponse_evaluationchaud(points,reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values (?,?,?,?,?,?,NOW(),NOW())",
-            [$point,$reponse,$id_desc_champ,$id_stag,$groupe_id,$cfp_id]);
+            DB::insert("insert into reponse_evaluationchaud(points,reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,statut,created_at,updated_at) values (?,?,?,?,?,?,?,NOW(),NOW())",
+            [$point,$reponse,$id_desc_champ,$id_stag,$groupe_id,$cfp_id,$anonyme]);
             DB::commit();
             $message['success']="Votre évaluation à chaud est terminée avec succès.";
         } catch (Exception $e) {
@@ -117,10 +117,11 @@ class EvaluationChaud extends Model
         }
         // DB::enableQueryLog();
         // DB::insert('insert into reponse_evaluationchaud(points,reponse_desc_champ,id_desc_champ,stagiaire_id,groupe_id,cfp_id,created_at,updated_at) values(?,?,?,?,?,?,NOW(),NOW())',[$valiny['point'][16],$valiny['result'][16],$valiny['id_champ'][16],$id_stag,$groupe_id,$cfp_id]);
-        
+        $anonyme = 0;
+        $imput->has('anonyme') ? $anonyme = 1 : $anonyme = 0;
         //============ insert multiple
         for ($j=0; $j <count($valiny['result']) ; $j++) {
-            $message= $this->insert($valiny['point'][$j],$valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$groupe_id,$cfp_id);
+            $message= $this->insert($valiny['point'][$j],$valiny['result'][$j],$valiny['id_champ'][$j],$id_stag,$groupe_id,$cfp_id,$anonyme);
         }
         // dd(DB::getQueryLog());
         return $message;
@@ -288,45 +289,6 @@ public function insert_desc_champ_reponse($desc,$id_qst_fille,$nb_max){
 
     public function pourcentage_point($groupe,$id_qst){
         return DB::select('select groupe_id,id_qst_fille,qst_fille,nombre_stg,note_sur_10,pourcentage from v_evaluation_chaud_resultat where id_qst_fille = ? and groupe_id = ? order by point desc',[$id_qst,$groupe]);
-    //     return DB::select('
-    //     select
-    //     qfp.groupe_id,
-    //     qfp.id_qst_fille,
-    //     qfp.qst_fille,
-    //     qfp.point,
-    //     ifnull(ec.points, 0) as point_eval,
-    //     qfp.point_max,
-    //     ifnull(ec.nombre_stg, 0) as nombre_stg,
-    //     ifnull(ec.total_stagiaire, 0) as total_stagiaire,
-    //     ifnull(
-    //         ROUND(
-    //             (
-    //                 (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
-    //             ) * 10,
-    //             1
-    //         ),
-    //         0
-    //     ) as note_sur_10,
-    //     ifnull(
-    //         ROUND(
-    //             (
-    //                 (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
-    //             ) * 100,
-    //             1
-    //         ),
-    //         0
-    //     ) as pourcentage
-    // from
-    //     v_question_fille_point qfp
-    //     left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille and qfp.point = ec.points
-    //     where qfp.groupe_id = ? and qfp.id_qst_fille = ?
-    //     group by 
-    //         qfp.groupe_id,
-    //         qfp.id_qst_fille,
-    //         qfp.qst_fille,
-    //         qfp.point,
-    //         qfp.point_max;
-    //     ',[$groupe,$id_qst]);
     }
 
     public function note_question($groupe,$id_qst){
