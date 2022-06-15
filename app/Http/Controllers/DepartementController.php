@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Role;
 use App\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use App\RoleUser;
 use App\entreprise;
 use App\Departement;
-use App\DepartementEntreprise;
-use App\chefDepartement;
-use App\chefDepartementEntreprise;
 use App\responsable;
+use App\chefDepartement;
+use App\ServiceDepartement;
+use Illuminate\Http\Request;
+use App\DepartementEntreprise;
 use App\Models\FonctionGenerique;
-use App\Role;
-use App\RoleUser;
-use App\service;
+use App\chefDepartementEntreprise;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+// use App\service;
+
 
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class DepartementController extends Controller
 {
@@ -385,7 +387,7 @@ class DepartementController extends Controller
     public function delete_service(Request $request)
     {
         $ids=$request->ids;
-        service::whereIn('id',$ids)->delete();
+        ServiceDepartement::whereIn('id',$ids)->delete();
         return back();
     }
     public function update_services(Request $request)

@@ -19,7 +19,7 @@ class Stagiaire extends Model
 
     public function service ()
     {
-        return $this->belongsTo('App\Service', 'service_id');
+        return $this->belongsTo('App\ServiceDepartement', 'service_id');
     }
 
     public function departement()

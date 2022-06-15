@@ -11,10 +11,11 @@ use App\stagiaire;
 use Carbon\Carbon;
 use App\entreprise;
 use App\Departement;
-use App\Service;
+
 use App\NiveauEtude;
 use App\responsable;
 use App\chefDepartement;
+use App\ServiceDepartement;
 use Illuminate\Http\Request;
 use App\Models\getImageModel;
 use App\DepartementEntreprise;
@@ -22,15 +23,15 @@ use App\Models\FonctionGenerique;
 use App\Exports\ParticipantExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Auth;
 
 /* ====================== Exportation Excel ============= */
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-// use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
 use App\Mail\create_new_compte\save_new_compte_stagiaire_Mail;
 
 class ParticipantController extends Controller
@@ -124,8 +125,6 @@ class ParticipantController extends Controller
             );
         }    
 
-
-        
         return response()->json($ref_status);
         
 
@@ -233,7 +232,7 @@ class ParticipantController extends Controller
         // $departement = DepartementEntreprise::find(1);
 
         $niveaux_etude = NiveauEtude::all();
-        $services = Service::all();
+        $services = ServiceDepartement::all();
         // $services = $departement->services;
         // dd($services);
 
