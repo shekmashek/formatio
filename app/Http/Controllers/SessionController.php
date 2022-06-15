@@ -129,7 +129,7 @@ class SessionController extends Controller
         $projet = new projet();
         $frais_annex = null;
         $module_session = DB::select('select reference,nom_module, module_id from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
-
+        $dataMontantSession = [];
         if(Gate::allows('isCFP')){
             $drive = new getImageModel();
 
