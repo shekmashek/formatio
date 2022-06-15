@@ -172,7 +172,7 @@
             <li>
                 <a href="{{route('crud_formation')}}" class="d-flex nav_linke">
                     <i class='bx bx-grid'></i>
-                    <span class="links_name">Domaine&Formation</span>
+                    <span class="links_name" style="font-size: 10px">Domaine & Formation</span>
                 </a>
 
             </li>
@@ -908,7 +908,7 @@
                                         <li><a class="dropdown-item" href="{{route('nouveau_coupon')}}"> <i
                                             class='bx bx-money '></i>&nbsp;Nouveau coupon
                                     </a></li>
-                                    <li><a class="dropdown-item" href="nouveau_formation"> <i
+                                    <li><a class="dropdown-item" href="{{route('nouveau_formation')}}"> <i
                                         class='bx bx-cross '></i>&nbsp;Nouvelle formation
                                     </a></li>
                                 </ul>
@@ -949,8 +949,12 @@
                                     </a>
 
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" href="{{route('employes.new')}}"><i
-                                                    class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('employes.new')}}"><i
+                                                    class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés
+                                            </a>
+                                            <input type="text" value="zavatra" class="zavatra" hidden>
+                                        </li>
                                         {{-- <li><a class="dropdown-item" href="{{route('nouveau+appel+offre')}}"> <i
                                                     class="fas fa-envelope-open-text icon_plus"></i>&nbsp; Appel
                                                 d'offre</a>
@@ -1155,7 +1159,7 @@
                                                 </div>
                                                 <hr>
                                                 <div class="text-center">
-                                                    <div class="">
+                                                    <div class="logout">
                                                         <p><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
                                                             </a></p>
@@ -1567,7 +1571,7 @@
             });
         });
 
-         $(document).ready(function() {
+        $(document).ready(function() {
             $.ajax({
                 url: '{{ route("aff_refuse_etp_cfp") }}'
                 , type: 'get'
@@ -1620,6 +1624,15 @@
     $(".btn_racourcis a").on("click", function(e){
         localStorage.setItem('indiceSidebar', this);
         $('a.active').removeClass('active');
+    });
+
+    $(".dropdown-menu li").on("click", function(e){
+        localStorage.setItem('indiceSidebar', $(this).find('input').val());
+        $('a.active').removeClass('active');
+    });
+
+    $(".deconnexion_text").on("click", function(e){
+        localStorage.clear();
     });
 
     if(!(localStorage.getItem('indiceSidebar')))localStorage.setItem('indiceSidebar', document.getElementById("accueil").href);
