@@ -276,7 +276,7 @@
         min-width: 285px;
     }
 .table-rating-bar .rating-label{
-  padding-right: 10px;
+  /* padding-right: 10px; */
   text-align: end
 
 }
@@ -1737,7 +1737,7 @@
     $(document).on('click','.get_pdf',function(){
         const rapport = document.getElementById('statistique');
         var opt = {
-            margin: 0.3,
+            margin: 0.2,
             width : 400,
             filename:'rapport_evaluation_a_chaud.pdf',
             mode: ['css', 'legacy'],
