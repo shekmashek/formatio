@@ -1740,7 +1740,7 @@
             margin: 0.3,
             width : 400,
             filename:'rapport_evaluation_a_chaud.pdf',
-            mode: ['css', 'legacy'],
+            pagebreak : { mode: ['avoid-all','css', 'legacy']},
             image:        { type: 'jpeg', quality: 0.98 },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
         };
