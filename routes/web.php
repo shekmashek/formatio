@@ -375,7 +375,7 @@ Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->nam
 Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
 //route module_formations
 Route::get('/module', 'FormationController@module_formations')->name('module');
- 
+
 // page creation formation
 Route::get('/nouveau_formation', 'FormationController@create')->name('nouveau_formation');
 
