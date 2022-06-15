@@ -22,10 +22,10 @@
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             {{-- <li class="nav-item">
                 <a href="#enCours" class="nav-link" data-toggle="tab">Configurer Programme&nbsp;&nbsp;&nbsp;{{count($mod_en_cours)}}</a>
-            </li> --}}
+            </li>
             <li class="nav-item">
                 <a href="#nonPublies" class="nav-link" data-toggle="tab">Modules non configurés&nbsp;&nbsp;&nbsp;{{count($mod_non_publies)}}</a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
             </li>
@@ -38,7 +38,7 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="enCours">
+            {{-- <div class="tab-pane fade show active" id="enCours">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
                         <div class="col-12">
@@ -196,10 +196,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
-            <div class="tab-pane show fade" id="nonPublies">
+            {{-- <div class="tab-pane show fade" id="nonPublies">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
                         <div class="col-12">
@@ -417,7 +417,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="tab-pane show fade" id="hors_ligne">
                 <div class="container-fluid p-0 mt-3 me-3">
@@ -814,7 +814,7 @@
                                         <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 40px;" required>
                                         </select>
                                         <label for="acf-categorie" class="form-control-placeholder mb-2">Thématique par Domaine</label>
-                                        <span style="" id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</span>
+                                        <p id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</p>
                                     </div>
                                 <div class="modal-footer justify-content-center">
                                     <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
@@ -1181,7 +1181,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="{{asset('js/modules.js')}}"></script>
 <script >
-
+localStorage.removeItem('popState');
 $("#acf-domaine").change(function() {
     var id = $(this).val();
     $(".categ").empty();

@@ -1,4 +1,4 @@
-navigation_module@import url("inputControlModules.css");
+@import url("inputControlModules.css");
 .detail__formation__result {
 
     box-sizing: border-box;
@@ -72,7 +72,7 @@ navigation_module@import url("inputControlModules.css");
 }
 
 /* section 1 */
-.detail__formation__item__left__adresse {
+/* .detail__formation__item__left__adresse {
     border: 1px solid rgb(226, 222, 222);
     padding: 20px;
     margin-right: 15px;
@@ -80,7 +80,7 @@ navigation_module@import url("inputControlModules.css");
 }
 .detail__formation__item__left__adresse .adresse__icon {
     color: #637381;
-}
+} */
 
 .detail__formation__item__left__prerequis {
     text-align: center;
@@ -902,6 +902,7 @@ font-size: 0.850rem;
     position: relative;
     top: 15px;
     padding: 5px;
+    cursor: pointer;
 }
 
 .aide_competence {
@@ -909,6 +910,7 @@ font-size: 0.850rem;
     /* top: 15px; */
     padding: 5px 5px 5px 10.7px;
     color: white;
+    cursor: pointer;
 }
 
 .text_aide {
@@ -947,4 +949,34 @@ font-size: 0.850rem;
     visibility: visible;
 }
 
+.module_detail_objet {
+    /* background: white; */
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 5px;
+    padding: 1rem 1rem;
+    margin-bottom: 1.5rem;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+}
 
+/* .module_detail_objet .bx {
+    position: relative;
+    padding: 0.5rem;
+    color: #637381;
+    border: none;
+    border-radius: 25px;
+    margin-right: 0.5rem;
+} */
+
+.encre_icon{
+    color: #28a7eb;
+    font-size: 2rem;
+    position: relative;
+    top: 8px;
+}
+
+.encre__icon{
+    color: #28a7eb;
+    font-size: 2.5rem;
+    position: relative;
+    top: 8px;
+}

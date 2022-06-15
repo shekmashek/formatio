@@ -135,69 +135,52 @@ class ModuleController extends Controller
     public function create_new(Request $request)
     {
         $fonct = new FonctionGenerique();
-        // $niveau = Niveau::all();
         $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
         $categorie = $request->categorie;
-        $list_prog = array();
-        $list_cours = array();
-        $list_comp = array ();
-        $np = 6;
-        $npc = 4;
-        $nc = 4;
-        // for($j = 1; $j < $np; $j++){
-        // $list_prog[$j] = array(
-        //     "titre" => "Programme ".$j,
-        //     );
-        //     for($k = 1; $k < $npc; $k++){
-        //         $list_cours[$j][$k] = array(
-        //             "titre_cours" => "Cours ".$k,
-        //             "programme_id" => $j
-        //         );
-        //     }
-        // }
-        // for($i = 1; $i < $nc; $i++){
-        //     $list_comp[$i] = array(
-        //         "titre_competence" => "Competence ".$i,
-        //         "objectif" => "10"
-        //     );
-        // }
-        $nom_module = 'Titre/Nom de votre module';
-        $description = 'Description courte du module';
+        $nom_module = 'Excel - Avancé(Titre module)';
+        $description = 'Optimiser et automatiser vos tableaux sans programmer(Description courte du module)';
         $heure = 12;
         $jour = 2;
         $modalite = 'Presentiel';
         $prix = 400000;
         $prix_groupe = 5000000;
-        $prerequis = 'Les préréquis pour suivre la formation';
+        $prerequis = 'Avoir suivi la formation "Excel - Intermédiaire" ou avoir un niveau de connaissances équivalent.';
         $reference = 'Ref';
-        $objectif = 'Objectif de la formation';
-        $materiel = 'Les matériels necessaires pour suivre la formation';
+        $objectif = 'Organiser vos données pour faciliter l\'analyse et fiabiliser les résultats. Exploiter le potentiel de calcul d\'Excel, automatiser les traitements et la mise en forme sans programmer : formules complexes, imbriquées, matricielles.';
+        $materiel = 'Les matériels necessaires pour suivre la formation (ordinateur, etc... )';
         $bon_a_savoir = 'Bon à savoir pour pouvoir suivre la formation';
-        $cible = 'Le public cible du formation';
-        $prestation = 'Préstation pédagogique par rapport au formation';
+        $cible = 'Contrôleur de gestion, financier, RH, toute personne ayant à exploiter des résultats chiffrés dans Excel (version 2013 et suivantes).';
+        $prestation = 'Package pedagogique special 40 ans, repas du midi et pauses-cafe offerts les jours de formation';
         $min_pers = 5;
         $max_pers = 10;
         $level = 1;
         $new_mod = DB::insert('insert into modules(reference,nom_module,formation_id,prix,prix_groupe,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id,created_at)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,NOW())', [$reference, $nom_module, $categorie, $prix,$prix_groupe, $heure, $jour, $prerequis, $objectif, $description, $modalite, $materiel, $level, $cible, $bon_a_savoir, $prestation, $min_pers, $max_pers, $cfp_id]);
         $id = DB::select('select id from modules order by id desc limit 1');
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id[0]->id . ') as moduleExiste');
-        for ($l = 1; $l < $np; $l++) {
-            if (! isset($list_prog[$l])) {
-                $prog = DB::insert('insert into programmes(titre,module_id) values(?,?)', [$list_prog[$l], $id[0]->id]);
-                $id_prog = DB::select('select id from programmes order by id desc limit 1')[0]->id;
-                for ($m = 1; $m < $npc; $m++) {
+        $np = 4;
+        $npc = 4;
+        $nc = 4;
+        DB::beginTransaction();
+        try {
+            for($j = 1; $j < $np; $j++){
 
-                    if ($list_cours['titre_cours'][$l][$m] != null) {
-                        $cours = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)', ['Cours '.$l[$m], $id_prog]);
-                    }
+                DB::insert('insert into programmes(titre,module_id) values(?,?)', ['Programme '.$j, $id[0]->id]);
+                $id_prog = DB::select('select id from programmes where module_id = ? order by id desc limit 1',[$id[0]->id]);
+                for($k = 1; $k < $npc; $k++){
+                    DB::insert('insert into cours(titre_cours,programme_id) values(?,?)',['Cours '.$k, $id_prog[0]->id]);
                 }
             }
+            for($i = 1; $i < $nc; $i++){
+                DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',['Competence '.$i,10,$id[0]->id]);
+            }
+            DB::update('update modules set status = ? where id = ?',[2,$id[0]->id]);
+            DB::commit();
+            return redirect()->route('nouveau_module_update');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('liste_module');
         }
-        for($n = 1; $n < $nc; $n++){
-            $comp = DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',['Competence '.$n,10,$id[0]->id]);
-        }
-        // dd($list_comp);
-        // return redirect()->route('nouveau_module_update');
     }
 
     public function update_new(){
@@ -220,6 +203,7 @@ class ModuleController extends Controller
             }
 
             $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id[0]->id]);
+            // dd($id[0]->id);
             $programmes = DB::select('select * from programmes where module_id = ?', [$id[0]->id]);
             $competences = DB::select('select * from competence_a_evaluers where module_id = ?', [$id[0]->id]);
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id[0]->id]);
