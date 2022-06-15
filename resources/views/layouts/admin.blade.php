@@ -25,10 +25,47 @@
     <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
 </head>
 <style>
-    .nav_linke.active{
-        border-bottom: 3px solid #7635dc !important;
-        border: none;
-        color: #7635dc;
+    .nav_linke:hover {
+        background-color: #7635dc;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+    }
+    .nav_linke.active {
+        background-color: #7635dc;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+        cursor: pointer;
+    }
+    .nav_linke:hover.nav_linke.active {
+        background-color: #7635dc;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+    }
+    .nav_linke.active .links_name{
+        color: white;
+    }
+    .nav_linke.active .bx{
+        color: white;
+    }
+
+
+    .btn_racourcis:hover {
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+    }
+    .btn_racourcis.active {
+        background-color: #7635dc;
+        border-radius: 10px 10px 10px 10px;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+        cursor: pointer;
+    }
+    .btn_racourcis.active .text_racourcis{
+        color: white;
+    }
+    .btn_racourcis.active .bx{
+        color: white;
+    }
+    .btn_racourcis.active :hover .text_racourcis{
+        color: white;
+    }
+    .btn_racourcis.active :hover .bx{
+        color: white;
     }
 </style>
 <body>
@@ -1580,15 +1617,16 @@
         $('a.active').removeClass('active');
     });
 
-    $('a[data-toggle="topnav"]').on('shown.bs.tab', function (e) {
-        let lien = ($(e.target).attr('href'));
-        localStorage.setItem('indiceTop', lien);
+    $(".btn_racourcis a").on("click", function(e){
+        localStorage.setItem('indiceSidebar', this);
+        $('a.active').removeClass('active');
     });
+
     if(!(localStorage.getItem('indiceSidebar')))localStorage.setItem('indiceSidebar', document.getElementById("accueil").href);
     let Tabactive = localStorage.getItem('indiceSidebar');
     if(Tabactive){
-        console.log($('a[href="' + Tabactive + '"]').closest('li'));
         ($('a[href="' + Tabactive + '"]').closest('a')).addClass('active');
+        ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     }
     </script>
 </body>
