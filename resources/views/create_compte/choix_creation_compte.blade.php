@@ -195,7 +195,7 @@ p {
         
         <!--Content starts-->
         <div class="content flex">
-          <p style="font-size: 30px">Formation.mg</p>
+          <p style="font-size: 30px">Formation.mg / <a href="/sign-in" style="text-decoration: none">revenir à l'acceuille</a> </p>
         </div>
         <!--Content ends-->
 </body>

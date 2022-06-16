@@ -141,7 +141,7 @@ i{
                                 <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
                             </div>
                             @enderror
-                            <span style="color:#ff0000; font-size: 0.8rem" id="matricule_resp_etp_err"></span>
+                            
                         </div>
                         <div class="form " style="margin-left: 20px;">
                             <input name="nom_resp_etp" autocomplete="off"  type="text" id="nom_resp_etp"  required>
@@ -185,7 +185,7 @@ i{
                                 <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
                             </div>
                             @enderror
-                            <span style="color:#ff0000; font-size: 0.8rem" id="email_resp_etp_err"> veuillez entrer votre mail</span>
+                            <span style="color:#ff0000; font-size: 0.8rem" id="email_resp_etp_err"> </span>
                         </div>
                     </div>  
                     <div class="img">
@@ -204,7 +204,7 @@ i{
                             <span style="color:#ff0000;" id="name_etp_err"></span>
                         </div>
                         <div class="form " style="margin-left: 20px;">
-                            <input name="nif" id="nif_etp" type="number" autocomplete="off"  required>
+                            <input name="nif" id="nif_etp" type="text" autocomplete="off"  required>
                             <label for="">Nif</label>
                             @error('nif')
                             <div class="col-sm-6">
@@ -239,7 +239,7 @@ i{
                     </div>
                     
                     <div class="formulaire text-center mt-3" style="display: flex;">
-                        <input name="value_confident" class="form-check-input align-middle" type="checkbox" value="1" id=""> &nbsp;<p class="align-middle"><a href="{{route('condition_generale_de_vente')}}" target="_blank" class="nav-item lien_confidentiel" style="font-size: 14px">J'ai lu et accepter les termes de confidentiels du plateforme</a></p>
+                        <input name="value_confident" required class="form-check-input align-middle" type="checkbox" value="1" id=""> &nbsp;<p class="align-middle"><a href="{{route('condition_generale_de_vente')}}" target="_blank" class="nav-item lien_confidentiel" style="font-size: 14px">J'ai lu et accepter les termes de confidentiels du plateforme</a></p>
                     </div>
                     
                    
@@ -247,9 +247,9 @@ i{
                         <div class="formulaire text-center" style="display: flex;">
                             <h5 style="font-size: 18px;margin-left:15%">Je ne suis pas un robot🙈</h5>
                         </div>
-                        <div class="formulaire">
+                        <div class="test">
                             <p style="font-size: 16px;margin-left:20%">16 + <input type="text" name="val_robot" placeholder="?" style="width: 40px;text-align:center" required> = 27</p>
-                            <button class="btn text-light align-middle mt-3" style="background: #0a0a08;margin-left:0%;"><i class="fa-solid fa-circle-chevron-left align-middle"></i> &nbsp; <a href="/create+compte+client" style="text-decoration: none;color:white">Retour</a> </button>
+                         <a href="/create+compte+client" class="btn btn" style="text-decoration: none;color:white;background: #0a0a08;margin-left:0%;"><i class="fa-solid fa-circle-chevron-left align-middle"></i> &nbsp;Retour</a> </button>
                         <button type="submit" id="suivant_of_confirmer" class="btn text-light mt-3" style="background: #7367f0;margin-left:35%;">Confirmer</button>
                     </div>
                 </div> 
@@ -287,23 +287,23 @@ i{
     });
 
 
-    $(function() {
-        $("input[name='cin_resp_etp']").on('input', function(e) {
-            $(this).val($(this).val().replace(/[^0-9]/g, ''));
-        });
-        $("input[name='cin_resp_cfp']").on('input', function(e) {
-            $(this).val($(this).val().replace(/[^0-9]/g, ''));
-        });
-        $("input[name='val_robot']").on('input', function(e) {
-            $(this).val($(this).val().replace(/[^0-9]/g, ''));
-        });
-    });
+    // $(function() {
+    //     $("input[name='cin_resp_etp']").on('input', function(e) {
+    //         $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    //     });
+    //     $("input[name='cin_resp_cfp']").on('input', function(e) {
+    //         $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    //     });
+    //     $("input[name='val_robot']").on('input', function(e) {
+    //         $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    //     });
+    // });
 
 
     $(document).ready(function() {
 
-        $('#suivant_etp_1').prop('disabled', true);
-        document.getElementById("nif_etp_err").innerHTML = "NIF incomplète!";
+        
+        document.getElementById("nif_etp_err").innerHTML = "";
         document.getElementById("matricule_resp_etp_err").innerHTML = "Matricule ne doit pas être null!";
         $('#suivant_etp_confirmer').prop('disabled', true);
 
@@ -342,7 +342,7 @@ i{
     $(document).ready(function() {
 
         $('#suivant_of_1').prop('disabled', true);
-        document.getElementById("nif_cfp_err").innerHTML = "NIF incomplète!";
+        document.getElementById("nif_cfp_err").innerHTML = "!";
         $('#suivant_of_confirmer').prop('disabled', true);
 
         $('.field-cfp input').change(function() {
@@ -763,7 +763,7 @@ i{
     $(document).on('keyup change', '#matricule_resp_etp', function() {
         var result = $(this).val();
         if (result.length < 1) {
-            document.getElementById("matricule_resp_etp_err").innerHTML = "Matricule ne doit pas être null";
+            document.getElementById("matricule_resp_etp_err").innerHTML = " ";
 
             if (document.getElementById("nom_resp_etp_err").innerHTML == '' &&
                 document.getElementById("cin_resp_etp_err").innerHTML == '' &&
