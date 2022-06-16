@@ -216,7 +216,7 @@
                         @if($refs->branche_id == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-building-house icon_sociaux2'></i>&nbsp;Branche ------------</p><p class="text-end"><a href="{{route('edit_branche',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                         @else
-                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;{{$refs->adresse_lot}}&nbsp;{{$refs->adresse_quartier}}</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;Branche: {{$refs->nom_branche}}</p><p class="text-end"><a href="{{route('edit_branche',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
                         @endif
                 </div>
             </div>

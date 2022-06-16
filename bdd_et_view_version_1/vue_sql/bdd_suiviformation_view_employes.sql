@@ -66,7 +66,7 @@ SELECT
     employers.adresse_region,
     employers.adresse_lot,
     employers.branche_id,
-    branches.nom_branche,
+    bc.nom_branche,
     role_users.role_id,
     role_users.prioriter,
 employers.created_at,
@@ -76,7 +76,7 @@ niveau_etude.niveau_etude
 FROM
 employers
 LEFT JOIN v_departement_service_entreprise vd ON vd.service_id = employers.service_id and vd.departement_entreprise_id = employers.departement_entreprises_id
-LEFT JOIN branches ON branches.id = employers.branche_id
+LEFT JOIN branches bc ON bc.id = employers.branche_id
 JOIN role_users ON role_users.user_id =  employers.user_id
 JOIN genre ON genre.id = employers.genre_id
 JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
