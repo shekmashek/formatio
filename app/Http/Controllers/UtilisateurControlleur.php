@@ -33,7 +33,6 @@ class UtilisateurControlleur extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
-        $this->order = new OrderModel();
     }
 
 

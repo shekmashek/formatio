@@ -23,7 +23,6 @@
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/table.css')}}">
 </head>
 
 <body>
@@ -1411,7 +1410,6 @@
     <script src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/apprendre.js')}}"></script>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
-    <script src="{{ asset('assets/order/order.js') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <script type="text/javascript">
