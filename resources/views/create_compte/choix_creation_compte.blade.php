@@ -164,7 +164,7 @@ p {
             <div class="row">
                 <h3 style="margin-top:-40px;font-weight: lighter;">Inscrivez votre organisme de formation ou votre entreprise gratuitement sur notre plateforme</h3>
                 <div class="col-md-5 contenue mt-5" style="margin-left: 9%">
-                    <h1 class="mt-3"> <a href="{{route('create+compte+client/employeur')}}"><span>E</span>ntreprise</a></h1>
+                    <h1 class=""> <a href="{{route('create+compte+client/employeur')}}"><span>E</span>ntreprise</a></h1>
                 </div>
                 <div class="col-md-5 contenue mt-5" style="margin-left: 2px">
                     <h1> <a href="{{route('create+compte+client/OF')}}"><span>O</span>rganisme de <span>f</span>ormation</a></h1>
@@ -195,7 +195,7 @@ p {
         
         <!--Content starts-->
         <div class="content flex">
-          <p style="font-size: 30px">Formation.mg / <a href="/sign-in" style="text-decoration: none">revenir à l'acceuille</a> </p>
+          <p style="font-size: 30px">Formation.mg / <a href="/" style="text-decoration: none">revenir à l'acceuille</a> </p>
         </div>
         <!--Content ends-->
 </body>
