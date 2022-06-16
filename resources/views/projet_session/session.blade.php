@@ -435,7 +435,6 @@
                         @endif 
                         
                         @can('isCFP')
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> CA :<strong>
                                 @if(count($dataMontantSession)>0)
                                     @if( $dataMontantSession[0]->hors_taxe != null)
@@ -452,7 +451,6 @@
                                 @endphp&nbsp;
                                 @endif 
                             {{$ref}}</strong> </p>&nbsp;&nbsp;
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> FA : <strong>
                                 @if ($frais_annex !=null)
                                     {{ number_format($frais_annex, 0, ',', ' ')}}
@@ -464,7 +462,6 @@
                                 {{$ref}}</strong></p>
                         @endcan
                         @can('isReferent')
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
                             <p class="text-dark mt-3"> CP : <strong>
                                 @if (count($dataMontantSession) >0)
                                     {{ number_format($dataMontantSession[0]->hors_taxe, 0, ',', ' ')}}
@@ -472,10 +469,7 @@
                                     @php
                                         echo "<span>-</span>";
                                     @endphp
-                                @endif
-                               
-                                          {{$ref}}</strong> </p>&nbsp;&nbsp;
-                            <p class="m-0"><i class="bx bx-dollar-circle mt-2"></i></p>&nbsp;
+                                @endif{{$ref}}</strong> </p>&nbsp;&nbsp;
                             <p class="text-dark mt-3"> FA : <strong id="frais_annex_entreprise">
                                 @php
                                     $Totalfa = 0;

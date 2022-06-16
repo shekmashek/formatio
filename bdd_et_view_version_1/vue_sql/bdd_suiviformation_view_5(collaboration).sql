@@ -40,7 +40,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_etp AS SELECT
 
 
 
-CREATE OR REPLACE VIEW v_invitation_cfp_pour_etp AS SELECT
+ CREATE OR REPLACE VIEW v_invitation_cfp_pour_etp AS SELECT
     demmande_etp_cfp.id,
     inviter_cfp_id,
     demmandeur_etp_id,
