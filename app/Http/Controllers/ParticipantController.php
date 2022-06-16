@@ -646,18 +646,7 @@ class ParticipantController extends Controller
         $branche = $fonct->findWhereMulitOne("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
         return view('admin.participant.edit_departement', compact('stagiaire', 'liste_dep', 'branche', 'service'));
     }
-    public function edit_branche($id, Request $request)
-    {
-        $user_id =  $users = Auth::user()->id;
 
-        $fonct = new FonctionGenerique();
-        $stagiaire = $fonct->findWhereMulitOne("stagiaires", ["id"], [$id]);
-        $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
-        // $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
-        $branche = $fonct->findWhereMulitOne("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
-        $liste_branche = $fonct->findWhere("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
-        return view('admin.participant.edit_branche', compact('liste_branche', 'stagiaire', 'service', 'branche'));
-    }
     public function edit_photos($id, Request $request)
     {
 

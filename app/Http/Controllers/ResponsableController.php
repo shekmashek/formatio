@@ -451,6 +451,7 @@ class ResponsableController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+
         $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_cin', compact('responsable'));
     }
@@ -533,6 +534,24 @@ class ResponsableController extends Controller
         $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_poste', compact('responsable'));
     }
+    public function edit_departement($id,Request $request){
+        $fonct = new FonctionGenerique();
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+        $departement = $fonct->findWhere("v_departement_service_entreprise",["entreprise_id"],[$responsable->entreprise_id]);
+        return view('admin.responsable.edit_departement',compact('departement','responsable'));
+    }
+    public function get_service(Request $request){
+        $fonct = new FonctionGenerique();
+        $service = $fonct->findWhere("services", ["departement_entreprise_id"], [$request->id]);
+        return response()->json($service);
+    }
+    public function edit_branche($id, Request $request)
+    {
+        $fonct = new FonctionGenerique();
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+        $liste_branche = $fonct->findWhere("branches", ["entreprise_id"], [$responsable->entreprise_id]);
+        return view('admin.responsable.edit_branche', compact('liste_branche','responsable', 'liste_branche'));
+    }
     public function update_etp(Request $request, $id)
     {
         $fonct = new FonctionGenerique();
@@ -555,6 +574,7 @@ class ResponsableController extends Controller
             //return redirect()->route('profil_referent');
         }
     }
+
     //modification photos
     public function update_photos_resp(Request $request)
     {
@@ -628,9 +648,18 @@ class ResponsableController extends Controller
         }
         else{
             DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
-            DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
+            DB::update('update employers set email_emp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
             return redirect()->route('profil_referent');
         }
+    }
+    public function update_departemennt_service($id,Request $request){
+        DB::update('update employers set service_id = ? , departement_entreprises_id = ? where id = ?', [$request->serv,$request->dep,$id]);
+        return redirect()->route('profil_referent');
+    }
+    public function update_branche(Request $request,$id){
+
+        DB::update('update employers set branche_id = ? where id = ?', [$request->branche,$id]);
+        return redirect()->route('profil_referent');
     }
     public function update(Request $request, $id)
     {
@@ -696,27 +725,12 @@ class ResponsableController extends Controller
             else{
                 if ($input != null) {
 
-                    DB::update('update employers set nom_emp = ? , prenom_emp = ?, date_naissance_emp = ?, cin_emp = ?,email_emp = ?,telephone_emp = ?,fonction_emp = ?,poste_emp = ?,genre_id = ?,adresse_lot = ?,adresse_ville = ?,adresse_region = ?', ['John']);
+                    DB::update('update employers set nom_emp = ? , prenom_emp = ?,date_naissance_emp = ?, cin_emp = ?,telephone_emp = ?,fonction_emp = ?,genre_id = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_lot = ?,adresse_ville = ?,adresse_region = ? where id = ?',
+                    [$nom,$prenom,$date_naiss,$cin,$phone,$fonction,$genre,$quartier,$code_postal,$lot,$ville,$region,$id]);
 
                 } else {
-                    responsable::where('id', $id)
-                        ->update([
-                            'nom_resp' => $nom,
-                            'prenom_resp' => $prenom,
-                            'fonction_resp' => $fonction,
-                            'email_resp' => $mail,
-                            'telephone_resp' => $phone,
-                            'date_naissance_resp' => $date_naiss,
-                            'genre_id' => $genre,
-                            'cin_resp' => $cin,
-                            'adresse_lot' => $lot,
-                            'adresse_code_postal' => $code_postal,
-                            'adresse_quartier' => $quartier,
-                            'adresse_ville' => $ville,
-                            'adresse_region' => $region,
-                            'poste_resp' => $poste,
-
-                        ]);
+                    DB::update('update employers set nom_emp = ? , prenom_emp = ?, date_naissance_emp = ?,cin_emp = ?,telephone_emp = ?,fonction_emp = ?,genre_id = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_lot = ?,adresse_ville = ?,adresse_region = ? where id = ?',
+                    [$nom,$prenom,$date_naiss,$cin,$phone,$fonction,$genre,$quartier,$code_postal,$lot,$ville,$region,$id]);
                 }
 
             }

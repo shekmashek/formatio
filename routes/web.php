@@ -293,11 +293,15 @@ Route::get('/edit_matricule_resp/{id}', 'ResponsableController@edit_matricule')-
 Route::get('/edit_entreprise_resp/{id}', 'ResponsableController@edit_entreprise')->name('edit_entreprise_resp');
 Route::get('/edit_niveau_resp/{id}', 'ResponsableController@edit_niveau')->name('edit_niveau_resp');
 Route::get('/edit_departement_resp/{id}', 'ResponsableController@edit_departement')->name('edit_departement_resp');
-Route::get('/edit_branche_resp/{id}', 'ResponsableController@edit_branche')->name('edit_branche_resp');
+//Route::get('/edit_branche_resp/{id}', 'ResponsableController@edit_branche')->name('edit_branche_resp');
 Route::get('/edit_photos_resp/{id}', 'ResponsableController@edit_photos')->name('edit_photos_resp');
 Route::get('/edit_pwd_resp/{id}', 'ResponsableController@edit_pwd')->name('edit_pwd_resp');
 Route::get('/edit_poste_resp/{id}', 'ResponsableController@edit_poste')->name('edit_poste_resp');
-
+Route::get('/edit_departement_service/{id}','ResponsableController@edit_departement')->name('edit_departement_service');
+Route::get('get_service','ResponsableController@get_service')->name('get_service');
+Route::post('/update_departemennt_service/{id}','ResponsableController@update_departemennt_service')->name('update_departemennt_service');
+Route::get('/edit_branche/{id}', 'ResponsableController@edit_branche')->name('edit_branche');
+Route::post('/update_branche/{id}','ResponsableController@update_branche')->name('update_branche');
 // ======================= desactiver personne =====================
 Route::get('desactiver_personne','ResponsableCfpController@desactiver_personne')->name('desactiver_personne');
 Route::get('activer_personne','ResponsableCfpController@activer_personne')->name('activer_personne');
@@ -331,8 +335,8 @@ Route::get('/edit_fonction/{id}', 'ParticipantController@edit_fonction')->name('
 Route::get('/edit_matricule/{id}', 'ParticipantController@edit_matricule')->name('edit_matricule');
 Route::get('/edit_entreprise/{id}', 'ParticipantController@edit_entreprise')->name('edit_entreprise');
 Route::get('/edit_niveau/{id}', 'ParticipantController@edit_niveau')->name('edit_niveau');
-Route::get('/edit_departement/{id}', 'ParticipantController@edit_departement')->name('edit_departement');
-Route::get('/edit_branche/{id}', 'ParticipantController@edit_branche')->name('edit_branche');
+// Route::get('/edit_departement/{id}', 'ParticipantController@edit_departement')->name('edit_departement');
+
 Route::get('/edit_photos/{id}', 'ParticipantController@edit_photos')->name('edit_photos');
 Route::get('/edit_pwd/{id}', 'ParticipantController@edit_pwd')->name('edit_pwd');
 
@@ -375,7 +379,7 @@ Route::get('/nouvelle_formation', 'FormationController@nouvelle_formation')->nam
 Route::get('/categorie', 'FormationController@categorie_formations')->name('categorie');
 //route module_formations
 Route::get('/module', 'FormationController@module_formations')->name('module');
- 
+
 // page creation formation
 Route::get('/nouveau_formation', 'FormationController@create')->name('nouveau_formation');
 
@@ -999,7 +1003,7 @@ Route::post('update_departement','DepartementController@update_dep')->name('upda
 Route::post('delete_service','DepartementController@delete_service')->name('delete_service');
 Route::post('update_services','DepartementController@update_services')->name('update_services');
 Route::get('delete_branche/{id}','DepartementController@delete_branche')->name('delete_branche');
-Route::post('update_branche','DepartementController@update_branche')->name('update_branche');
+// Route::post('update_branche','DepartementController@update_branche')->name('update_branche');
 
 //enregistrement service
 Route::post('enregistrement_service', 'DepartementController@enregistrement_service')->name('enregistrement_service');
