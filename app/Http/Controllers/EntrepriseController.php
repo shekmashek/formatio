@@ -51,7 +51,7 @@ class EntrepriseController extends Controller
         $entp = new entreprise();
         if (Gate::allows('isCFP')) {
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
-            $domaine = $this->fonct->findAll("domaines");
+            $domaine = $fonct->findAll("domaines");
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
             $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
             $etp1 = $fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);

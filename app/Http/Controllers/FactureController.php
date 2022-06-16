@@ -68,6 +68,7 @@ class FactureController extends Controller
         $etp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
 
         $entreprise = $this->fonct->concatTwoList($etp1, $etp2);
+        $domaine = $this->fonct->findAll("domaines");
 
         $nb_limit = 10;
 
@@ -104,9 +105,9 @@ class FactureController extends Controller
         $facture_inactif_guide = $this->fonct->findWhere("v_facture_inactif", ["cfp_id"], [$cfp_id]);
         $test = count($facture_inactif_guide) + count($facture_actif_guide);
         if ($test <= 0) {
-            return view('admin.facture.guide');
+            return view('admin.facture.guide', compact('domaine'));
         } else {
-            return view('admin.facture.facture', compact('pour_list','encaissement', 'devise', 'entreprise', 'pagination_full', 'pagination_brouillon', 'pagination_actif', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_inactif', 'facture_payer'));
+            return view('admin.facture.facture', compact('pour_list','domaine','encaissement', 'devise', 'entreprise', 'pagination_full', 'pagination_brouillon', 'pagination_actif', 'pagination_payer', 'mode_payement', 'full_facture', 'facture_actif', 'facture_inactif', 'facture_payer'));
         }
     }
 
@@ -121,6 +122,8 @@ class FactureController extends Controller
         $cfp2 = $this->fonct->findWhere("v_demmande_cfp_etp", ["entreprise_id"], [$entreprise_id]);
 
         $cfp = $this->fonct->concatTwoList($cfp1, $cfp2);
+        $domaine = $this->fonct->findAll("domaines");
+
 
         $nb_limit = 10;
 
@@ -144,7 +147,7 @@ class FactureController extends Controller
             $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "entreprise_id"], ["terminer", $entreprise_id], 0, $nb_limit, "invoice_date", "DESC");
             $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id], 0, $nb_limit, "invoice_date", "DESC");
         }
-        return view('admin.facture.facture_etp', compact('pour_list', 'devise', 'cfp', 'full_facture', 'facture_actif', 'facture_payer', 'pagination_full', 'pagination_actif', 'pagination_payer'));
+        return view('admin.facture.facture_etp', compact('pour_list','domaine', 'devise', 'cfp', 'full_facture', 'facture_actif', 'facture_payer', 'pagination_full', 'pagination_actif', 'pagination_payer'));
     }
 
 
@@ -167,6 +170,7 @@ class FactureController extends Controller
         $solde_debut = $req->solde_debut;
         $solde_fin = $req->solde_fin;
         $mode_payement = DB::select('select * from mode_financements');
+        $domaine = $this->fonct->findAll("domaines");
 
         $nb_limit = 10;
         if ($solde_debut_pag != null || $solde_fin_pag != null) {
@@ -179,7 +183,7 @@ class FactureController extends Controller
 
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
-            $domaine = $this->fonct->findAll("domaines");
+            // $domaine = $this->fonct->findAll("domaines");
 
             $totale_pag_full = $this->fonct->getNbrePagination("v_full_facture", "num_facture", ["montant_total", "montant_total", "cfp_id"], [">=", "<=", "="], [$solde_debut, $solde_fin, $cfp_id], "AND");
             $totale_pag_brouillon = $this->fonct->getNbrePagination("v_facture_inactif", "num_facture", ["montant_total", "montant_total", "cfp_id"], [">=", "<=", "="], [$solde_debut, $solde_fin, $cfp_id], "AND");
