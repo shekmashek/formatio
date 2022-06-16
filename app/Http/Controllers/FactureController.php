@@ -1388,6 +1388,9 @@ class FactureController extends Controller
                 $rep_par_trie = "dernier_montant_ouvert";
             }
 
+            if($req->trie_par == "DTE_FACT"){
+                $rep_par_trie = "date_facture";
+            }
 
             if ($req->trie_par == "ENTITE") {
                 $rep_par_trie = "nom_etp";

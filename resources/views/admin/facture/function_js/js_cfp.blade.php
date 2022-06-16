@@ -242,7 +242,7 @@
                 html_tous += "</td> </tr> <tr>";
                     html_tous +='<td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_actif_'+full_facture[i_act].num_facture+'" aria-labelledby="collapseprojet_'+full_facture[i_act].num_facture+'">';
                         if(full_facture[i_act].facture_encour != "valider" && encaissement.length>0){
-                        html_tous +='<table  class="table table-hover">';
+                        html_tous +='<div class="centrer"><div class="alert alert-light" role="alert">Vos Encaissements:</div><table  class="table table-hover">';
                                 html_tous +='<thead><tr>';
                                         html_tous +='<th scope="col">N° F#</th>';
                                         html_tous +='<th scope="col">Montant facturer</th>';
@@ -271,7 +271,7 @@
                                             html_tous +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
                                         }
                                     }
-                                html_tous +='</tbody></table>';
+                                html_tous +='</tbody></table></div>';
                         }
                     html_tous +='</td></tr>';
 
@@ -564,7 +564,7 @@
                 html_actif += "</td> </tr> <tr>";
                     html_actif +='<td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_valider_'+facture_actif[i_actif].num_facture+'" aria-labelledby="collapseprojet_'+facture_actif[i_actif].num_facture+'">';
                         if(encaissement.length>0){
-                        html_actif +='<table  class="table table-hover">';
+                        html_actif +='<div class="centrer"><div class="alert alert-light" role="alert">Vos Encaissements:</div><table  class="table table-hover">';
                                 html_actif +='<thead><tr>';
                                         html_actif +='<th scope="col">N° F#</th>';
                                         html_actif +='<th scope="col">Montant facturer</th>';
@@ -593,7 +593,7 @@
                                             html_actif +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
                                         }
                                     }
-                                html_actif +='</tbody></table>';
+                                html_actif +='</tbody></table></div>';
                         }
                     html_actif +='</td></tr>';
 
@@ -795,7 +795,7 @@
                 html_payer += "</td> </tr> <tr>";
                     html_payer +='<td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_payer_'+facture_payer[i_payer].num_facture+'" aria-labelledby="collapseprojet_'+facture_payer[i_payer].num_facture+'">';
                         if(encaissement.length>0){
-                        html_payer +='<table  class="table table-hover">';
+                        html_payer +='<div class="centrer"><div class="alert alert-light" role="alert">Vos Encaissements:</div><table  class="table table-hover">';
                                 html_payer +='<thead><tr>';
                                         html_payer +='<th scope="col">N° F#</th>';
                                         html_payer +='<th scope="col">Montant facturer</th>';
@@ -824,7 +824,7 @@
                                             html_payer +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
                                         }
                                     }
-                                html_payer +='</tbody></table>';
+                                html_payer +='</tbody></table></div>';
                         }
                     html_payer +='</td></tr>';
             }
@@ -1066,11 +1066,18 @@
     });
     /* =================================================================================================*/
 
-
+    var count_fact_trie =0;
+    var count_rest_payer_trie = 0;
+    var count_entiter_trie =0;
+    var count_reglement_trie = 0;
+    var count_total_payer_trie = 0;
     $(".num_fact_trie").on('click', function(e) {
         var valiny = $(this).val();
-
-
+        count_fact_trie++;
+        count_rest_payer_trie = 0;
+        count_entiter_trie =0;
+        count_reglement_trie = 0;
+        count_total_payer_trie = 0;
         if ($(".num_fact_trie").val() == 0) {
             $(".num_fact_trie").val(1);
         } else {
@@ -1121,6 +1128,13 @@
             .addClass("fa-arrow-down"); */
 
             $('.icon_trie').remove();
+            var dataValue=null;
+            if(count_fact_trie < 3){
+                dataValue = getDataRequetTrie(".nom_entiter_trie", "ENTITE");
+            }else{
+                dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+                $(".dte_reglement_trie").val(0);
+            }
         /* .TFtableCol tr td:nth-child(even){
 		        background: #dae5f4;
 	        } */
@@ -1146,8 +1160,13 @@
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
                 var arrow = valiny["arrow"];
-                $('.num_has_arrow').append(arrow);
-                $('.num_fact_trie').parent().click();
+                if(count_fact_trie < 3){
+                    $('.num_has_arrow').append(arrow);
+                    $('.num_fact_trie').parent().click();
+                }else{
+                    count_fact_trie=0;
+                    $('.num_fact_trie').parent().click();
+                }
             }
             , error: function(error) {
                 console.log(error)
@@ -1157,10 +1176,14 @@
     });
 
     /*--------------------------------------------- Nom Entité-----------------------------------------------------------------------*/
-
+    
     $(".nom_entiter_trie").on('click', function(e) {
         var valiny = $(this).val();
-
+        count_entiter_trie++;
+        count_fact_trie =0;
+        count_rest_payer_trie = 0;
+        count_reglement_trie = 0;
+        count_total_payer_trie = 0;
         /* if (
             $(".nom_entiter_trie")
             .find(".icon_trie")
@@ -1209,7 +1232,13 @@
             $(".nom_entiter_trie").val(0);
         }
         $('.icon_trie').remove();
-        var dataValue = getDataRequetTrie(".nom_entiter_trie", "ENTITE");
+        var dataValue=null;
+        if(count_entiter_trie < 3){
+            dataValue = getDataRequetTrie(".nom_entiter_trie", "ENTITE");
+        }else{
+            dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+            $(".dte_reglement_trie").val(0);
+        }
 
         $.ajax({
             method: "GET"
@@ -1232,8 +1261,13 @@
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
                 var arrow = valiny["arrow"];
-                $('.nom_has_arrow').append(arrow);
-                $('.nom_entiter_trie').parent().click();
+                if(count_entiter_trie < 3){
+                    $('.nom_has_arrow').append(arrow);
+                    $('.nom_entiter_trie').parent().click();
+                }else{
+                    count_entiter_trie=0;
+                    $('.nom_entiter_trie').parent().click();
+                }
 
             }
             , error: function(error) {
@@ -1243,10 +1277,14 @@
     });
 
     /*--------------------------------------------- Date de règlement -----------------------------------------------------------------------*/
-
+    
     $(".dte_reglement_trie").on('click', function(e) {
         var valiny = $(this).val();
-
+        count_reglement_trie++;
+        count_fact_trie =0;
+        count_rest_payer_trie = 0;
+        count_entiter_trie =0;
+        count_total_payer_trie = 0;
         /* if (
             $(".dte_reglement_trie")
             .find(".icon_trie")
@@ -1296,9 +1334,14 @@
             $(".dte_reglement_trie").val(0);
         }
         $('.icon_trie').remove();
-
-        var dataValue = getDataRequetTrie(".dte_reglement_trie", "DUE_DTE");
-
+        var dataValue=null;
+        if(count_reglement_trie < 3){
+            dataValue = getDataRequetTrie(".dte_reglement_trie", "DUE_DTE");
+        }else{
+            dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+            $(".dte_reglement_trie").val(0);
+        }
+        console.log(count_reglement_trie);
         $.ajax({
             method: "GET"
             , url: "{{route('facture.trie')}}"
@@ -1320,8 +1363,13 @@
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
                 var arrow = valiny["arrow"];
-                $('.dte_has_arrow').append(arrow);
-                $('.dte_reglement_trie').parent().click();
+                if(count_reglement_trie < 3){
+                    $('.dte_has_arrow').append(arrow);
+                    $('.dte_reglement_trie').parent().click();
+                }else{
+                    count_reglement_trie=0;
+                    $('.dte_reglement_trie').parent().click();
+                }
             }
             , error: function(error) {
                 console.log(error)
@@ -1330,10 +1378,14 @@
     });
 
     /*--------------------------------------------- Totale à payer -----------------------------------------------------------------------*/
-
+    
     $(".total_payer_trie").on('click', function(e) {
         var valiny = $(this).val();
-
+        count_total_payer_trie++;
+        count_fact_trie =0;
+        count_rest_payer_trie = 0;
+        count_entiter_trie =0;
+        count_reglement_trie = 0;
         /* if (
             $(".total_payer_trie")
             .find(".icon_trie")
@@ -1381,8 +1433,14 @@
             $(".total_payer_trie").val(0);
         }
         $('.icon_trie').remove();
-
-        var dataValue = getDataRequetTrie(".total_payer_trie", "TOTAL_SOLDE");
+        var dataValue=null; 
+        if(count_total_payer_trie < 3){
+            dataValue = getDataRequetTrie(".total_payer_trie", "TOTAL_SOLDE");
+        }else{
+            dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+            $(".total_payer_trie").val(0);
+        }
+        
         $.ajax({
             method: "GET"
             , url: "{{route('facture.trie')}}"
@@ -1402,8 +1460,13 @@
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
                 var arrow = valiny["arrow"];
-                $('.total_has_arrow').append(arrow);
-                $('.total_payer_trie').parent().parent().click();
+                if(count_total_payer_trie < 3){
+                    $('.total_has_arrow').append(arrow);
+                    $('.total_payer_trie').parent().parent().click();
+                }else{
+                    count_total_payer_trie=0;
+                    $('.total_payer_trie').parent().parent().click();
+                }
                 
             }
             , error: function(error) {
@@ -1414,9 +1477,14 @@
 
     /*--------------------------------------------- Totale reste à payer -----------------------------------------------------------------------*/
 
+    
     $(".rest_payer_trie").on('click', function(e) {
         var valiny = $(this).val();
-
+        count_rest_payer_trie++;
+        count_fact_trie =0;
+        count_entiter_trie =0;
+        count_reglement_trie = 0;
+        count_total_payer_trie = 0;
         /* if (
             $(".rest_payer_trie")
             .find(".icon_trie")
@@ -1464,9 +1532,13 @@
             $(".rest_payer_trie").val(0);
         }
         $('.icon_trie').remove();
-
-        var dataValue = getDataRequetTrie(".rest_payer_trie", "RESTE_SOLDE");
-
+        var dataValue=null; 
+        if(count_rest_payer_trie < 3){
+            dataValue = getDataRequetTrie(".rest_payer_trie", "RESTE_SOLDE");
+        }else{
+            dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+            $(".rest_payer_trie").val(0);
+        }
         $.ajax({
             method: "GET"
             , url: "{{route('facture.trie')}}"
@@ -1487,8 +1559,13 @@
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
                 var arrow = valiny["arrow"];
-                $('.rest_has_arrow').append(arrow);
-                $('.rest_payer_trie').parent().parent().click();
+                if(count_rest_payer_trie < 3){
+                    $('.rest_has_arrow').append(arrow);
+                    $('.rest_payer_trie').parent().parent().click();
+                }else{
+                    count_rest_payer_trie=0;
+                    $('.rest_payer_trie').parent().parent().click();
+                }
             }
             , error: function(error) {
                 console.log(error)
@@ -1500,23 +1577,25 @@
 
 $('.facture_table th').on('click', function(e) {
         var th = this.cellIndex;
-        $('.facture_table td').removeClass("colored_td");
-        $('.facture_table td').removeAttr("style");
-        $('.facture_table th').removeClass("colored_td");
-        $('.facture_table th').removeAttr("style");
-        
-        $('.facture_table tr').each(function() {
-            /* $('.facture_table tr').removeProp("background-color"); */
-            var self = $(this);
-            self.find('th:eq(' + th + ')').addClass("colored_td");
-            self.find('td:eq(' + th + ')').addClass("colored_td");
-            self.find('th:eq(' + th + ')').css('background-color', '#cccccc');
-            self.find('td:eq(' + th + ')').css('background-color', '#cccccc');
-        });
-        $('.inner td').removeClass("colored_td");
-        $('.inner td').removeAttr("style");
-        $('.inner th').removeClass("colored_td");
-        $('.inner th').removeAttr("style");
+        if(th!=0){
+            $('.facture_table td').removeClass("colored_td");
+            $('.facture_table td').removeAttr("style");
+            $('.facture_table th').removeClass("colored_td");
+            $('.facture_table th').removeAttr("style");
+            
+            $('.facture_table tr').each(function() {
+                /* $('.facture_table tr').removeProp("background-color"); */
+                var self = $(this);
+                self.find('th:eq(' + th + ')').addClass("colored_td");
+                self.find('td:eq(' + th + ')').addClass("colored_td");
+                self.find('th:eq(' + th + ')').css('background-color', '#cccccc');
+                self.find('td:eq(' + th + ')').css('background-color', '#cccccc');
+            });
+            $('.inner td').removeClass("colored_td");
+            $('.inner td').removeAttr("style");
+            $('.inner th').removeClass("colored_td");
+            $('.inner th').removeAttr("style");
+        }
 });
 $(document).delegate('.encaiss_payement','click',function() {
     console.log('here');

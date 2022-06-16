@@ -214,9 +214,9 @@
                         <tr>
                             <td>{{ $info->date_encaissement }}</td>
                             <td>{{ $info->libelle }}</td>
-                            <td class="text-end">{{$devise->reference." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
-                            <td class="text-end">{{$devise->reference." ". number_format($info->payement, 0, ',', ' ') }}</td>
-                            <td class="text-end">{{$devise->reference." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                            <td class="text-end">{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                            <td class="text-end">{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                            <td class="text-end">{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
                             <td>{{ $info->description }}</td>
                             {{-- <td>{{ $info->nom_resp_cfp}}</td> --}}
                         </tr>

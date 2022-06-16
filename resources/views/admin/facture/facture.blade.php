@@ -327,13 +327,14 @@
                                     <table class="table table-hover facture_table">
                                         <thead>
                                             <tr>
-                                                <th></th>
+                                                <th>#</th>
                                                 <th style="max-width: 12%">Type</th>
                                                 <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                                 </th>
                                                 <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Entreprise &nbsp; <span class="nom_has_arrow"></span> </a>
                                                 </th>
-                                                <th style="max-width: 12%">Date de facturation</th>
+                                                <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
+                                                </th>
                                                 <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
                                                 </th>
                                                 <th style="max-width: 12%">
@@ -552,7 +553,9 @@
                                                 <tr>
                                                     <td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
                                                         @if($actif->facture_encour != "valider" && count($encaissement)>0)
-                                                            <table  class="table table-hover">
+                                                        <div class="centrer">
+                                                        <div class="alert alert-light" role="alert">Vos Encaissements:</div>
+                                                            <table  class="table table-hover table-sm">
                                                                 <thead>
                                                                     <tr>
                                                                         <th scope="col">N° F#</th>
@@ -586,6 +589,7 @@
                                                                     @endforeach
                                                                 </tbody>
                                                             </table>
+                                                        </div>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -725,13 +729,14 @@
                                         <table class="table table-hover facture_table">
                                             <thead>
                                                 <tr>
-                                                    <th></th>
+                                                    <th>#</th>
                                                     <th style="max-width: 12%">Type</th>
                                                     <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                                     </th>
                                                     <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Entreprise &nbsp; <span class="nom_has_arrow"></span> </a>
                                                     </th>
-                                                    <th style="max-width: 12%">Date de facturation</th>
+                                                    <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
+                                                    </th>
                                                     <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
                                                     </th>
                                                     <th style="max-width: 12%">
@@ -779,11 +784,11 @@
                                                         </a>
 
                                                     </td>
-                                                    <th>
+                                                    <td>
                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                             {{$actif->num_facture}}
                                                         </a>
-                                                    </th>
+                                                    </td>
                                                     <td>
                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                             {{$actif->nom_etp}}
@@ -904,13 +909,14 @@
                                                 <table class="table table-hover facture_table">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
+                                                            <th>#</th>
                                                             <th style="max-width: 12%">Type</th>
                                                             <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                                             </th>
                                                             <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Entreprise &nbsp; <span class="nom_has_arrow"></span> </a>
                                                             </th>
-                                                            <th style="max-width: 12%">Date de facturation</th>
+                                                            <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
+                                                            </th>
                                                             <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
                                                             </th>
                                                             <th style="max-width: 12%">
@@ -961,11 +967,11 @@
 
                                                                 </a>
                                                             </td>
-                                                            <th>
+                                                            <td>
                                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                     {{$actif->num_facture}}
                                                                 </a>
-                                                            </th>
+                                                            </td>
                                                             <td>
                                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                     {{$actif->nom_etp}}
@@ -1060,7 +1066,9 @@
                                                         <tr>
                                                             <td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_actif_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
                                                                 @if($actif->facture_encour != "valider" && count($encaissement)>0)
-                                                                    <table  class="table table-hover">
+                                                                <div class="centrer">
+                                                                <div class="alert alert-light" role="alert">Vos Encaissements:</div>
+                                                                    <table  class="table table-hover table-sm">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th scope="col">N° F#</th>
@@ -1094,6 +1102,7 @@
                                                                             @endforeach
                                                                         </tbody>
                                                                     </table>
+                                                                </div>
                                                                 @endif
                                                             </td>
                                                         </tr>
@@ -1190,13 +1199,14 @@
                                                         @include("admin.facture.pagination_cfp.pagination_facture_payer")
                                                         <table class="table table-hover facture_table">
                                                             <tr>
-                                                                <th></th>
+                                                                <th>#</th>
                                                                 <th scope="col">Type</th>
                                                                 <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                                                 </th>
                                                                 <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Entreprise &nbsp; <span class="nom_has_arrow"></span> </a>
                                                                 </th>
-                                                                <th scope="col">Date de facturation</th>
+                                                                <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
+                                                                </th>
                                                                 <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
                                                                 </th>
                                                                 <th scope="col">
@@ -1206,7 +1216,7 @@
                                                                 </th>
                                                                 <th scope="col">
                                                                     <div align="right">
-                                                                        <a class=" rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
+                                                                        <a class="rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
                                                                     </div>
                                                                 </th>
                                                                 <th scope="col">Statut</th>
@@ -1242,11 +1252,11 @@
                                                                             @endif
                                                                         </a>
                                                                     </td>
-                                                                    <th>
+                                                                    <td>
                                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                             {{$actif->num_facture}}
                                                                         </a>
-                                                                    </th>
+                                                                    </td>
                                                                     <td>
                                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                             {{$actif->nom_etp}}
@@ -1302,7 +1312,10 @@
                                                                 <tr>
                                                                     <td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_payer_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
                                                                         @if($actif->facture_encour != "valider" && count($encaissement)>0)
-                                                                            <table  class="table table-hover">
+                                                                        <div class="centrer">
+                                                                        <div class="alert alert-light" role="alert">Vos Encaissements:</div>
+
+                                                                            <table  class="table table-hover table-sm">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th scope="col">N° F#</th>
@@ -1336,6 +1349,7 @@
                                                                                     @endforeach
                                                                                 </tbody>
                                                                             </table>
+                                                                        </div>
                                                                         @endif
                                                                     </td>
                                                                 </tr>
