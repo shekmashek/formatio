@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Numerika Center - Suivi Formation'),
+    'name' => env('APP_NAME', 'UpSkill - Suivi Formation'),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    // 'timezone' => 'UTC',
+    'timezone' => 'Africa/Nairobi',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +81,9 @@ return [
     |
     */
 
-    'locale' => 'en',
+    // 'locale' => 'en',
+    // set fr as locale by default and en if fr is not available
+    'locale' => 'fr' ?? 'en',
 
     /*
     |--------------------------------------------------------------------------

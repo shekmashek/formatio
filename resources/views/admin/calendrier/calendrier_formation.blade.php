@@ -243,9 +243,11 @@
         {{-- <a href="#" class="btn_creer text-center filter mt-4" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a> --}}
         <div class="row w-100 mt-3">
 
+            {{-- the calendar will be added here --}}
             <div class="col-sm-6">
                 <div id='calendar' style="width:100%;"></div>
             </div>
+
             <div class="col-sm-6" id="detail" style="display: none">
                 {{-- <div class="card" style="width: auto;">
                     <div id="editor"></div>
@@ -325,6 +327,8 @@
                 </div>
             </div> --}}
         </div>
+
+        {{-- filtres --}}
         <div class="filtrer mt-3">
             <div class="row">
                 <div class="col">
@@ -396,8 +400,10 @@
             }
             return color;
         }
+        
         window.addEventListener("DOMContentLoaded", (event) => {
 
+            // pour le bouton de filtre par module
             var nom_module = $('#nom_module').val();
             $.ajax({
                 type: "GET"
@@ -420,7 +426,7 @@
                                 title: details[$i].nom_formation
                             @endcan
                             @can('isReferent')
-                            title: details[$i].nom_formation
+                                title: details[$i].nom_formation
                             @endcan
                             , start: details[$i].date_detail
                             ,backgroundColor:getRandomColor()
@@ -436,11 +442,14 @@
                         });
                     }
 
+
+                    // éléments du calendrier
                     var calendarEl = document.getElementById('calendar');
 
                     var calendar = new FullCalendar.Calendar(calendarEl, {
+                        locale: '{{ config('app.locale') }}',
                         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives'
-                        , timeZone: 'UTC'
+                        , timeZone: '{{ config('app.timezone') }}'
                         , initialView: 'dayGridMonth'
                         , headerToolbar: {
                             left: 'prev,next'
@@ -450,6 +459,8 @@
                         }
                         , editable: true
                         ,lang: 'fr'
+
+                        // afficher le conteneur des détails lors du clic sur l'événement
                         , eventClick: function(info) {
                             $('#detail').css('display','block');
 
@@ -487,31 +498,31 @@
                                         var logo_cfp = document.getElementById('logo_cfp');
                                         var logo_formateur = document.getElementById('logo_formateur');
                                         if ( nom_cfp == null) {
-                                            console.log('null');
+                                            console.log('nom_cfp null');
                                         }
                                         else{
                                             nom_cfp.innerHTML = '';
                                         }
                                         if ( etp == null) {
-                                            console.log('null');
+                                            console.log('etp null');
                                         }
                                         else{
                                             etp.innerHTML = '';
                                         }
                                         if ( logo_etp == null) {
-                                            console.log('null');
+                                            console.log('logo-etp null');
                                         }
                                         else{
                                             logo_etp.innerHTML = '';
                                         }
                                         if ( logo_cfp == null) {
-                                            console.log('null');
+                                            console.log('logo-cfop null');
                                         }
                                         else{
                                             logo_cfp.innerHTML = '';
                                         }
                                         if ( logo_formateur == null) {
-                                            console.log('null');
+                                            console.log('logo-f null');
                                         }
                                         else{
                                             logo_formateur.innerHTML = '';
@@ -528,12 +539,12 @@
                                         var salle = document.getElementById('salle');
                                         salle.innerHTML = '';
                                         @canany(['isReferent','isCFP','isFormateur'])
-                                        var liste_app = document.getElementById('liste_app');
-                                        liste_app.innerHTML = '';
-                                        var nb_apprenant = document.getElementById('nb_apprenant');
-                                        nb_apprenant.innerHTML = '';
-                                        var ressource = document.getElementById('ressource');
-                                        ressource.innerHTML = '';
+                                            var liste_app = document.getElementById('liste_app');
+                                            liste_app.innerHTML = '';
+                                            var nb_apprenant = document.getElementById('nb_apprenant');
+                                            nb_apprenant.innerHTML = '';
+                                            var ressource = document.getElementById('ressource');
+                                            ressource.innerHTML = '';
                                         @endcanany
                                         // alert(JSON.stringify(response));
 

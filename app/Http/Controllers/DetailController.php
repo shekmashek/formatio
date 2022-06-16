@@ -55,6 +55,7 @@ class DetailController extends Controller
 
         return view('admin.calendrier.calendrier',compact('domaines','formations','statut'));
     }
+    
     //calendrier entreprise
     public function calendrier_formation(){
         $domaines = $this->fonct->findAll('domaines');
@@ -132,6 +133,8 @@ class DetailController extends Controller
 
         return response()->json(['detail'=>$detail,'modules'=>$modules,'formations'=>$formations]);
     }
+
+    
     //liste event pour referent
     public function listEvent_entreprise(Request $request){
         $id_user = Auth::user()->id;
@@ -258,6 +261,8 @@ class DetailController extends Controller
         }
     }
 
+
+    // details lors du clic sur l'event dans le calendrier
     public function informationModule(Request $request)
     {
         $id = $request->Id;
@@ -271,8 +276,6 @@ class DetailController extends Controller
             inner join type_formations on projets.type_formation_id = type_formations.id
             where details.id = ?',[$id]);
         
-   
-         
 
         $entreprises = DB::select('
             select * from groupe_entreprises
