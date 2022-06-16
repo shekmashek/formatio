@@ -12,6 +12,14 @@
         <link rel="stylesheet" href="{{ asset('assets/css/inputControl.css') }}">
 
         <style>
+
+            /* colors */
+            .badge.bg-purple {
+
+                background-color: #f1e7fe!important;
+                color: #a537fd!important;
+                
+            }
             .table-head {
                 font-weight: normal;
             }
@@ -91,6 +99,21 @@
                 flex-wrap: nowrap;
                 font-size: 1rem;
             }
+
+
+
+            @media (max-width: 1000px) {
+                .activer_referent.d-none, .desactiver_referent.d-none{
+                    display: block!important;
+                    margin-top: 12px;
+                }
+
+                /* .activer_stg.visually-hidden, .desactiver_stg.visually-hidden{
+                    visibility: initial!important;
+                    margin-top: 12px;
+                } */
+            }
+            
         </style>
     @endpush
 
@@ -280,21 +303,25 @@
                                 <td class="align-middle text-center text-secondary">
 
                                     @if ($employe->activiter == 1)
-                                        <div class="form-check form-switch">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span
+                                        <div class="form-check form-switch ">
+                                            <label class="btn pe-auto form-check-label" for="unset_actif{{ $employe->id }}">
+                                                <span data-toggle="tooltip" data-placement="top" 
+                                                title="Appuillez pour désactiver"
                                                     class="badge bg-success">actif</span></label>
-                                            <input class="form-check-input desactiver_stg" type="checkbox"
+                                            <input id="unset_actif{{ $employe->id }}" class="pe-auto form-check-input desactiver_stg  mt-1" type="checkbox"
                                                 data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
                                                 checked>
                                         </div>
+                                        
                                     @else
-                                        <div class="form-check form-switch">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked">
-                                                <span class="badge bg-danger">
-                                                    inactif
+                                        <div class="form-check form-switch ">
+                                            <label class="btn pe-auto form-check-label" for="set_actif{{ $employe->id }}">
+                                                <span data-toggle="tooltip" data-placement="bottom" 
+                                                title="Appuillez pour activer"
+                                                 class="badge bg-danger">inactif
                                                 </span>
                                             </label>
-                                            <input class="form-check-input activer_stg" type="checkbox"
+                                            <input id="set_actif{{ $employe->id }}" class="pe-auto form-check-input activer_stg mt-1" type="checkbox"
                                                 data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
                                         </div>
                                     @endif
@@ -305,25 +332,28 @@
                                 <td class="align-middle text-center text-secondary">
 
                                     @if ($employe->status_referent == 1)
-                                        <div class="form-check form-switch">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked"><span
-                                                    class="badge bg-success">Référent</span></label>
-                                            <input class="form-check-input desactiver_referent" type="checkbox"
+                                        <div class="form-check form-switch p-2 px-3">
+                                            <label class="btn pe-auto cursor-pointer form-check-label " for="unsetReferent{{ $employe->id }}">
+                                                <span data-toggle="tooltip" data-placement="bottom" 
+                                                    title="cliquez pour retirer le référent"
+                                                    class="badge bg-purple">Référent</span></label>
+                                            <input id="unsetReferent{{ $employe->id }}" class=" form-check-input desactiver_referent d-none" type="checkbox"
                                                 data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
                                                 date-user-actif="{{ $employe->activiter }}"
                                                 checked>
                                         </div>
                                     @else
-                                        <div class="form-check form-switch">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked">
-                                                <span class="badge bg-secondary">
-                                                    non référent
-                                                </span>
+                                        <div class="form-check form-switch p-2 px-3">
+                                            <label class="btn pe-auto cursor-pointer form-check-label" for="setReferent{{ $employe->id }}">
+                                                <span class="cursor-pointer badge bg-secondary btn pe-auto"
+                                                data-placement="bottom" 
+                                                title="cliquez pour définir en tant que référent">non référent</span>
                                             </label>
-                                            <input class="form-check-input activer_referent" type="checkbox"
+                                            <input  id="setReferent{{ $employe->id }}" class="form-check-input activer_referent d-none" type="checkbox"
                                                 data-user-id='["{{ $employe->user_id }}","{{ $employe->activiter }}"]' value="{{ $employe->id }}"
                                         
-                                                {{-- desactiver le bouton si l'employé n'est pas actif --}} @if ($employe->activiter != 1) disabled @endif>
+                                                {{-- desactiver le bouton si l'employé n'est pas actif --}} 
+                                                @if ($employe->activiter != 1) disabled @endif>
                                         </div>
                                     @endif
 
@@ -457,7 +487,7 @@
 
                             document.getElementById("status_error") .innerHTML = response.error;
                         } else {
-                            alert('pass');
+                            // alert('pass');
                             window.location.reload();
                         }
                     },

@@ -106,6 +106,17 @@
     color: #0e0e0e;
 }
 
+.bg-purple{
+    background-color: #a537fd!important;
+}
+
+.badge.bg-purple {
+
+    background-color: #f1e7fe!important;
+    color: #a537fd!important;
+    
+}
+
 .bg-danger {
     background-color: #cf000f!important;
 }
