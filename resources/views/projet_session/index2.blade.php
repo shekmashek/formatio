@@ -376,7 +376,7 @@
                                     <tbody>
                                         @foreach ($projet as $prj)
                                             <tr>
-                                                <td colspan="2" scope="row" style="border-bottom: none; padding-left: 20px; background: #cccccc;">
+                                                <td colspan="9" scope="row" style="border-bottom: none; background: #cccccc;">
                                                     @php
                                                         if ($prj->totale_session == 1) {
                                                             echo $prj->nom_projet;
@@ -387,7 +387,9 @@
                                                         }
                                                     @endphp
                                                 </td>
-                                                <td colspan="7" style="background: #cccccc;font-size: 20; padding-left: 20px;">
+                                            </tr>
+                                            <tr>
+                                                <td colspan="7" style="font-size: 20;">
                                                     @if ($prj->type_formation_id == 1)
                                                         <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
                                                             {{ $prj->type_formation }}
@@ -402,7 +404,7 @@
                                                 {{-- Bouton add session --}}
                                                 @can('isCFP')
                                                     @if ($prj->type_formation_id == 1)
-                                                        <td style="border-bottom: none; background: #cccccc;">
+                                                        <td style="border-bottom: none;">
                                                             <span role="button" data-bs-toggle="modal"
                                                                 data-bs-target="#modal_{{ $prj->projet_id }}" data-backdrop='static'
                                                                 title="Nouvelle session" class="btn btn_nouveau py-1">
