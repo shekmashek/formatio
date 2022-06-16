@@ -847,17 +847,5 @@
                                     {{-- inmportation fonction js pour cfp --}}
                                     @include("admin.facture.function_js.js_etp")
 
-<script>
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            let lien = ($(e.target).attr('href'));
-            localStorage.setItem('abonnement', lien);
-            ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
-            ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
-    });
-    let activeTab = localStorage.getItem('abonnement');
-    // console.log(activeTab);
-    if(activeTab){
-        $('#myTab a[href="' + activeTab + '"]').tab('show');
-    }
-</script>
-@endsection
+
+                                    @endsection

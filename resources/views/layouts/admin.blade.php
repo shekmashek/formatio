@@ -60,6 +60,22 @@
     .btn_racourcis.active .bx{
         color: white;
     }
+    .parametre.active{
+        background-color: #7635dc;
+        border-radius: 10px 10px 10px 10px;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+        cursor: pointer;
+    }
+    .parametre.active .links_name{
+        color: white;
+    }
+    .parametre.active .bx{
+        color: white;
+    }
+    .parametre.active .dropdown-toggle::after {
+        color: white;
+    }
+
 </style>
 <body>
     <div class="sidebar active">
@@ -980,17 +996,17 @@
                                 </div>
 
                                 <div class="ms-2">
-                                    <div class="btn_creer dropdown">
+                                    <div class="btn_creer parametre dropdown">
 
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
                                             style="text-decoration: none">
                                             <i class='bx bxs-cog icon_creer_admin'></i>
-                                            Paramètres
+                                            <span class="links_name">Accueil</span>
                                         </a>
 
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-                                            <li>
+                                            <li id="parametre">
                                                 <a class="dropdown-item" href="{{route('aff_parametre_referent')}}">
                                                     <i class="bx bx-info-circle icon_plus  "></i>&nbsp; Information légales
                                                 </a>
@@ -1008,7 +1024,7 @@
                                             {{-- <li><a class="dropdown-item" href="{{route('planFormation.index')}}">
                                                     <i class='bx bxs-credit-card-front icon_plus'></i>&nbsp;Taxation
                                                 </a></li> --}}
-                                            <li>
+                                            <li id="parametre">
                                                 <a class="dropdown-item" href="{{route('parametrage_frais_annexe')}}">
                                                     <i class="bx bx-money-withdraw icon_plus  "></i>&nbsp; Frais annexes
                                                 </a>
@@ -1072,21 +1088,21 @@
                                 </div>
                                 @can('isCFPPrincipale','isPremium')
                                 <div class="ms-2">
-                                    <div class="btn_creer dropdown">
+                                    <div class="btn_creer parametre dropdown">
 
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class='bx bxs-cog icon_creer_admin'></i>
-                                            Paramètres
+                                            <span class="links_name">Paramètres</span>
                                         </a>
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
-                                            <li><a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}"><i
+                                            <li id="parametre"><a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}"><i
                                                         class="bx bx-info-circle icon_plus  "></i>&nbsp; Information
                                                     légales</a></li>
                                             <li id="abo"><a class="dropdown-item" href="{{route('ListeAbonnement')}}"> <i
                                                         class="bx bxl-sketch icon_plus"></i>&nbsp;Abonnement</a>
                                             </li>
-                                            <li><a class="dropdown-item" href="{{route('parametrage_salle')}}">
+                                            <li id="parametre"><a class="dropdown-item" href="{{route('parametrage_salle')}}">
                                                     <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
                                                 </a></li>
                                         </ul>
@@ -1630,6 +1646,9 @@
         else if (!$(".nav").find("."+this.id)) {
             localStorage.removeItem('indiceSidebar');
         }
+        else if (this.id="parametre") {
+            localStorage.setItem('indiceSidebar', 'parametre');
+        }
         else if($(".btn_racourcis").find("."+this.id).get()[0]){
             localStorage.setItem('indiceSidebar', $(".btn_racourcis").find("."+this.id).get()[0].href);
         }
@@ -1642,9 +1661,11 @@
     $(".deconnexion_text").on("click", function(e){
         localStorage.clear();
     });
-    if(!(localStorage.getItem('indiceSidebar')))localStorage.setItem('indiceSidebar', document.getElementById("accueil").href);
+
     let Tabactive = localStorage.getItem('indiceSidebar');
-    if(Tabactive){
+    if(!(localStorage.getItem('indiceSidebar')))localStorage.setItem('indiceSidebar', document.getElementById("accueil").href);
+    else if(Tabactive=="parametre")$('.btn_creer.parametre').addClass('active');
+    else if(Tabactive){
         ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
         ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     }
