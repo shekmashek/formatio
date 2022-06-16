@@ -196,7 +196,6 @@
 
                     html_tous += "</li></ul> </div> </div>";
                 } else {
-
                     if (full_facture[i_act].facture_encour == "valider") {
 
                         html_tous += ' <div class="dropdown"><div class="btn-group dropstart"> <button type="button" class="btn  btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> </button> ';
@@ -255,17 +254,21 @@
                                         html_tous +='<th scope="col">Actions</th>';
                                 html_tous +='</tr></thead><tbody>';
                                     for(var iencaiss=0; iencaiss<encaissement.length; iencaiss+=1){
+                                        var url_encais_facture = "{{ route('detail_facture', ':id') }}";
+                                        url_encais_facture = url_encais_facture.replace(":id", encaissement[iencaiss].num_facture);
+                                        var url_supprimer = "{{route('supprimer',':id')}}";
+                                        url_supprimer = url_supprimer.replace(":id", encaissement[iencaiss].id);
                                         if (full_facture[i_act].num_facture == encaissement[iencaiss].num_facture){
-                                            html_tous +='<tr><td> <a href="route("detail_facture",'+encaissement[iencaiss].num_facture+')'+'">'+encaissement[iencaiss].num_facture+'</a></td>';
-                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
-                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
-                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() +'</td>';
+                                            html_tous +='<tr><td> <a href="'+url_encais_facture+'">'+encaissement[iencaiss].num_facture+'</a></td>';
+                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() +'</td>';
                                             html_tous +='<td>'+encaissement[iencaiss].description+'</td>';
                                             html_tous +='<td>'+encaissement[iencaiss].date_encaissement+'</td>';
                                             html_tous +='<td>'+encaissement[iencaiss].libelle+'</td>';
-                                            html_tous +='<td><button class=" btn btn_creer btn-block mb-2 payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
+                                            html_tous +='<td><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
                                             html_tous +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
-                                            html_tous +='<a href="route("supprimer",['+encaissement[iencaiss].id+'])" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
+                                            html_tous +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
                                         }
                                     }
                                 html_tous +='</tbody></table>';
@@ -573,17 +576,21 @@
                                         html_actif +='<th scope="col">Actions</th>';
                                 html_actif +='</tr></thead><tbody>';
                                     for(var iencaiss=0; iencaiss<encaissement.length; iencaiss+=1){
+                                        var url_encais_facture = "{{ route('detail_facture', ':id') }}";
+                                        url_encais_facture = url_encais_facture.replace(":id", encaissement[iencaiss].num_facture);
+                                        var url_supprimer = "{{route('supprimer',':id')}}";
+                                        url_supprimer = url_supprimer.replace(":id", encaissement[iencaiss].id);
                                         if (facture_actif[i_actif].num_facture == encaissement[iencaiss].num_facture){
-                                            html_actif +='<tr><td> <a href="route("detail_facture",'+encaissement[iencaiss].num_facture+')'+'">'+encaissement[iencaiss].num_facture+'</a></td>';
-                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
-                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
-                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() +'</td>';
+                                            html_actif +='<tr><td> <a href="' + url_encais_facture + '">'+encaissement[iencaiss].num_facture+'</a></td>';
+                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() +'</td>';
                                             html_actif +='<td>'+encaissement[iencaiss].description+'</td>';
                                             html_actif +='<td>'+encaissement[iencaiss].date_encaissement+'</td>';
                                             html_actif +='<td>'+encaissement[iencaiss].libelle+'</td>';
-                                            html_actif +='<td><button class=" btn btn_creer btn-block mb-2 payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
+                                            html_actif +='<td><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
                                             html_actif +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
-                                            html_actif +='<a href="route("supprimer",['+encaissement[iencaiss].id+'])" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
+                                            html_actif +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
                                         }
                                     }
                                 html_actif +='</tbody></table>';
@@ -800,17 +807,21 @@
                                         html_payer +='<th scope="col">Actions</th>';
                                 html_payer +='</tr></thead><tbody>';
                                     for(var iencaiss=0; iencaiss<encaissement.length; iencaiss+=1){
+                                        var url_encais_facture = "{{ route('detail_facture', ':id') }}";
+                                        url_encais_facture = url_encais_facture.replace(":id", encaissement[iencaiss].num_facture);
+                                        var url_supprimer = "{{route('supprimer',':id')}}";
+                                        url_supprimer = url_supprimer.replace(":id", encaissement[iencaiss].id);
                                         if (facture_payer[i_payer].num_facture == encaissement[iencaiss].num_facture){
-                                            html_payer +='<tr><td> <a href="route("detail_facture",'+encaissement[iencaiss].num_facture+')'+'">'+encaissement[iencaiss].num_facture+'</a></td>';
-                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
-                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
-                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() +'</td>';
+                                            html_payer +='<tr><td> <a href="'+url_encais_facture+'">'+encaissement[iencaiss].num_facture+'</a></td>';
+                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() +'</td>';
                                             html_payer +='<td>'+encaissement[iencaiss].description+'</td>';
                                             html_payer +='<td>'+encaissement[iencaiss].date_encaissement+'</td>';
                                             html_payer +='<td>'+encaissement[iencaiss].libelle+'</td>';
-                                            html_payer +='<td><button class=" btn btn_creer btn-block mb-2 payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
+                                            html_payer +='<td><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
                                             html_payer +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
-                                            html_payer +='<a href="route("supprimer",['+encaissement[iencaiss].id+'])" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
+                                            html_payer +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
                                         }
                                     }
                                 html_payer +='</tbody></table>';
@@ -1507,5 +1518,85 @@ $('.facture_table th').on('click', function(e) {
         $('.inner th').removeClass("colored_td");
         $('.inner th').removeAttr("style");
 });
-
+$(document).delegate('.encaiss_payement','click',function() {
+    console.log('here');
+    $('#modification').html('');
+    var id = $(this).data("id");
+    $.ajax({
+        method: "GET"
+        , url: "{{route('page_modification')}}"
+        , data: {
+            encaissement_id: id
+        }
+        , dataType: "html"
+        , success: function(response) {
+            var valiny = JSON.parse(response)[0];
+            var html = '';
+            html += '<div class="inputbox inputboxP mt-3  mx-1">';
+            html += '<div class="row">';
+            html += '<div class="col"><span>Date de paiement<strong style="color:#ff0000;">*</strong></span></div>';
+            html += '<div class="col">';
+            html += '<input type="date" name="date_encaissement" class="form-control formPayement" required style="height: 50px;" value=' + valiny.userData[3] + '>';
+            html += '  </div></div>';
+            html += '</div>';
+            html += '<div class="inputbox inputboxP mt-3   mx-1">';
+            html += '<div class="row">';
+            html += '<div class="col"><span>Montant à facturer<strong style="color:#ff0000;">*</strong></span></div>';
+            html += ' <div class="col">';
+            html += '<input autocomplete="off" type="number" min="1" name="montant" value="' + valiny.userData[0] + '" class="form-control formPayement" required style="height: 50px;">';
+            html += '  </div></div></div>';
+            html += '<input type="hidden" name="encaissement_id" value="' + id + '">';
+            html += '<input type="hidden" name="num_facture" value="' + valiny.userData[2] + '">';
+                        
+            html += '<div class="form-group  mt-3  mx-1">';
+            html += '<div class="row">';
+            html += '   <div class="col"><span>Mode de paiement<strong style="color:#ff0000;">*</strong></span> </div>';
+            html += '<div class="col">';
+            html += '<select class="form-select selectP" name="mode_payement" aria-label="Default select example" style="height: 50px;">';
+            html += '<option value="' + valiny.mode_finance_edit.id + '" selected>' + valiny.mode_finance_edit.description + '</option>';
+                        
+            var tab = valiny.mode_finance_list;
+            for (var i = 0; i < tab.length; i += 1) {
+                html += '<option value="' + tab[i].id + '">' + tab[i].description + '</option>';
+            }
+            html += ' </select> </div></div></div>';
+            html += '<div class="inputbox inputboxP mt-2  mx-1"><span>Memo/Notes</span>';
+            if (valiny.userData[1] != null) {
+                html += '<textarea autocomplete="off" name="libelle" class="text_description form-control"  rows="5">' + valiny.userData[1] + '</textarea> </div>';
+            } else {
+                html += '<textarea autocomplete="off" name="libelle" class="text_description form-control"  rows="5"></textarea> </div>';
+                        
+            }
+            html += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>';
+            html += '<button type="submit" class="btn btn_creer px-3">Modifier</button>';
+            /*        html += '<textarea  autocomplete="off" name="libelle" id="libelle" class="text_description form-control"  rows="5">' + valiny.userData[1] + '</textarea>';
+                    html += '<div class="inputbox inputboxP mt-3">';
+                    html += '<span>Montant à enaisser</span>';
+                    html += '<input autocomplete="off" type="number" min="1" pattern="[0-9]" name="montant" class="form-control formPayement" value="' + valiny.userData[0] + '" required style="height: 50px;"><br>';
+                    html += '<input type="hidden" name="encaissement_id" value="' + id + '">';
+                    html += '<input type="hidden" name="num_facture" value="' + valiny.userData[2] + '">';
+                    html += '</div>';
+                    html += '<div class="form-group  mt-3">';
+                    html += '<span>Mode de paiement<strong style="color:#ff0000;">*</strong></span>';
+                    html += '<select class="form-select selectP" name="mode_payement" id="mode_payement" aria-label="Default select example" style="height: 50px;">';
+                    html += '<option value="' + valiny.mode_finance_edit.id + '" selected>' + valiny.mode_finance_edit.description + '</option>';
+                    var tab = valiny.mode_finance_list;
+                    for (var i = 0; i < tab.length; i += 1) {
+                        html += '<option value="' + tab[i].id + '">' + tab[i].description + '</option>';
+                    }
+                    html += '</select>';
+                    html += '</div>';
+                    html += '<div class="inputbox inputboxP mt-3">';
+                    html += '<span>Date de paiement<strong style="color:#ff0000;">*</strong></span>';
+                    html += '<input type="date" name="date_encaissement" class="form-control formPayement" required="required" style="height: 50px;" value=' + valiny.userData[3] + '>';
+                    html += '</div>';
+                    html += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>';
+                    html += '<button type="submit" class="btn btn_creer px-3">Modifier</button>'; */
+            $("#modification").append(html);
+        }
+        , error: function(error) {
+            console.log(error)
+        }
+    });
+});
 </script>

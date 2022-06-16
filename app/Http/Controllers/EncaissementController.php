@@ -128,7 +128,7 @@ class EncaissementController extends Controller
             encaissement::supprimerAutres($id_encaissement);
             DB::delete('delete from encaissements where id = ?', [$id_encaissement]);
             DB::commit();
-            return redirect()->route('listeEncaissement', [$numero_fact]);
+            return redirect()->route('liste_facture');
         } catch (Exception $e) {
             DB::rollback();
             return redirect()->back();
@@ -175,7 +175,7 @@ class EncaissementController extends Controller
             );
             encaissement::modifierAutres($id_encaissement);
             DB::commit();
-            return redirect()->route('listeEncaissement', [$numero_fact]);
+            return redirect()->route('liste_facture');
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back();

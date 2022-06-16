@@ -595,16 +595,19 @@
                 <div class="col-3 d-flex flex-row padding_logo">
                     {{-- <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt=""
                             class="img-fluid menu_logo me-3"></span>@yield('title') --}}
-                            <a href="/home" class="teste">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <div class="titre">
-                                    <i >F</i>
-                                </div>
+                            <div>
+                                <a href="/home" class="teste">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <div class="titre">
+                                        <i >F</i>
+                                    </div>
 
-                            </a>
+                                </a>
+                            </div>
+                            <div style="margin-left:90px;margin-top:-10px;font-size:30px;">@yield('title')</div>
                 </div>
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
                     @canany(['isReferent','isStagiaire','isManager'])

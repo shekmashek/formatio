@@ -578,7 +578,7 @@
                                                                             <td>{{ $info->description }}</td>
                                                                             <td>{{ $info->date_encaissement }}</td>
                                                                             <td>{{ $info->libelle }}</td>
-                                                                            <td><button class=" btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                            <td><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
                                                                                 <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
                                                                             </td>
                                                                         </tr>
@@ -1086,7 +1086,7 @@
                                                                                     <td>{{ $info->description }}</td>
                                                                                     <td>{{ $info->date_encaissement }}</td>
                                                                                     <td>{{ $info->libelle }}</td>
-                                                                                    <td><button class=" btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                                    <td><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
                                                                                         <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
                                                                                     </td>
                                                                                 </tr>
@@ -1328,7 +1328,7 @@
                                                                                             <td>{{ $info->description }}</td>
                                                                                             <td>{{ $info->date_encaissement }}</td>
                                                                                             <td>{{ $info->libelle }}</td>
-                                                                                            <td><button class=" btn btn_creer btn-block mb-2 payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                                            <td><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
                                                                                                 <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
                                                                                             </td>
                                                                                         </tr>
@@ -1548,7 +1548,32 @@
                                 </div>
                             </div>
                         </div>
+                        
+                            {{-- debut modal encaissement --}}
+                            <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content  px-3 py-3">
+                                        <div class="modal-header">
+                                            <div class="modal-title text-md">
+                                                <h5>Modification</h5>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('modifier_encaissement') }}" method="POST">
+                                                @csrf
+                                                <div id="modification"></div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- fin --}}
                     </div>
                 </div>
             </div>
             {{-- inmportation fonction js pour cfp --}} @include("admin.facture.function_js.js_cfp") @endsection
+            {{-- <script type="text/javascript">
+           
+                            </script> --}}
+            

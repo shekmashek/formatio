@@ -326,7 +326,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 <script type="text/javascript">
-    $(".payement").on('click', function(e) {
+    /* $(".payement").on('click', function(e) {
         $('#modification').html('');
         var id = $(this).data("id");
         $.ajax({
@@ -399,13 +399,13 @@
                         html += '</div>';
                         html += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>';
                         html += '<button type="submit" class="btn btn_creer px-3">Modifier</button>'; */
-                $("#modification").append(html);
+                /* $("#modification").append(html);
             }
             , error: function(error) {
                 console.log(error)
             }
-        });
-    });
+        }); */
+    /* });  */
 
 </script>
 @endsection
