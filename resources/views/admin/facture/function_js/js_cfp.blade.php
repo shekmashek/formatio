@@ -74,7 +74,7 @@
 
 
 
-    function getDataFactureTous(full_facture, devise) {
+    function getDataFactureTous(full_facture, devise,encaissement) {/* getDataFactureTous */
         var html_tous = '';
         if (full_facture.length > 0) {
 
@@ -100,8 +100,11 @@
                 url_pdf_facture_facture = url_pdf_facture_facture.replace(":id", full_facture[i_act].num_facture);
 
                 var url_form_encaissement = "{{ route('encaisser') }}";
-
-                html_tous += " <tr><td> <a href=" + url_detail_facture + ">";
+                html_tous += '<tr><td>';
+                    if(full_facture[i_act].facture_encour =="en_cour" || full_facture[i_act].facture_encour=="terminer"){
+                        html_tous +='<h6><a href="#collapseprojet_actif_'+full_facture[i_act].num_facture+'" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>';
+                    }
+                html_tous += " </td><td> <a href=" + url_detail_facture + ">";
 
                 if (full_facture[i_act].reference_type_facture == "Facture") {
 
@@ -127,8 +130,9 @@
                         " </div>";
                 } */
 
-                html_tous += "  </a></td><th>";
-                html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].num_facture + "   </a> </th> <td>";
+                html_tous += "  </a></td>";
+
+                html_tous += "  <td><a href=" + url_detail_facture + ">" + full_facture[i_act].num_facture + "   </a> </td> <td>";
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].nom_etp + " </a></td><td>";
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].invoice_date + " </a> </td><td>";
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].due_date + " </a> </td><td>";
@@ -200,7 +204,7 @@
                         html_tous += '  <a href="#" class="dropdown-item">';
                         html_tous += ' <button type="button" class=" btn  payement" data-id="' + full_facture[i_act].num_facture + '" id="' + full_facture[i_act].num_facture + '" data-bs-toggle="modal" data-bs-target="#modal' + full_facture[i_act].cfp_id + '_' + full_facture[i_act].num_facture + '">Faire un encaissement</button>';
                         html_tous += '</a>';
-                        html_tous += '<a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>';
+                        /* html_tous += '<a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>'; */
                         html_tous += '</ul>';
                         html_tous += ' </div> </div>';
 
@@ -214,7 +218,7 @@
                         html_tous += '<a href="#" class="dropdown-item">';
                         html_tous += '<button type="button" class=" btn  payement" data-id="' + full_facture[i_act].num_facture + '" id="' + full_facture[i_act].num_facture + '" data-bs-toggle="modal" data-bs-target="#modal' + full_facture[i_act].cfp_id + '_' + full_facture[i_act].num_facture + '">Faire un encaissement</button>';
                         html_tous += '</a>'
-                        html_tous += ' <a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>';
+                        /* html_tous += ' <a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>'; */
                         html_tous += '<hr class="dropdown-divider">';
                         html_tous += '<a class="dropdown-item" href="' + url_pdf_liste_encaissement_facture + '">';
                         html_tous += '<button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>';
@@ -228,7 +232,7 @@
                         html_tous += '</button>';
                         html_tous += '<ul class="dropdown-menu">';
                         html_tous += '<a class="dropdown-item" href="' + url_pdf_facture_facture + '"><button type="button" class="btn "><i class="fa fa-download"></i> PDF Facture</button></a>';
-                        html_tous += ' <a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>';
+                       /*  html_tous += ' <a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>'; */
                         html_tous += '<hr class="dropdown-divider">';
                         html_tous += '<a class="dropdown-item" href="' + url_pdf_liste_encaissement_facture + '">';
                         html_tous += '<button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>';
@@ -236,9 +240,37 @@
 
                     }
                 }
-
-                html_tous += "</td> </tr>";
-
+                html_tous += "</td> </tr> <tr>";
+                    html_tous +='<td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_actif_'+full_facture[i_act].num_facture+'" aria-labelledby="collapseprojet_'+full_facture[i_act].num_facture+'">';
+                        if(full_facture[i_act].facture_encour != "valider" && encaissement.length>0){
+                        html_tous +='<table  class="table table-hover">';
+                                html_tous +='<thead><tr>';
+                                        html_tous +='<th scope="col">N° F#</th>';
+                                        html_tous +='<th scope="col">Montant facturer</th>';
+                                        html_tous +='<th scope="col">Paiement</th>';
+                                        html_tous +='<th scope="col">Montant ouvert</th>';
+                                        html_tous +='<th scope="col">Mode de paiement</th>';
+                                        html_tous +='<th scope="col">Date de paiement</th>';
+                                        html_tous +='<th scope="col">Memo/Notes</th>';
+                                        html_tous +='<th scope="col">Actions</th>';
+                                html_tous +='</tr></thead><tbody>';
+                                    for(var iencaiss=0; iencaiss<encaissement.length; iencaiss+=1){
+                                        if (full_facture[i_act].num_facture == encaissement[iencaiss].num_facture){
+                                            html_tous +='<tr><td> <a href="route("detail_facture",'+encaissement[iencaiss].num_facture+')'+'">'+encaissement[iencaiss].num_facture+'</a></td>';
+                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
+                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
+                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() +'</td>';
+                                            html_tous +='<td>'+encaissement[iencaiss].description+'</td>';
+                                            html_tous +='<td>'+encaissement[iencaiss].date_encaissement+'</td>';
+                                            html_tous +='<td>'+encaissement[iencaiss].libelle+'</td>';
+                                            html_tous +='<td><button class=" btn btn_creer btn-block mb-2 payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
+                                            html_tous +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
+                                            html_tous +='<a href="route("supprimer",['+encaissement[iencaiss].id+'])" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
+                                        }
+                                    }
+                                html_tous +='</tbody></table>';
+                        }
+                    html_tous +='</td></tr>';
 
                 html_tous += ' <div id="modal' + full_facture[i_act].cfp_id + '_' + full_facture[i_act].num_facture + '" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">';
 
@@ -350,8 +382,8 @@
                         " </div>";
                 }
 
-                html_inactif += "  </a></td><th>";
-                html_inactif += "  <a href=" + url_detail_facture + ">" + facture_inactif[i_act].num_facture + "   </a> </th> <td>";
+                html_inactif += "  </a></td><td>";
+                html_inactif += "  <a href=" + url_detail_facture + ">" + facture_inactif[i_act].num_facture + "   </a> </td> <td>";
                 html_inactif += "  <a href=" + url_detail_facture + ">" + facture_inactif[i_act].nom_etp + " </a></td><td>";
                 html_inactif += "  <a href=" + url_detail_facture + ">" + facture_inactif[i_act].invoice_date + " </a> </td><td>";
                 html_inactif += "  <a href=" + url_detail_facture + ">" + facture_inactif[i_act].due_date + " </a> </td><td>";
@@ -419,7 +451,7 @@
     }
 
 
-    function getDataFactureValider(facture_actif, devise) {
+    function getDataFactureValider(facture_actif, devise, encaissement) {
         var html_actif = '';
         // var mode_payement = @php $mode_payement;  @endphp;
 
@@ -447,7 +479,11 @@
 
                 var url_form_encaissement = "{{ route('encaisser') }}";
 
-                html_actif += " <tr><td> <a href=" + url_detail_facture + ">";
+                html_actif += '<tr><td>';
+                    if(facture_actif[i_actif].facture_encour=="terminer" || facture_actif[i_actif].facture_encour=="en_cour"){
+                        html_actif +='<h6><a href="#collapseprojet_valider_'+facture_actif[i_actif].num_facture+'" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>';
+                    }
+                html_actif += " </td><td> <a href=" + url_detail_facture + ">";
 
                 if (facture_actif[i_actif].reference_type_facture == "Facture") {
 
@@ -471,8 +507,8 @@
                         " </div>";
                 }
 
-                html_actif += "  </a></td><th>";
-                html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].num_facture + "   </a> </th> <td>";
+                html_actif += "  </a></td><td>";
+                html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].num_facture + "   </a> </td> <td>";
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].nom_etp + " </a></td><td>";
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].invoice_date + " </a> </td><td>";
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].due_date + " </a> </td><td>";
@@ -501,7 +537,7 @@
                     html_actif += '  <a href="#" class="dropdown-item">';
                     html_actif += ' <button type="button" class=" btn  payement" data-id="' + facture_actif[i_actif].num_facture + '" id="' + facture_actif[i_actif].num_facture + '" data-bs-toggle="modal" data-bs-target="#modal_valide_' + facture_actif[i_actif].cfp_id + '_' + facture_actif[i_actif].num_facture + '">Faire un encaissement</button>';
                     html_actif += '</a>';
-                    html_actif += '<a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>';
+                   /*  html_actif += '<a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>'; */
                     html_actif += '</ul>';
                     html_actif += ' </div> </div>';
 
@@ -514,7 +550,7 @@
                     html_actif += '<a href="#" class="dropdown-item">';
                     html_actif += '<button type="button" class=" btn  payement" data-id="' + facture_actif[i_actif].num_facture + '" id="' + facture_actif[i_actif].num_facture + '" data-bs-toggle="modal" data-bs-target="#modal_valide_' + facture_actif[i_actif].cfp_id + '_' + facture_actif[i_actif].num_facture + '">Faire un encaissement</button>';
                     html_actif += '</a>'
-                    html_actif += ' <a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>';
+                    /* html_actif += ' <a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>'; */
                     html_actif += '<hr class="dropdown-divider">';
                     html_actif += '<a class="dropdown-item" href="' + url_pdf_liste_encaissement_facture + '">';
                     html_actif += '<button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>';
@@ -522,7 +558,37 @@
 
                 }
 
-                html_actif += "</td> </tr>";
+                html_actif += "</td> </tr> <tr>";
+                    html_actif +='<td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_valider_'+facture_actif[i_actif].num_facture+'" aria-labelledby="collapseprojet_'+facture_actif[i_actif].num_facture+'">';
+                        if(encaissement.length>0){
+                        html_actif +='<table  class="table table-hover">';
+                                html_actif +='<thead><tr>';
+                                        html_actif +='<th scope="col">N° F#</th>';
+                                        html_actif +='<th scope="col">Montant facturer</th>';
+                                        html_actif +='<th scope="col">Paiement</th>';
+                                        html_actif +='<th scope="col">Montant ouvert</th>';
+                                        html_actif +='<th scope="col">Mode de paiement</th>';
+                                        html_actif +='<th scope="col">Date de paiement</th>';
+                                        html_actif +='<th scope="col">Memo/Notes</th>';
+                                        html_actif +='<th scope="col">Actions</th>';
+                                html_actif +='</tr></thead><tbody>';
+                                    for(var iencaiss=0; iencaiss<encaissement.length; iencaiss+=1){
+                                        if (facture_actif[i_actif].num_facture == encaissement[iencaiss].num_facture){
+                                            html_actif +='<tr><td> <a href="route("detail_facture",'+encaissement[iencaiss].num_facture+')'+'">'+encaissement[iencaiss].num_facture+'</a></td>';
+                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
+                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
+                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() +'</td>';
+                                            html_actif +='<td>'+encaissement[iencaiss].description+'</td>';
+                                            html_actif +='<td>'+encaissement[iencaiss].date_encaissement+'</td>';
+                                            html_actif +='<td>'+encaissement[iencaiss].libelle+'</td>';
+                                            html_actif +='<td><button class=" btn btn_creer btn-block mb-2 payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
+                                            html_actif +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
+                                            html_actif +='<a href="route("supprimer",['+encaissement[iencaiss].id+'])" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
+                                        }
+                                    }
+                                html_actif +='</tbody></table>';
+                        }
+                    html_actif +='</td></tr>';
 
                 html_actif += ' <div id="modal_valide_' + facture_actif[i_actif].cfp_id + '_' + facture_actif[i_actif].num_facture + '" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">';
 
@@ -649,7 +715,7 @@
         return html_actif;
     }
 
-    function getDataFacturePayer(facture_payer, devise) {
+    function getDataFacturePayer(facture_payer, devise, encaissement) {
         var html_payer = '';
         if (facture_payer.length > 0) {
 
@@ -667,9 +733,12 @@
                 var url_pdf_facture_facture = "{{ route('imprime_feuille_facture', ':id') }}";
                 url_pdf_facture_facture = url_pdf_facture_facture.replace(":id", facture_payer[i_payer].num_facture);
 
-
-                html_payer += " <tr><td> <a href=" + url_detail_facture + ">";
-
+                    html_payer += '<tr><td>';
+                    if(facture_payer[i_payer].facture_encour=="terminer"){
+                        html_payer +='<h6><a href="#collapseprojet_payer_'+facture_payer[i_payer].num_facture+'" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>';
+                    }
+                    html_payer += " </td><td> <a href=" + url_detail_facture + ">";
+                
                 if (facture_payer[i_payer].reference_type_facture == "Facture") {
 
                     html_payer += "  <div style='background-color: green; border-radius: 10px; text-align: center;color: white'>" +
@@ -692,8 +761,8 @@
                         " </div>";
                 }
 
-                html_payer += "  </a></td><th>";
-                html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].num_facture + "   </a> </th> <td>";
+                
+                html_payer += "  <td><a href=" + url_detail_facture + ">" + facture_payer[i_payer].num_facture + "   </a> </td> <td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].nom_etp + " </a></td><td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].invoice_date + " </a> </td><td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].due_date + " </a> </td><td>";
@@ -711,13 +780,42 @@
                 html_payer += '</button>';
                 html_payer += '<ul class="dropdown-menu">';
                 html_payer += '<a class="dropdown-item" href="' + url_pdf_facture_facture + '"><button type="button" class="btn "><i class="fa fa-download"></i> PDF Facture</button></a>';
-                html_payer += ' <a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>';
+                /* html_payer += ' <a class="dropdown-item" href="' + url_liste_encaissement_facture + '"><button type="button" class="btn ">Liste des encaissements</button></a>'; */
                 html_payer += '<hr class="dropdown-divider">';
                 html_payer += '<a class="dropdown-item" href="' + url_pdf_liste_encaissement_facture + '">';
                 html_payer += '<button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>';
                 html_payer += '</ul> </div></div>';
-
-                html_payer += "</td> </tr>";
+                html_payer += "</td> </tr> <tr>";
+                    html_payer +='<td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_payer_'+facture_payer[i_payer].num_facture+'" aria-labelledby="collapseprojet_'+facture_payer[i_payer].num_facture+'">';
+                        if(encaissement.length>0){
+                        html_payer +='<table  class="table table-hover">';
+                                html_payer +='<thead><tr>';
+                                        html_payer +='<th scope="col">N° F#</th>';
+                                        html_payer +='<th scope="col">Montant facturer</th>';
+                                        html_payer +='<th scope="col">Paiement</th>';
+                                        html_payer +='<th scope="col">Montant ouvert</th>';
+                                        html_payer +='<th scope="col">Mode de paiement</th>';
+                                        html_payer +='<th scope="col">Date de paiement</th>';
+                                        html_payer +='<th scope="col">Memo/Notes</th>';
+                                        html_payer +='<th scope="col">Actions</th>';
+                                html_payer +='</tr></thead><tbody>';
+                                    for(var iencaiss=0; iencaiss<encaissement.length; iencaiss+=1){
+                                        if (facture_payer[i_payer].num_facture == encaissement[iencaiss].num_facture){
+                                            html_payer +='<tr><td> <a href="route("detail_facture",'+encaissement[iencaiss].num_facture+')'+'">'+encaissement[iencaiss].num_facture+'</a></td>';
+                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
+                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() + '</td>';
+                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, " ").trim() +'</td>';
+                                            html_payer +='<td>'+encaissement[iencaiss].description+'</td>';
+                                            html_payer +='<td>'+encaissement[iencaiss].date_encaissement+'</td>';
+                                            html_payer +='<td>'+encaissement[iencaiss].libelle+'</td>';
+                                            html_payer +='<td><button class=" btn btn_creer btn-block mb-2 payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
+                                            html_payer +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
+                                            html_payer +='<a href="route("supprimer",['+encaissement[iencaiss].id+'])" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
+                                        }
+                                    }
+                                html_payer +='</tbody></table>';
+                        }
+                    html_payer +='</td></tr>';
             }
         } else {
             html_payer += '<tr><td colspan = "11" class = "text-center" style = "color:red;" > Aucun Résultat </td> </tr> ';
@@ -729,18 +827,18 @@
     function getDataFacture(response) {
         var valiny = JSON.parse(response);
         var devise = valiny["devise"];
+        var encaissement = valiny["encaissement"];
 
         if (valiny["entiter"] == "OF") {
-
             var full_facture = valiny["full_facture"];
             var facture_inactif = valiny["facture_inactif"];
             var facture_actif = valiny["facture_actif"];
             var facture_payer = valiny["facture_payer"];
 
-            var html_full = getDataFactureTous(full_facture, devise);
+            var html_full = getDataFactureTous(full_facture, devise, encaissement);
             var html_inactif = getDataFactureBrouillon(facture_inactif, devise);
-            var html_actif = getDataFactureValider(facture_actif, devise);
-            var html_payer = getDataFacturePayer(facture_payer, devise);
+            var html_actif = getDataFactureValider(facture_actif, devise, encaissement);
+            var html_payer = getDataFacturePayer(facture_payer, devise, encaissement);
 
 
             return {
@@ -755,9 +853,9 @@
             var facture_actif = valiny["facture_actif"];
             var facture_payer = valiny["facture_payer"];
 
-            var html_full = getDataFactureTous(full_facture, devise);
-            var html_actif = getDataFactureValider(facture_actif, devise);
-            var html_payer = getDataFacturePayer(facture_payer, devise);
+            var html_full = getDataFactureTous(full_facture, devise,encaissement);
+            var html_actif = getDataFactureValider(facture_actif, devise, encaissement);
+            var html_payer = getDataFacturePayer(facture_payer, devise, encaissement);
 
             return {
                 "html_full": html_full
@@ -969,7 +1067,7 @@
             $(".num_fact_trie").val(0);
         }
 
-        if (
+        /* if (
             $(".num_fact_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -1009,8 +1107,12 @@
             .find(".icon_trie")
             .removeClass("fa-arrow-up")
             .removeClass("color-text-trie")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
 
+            $('.icon_trie').remove();
+        /* .TFtableCol tr td:nth-child(even){
+		        background: #dae5f4;
+	        } */
         var dataValue = getDataRequetTrie(".num_fact_trie", "NUM_FACT");
 
         $.ajax({
@@ -1022,7 +1124,6 @@
 
                 var valiny = JSON.parse(response);
                 var resultat = getDataFacture(response);
-
                 if (valiny["entiter"] == "OF") {
                     $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_brouillon').empty().append(resultat["html_inactif"]);
@@ -1033,7 +1134,9 @@
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
-
+                var arrow = valiny["arrow"];
+                $('.num_has_arrow').append(arrow);
+                $('.num_fact_trie').parent().click();
             }
             , error: function(error) {
                 console.log(error)
@@ -1047,7 +1150,7 @@
     $(".nom_entiter_trie").on('click', function(e) {
         var valiny = $(this).val();
 
-        if (
+        /* if (
             $(".nom_entiter_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -1087,14 +1190,14 @@
             .find(".icon_trie")
             .removeClass("color-text-trie")
             .removeClass("fa-arrow-up")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
 
         if ($(".nom_entiter_trie").val() == 0) {
             $(".nom_entiter_trie").val(1);
         } else {
             $(".nom_entiter_trie").val(0);
         }
-
+        $('.icon_trie').remove();
         var dataValue = getDataRequetTrie(".nom_entiter_trie", "ENTITE");
 
         $.ajax({
@@ -1117,7 +1220,9 @@
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
-
+                var arrow = valiny["arrow"];
+                $('.nom_has_arrow').append(arrow);
+                $('.nom_entiter_trie').parent().click();
 
             }
             , error: function(error) {
@@ -1131,7 +1236,7 @@
     $(".dte_reglement_trie").on('click', function(e) {
         var valiny = $(this).val();
 
-        if (
+        /* if (
             $(".dte_reglement_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -1172,13 +1277,14 @@
             .find(".icon_trie")
             .removeClass("fa-arrow-up")
             .removeClass("color-text-trie")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
 
         if ($(".dte_reglement_trie").val() == 0) {
             $(".dte_reglement_trie").val(1);
         } else {
             $(".dte_reglement_trie").val(0);
         }
+        $('.icon_trie').remove();
 
         var dataValue = getDataRequetTrie(".dte_reglement_trie", "DUE_DTE");
 
@@ -1202,7 +1308,9 @@
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
-
+                var arrow = valiny["arrow"];
+                $('.dte_has_arrow').append(arrow);
+                $('.dte_reglement_trie').parent().click();
             }
             , error: function(error) {
                 console.log(error)
@@ -1215,7 +1323,7 @@
     $(".total_payer_trie").on('click', function(e) {
         var valiny = $(this).val();
 
-        if (
+        /* if (
             $(".total_payer_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -1255,22 +1363,21 @@
             .find(".icon_trie")
             .removeClass("fa-arrow-up")
             .removeClass("color-text-trie")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
         if ($(".total_payer_trie").val() == 0) {
             $(".total_payer_trie").val(1);
         } else {
             $(".total_payer_trie").val(0);
         }
+        $('.icon_trie').remove();
 
         var dataValue = getDataRequetTrie(".total_payer_trie", "TOTAL_SOLDE");
-
         $.ajax({
             method: "GET"
             , url: "{{route('facture.trie')}}"
             , data: dataValue
             , dataType: "html"
             , success: function(response) {
-
                 var valiny = JSON.parse(response);
                 var resultat = getDataFacture(response);
                 if (valiny["entiter"] == "OF") {
@@ -1283,6 +1390,10 @@
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
+                var arrow = valiny["arrow"];
+                $('.total_has_arrow').append(arrow);
+                $('.total_payer_trie').parent().parent().click();
+                
             }
             , error: function(error) {
                 console.log(error)
@@ -1295,7 +1406,7 @@
     $(".rest_payer_trie").on('click', function(e) {
         var valiny = $(this).val();
 
-        if (
+        /* if (
             $(".rest_payer_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -1335,12 +1446,13 @@
             .find(".icon_trie")
             .removeClass("color-text-trie")
             .removeClass("fa-arrow-up")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
         if ($(".rest_payer_trie").val() == 0) {
             $(".rest_payer_trie").val(1);
         } else {
             $(".rest_payer_trie").val(0);
         }
+        $('.icon_trie').remove();
 
         var dataValue = getDataRequetTrie(".rest_payer_trie", "RESTE_SOLDE");
 
@@ -1363,7 +1475,9 @@
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
                 }
-
+                var arrow = valiny["arrow"];
+                $('.rest_has_arrow').append(arrow);
+                $('.rest_payer_trie').parent().parent().click();
             }
             , error: function(error) {
                 console.log(error)
@@ -1371,6 +1485,27 @@
         });
     });
 
+ /*--------------------------------------------- Ajout Couleur colonne -----------------------------------------------------------------------*/
 
+$('.facture_table th').on('click', function(e) {
+        var th = this.cellIndex;
+        $('.facture_table td').removeClass("colored_td");
+        $('.facture_table td').removeAttr("style");
+        $('.facture_table th').removeClass("colored_td");
+        $('.facture_table th').removeAttr("style");
+        
+        $('.facture_table tr').each(function() {
+            /* $('.facture_table tr').removeProp("background-color"); */
+            var self = $(this);
+            self.find('th:eq(' + th + ')').addClass("colored_td");
+            self.find('td:eq(' + th + ')').addClass("colored_td");
+            self.find('th:eq(' + th + ')').css('background-color', '#cccccc');
+            self.find('td:eq(' + th + ')').css('background-color', '#cccccc');
+        });
+        $('.inner td').removeClass("colored_td");
+        $('.inner td').removeAttr("style");
+        $('.inner th').removeClass("colored_td");
+        $('.inner th').removeAttr("style");
+});
 
 </script>

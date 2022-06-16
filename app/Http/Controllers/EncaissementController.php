@@ -53,14 +53,13 @@ class EncaissementController extends Controller
     {
         // encaissement::validation($request);
 
-
+      
         $fonct = new FonctionGenerique();
         $resp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id]);
         $cfp_id = $resp->cfp_id;
 
         DB::beginTransaction();
         try {
-
             encaissement::insert($request, $cfp_id, $resp->id, $resp->nom_resp_cfp . " " . $resp->prenom_resp_cfp);
             DB::commit();
             // return back()->with('encaissement_ok', 'Paiement réussi');
