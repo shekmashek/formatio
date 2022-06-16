@@ -434,6 +434,17 @@
         });
     });
 
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        let lien = ($(e.target).attr('href'));
+        $('#myTab a.active').removeClass('active');
+        ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
+        ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
+        localStorage.setItem('indiceCfp', lien);
+    });
+    let Tabactive = localStorage.getItem('indiceCfp');
+    if(Tabactive){
+        $('#myTab a[href="' + Tabactive + '"]').tab('show');
+    }
 
 
 </script>
