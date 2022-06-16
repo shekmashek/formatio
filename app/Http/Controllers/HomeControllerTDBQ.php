@@ -35,6 +35,7 @@ class HomeControllerTDBQ extends Controller
     public function index()
     {
         if(Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
             $user_id = User::where('id', Auth::user()->id)->value('id');
             $centre_fp = cfp::where('user_id', $user_id)->value('id');
             $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,

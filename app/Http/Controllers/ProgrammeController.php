@@ -30,13 +30,15 @@ class ProgrammeController extends Controller
         $programme = new programme();
         $id_user = Auth::user()->id;
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
+
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
             $programmes = DB::select('select * from cfpcours where cfp_id = ?', [$cfp_id]);
 
             if (count($programmes) <= 0) {
                 return view('admin.programme.guide');
             } else {
-                return view('admin.programme.programme', compact('programmes'));
+                return view('admin.programme.programme', compact('programmes','domaine'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -114,6 +116,13 @@ class ProgrammeController extends Controller
         return response()->json($cours_prog);
     }
 
+    public function load_cours_programme(Request $request)
+    {
+        $id = $request->Id;
+        $cours_prog = DB::select('select cours_id,programme_id,titre,titre_cours from v_cours_programme where programme_id = ?', [$id]);
+        return response()->json(['cours'=>$cours_prog]);
+    }
+
     public function info_data(Request $req)
     {
         $data = array();
@@ -159,6 +168,7 @@ class ProgrammeController extends Controller
     {
         $id = request('id');
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+        $domaine = $this->fonct->findAll("domaines");
 
         $categorie = DB::select('select * from formations where status = 1');
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id . ') as moduleExiste');
@@ -179,7 +189,7 @@ class ProgrammeController extends Controller
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
             $niveau = DB::select('select * from niveaux');
             // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
-            return view('admin.module.modif_programme', compact('devise','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id', 'competences','niveau'));
+            return view('admin.module.modif_programme', compact('devise','domaine','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id', 'competences','niveau'));
         } else return redirect()->route('liste_module');
     }
 

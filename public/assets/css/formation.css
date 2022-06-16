@@ -677,3 +677,7 @@ input{
 .text_minifier{
     font-size: .8rem;
 }
+
+.moins_avis{
+    visibility: hidden;
+}

@@ -5,6 +5,7 @@
 @section('content')
 <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/inputControlModules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modif_programme.css')}}">
 <div class="row navigation_detail">
     <div class="ps-5 col justify-content-between d-flex flex-row">

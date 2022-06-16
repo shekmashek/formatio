@@ -338,7 +338,7 @@ class AbonnementController extends Controller
 
             $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
-
+            $domaine = $this->fonct->findAll("domaines");
 
 
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->where('status','!=','En attente')->exists();
@@ -442,11 +442,11 @@ class AbonnementController extends Controller
                 $payant = $this->fonct->findWhere("v_type_abonnement_cfp",['cfp_id'],[$cfp_id]);
 
                 // $payant = abonnement_cfp::with('type_abonnement_role')->where('cfp_id', $cfp_id)->get();
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','facture', 'payant', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','facture', 'payant', 'typeAbonnement','domaine'));
             }
             if ($test_abonne == false) {
                 $gratuit = "Gratuite";
-                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','facture', 'gratuit', 'typeAbonnement'));
+                return view('superadmin.listeAbonnement', compact('facture_suivant','abonnement_actuel','annee','mois','facture', 'gratuit', 'typeAbonnement','domaine'));
             }
         }
         // else {
@@ -857,6 +857,7 @@ class AbonnementController extends Controller
             $cfp_id = $resp[0]->cfp_id;
             $cfp =$this->fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
             $facture =$this->fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
+            $domaine = $this->fonct->findAll("domaines");
 
             // if($facture!=null){
             //     $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
@@ -876,7 +877,7 @@ class AbonnementController extends Controller
             // }
             $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
             $dates_abonnement =$this->fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
-            return view('superadmin.detail_facture',compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','mode_paiements'));
+            return view('superadmin.detail_facture',compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','mode_paiements','domaine'));
         }
         if(Gate::allows('isReferent')){
             $cfp = null;
@@ -921,6 +922,7 @@ class AbonnementController extends Controller
         }
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp",["user_id"],[Auth::id()]);
+            $domaine = $this->fonct->findAll("domaines");
             $abonnement_id = DB::select('select * from v_abonnement_facture where type_abonnements_cfp_id = ? order by facture_id desc limit 1', [$id]);
                //on met à 0 l'activite pour desactiver l'offre
             DB::update('update abonnement_cfps set status = ?, activite = ?, type_arret = ? where id = ?',["Désactivé",0,"immediat",$abonnement_id[0]->abonnement_id]);
@@ -943,7 +945,7 @@ class AbonnementController extends Controller
             $cfp_id = $resp[0]->cfp_id;
             $cfp =$this->fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
             $facture =$this->fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
-
+            $domaine = $this->fonct->findAll("domaines");
             // if($facture!=null){
             //     $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
             //         //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
@@ -962,7 +964,7 @@ class AbonnementController extends Controller
             // }
             $dates_abonnement =$this->fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
             $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
-            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','mode_paiements'));
+            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','mode_paiements','domaine'));
 
         }
         if(Gate::allows('isReferent')){
@@ -1142,6 +1144,7 @@ class AbonnementController extends Controller
                 DB::update('update factures_abonnements set montant_facture = ? where id = ?', [$mont_reduit,$facture_id]);
             }
             if(Gate::allows('isCFP')){
+                $domaine = $this->fonct->findAll("domaines");
                 DB::update('update abonnement_cfps set coupon_id = ? where id = ?', [$test->id,$abonnemet_id]);
                 $factures = $this->fonct->findWhereMulitOne("factures_abonnements_cfp",["id"],[$facture_id]);
 

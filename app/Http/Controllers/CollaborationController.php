@@ -161,7 +161,7 @@ class CollaborationController extends Controller
         if (Gate::allows('isCFP')) {
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
-
+            $domaine = $this->fonct->findAll("domaines");
             $btn_suppr = DB::select('select * from v_groupe_projet_entreprise where cfp_id = ? and entreprise_id = ?', [$cfp_id, $req->etp_id]);
             if ($btn_suppr == NULL || $btn_suppr == "") {
                 return $this->collaboration->verify_annulation_collaboration_etp_cfp($cfp_id, $req->etp_id);
@@ -189,6 +189,7 @@ class CollaborationController extends Controller
     {
         $user_id = Auth::user()->id;
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
             $cfp_id = cfp::where('user_id', $user_id)->value('id');
             return $this->collaboration->verify_annulation_collaboration_cfp_formateur($cfp_id, $req->formateur_id);
         }
@@ -259,6 +260,7 @@ class CollaborationController extends Controller
         $user_id = Auth::user()->id;
         $forma = new formateur();
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
 
             $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ["cfp_id"], [$cfp_id]);
             $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ["cfp_id"], [$cfp_id]);
@@ -266,7 +268,7 @@ class CollaborationController extends Controller
 
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
             $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
-            return view('collaboration.collaboration_cfp', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
+            return view('collaboration.collaboration_cfp', compact('formateur', 'demmande_formateur', 'invitation_formateur','domaine'));
         }
     }
     /* public function collaboration_cfp_etp_et_formateur()
@@ -432,7 +434,7 @@ class CollaborationController extends Controller
                 DB::update("update demmande_etp_cfp set activiter = 1 where demmandeur_etp_id = ?", [$id]);
                 DB::commit();
             }
-            
+
         } catch (Exception $e) {
             DB::rollback();
             echo $e->getMessage();

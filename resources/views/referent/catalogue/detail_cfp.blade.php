@@ -481,9 +481,10 @@
                     </div>
                     @endforeach
                     @if(count($liste_avis_count) >= 10)
-                        <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$cfp->id}}">voir tous les avis</a></div>
+                        <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$cfp->id}}"><i class='bx bxs-chevron-down me-2'></i>afficher plus' avis</a></div>
                     @endif
                     <div class="newRowAvis"></div>
+                    <div class="text-end"><a class="btn btn_fermer moins_avis" role="button" role="button" ><i class='bx bxs-chevron-up me-2' ></i>afficher moins d'avis</a></div>
                 </div>
             </div>
         </div>
@@ -529,9 +530,11 @@
                         html +=     '<p>'+cfpData['liste_avis'][i]['commentaire']+'</p>';
                         html += '</div>';
                     }
+
                     $('.newRowAvis').empty();
                     $('.newRowAvis').append(html);
                     $('.plus_avis').hide();
+                    $('.moins_avis').css('visibility','visible');
                 }else{
                     alert('error');
                 }
@@ -541,6 +544,12 @@
                 console.log(error);
             },
         });
+    });
+
+    $('.moins_avis').click(function(){
+        $('.newRowAvis').empty();
+        $('.plus_avis').show();
+        $('.moins_avis').css('visibility','hidden');
     });
 </script>
 

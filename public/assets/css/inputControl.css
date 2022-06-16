@@ -11,7 +11,7 @@ label.in-non-modal span {
     /* opacity: 0.5; */
     z-index: 100;
     transition: 0.3s;
-    
+
 }
 
 .in-non-modal{
@@ -29,8 +29,8 @@ label.in-non-modal span {
     padding: 2px 1rem;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #888787;
-    border: 1px solid #bdbdbd;
+    color: #637381;
+    border: 1px solid #28a7eb;
     font-size: 16px;
     letter-spacing: 1px;
     height: 40px !important;
@@ -41,7 +41,7 @@ label.in-non-modal span {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border-bottom: 2px solid #7635dc !important;
+    border-bottom: 2px solid #28a7eb !important;
     outline-width: 0 !important;
 }
 
@@ -50,7 +50,7 @@ label.in-non-modal span {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border-bottom: 2px solid #7635dc !important;
+    border-bottom: 2px solid #28a7eb !important;
     outline-width: 0 !important;
 }
 
@@ -74,7 +74,7 @@ label.in-non-modal span {
     transform: translate3d(0, -100%, 0);
     opacity: 1;
     background-color: white;
-    color: #7635dc;
+    color: #28a7eb;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
@@ -83,8 +83,8 @@ label.in-non-modal span {
     padding: 10px 1rem;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #888787;
-    border: 1px solid #bdbdbd;
+    color: #637381;
+    border: 1px solid #28a7eb;
     font-size: 0.850rem;
     letter-spacing: 1px;
     height: 200px;
@@ -95,7 +95,7 @@ label.in-non-modal span {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: 2px solid #7635dc !important;
+    border: 2px solid #28a7eb !important;
     outline-width: 0 !important;
 }
 
@@ -120,7 +120,7 @@ label.in-non-modal span {
     transform: translate3d(0, -100%, 0);
     opacity: 1;
     background-color: white;
-    color: #7635dc;
+    color: #28a7eb;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }

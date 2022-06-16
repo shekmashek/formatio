@@ -74,6 +74,7 @@ class ProfController extends Controller
         $user_id = Auth::user()->id;
         $forma = new formateur();
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
 
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$user_id])->cfp_id;
@@ -95,12 +96,12 @@ class ProfController extends Controller
 
             // $cfp_formateur = DB::select('select * from v_demmande_cfp_formateur where cfp_id = ?', [$cfp_id]);
 
-            return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
+            return view('admin.formateur.formateur', compact('formateur','domaine', 'demmande_formateur', 'invitation_formateur'));
 
             if (count($formateur) <= 0) {
                 return view('admin.formateur.guide');
             } else {
-                return view('admin.formateur.formateur', compact('formateur'));
+                return view('admin.formateur.formateur', compact('formateur','domaine'));
             }
         } else {
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
