@@ -329,7 +329,7 @@
         </div>
 
         {{-- filtres --}}
-        <div class="filtrer mt-3">
+        {{-- <div class="filtrer mt-3">
             <div class="row">
                 <div class="col">
                     <p class="m-0">Filter votre Agenda</p>
@@ -378,8 +378,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div> --}}
+{{-- end-filtres --}}
 
     </div>
 </body>
@@ -419,6 +419,7 @@
                     var detail_id = userDataDetail['detail_id'];
 
 
+                    // évènements du calendrier
                     for (var $i = 0; $i < details.length; $i++) {
 
                         event.push({
@@ -713,20 +714,21 @@
                                     }
                                 });
                         },
-                        eventDidMount: function(info) {
-                            var tooltip = new Tooltip(info.el, {
-                                title: "test",
-                                placement: 'top',
-                                trigger: 'hover',
-                                container: 'body'
-                            });
-                        },
+                        // eventDidMount: function(info) {
+                        //     var tooltip = new Tooltip(info.el, {
+                        //         title: "test",
+                        //         placement: 'top',
+                        //         trigger: 'hover',
+                        //         container: 'body'
+                        //     });
+                        // },
                         events: event
                     });
 
-
+                    
                     calendar.render();
-
+                    
+                    // end-calendar
                 }
                 , error: function(error) {
                     console.log(error)

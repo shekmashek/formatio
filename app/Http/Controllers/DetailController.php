@@ -34,6 +34,8 @@ class DetailController extends Controller
         $this->fonct = new FonctionGenerique();
         $this->groupes = new groupe();
     }
+
+    // calendrier coté cfp
     public function calendrier(){
         
         $domaines = $this->fonct->findAll('domaines');
@@ -262,7 +264,7 @@ class DetailController extends Controller
     }
 
 
-    // details lors du clic sur l'event dans le calendrier
+    // details sur l'event dans le calendrier
     public function informationModule(Request $request)
     {
         $id = $request->Id;
