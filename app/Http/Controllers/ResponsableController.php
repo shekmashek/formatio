@@ -306,10 +306,11 @@ class ResponsableController extends Controller
             return view('admin.responsable.profilResponsables', compact('refs','entreprise','projets_counts','cfp_counts','modulesInternes_counts','projetInter_counts','projetIntra_counts','stagiaires_counts','chef_departements_counts'));
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
 
             $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
 
-            return view('admin.responsable.profilResponsable', compact('refs'));
+            return view('admin.responsable.profilResponsable', compact('refs','domaine'));
         }
     }
 
@@ -343,6 +344,7 @@ class ResponsableController extends Controller
         }
          if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') || Gate::allows('isCFP')) {
             $refs = $fonct->findWhereMulitOne("responsables",["id"],[$id]);
+            $domaine = $this->fonct->findAll("domaines");
 
             $entreprise = entreprise::with('Secteur')->findOrFail($refs->entreprise_id);
             // $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$refs->entreprise_id]);
@@ -353,7 +355,7 @@ class ResponsableController extends Controller
 
             $responsables=responsable::where('entreprise_id',$refs->entreprise_id)->where('prioriter',0)->get();
 
-           return view('admin.responsable.profile_entreprise', compact('refs','entreprise','branche','responsables','abonnement'));
+           return view('admin.responsable.profile_entreprise', compact('refs','domaine','entreprise','branche','responsables','abonnement'));
         }
     }
     public function show($id)

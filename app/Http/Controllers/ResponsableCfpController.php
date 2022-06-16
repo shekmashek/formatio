@@ -37,6 +37,7 @@ class ResponsableCfpController extends Controller
         $fonct = new FonctionGenerique();
 
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
             if ($id!=null) {
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
             }
@@ -54,12 +55,12 @@ class ResponsableCfpController extends Controller
                 $horaire = $fonct->findWhere("v_horaire_cfp",["cfp_id"],[$refs->cfp_id]);
                 $reseaux_sociaux = $fonct->findWhere("reseaux_sociaux",["cfp_id"],[$refs->cfp_id]);
             }
-            return view('cfp.responsable_cfp.profile', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts'));
+            return view('cfp.responsable_cfp.profile', compact('refs','domaine','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts'));
 
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
             $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
-            return view('cfp.responsable_cfp.profile', compact('refs'));
+            return view('cfp.responsable_cfp.profile', compact('refs','domaine'));
 
         }
 
@@ -71,9 +72,10 @@ class ResponsableCfpController extends Controller
         $fonct = new FonctionGenerique();
 
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
             if ($id != null) {
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["id"],[$id]);
-                return view('cfp.responsable_cfp.affParametre_cfp', compact('refs'));
+                return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','domaine'));
             }
             else{
                 $refs = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[Auth::user()->id]);
@@ -91,7 +93,7 @@ class ResponsableCfpController extends Controller
                 $tva = DB::select('select * from taxes where id = ?', [1]);
             }
             // dd($cfps);
-            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts','tva'));
+            return view('cfp.responsable_cfp.affParametre_cfp', compact('refs','domaine','cfps','horaire','reseaux_sociaux','modules_counts','projets_counts','sessions_counts','factures_counts','projetInter_counts','projetIntra_counts','formateurs_counts','entreprises_counts','tva'));
 
         }
         if (Gate::allows('isSuperAdmin') || Gate::allows('isAdmin') ) {
@@ -117,11 +119,12 @@ class ResponsableCfpController extends Controller
         $user_id = Auth::id();
         $fonct = new FonctionGenerique();
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
             $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
             // $responsable = DB::select("select * from responsables_cfp where cfp_id=? and id!=?", [$resp_cfp_connecter->cfp_id, $resp_cfp_connecter->id]);
             $responsable = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where cfp_id=? and id=?', [$resp_cfp_connecter->cfp_id, $resp_cfp_connecter->id]);
             // dd($responsable);
-            return view('cfp.responsable_cfp.nouveau_responsable', compact('resp_cfp_connecter', 'responsable'));
+            return view('cfp.responsable_cfp.nouveau_responsable', compact('resp_cfp_connecter','domaine', 'responsable'));
         }
     }
 
@@ -136,12 +139,14 @@ class ResponsableCfpController extends Controller
         $fonct = new FonctionGenerique();
         $user_id = Auth::id();
         if (Gate::allows('isCFP')){
+            $domaine = $this->fonct->findAll("domaines");
+
             $resp_connecte = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp_connecte->cfp_id;
             $cfp = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where cfp_id = ?' , [$cfp_id]);
             $cfpPrincipale = DB::select('select * from responsables_cfp where prioriter = 1');
             // $cfpPrincipal = DB::select('select * from responsables_cfp where activiter = 0');
-            return view('cfp.responsable_cfp.liste_equipe_admin_cfp', compact('cfp','resp_connecte','cfpPrincipale'));
+            return view('cfp.responsable_cfp.liste_equipe_admin_cfp', compact('cfp','domaine','resp_connecte','cfpPrincipale'));
         }
     }
 
@@ -163,6 +168,7 @@ class ResponsableCfpController extends Controller
 
         $user_id = Auth::id();
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
             $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
             /**On doit verifier le dernier abonnement de l'of pour pouvoir limité l'utilisateur à ajouter */
             $nb_referent = $this->fonct->findWhere("responsables_cfp",["cfp_id"],[$resp_cfp_connecter->cfp_id]);
@@ -209,7 +215,7 @@ class ResponsableCfpController extends Controller
                                 try {
                                     $fonct->insert_role_user($use_id_inserer,"7",true); // cfp
                                     DB::commit();
-                                } catch (Exception $e) {
+                                } catch (\Exception $e) {
                                     DB::rollback();
                                     echo $e->getMessage();
                                 }

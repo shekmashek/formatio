@@ -3,7 +3,7 @@
     padding: 2px 1rem;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #28a7eb;
+    color: #637381;
     border: 1px solid #28a7eb;
     font-size: 0.850rem;
     letter-spacing: 1px;
@@ -28,7 +28,7 @@ textarea:focus::placeholder{
     padding: 10px 1rem;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #28a7eb;
+    color: #637381;
     border: 1px solid #28a7eb;
     font-size: 0.850rem;
     letter-spacing: 1px;

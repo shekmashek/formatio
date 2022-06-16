@@ -539,6 +539,7 @@ Route::get('/create_programme', 'ProgrammeController@create')->name('create_prog
 Route::get('modif_programmes/{id}', 'ProgrammeController@ajout_programme')->name('modif_programmes');
 Route::get('suppression_programme', 'ProgrammeController@suppre_programme')->name('suppression_programme');
 Route::get('editer_programme', 'ProgrammeController@edit')->name('editer_programme');
+Route::get('load_cours_programme', 'ProgrammeController@load_cours_programme')->name('load_cours_programme');
 
 
 // route liste equipe adminb pour O.F

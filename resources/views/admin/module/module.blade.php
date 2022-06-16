@@ -566,7 +566,7 @@
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
                                                         <button type="button" class="btn btn_annuler" data-bs-dismiss="modal" id="{{$mod->module_id}}"><i class='bx bx-x me-1'></i>Non</button>
-                                                        <button type="button" class="btn btn_enregistrer suppression_module" ><i class='bx bx-check me-1'></i>Oui</button>
+                                                        <button type="button" class="btn btn_enregistrer suppression_module" id="{{$mod->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -603,7 +603,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane show fade" id="publies">
+            <div class="tab-pane show fade active" id="publies">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
                         <div class="col-12">

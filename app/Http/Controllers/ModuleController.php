@@ -50,6 +50,7 @@ class ModuleController extends Controller
 
         // $cfp_id = cfp::where('user_id', $id_user)->value('id');
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
             $cfp_id  = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
             $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
@@ -68,7 +69,7 @@ class ModuleController extends Controller
                 return view('admin.module.guide');
             } else {
                 // return view('admin.module.module', compact('devise','infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
-                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp', 'mod_hors_ligne','domaine','liste'));
+                return view('admin.module.module', compact('devise','domaine','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp', 'mod_hors_ligne','domaine','liste'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -186,7 +187,7 @@ class ModuleController extends Controller
     public function update_new(){
         $fonct = new FonctionGenerique();
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-
+        $domaine = $fonct->findAll("domaines");
         $id = DB::select('select id from modules  order by id desc limit 1');
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id[0]->id . ') as moduleExiste');
         // dd($id,$test);
@@ -209,7 +210,7 @@ class ModuleController extends Controller
             $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id[0]->id]);
             $niveau = DB::select('select * from niveaux');
             // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id[0]->id]);
-            return view('admin.module.nouveauModule_new', compact('devise','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'id', 'competences','niveau'));
+            return view('admin.module.nouveauModule_new', compact('devise','infos', 'cours','domaine', 'programmes', 'nb_avis', 'liste_avis', 'id', 'competences','niveau'));
         } else return redirect()->route('liste_module');
     }
 
@@ -314,6 +315,8 @@ class ModuleController extends Controller
         $id = $request->id;
         $fonct = new FonctionGenerique();
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
+
             $id_user = Auth::user()->id;
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
 
@@ -329,7 +332,7 @@ class ModuleController extends Controller
 
         }
 
-        return view('admin.module.modif_module', compact('devise','module_en_modif', 'niveau'));
+        return view('admin.module.modif_module', compact('devise','domaine','module_en_modif', 'niveau'));
     }
 
     public function modifier_mod_prog(Request $request)
@@ -338,6 +341,7 @@ class ModuleController extends Controller
 
         $id = $request->id;
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
             $id_user = Auth::user()->id;
             $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
             // $cfp_id = cfp::where('user_id', $id_user)->value('id');
@@ -350,7 +354,7 @@ class ModuleController extends Controller
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         }
 
-        return view('admin.module.modif_module_prog', compact('devise','module_en_modif', 'niveau'));
+        return view('admin.module.modif_module_prog', compact('devise','domaine','module_en_modif', 'niveau'));
     }
 
     public function modifier_mod_publies(Request $request)
@@ -360,6 +364,8 @@ class ModuleController extends Controller
         $id = $request->id;
         if (Gate::allows('isCFP')) {
             $id_user = Auth::user()->id;
+            $domaine = $this->fonct->findAll("domaines");
+
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
 
             $niveau = Niveau::all();
@@ -370,7 +376,7 @@ class ModuleController extends Controller
             $module_en_modif = DB::select('select * from moduleformation where module_id = ?', [$id]);
         }
 
-        return view('admin.module.modif_module_publies', compact('devise','module_en_modif', 'niveau'));
+        return view('admin.module.modif_module_publies', compact('devise','domaine','module_en_modif', 'niveau'));
     }
 
     public function update(Request $request)

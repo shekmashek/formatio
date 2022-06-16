@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlModules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/modif_programme.css')}}">
-<div class="row navigation_detail mb-5">
+<div class="row navigation_detail mb-2">
     <div class="ps-5 col justify-content-between d-flex flex-row">
         <div>
             <ul class="d-flex flex-row">
@@ -21,7 +21,7 @@
             <a href="{{route('annuler_new_mod',$infos[0]->module_id)}}" class="text-primary retour_back btn_annuler"><i class='bx bx-x me-1'></i>annuler</a>
             <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
             href="{{route('liste_module')}}">
-            <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
+            <span class="btn_precedent text-center hors_ligne_redirect"><i class='bx bx-check-double me-1'></i>Enregistrer</span>
             </a>
         </div>
     </div>
@@ -30,7 +30,7 @@
 <div id="popup">
     Bonjour, pour pouvoir créer votre module de formation, veuillez modifier le template ci-dessous afin de l'enregistrer. <br>
     Ceci est un aperçu de présentation de votre module quand il sera mis en ligne. Pour annuler cette création cliquer <a href="{{route('annuler_new_mod',$infos[0]->module_id)}}" class="text-primary retour_back">ici.</a><br>
-    Si vous ne modifier pas vos informations, il sera présenter comme tel. Veuillez à bien vérifier 👀 !
+    Si vous ne modifier pas vos informations, il sera présenter comme tel. Veuillez à bien vérifier 👀 ! Il sera visible dans l'onglet hors ligne.
 </div>
 <section class="detail__formation">
     <div class="container py-4 bg-light">
@@ -47,7 +47,7 @@
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
                         <span class="text_black"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
                         <div class="col">
-                            <span> Nouveau niveau de formation &nbsp;<i class="bx bx-plus-medical bx_ajouter" onclick="changer_niveau()"></i></span>
+                            <p class="mb-0"> Nouveau niveau de formation &nbsp;<i class="bx bx-plus-medical bx_ajouter" onclick="changer_niveau()"></i></p>
                         </div>
                     </div>
 
@@ -82,15 +82,13 @@
                 </div>
                 <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
                 <div class="col"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                <div class="col" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @if($res->prix_groupe != null)
-                    <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                    <div class="col" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
-
                 <div class="col">
                     <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
                 </div>
-
             </div>
         </div>
         <div class="row detail__formation__detail justify-content-space-between py-5 px-5 mb-5">
@@ -98,7 +96,7 @@
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i>Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3>
+                <h4 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i>Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h4>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
                         {{-- <p>@php echo html_entity_decode($res->objectif) @endphp</p> --}}
@@ -108,7 +106,7 @@
 
                 {{-- section 1 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pt-3 pb-3"><i class='bx bx-user encre__icon me-2'></i>A qui s'adresse cette formation?</h3>
+                <h4 class="pt-3 pb-3"><i class='bx bx-user encre__icon me-2'></i>A qui s'adresse cette formation?</h4>
                 <div class="row detail__formation__item__left__adresse pe-4">
                     <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
@@ -177,10 +175,16 @@
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row detail__formation__item__left">
                     <div class="d-flex flex-row">
-                        <h3 class="pt-3 pb-3"><i class='bx bx-list-minus encre__icon me-2'></i>Programme de la formation </h3>
+                        <h4 class="pt-3 pb-3"><i class='bx bx-list-minus encre__icon me-2'></i>Programme de la formation </h4>
                         <span class="aide_pogramme"><i class='bx bx-help-circle text-muted'></i>
                             <div class="text_aide">
-                                <p>Le programme doit décrire les différentes étapes que le stagiaire aura à parcourir pour atteindre son objectif en termes d’acquisition de compétences, de savoirs et de savoir-faire.</p>
+                                <p>Le programme doit décrire les différentes étapes que le stagiaire aura à parcourir pour atteindre son objectif en termes d’acquisition de compétences, de savoirs et de savoir-faire. <br>
+                                    Vous pouvez également ajouter de nouvelles programmes en cliquant sur <button type="button" class="btn_nouveau btn">
+                                        <i class='bx bx-plus-medical '></i>
+                                        Ajouter un section
+                                    </button>
+                                    <br>Vous pouvez également modifier les existant en faisant un survol.
+                                </p>
                             </div>
                         </span>
                     </div>
@@ -193,7 +197,7 @@
                                 <div class="form-row d-flex flex-row">
                                     <input type="hidden" value="{{$id[0]->id}}" name="id_module">
                                     <button type="submit" class="btn btn_enregistrer me-4" id="nouveau_prg"
-                                        style="display:none"><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                        style="display:none"><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                     <button type="button" id="addProg" class="btn_nouveau btn">
                                         <i class='bx bx-plus-medical '></i>
                                         Ajouter un section
@@ -213,7 +217,7 @@
                                             <div role="button" data-bs-toggle="modal" class="ajouter_cours me-2" data-bs-target="#Modal_cours_{{$prgc->id}}" id="{{$prgc->id}}" title="ajouter une nouvelle point">
                                                 <i class='bx bx-plus-medical bx_ajouter'></i>
                                             </div>
-                                            <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" data-bs-target="#Modal_{{$prgc->id}}" id="{{$prgc->id}}" title="modifier le programme">
+                                            <div role="button" data-bs-toggle="modal" class="modifier_cours me-2"  id="{{$prgc->id}}" title="modifier le programme">
                                                 <i class='bx bx-edit bx_modifier'></i>
                                             </div>
                                             <div class="suppression_programme" title="Supprimer le programme" id="{{$prgc->id}}">
@@ -250,33 +254,28 @@
                                                     <form action="{{route('update_prog_cours')}}" method="POST"
                                                         class="form_modif">
                                                         @csrf
-                                                        <input type="hidden" value="{{$prgc->id}}" name="id_prog">
+                                                        <div class="rowModifier"></div>
+                                                        {{-- <input type="hidden" value="{{$prgc->id}}" name="id_prog">
                                                         <div class="form-row">
                                                             <label for="" class="mb-2">Titre de Section</label>
-                                                            <input type="text" name="titre_prog"
-                                                                class="w-100  titre_{{$i}} input" value="{{$prgc->titre}}">
+                                                            <input type="text" name="titre_prog" class="w-100  titre_{{$i}} input" value="{{$prgc->titre}}">
                                                             <hr>
                                                             <label for="" class="mb-2">Liste des Points en Cours</label>
                                                             <div class="d-flex flex-column">
                                                                 <?php $j=0 ?>
                                                                 @foreach ($cours as $c)
-                                                                @if($c->programme_id == $prgc->id)
-                                                                <input type="text"
-                                                                    name="cours_{{$prgc->id}}_{{$c->cours_id}}"
-                                                                    class="w-100 cours_{{$j}} input mb-2"
-                                                                    value="{{$c->titre_cours}}" required>
-                                                                <input type="hidden"
-                                                                    name="id_cours_{{$prgc->id}}_{{$c->cours_id}}"
-                                                                    value="{{$c->cours_id}}">
-                                                                <?php $j++ ?>
-                                                                @endif
+                                                                    @if($c->programme_id == $prgc->id)
+                                                                    <input type="text" name="cours_{{$prgc->id}}_{{$c->cours_id}}" class="w-100 cours_{{$j}} input mb-2" value="{{$c->titre_cours}}" required>
+                                                                    <input type="hidden" name="id_cours_{{$prgc->id}}_{{$c->cours_id}}" value="{{$c->cours_id}}">
+                                                                    <?php $j++ ?>
+                                                                    @endif
                                                                 @endforeach
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
-                                                    <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                                    <button type="button" class="btn btn_fermer remove_input" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                                 </div>
                                                 </form>
                                             </div>
@@ -320,7 +319,7 @@
                                                     </div>
                                                     <div class="modal-footer justify-content-center">
                                                         <button type="button" class="btn btn_fermer" id="fermerCours" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -354,7 +353,7 @@
                         @foreach ($competences as $comp)
                         <div class="row text-start g-0 px-1" id="competence_{{$comp->id}}">
                             <div class="col-1">
-                                <i class="bx bx-check check_comp"></i>&nbsp;
+                                <i class="bx bx-check-double check_comp"></i>&nbsp;
                             </div>
                             <div class="col-11 mb-3">
                                 <span class="text-capitalize">{{$comp->titre_competence}}</span>
@@ -423,7 +422,7 @@
                                     </div>
                                     <div class="modal-footer justify-content-center">
                                         <button type="button" class="btn btn_fermer" id="fermerComp" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                     </div>
                                 </form>
                             </div>
@@ -485,7 +484,7 @@
                                     </div>
                                     <div class="modal-footer justify-content-center">
                                         <button type="button" class="btn btn_fermer" id="fermer4" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                     </div>
                                 </form>
                             </div>
@@ -513,7 +512,7 @@
                                         </div>
                                         <div class="text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -538,7 +537,7 @@
                                         </div>
                                         <div class="text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -613,7 +612,7 @@
                                         </div>
                                         <div class="text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -641,7 +640,7 @@
                                         </div>
                                         <div class="mt-3 text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -668,7 +667,7 @@
                                         </div>
                                         <div class="mt-3 text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -695,7 +694,7 @@
                                         </div>
                                         <div class="mt-3 text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -722,7 +721,7 @@
                                         </div>
                                         <div class="mt-3 text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -749,7 +748,7 @@
                                         </div>
                                         <div class="mt-3 text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -776,7 +775,7 @@
                                         </div>
                                         <div class="mt-3 text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -810,8 +809,8 @@
                                         <div id="mydiv" class="text-center px-2 mt-3">
                                             <form action="{{route('enregistrer_niveau')}}" method="POST">
                                                 @csrf
-                                                <input type="text" class="form-control mb-2 input" name="niveau" placeholder="Niveau" required>
-                                                <button type="submit" class="btn btn_enregistrer mb-3" ><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                                <input type="text" class="form-control mb-2 input" name="niveau" placeholder="Nouveau Niveau" required>
+                                                <button type="submit" class="btn btn_enregistrer mb-3" ><i class='bx bx-check-double me-1'></i>Enregistrer</button>
 
                                             </form>
                                         </div>
@@ -832,6 +831,56 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
+
+    $('.modifier_cours').on('click',function(e){
+        let id = $(e.target).closest('.modifier_cours').attr("id");
+        $.ajax({
+            type: "get"
+            , url: "{{route('load_cours_programme')}}"
+            ,dataType: "json"
+            , data: {
+                Id: id
+            }
+            , success: function(response) {
+                let userData = response;
+                console.log(userData);
+                let html = '';
+                if (userData['cours'] != null || undefined) {
+                    // for (let $l = 0; $l < userData['cours'].length; $l++) {
+                        html += '<input type="hidden" value="'+userData['cours'][0]['programme_id']+'" name="id_prog">';
+                        html += '<div class="form-row">';
+                        html +=     '<label for="" class="mb-2">Titre de Section</label>';
+                        html +=     '<input type="text" name="titre_prog" class="w-100  titre_{{$i}} input" value="'+userData['cours'][0]['titre']+'">';
+                        html +=     '<hr>'
+                        html +=     '<label for="" class="mb-2">Liste des Points en Cours</label>';
+
+                        html +=     '<div class="d-flex flex-column">'
+                        html +=         '<?php $j=0 ?>';
+                                        for (let $k = 0; $k < userData['cours'].length; $k++) {
+                                            if (userData['cours'][0]['programme_id'] == userData['cours'][$k]['programme_id']) {
+                        html +=                 '<input type="text" name="cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" class="w-100 cours_'+$k+' input mb-2" value="'+userData['cours'][$k]['titre_cours']+'" required>';
+                        html +=                 '<input type="hidden" name="id_cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" value="'+userData['cours'][$k]['cours_id']+'">';
+                                            }
+                                        }
+                        html +=     '</div>'
+                        html += '</div>'
+                    // }
+                }else{
+                    alert('error');
+                }
+                $('.rowModifier').empty();
+                $('.rowModifier').append(html);
+                $('#Modal_'+ id).modal('show');
+
+            }
+            , error: function(error) {
+                console.log(JSON.parse(error));
+                // console.log(JSON.stringify(error));
+            }
+        });
+    });
+
+
     $('.retour_back').on('click', function (e) {
         localStorage.setItem('ActiveTabMod', '#publies');
     });
@@ -973,6 +1022,10 @@ function changer_niveau() {
         $('.dismis_buton').show();
         $("#ouvrir_flottant").modal("show");
 }
+
+$('.hors_ligne_redirect').on('click', function (e) {
+        localStorage.setItem('ActiveTabMod', '#hors_ligne');
+    });
 
 // function ajouter_niveau() {
 //     var x = document.getElementById("mydiv");

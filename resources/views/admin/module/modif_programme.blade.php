@@ -88,7 +88,7 @@
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i>Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3>
+                <h4 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i>Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h4>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
                         {{-- <p>@php echo html_entity_decode($res->objectif) @endphp</p> --}}
@@ -98,7 +98,7 @@
 
                 {{-- section 1 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pt-3 pb-3"><i class='bx bx-user encre__icon me-2'></i>A qui s'adresse cette formation?</h3>
+                <h4 class="pt-3 pb-3"><i class='bx bx-user encre__icon me-2'></i>A qui s'adresse cette formation?</h4>
                 <div class="row detail__formation__item__left__adresse pe-4">
                     <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
@@ -166,7 +166,7 @@
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
                 <div class="row detail__formation__item__left">
-                    <h3 class="pt-3 pb-3"><i class='bx bx-list-minus encre__icon me-2'></i>Programme de la formation </h3>
+                    <h4 class="pt-3 pb-3"><i class='bx bx-list-minus encre__icon me-2'></i>Programme de la formation </h4>
                     <div class="col-lg-12">
                         <div class="row detail__formation__item__left">
                             <form action="{{route('insert_prog_cours')}}" method="POST" class="w-100">
@@ -195,7 +195,7 @@
                                             <div role="button" data-bs-toggle="modal" class="ajouter_cours me-2" data-bs-target="#Modal_cours_{{$prgc->id}}" id="{{$prgc->id}}" title="ajouter une nouvelle point">
                                                 <i class='bx bx-plus-medical bx_ajouter'></i>
                                             </div>
-                                            <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" data-bs-target="#Modal_{{$prgc->id}}" id="{{$prgc->id}}" title="modifier le programme">
+                                            <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" id="{{$prgc->id}}" title="modifier le programme">
                                                 <i class='bx bx-edit bx_modifier'></i>
                                             </div>
                                             <div class="suppression_programme" title="Supprimer le programme" id="{{$prgc->id}}">
@@ -232,7 +232,8 @@
                                                     <form action="{{route('update_prog_cours')}}" method="POST"
                                                         class="form_modif">
                                                         @csrf
-                                                        <input type="hidden" value="{{$prgc->id}}" name="id_prog">
+                                                        <div class="rowModifier"></div>
+                                                        {{-- <input type="hidden" value="{{$prgc->id}}" name="id_prog">
                                                         <div class="form-row">
                                                             <label for="" class="mb-2">Titre de Section</label>
                                                             <input type="text" name="titre_prog"
@@ -254,7 +255,7 @@
                                                                 @endif
                                                                 @endforeach
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
                                                     <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
@@ -782,9 +783,8 @@
                                         <div id="mydiv" class="text-center px-2 mt-3">
                                             <form action="{{route('enregistrer_niveau')}}" method="POST">
                                                 @csrf
-                                                <input type="text" class="form-control mb-2 input" name="niveau" placeholder="Niveau" required>
+                                                <input type="text" class="form-control mb-2 input" name="niveau" placeholder="Nouveau Niveau" required>
                                                 <button type="submit" class="btn btn_enregistrer mb-3" ><i class='bx bx-check me-1'></i>Enregistrer</button>
-
                                             </form>
                                         </div>
                                     </div>
@@ -803,6 +803,54 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
+
+$('.modifier_cours').on('click',function(e){
+        let id = $(e.target).closest('.modifier_cours').attr("id");
+        $.ajax({
+            type: "get"
+            , url: "{{route('load_cours_programme')}}"
+            ,dataType: "json"
+            , data: {
+                Id: id
+            }
+            , success: function(response) {
+                let userData = response;
+                console.log(userData);
+                let html = '';
+                if (userData['cours'] != null || undefined) {
+                    // for (let $l = 0; $l < userData['cours'].length; $l++) {
+                        html += '<input type="hidden" value="'+userData['cours'][0]['programme_id']+'" name="id_prog">';
+                        html += '<div class="form-row">';
+                        html +=     '<label for="" class="mb-2">Titre de Section</label>';
+                        html +=     '<input type="text" name="titre_prog" class="w-100  titre_{{$i}} input" value="'+userData['cours'][0]['titre']+'">';
+                        html +=     '<hr>'
+                        html +=     '<label for="" class="mb-2">Liste des Points en Cours</label>';
+
+                        html +=     '<div class="d-flex flex-column">'
+                        html +=         '<?php $j=0 ?>';
+                                        for (let $k = 0; $k < userData['cours'].length; $k++) {
+                                            if (userData['cours'][0]['programme_id'] == userData['cours'][$k]['programme_id']) {
+                        html +=                 '<input type="text" name="cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" class="w-100 cours_'+$k+' input mb-2" value="'+userData['cours'][$k]['titre_cours']+'" required>';
+                        html +=                 '<input type="hidden" name="id_cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" value="'+userData['cours'][$k]['cours_id']+'">';
+                                            }
+                                        }
+                        html +=     '</div>'
+                        html += '</div>'
+                    // }
+                }else{
+                    alert('error');
+                }
+                $('.rowModifier').empty();
+                $('.rowModifier').append(html);
+                $('#Modal_'+ id).modal('show');
+
+            }
+            , error: function(error) {
+                console.log(JSON.parse(error));
+                // console.log(JSON.stringify(error));
+            }
+        });
+    });
     var toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
         ['code-block'],

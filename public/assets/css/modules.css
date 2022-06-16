@@ -569,7 +569,7 @@ font-size: 0.850rem;
     top: 4rem;
     background-color: white;
     z-index: 1;
-    padding: 1rem;
+    padding: .5rem;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
     text-transform: uppercase;
 }
@@ -842,7 +842,7 @@ font-size: 0.850rem;
         width: 0;
         height: 0;
         left: -8.5px;
-        bottom: -10.1px;
+        bottom: -10.05px;
         border-left: 53px solid transparent;
         border-right: 53px solid transparent;
         border-top: 10px solid #01b5af;
@@ -892,6 +892,7 @@ font-size: 0.850rem;
     text-align: center;
     padding: 15px;
     color: orange;
+    cursor: default;
 }
 
 #popup a:hover{
@@ -900,7 +901,7 @@ font-size: 0.850rem;
 
 .aide_pogramme {
     position: relative;
-    top: 15px;
+    top: 25px;
     padding: 5px;
     cursor: pointer;
 }
@@ -915,20 +916,7 @@ font-size: 0.850rem;
 
 .text_aide {
     visibility: hidden;
-    width: 300px;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    color: grey;
-    border-radius: 5px;
-    padding: 10px;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-}
-.text_aide {
-    visibility: hidden;
-    width: 300px;
+    width: 350px;
     background-color: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     color: grey;
@@ -958,25 +946,24 @@ font-size: 0.850rem;
     /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
 }
 
-/* .module_detail_objet .bx {
-    position: relative;
-    padding: 0.5rem;
-    color: #637381;
-    border: none;
-    border-radius: 25px;
-    margin-right: 0.5rem;
-} */
-
 .encre_icon{
-    color: #28a7eb;
+    /* color: #28a7eb; */
     font-size: 2rem;
     position: relative;
     top: 8px;
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
 .encre__icon{
-    color: #28a7eb;
+    /* color: #28a7eb; */
     font-size: 2.5rem;
     position: relative;
     top: 8px;
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }

@@ -25,7 +25,7 @@
     --bg_color_suivant: #9733EE;
     --bg_suivant_bx: #DA22FF;
     --bg_color_ajouter: #07cd19;
-    --bg_color_nouveau: #3CA55C;
+    --bg_color_nouveau: #077127;
     --txt_color:#ffffff;
 }
 
@@ -89,19 +89,23 @@
 .btn_nouveau{
     padding: var(--padding_button);
     color: var(--txt_color) !important;
-    background: var(--bg_color_nouveau);
+    /* background: var(--bg_color_nouveau); */
+    /* background-image: linear-gradient(60deg, var(--bg_color_ajouter), var(--bg_color_nouveau)); */
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    border: none;
     text-transform: capitalize;
 }
 
 .btn_nouveau:hover{
     text-decoration: none;
-    color: var(--bg_color_ajouter) !important;
-    border: 1px solid var(--bg_color_ajouter);
-    background-color: var(--txt_color);
+    color: var(--bg_color_enregistrer) !important;
+    border: 1px solid var(--bg_color_enregistrer);
+    /* background-color: var(--txt_color); */
+    background: transparent;
 }
 
 .btn_nouveau .bx{
@@ -109,12 +113,13 @@
     top: 1px;
     color: var(--txt_color) !important;
     padding: var(--padding_icon);
-    background-color: var(--bg_color_ajouter);
+    background-color: var(--bg_enregistrer_bx);
     border-radius: var(--brd_radius);
 }
 
 .btn_nouveau:hover .bx{
     color: var(--txt_color);
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
 }
 
 /* button annuler */
@@ -134,15 +139,19 @@
 
 .btn_annuler:hover{
     text-decoration: none;
+    border: none;
     color: var(--txt_color) !important;
-    background: var(--bg_color_annuler);
+    /* background: var(--bg_color_annuler); */
+    background-image: linear-gradient(60deg, orangered, var(--bg_annuler_bx));
+
 }
 
 .btn_annuler .bx{
     position: relative;
     top: 1px;
     padding: var(--padding_icon);
-    background-color: var(--bg_color_annuler);
+    /* background-color: var(--bg_color_annuler); */
+    background-image: linear-gradient(60deg, orangered, var(--bg_annuler_bx));
     border-radius: var(--brd_radius);
     color: var(--txt_color) !important;
     font-weight: 900;
@@ -174,8 +183,10 @@
 
 .btn_fermer:hover{
     text-decoration: none;
+    border: none;
     color: var(--txt_color) !important;
-    background: var(--bg_color_fermer);
+    /* background: var(--bg_color_fermer); */
+    background-image: linear-gradient(60deg, var(--bg_fermer_bx), var(--bg_color_modifier));
 
 }
 
@@ -183,7 +194,8 @@
     position: relative;
     top: 1px;
     padding: var(--padding_icon);
-    background-color: var(--bg_fermer_bx);
+    /* background-color: var(--bg_fermer_bx); */
+    background-image: linear-gradient(60deg, var(--bg_fermer_bx), var(--bg_color_modifier));
     border-radius: var(--brd_radius);
     color: var(--txt_color) !important;
     font-weight: 900;
@@ -191,7 +203,8 @@
 
 .btn_fermer:hover .bx{
     color: var(--txt_color);
-    background-color: var(--bg_fermer_bx);
+    /* background-image: var(--bg_annuler_bx); */
+    background-image: linear-gradient(60deg, var(--bg_fermer_bx), var(--bg_color_fermer));
 }
 
 /* button enregistrer */
@@ -200,11 +213,13 @@
 .btn_enregistrer{
     padding: var(--padding_button);
     color: var(--txt_color) !important;
-    background: var(--bg_color_enregistrer) !important;
+    /* background: var(--bg_color_enregistrer) !important; */
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
     cursor: pointer;
+    border: none;
     text-transform: capitalize;
 }
 
@@ -212,7 +227,8 @@
     text-decoration: none;
     color: var(--bg_color_enregistrer) !important;
     border: 1px solid var(--bg_color_enregistrer) !important;
-    background-color: var(--txt_color) !important;
+    /* background-color: var(--txt_color) !important; */
+    background: transparent;
 }
 
 .btn_enregistrer .bx{
@@ -227,7 +243,9 @@
 
 .btn_enregistrer:hover .bx{
     color: var(--txt_color);
-    background-color: var(--bg_color_enregistrer);
+    /* background-color: var(--bg_color_enregistrer); */
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+
 }
 
 /* button precedent */
@@ -236,7 +254,8 @@
 .btn_precedent{
     padding: var(--padding_button);
     color: var(--txt_color) !important;
-    background: var(--bg_color_precedent);
+    /* background: var(--bg_color_precedent);*/
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
@@ -248,7 +267,8 @@
     text-decoration: none;
     color: var(--bg_color_precedent) !important;
     border: 1px solid var(--bg_color_precedent);
-    background-color: var(--txt_color);
+    /* background-color: var(--txt_color); */
+    background: transparent;
 }
 
 .btn_precedent .bx{
@@ -263,7 +283,8 @@
 
 .btn_precedent:hover .bx{
     color: var(--txt_color);
-    background-color: var(--bg_color_precedent);
+    /* background-color: var(--bg_color_precedent); */
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
 }
 
 /* button suivant */

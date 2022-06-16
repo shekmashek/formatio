@@ -3,7 +3,7 @@
     padding: 2px 1rem;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #28a7eb;
+    color: #637381;
     border: 1px solid #28a7eb;
     font-size: 16px;
     letter-spacing: 1px;
@@ -23,7 +23,7 @@
     padding: 10px 1rem;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #28a7eb;
+    color: #637381;
     border: 1px solid #28a7eb;
     font-size: 0.850rem;
     letter-spacing: 1px;
@@ -71,7 +71,7 @@
     transform: translate3d(0, -100%, 0);
     opacity: 1;
     background-color: white;
-    color: #7635dc;
+    color: #637381;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
@@ -85,7 +85,7 @@
     transform: translate3d(0, -100%, 0);
     opacity: 1;
     background-color: white;
-    color: #7635dc;
+    color: #637381;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }

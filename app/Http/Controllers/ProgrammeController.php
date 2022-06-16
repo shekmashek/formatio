@@ -30,13 +30,15 @@ class ProgrammeController extends Controller
         $programme = new programme();
         $id_user = Auth::user()->id;
         if (Gate::allows('isCFP')) {
+            $domaine = $this->fonct->findAll("domaines");
+
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
             $programmes = DB::select('select * from cfpcours where cfp_id = ?', [$cfp_id]);
 
             if (count($programmes) <= 0) {
                 return view('admin.programme.guide');
             } else {
-                return view('admin.programme.programme', compact('programmes'));
+                return view('admin.programme.programme', compact('programmes','domaine'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -112,6 +114,13 @@ class ProgrammeController extends Controller
         $id = $request->Id;
         $cours_prog = DB::select('select titre,titre_cours from v_cours_programme where programme_id = ?', [$id]);
         return response()->json($cours_prog);
+    }
+
+    public function load_cours_programme(Request $request)
+    {
+        $id = $request->Id;
+        $cours_prog = DB::select('select cours_id,programme_id,titre,titre_cours from v_cours_programme where programme_id = ?', [$id]);
+        return response()->json(['cours'=>$cours_prog]);
     }
 
     public function info_data(Request $req)
