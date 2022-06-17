@@ -375,7 +375,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_formateur AS SELECT
     demmande_cfp_formateur.id,
     demmandeur_cfp_id,
     inviter_formateur_id,
-    resp_cfp_id,
+    
     responsables_cfp.id AS responsable_cfp_id,
     responsables_cfp.email_resp_cfp,
     responsables_cfp.nom_resp_cfp,
@@ -429,7 +429,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_formateur AS SELECT
             formateurs
         WHERE
             demmandeur_cfp_id = cfps.id and inviter_formateur_id = formateurs.id  and
-resp_cfp_id =responsables_cfp.id and demmandeur_cfp_id =responsables_cfp.cfp_id
+
             and  demmande_cfp_formateur.activiter = 0;
 
 
@@ -669,7 +669,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     rsp.nom_resp_cfp,
     rsp.prenom_resp_cfp,
     rsp.photos_resp_cfp,
-    d.resp_cfp_id,
+    
     c.id AS cfp_id,
     c.nom,
     c.adresse_lot,
@@ -705,7 +705,7 @@ FROM
     demmande_cfp_formateur d,cfps c,formateurs f,genre g,responsables_cfp rsp
 WHERE
     c.id = d.demmandeur_cfp_id AND
-    f.id = d.inviter_formateur_id AND d.resp_cfp_id = rsp.id AND
+    f.id = d.inviter_formateur_id= rsp.id AND
     g.id = IFNULL(f.genre_id,1) AND d.activiter = 1;
 
 
