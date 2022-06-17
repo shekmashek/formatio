@@ -801,10 +801,10 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="mytab">
             <li class="nav-item">
-                <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
+                <a href="#hors_lignes" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
             </li>
             <li class="nav-item ">
-                <a href="#publies" class="nav-link" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
+                <a href="#publiees" class="nav-link" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
@@ -813,7 +813,7 @@
 
         </ul>
         <div class="tab-content">
-            <div class="tab-pane show fade" id="hors_ligne">
+            <div class="tab-pane show fade" id="hors_lignes">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
                         <div class="col-12">
@@ -1022,7 +1022,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane show fade active" id="publies">
+            <div class="tab-pane show fade active" id="publiees">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
                         <div class="col-12">
@@ -1675,22 +1675,20 @@ $("#acf-domaine").change(function() {
     }
 
     function show(shown, hidden) {
-    // alert(shown);
         document.getElementById(shown).style.display='block';
         document.getElementById(hidden).style.display='none';
 
         if (shown == "Page2") {
-            alert(shown);
-            localStorage.setItem('ActiveTabMod', '#publies');
+            // alert(shown);
+            localStorage.getItem('ActiveTabMod', '#publiees');
         }
         if (shown == "Page1") {
-            alert(shown);
-            localStorage.setItem('ActiveTabMod','#publies');
+            // alert(shown);
+            localStorage.getItem('ActiveTabMod','#publies');
         }
         return false;
 
     }
-    shown()
     $('.redirect_tab').on('click', function (e) {
         localStorage.setItem('ActiveTabMod', '#hors_ligne');
     });
