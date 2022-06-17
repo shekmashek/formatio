@@ -36,7 +36,6 @@ class DetailController extends Controller
     }
     public function calendrier(){
 
-         $domaine = $this->fonct->findAll('domaines');
          $domaines = $this->fonct->findAll('domaines');
         $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
 
@@ -54,16 +53,15 @@ class DetailController extends Controller
             $formations = DB::select('select * from formations ');
         }
 
-        return view('admin.calendrier.calendrier',compact('domaines','domaine','formations','statut'));
+        return view('admin.calendrier.calendrier',compact('domaines','formations','statut'));
     }
     //calendrier entreprise
     public function calendrier_formation(){
         $domaines = $this->fonct->findAll('domaines');
-        $domaine = $this->fonct->findAll('domaines');
         $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
         $statut = $this->fonct->findAll('status');
         $formations = DB::select('select * from formations ');
-        return view('admin.calendrier.calendrier_formation',compact('domaines','domaine','statut','formations'));
+        return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations'));
     }
     public function listEvent(Request $request)
     {
@@ -77,8 +75,6 @@ class DetailController extends Controller
             $detail = $this->fonct->findAll('v_detailmodule');
         }
         if (Gate::allows('isCFP')) {
-            $fonct = new FonctionGenerique();
-            // $domaine = $this->fonct->findAll("domaines");
             $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[$id_user]);
             $cfp_id = $rqt[0]->cfp_id;
             // $detail =  $this->fonct->findWhere('v_detailmodule',['cfp_id'],[$cfp_id]);
@@ -462,7 +458,6 @@ class DetailController extends Controller
             // $cfp_id = cfp::where('user_id', $users)->value('id');
             $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$users]);
             $cfp_id = $resp->cfp_id;
-            $domaine = $this->fonct->findAll("domaines");
             $forma = new formateur();
 
             $datas = $fonct->findWhere("v_detailmodule", ["cfp_id"], [$cfp_id]);
@@ -474,38 +469,34 @@ class DetailController extends Controller
             if (count($datas) <= 0) {
                 return view('admin.detail.guide');
             } else {
-                return view('admin.detail.detail', compact('formateur', 'datas', 'liste', 'projet','domaine'));
+                return view('admin.detail.detail', compact('formateur', 'datas', 'liste', 'projet'));
             }
         } elseif (Gate::allows('isFormateur')) {
-            $domaine = $this->fonct->findAll("domaines");
 
             $form_id = formateur::where('user_id', $users)->value('id');
             $datas = $fonct->findWhere("v_detailmodule", ["formateur_id"], [$form_id]);
             $liste = $fonct->findAll("entreprises");
-            return view('admin.detail.detail', compact('datas', 'liste', 'projet','domaine'));
+            return view('admin.detail.detail', compact('datas', 'liste', 'projet'));
         } elseif (Gate::allows('isReferent')) {
-            $domaine = $this->fonct->findAll("domaines");
 
             $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
-            return view('admin.detail.detail', compact('datas', 'projet','domaine'));
+            return view('admin.detail.detail', compact('datas', 'projet'));
         } elseif (Gate::allows('isStagiaire')) {
-            $domaine = $this->fonct->findAll("domaines");
 
             $entreprise_id = stagiaire::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
-            return view('admin.detail.detail', compact('datas', 'projet','domaine'));
+            return view('admin.detail.detail', compact('datas', 'projet'));
         } elseif (Gate::allows('isManager')) {
-            $domaine = $this->fonct->findAll("domaines");
 
             $entreprise_id = chefDepartement::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
-            return view('admin.detail.detail', compact('datas', 'projet','domaine'));
+            return view('admin.detail.detail', compact('datas', 'projet'));
         } else {
             return back();
         }
 
-        return view('admin.detail.detail', compact('datas', 'liste', 'projet','domaine'));
+        return view('admin.detail.detail', compact('datas', 'liste', 'projet'));
     }
 
 

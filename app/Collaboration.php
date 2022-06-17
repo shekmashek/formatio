@@ -353,7 +353,6 @@ class Collaboration extends Model
             $formateur_id = formateur::where('user_id', $id)->value('id');
             $totale_invitation += count($fonct->findWhere("v_invitation_formateur_pour_cfp", ["inviter_formateur_id"], [$formateur_id]));
         } elseif (Gate::allows('isCFP')) {
-            $domaine = $fonct->findAll("domaines");
             $cfp_id = CFP::where('user_id', $id)->value('id');
             $totale_invitation += count($fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]));
             $totale_invitation += count($fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]));

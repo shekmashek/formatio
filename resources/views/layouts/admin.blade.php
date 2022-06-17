@@ -1,3 +1,4 @@
+@inject("domaine", 'App\Domaine')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1226,7 +1227,10 @@
                                                 <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 40px;" required>
                                                     <option value="null" disable selected hidden>Choisissez la
                                                         domaine de formation ...</option>
-                                                    @foreach($domaine as $do)
+                                                    @php
+                                                        $data = $domaine->domaine();
+                                                    @endphp
+                                                    @foreach($data as $do)
                                                     <option value="{{$do->id}}" data-value="{{$do->nom_domaine}}">
                                                         {{$do->nom_domaine}}</option>
                                                     @endforeach

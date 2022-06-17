@@ -55,14 +55,13 @@ class AppelOffreController extends Controller
         }
         if (Gate::allows('isCFP')) {
             $domaines = $this->fonct->findAll("domaines");
-            $domaine = $this->fonct->findAll("domaines");
             $appel_offre_non_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [false]);
             $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [true]);
             // $entreprise_id=Appel_offre::value('entreprise_id');
             // $entreprise=entreprise::findOrFail($entreprise_id);
             // dd($entreprise);
             // dd($appel_offre_publier );
-            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines','domaine'));
+            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines'));
             // $projet = DB::select($sql);
             // return view('admin.appel_offre.appel_offre_cfp', compact('entreprise','appel_offre_publier','domaines','page','fin_page','nb_offre','debut','fin','nb_par_page'));
         }
@@ -90,37 +89,34 @@ class AppelOffreController extends Controller
 
         if (Gate::allows('isCFP')) {
             $domaines = $this->fonct->findAll("domaines");
-            $domaine = $this->fonct->findAll("domaines");
             if ($reference != null) {
                 $appel_offre_publier =  DB::select("select * from v_appel_offre where UPPER(nom_formation) LIKE UPPER('%" . $reference . "%') and  publier=true");
             } else {
                 $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["publier"], [true]);
             }
-            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines','domaine'));
+            return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines'));
         }
     }
 
     public function recherche_thematique_formation(Request $req){
         $domaines = $this->fonct->findAll("domaines");
-        $domaine = $this->fonct->findAll("domaines");
 
         if($req->thematique!=null){
             $appel_offre_publier =  DB::select("select * from v_appel_offre where formation_id=?",[$req->thematique]);
         } else {
             $appel_offre_publier =  DB::select("select * from v_appel_offre");
         }
-        return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines','domaine'));
+        return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines'));
     }
 
     public function recherche_intervale_date_appel_offre(Request $req){
         $domaines = $this->fonct->findAll("domaines");
-        $domaine = $this->fonct->findAll("domaines");
         if($req->dte_debut!=null && $req->dte_fin!=null){
           $appel_offre_publier =  DB::select("select * from v_appel_offre where date_fin>=? and date_fin<=?",[$req->dte_debut,$req->dte_fin]);
         } else {
             $appel_offre_publier =  DB::select("select * from v_appel_offre");
         }
-        return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines','domaine'));
+        return view('admin.appel_offre.appel_offre_cfp', compact('appel_offre_publier','domaines'));
     }
 
     /**

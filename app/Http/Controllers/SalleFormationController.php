@@ -30,10 +30,9 @@ class SalleFormationController extends Controller
         if(Gate::allows('isCFP')){
             $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
             $cfp_id = $resp->cfp_id;
-            $domaine = $this->fonct->findAll("domaines");
 
             $salles = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
-            return view('admin.salle_formation.salle_formation', compact('salles','domaine'));
+            return view('admin.salle_formation.salle_formation', compact('salles'));
         }
     }
 
