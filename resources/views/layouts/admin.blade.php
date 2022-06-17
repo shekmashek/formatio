@@ -1606,7 +1606,7 @@
             });
         });
 
-         $(document).ready(function() {
+        $(document).ready(function() {
             $.ajax({
                 url: '{{ route("aff_refuse_etp_cfp") }}'
                 , type: 'get'
