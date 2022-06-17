@@ -82,9 +82,10 @@ class EmployeurController extends Controller
 
              /**On doit verifier le dernier abonnement de l'entreprise pour pouvoir limité le referent à ajouter */
 
-            $current_year = Carbon::now();
-            $nb_stagiaire = DB::select('SELECT * from stagiaires where entreprise_id = ? and YEAR(created_at) = ? ',[$entreprise_id[0]->entreprise_id,$current_year]);
-            $nb_referent =  DB::select('SELECT * from responsables where entreprise_id = ? and YEAR(created_at) = ? ',[$entreprise_id[0]->entreprise_id,$current_year]);
+            $current_month = Carbon::now()->month;
+
+            $nb_stagiaire = DB::select('SELECT * from stagiaires where entreprise_id = ? and MONTH(created_at) = ? ',[$entreprise_id[0]->entreprise_id,$current_month]);
+            $nb_referent =  DB::select('SELECT * from responsables where entreprise_id = ? and MONTH(created_at) = ? ',[$entreprise_id[0]->entreprise_id,$current_month]);
 
             // $nb_stagiaire = $this->fonct->findWhere("stagiaires",["entreprise_id"],[$entreprise_id[0]->entreprise_id]);
 

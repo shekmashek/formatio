@@ -52,7 +52,7 @@ class GroupeController extends Controller
         // $formations = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
         // $modules = $fonct->findAll("modules");
         $modules = $fonct->findWhere("modules", ["cfp_id",'status'], [$cfp_id,2]);
-        
+
         $etp1 = $fonct->findWhere("v_demmande_cfp_etp", ['cfp_id'], [$cfp_id]);
         $etp2 = $fonct->findWhere("v_demmande_etp_cfp", ['cfp_id'], [$cfp_id]);
         $entreprise = $fonct->concatTwoList($etp1, $etp2);
@@ -99,8 +99,8 @@ class GroupeController extends Controller
         $fonct = new FonctionGenerique();
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
          /**annee courante */
-        $current_year = Carbon::now();
-        $nb_projet = DB::select('SELECT * from v_session_projet where cfp_id = ? and YEAR(date_projet) = ? ',[$cfp_id,$current_year]);
+        $current_month = Carbon::now()->month;
+        $nb_projet = DB::select('SELECT * from v_session_projet where cfp_id = ? and YEAR(date_projet) = ? ',[$cfp_id,$current_month]);
 
         // $nb_projet = $fonct->findWhere("v_session_projet",["cfp_id"],[$cfp_id]);
         /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le projet à ajouter */

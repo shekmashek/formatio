@@ -583,7 +583,7 @@
                                                 <label for="lieu">Salle de formation</label>
                                                 <select name="lieu[]" style="height: 2.361rem"
                                                     class="form-control  my-1 salle_de_formation">
-                                                    <option>Choississez votre salle de formation&hellip;</option>
+                                                    <option selected hidden>Choississez votre salle de formation&hellip;</option>
                                                     @foreach ($salle_formation as $salle)
                                                         <option
                                                             value="{{ $salle->ville . ',  ' . $salle->salle_formation }}">
@@ -813,7 +813,8 @@
             url: "{{ route('all_formateurs') }}",
             type: 'get',
             success: function(response) {
-                var userData = response;
+                var userData = response['formateur'];
+                var salles = response['salles'];
                 var html = '';
                 html += '<div class="row" id ="inputFormRow">';
 
@@ -837,7 +838,7 @@
                 html += '<div class="input-group">';
                 html +=
                     '<select name="ville[]" id="" style="height: 2.361rem" class="form-control  my-1" required>';
-                html += '<option value="null" selected hidden>Choisissez votre Ville...</option>';
+                html += '<option value="null" selected disabled>Choisissez votre Ville...</option>';
                 html += '<option value="Tananarive">Tananarive</option>';
                 html += '<option value="Tamatave">Tamatave</option>';
                 html += '<option value="Antsirabé">Antsirabé</option>';
@@ -874,8 +875,14 @@
                 html += '</div>';
                 html += '<div class="col-md-7 px-0 pe-2">';
                 html += '<div class="input-group">';
-                html +=
-                    '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
+                html += '<select  name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
+                html += '<option value="" selected disabled> Choisir votre salle de formation </option>';
+                for (var $i = 0; $i < salles.length; $i++) {
+                    html += '<option value="' + salles[$i].ville + ','+salles[$i].salle_formation+'">'+ salles[$i].ville + ','+salles[$i].salle_formation+ '</option>';
+                }
+                html += '</select>';
+                // html +=
+                //     '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
                 html +=
                     '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"></i></button> ';
                 html += '<input type="hidden" name="ville_lieu" id="ville_lieu">';
@@ -907,7 +914,10 @@
             url: "{{ route('all_formateurs') }}",
             type: 'get',
             success: function(response) {
-                var userData = response;
+                var userData = response['formateur'];
+                var salles = response['salles'];
+                // var formateur = data;
+                // console.log(data);
                 var html = '';
                 html += '<div class="row" id ="inputFormRow">';
 
@@ -931,7 +941,7 @@
                 html += '<div class="input-group">';
                 html +=
                     '<select name="formateur[]" id="" style="height: 2.361rem" class="form-control  my-1" required>';
-                html += '<option value="" selected hidden> Choisir formateur </option>';
+                html += '<option value="" selected disabled> Choisir formateur </option>';
                 for (var $i = 0; $i < userData.length; $i++) {
                     html += '<option value="' + userData[$i].formateur_id + '">' + userData[$i]
                         .prenom_formateur + '</option>';
@@ -941,8 +951,13 @@
                 html += '</div>';
                 html += '<div class="col-md-7 px-0 pe-2">';
                 html += '<div class="input-group">';
-                html +=
-                    '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
+                html += '<select name="lieu[]" id="" style="height: 2.361rem" class="form-control  my-1" required>';
+                html += '<option value="" selected disabled> Choisir votre salle de formation </option>';
+                for (var $i = 0; $i < salles.length; $i++) {
+                    html += '<option value="' + salles[$i].ville + ','+salles[$i].salle_formation+'">'+ salles[$i].ville + ','+salles[$i].salle_formation+ '</option>';
+                }
+                html += '</select>';
+                // html +='<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
                 html +=
                     '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3" style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button> ';
                 html += '<input type="hidden" name="ville_lieu" id="ville_lieu">';

@@ -28,7 +28,7 @@
 <body>
         <div class="row dashboard mt-5">
             <div class="row">
-                <h4 class="text-center">Remplissez les informations manquantes</h4>
+                <h3 class="text-center">Bonjour, vous allez bientôt accéder à votre espace.Aidez nous à paramétrer votre compte en fournissant les informations manquantes pour une meilleure utilisation de votre logiciel.</h3>
                 @if (\Session::has('error'))
                     <div class="alert alert-danger">
                         <ul>

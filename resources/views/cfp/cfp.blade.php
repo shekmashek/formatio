@@ -58,7 +58,7 @@
             role="tab"
             aria-controls="ex1-tabs-1"
             aria-selected="true"
-            ><i class="bi bi-wallet-fill"></i>&nbsp;&nbsp;EN COLABORATION</a
+            ><i class="bi bi-wallet-fill"></i>&nbsp;&nbsp;EN COLABORATIONs</a
           >
         </li>
         <li class="nav-item" id="invitation-tab" role="presentation">
@@ -107,9 +107,7 @@
                     @foreach($cfp as $centre)
                     <tr>
 
-                        <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>
-                            <img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:80px; width:80px;"><span class="ms-3">{{$centre->nom}} </span>
-                        </td>
+                        <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height 80px; width: 80px;"><span class="ms-3">{{$centre->nom}} </span></td>
                         {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->telephone}}</td> --}}
                         <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>
 
@@ -138,7 +136,7 @@
                         </td> --}}
 
                             <td class="align-middle" >
-                                <a href="{{route('tous_projets',$centre->cfp_id)}}" class="btn btn-info btn-sm text-light" >Voir tous les projets</a>
+                                <a href="{{route('liste_projet',$centre->cfp_id)}}" class="btn btn-info btn-sm text-light" >Voir tous les projets</a>
                                 <a  data-bs-toggle="modal" class="ms-3 mt-5"  data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i  class='bx bx-trash bx_supprimer align-middle'></i></a>
                             </td>
 
@@ -438,13 +436,15 @@
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
-        localStorage.setItem('collaboration', lien);
+        localStorage.setItem('indicecfp', lien);
+        ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
+        ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     });
-    let Tabactive = localStorage.getItem('collaboration');
-    if(Tabactive){
-        $('#myTab a[href="' + Tabactive + '"]').tab('show');
+    let activeTab = localStorage.getItem('indicecfp');
+    console.log($('a[data-toggle="tab"]'));
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
     }
-
 
 </script>
 @endsection

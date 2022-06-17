@@ -324,25 +324,27 @@
                                     {{------------------------------------------------------------------------------- pagination facture full--}}
                                     @include("admin.facture.pagination_cfp.pagination_tout_facture")
 
-                                    <table class="table table-hover ">
+                                    <table class="table table-hover facture_table">
                                         <thead>
                                             <tr>
+                                                <th>#</th>
                                                 <th style="max-width: 12%">Type</th>
-                                                <th>F # &nbsp; <a href="#" style="color: blue" class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i> </a>
+                                                <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                                 </th>
-                                                <th style="max-width: 12%">Entreprise &nbsp; <a class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a> </a>
+                                                <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Entreprise &nbsp; <span class="nom_has_arrow"></span> </a>
                                                 </th>
-                                                <th style="max-width: 12%">Date de facturation</th>
-                                                <th style="max-width: 12%">Date de règlement &nbsp; <a class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a> </a>
+                                                <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
+                                                </th>
+                                                <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
                                                 </th>
                                                 <th style="max-width: 12%">
                                                     <div align="right">
-                                                        Total à payer &nbsp; <a class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a> </a>
+                                                    <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
                                                     </div>
                                                 </th>
                                                 <th style="max-width: 12%">
                                                     <div align="right">
-                                                        Solde &nbsp; <a class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></a> </a>
+                                                    <a class=" rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
                                                     </div>
                                                 </th>
                                                 <th style="max-width: 12%">Statut</th>
@@ -356,6 +358,14 @@
                                             @foreach ($full_facture as $actif)
 
                                             <tr>
+                                                <td>
+                                                    @if($actif->facture_encour =="en_cour"  || $actif->facture_encour =="terminer")
+                                                        
+                                                        <h6><a href="#collapseprojet_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
+
+                                                    @endif
+                            
+                                                </td>
                                                 <td>
                                                     <a href="{{route('detail_facture',$actif->num_facture)}}">
 
@@ -416,131 +426,174 @@
                                                     <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                         @if($actif->dernier_montant_ouvert<=0) <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
                                                             payé
-                                </div>
+                                                        </div>
 
-                                @elseif($actif->activiter==false)
+                                                        @elseif($actif->activiter==false)
 
-                                @if ($actif->jour_restant >0)
-                                <div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">
-                                    nom envoyé
-                                </div>
-                                @else
-                                <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
-                                    en retard
-                                </div>
-                                @endif
+                                                        @if ($actif->jour_restant >0)
+                                                        <div style="background-color: rgb(233, 190, 142); border-radius: 10px; text-align: center;color:white">
+                                                            nom envoyé
+                                                        </div>
+                                                        @else
+                                                        <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                                            en retard
+                                                        </div>
+                                                        @endif
 
-                                @else
-                                @if($actif->facture_encour =="valider")
+                                                        @else
+                                                        @if($actif->facture_encour =="valider")
 
-                                @if ($actif->jour_restant >0)
-                                <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                    envoyé
-                                </div>
-                                @else
-                                <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
-                                    en retard
-                                </div>
-                                @endif
+                                                        @if ($actif->jour_restant >0)
+                                                        <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                            envoyé
+                                                        </div>
+                                                        @else
+                                                        <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                                            en retard
+                                                        </div>
+                                                        @endif
 
-                                @elseif($actif->facture_encour =="en_cour")
-                                @if ($actif->jour_restant >0)
-                                <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                    partiellement payé
-                                </div>
-                                @else
-                                <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
-                                    en retard
-                                </div>
-                                @endif
+                                                        @elseif($actif->facture_encour =="en_cour")
+                                                        @if ($actif->jour_restant >0)
+                                                        <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                            partiellement payé
+                                                        </div>
+                                                        @else
+                                                        <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                                            en retard
+                                                        </div>
+                                                        @endif
 
 
-                                @endif
-                                @endif
+                                                        @endif
+                                                        @endif
 
-                                </a>
-                                </td>
-                                <td>
-                                    @if($actif->activiter==0)
-                                    <div class="dropdown">
-                                        <div class="btn-group dropstart">
-                                            <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li class="dropdown-item">
-                                                    <a href="{{route('edit_facture',$actif->num_facture)}}"> <button type="button" class="btn"><i class="fa fa-edit"></i> Modifier</button>
                                                     </a>
-                                                </li>
-                                                <li class="dropdown-item">
-                                                    <form action="{{route('valid_facture')}}" method="POST">
-                                                        @csrf
-                                                        <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                        <button type="submit" class="btn "><i class='bx bx-file'></i> Valider</button>
-                                                    </form>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">
-                                                        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_fature_{{$actif->num_facture}}"><span class="fa fa-trash"></span> Supprimer</button>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    @else
+                                                </td>
+                                                <td>
+                                                    @if($actif->activiter==0)
+                                                    <div class="dropdown">
+                                                        <div class="btn-group dropstart">
+                                                            <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
-                                    @if($actif->facture_encour == "valider")
-                                    <div class="dropdown">
-                                        <div class="btn-group dropstart">
-                                            <button type="button" class="btn  btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li class="dropdown-item">
+                                                                    <a href="{{route('edit_facture',$actif->num_facture)}}"> <button type="button" class="btn"><i class="fa fa-edit"></i> Modifier</button>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="dropdown-item">
+                                                                    <form action="{{route('valid_facture')}}" method="POST">
+                                                                        @csrf
+                                                                        <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
+                                                                        <button type="submit" class="btn "><i class='bx bx-file'></i> Valider</button>
+                                                                    </form>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="#">
+                                                                        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#delete_fature_{{$actif->num_facture}}"><span class="fa fa-trash"></span> Supprimer</button>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    @else
 
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <a href="#" class="dropdown-item">
-                                                    <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
-                                                </a>
-                                                <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    @elseif($actif->facture_encour =="en_cour")
-                                    <div class="dropdown">
-                                        <div class="btn-group dropstart">
-                                            <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    @if($actif->facture_encour == "valider")
+                                                    <div class="dropdown">
+                                                        <div class="btn-group dropstart">
+                                                            <button type="button" class="btn  btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <a href="#" class="dropdown-item">
-                                                    <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
-                                                </a>
-                                                <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                <hr class="dropdown-divider">
-                                                <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
-                                                    <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    @else
-                                    <div class="dropdown">
-                                        <div class="btn-group dropstart">
-                                            <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <a href="#" class="dropdown-item">
+                                                                    <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
+                                                                </a>
+                                                                {{-- <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a> --}}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    @elseif($actif->facture_encour =="en_cour")
+                                                    <div class="dropdown">
+                                                        <div class="btn-group dropstart">
+                                                            <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF Facture</button></a>
-                                                <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
-                                                <hr class="dropdown-divider">
-                                                <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
-                                                    <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <a href="#" class="dropdown-item">
+                                                                    <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
+                                                                </a>
+                                                                {{-- <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a> --}}
+                                                                <hr class="dropdown-divider">
+                                                                <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
+                                                                    <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    @else
+                                                    <div class="dropdown">
+                                                        <div class="btn-group dropstart">
+                                                            <button type="button" class="btn btn_creer_trie dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    @endif
-                                    @endif
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF Facture</button></a>
+                                                                {{-- <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a> --}}
+                                                                <hr class="dropdown-divider">
+                                                                <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
+                                                                    <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
 
-                                </td>
-                                </tr>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    @endif
+                                                    @endif
+
+                                                </td>
+                                                <tr>
+                                                    <td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
+                                                        @if($actif->facture_encour != "valider" && count($encaissement)>0)
+                                                        <div class="centrer">
+                                                        <div class="alert alert-light" role="alert">Vos Encaissements:</div>
+                                                            <table  class="table table-hover table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">N° F#</th>
+                                                                        <th scope="col">Montant facturer</th>
+                                                                        <th scope="col">Paiement</th>
+                                                                        <th scope="col">Montant ouvert</th>
+                                                                        <th scope="col">Mode de paiement</th>
+                                                                        <th scope="col">Date de paiement</th>
+                                                                        <th scope="col">Memo/Notes</th>
+                                                                        <th scope="col">Actions</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($encaissement as $info)
+                                                                    @if ($actif->num_facture == $info->num_facture)
+                                                                        <tr>
+                                                                            <td> <a href="{{route('detail_facture',$info->num_facture)}}">
+                                                                                    {{ $info->num_facture }}</a>
+                                                                            </td>
+                                                                            <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                                                                            <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                                                                            <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                                                                            <td>{{ $info->description }}</td>
+                                                                            <td>{{ $info->date_encaissement }}</td>
+                                                                            <td>{{ $info->libelle }}</td>
+                                                                            <td><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                                <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endif
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            </tr>
 
                                 <div id="modal{{ $actif->cfp_id }}_{{ $actif->num_facture }}" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
@@ -673,30 +726,32 @@
                                         @include("admin.facture.pagination_cfp.pagination_facture_brouillon")
 
 
-                                        <table class="table table-hover">
+                                        <table class="table table-hover facture_table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Type</th>
-                                                    <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                    <th>#</th>
+                                                    <th style="max-width: 12%">Type</th>
+                                                    <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                                     </th>
-                                                    <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                    <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Entreprise &nbsp; <span class="nom_has_arrow"></span> </a>
                                                     </th>
-                                                    <th scope="col">Date de facturation</th>
-                                                    <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                    <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
                                                     </th>
-                                                    <th scope="col">
+                                                    <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
+                                                    </th>
+                                                    <th style="max-width: 12%">
                                                         <div align="right">
-                                                            Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
                                                         </div>
                                                     </th>
-                                                    <th scope="col">
+                                                    <th style="max-width: 12%">
                                                         <div align="right">
-                                                            Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        <a class=" rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
                                                         </div>
                                                     </th>
-                                                    <th scope="col">Statut</th>
+                                                    <th style="max-width: 12%">Statut</th>
                                                     @canany(['isCFP'])
-                                                    <th scope="col" colspan="2">Action</th>
+                                                    <th style="max-width: 12%">Action</th>
                                                     @endcanany
                                                 </tr>
                                             </thead>
@@ -729,11 +784,11 @@
                                                         </a>
 
                                                     </td>
-                                                    <th>
+                                                    <td>
                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                             {{$actif->num_facture}}
                                                         </a>
-                                                    </th>
+                                                    </td>
                                                     <td>
                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                             {{$actif->nom_etp}}
@@ -851,35 +906,44 @@
                                                 {{------------------------------------------------------------------------------- pagination facture activer--}}
                                                 @include("admin.facture.pagination_cfp.pagination_facture_actif")
 
-                                                <table class="table table-hover">
-                                                    <tr>
-                                                        <th scope="col">Type</th>
-                                                        <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                        </th>
-                                                        <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                        </th>
-                                                        <th scope="col">Date de facturation</th>
-                                                        <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                        </th>
-                                                        <th scope="col">
-                                                            <div align="right">
-                                                                Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                            </div>
-                                                        </th>
-                                                        <th scope="col">
-                                                            <div align="right">
-                                                                Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
-                                                            </div>
-                                                        </th>
-                                                        <th scope="col">Statut</th>
-                                                        @canany(['isCFP'])
-                                                        <th scope="col" colspan="2">Action</th>
-                                                        @endcanany
-                                                    </tr>
+                                                <table class="table table-hover facture_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th style="max-width: 12%">Type</th>
+                                                            <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
+                                                            </th>
+                                                            <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Entreprise &nbsp; <span class="nom_has_arrow"></span> </a>
+                                                            </th>
+                                                            <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
+                                                            </th>
+                                                            <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
+                                                            </th>
+                                                            <th style="max-width: 12%">
+                                                                <div align="right">
+                                                                <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
+                                                                </div>
+                                                            </th>
+                                                            <th style="max-width: 12%">
+                                                                <div align="right">
+                                                                <a class=" rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
+                                                                </div>
+                                                            </th>
+                                                            <th style="max-width: 12%">Statut</th>
+                                                            @canany(['isCFP'])
+                                                            <th style="max-width: 12%">Action</th>
+                                                            @endcanany
+                                                        </tr>
+                                                    </thead>
                                                     <tbody id="list_data_trie_valider">
                                                         @if (count($facture_actif) > 0)
                                                         @foreach ($facture_actif as $actif)
                                                         <tr>
+                                                            <td>
+                                                                @if($actif->facture_encour =="en_cour")
+                                                                    <h6><a href="#collapseprojet_actif_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
+                                                                @endif
+                                                            </td>
                                                             <td>
                                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
 
@@ -903,11 +967,11 @@
 
                                                                 </a>
                                                             </td>
-                                                            <th>
+                                                            <td>
                                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                     {{$actif->num_facture}}
                                                                 </a>
-                                                            </th>
+                                                            </td>
                                                             <td>
                                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                     {{$actif->nom_etp}}
@@ -969,7 +1033,7 @@
                                                                             <a href="#" class="dropdown-item">
                                                                                 <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal_valide_{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
                                                                             </a>
-                                                                            <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
+                                                                            {{-- <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a> --}}
                                                                         </ul>
                                                                     </div>
                                                                 </div>
@@ -985,7 +1049,7 @@
                                                                             <a href="#" class="dropdown-item">
                                                                                 <button type="button" class=" btn  payement" data-id="{{ $actif->num_facture }}" id="{{ $actif->num_facture }}" data-bs-toggle="modal" data-bs-target="#modal_valide_{{ $actif->cfp_id }}_{{ $actif->num_facture }}">Faire un encaissement</button>
                                                                             </a>
-                                                                            <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
+                                                                            {{-- <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a> --}}
                                                                             <hr class="dropdown-divider">
                                                                             <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
                                                                                 <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
@@ -999,7 +1063,49 @@
                                                             @endcanany
 
                                                         </tr>
-
+                                                        <tr>
+                                                            <td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_actif_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
+                                                                @if($actif->facture_encour != "valider" && count($encaissement)>0)
+                                                                <div class="centrer">
+                                                                <div class="alert alert-light" role="alert">Vos Encaissements:</div>
+                                                                    <table  class="table table-hover table-sm">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">N° F#</th>
+                                                                                <th scope="col">Montant facturer</th>
+                                                                                <th scope="col">Paiement</th>
+                                                                                <th scope="col">Montant ouvert</th>
+                                                                                <th scope="col">Mode de paiement</th>
+                                                                                <th scope="col">Date de paiement</th>
+                                                                                <th scope="col">Memo/Notes</th>
+                                                                                <th scope="col">Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach ($encaissement as $info)
+                                                                            @if ($actif->num_facture == $info->num_facture)
+                                                                                <tr>
+                                                                                    <td> <a href="{{route('detail_facture',$info->num_facture)}}">
+                                                                                            {{ $info->num_facture }}</a>
+                                                                                    </td>
+                                                                                    <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                                                                                    <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                                                                                    <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                                                                                    <td>{{ $info->description }}</td>
+                                                                                    <td>{{ $info->date_encaissement }}</td>
+                                                                                    <td>{{ $info->libelle }}</td>
+                                                                                    <td><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                                        <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endif
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
                                                         <div id="modal_valide_{{ $actif->cfp_id }}_{{ $actif->num_facture }}" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
                                                             <div class="modal-dialog">
@@ -1091,26 +1197,26 @@
 
                                                         {{------------------------------------------------------------------------------- pagination facture payer--}}
                                                         @include("admin.facture.pagination_cfp.pagination_facture_payer")
-
-
-                                                        <table class="table table-hover">
+                                                        <table class="table table-hover facture_table">
                                                             <tr>
+                                                                <th>#</th>
                                                                 <th scope="col">Type</th>
-                                                                <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                                                 </th>
-                                                                <th scope="col">Entreprise &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Entreprise &nbsp; <span class="nom_has_arrow"></span> </a>
                                                                 </th>
-                                                                <th scope="col">Date de facturation</th>
-                                                                <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
+                                                                </th>
+                                                                <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
                                                                 </th>
                                                                 <th scope="col">
                                                                     <div align="right">
-                                                                        Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                        <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
                                                                     </div>
                                                                 </th>
                                                                 <th scope="col">
                                                                     <div align="right">
-                                                                        Solde &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                        <a class="rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
                                                                     </div>
                                                                 </th>
                                                                 <th scope="col">Statut</th>
@@ -1122,6 +1228,9 @@
                                                                 @if (count($facture_payer) > 0)
                                                                 @foreach ($facture_payer as $actif)
                                                                 <tr>
+                                                                    <td>
+                                                                        <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>   
+                                                                    </td>
                                                                     <td>
                                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                             @if ($actif->reference_type_facture == "Facture")
@@ -1143,11 +1252,11 @@
                                                                             @endif
                                                                         </a>
                                                                     </td>
-                                                                    <th>
+                                                                    <td>
                                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                             {{$actif->num_facture}}
                                                                         </a>
-                                                                    </th>
+                                                                    </td>
                                                                     <td>
                                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                                             {{$actif->nom_etp}}
@@ -1189,7 +1298,7 @@
                                                                                 </button>
                                                                                 <ul class="dropdown-menu">
                                                                                     <a class="dropdown-item" href="{{route('imprime_feuille_facture',$actif->num_facture)}}"><button type="button" class="btn "><i class="fa fa-download"></i> PDF Facture</button></a>
-                                                                                    <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a>
+                                                                                    {{-- <a class="dropdown-item" href="{{ route('listeEncaissement',[$actif->num_facture]) }}"><button type="button" class="btn ">Liste des encaissements</button></a> --}}
                                                                                     <hr class="dropdown-divider">
                                                                                     <a class="dropdown-item {{ Route::currentRouteNamed('pdf+liste+encaissement',$actif->num_facture) ? 'active' : '' }}" href="{{route('pdf+liste+encaissement',$actif->num_facture)}}">
                                                                                         <button type="button" class="btn "> <i class="fa fa-download"></i> PDF Encaissement </button></a>
@@ -1199,6 +1308,50 @@
                                                                         </div>
                                                                     </td>
                                                                     @endcanany
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_payer_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
+                                                                        @if($actif->facture_encour != "valider" && count($encaissement)>0)
+                                                                        <div class="centrer">
+                                                                        <div class="alert alert-light" role="alert">Vos Encaissements:</div>
+
+                                                                            <table  class="table table-hover table-sm">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th scope="col">N° F#</th>
+                                                                                        <th scope="col">Montant facturer</th>
+                                                                                        <th scope="col">Paiement</th>
+                                                                                        <th scope="col">Montant ouvert</th>
+                                                                                        <th scope="col">Mode de paiement</th>
+                                                                                        <th scope="col">Date de paiement</th>
+                                                                                        <th scope="col">Memo/Notes</th>
+                                                                                        <th scope="col">Actions</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach ($encaissement as $info)
+                                                                                    @if ($actif->num_facture == $info->num_facture)
+                                                                                        <tr>
+                                                                                            <td> <a href="{{route('detail_facture',$info->num_facture)}}">
+                                                                                                    {{ $info->num_facture }}</a>
+                                                                                            </td>
+                                                                                            <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                                                                                            <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                                                                                            <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                                                                                            <td>{{ $info->description }}</td>
+                                                                                            <td>{{ $info->date_encaissement }}</td>
+                                                                                            <td>{{ $info->libelle }}</td>
+                                                                                            <td><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                                                <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endif
+                                                                                    @endforeach
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        @endif
+                                                                    </td>
                                                                 </tr>
                                                                 @endforeach
                                                                 @else
@@ -1297,13 +1450,13 @@
                                                                         <div class="row">
                                                                             <div class="col">
                                                                                 <div class="form-group">
-                                                                                    <label for="dte_debut" class="form-label" align="left">Solde minimum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
+                                                                                    <label for="dte_debut" class="form-label" align="left">Solde minimum({{$devise->devise}})<strong style="color:#ff0000;">*</strong></label>
                                                                                     <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col">
                                                                                 <div class="form-group">
-                                                                                    <label for="dte_fin" class="form-label" align="left"> Solde maximum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
+                                                                                    <label for="dte_fin" class="form-label" align="left"> Solde maximum({{$devise->devise}})<strong style="color:#ff0000;">*</strong></label>
                                                                                     <input required type="number" name="solde_fin" id="solde_fin" class="form-control" />
                                                                                 </div>
                                                                             </div>
@@ -1409,7 +1562,32 @@
                                 </div>
                             </div>
                         </div>
+                        
+                            {{-- debut modal encaissement --}}
+                            <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content  px-3 py-3">
+                                        <div class="modal-header">
+                                            <div class="modal-title text-md">
+                                                <h5>Modification</h5>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('modifier_encaissement') }}" method="POST">
+                                                @csrf
+                                                <div id="modification"></div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- fin --}}
                     </div>
                 </div>
             </div>
             {{-- inmportation fonction js pour cfp --}} @include("admin.facture.function_js.js_cfp") @endsection
+            {{-- <script type="text/javascript">
+           
+                            </script> --}}
+            
