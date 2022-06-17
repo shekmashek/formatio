@@ -257,14 +257,11 @@ ul li a {
     background-color: #7635dc;
     box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
 } */
-.nav_linke.active .bx{
+.nav_linke.active {
     /* background-color: #7635dc; */
     background-image: linear-gradient(60deg, #f206ee, #0765f3);
     /* box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%); */
     cursor: pointer;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
 }
 .nav_linke:hover.nav_linke.active {
     background-color: #7635dc;
