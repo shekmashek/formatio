@@ -323,7 +323,7 @@
 
             @canany(['isCFP'])
             <li>
-                <a href="{{route('liste_formateur')}}" class="d-flex formateur nav_linke">
+                <a href="{{route('liste_formateur')}}" class="d-flex formateurs nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
                     <span class="links_name">Formateurs</span>
                 </a>
@@ -1076,7 +1076,7 @@
                                                 <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
                                             </a>
                                         </li>
-                                        <li id="">
+                                        <li id="formateurs">
                                             <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
                                                 <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
                                             </a>
