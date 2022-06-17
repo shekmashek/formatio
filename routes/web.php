@@ -240,6 +240,7 @@ Route::get('/editer_fonction/{id}', 'ProfController@editer_fonction')->name('edi
 
 
 
+
 // Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
 //     Route::get('/liste_formateur/{id?}','ProfController@index')->name('liste_formateur');
 // });
@@ -335,6 +336,7 @@ Route::get('/edit_fonction/{id}', 'ParticipantController@edit_fonction')->name('
 Route::get('/edit_matricule/{id}', 'ParticipantController@edit_matricule')->name('edit_matricule');
 Route::get('/edit_entreprise/{id}', 'ParticipantController@edit_entreprise')->name('edit_entreprise');
 Route::get('/edit_niveau/{id}', 'ParticipantController@edit_niveau')->name('edit_niveau');
+Route::get('/edit_departement/{id}', 'ParticipantController@edit_departement')->name('edit_departement');
 // Route::get('/edit_departement/{id}', 'ParticipantController@edit_departement')->name('edit_departement');
 
 Route::get('/edit_photos/{id}', 'ParticipantController@edit_photos')->name('edit_photos');

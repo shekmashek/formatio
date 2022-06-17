@@ -663,7 +663,8 @@ class ResponsableController extends Controller
     }
     public function update_departemennt_service($id,Request $request){
         DB::update('update employers set service_id = ? , departement_entreprises_id = ? where id = ?', [$request->serv,$request->dep,$id]);
-        return redirect()->route('profil_referent');
+        if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+        if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
     }
     public function update_branche(Request $request,$id){
 

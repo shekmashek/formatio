@@ -254,16 +254,23 @@
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
 
-                        <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-building' ></i>&nbsp; DEPARTEMENT<span style="float: right;">
                                 @if ($stagiaire->nom_departement == null)
-                                    <strong style="color: red">---</strong>&nbsp;
+                                    <a href="{{ route('edit_departement', $stagiaire->stagiaire_id) }} ">
+                                        <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-list-ul'></i>&nbsp; DEPARTEMENT<span
+                                                style="float: right"> <strong style="color: red">---</strong>&nbsp;<i
+                                                    class="fas fa-angle-right"></i></span>
+                                        </p>
+                                    </a>
                                 @else
-                                    {{ $stagiaire->nom_departement }}&nbsp;
+                                    <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-id-card' undefined ></i>&nbsp; DEPARTEMENT<span
+                                        style="float: right;">   {{$stagiaire->nom_departement}}&nbsp;<i
+                                            class="fas fa-angle-right"></i></span>
+                                    </p>
+
                                 @endif
-                                <i class="fas fa-angle-right"></i>
                             </span>
-                        </p>
-                        </a>
+
+
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         @can('isStagiaire')

@@ -641,10 +641,10 @@ class ParticipantController extends Controller
         $stagiaire = $fonct->findWhereMulitOne("stagiaires", ["id"], [$id]);
         $service = $fonct->findWhereMulitOne("services", ["id"], [$stagiaire->service_id]);
         // $departement = $fonct->findWhereMulitOne("departement_entreprises",["id"],[$service->departement_entreprise_id]);
-        $liste_dep = $fonct->findWhere("departement_entreprises", ["entreprise_id"], [$stagiaire->entreprise_id]);
+        $departement = $fonct->findWhere("v_departement_service_entreprise",["entreprise_id"],[$stagiaire->entreprise_id]);
 
         $branche = $fonct->findWhereMulitOne("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
-        return view('admin.participant.edit_departement', compact('stagiaire', 'liste_dep', 'branche', 'service'));
+        return view('admin.participant.edit_departement', compact('departement','stagiaire', 'branche', 'service'));
     }
 
     public function edit_photos($id, Request $request)
