@@ -28,7 +28,7 @@
 <body>
         <div class="row dashboard mt-5">
             <div class="row">
-                <h3 class="text-center">Bonjour, vous allez bientôt accéder à votre espace.Aidez nous à paramétrer votre compte en fournissant les informations manquantes pour une meilleure utilisation de votre logiciel.</h3>
+                <p class="text-center">Bonjour, vous allez bientôt accéder à votre espace.Aidez nous à paramétrer votre compte en fournissant les informations manquantes pour une meilleure utilisation de votre logiciel.</p>
                 @if (\Session::has('error'))
                     <div class="alert alert-danger">
                         <ul>
@@ -41,17 +41,17 @@
             <div class="row mt-4">
                 <div class="container">
                     <div class="col-12">
-                        <form action="{{route('remplir_info_resp')}}" method="POST" class=" formulaire w-50" >
+                        <form action="{{route('remplir_information')}}" method="POST" class=" formulaire w-50" >
                             @csrf
-                            <input type="hidden" name="id_resp" value="{{$testNull[0]->id}}">
+                            <input type="hidden" name="id_stg" value="{{$testNull[0]->id}}">
                             <p class="text-center">Informations générales</p>
                             <div class="mb-3 row text-end">
                                 <label for="nom" class="col-sm-3 col-form-label">Nom<sup>*</sup></label>
                                 <div class="col-sm-6">
                                     @if ($testNull[0]->nom_resp != null)
-                                        <input type="text" readonly class="form-control" id="nom_resp" name="nom_resp" value="{{$testNull[0]->nom_resp}}">
+                                        <input type="text" readonly class="form-control" id="nom_stg" name="nom_stg" value="{{$testNull[0]->nom_resp}}">
                                     @else
-                                        <input type="text" class="form-control" id="nom_resp" name="nom_resp" placeholder="nom responsable" required>
+                                        <input type="text" class="form-control" id="nom_stg" name="nom_stg" placeholder="nom responsable" required>
                                     @endif
                                 </div>
                             </div>
@@ -59,9 +59,9 @@
                                 <label for="nom" class="col-sm-3 col-form-label">Prenom<sup>*</sup></label>
                                 <div class="col-sm-9">
                                     @if ($testNull[0]->prenom_resp != null)
-                                        <input type="text" readonly class="form-control" id="prenom_resp" name="prenom_resp" value="{{$testNull[0]->prenom_resp}}">
+                                        <input type="text" readonly class="form-control" id="prenom_stg" name="prenom_stg" value="{{$testNull[0]->prenom_resp}}">
                                     @else
-                                        <input type="text" class="form-control" id="prenom_resp" name="prenom_resp" placeholder="prenom responsable" required>
+                                        <input type="text" class="form-control" id="prenom_stg" name="prenom_stg" placeholder="prenom responsable" required>
                                     @endif
                                 </div>
                             </div>
@@ -69,9 +69,9 @@
                                 <label for="nom" class="col-sm-3 col-form-label">Date de naissance<sup>*</sup></label>
                                 <div class="col-sm-4">
                                     @if ($testNull[0]->date_naissance_resp != null)
-                                        <input type="text" readonly class="form-control" id="date_naissance_resp" name="date_naissance_resp" value="{{$testNull[0]->date_naissance_resp}}">
+                                        <input type="text" readonly class="form-control" id="date_naissance_stg" name="date_naissance_stg" value="{{$testNull[0]->date_naissance_resp}}">
                                     @else
-                                        <input type="text" class="form-control" id="date_naissance_resp" name="date_naissance_resp" placeholder="date" onfocus="(this.type='date')" required>
+                                        <input type="text" class="form-control" id="date_naissance_stg" name="date_naissance_stg" placeholder="date" onfocus="(this.type='date')" required>
                                     @endif
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                                 <label for="nom" class="col-sm-3 col-form-label">Genre<sup>*</sup></label>
                                 <div class="col-sm-4">
                                     @if ($testNull[0]->sexe_resp != null)
-                                        <input type="text" readonly class="form-control" id="sexe_resp" name="sexe_resp" value="{{$testNull[0]->sexe_resp}}">
+                                        <input type="text" readonly class="form-control" id="genre_stg" name="genre_stg" value="{{$testNull[0]->sexe_resp}}">
                                     @else
                                         <select name="genre" class="form-select test" id="genre">
                                             <option value="Homme">Homme</option>
@@ -93,9 +93,9 @@
                                 <label for="nom" class="col-sm-3 col-form-label">Email<sup>*</sup></label>
                                 <div class="col-sm-6">
                                     @if ($testNull[0]->email_resp != null)
-                                        <input type="text" readonly class="form-control" id="email_resp" name="email_resp" value="{{$testNull[0]->email_resp}}">
+                                        <input type="text" readonly class="form-control" id="email_stg" name="email_stg" value="{{$testNull[0]->email_resp}}">
                                     @else
-                                        <input type="mail" class="form-control" id="email_resp" name="email_resp" required>
+                                        <input type="mail" class="form-control" id="email_stg" name="email_stg" required>
                                     @endif
                                 </div>
                             </div>
@@ -103,9 +103,9 @@
                                 <label for="nom" class="col-sm-3 col-form-label">Téléphone<sup>*</sup></label>
                                 <div class="col-sm-4">
                                     @if ($testNull[0]->telephone_resp != null)
-                                        <input type="text" readonly class="form-control" id="telephone_resp" name="telephone_resp" value="{{$testNull[0]->telephone_resp}}">
+                                        <input type="text" readonly class="form-control" id="tel_stg" name="tel_stg" value="{{$testNull[0]->telephone_resp}}">
                                     @else
-                                        <input type="text" class="form-control" id="telephone_resp" name="telephone_resp" placeholder="téléphone" onfocus="(this.type='number')" required>
+                                        <input type="text" class="form-control" id="tel_stg" name="tel_stg" placeholder="téléphone" onfocus="(this.type='number')" required>
                                     @endif
                                 </div>
                             </div>
@@ -113,9 +113,9 @@
                                 <label for="nom" class="col-sm-3 col-form-label">CIN<sup>*</sup></label>
                                 <div class="col-sm-4">
                                     @if ($testNull[0]->cin_resp != null)
-                                        <input type="text" readonly class="form-control" id="cin_resp" name="cin_resp" value="{{$testNull[0]->cin_resp}}">
+                                        <input type="text" readonly class="form-control" id="cin_stg" name="cin_stg" value="{{$testNull[0]->cin_resp}}">
                                     @else
-                                        <input type="text" class="form-control" id="cin_resp" name="cin_resp" placeholder="carte d'identité national" onfocus="(this.type='number')" min="0" required>
+                                        <input type="text" class="form-control" id="cin_stg" name="cin_stg" placeholder="carte d'identité national" onfocus="(this.type='number')" min="0" required>
                                     @endif
                                 </div>
                             </div>
@@ -166,7 +166,11 @@
                             <div class="mb-3 row text-end">
                                 <label for="nom" class="col-sm-3 col-form-label">Fonction</label>
                                 <div class="col-sm-8">
-                                    <input type="text" readonly class="form-control" id="etp" name="etp" value="{{$testNull[0]->fonction_resp}}">
+                                    @if ($testNull[0]->fonction_resp != null)
+                                        <input type="text" readonly class="form-control" id="fonction_stagiaire" name="fonction_stagiaire" value="{{$testNull[0]->fonction_resp}}">
+                                    @else
+                                        <input type="text"  class="form-control" id="fonction_stagiaire" name="fonction_stagiaire" value="{{$testNull[0]->fonction_resp}}" required>
+                                    @endif
                                 </div>
                             </div>
                             <div class="mb-3 row">

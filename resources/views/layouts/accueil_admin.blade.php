@@ -71,7 +71,9 @@
                                 <p class="card-text m-1 " id="fpt"><i class="fas fa-briefcase"></i>&nbsp;
                                     <span>
                                         @foreach($phone_tmp as $item)
-                                            {{$item->nom_departement}}
+                                            @if($item->nom_departement == null) ------------------------
+                                            @else {{$item->nom_departement}}
+                                            @endif
                                         @endforeach
                                     </span>
                                 </p>

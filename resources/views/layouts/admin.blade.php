@@ -1444,11 +1444,24 @@
         }
 
         $(document).ready(function() {
+
             var pdp = "";
             $.ajax({
                 url: '{{ route("profile_resp") }}'
                 , type: 'get'
                 , success: function(response) {
+                    if(response['photo'] == 'oui'){
+                        var html = '<img src="{{asset(":?")}}" alt="user_profile" style="width : 70px; height : 70px; border: none; border-radius : 100%; display: grid; place-content: center">';
+                        html = html.replace(":?", response['user']);
+                        // alert(JSON.stringify(response));
+                        $('.photo_users').append(html);
+
+                    }
+
+                    if(response['photo'] == 'non'){
+                        var html = response['user'][0]['nm']+''+response['user'][0]['pr'];
+                        $('.photo_users').append(html);
+                    }
                     $('.badge_invitation').text("");
                     $('.badge_invitation').append(response['invitation'].length);
 
@@ -1513,17 +1526,7 @@
                         }
                     }
 
-                    if(response['photo'] == 'oui'){
-                        var html = '<img src="{{asset(":?")}}" alt="user_profile" style="width : 70px; height : 70px; border: none; border-radius : 100%; display: grid; place-content: center">';
-                        html = html.replace(":?", response['user']);
-                        // alert(JSON.stringify(response));
-                        $('.photo_users').append(html);
 
-                    }
-                    if(response['photo'] == 'non'){
-                        var html = response['user'][0]['nm']+''+response['user'][0]['pr'];
-                        $('.photo_users').append(html);
-                    }
                 }
                 , error: function(error) {
                     console.log(error);

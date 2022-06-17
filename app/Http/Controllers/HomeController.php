@@ -76,6 +76,7 @@ class HomeController extends Controller
     public function remplir_info_stagiaire(Request $request)
     {
         $id_stg = $request->input('id_stg');
+
         //teste si les inputs contiennent une valeur vide
         $test_null =  array_filter(request()->all(), function ($val) {
             return is_null($val);
@@ -87,6 +88,7 @@ class HomeController extends Controller
                 throw new Exception("Remplissez les champs vides");
             }
             else{
+
                 DB::beginTransaction();
 
                 DB::update('update employers set nom_emp= ? where id = ?', [$request->input('nom_stg'), $id_stg]);
@@ -226,14 +228,17 @@ class HomeController extends Controller
 
             $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?', [$databaseName, 'stagiaires']);
             $nb = 0;
+
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
+                if( $colonnes[$i]->COLUMN_NAME != "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "nom_departement" and $colonnes[$i]->COLUMN_NAME != "poste_emp" and $colonnes[$i]->COLUMN_NAME != "nom_branche" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "prioriter"  and $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
                     if ($testNull[0]->$tempo == null) {
+
                         $nb += 1;
                     }
                 }
             }
+
             //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
             if ($nb > 0) {
                 return view('formulaire_stagiaire', compact('testNull', 'entreprise'));
@@ -246,8 +251,7 @@ class HomeController extends Controller
             if ($activiter == 1) {
                 if (Auth::user()->exists) {
                     $totale_invitation = $this->collaboration->count_invitation();
-                    $phone_tmp =  DB::select('select * from v_stagiaire_entreprise where user_id = ?', [Auth::user()->id]);
-
+                    $phone_tmp =  $this->fonct->findWhere("v_stagiaire_entreprise",["user_id"],[Auth::user()->id]);
                     return view('layouts.accueil_admin', compact('totale_invitation', 'phone_tmp'));
                 }
             }

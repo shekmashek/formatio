@@ -490,7 +490,7 @@ FROM
     join niveau_etude niveau
     on niveau.id = stg.niveau_etude_id
     join genre gr
-    on gr.id = stg.genre_stagiaire;
+    on gr.id = stg.genre_id;
 
 -- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
 --     stg.id AS stagiaire_id,

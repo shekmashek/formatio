@@ -587,18 +587,21 @@ class ResponsableController extends Controller
             }
             elseif(in_array($request->image->extension(),$extension_type)){
                 $user_id =  $users = Auth::user()->id;
-                $responsable = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id]);
+                $responsable = $this->fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
                 $image_ancien = $responsable->photos;
                 //supprimer l'ancienne image
                 File::delete(public_path("images/responsables/".$image_ancien));
                 //enregiistrer la nouvelle photo
                 $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-                $destinationPath = 'images/responsables';
+
+                if(Gate::allows('isReferent')) $destinationPath = 'images/responsables';
+                if(Gate::allows('isStagiaire')) $destinationPath = 'images/stagiaires';
                  //imager  resize
 
                  $image_name = $nom_image;
 
-                 $destinationPath = public_path('images/responsables');
+                 if(Gate::allows('isReferent'))  $destinationPath = public_path('images/responsables');
+                 if(Gate::allows('isStagiaire')) $destinationPath = public_path('images/stagiaires');
 
                  $resize_image = Image::make($image->getRealPath());
 
@@ -606,9 +609,12 @@ class ResponsableController extends Controller
                      $constraint->aspectRatio();
                  })->save($destinationPath . '/' .  $image_name);
                 // $image->move($destinationPath, $nom_image);
-                $url_photo = URL::to('/')."/images/responsables/".$nom_image;
-                DB::update('update responsables set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
-                return redirect()->route('profil_referent');
+                if(Gate::allows('isReferent'))  $url_photo = URL::to('/')."/images/responsables/".$nom_image;
+                if(Gate::allows('isStagiaire')) $url_photo = URL::to('/')."/images/stagiaires/".$nom_image;
+
+                DB::update('update employers set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
+                if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+                if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
             }
             else{
                 return redirect()->back()->with('error_format', 'Le format de votre fichier n\'est pas acceptable,choisissez entre : .jpeg,.jpg,.png,.gif,.psd,.ai,.svg');
