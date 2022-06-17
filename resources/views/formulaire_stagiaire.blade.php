@@ -43,7 +43,7 @@
                     <div class="col-12">
                         <form action="{{route('remplir_information')}}" method="POST" class=" formulaire w-50" >
                             @csrf
-                            <input type="hidden" name="id_resp" value="{{$testNull[0]->id}}">
+                            <input type="hidden" name="id_stg" value="{{$testNull[0]->id}}">
                             <p class="text-center">Informations générales</p>
                             <div class="mb-3 row text-end">
                                 <input type="text" name="id_stg" style="float: right;" value="{{$testNull[0]->id}}" hidden>
@@ -131,12 +131,12 @@
                                                 <input type="text" readonly class="form-control mb-3" id="lot" name="lot" value="{{$testNull[0]->lot}}">
                                             @else
 
-                                                <input type="text" class="form-control mb-3" id="lot" name="lot" placeholder="lot " required>
+                                                <input type="text" class="form-control mb-3" id="lot" name="lot" placeholder="lot " >
                                             @endif
                                             @if ($testNull[0]->quartier != null)
                                                 <input type="text" readonly class="form-control mb-3" id="quartier" name="quartier" value="{{$testNull[0]->quartier}}">
                                             @else
-                                                <input type="text" class="form-control mb-3" id="quartier" name="quartier" placeholder="quartier " required>
+                                                <input type="text" class="form-control mb-3" id="quartier" name="quartier" placeholder="quartier ">
                                             @endif
                                             @if ($testNull[0]->ville != null)
                                                 <input type="text" readonly class="form-control mb-3" id="ville" name="ville" value="{{$testNull[0]->ville}}">

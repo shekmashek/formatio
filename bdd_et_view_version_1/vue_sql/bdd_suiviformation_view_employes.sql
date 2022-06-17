@@ -13,9 +13,11 @@ SELECT
     (employers.telephone_emp) telephone_stagiaire,
     employers.user_id,
     (employers.prioriter) prioriter_emp,
-    service_id,
-    branche_id,
+    employers.service_id,
+    employers.branche_id,
     url_photo,
+    employers.departement_entreprises_id,
+     vd.nom_departement,
     employers.photos,
     (employers.cin_emp) cin,
     (employers.date_naissance_emp) date_naissance,
@@ -25,16 +27,20 @@ SELECT
     (employers.adresse_ville) ville,
     (employers.adresse_region) region,
     (employers.adresse_lot) lot,
+    bc.nom_branche,
     role_users.role_id,
     role_users.prioriter,
 employers.created_at,
 employers.updated_at,
 niveau_etude_id,
 niveau_etude.niveau_etude
-FROM
-employers, role_users, genre,niveau_etude
-WHERE
-    employers.user_id = role_users.user_id and employers.genre_id = genre.id and niveau_etude_id=niveau_etude.id and role_users.role_id=3;
+FROM employers
+LEFT JOIN v_departement_service_entreprise vd ON vd.service_id = employers.service_id and vd.departement_entreprise_id = employers.departement_entreprises_id
+LEFT JOIN branches bc ON bc.id = employers.branche_id
+JOIN role_users ON role_users.user_id =  employers.user_id
+JOIN genre ON genre.id = employers.genre_id
+JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
+WHERE role_users.role_id=3;
 
 CREATE OR REPLACE view responsables as
 SELECT

@@ -38,6 +38,7 @@ use App\Models\getImageModel;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
+use Exception;
 
 use function Ramsey\Uuid\v1;
 
@@ -75,54 +76,50 @@ class HomeController extends Controller
     public function remplir_info_stagiaire(Request $request)
     {
         $id_stg = $request->input('id_stg');
+        //teste si les inputs contiennent une valeur vide
+        $test_null =  array_filter(request()->all(), function ($val) {
+            return is_null($val);
+        });
 
-        if ($request->input('nom_stg') != null) {
-            DB::update('update employers set nom_emp= ? where id = ?', [$request->input('nom_stg'), $id_stg]);
-        }
-        if ($request->input('prenom_stg') != null) {
-            DB::update('update employers set prenom_emp = ? where id = ?', [$request->input('prenom_stg'), $id_stg]);
-        }
-        if ($request->input('date_naissance_stg') != null) {
-            DB::update('update employers set date_naissance_emp = ? where id = ?', [$request->input('date_naissance_stg'), $id_stg]);
-        }
-        if ($request->input('genre_stg') != null) {
-            if ($request->input('genre_stg') == 'Femme') $genre = 1;
-            if ($request->input('genre_stg') == 'Homme') $genre = 2;
-            DB::update('update employers set genre_id = ? where id = ?', [$genre, $id_stg]);
-        }
-        if ($request->input('tel_stg') != null) {
-            DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_stg'), $id_stg]);
-        }
-        if ($request->input('cin_stg') != null) {
-            DB::update('update employers set cin_emp = ? where id = ?', [$request->input('cin_stg'), $id_stg]);
-        }
-        if ($request->input('lot') != null) {
-            DB::update('update employers set adresse_lot = ? where id = ?', [$request->input('lot'), $id_stg]);
-        }
-        if ($request->input('quartier') != null) {
-            DB::update('update employers set adresse_quartier = ? where id = ?', [$request->input('quartier'), $id_stg]);
-        }
-        if ($request->input('ville') != null) {
-            DB::update('update employers set adresse_ville = ? where id = ?', [$request->input('ville'), $id_stg]);
-        }
-        if ($request->input('code_postal') != null) {
-            DB::update('update employers set adresse_code_postal = ? where id = ?', [$request->input('code_postal'), $id_stg]);
-        }
-        if ($request->input('region') != null) {
-            DB::update('update employers set adresse_region = ? where id = ?', [$request->input('region'), $id_stg]);
-        }
-        if ($request->input('niveau_stg') != null) {
-            DB::update('update employers set niveau_etude_id = ? where id = ?', [$request->input('niveau_stg'), $id_stg]);
-        }
-        if ($request->input('fonction_stagiaire') != null) {
-            DB::update('update employers set fonction_emp = ? where id = ?', [$request->input('fonction_stagiaire'), $id_stg]);
-        }
-        dd($request->input());
-        if (count($request->input()) > 2) {
-            return redirect()->back()->with('error', 'Remplissez les champs vides');
-        } else {
+        try {
+            if (count($test_null) > 0)
+            {
+                throw new Exception("Remplissez les champs vides");
+            }
+            else{
+                DB::beginTransaction();
+
+                DB::update('update employers set nom_emp= ? where id = ?', [$request->input('nom_stg'), $id_stg]);
+                DB::update('update employers set prenom_emp = ? where id = ?', [$request->input('prenom_stg'), $id_stg]);
+
+                DB::update('update employers set date_naissance_emp = ? where id = ?', [$request->input('date_naissance_stg'), $id_stg]);
+
+                if ($request->input('genre_stg') == 'Femme') $genre = 1;
+                if ($request->input('genre_stg') == 'Homme') $genre = 2;
+                DB::update('update employers set genre_id = ? where id = ?', [$genre, $id_stg]);
+
+                DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_stg'), $id_stg]);
+
+                DB::update('update employers set cin_emp = ? where id = ?', [$request->input('cin_stg'), $id_stg]);
+
+                DB::update('update employers set adresse_lot = ? where id = ?', [$request->input('lot'), $id_stg]);
+
+                DB::update('update employers set adresse_quartier = ? where id = ?', [$request->input('quartier'), $id_stg]);
+
+                DB::update('update employers set adresse_ville = ? where id = ?', [$request->input('ville'), $id_stg]);
+
+                DB::update('update employers set adresse_code_postal = ? where id = ?', [$request->input('code_postal'), $id_stg]);
+
+                DB::update('update employers set adresse_region = ? where id = ?', [$request->input('region'), $id_stg]);
+
+                DB::update('update employers set fonction_emp = ? where id = ?', [$request->input('fonction_stagiaire'), $id_stg]);
+                DB::commit();
+            }
             $totale_invitation = $this->collaboration->count_invitation();
-            return view('layouts.accueil_admin', compact('totale_invitation'));
+            $phone_tmp = $this->fonct->findWhere("stagiaires",["id"],[$id_stg]);
+            return view('layouts.accueil_admin', compact('totale_invitation','phone_tmp'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
     public function remplir_info_manager(Request $request)

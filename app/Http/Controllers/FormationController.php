@@ -409,6 +409,7 @@ class FormationController extends Controller
             $secteurs = $this->fonct->findAll("secteurs");
             $user_id = Auth::id();
             $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
+            if(Gate::allows('isStagiaire') )
             $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
             $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1, $resp_etp_connecter->entreprise_id]);
             $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis, md.cfp_id from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id join cfps as cfp on md.cfp_id = cfp.id where md.cfp_id = cfp.id group by md.cfp_id');
