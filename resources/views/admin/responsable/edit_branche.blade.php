@@ -13,7 +13,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
 
-        <form   class="btn-submit" action="{{route('update_branche',$responsable->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_branche_emp',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
                     @if ($liste_branche!=null)

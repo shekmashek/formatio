@@ -78,7 +78,6 @@
 
                     <input type="hidden" class="form-control test"  name="entreprise"  value="   {{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
 
-                    <input type="hidden" value="{{ $branche->nom_branche }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
                     <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
 
@@ -109,5 +108,38 @@
 </div>
 </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+$("#dep").change(function() {
+  $(".serv").empty();
+  var id = $(this).val();
 
+  $.ajax({
+        url: "/get_service",
+        type: "get",
+        data: {
+            id: id,
+        },
+        success: function(response) {
+            var userData = response;
+            if (userData.length > 0) {
+                for (var $i = 0; $i < userData.length; $i++) {
+                    $(".serv").append(
+                        '<option value="' +
+                            userData[$i].id +
+                            '" data-value="' +
+                            userData[$i].nom_service +
+                            '" >' +
+                            userData[$i].nom_service +
+                            "</option>"
+                    );
+                }
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        },
+    });
+});
+</script>
 @endsection

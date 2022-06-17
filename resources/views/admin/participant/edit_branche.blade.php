@@ -12,7 +12,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
 
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
+        <form   class="btn-submit" action="{{route('update_branche_emp',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
             @csrf
 
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -42,15 +42,6 @@
                         </select>
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label> --}}
 
-                        <select hidden value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
-                            <option value="Mr">Mr</option>
-                            <option value="Mme">Mme</option>
-                            <option value="Mlle">Mlle</option>
-                            <option value="Dr">Dr</option>
-                            <option value="Prof">Prof</option>
-                            <option value="Dir">Dir</option>
-                            <option value="PDG">PDG</option>
-                        </select>
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label> --}}
 
 
@@ -88,22 +79,28 @@
 
                     <input type="hidden" class="form-control test"  name="entreprise"  value="   {{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
 
-                    <select name="" id="" class="form-select test input">
+                    @if ($liste_branche!=null)
+                    <select name="branche" id="" class="form-select test input">
                       @for ($i = 0;$i<count($liste_branche);$i++)
-                        <option value="">{{$liste_branche[$i]->nom_branche}}</option>
+                        <option value="{{$liste_branche[$i]->id}}">{{$liste_branche[$i]->nom_branche}}</option>
                       @endfor
                     </select>
+                    <label class="ml-3 form-control-placeholder">Branche</label>
+                    <button class="btn btn_enregistrer mt-1"><i class="bx bx-check me-1"></i> Enregistrer</button>
+                    @else
+                    <p>Votre entreprise n'a pas de branche.</p>
+                    @endif
                     {{-- <div class="row px-3 mt-4">
                       <div class="form-group mt-1 mb-1">
                     <input type="text" value="   {{ $branche->nom_branche }}"  class="form-control test input"  name="lieu" placeholder="Matricule" > --}}
 
-                    <label class="ml-3 form-control-placeholder">Branche</label>
+
 
                   </div>
               </div>
                     <input type="hidden" class="form-control test"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" >
 
-                    <button class="btn btn_enregistrer mt-1"><i class="bx bx-check me-1"></i> Enregistrer</button>
+
 </form>
 <div id="columnchart_material_12" style="width: 200px; height: 30px;"></div>
 </center>

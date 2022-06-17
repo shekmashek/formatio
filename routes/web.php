@@ -302,7 +302,7 @@ Route::get('/edit_departement_service/{id}','ResponsableController@edit_departem
 Route::get('get_service','ResponsableController@get_service')->name('get_service');
 Route::post('/update_departemennt_service/{id}','ResponsableController@update_departemennt_service')->name('update_departemennt_service');
 Route::get('/edit_branche/{id}', 'ResponsableController@edit_branche')->name('edit_branche');
-Route::post('/update_branche/{id}','ResponsableController@update_branche')->name('update_branche');
+Route::post('/update_branche_emp/{id}','ResponsableController@update_branche')->name('update_branche_emp');
 // ======================= desactiver personne =====================
 Route::get('desactiver_personne','ResponsableCfpController@desactiver_personne')->name('desactiver_personne');
 Route::get('activer_personne','ResponsableCfpController@activer_personne')->name('activer_personne');
@@ -1005,7 +1005,7 @@ Route::post('update_departement','DepartementController@update_dep')->name('upda
 Route::post('delete_service','DepartementController@delete_service')->name('delete_service');
 Route::post('update_services','DepartementController@update_services')->name('update_services');
 Route::get('delete_branche/{id}','DepartementController@delete_branche')->name('delete_branche');
-// Route::post('update_branche','DepartementController@update_branche')->name('update_branche');
+Route::post('update_branche','DepartementController@update_branche')->name('update_branche');
 
 //enregistrement service
 Route::post('enregistrement_service', 'DepartementController@enregistrement_service')->name('enregistrement_service');

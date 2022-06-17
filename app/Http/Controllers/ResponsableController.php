@@ -548,9 +548,17 @@ class ResponsableController extends Controller
     public function edit_branche($id, Request $request)
     {
         $fonct = new FonctionGenerique();
-        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
-        $liste_branche = $fonct->findWhere("branches", ["entreprise_id"], [$responsable->entreprise_id]);
-        return view('admin.responsable.edit_branche', compact('liste_branche','responsable', 'liste_branche'));
+        if(Gate::allows('isReferent')){
+            $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+            $liste_branche = $fonct->findWhere("branches", ["entreprise_id"], [$responsable->entreprise_id]);
+            return view('admin.responsable.edit_branche', compact('liste_branche','responsable', 'liste_branche'));
+        }
+        if(Gate::allows('isStagiaire')){
+            $stagiaire = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from stagiaires where id = ?',[$id])[0];
+            $liste_branche = $fonct->findWhere("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
+            return view('admin.participant.edit_branche', compact('liste_branche','stagiaire', 'liste_branche'));
+        }
+
     }
     public function update_etp(Request $request, $id)
     {
@@ -669,7 +677,8 @@ class ResponsableController extends Controller
     public function update_branche(Request $request,$id){
 
         DB::update('update employers set branche_id = ? where id = ?', [$request->branche,$id]);
-        return redirect()->route('profil_referent');
+        if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+        if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
     }
     public function update(Request $request, $id)
     {

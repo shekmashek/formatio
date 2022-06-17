@@ -114,7 +114,7 @@ class DepartementController extends Controller
 
         $funct = new FonctionGenerique();
         $emps = $funct->afficheInfoNewOne($user_id);
-        
+
         return response()->json($emps);
     }
 
@@ -373,8 +373,19 @@ class DepartementController extends Controller
     }
     public function delete_dep($id)
     {
-        DB::delete('delete from departement_entreprises where id = ?', [$id]);
-        return back();
+        $fonct = new FonctionGenerique();
+        $verification = $fonct->findWhere("employers",["departement_entreprises_id"],[$id]);
+        $verification_service = $fonct->findWhere("services",["departement_entreprise_id"],[$id]);
+        if($verification != null){
+            return back()->with('erreur','Vous ne pouvez pas supprimer, il y a des employés rattachés à ce département');
+        }
+        if($verification_service != null){
+            return back()->with('erreur','Vous ne pouvez pas supprimer, il y a des services rattachés à ce département');
+        }
+        else{
+            DB::delete('delete from departement_entreprises where id = ?', [$id]);
+            return back();
+        }
 
     }
     public function update_dep(Request $request)
@@ -385,8 +396,20 @@ class DepartementController extends Controller
     public function delete_service(Request $request)
     {
         $ids=$request->ids;
-        service::whereIn('id',$ids)->delete();
-        return back();
+        if($ids == null) return back()->with('erreur','Veuillez sélectionnez le service que vous voulez supprimer');
+        else{
+            $id = service::whereIn('id',$ids)->get();
+            $fonct = new FonctionGenerique();
+            $verification = $fonct->findWhere("employers",["service_id"],[$id[0]->id]);
+            if($verification != null){
+                return back()->with('erreur','Vous ne pouvez pas supprimer, il y a des employés rattachés à ce service');
+            }
+            else{
+                service::whereIn('id',$ids)->delete();
+                return back();
+            }
+        }
+
     }
     public function update_services(Request $request)
     {
@@ -412,8 +435,15 @@ class DepartementController extends Controller
     }
     public function delete_branche($id)
     {
-        DB::delete('delete from branches where id=?',[$id]);
-        return back();
+        $fonct = new FonctionGenerique();
+        $verification = $fonct->findWhere("employers",["branche_id"],[$id]);
+        if($verification != null){
+            return back()->with('erreur','Vous ne pouvez pas supprimer, il y a des employés rattachés à cette branche');
+        }
+        else{
+            DB::delete('delete from branches where id=?',[$id]);
+            return back();
+        }
     }
     public function update_branche(Request $request)
     {

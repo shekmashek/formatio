@@ -103,6 +103,11 @@
 
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i
             class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+            @if(session()->has('erreur'))
+            <div class="alert alert-danger">
+                {{ session()->get('erreur') }}
+            </div>
+        @endif
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item active">
@@ -270,7 +275,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-md-1" style="white-space: nowrap">
-                                                                    
+
                                                                     <a type="button"  href="" data-bs-toggle="modal" data-bs-target="#example_{{$service_departement[$i]->departement_entreprise_id}}"><i class='bx  bx-edit bx_modifier'></i></a>
                                                                     <a type="button"  href="" data-bs-toggle="modal" data-bs-target="#deleteserve_{{$service_departement[$i]->departement_entreprise_id}}"><i class='bx  bx-trash bx_supprimer' ></i></a>
 
@@ -315,7 +320,7 @@
                                                                             <form action="{{route('delete_service')}}"  method="POST">
                                                                                 @csrf
                                                                                 <input type="hidden" name="departement" value="{{$service_departement[$i]->departement_entreprise_id}}">
-                                                                                <label > Selectionner les elements à supprimer</label><br>
+                                                                                <label> Selectionner les elements à supprimer</label><br>
                                                                                 @foreach ($service_departement_tous as $sd)
                                                                                     @if ($sd->departement_entreprise_id == $service_departement[$i]->departement_entreprise_id)
 
@@ -396,7 +401,7 @@
                                         <div class="col">
                                             <input type="text" class="form-control mb-2" id="inlineFormInput"
                                                 name="service[]" placeholder="Nom de service" required />
-                                        </div> --}} 
+                                        </div> --}}
                                         <div class="col ms-2">
                                             <button type="button" class="btn btn_nouveau affiche_btn2" id="addRow2" >
                                                 <i class="bx bx-plus-medical me-1"></i>nouveau service</button>
@@ -419,6 +424,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class=" p-3 mb-5 bg-body rounded ">
+
                                 <h6>Branche</h6>
                                 <hr>
                                 <div class="table-responsive mt-0">
@@ -438,7 +444,7 @@
                                                         <i class='bx  bx-edit bx_modifier'></i></a>
                                                     <a href="" data-bs-toggle="modal" data-bs-target="#deletebranche_{{$branches[$i]->id}}" type="button" >
                                                        <i class='bx  bx-trash bx_supprimer'></i></a>
-                                                
+
 
                                             </td>
 

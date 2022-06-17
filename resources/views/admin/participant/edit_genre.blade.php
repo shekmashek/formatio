@@ -77,8 +77,6 @@
 
                     <input type="hidden" class="form-control"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}" readonly>
 
-                    <input type="hidden" value="{{ $branche->id }}"  class="form-control"  name="lieu_travail" placeholder="Matricule" readonly>
-
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>
 
