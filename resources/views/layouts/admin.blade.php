@@ -1346,7 +1346,7 @@
                                 </a>
                                 <div id="apprCat" class="collapse p-1">
                                     <hr>
-                                    <a href="/nouveau_module"><span>Cliquer ici pour ajouter un module à votre catalogue
+                                    <a data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button"><span>Cliquer ici pour ajouter un module à votre catalogue
                                             de formation</span></a>
                                 </div>
                             </li>
@@ -1361,7 +1361,7 @@
                                 </a>
                                 <div id="apprFormateur" class="collapse  p-1">
                                     <hr>
-                                    <a href="nouveau_formateur"><span>Cliquer ici pour ajouter un formateur</span></a>
+                                    <a href="{{route('nouveau_formateur')}}"><span>Cliquer ici pour ajouter un formateur</span></a>
                                 </div>
                             </li>
 
@@ -1377,7 +1377,7 @@
                                 </a>
                                 <div id="apprInter" class="collapse">
                                     <hr>
-                                    <a href="/liste_entreprise"><span>Cliquer ici pour collaborer avec une
+                                    <a href="{{route('liste_entreprise')}}"><span>Cliquer ici pour collaborer avec une
                                             entreprise</span></a>
                                 </div>
                             </li>
