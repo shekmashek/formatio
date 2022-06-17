@@ -51,6 +51,7 @@ class ModuleController extends Controller
             $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             $categorie = formation::all();
+            
             $date_creation = module::all();
             $niveau = Niveau::all();
             $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
@@ -59,8 +60,7 @@ class ModuleController extends Controller
                 select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by nom_module desc',[$cfp_id]);
             $mod_hors_ligne = DB::select('select * from moduleformation where status = 2 and etat_id = 2 and cfp_id = ? order by nom_module desc',[$cfp_id]);
             $mod_publies = DB::select('select * from moduleformation where status = 2 and etat_id = 1 and cfp_id = ? order by nom_module desc',[$cfp_id]);
-
-
+              
             if (count($infos) <= 0) {
                 return view('admin.module.guide');
             } else {
