@@ -1471,48 +1471,48 @@
         //Pour chaque div de classe randomColor
         $(".randomColor").each(function() {
         //On change la couleur de fond au hasard
-        $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
+            $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
         });
 
         $("#acf-domaine").change(function() {
-    var id = $(this).val();
-    $(".categ").empty();
-    // $(".categ").append(
-    //     '<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>'
-    // );
+            var id = $(this).val();
+            $(".categ").empty();
+            // $(".categ").append(
+            //     '<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>'
+            // );
 
-    $.ajax({
-        url: "/get_formation",
-        type: "get",
-        data: {
-            id: id,
-        },
-        success: function(response) {
-            var userData = response;
+            $.ajax({
+                url: "/get_formation",
+                type: "get",
+                data: {
+                    id: id,
+                },
+                success: function(response) {
+                    var userData = response;
 
-            if (userData.length > 0) {
-                document.getElementById("domaine_id_err").innerHTML = "";
-                for (var $i = 0; $i < userData.length; $i++) {
-                    $(".categ").append(
-                        '<option value="' +
-                            userData[$i].id +
-                            '" data-value="' +
-                            userData[$i].nom_formation +
-                            '" >' +
-                            userData[$i].nom_formation +
-                            "</option>"
-                    );
-                }
-            } else {
-                document.getElementById("domaine_id_err").innerHTML =
-                    "choisir le type de domaine valide pour avoir ses formations";
-            }
-        },
-        error: function(error) {
-            console.log(error);
-        },
-    });
-});
+                    if (userData.length > 0) {
+                        document.getElementById("domaine_id_err").innerHTML = "";
+                        for (var $i = 0; $i < userData.length; $i++) {
+                            $(".categ").append(
+                                '<option value="' +
+                                    userData[$i].id +
+                                    '" data-value="' +
+                                    userData[$i].nom_formation +
+                                    '" >' +
+                                    userData[$i].nom_formation +
+                                    "</option>"
+                            );
+                        }
+                    } else {
+                        document.getElementById("domaine_id_err").innerHTML =
+                            "choisir le type de domaine valide pour avoir ses formations";
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                },
+            });
+        });
 
         toastr.options = {
         "closeButton": false,
@@ -1654,19 +1654,6 @@
         $('.prevent_affichage2').on('click', function(e){
             e.stopPropagation();
         });
-
-        // $(document).on('click', function(e) {
-        //     var container = $("#box_profil");
-        //     if ($(e.target).closest(container).length) {
-        //         container.show();
-        //     }
-        // });
-        // $(document).on('click', function(e) {
-        //     var container = $("#box_profil");
-        //     if (!$(e.target).closest(container).length) {
-        //         container.hide();
-        //     }
-        // });
 
 
     $(".nav .nav_linke").on("click", function(e){
