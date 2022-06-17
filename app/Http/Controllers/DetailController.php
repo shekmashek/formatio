@@ -88,11 +88,13 @@ class DetailController extends Controller
 
             $modules = array();
             $formations = array();
+            // dd($detail);
             for ($i=0; $i < count($detail); $i++) {
                 array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
             }
 
             for ($i=0; $i < count($modules); $i++) {
+                // dd($modules);
                 array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
             }
 
