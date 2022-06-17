@@ -949,7 +949,7 @@
         }
 
         $('.icon_trie').remove();
-        var dataValue=null; 
+        var dataValue=null;
         if(count_total_payer_trie < 3){
             dataValue = getDataRequetTrie(".total_payer_trie", "TOTAL_SOLDE");
         }else{

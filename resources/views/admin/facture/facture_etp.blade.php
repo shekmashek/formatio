@@ -497,7 +497,7 @@
                                     @include("admin.facture.pagination_etp.pagination_facture_actif")
 
 
-                                    <table class="table  table-hover">
+                                    <table class="table facture_table table-hover">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -555,11 +555,11 @@
 
                                                     </a>
                                                 </td>
-                                                <th>
+                                                <td>
                                                     <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                         {{$actif->num_facture}}
                                                     </a>
-                                                </th>
+                                                </td>
                                                 <td>
                                                     <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                         {{$actif->nom_cfp}}
@@ -674,7 +674,7 @@
                                             @include("admin.facture.pagination_etp.pagination_facture_payer")
 
 
-                                            <table class="table  table-hover">
+                                            <table class="table facture_table table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -728,11 +728,11 @@
                                                                 @endif
                                                             </a>
                                                         </td>
-                                                        <th>
+                                                        <td>
                                                             <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                                 {{$actif->num_facture}}
                                                             </a>
-                                                        </th>
+                                                        </td>
                                                         <td>
                                                             <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                                 {{$actif->nom_cfp}}
