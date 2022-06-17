@@ -1661,6 +1661,10 @@
         localStorage.setItem('indiceSidebar', 'vous');
     });
 
+    $("a.teste").on("click", function(e){
+        localStorage.setItem('indiceSidebar', $(".nav").find("#accueil").get()[0].href);
+    });
+
     $(".btn_creer li").on("click", function(e){
         if(''==this.id)localStorage.removeItem('indiceSidebar');
         else if (!$(".nav").find("."+this.id)) {
@@ -1689,7 +1693,7 @@
     else if(Tabactive){
         ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
         ($('.btn_racourcis a[href="' + Tabactive + '"]').closest('div')).addClass('active');
-    }
+    }else localStorage.removeItem('indiceSidebar');
     </script>
 </body>
 
