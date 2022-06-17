@@ -336,6 +336,12 @@
     border: none;
 }
 
+/*.nav-item.active .nav-link {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc;
+} */
+
 .nav-item.active .nav-link {
     border-bottom: 3px solid #7635dc !important;
     border: none;
@@ -966,4 +972,26 @@ font-size: 0.850rem;
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+}
+
+.view_icon{
+    font-size: 2.5rem;
+    position: relative;
+    bottom: 0px;
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.actions_button_mod{
+    visibility: hidden;
+}
+
+.liste__formation:hover .actions_button_mod{
+    visibility: visible;
+}
+
+.form-check-input{
+    cursor: pointer;
 }
