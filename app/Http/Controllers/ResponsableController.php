@@ -640,7 +640,8 @@ class ResponsableController extends Controller
             $new_password = Hash::make($request->new_password);
             if (Hash::check($request->get('ancien_password'), $pwd)) {
                 DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
-                return redirect()->route('profil_referent');
+                if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+                if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
             } else {
                 return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
             }
@@ -655,7 +656,9 @@ class ResponsableController extends Controller
         else{
             DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
             DB::update('update employers set email_emp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
-            return redirect()->route('profil_referent');
+
+            if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+            if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
         }
     }
     public function update_departemennt_service($id,Request $request){
@@ -671,10 +674,10 @@ class ResponsableController extends Controller
     {
 
 
-        if (Gate::allows('isReferent')) {
+
             $fonct = new FonctionGenerique();
 
-            $resp_etp = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
+            // $resp_etp = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
 
             //modifier les données
             $nom = $request->nom;
@@ -693,7 +696,6 @@ class ResponsableController extends Controller
             $phone =  $request->phone;
             $mdp = $request->password;
             $mdpHash = Hash::make($mdp);
-
             $input = $request->image;
             //stocker logo dans google drive
             //stocker logo dans google drive
@@ -704,8 +706,8 @@ class ResponsableController extends Controller
 
 
             if ($image = $request->file('image')) {
-
-                $destinationPath = 'images/responsables';
+                if(Gate::allows('isReferent')) $destinationPath = 'images/responsables';
+                if(Gate::allows('isStagiaire')) $destinationPath = 'images/stagiaires';
                 $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
                 $image->move($destinationPath, $profileImage);
                 $input = "$profileImage";
@@ -746,69 +748,8 @@ class ResponsableController extends Controller
             DB::update('update users set telephone = ? where id = ?', [$phone,Auth::user()->id]);
             // DB::update('update users set cin = ? where id = ?', [$cin,Auth::user()->id]);
 
-            return redirect()->route('profil_referent');
-        }
-
-
-        if (Gate::allows('isSuperAdmin') || Gate::allows('isReferent')) {
-            $id = $request->Id;
-            $user_id = responsable::where('id', $id)->value('user_id');
-            //modifier les données
-            // $dossier = 'stagiaire';
-            // $stock_stg = new getImageModel();
-            //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
-            $input = $request->image;
-            if ($image = $request->file('image')) {
-                $destinationPath = 'images/stagiaires';
-                $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                $image->move($destinationPath, $profileImage);
-                $input = "$profileImage";
-            }
-            $nom = $request->Nom;
-            $prenom = $request->Prenom;
-            $mail = $request->Mail;
-            $fonction = $request->Fonction;
-            $phone =  $request->Phone;
-            if ($input != null) {
-
-
-                responsable::where('id', $id)
-                    ->update([
-                        'nom_resp' => $nom,
-                        'prenom_resp' => $prenom,
-                        'fonction_resp' => $fonction,
-                        'email_resp' => $mail,
-                        'telephone_resp' => $phone,
-                        'photos' => $input,
-                        'adresse_lot' => $request->lot,
-                        'adresse_region' => $request->region,
-                        'adresse_ville' => $request->ville,
-                        'adresse_quartier' => $request->quartier,
-                        'adresse_code_postal' => $request->code_postal
-                    ]);
-
-            } else {
-                responsable::where('id', $id)
-                    ->update([
-                        'nom_resp' => $nom,
-                        'prenom_resp' => $prenom,
-                        'fonction_resp' => $fonction,
-                        'email_resp' => $mail,
-                        'telephone_resp' => $phone,
-                        'adresse_lot' => $request->lot,
-                        'adresse_region' => $request->region,
-                        'adresse_ville' => $request->ville,
-                        'adresse_quartier' => $request->quartier,
-                        'adresse_code_postal' => $request->code_postal
-                    ]);
-            }
-            User::where('id', $user_id)
-                ->update([
-                    'name' => $nom,
-                    'email' => $mail
-                ]);
-            return redirect()->route('liste_responsable');
-        }
+            if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+            if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
     }
 
     public function destroy(Request $request)

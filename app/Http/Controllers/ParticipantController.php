@@ -1041,137 +1041,16 @@ class ParticipantController extends Controller
 
         // }
     }
-    //update_stagiaire connecte
-    public function update_mot_de_passe_stagiaire(Request $request, $id)
-    {
-        if ($request->ancien_password == null) {
-            return back()->with('error_ancien_pwd', 'Entrez votre ancien mot de passe');
-        } elseif ($request->new_password == null) {
-            return back()->with('error_new_pwd', 'Entrez votre nouveau mot de passe avant de cliquer sur enregistrer');
-        } else {
-            $users =  db::select('select * from users where id = ?', [Auth::id()]);
-            $pwd = $users[0]->password;
-            $new_password = Hash::make($request->new_password);
-            if (Hash::check($request->get('ancien_password'), $pwd)) {
-                DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
-                return redirect()->route('profile_stagiaire');
-            } else {
-                return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
-            }
-        }
-    }
+
     public function update_niveau_stagiaire(Request $request, $id)
     {
         $niveau = $request->niveau;
-        DB::update('update stagiaires set niveau_etude_id = ? where id = ?', [$niveau, $id]);
-        return redirect()->route('profile_stagiaire');
+        DB::update('update employers set niveau_etude_id = ? where id = ?', [$niveau, $id]);
+        if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
+        if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
     }
-    public function update_email_stagiaire(Request $request, $id)
-    {
-        if ($request->mail == null) {
-            return back()->with('error_email', 'Entrez votre adresse e-mail avant de cliquer sur enregistrer');
-        } else {
-            DB::update('update users set email = ? where id = ?', [$request->mail, Auth::id()]);
-            DB::update('update stagiaires set mail_stagiaire = ? where user_id = ?', [$request->mail, Auth::id()]);
-            return redirect()->route('profile_stagiaire');
-        }
-    }
-    public function update_stagiaire(Request $request, $id)
-    {
-        if ($request->nom == null) {
-            return back()->with('error_nom', 'Entrez votre nom avant de cliquer sur enregistrer');
-        } elseif ($request->prenom == null) {
-            return back()->with('error_prenom', 'Entrez votre prénom avant de cliquer sur enregistrer');
-        } elseif ($request->phone == null) {
-            return back()->with('error_phone', 'Entrez votre numéro de téléphone avant de cliquer sur enregistrer');
-        } elseif ($request->cin == null) {
-            return back()->with('error_cin', 'Entrez votre CIN avant de cliquer sur enregistrer');
-        } elseif ($request->fonction == null) {
-            return back()->with('error_fonction', 'Entrez votre fonction avant de cliquer sur enregistrer');
-        } else {
-            $user_id = Auth::user()->id;
-            $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
-
-            $input = $request->image;
-            if ($image = $request->file('image')) {
-                $destinationPath = 'images/stagiaires';
-                $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                $image->move($destinationPath, $profileImage);
-                $input = "$profileImage";
-            }
-
-            if ($input != null) {
-                $stagiaires = stagiaire::with('entreprise', 'Departement')->where('user_id', $user_id)->get();
-                stagiaire::where('id', $id)->update([
-
-                    'matricule' => $request->matricule,
-                    'nom_stagiaire' => $request->nom,
-                    'prenom_stagiaire' => $request->prenom,
-                    'date_naissance' => $request->date,
-                    'genre_stagiaire' => $request->genre,
-                    'fonction_stagiaire' => $request->fonction,
-                    'telephone_stagiaire' => $request->phone,
-                    'mail_stagiaire' => $request->mail,
-                    'photos' => $input,
-                    'branche_id' => $request->lieu_travail,
-                    'cin' => $request->cin,
-                    'niveau_etude' => $request->niveau,
-                    'titre' => $request->titre,
-                    'ville' => $request->ville,
-                    'quartier' => $request->quartier,
-                    'code_postal' => $request->code_postal,
-                    'lot' => $request->lot,
-                    'region' => $request->region,
-
-                ]);
-
-                // Departement::where('id',$id)->update([
-                //     'nom_departement'=>$request->departement
-                // ]);
-                entreprise::where('id', $id)->update([
-                    'nom_etp' => $request->entreprise
-                ]);
-            } else {
-                stagiaire::where('id', $id)->update([
-                    'matricule' => $request->matricule,
-                    'nom_stagiaire' => $request->nom,
-                    'prenom_stagiaire' => $request->prenom,
-                    'date_naissance' => $request->date,
-                    'genre_stagiaire' => $request->genre,
-                    'fonction_stagiaire' => $request->fonction,
-                    'telephone_stagiaire' => $request->phone,
-                    'mail_stagiaire' => $request->mail,
-                    'branche_id' => $request->lieu_travail,
-                    'cin' => $request->cin,
-                    'niveau_etude_id' => $request->niveau,
-                    'titre' => $request->titre,
-                    'ville' => $request->ville,
-                    'quartier' => $request->quartier,
-                    'code_postal' => $request->code_postal,
-                    'lot' => $request->lot,
-                    'region' => $request->region,
 
 
-                ]);
-                // Departement::where('id',$id)->update([
-                //     'nom_departement'=>$request->departement
-                // ]);
-                // entreprise::where('id',$id)->update([
-                //     'nom_etp'=>$request->entreprise
-                // ]);
-            }
-            // $password = $request->password;
-            // $nom = $request->nom;
-            // $mail = $request->mail;
-            // $hashedPwd = Hash::make($password);
-            // // $user = User::where('id', Auth::user()->id)->update([
-            // //     'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
-            // // ]);
-            DB::update('update users set telephone = ? where id = ?', [$request->phone, Auth::id()]);
-            DB::update('update users set cin = ? where id = ?', [$request->cin, Auth::id()]);
-            return redirect()->route('profile_stagiaire', $id);
-        }
-    }
     public function update_photo_stagiaire($id, Request $request)
     {
         $image = $request->file('image');
