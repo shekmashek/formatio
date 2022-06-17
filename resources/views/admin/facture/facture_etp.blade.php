@@ -300,28 +300,30 @@
                                 {{------------------------------------------------------------------------------- pagination facture full--}}
                                 @include("admin.facture.pagination_etp.pagination_tout_facture")
 
-                                <table class="table table-hover">
+                                <table class="table facture_table table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            <th>#</th>
+                                            <th style="max-width: 12%">Type</th>
+                                            <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                             </th>
-                                            <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Organisme de formation &nbsp; <span class="nom_has_arrow"></span> </a>
                                             </th>
-                                            <th scope="col">Date de facturation</th>
-                                            <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                            <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
                                             </th>
-                                            <th scope="col">
+                                            <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
+                                            </th>
+                                            <th style="max-width: 12%">
                                                 <div align="right">
-                                                    Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
                                                 </div>
                                             </th>
-                                            <th scope="col">
+                                            <th style="max-width: 12%">
                                                 <div align="right">
-                                                    Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                <a class=" rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
                                                 </div>
                                             </th>
-                                            <th scope="col">Statut</th>
+                                            <th style="max-width: 12%">Statut</th>
                                         </tr>
                                     </thead>
                                     <tbody id="list_data_trie_tous">
@@ -329,6 +331,14 @@
                                         @foreach ($full_facture as $actif)
 
                                         <tr>
+                                            <td>
+                                                @if($actif->facture_encour =="en_cour"  || $actif->facture_encour =="terminer")
+                                                    
+                                                    <h6><a href="#collapseprojet_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
+
+                                                @endif
+                        
+                                            </td>
                                             <td>
                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
 
@@ -353,11 +363,11 @@
                                                 </a>
 
                                             </td>
-                                            <th>
+                                            <td>
                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                     {{$actif->num_facture}}
                                                 </a>
-                                            </th>
+                                            </td>
                                             <td>
                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
                                                     {{$actif->nom_etp}}
@@ -390,45 +400,85 @@
 
                                                     @if($actif->dernier_montant_ouvert<=0) <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
                                                         payé
-                            </div>
-                            @else
-                            @if($actif->facture_encour =="valider")
-                            @if ($actif->jour_restant >0)
-                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                envoyé
-                            </div>
-                            @else
-                            <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
-                                en retard
-                            </div>
-                            @endif
-                            @elseif($actif->facture_encour =="en_cour")
-                            @if ($actif->jour_restant >0)
-                            <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
-                                partiellement payé
-                            </div>
-                            @else
-                            <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
-                                en retard
-                            </div>
-                            @endif
-                            @endif
-                            @endif
+                                                    </div>
+                                                    @else
+                                                    @if($actif->facture_encour =="valider")
+                                                    @if ($actif->jour_restant >0)
+                                                    <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                        envoyé
+                                                    </div>
+                                                    @else
+                                                    <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                                        en retard
+                                                    </div>
+                                                    @endif
+                                                    @elseif($actif->facture_encour =="en_cour")
+                                                    @if ($actif->jour_restant >0)
+                                                    <div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white">
+                                                        partiellement payé
+                                                    </div>
+                                                    @else
+                                                    <div style="background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white">
+                                                        en retard
+                                                    </div>
+                                                    @endif
+                                                    @endif
+                                                    @endif
 
-                            </a>
-                            </td>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td colspan="9" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
+                                                @if(count($encaissement)>0)
+                                                <div class="centrer">
+                                                <div class="alert alert-light" role="alert">Vos Payements:</div>
+                                                    <table  class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">N° F#</th>
+                                                                <th scope="col">Montant facturer</th>
+                                                                <th scope="col">Paiement</th>
+                                                                <th scope="col">Montant ouvert</th>
+                                                                <th scope="col">Mode de paiement</th>
+                                                                <th scope="col">Date de paiement</th>
+                                                                <th scope="col">Memo/Notes</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($encaissement as $info)
+                                                            @if ($actif->num_facture == $info->num_facture)
+                                                                <tr>
+                                                                    <td> <a href="{{route('detail_facture',$info->num_facture)}}">
+                                                                            {{ $info->num_facture }}</a>
+                                                                    </td>
+                                                                    <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                                                                    <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                                                                    <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                                                                    <td>{{ $info->description }}</td>
+                                                                    <td>{{ $info->date_encaissement }}</td>
+                                                                    <td>{{ $info->libelle }}</td>
+                                                                </tr>
+                                                            @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        @else
+                                        <tr>
+                                            <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
+                                        </tr>
+                                        @endif
+                                        
+                                    </tbody>
+                                </table>
 
-                            </tr>
-                            @endforeach
-                            @else
-                            <tr>
-                                <td colspan="10" class="text-center" style="color:red;">Aucun Résultat</td>
-                            </tr>
-                            @endif
-                            </tbody>
-                            </table>
-
-                        </div>
+                                </div>
 
 
                         {{-- --}}
@@ -450,31 +500,38 @@
                                     <table class="table  table-hover">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Type</th>
-                                                <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                <th>#</th>
+                                                <th style="max-width: 12%">Type</th>
+                                                <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                                 </th>
-                                                <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Organisme de formation &nbsp; <span class="nom_has_arrow"></span> </a>
                                                 </th>
-                                                <th scope="col">Date de facturation</th>
-                                                <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
                                                 </th>
-                                                <th scope="col">
+                                                <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
+                                                </th>
+                                                <th style="max-width: 12%">
                                                     <div align="right">
-                                                        Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                    <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
                                                     </div>
                                                 </th>
-                                                <th scope="col">
+                                                <th style="max-width: 12%">
                                                     <div align="right">
-                                                        Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                    <a class=" rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
                                                     </div>
                                                 </th>
-                                                <th scope="col">Status</th>
+                                                <th style="max-width: 12%">Statut</th>
                                             </tr>
                                         </thead>
                                         <tbody id="list_data_trie_valider">
                                             @if (count($facture_actif) > 0)
                                             @foreach ($facture_actif as $actif)
                                             <tr>
+                                                <td>
+                                                    @if($actif->facture_encour =="en_cour")
+                                                        <h6><a href="#collapseprojet_actif_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
 
@@ -550,12 +607,52 @@
                                                 </td>
 
                                             </tr>
+                                            <tr>
+                                                <td colspan="9" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_actif_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
+                                                    @if($actif->facture_encour != "valider" && count($encaissement)>0)
+                                                    <div class="centrer">
+                                                    <div class="alert alert-light" role="alert">Vos Payements:</div>
+                                                        <table  class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">N° F#</th>
+                                                                    <th scope="col">Montant facturer</th>
+                                                                    <th scope="col">Paiement</th>
+                                                                    <th scope="col">Montant ouvert</th>
+                                                                    <th scope="col">Mode de paiement</th>
+                                                                    <th scope="col">Date de paiement</th>
+                                                                    <th scope="col">Memo/Notes</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($encaissement as $info)
+                                                                @if ($actif->num_facture == $info->num_facture)
+                                                                    <tr>
+                                                                        <td> <a href="{{route('detail_facture',$info->num_facture)}}">
+                                                                                {{ $info->num_facture }}</a>
+                                                                        </td>
+                                                                        <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                                                                        <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                                                                        <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                                                                        <td>{{ $info->description }}</td>
+                                                                        <td>{{ $info->date_encaissement }}</td>
+                                                                        <td>{{ $info->libelle }}</td>
+                                                                    </tr>
+                                                                @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    @endif
+                                                </td>
+                                            </tr>
                                             @endforeach
                                             @else
                                             <tr>
                                                 <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                             </tr>
                                             @endif
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -580,31 +677,36 @@
                                             <table class="table  table-hover">
                                                 <thead>
                                                     <tr>
+                                                        <th>#</th>
                                                         <th scope="col">Type</th>
-                                                        <th scope="col">F # &nbsp; <a href="#" style="color: blue"> <button class="btn btn_creer_trie num_fact_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        <th><a href="#" style="color: blue" class="num_fact_trie" value="0">F # &nbsp; <span class="num_has_arrow"></span> </a>
                                                         </th>
-                                                        <th scope="col">Organisme de formation &nbsp; <button class="btn btn_creer_trie nom_entiter_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        <th style="max-width: 12%"><a class="nom_entiter_trie" value="0">Organisme de formation &nbsp; <span class="nom_has_arrow"></span> </a>
                                                         </th>
-                                                        <th scope="col">Date de facturation</th>
-                                                        <th scope="col">Date de règlement &nbsp; <button class="btn btn_creer_trie dte_reglement_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                        <th scope="col"><a class="dte_fact_trie" value="0">Date de facturation &nbsp; <span class="fact_has_arrow"></span></a>
+                                                        </th>
+                                                        <th style="max-width: 12%"><a class="dte_reglement_trie" value="0">Date de règlement &nbsp; <span class="dte_has_arrow"></span></a>
                                                         </th>
                                                         <th scope="col">
                                                             <div align="right">
-                                                                Total à payer &nbsp; <button class="btn btn_creer_trie total_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                <a class="total_payer_trie" value="0"> Total à payer &nbsp; <span class="total_has_arrow"></span></a>
                                                             </div>
                                                         </th>
                                                         <th scope="col">
                                                             <div align="right">
-                                                                Reste à payer &nbsp; <button class="btn btn_creer_trie rest_payer_trie" value="0"><i class="fa icon_trie fa-arrow-down"></i></button> </a>
+                                                                <a class="rest_payer_trie" value="0"> Solde &nbsp; <span class="rest_has_arrow"></span></a>
                                                             </div>
                                                         </th>
-                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Statut</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="list_data_trie_payer">
                                                     @if (count($facture_payer) > 0)
                                                     @foreach ($facture_payer as $actif)
                                                     <tr>
+                                                        <td>
+                                                            <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>   
+                                                        </td>
                                                         <td>
                                                             <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                                 @if ($actif->reference_type_facture == "Facture")
@@ -663,6 +765,50 @@
                                                                     payé
                                                                 </div>
                                                             </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="9" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_payer_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
+                                                            @if($actif->facture_encour != "valider" && count($encaissement)>0)
+                                                            <div class="centrer">
+                                                            <div class="alert alert-light" role="alert">Vos Payements:</div>
+
+                                                                <table  class="table table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">N° F#</th>
+                                                                            <th scope="col">Montant facturer</th>
+                                                                            <th scope="col">Paiement</th>
+                                                                            <th scope="col">Montant ouvert</th>
+                                                                            <th scope="col">Mode de paiement</th>
+                                                                            <th scope="col">Date de paiement</th>
+                                                                            <th scope="col">Memo/Notes</th>
+                                                                            <th scope="col">Actions</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($encaissement as $info)
+                                                                        @if ($actif->num_facture == $info->num_facture)
+                                                                            <tr>
+                                                                                <td> <a href="{{route('detail_facture',$info->num_facture)}}">
+                                                                                        {{ $info->num_facture }}</a>
+                                                                                </td>
+                                                                                <td>{{$devise->devise." ". number_format($info->montant_facture, 0, ',', ' ') }}</td>
+                                                                                <td>{{$devise->devise." ". number_format($info->payement, 0, ',', ' ') }}</td>
+                                                                                <td>{{$devise->devise." ". number_format($info->montant_ouvert, 0, ',', ' ') }}</td>
+                                                                                <td>{{ $info->description }}</td>
+                                                                                <td>{{ $info->date_encaissement }}</td>
+                                                                                <td>{{ $info->libelle }}</td>
+                                                                                <td><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                                    <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                     @endforeach

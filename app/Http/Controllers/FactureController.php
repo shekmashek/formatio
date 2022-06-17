@@ -143,7 +143,8 @@ class FactureController extends Controller
             $facture_actif = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour!", "entreprise_id"], ["terminer", $entreprise_id], 0, $nb_limit, "invoice_date", "DESC");
             $facture_payer = $this->fact->getListDataFacture("v_facture_actif", ["facture_encour", "entreprise_id"], ["terminer", $entreprise_id], 0, $nb_limit, "invoice_date", "DESC");
         }
-        return view('admin.facture.facture_etp', compact('pour_list', 'devise', 'cfp', 'full_facture', 'facture_actif', 'facture_payer', 'pagination_full', 'pagination_actif', 'pagination_payer'));
+        $encaissement = DB::select('select * from v_encaissement where entreprise_id=?', [$entreprise_id]);
+        return view('admin.facture.facture_etp', compact('pour_list','encaissement', 'devise', 'cfp', 'full_facture', 'facture_actif', 'facture_payer', 'pagination_full', 'pagination_actif', 'pagination_payer'));
     }
 
 
@@ -1756,6 +1757,7 @@ class FactureController extends Controller
         // ===========================================================================================================================================================================
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+            $encaissement = DB::select('select * from v_encaissement where entreprise_id=?', [$entreprise_id]);
             $arrow='<i class="fa icon_trie fa-arrow-down"></i>';
             // ---------------------------------- ts mhz fafana
             if ($req->data_value == 0) {
@@ -1780,7 +1782,9 @@ class FactureController extends Controller
             if ($req->trie_par == "RESTE_SOLDE") {
                 $rep_par_trie = "dernier_montant_ouvert";
             }
-
+            if($req->trie_par == "DTE_FACT"){
+                $rep_par_trie = "date_facture";
+            }
 
             if ($req->trie_par == "ENTITE") {
                 $rep_par_trie = "nom_cfp";
@@ -2038,6 +2042,7 @@ class FactureController extends Controller
 
             return response()->json([
                 "full_facture" => $full_facture,
+                "encaissement" => $encaissement,
                 "arrow" => $arrow,
                 "facture_actif" => $facture_actif,
                 "facture_payer" => $facture_payer,
