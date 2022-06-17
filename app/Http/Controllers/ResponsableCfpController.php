@@ -116,26 +116,20 @@ class ResponsableCfpController extends Controller
     {
         $user_id = Auth::id();
         $fonct = new FonctionGenerique();
-        if (Gate::allows('isCFP')) {
+        if (Gate::allows('isCFP')){
             $resp_cfp_connecter = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [$user_id]);
             // $responsable = DB::select("select * from responsables_cfp where cfp_id=? and id!=?", [$resp_cfp_connecter->cfp_id, $resp_cfp_connecter->id]);
             $responsable = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where cfp_id=? and id=?', [$resp_cfp_connecter->cfp_id, $resp_cfp_connecter->id]);
             // dd($responsable);
-            return view('cfp.responsable_cfp.nouveau_responsable', compact('resp_cfp_connecter', 'responsable'));
+            return view('cfp.responsable_cfp.nouveau_responsable', compact('resp_cfp_connecter','responsable'));
         }
     }
-
-    public function create()
-    {
-        //
-    }
-
-
 
     public function listeEquipeAdminCFP(Request $request) {
         $fonct = new FonctionGenerique();
         $user_id = Auth::id();
         if (Gate::allows('isCFP')){
+
             $resp_connecte = $fonct->findWhereMulitOne('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp_connecte->cfp_id;
             $cfp = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where cfp_id = ?' , [$cfp_id]);
@@ -209,7 +203,7 @@ class ResponsableCfpController extends Controller
                                 try {
                                     $fonct->insert_role_user($use_id_inserer,"7",true); // cfp
                                     DB::commit();
-                                } catch (Exception $e) {
+                                } catch (\Exception $e) {
                                     DB::rollback();
                                     echo $e->getMessage();
                                 }
@@ -224,7 +218,7 @@ class ResponsableCfpController extends Controller
                                 }
                                 if (Gate::allows('isAdmin')) {
                                     $result = $resp->insert_resp_CFP($doner, $request->cfp_id, $user->id);
-                                   return $result;
+                                    return $result;
                                 }
                             }
                         }
@@ -433,11 +427,11 @@ class ResponsableCfpController extends Controller
 					$nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
 					$destinationPath = 'images/responsables';
                     //imager  resize
-                   $image_name = $nom_image;
+                    $image_name = $nom_image;
 
-                 $destinationPath = public_path('images/responsables');
+                    $destinationPath = public_path('images/responsables');
 
-                 $resize_image = Image::make($image->getRealPath());
+                    $resize_image = Image::make($image->getRealPath());
 
                 $resize_image->resize(228, 128, function($constraint){
                     $constraint->aspectRatio();

@@ -161,7 +161,6 @@ class CollaborationController extends Controller
         if (Gate::allows('isCFP')) {
             // $cfp_id = cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
-
             $btn_suppr = DB::select('select * from v_groupe_projet_entreprise where cfp_id = ? and entreprise_id = ?', [$cfp_id, $req->etp_id]);
             if ($btn_suppr == NULL || $btn_suppr == "") {
                 return $this->collaboration->verify_annulation_collaboration_etp_cfp($cfp_id, $req->etp_id);
@@ -432,7 +431,7 @@ class CollaborationController extends Controller
                 DB::update("update demmande_etp_cfp set activiter = 1 where demmandeur_etp_id = ?", [$id]);
                 DB::commit();
             }
-            
+
         } catch (Exception $e) {
             DB::rollback();
             echo $e->getMessage();

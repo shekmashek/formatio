@@ -289,16 +289,16 @@
                     <div class="row mt-0 navigation_module">
 
                     <div class="accordion accordion-flush" id="accordionFlushExample">
-                      
-                        
+
+
                         <p>
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#search_num_fact" aria-expanded="false" aria-controls="search_num_fact">
 
                             Recherche par nom d'organisme
                         </p>
-                           
+
                         </button>
-                       
+
                         <div class="collapse multi-collapse" id="search_num_fact">
                             <form class=" mt-1 mb-2 form_colab" method="GET" action="{{route('annuaire+recherche+par+entiter')}}" enctype="multipart/form-data">
                                 @csrf
@@ -306,15 +306,15 @@
                                 <input type="submit" class="btn_creer mt-2" id="exampleFormControlInput1" value="Recherche" />
                             </form>
                         </div>
-                       
-                 
+
+
                         <hr>
-                        
+
                         <p>
 
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#detail_par_solde" aria-expanded="false" aria-controls="detail_par_solde">
                                 Recherche par adresse
-                             
+
                         </p>
                     </button>
                         <div class="collapse multi-collapse" id="detail_par_solde">
@@ -567,7 +567,7 @@
                             $('.nbr_cfp').append(counterCfp+' résultats');
                         }
 
-                        $("#result").empty();
+                        $("#result").text("");
                         $("#result").append(html);
                         $(".pagination").css('display', 'flex');
                     } else {

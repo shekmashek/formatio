@@ -1,3 +1,4 @@
+@inject("domaine", 'App\Domaine')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,6 +24,11 @@
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
+    <style>
+        .modal-backdrop{
+            z-index: 1 !important;
+        }
+    </style>
 </head>
 <style>
     .nav_linke:hover {
@@ -595,16 +601,19 @@
                 <div class="col-3 d-flex flex-row padding_logo">
                     {{-- <span><img src="{{asset('img/logo_formation/logo_fmg7635dc.png')}}" alt=""
                             class="img-fluid menu_logo me-3"></span>@yield('title') --}}
-                            <a href="/home" class="teste">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <div class="titre">
-                                    <i >F</i>
-                                </div>
+                            <div>
+                                <a href="/home" class="teste">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <div class="titre">
+                                        <i >F</i>
+                                    </div>
 
-                            </a>
+                                </a>
+                            </div>
+                            <div style="margin-left:90px;margin-top:-10px;font-size:30px;">@yield('title')</div>
                 </div>
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
                     @canany(['isReferent','isStagiaire','isManager'])
@@ -666,7 +675,7 @@
                         <div class="searchBoxMod d-flex flex-row py-2">
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('liste_module')}}" class="text-center" role="button"><span
-                                        class="d-flex flex-column"><i class='bx bxs-customize mb-2 mt-1'></i><span
+                                        class="d-flex flex-column module_redirect"><i class='bx bxs-customize mb-2 mt-1'></i><span
                                             class="text_racourcis">Modules</span></span></a>
                             </div>
                             <div class="btn_racourcis me-4">
@@ -1040,7 +1049,7 @@
                                         @endcan
 
                                         <li>
-                                            <a class="dropdown-item" href="{{route('nouveau_module')}}">
+                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button">
                                                 <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
                                             </a>
                                         </li>
@@ -1070,7 +1079,9 @@
                                         </li>
 
                                     </ul>
+
                                 </div>
+
                                 @can('isCFPPrincipale','isPremium')
                                 <div class="ms-2">
                                     <div class="btn_creer dropdown">
@@ -1203,6 +1214,50 @@
                         </div>
                     </div>
                 </div>
+                @can('isCFP')
+                    <div>
+                        <div class="modal fade" id="nouveau_module" tabindex="-1"
+                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <form action="{{route('nouveau_module_new')}}" method="POST" id="frm_new_module">
+                                        @csrf
+                                        <div class="modal-header .avertissement  d-flex justify-content-center"
+                                            style="color: white">
+                                            <h6 class="modal-title">Domaine de Formation</h6>
+                                        </div>
+                                        <div class="modal-body mb-3">
+                                            <div class="form-group" >
+                                                <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 40px;" required>
+                                                    <option value="null" disable selected hidden>Choisissez la
+                                                        domaine de formation ...</option>
+                                                    @php
+                                                        $data = $domaine->domaine();
+                                                    @endphp
+                                                    @foreach($data as $do)
+                                                    <option value="{{$do->id}}" data-value="{{$do->nom_domaine}}">
+                                                        {{$do->nom_domaine}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="acf-domaine" class="form-control-placeholder mb-2">Domaine de Formation</label>
+                                            </div>
+                                            <div class="form-group mt-3" >
+                                                <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 40px;" required>
+                                                </select>
+                                                <label for="acf-categorie" class="form-control-placeholder mb-2">Thématique par Domaine</label>
+                                                <p id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</p>
+                                            </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                                            <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Créer votre module</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
+
             </header>
             {{-- header --}}
             {{-- content --}}
@@ -1295,7 +1350,7 @@
                                 </a>
                                 <div id="apprCat" class="collapse p-1">
                                     <hr>
-                                    <a href="/nouveau_module"><span>Cliquer ici pour ajouter un module à votre catalogue
+                                    <a data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button"><span>Cliquer ici pour ajouter un module à votre catalogue
                                             de formation</span></a>
                                 </div>
                             </li>
@@ -1310,7 +1365,7 @@
                                 </a>
                                 <div id="apprFormateur" class="collapse  p-1">
                                     <hr>
-                                    <a href="nouveau_formateur"><span>Cliquer ici pour ajouter un formateur</span></a>
+                                    <a href="{{route('nouveau_formateur')}}"><span>Cliquer ici pour ajouter un formateur</span></a>
                                 </div>
                             </li>
 
@@ -1326,7 +1381,7 @@
                                 </a>
                                 <div id="apprInter" class="collapse">
                                     <hr>
-                                    <a href="/liste_entreprise"><span>Cliquer ici pour collaborer avec une
+                                    <a href="{{route('liste_entreprise')}}"><span>Cliquer ici pour collaborer avec une
                                             entreprise</span></a>
                                 </div>
                             </li>
@@ -1463,7 +1518,47 @@
         $(".randomColor").each(function() {
         //On change la couleur de fond au hasard
         $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
-        })
+        });
+
+        $("#acf-domaine").change(function() {
+    var id = $(this).val();
+    $(".categ").empty();
+    // $(".categ").append(
+    //     '<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>'
+    // );
+
+    $.ajax({
+        url: "/get_formation",
+        type: "get",
+        data: {
+            id: id,
+        },
+        success: function(response) {
+            var userData = response;
+
+            if (userData.length > 0) {
+                document.getElementById("domaine_id_err").innerHTML = "";
+                for (var $i = 0; $i < userData.length; $i++) {
+                    $(".categ").append(
+                        '<option value="' +
+                            userData[$i].id +
+                            '" data-value="' +
+                            userData[$i].nom_formation +
+                            '" >' +
+                            userData[$i].nom_formation +
+                            "</option>"
+                    );
+                }
+            } else {
+                document.getElementById("domaine_id_err").innerHTML =
+                    "choisir le type de domaine valide pour avoir ses formations";
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        },
+    });
+});
 
         toastr.options = {
         "closeButton": false,
@@ -1482,6 +1577,9 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
         }
+        $('.module_redirect').on('click', function (e) {
+            localStorage.setItem('ActiveTabMod', '#publies');
+        });
 
         $(document).ready(function() {
             var pdp = "";

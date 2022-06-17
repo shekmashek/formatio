@@ -35,19 +35,19 @@ class DetailController extends Controller
         $this->groupes = new groupe();
     }
     public function calendrier(){
-        
-        $domaines = $this->fonct->findAll('domaines');
-       
+
+         $domaines = $this->fonct->findAll('domaines');
         $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
-       
+
         $statut = $this->fonct->findAll('status');
-       
+
         if (Gate::allows('isCFP')) {
             $cfp_id = $rqt[0]->cfp_id;
-           
+
+
             $formations = $this->fonct->findWhere('v_formation',['cfp_id'],[$cfp_id]);
-           
-           
+
+
         }
         else{
             $formations = DB::select('select * from formations ');
@@ -75,7 +75,6 @@ class DetailController extends Controller
             $detail = $this->fonct->findAll('v_detailmodule');
         }
         if (Gate::allows('isCFP')) {
-            $fonct = new FonctionGenerique();
             $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[$id_user]);
             $cfp_id = $rqt[0]->cfp_id;
             // $detail =  $this->fonct->findWhere('v_detailmodule',['cfp_id'],[$cfp_id]);
@@ -89,11 +88,13 @@ class DetailController extends Controller
 
             $modules = array();
             $formations = array();
+            // dd($detail);
             for ($i=0; $i < count($detail); $i++) {
                 array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
             }
 
             for ($i=0; $i < count($modules); $i++) {
+                // dd($modules);
                 array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
             }
 
@@ -270,16 +271,16 @@ class DetailController extends Controller
             inner join projets on details.projet_id = projets.id
             inner join type_formations on projets.type_formation_id = type_formations.id
             where details.id = ?',[$id]);
-        
-   
-         
+
+
+
 
         $entreprises = DB::select('
             select * from groupe_entreprises
             inner join entreprises on groupe_entreprises.entreprise_id = entreprises.id
             where groupe_entreprises.groupe_id = ?
             ',[$detail[0]->groupe_id]);
-            
+
         $formations = DB::select('
         select * from groupes
         inner join modules on groupes.module_id = modules.id
@@ -315,7 +316,7 @@ class DetailController extends Controller
             array_push($initial_stg,DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from v_participant_groupe_detail where stagiaire_id =  ?', [$stg[$i]->stagiaire_id ]));
         }
         $id_groupe = $detail[0]->groupe_id;
-     
+
         $date_groupe =  DB::select('select status_groupe,date_detail,h_debut,h_fin,detail_id,nom_projet,type_formation,lieu,nom_groupe,groupe_id,type_formation_id,nom_cfp,cfp_id,nom_etp,entreprise_id,photos,logo_entreprise,logo_cfp,nom_formateur,prenom_formateur,mail_formateur,numero_formateur,formateur_id,formation_id,nom_formation,module_id,nom_module  from v_detailmodule where groupe_id = ' . $id_groupe);
         $ressource = DB::select('select * from ressources where groupe_id =?',[$id_groupe]);
 
@@ -473,19 +474,23 @@ class DetailController extends Controller
                 return view('admin.detail.detail', compact('formateur', 'datas', 'liste', 'projet'));
             }
         } elseif (Gate::allows('isFormateur')) {
+
             $form_id = formateur::where('user_id', $users)->value('id');
             $datas = $fonct->findWhere("v_detailmodule", ["formateur_id"], [$form_id]);
             $liste = $fonct->findAll("entreprises");
             return view('admin.detail.detail', compact('datas', 'liste', 'projet'));
         } elseif (Gate::allows('isReferent')) {
+
             $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
             return view('admin.detail.detail', compact('datas', 'projet'));
         } elseif (Gate::allows('isStagiaire')) {
+
             $entreprise_id = stagiaire::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
             return view('admin.detail.detail', compact('datas', 'projet'));
         } elseif (Gate::allows('isManager')) {
+
             $entreprise_id = chefDepartement::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
             return view('admin.detail.detail', compact('datas', 'projet'));

@@ -47,7 +47,7 @@ class FormationController extends Controller
             $domaine_col2 = DB::select('select * from domaines limit ' . $offset . ' offset ' . $offset . '');
             $domaine_col3 = DB::select('select * from domaines limit ' . $offset . ' offset ' . ($offset * 2) . '');
             $domaine_col4 = DB::select('select * from domaines limit ' . $offset . ' offset ' . ($offset * 3) . '');
-            return view('admin.formation.formation', compact('formation', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+            return view('admin.formation.formation', compact('formation', 'domaine', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
         if (Gate::allows('isFormateur')) {
             $categorie = formation::orderBy('nom_formation')->get();
@@ -64,7 +64,7 @@ class FormationController extends Controller
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             //liste formation
             $categorie = formation::orderBy('nom_formation')->get();
-            // $domaines = Domaine::all();
+            $domaines = Domaine::all();
             $test = 4;
             $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
             $offset = round($domaines_count[0]->nb_domaines / $test);
@@ -76,7 +76,7 @@ class FormationController extends Controller
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
             // $categorie = DB::select('select * from formations where status = 1 limit 5');
             $module = DB::select('select md.*,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where  status = 2 and etat_id = 1 order by md.pourcentage desc limit 2 ');
-            return view('referent.catalogue.formation', compact('devise', 'categorie', 'module', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+            return view('referent.catalogue.formation', compact('devise','domaines', 'categorie', 'module', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
     }
 

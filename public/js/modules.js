@@ -13,48 +13,48 @@ function numStr(a, b) {
     }
     return c;
 }
-$(".afficher").on('click', function(e) {
-    let id = $(this).data("id");
-    $.ajax({
-        method: "GET"
-        , url: "/afficher_module"
-        , data: {
-            Id: id
-        }
-        , dataType: "html"
-        , success: function(response) {
+// $(".afficher").on('click', function(e) {
+//     let id = $(this).data("id");
+//     $.ajax({
+//         method: "GET"
+//         , url: "/afficher_module"
+//         , data: {
+//             Id: id
+//         }
+//         , dataType: "html"
+//         , success: function(response) {
 
-            let userData = JSON.parse(response);
+//             let userData = JSON.parse(response);
 
-            console.log(userData);
-            //parcourir le premier tableau contenant les info sur les programmes
-            for (let $i = 0; $i < userData.length; $i++) {
-                $("#reference").text(userData[$i].reference);
-                $("#nom_module").text(userData[$i].nom_module);
-                $("#prix").text(numStr(userData[$i].prix, ' '));
-                $("#heure").text(userData[$i].duree);
-                $("#heure2").text(userData[$i].duree);
-                $("#jour").text(userData[$i].duree_jour);
-                $("#jour2").text(userData[$i].duree_jour);
-                $("#objectif").text(userData[$i].objectif);
-                $("#prerequis").text(userData[$i].prerequis);
-                $("#modalite").text(userData[$i].modalite_formation);
-                $("#modalite2").text(userData[$i].modalite_formation);
-                $("#description").text(userData[$i].description);
-                $("#materiel").text(userData[$i].materiel_necessaire);
-                $("#bon_a_savoir").text(userData[$i].bon_a_savoir);
-                $("#cible").text(userData[$i].cible);
-                $("#prestation").text(userData[$i].prestation);
-                $("#nom_formation").text(userData[$i].nom_formation);
-                $("#niveau").text(userData[$i].niveau);
-            }
+//             console.log(userData);
+//             //parcourir le premier tableau contenant les info sur les programmes
+//             for (let $i = 0; $i < userData.length; $i++) {
+//                 $("#reference").text(userData[$i].reference);
+//                 $("#nom_module").text(userData[$i].nom_module);
+//                 $("#prix").text(numStr(userData[$i].prix, ' '));
+//                 $("#heure").text(userData[$i].duree);
+//                 $("#heure2").text(userData[$i].duree);
+//                 $("#jour").text(userData[$i].duree_jour);
+//                 $("#jour2").text(userData[$i].duree_jour);
+//                 $("#objectif").text(userData[$i].objectif);
+//                 $("#prerequis").text(userData[$i].prerequis);
+//                 $("#modalite").text(userData[$i].modalite_formation);
+//                 $("#modalite2").text(userData[$i].modalite_formation);
+//                 $("#description").text(userData[$i].description);
+//                 $("#materiel").text(userData[$i].materiel_necessaire);
+//                 $("#bon_a_savoir").text(userData[$i].bon_a_savoir);
+//                 $("#cible").text(userData[$i].cible);
+//                 $("#prestation").text(userData[$i].prestation);
+//                 $("#nom_formation").text(userData[$i].nom_formation);
+//                 $("#niveau").text(userData[$i].niveau);
+//             }
 
-        }
-        , error: function(error) {
-            console.log(error)
-        }
-    });
-});
+//         }
+//         , error: function(error) {
+//             console.log(error)
+//         }
+//     });
+// });
 $('#fermer', '.close').on('change', function(e) {
     let ul = document.getElementById('programme');
     ul.innerHTML = '';
@@ -62,7 +62,7 @@ $('#fermer', '.close').on('change', function(e) {
 });
 $(".suppression_module").on('click', function(e) {
     let id = e.target.id;
-    alert(id);
+    // alert(id);
     $.ajax({
         type: "get"
         , url: '/destroy_module'
@@ -73,7 +73,6 @@ $(".suppression_module").on('click', function(e) {
         , success: function(response) {
 
             if (response.success) {
-
                 window.location.reload();
             } else {
                 alert("Error");
@@ -196,8 +195,3 @@ $(document).on('click', '#removeRow', function() {
     $(this).closest('#row_new').remove();
 });
 
-
-
-// $('.changer_prix').click(function(){
-//     $('.new_module_prix').toggle('active_prix');
-// })

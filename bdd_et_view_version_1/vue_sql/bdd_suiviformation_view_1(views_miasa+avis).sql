@@ -338,7 +338,7 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
                 DATEDIFF(m.created_at, NOW()) +3),
                 0
             )
-    ) jours_restant,
+    ) case jours_restant,
     IFNULL(m.max, 0) AS max_pers,
     IFNULL(m.min, 0) AS min_pers,
     n.niveau,

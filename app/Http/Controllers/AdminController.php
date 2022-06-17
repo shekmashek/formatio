@@ -119,7 +119,7 @@ class AdminController extends Controller
         $entp = new entreprise();
 
         if (Gate::allows('isCFP')) {
-            
+
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
             $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
@@ -128,7 +128,7 @@ class AdminController extends Controller
             // $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $refuse_demmande_etp = DB::select('select * from v_refuse_demmande_etp_cfp where cfp_id = ? order by date_refuse desc limit 10',[$cfp_id]);
             $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
-            
+
             $entreprise = $entp->getEntreprise($etp2, $etp1);
 
             return response()->json(['refuse_invitation'=>$refuse_demmande_etp]);
@@ -189,7 +189,7 @@ class AdminController extends Controller
         }
 
         if (Gate::allows('isCFP')) {
-            
+
             // $cfp_id =  cfp::where('user_id', $user_id)->value('id');
             $cfp_id =  $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
             $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);
@@ -197,7 +197,7 @@ class AdminController extends Controller
             $etp2 = $fonct->findWhere("v_demmande_cfp_etp", ["cfp_id"], [$cfp_id]);
             $refuse_demmande_etp = $fonct->findWhere("v_refuse_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
             $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
-            
+
             $entreprise = $entp->getEntreprise($etp2, $etp1);
 
 
@@ -267,7 +267,6 @@ class AdminController extends Controller
         if (Gate::allows('isCFP')) {
             // $etp = $fonct->findWhereMulitOne("v_responsable_cfp",["substring(user_id,1,1)"],["substring('".$id_user."',1,1)"])->logo_cfp;
             $etp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$id_user])->logo_cfp;
-
             if($etp == null){
                 // $etp = DB::select('SELECT SUBSTRING(prenom_resp_cfp, 1, 1) AS prenom FROM v_responsable_cfp where user_id = ?', [$id_user]);
                 $etp = 'users/users.png';

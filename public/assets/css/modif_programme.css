@@ -34,12 +34,12 @@
 
 .accordion_prog input:focus {
     background-color: transparent;
-    border-bottom: 2px solid #7635dc;
+    border-bottom: 2px solid #28a7eb;
 }
 
 .accordion_prog2 input:focus {
     background-color: transparent;
-    border-bottom: 2px solid #7635dc;
+    border-bottom: 2px solid #28a7eb;
 }
 
 .input_cours input {
@@ -56,7 +56,7 @@
 
 .input_cours input:focus {
     background-color: transparent;
-    border-bottom: 2px solid #7635dc;
+    border-bottom: 2px solid #28a7eb;
     font-size: 14px
 }
 
@@ -75,7 +75,7 @@
 
 .input_cours2 input:focus {
     background-color: transparent;
-    border-bottom: 2px solid #7635dc;
+    border-bottom: 2px solid #28a7eb;
     font-size: 14px
 }
 

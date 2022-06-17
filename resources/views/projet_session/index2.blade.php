@@ -385,8 +385,8 @@
                                     <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
                                         <th> Session </th>
                                         <th>Module</th>
-                                        {{-- <th><i class="bx bx-dollar"></i> {{$ref}}</th>
-                                        <th> <i class='bx bx-group'></i> </th> --}}
+                                       <th><i class="bx bx-dollar"></i> {{$ref}}</th>
+                                         {{-- <th> <i class='bx bx-group'></i> </th> --}}
                                         <th> Entreprise </th>
                                         <th> Modalité </th>
                                         <th> Date du projet</th>

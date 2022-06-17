@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FonctionGenerique;
+use App\Models\OrderModel;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
@@ -83,6 +84,37 @@ class UtilisateurControlleur extends Controller
             // dd($datas);
             $branches = $this->fonct->findAll("departement_entreprises");
             return view('admin.utilisateur.entreprise', compact('entreprise', 'branches','datas','debut','fin','nb_resp','nb_par_page','page','fin_page'));
+        }
+        
+        
+        public function order_etp(Request $request){
+            $nb_par_page = 5;
+            $page = $request->page;
+            $nb_resp= DB::select('select count(id) as nb_resp from responsables  where prioriter=1')[0]->nb_resp;
+            // ≈pagination
+            $fin_page = ceil($nb_resp/$nb_par_page);
+            if($page == 1){
+                $offset = 0;
+                $debut = 1;
+                if($nb_par_page > $nb_resp){
+                    $fin = $nb_resp;
+                }else{
+                    $fin = $nb_par_page;
+                }
+            }
+            elseif($page == $fin_page){
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $nb_resp;
+            }
+            else{
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $page * $nb_par_page;
+            }
+            $datas = responsable::orderBy($request->nom_ordre,$request->order)->with('entreprise')->where('prioriter',1)->take($request->id)->offset($offset)->limit($nb_par_page)->get();
+            $data['output'] = $this->order->ordonner_etp_resp($request->page,$request->order,$datas);
+            echo json_encode($data);
         }
 
 

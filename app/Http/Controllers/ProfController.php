@@ -95,7 +95,7 @@ class ProfController extends Controller
 
             // $cfp_formateur = DB::select('select * from v_demmande_cfp_formateur where cfp_id = ?', [$cfp_id]);
 
-            return view('admin.formateur.formateur', compact('formateur', 'demmande_formateur', 'invitation_formateur'));
+            return view('admin.formateur.formateur', compact('formateur','demmande_formateur', 'invitation_formateur'));
 
             if (count($formateur) <= 0) {
                 return view('admin.formateur.guide');
@@ -501,7 +501,7 @@ class ProfController extends Controller
             try {
                 DB::delete('delete from formateurs where id = ?', [$id_formateur]);
                 DB::delete('delete from users where id = ?', [$user_id]);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 DB::rollback();
                 echo $e->getMessage();
             }

@@ -39,7 +39,7 @@ class AppelOffreController extends Controller
     }
     public function index(Request $request,$page = null)
     {
-       
+
         $appel_offre = new Appel_offre();
         $nb_par_page = 1;
         if($page == null){
@@ -47,10 +47,11 @@ class AppelOffreController extends Controller
         }
         if (Gate::allows('isReferent')) {
             $domaines = $this->fonct->findAll("domaines");
+            $domaine = $this->fonct->findAll("domaines");
             $resp_connecter = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
             $appel_offre_non_publier = $this->fonct->findWhere("v_appel_offre", ["entreprise_id", "publier"], [$resp_connecter->entreprise_id, false]);
             $appel_offre_publier = $this->fonct->findWhere("v_appel_offre", ["entreprise_id", "publier"], [$resp_connecter->entreprise_id, true]);
-            return view('admin.appel_offre.appel_offre_etp', compact('appel_offre_non_publier', 'appel_offre_publier','domaines'));
+            return view('admin.appel_offre.appel_offre_etp', compact('appel_offre_non_publier', 'appel_offre_publier','domaines','domaine'));
         }
         if (Gate::allows('isCFP')) {
             $domaines = $this->fonct->findAll("domaines");

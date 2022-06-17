@@ -162,6 +162,9 @@ Route::resource('utilisateur', 'UtilisateurControlleur')->except([
 ]);
 Route::get('/show_stagiaire/{id?}','UtilisateurControlleur@show_stagiaire')->name('show_stagiaire');
 Route::get('/liste_utilisateur/{id?}/{page?}','UtilisateurControlleur@index')->name('liste_utilisateur');
+
+Route::get('/liste_utilisateur/{id?}/{page?}/{order?}/{nom_ordre?}','UtilisateurControlleur@order_etp')->name('liste_utilisateur');
+
 // Route::get('/show_etp/{id?}','UtilisateurControlleur@show_etp')->name('show_etp');
 Route::get('/utilisateur_stagiaire/{id?}','UtilisateurControlleur@create')->name('utilisateur_stagiaire');
 Route::get('/utilisateur_formateur','UtilisateurControlleur@liste_formateur')->name('utilisateur_formateur');
@@ -447,6 +450,9 @@ Route::get('result_formation.modalite.filtre/{nbPag?}/{nom_entiter?}', 'Formatio
 Route::get('afficher_module','ModuleController@affichage')->name('afficher_module');
 Route::get('/liste_module/{id?}/{page?}/{index?}','ModuleController@index')->name('liste_module');
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
+Route::post('/nouveau_module_new','ModuleController@create_new')->name('nouveau_module_new');
+Route::get('nouveau_module_update','ModuleController@update_new')->name('nouveau_module_update');
+Route::get('annuler_new_mod/{id}','ModuleController@destroy_new')->name('annuler_new_mod');
 Route::get('/get_formation','ModuleController@get_formation')->name('get_formation');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
 Route::get('destroy_module','ModuleController@destroy')->name('destroy_module');
@@ -563,6 +569,7 @@ Route::get('/create_programme', 'ProgrammeController@create')->name('create_prog
 Route::get('modif_programmes/{id}', 'ProgrammeController@ajout_programme')->name('modif_programmes');
 Route::get('suppression_programme', 'ProgrammeController@suppre_programme')->name('suppression_programme');
 Route::get('editer_programme', 'ProgrammeController@edit')->name('editer_programme');
+Route::get('load_cours_programme', 'ProgrammeController@load_cours_programme')->name('load_cours_programme');
 
 
 // route liste equipe adminb pour O.F
