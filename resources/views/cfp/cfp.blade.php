@@ -58,7 +58,7 @@
             role="tab"
             aria-controls="ex1-tabs-1"
             aria-selected="true"
-            ><i class="bi bi-wallet-fill"></i>&nbsp;&nbsp;EN COLABORATION</a
+            ><i class="bi bi-wallet-fill"></i>&nbsp;&nbsp;EN COLABORATIONs</a
           >
         </li>
         <li class="nav-item" id="invitation-tab" role="presentation">
@@ -434,7 +434,17 @@
         });
     });
 
-
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        let lien = ($(e.target).attr('href'));
+        localStorage.setItem('indicecfp', lien);
+        ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
+        ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
+    });
+    let activeTab = localStorage.getItem('indicecfp');
+    console.log($('a[data-toggle="tab"]'));
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
 
 </script>
 @endsection

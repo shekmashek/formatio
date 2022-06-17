@@ -76,6 +76,22 @@
         color: white;
     }
 
+    .btn_vous.active{
+        background-color: #7635dc;
+        border-radius: 10px 10px 10px 10px;
+        box-shadow: 0 0 10px 1px rgb(115 103 240 / 70%);
+        cursor: pointer;
+    }
+    .btn_vous.active .links_name{
+        color: white;
+    }
+    .btn_vous.active .bxs-user::before{
+        color: white;
+    }
+    .btn_vous.active .bx-caret-down::before {
+        color: white;
+    }
+
 </style>
 <body>
     <div class="sidebar active">
@@ -1002,7 +1018,7 @@
                                             data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
                                             style="text-decoration: none">
                                             <i class='bx bxs-cog icon_creer_admin'></i>
-                                            <span class="links_name">Accueil</span>
+                                            <span class="links_name">Paramètres</span>
                                         </a>
 
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
@@ -1118,7 +1134,7 @@
                         <div class="btn_vous header_img text-center">
                             <span role="button">
                                 <i class='bx bxs-user' style="font-size: 20px; position: relative; top:.1rem;"></i>
-                                <span class="mt-1" style="font-size: 12.8px">Vous&nbsp;<i class='bx bx-caret-down mt-1 ' style="font-size: 12.7px"></i></span>
+                                <span class="mt-1 links_name" style="font-size: 12.8px">Vous&nbsp;<i class='bx bx-caret-down mt-1 ' style="font-size: 12.7px"></i></span>
                             </span>
                         </div>
                         <div class="pdp_profil mt-3" id="box_profil">
@@ -1138,27 +1154,27 @@
                                                 <h6 class="mb-0 text-center text-muted">{{Auth::user()->email}}</h6>
                                                 <div class="text-center">
                                                     @can('isManagerPrincipale')
-                                                    <a href="{{route('affProfilChefDepartement')}}"><button
+                                                    <a class="vous" href="{{route('affProfilChefDepartement')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcan
                                                     @can('isFormateurPrincipale')
-                                                    <a href="{{route('profile_formateur')}}"><button
+                                                    <a class="vous" href="{{route('profile_formateur')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcan
                                                     @can('isStagiairePrincipale')
-                                                    <a href="{{route('profile_stagiaire')}}"><button
+                                                    <a class="vous" href="{{route('profile_stagiaire')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcan
                                                     @can('isReferentPrincipale')
-                                                    <a href="{{route('profil_referent')}}"><button
+                                                    <a class="vous" href="{{route('profil_referent')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcan
                                                     @can('isCFPPrincipale')
-                                                    <a href="{{route('profil_du_responsable')}}"><button
+                                                    <a class="vous" href="{{route('profil_du_responsable')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcan
@@ -1641,12 +1657,16 @@
         $('a.active').removeClass('active');
     });
 
+    $("a.vous").on("click", function(e){
+        localStorage.setItem('indiceSidebar', 'vous');
+    });
+
     $(".btn_creer li").on("click", function(e){
         if(''==this.id)localStorage.removeItem('indiceSidebar');
         else if (!$(".nav").find("."+this.id)) {
             localStorage.removeItem('indiceSidebar');
         }
-        else if (this.id="parametre") {
+        else if (this.id=="parametre") {
             localStorage.setItem('indiceSidebar', 'parametre');
         }
         else if($(".btn_racourcis").find("."+this.id).get()[0]){
@@ -1665,9 +1685,10 @@
     let Tabactive = localStorage.getItem('indiceSidebar');
     if(!(localStorage.getItem('indiceSidebar')))localStorage.setItem('indiceSidebar', document.getElementById("accueil").href);
     else if(Tabactive=="parametre")$('.btn_creer.parametre').addClass('active');
+    else if(Tabactive=="vous")$('.btn_vous ').addClass('active');
     else if(Tabactive){
         ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
-        ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
+        ($('.btn_racourcis a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     }
     </script>
 </body>
