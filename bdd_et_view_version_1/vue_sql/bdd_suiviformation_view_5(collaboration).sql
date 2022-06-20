@@ -305,7 +305,6 @@ JOIN responsables r ON
 JOIN responsables_cfp rc ON
     rc.id = d.resp_cfp_id
 
-WHERE
     d.activiter = 1;
 
 

@@ -349,8 +349,11 @@ class DepartementController extends Controller
     //fonction qui montre les départements, services,branches de l'entreprise connecté
     public function show_departement(Request $request)
     {
+        $fonct = new FonctionGenerique();
+
         if (Gate::allows('isReferentPrincipale')) {
             $rqt = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
+            $employes = $fonct->findWhere("employers",["entreprise_id"],[$rqt[0]->entreprise_id]);
             $id_etp = $rqt[0]->entreprise_id;
         }
         if (Gate::allows('isStagiairePrincipale')) {
@@ -361,15 +364,17 @@ class DepartementController extends Controller
             $rqt = DB::select('select * from chef_departements where user_id = ?', [Auth::user()->id]);
             $id_etp = $rqt[0]->entreprise_id;
         }
-        $rqt = db::select('select * from departement_entreprises where entreprise_id = ?', [$id_etp]);
+        $rqt = db::select('select * from v_chef_departement_entreprise where entreprise_id = ?', [$id_etp]);
 
         $nb = count($rqt);
         $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);
         $service_departement_tous = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? ", [$id_etp]);
         $nb_serv = count($service_departement);
         $branches = DB::select('select * from branches where entreprise_id = ?', [$id_etp]);
+        $manager = $fonct->findWhere("chef_departements",["entreprise_id"],[$id_etp]);
         $nb_branche = count($branches);
-            return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tous','branches', 'nb_branche'));
+
+        return view('admin.departememnt.nouveau_departement', compact('manager','employes','rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tous','branches', 'nb_branche'));
     }
     public function delete_dep($id)
     {
@@ -511,5 +516,42 @@ class DepartementController extends Controller
         $id_etp = $rqt[0]->entreprise_id;
         $nom_dep = DB::select('select * from departement_entreprises where entreprise_id = ?', [$id_etp]);
         return response()->json($nom_dep);
+    }
+    /**Ajout chef de departement */
+    public function ajouter_manager(Request $request){
+        $fonct = new FonctionGenerique();
+        if($request->manager != "null"){
+            $dep_id = $request->dep_id;
+            DB::insert('insert into chef_dep_entreprises (departement_entreprise_id, chef_departement_id) values (?, ?)', [$dep_id, $request->manager]);
+            $emp_info = $fonct->findWhereMulitOne("employers",["id"],[$request->manager]);
+
+            DB::update('update role_users set prioriter = 0 where user_id = ? and role_id != ?', [$emp_info->user_id,2]);
+            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?,?,?,?)', [$emp_info->user_id,5,1,1]);
+            return back();
+        }
+        else{
+            return back()->with('erreur_manager',"Choisissez un manager avant d'enregistrer");
+        }
+    }
+    /**Modifier chef de departement */
+    public function modifier_manager(Request $request){
+        $fonct = new FonctionGenerique();
+        if($request->manager != "null"){
+            $dep_id = $request->dep_id;
+            /**modification  ancien manager*/
+            DB::delete('delete from chef_dep_entreprises where departement_entreprise_id = ? and chef_departement_id = ?', [$dep_id,$request->ancien_chef]);
+            DB::delete('delete from role_users where user_id = ? and role_id = ?', [$request->ancien_user_chef,5]);
+
+             /**ajout  nouveau manager*/
+            DB::insert('insert into chef_dep_entreprises (departement_entreprise_id, chef_departement_id) values (?, ?)', [$dep_id, $request->manager]);
+            $emp_info = $fonct->findWhereMulitOne("employers",["id"],[$request->manager]);
+
+            DB::update('update role_users set prioriter = 0 where user_id = ? and role_id != ?', [$emp_info->user_id,2]);
+            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?,?,?,?)', [$emp_info->user_id,5,1,1]);
+            return back();
+        }
+        else{
+            return back()->with('erreur_manager',"Choisissez un manager avant d'enregistrer");
+        }
     }
 }

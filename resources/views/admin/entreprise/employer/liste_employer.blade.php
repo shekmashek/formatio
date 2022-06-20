@@ -290,6 +290,11 @@
                     import EXCEL employé
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{route('employes.liste_referent')}}" class="nav-link">
+                   Référents
+                </a>
+            </li>
         </ul>
 
         <div class="row">
@@ -308,9 +313,12 @@
 
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
+
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
 
                         </tr>
+
+
                     </thead>
                     <tbody>
                         @forelse ($employers as $employe)
@@ -379,7 +387,10 @@
 
                                             </td>
                                             <td class="align-middle text-center text-secondary">
-                                                <span>----</span>
+                                                <p class="text-muted mb-0">
+                                                    {{ $employe->nom_departement != null ? $employe->nom_departement : '----' }} <br>
+                                                    {{ $employe->nom_service != null ? $employe->nom_service : '----' }} <br>
+                                                </p>
                                             </td>
                                             {{-- <td class="align-middle text-center text-secondary">61</td> --}}
 
@@ -405,7 +416,9 @@
                                                         data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
                                                 </div>
                                             @endif
+
                                     </td>
+
                                     <td class="align-middle text-center text-secondary">
                                         <button type="button" class="btn " data-bs-toggle="modal"
                                             data-bs-target="#delete_emp_{{ $employe->id }}">
@@ -429,8 +442,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <small>Vous êtes sur le point d'enlever l'employé
-                                                    {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }} -
-                                                    id : {{ $employe->id }}, utilisateur {{ $employe->user_id }},
+                                                    {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }},
                                                     cette action est irréversible. Continuer ?</small>
                                             </div>
 

@@ -14,6 +14,7 @@ SELECT
     employers.user_id,
     (employers.prioriter) prioriter_emp,
     employers.service_id,
+    vd.nom_service,
     employers.branche_id,
     url_photo,
     employers.departement_entreprises_id,
@@ -104,8 +105,12 @@ SELECT
     employers.user_id,
     (employers.prioriter) prioriter_emp,
     employers.branche_id,
-    service_id,
+    bc.nom_branche,
+    employers.service_id,
+    vd.nom_service,
     url_photo,
+    employers.departement_entreprises_id,
+    vd.nom_departement,
     employers.photos,
     (employers.cin_emp) cin_chef,
     (employers.date_naissance_emp) date_naissance_chef,
@@ -122,8 +127,10 @@ employers.updated_at,
 niveau_etude_id,
 niveau_etude.niveau_etude
 FROM
-employers, role_users, genre,niveau_etude
-WHERE
-    employers.user_id = role_users.user_id and employers.genre_id =genre.id and niveau_etude_id=niveau_etude.id and role_users.role_id=5;
-
-
+employers
+LEFT JOIN v_departement_service_entreprise vd ON vd.service_id = employers.service_id and vd.departement_entreprise_id = employers.departement_entreprises_id
+LEFT JOIN branches bc ON bc.id = employers.branche_id
+JOIN role_users ON role_users.user_id =  employers.user_id
+JOIN genre ON genre.id = employers.genre_id
+JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
+WHERE role_users.role_id=5;

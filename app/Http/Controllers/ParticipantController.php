@@ -1247,4 +1247,10 @@ class ParticipantController extends Controller
         return response()->json($msg);
         // return response()->json($data);
     }
+    /**Liste des référents */
+    public function liste_referent(){
+        $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
+        $employers = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id]);
+        return view("admin.entreprise.employer.liste_referent",compact('employers'));
+    }
 }

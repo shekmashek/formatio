@@ -781,6 +781,7 @@ Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->
 Route::get('employes.new','ParticipantController@new_emp')->name('employes.new');
 Route::get('employes.liste.desactiver','ParticipantController@desactiver_stagiaire')->name('employes.liste.desactiver');
 
+Route::get('employes.liste_referent','ParticipantController@liste_referent')->name('employes.liste_referent');
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement', 'ChefDepartementController');
 Route::get('/destroy_chefDepartement', 'ChefDepartementController@destroy')->name('destroy_chefDepartement');
@@ -1452,3 +1453,8 @@ Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
 
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
+
+/**Ajout chef de departement */
+Route::post('ajouter_manager','DepartementController@ajouter_manager')->name('ajouter_manager');
+/**Modifier chef de departement */
+Route::post('modifier_manager','DepartementController@modifier_manager')->name('modifier_manager');
