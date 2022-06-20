@@ -1391,6 +1391,13 @@ Route::get('/newAfficheInfo/employe/emp/{id_emp}', 'DepartementController@newInf
 
 Route::get('resultat_evaluation/{groupe_id}','EvaluationChaudController@evaluation_chaud_pdf')->name('resultat_evaluation');
 Route::get('/raport','SessionController@fiche')->name('fichePDF');
+<<<<<<< HEAD
 //plus d'avis
 Route::get('plus_avis','FormationController@plus_avis')->name('plus_avis');
 Route::get('plus_avis_module','FormationController@plus_avis_module')->name('plus_avis_module');
+=======
+
+//Affiche infos SESSION
+//etp
+Route::get('/info/session/etp/{id?}', 'SessionController@infoSessionEtp');
+>>>>>>> be1328257 (ok)

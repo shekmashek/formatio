@@ -675,5 +675,29 @@ class SessionController extends Controller
     }
 
 
+    //Affiche infos session
+    //etp
+    public function infoSessionEtp($etpId=null){
+        // $etpId = $request->Id;
+
+        $info = DB::table('statut_compte')
+                ->join('entreprises', 'entreprises.statut_compte_id', 'statut_compte.id')
+                ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+                // ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
+                // ->join('v_abonnement_facture_entreprise', 'v_abonnement_facture_entreprise.entreprise_id', 'entreprises.id')
+                ->select(DB::raw('substr(entreprises.nom_etp, 1, 2) as nomEtpS') ,DB::raw('substr(responsables.nom_resp, 1, 1) as nomEtresp'), 
+                        DB::raw('substr(responsables.prenom_resp, 1, 1) as prenomEtpresp'), 'entreprises.logo', 
+                        'entreprises.nif', 'entreprises.stat', 'entreprises.email_etp', 'entreprises.site_etp', 'entreprises.telephone_etp' ,
+                        'responsables.photos', 'responsables.matricule', 'responsables.nom_resp', 'responsables.prenom_resp',
+                        'responsables.email_resp', 'responsables.telephone_resp', 'responsables.adresse_quartier', 'responsables.adresse_lot',
+                        'responsables.adresse_ville', 'responsables.adresse_region', 
+                        // 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.statut_compte_id',
+                        'statut_compte.nom_statut', 'entreprises.nom_etp')
+                        // 'v_abonnement_facture_entreprise.nom_type', 'v_abonnement_facture_entreprise.tarif')
+                // ->where('v_groupe_projet_entreprise.entreprise_id', $etpId)
+                ->get();
+                
+        return response()->json($info);
+    }
 
 }
