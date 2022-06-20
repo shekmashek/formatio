@@ -64,6 +64,7 @@ class DetailController extends Controller
         $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
         $statut = $this->fonct->findAll('status');
         $formations = DB::select('select * from formations ');
+        // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
         return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations'));
     }
     public function listEvent(Request $request)

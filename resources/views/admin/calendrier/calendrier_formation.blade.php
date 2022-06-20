@@ -231,11 +231,13 @@
         }
 
     </style>
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
 
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
+    
     <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
     <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
+    
     <script src="{{asset('js/fr.js')}}"></script>
 </head>
 <body>
@@ -245,9 +247,16 @@
 
             {{-- the calendar will be added here --}}
             <div class="col-sm-6">
-                <div id='calendar' style="width:100%;"></div>
+                <div id='calendar'></div>
             </div>
 
+            <div class="col-sm-6">
+                <div id='planning'></div>
+            </div>
+
+            
+
+            {{-- details on click --}}
             <div class="col-sm-6" id="detail" style="display: none">
                 {{-- <div class="card" style="width: auto;">
                     <div id="editor"></div>
@@ -326,6 +335,7 @@
                     {{-- </div>
                 </div>
             </div> --}}
+            {{-- end details --}}
         </div>
 
         {{-- filtres --}}
@@ -392,6 +402,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script> --}}
 
     <script>
+
+            $(document).ready(function() {
+                $('#planning').fullCalendar({
+
+                })
+            });
+
+
         function getRandomColor() {
             var letters = '0123456789ABCDEF';
             var color = '#';
@@ -739,6 +757,11 @@
         $('#fermer').on('click', function(e) {
              $('#detail').css('display','none');
         });
+
+
+
+
+
     </script>
 </html>
 @endsection
