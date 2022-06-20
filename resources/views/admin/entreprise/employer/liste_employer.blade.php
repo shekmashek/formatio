@@ -309,7 +309,7 @@
                                 <span class="d-block">Département</span>
                                 <span>Service</span>
                             </th>
-                            {{-- <th scope="col" class="table-head font-weight-light align-middle text-center ">Age</th> --}}
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th>
 
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
@@ -392,7 +392,10 @@
                                                     {{ $employe->nom_service != null ? $employe->nom_service : '----' }} <br>
                                                 </p>
                                             </td>
-                                            {{-- <td class="align-middle text-center text-secondary">61</td> --}}
+                                            <td class="align-middle text-center text-secondary">
+                                                <input class="form-check-input referent" type="checkbox" value="{{$employe->id}}" name = "referent"  id="flexCheckDefault">
+
+                                            </td>
 
                                             <td class="align-middle text-center text-secondary">
 
@@ -714,7 +717,27 @@
                     })
             })()
 
-        </script>
+            //changer role referent
 
+            // $(".referent").change(function() {
+            //     $emp_id = $(this).val();
+
+            //     $.ajax({
+            //         type: "GET"
+            //         , url: "{{route('employes.changer_role')}}"
+            //         , data: {
+            //             emp_id: $emp_id
+            //         }
+            //         , success: function(response) {
+            //             $("#estado_cat").prop( "checked", true );
+            //         }
+            //         , error: function(error) {
+            //             console.log(error)
+            //         }
+            //     });
+
+            // });
+
+        </script>
 
         @endsection
