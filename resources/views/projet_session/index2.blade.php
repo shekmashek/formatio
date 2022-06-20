@@ -1217,6 +1217,7 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </thead>
                             <tbody class="">
                                 @foreach ($data as $pj)
@@ -1255,6 +1256,9 @@
                                             <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn pb-2">Résultat</button>
 
                                             </a>
+                                        </td>
+                                        <td>
+                                            <a class="btn_eval_stg" href="{{ route('evaluation_froid',[$pj->groupe_id]) }}" style="color: #ffffff !important">A froid</a>
                                         </td>
 
                                     </tr>

@@ -76,3 +76,15 @@ create table resultat_eval_froid_manager(
     date_eval timestamp default now(),
     point int(2) default 0
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+create or replace view v_question_champ_froid as
+select 
+    q.id as question_id,
+    q.type_champ_id,
+    q.question,
+    q.point_max,
+    tc.nom_champ,
+    tc.desc_champ
+from question_evaluation_froid q
+join type_champs tc on q.type_champ_id = tc.id;

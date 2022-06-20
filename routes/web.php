@@ -1453,3 +1453,6 @@ Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
 
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
+
+//evaluation A froid
+Route::get('/evaluation_froid/{groupe?}','EvaluationFroidController@index')->name('evaluation_froid');
