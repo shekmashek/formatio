@@ -958,7 +958,14 @@ class FormationController extends Controller
 
     public function plus_avis_module(Request $request){
         $id = $request->Id;
-        $liste_avis_tous = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis where module_id = ? order by lsta.date_avis desc limit 30 offset 10', [$id]);
+        $liste_avis_tous = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis as lsta where module_id = ? order by lsta.date_avis desc limit 30 offset 10', [$id]);
+
+        return response()->json(['liste_avis'=>$liste_avis_tous]);
+    }
+
+    public function plus_avis_mod_cfp(Request $request){
+        $id = $request->Id;
+        $liste_avis_tous = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis as lsta where module_id = ? order by lsta.date_avis desc limit 30 offset 10', [$id]);
 
         return response()->json(['liste_avis'=>$liste_avis_tous]);
     }

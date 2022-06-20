@@ -106,11 +106,11 @@
                 <div class="">
                     <a href="{{route('detail_cfp',$res->cfp_id)}}">
                         <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
-
                         <div class="text-center">
                             <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
                         </div>
                     </a>
+                    
                 </div>
             </div>
             <div id="objectif"></div>
@@ -726,6 +726,6 @@
         $('.newRowAvis').empty();
         $('.plus_avis').show();
         $('.moins_avis').css('visibility','hidden');
-    })
+    });
 </script>
 @endsection

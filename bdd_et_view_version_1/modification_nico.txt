@@ -240,3 +240,12 @@ CREATE OR REPLACE VIEW v_pourcentage_total_module_cfp AS SELECT
 
 ---------- 10 juin ----------------
 recréer vue moduleformation dans bdd_suiviformation_view_1(views_miasa+avis)
+
+---------- 20 juin ----------------
+alter table niveaux add progression bigint(20) UNSIGNED NOT NULL;
+Ajouter par defaut dans progression :   Débutant = 1
+                                        Intermédiaire = 3
+                                        Avancé = 4
+                                        Expert = 5
+
+

@@ -38,11 +38,11 @@
                     </div>
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
-                        <span class="text_black"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
+                        <span class="text_black"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb[0]->nb_avis }} avis)</span>
                     </div>
-                    <div class="col">
+                    {{-- <div class="col">
                         <span> Nouveau niveau de formation &nbsp;<i class="bx bx-plus-medical bx_ajouter" onclick="changer_niveau()"></i></span>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>
@@ -54,11 +54,31 @@
                     </a>
                     <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid"
                             style="width: 200px; height:100px;"></div>
+                    @if($avis_etoile[0]->pourcentage != null)
+                    <div class="d-flex flex-row justify-content-center mt-2">
+                        @if($avis_etoile[0]->pourcentage != null)
+                            <div class="Stars" style="--note: {{ $avis_etoile[0]->pourcentage }};"></div>
+                        @else
+                            <div class="Stars" style="--note: 0;"></div>
+                        @endif
+                        <div class="rating-box ms-2">
+                            @if($avis_etoile[0]->pourcentage != null)
+                                <span class="avis_verif"><span class="">{{ $avis_etoile[0]->pourcentage }}</span> ({{$avis_etoile[0]->nb_avis}} avis)</span><br>
+                            @else
+                                <span class="">0 sur 5 (0 avis)</span>
+                            @endif
+                        </div>
+                        <br>
+                    </div>
+                    <div class="text-center">
+                        <span>Avis sur le centre de formation</span>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
                 <div id="objectif"></div>
-                <div class="col"><i class="bx bxs-alarm bx_icon"></i>
+                <div class="col background_contrast border_left"><i class="bx bxs-alarm bx_icon"></i><i class='bx bx-signal-5' ></i>
                     <span>
                         @isset($res->duree_jour)
                         {{$res->duree_jour}} jours
@@ -70,13 +90,19 @@
                         @endisset
                     </span> </p>
                 </div>
-                <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
+                <div class="col background_contrast border_left"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
                 </div>
-                <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
-                <div class="col"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                <div class="col background_contrast border_left">
+                    @foreach ($niveau as $level)
+                    @if($res->niveau_id == $level->id)
+                        <i class='bx bx-signal-5 bx_icon bx_pourcentage' style="--pourcentage: {{$level->progression}}"></i><span>&nbsp;{{$res->niveau}}</span>
+                    @endif
+                    @endforeach
+                </div>
+                <div class="col background_contrast border_left"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
+                <div class="col background_contrast border_left" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @if($res->prix_groupe != null)
-                    <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                    <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
                 <div class="col">
                     <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
@@ -316,6 +342,212 @@
                         </div>
                     </div>
                 </div>
+                <div class="row detail__formation__programme__avis">
+                    <div>
+                        <h3 class="pt-5 pb-0">Avis sur la formation</h3>
+                    </div>
+                    @if($liste_avis_count > 0)
+                    <div class="col-12 mb-5">
+                        <div class="card p-2 pt-1">
+                            <div class="row detail__formation__programme__avis__rated d-flex">
+                                <div class="col-md-4 text-center d-flex flex-column">
+                                    <div class="rating-box">
+                                        <h3 class="pt-4">
+                                            @if($res->pourcentage != null)
+                                                {{$res->pourcentage}} avis
+                                            @else
+                                                0 avis
+                                            @endif
+                                        </h3>
+                                        <p class="">sur 5</p>
+                                    </div>
+                                    <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
+                                </div>
+                                <div class="col-md-8 pt-2 ">
+                                    <div class="table-rating-bar justify-content-center">
+                                        <table class="text-left mx-auto">
+                                            <tr>
+                                                <td class="rating-label">Excellent</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-5"
+                                                            style="--progress_bar: {{ $statistiques[0]->pourcentage_note }}%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">{{ $statistiques[0]->pourcentage_note }}%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="rating-label">Bien</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-4"
+                                                            style="--progress_bar: {{ $statistiques[1]->pourcentage_note }}%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">{{ $statistiques[1]->pourcentage_note }}%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="rating-label">Moyenne</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-3"
+                                                            style="--progress_bar: {{ $statistiques[2]->pourcentage_note }}%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">{{ $statistiques[2]->pourcentage_note }}%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="rating-label">Normal</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-2"
+                                                            style="--progress_bar: {{ $statistiques[3]->pourcentage_note }}%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">{{ $statistiques[3]->pourcentage_note }}%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="rating-label">Terrible</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-1"
+                                                            style="--progress_bar: {{ $statistiques[4]->pourcentage_note }}%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">{{ $statistiques[4]->pourcentage_note }}%
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail__formation__programme__avis__donnes mt-5">
+                            @foreach ($liste_avis as $avis)
+                            <div class="row">
+                                <div class="d-flex flex-row">
+                                    <div class="col">
+                                        <h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }}.{{ $avis->prenom_stagiaire }}
+                                        </h5>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-left d-flex flex-row">
+                                        <div class="Stars" style="--note: {{ $avis->note }};"></div>&nbsp;<span
+                                            class="text-muted">{{ $avis->note }}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ms-1 mb-3">
+                                <p>{{ $avis->commentaire }}</p>
+                            </div>
+                            @endforeach
+                            @if(count($liste_avis_count) >= 10)
+                                <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$infos[0]->module_id}}">voir tous les avis</a></div>
+                            @endif
+                            <div class="newRowAvis"></div>
+                            <div class="text-end"><a class="btn btn_fermer moins_avis" role="button" role="button" ><i class='bx bxs-chevron-up me-2' ></i>afficher moins d'avis</a></div>
+                        </div>
+                    </div>
+                    @else
+                    <div class="col-12 mb-5">
+                        <div class="card p-2 pt-1">
+                            <div class="row detail__formation__programme__avis__rated d-flex">
+                                <div class="col-md-4 text-center d-flex flex-column">
+                                    <div class="rating-box">
+                                        <h3 class="pt-4">
+                                            @if($res->pourcentage != null)
+                                                {{$res->pourcentage}} avis
+                                            @else
+                                                0 avis
+                                            @endif
+                                        </h3>
+                                        <p class="">sur 5</p>
+                                    </div>
+                                    <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
+                                </div>
+                                <div class="col-md-8 pt-2 ">
+                                    <div class="table-rating-bar justify-content-center">
+                                        <table class="text-left mx-auto">
+                                            <tr>
+                                                <td class="rating-label">Excellent</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-5"
+                                                            style="--progress_bar: 0%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">0%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="rating-label">Bien</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-4"
+                                                            style="--progress_bar: 0%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">0%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="rating-label">Moyenne</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-3"
+                                                            style="--progress_bar: 0%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">0%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="rating-label">Normal</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-2"
+                                                            style="--progress_bar: 0%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">0%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="rating-label">Terrible</td>
+                                                <td class="rating-bar">
+                                                    <div class="bar-container">
+                                                        <div class="bar-1"
+                                                            style="--progress_bar: 0%;">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">0%
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                </div>
             </div>
 
             {{-- FIXME:mise en forme de design --}}
@@ -324,7 +556,7 @@
                 @if($competences != null)
                 <div class="row g-0 competence_box mb-3 ">
                     <h5 class="text-center py-2">Compétences à Acquérir</h5>
-                        @foreach ($competences as $comp)
+                        {{-- @foreach ($competences as $comp)
                         <div class="row text-start g-0 px-1" id="competence_{{$comp->id}}">
                             <div class="col-1">
                                 <i class="bx bx-check check_comp"></i>&nbsp;
@@ -333,7 +565,8 @@
                                 <span class="text-capitalize">{{$comp->titre_competence}}</span>
                             </div>
                         </div>
-                        @endforeach
+                        @endforeach --}}
+                        <canvas id="libweb" width="400px" height="400px"></canvas>
                         <div class="text-center mb-3">
                             <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id}}" id="{{$id}}" title="ajouter une nouvelle competence">
                                 <i class='bx bx-plus-medical bx_ajouter'></i>
@@ -563,12 +796,38 @@
                                         </div>
                                         <div class="form-group">
                                             <select class="form-control select_formulaire niveau niveau input mt-3" id="niveau" name="niveau" style="height: 50px;">
+                                                @if($res->niveau == 'Débutant')
                                                 <option value="{{$res->niveau_id}}" selected>
                                                     {{$res->niveau}} </option>
-                                                @foreach($niveau as $nv)
+                                                <option value="2">Intermédiaire</option>
+                                                <option value="3">Avancé</option>
+                                                <option value="5">Expert</option>
+                                                @endif
+                                                @if($res->niveau == 'Intermédiaire')
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                <option value="1">Débutant</option>
+                                                <option value="3">Avancé</option>
+                                                <option value="5">Expert</option>
+                                                @endif
+                                                @if($res->niveau == 'Avancé')
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                <option value="1">Débutant</option>
+                                                <option value="2">Intermédiaire</option>
+                                                <option value="5">Expert</option>
+                                                @endif
+                                                @if($res->niveau == 'Expert')
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                <option value="1">Débutant</option>
+                                                <option value="2">Intermédiaire</option>
+                                                <option value="3">Avancé</option>
+                                                @endif
+                                                {{-- @foreach($niveau as $nv)
                                                 <option value="{{$nv->id}}" data-value="{{$nv->niveau}}">
                                                     {{$nv->niveau}}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             </select>
                                             <label for="acf-modalite" class="form-control-placeholder">Modifier le niveau</label>
                                         </div>
@@ -758,7 +1017,7 @@
                     </div>
                 </div>
                 {{-- modification niveau --}}
-                <div class="modal" tabindex="-1" role="dialog" id="ouvrir_flottant">
+                {{-- <div class="modal" tabindex="-1" role="dialog" id="ouvrir_flottant">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -792,7 +1051,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -815,7 +1074,7 @@ $('.modifier_cours').on('click',function(e){
             }
             , success: function(response) {
                 let userData = response;
-                console.log(userData);
+                // console.log(userData);
                 let html = '';
                 if (userData['cours'] != null || undefined) {
                     // for (let $l = 0; $l < userData['cours'].length; $l++) {
@@ -945,6 +1204,60 @@ $('.modifier_cours').on('click',function(e){
         $('.dismis_buton').show();
         $("#ouvrir_flottant").modal("show");
 }
+$('.plus_avis').on('click', function(e){
+        let id = $(e.target).closest('.plus_avis').attr("id");
+
+        $.ajax({
+            type: "get"
+            ,url: "{{route('plus_avis_mod_cfp')}}"
+            ,data:{
+                Id: id,
+            }
+            ,success: function(response){
+                let moduleData = response;
+                if (moduleData['liste_avis'] != null || undefined){
+                    let html = '';
+
+                    for (let i = 0; i < moduleData['liste_avis'].length; i++) {
+                        html += '<div class="row" id="avis">';
+                        html +=     '<div class="d-flex flex-row">';
+                        html +=         '<div class="col">';
+                        html +=             '<h6 class="mt-3 mb-0">'+moduleData['liste_avis'][i]['nom_stagiaire']+'.'+moduleData['liste_avis'][i]['prenom_stagiaire']+'</h6>';
+                        html +=         '</div>'
+                        html +=         '<div class="col">';
+                        html +=             '<p class="text-muted pt-5 pt-sm-3">'+moduleData['liste_avis'][i]['date_avis']+'</p>';
+                        html +=         '</div>'
+                        html +=         '<div class="col">';
+                        html +=             '<p class="text-left d-flex flex-row">';
+                        html +=                 '<div class="Stars" style="--note: '+moduleData['liste_avis'][i]['note']+';"></div>&nbsp;<span class="text-muted">'+moduleData['liste_avis'][i]['note']+'</span>';
+                        html +=             '</p>'
+                        html +=         '</div>'
+                        html +=     '</div>'
+                        html += '</div>'
+                        html += '<div class="row ms-1">';
+                        html +=     '<p>'+moduleData['liste_avis'][i]['commentaire']+'</p>';
+                        html += '</div>';
+                    }
+                    $('.newRowAvis').empty();
+                    $('.newRowAvis').append(html);
+                    $('.plus_avis').hide();
+                    $('.moins_avis').css('visibility','visible');
+                }else{
+                    alert('error');
+                }
+
+            }
+            ,error: function(error){
+                console.log(error);
+            },
+        });
+    });
+    $('.moins_avis').click(function(){
+        $('.newRowAvis').empty();
+        $('.plus_avis').show();
+        $('.moins_avis').css('visibility','hidden');
+    });
+
 
 </script>
 @endsection

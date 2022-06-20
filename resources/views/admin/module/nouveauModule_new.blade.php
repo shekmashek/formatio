@@ -46,9 +46,9 @@
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
                         <span class="text_black"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
-                        <div class="col">
+                        {{-- <div class="col">
                             <p class="mb-0"> Nouveau niveau de formation &nbsp;<i class="bx bx-plus-medical bx_ajouter" onclick="changer_niveau()"></i></p>
-                        </div>
+                        </div> --}}
                     </div>
 
 
@@ -66,7 +66,7 @@
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
                 <div id="objectif"></div>
-                <div class="col"><i class="bx bxs-alarm bx_icon"></i>
+                <div class="col background_contrast border_left"><i class="bx bxs-alarm bx_icon"></i><i class='bx bx-signal-5' ></i>
                     <span>
                         @isset($res->duree_jour)
                         {{$res->duree_jour}} jours
@@ -78,13 +78,20 @@
                         @endisset
                     </span> </p>
                 </div>
-                <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
+                <div class="col background_contrast border_left"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
                 </div>
-                <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
-                <div class="col"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+
+                <div class="col background_contrast border_left">
+                    @foreach ($niveau as $level)
+                    @if($res->niveau_id == $level->id)
+                        <i class='bx bx-signal-5 bx_icon bx_pourcentage' style="--pourcentage: {{$level->progression}}"></i><span>&nbsp;{{$res->niveau}}</span>
+                    @endif
+                    @endforeach
+                </div>
+                <div class="col background_contrast border_left"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
+                <div class="col background_contrast border_left" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @if($res->prix_groupe != null)
-                    <div class="col" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                    <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
                 <div class="col">
                     <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
@@ -345,12 +352,12 @@
                         <span class="aide_competence"><i class='bx bx-help-circle '></i>
                             <div class="text_aide">
                                 <p>Attribuez des compétences à vos intervenants et à vos programmes de formation pour faciliter le suivi de vos formations. <br>
-                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i> et les modifer sur <i class='bx bx-edit bx_modifier'></i></p>
+                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i> et les modifer sur <i class='bx bx-edit bx_modifier'></i>. Vous pouvez entrer au maximum 10 compétences et 3 minimum!</p>
                             </div>
                         </span>
                     </h5>
                     </div>
-                        @foreach ($competences as $comp)
+                        {{-- @foreach ($competences as $comp)
                         <div class="row text-start g-0 px-1" id="competence_{{$comp->id}}">
                             <div class="col-1">
                                 <i class="bx bx-check-double check_comp"></i>&nbsp;
@@ -359,14 +366,18 @@
                                 <span class="text-capitalize">{{$comp->titre_competence}}</span>
                             </div>
                         </div>
-                        @endforeach
+                        @endforeach --}}
+                        <canvas id="marksChart" width="1000" height="800" class="justify-content-center"></canvas>
                         <div class="text-center mb-3">
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id[0]->id}}" id="{{$id[0]->id}}" title="ajouter une nouvelle competence">
+                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id[0]->id}}" id="{{$id[0]->id}}" onclick="competence();" title="ajouter une nouvelle competence">
                                 <i class='bx bx-plus-medical bx_ajouter'></i>
                             </span>
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id[0]->id}}" id="{{$id[0]->id}}" title="modifier les competence">
-                                <i class='bx bx-edit bx_modifier'></i>
-                            </span>
+                            @if(count($competences) > 3)
+                                <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id[0]->id}}" id="{{$id[0]->id}}" title="modifier les competence">
+                                    <i class='bx bx-edit bx_modifier'></i>
+                                </span>
+                            @endif
+
                         </div>
                 </div>
                 {{-- @endif --}}
@@ -382,9 +393,9 @@
                                     </div>
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="mt-2 text-center mb-5">
-                                                    <span id="addRow" class="btn_nouveau text-center " onclick="competence();" >
+                                                    <span id="addRow" class="btn_nouveau text-center " >
                                                         <i class='bx bx-plus-medical me-1'></i>Ajouter une competence
                                                     </span>
 
@@ -416,7 +427,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="newRowComp"></div>
                                         </div>
                                     </div>
@@ -443,7 +454,7 @@
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
                                             @foreach ($competences as $comp)
-                                            <div class="d-flex">
+                                            <div class="d-flex count_input" id="countt_{{$comp->id}}">
                                                 <div class="col-9">
                                                     <div class="form-group">
                                                         <div class="form-row">
@@ -476,7 +487,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-1">
-                                                    <div class="suppre_{{$comp->id}} suppression_competence" role="button" title="Supprimer le competence" id="{{$comp->id}}" data-id="{{$comp->id}}"><i class='bx bx-trash bx_supprimer mt-1 ms-2'></i></div>
+                                                    @if(count($competences) >= 4)
+                                                        <div class="suppre_{{$comp->id}} suppression_competence" role="button" title="Supprimer le competence" id="{{$comp->id}}" data-id="{{$comp->id}}"><i class='bx bx-trash bx_supprimer mt-1 ms-2'></i></div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             @endforeach
@@ -589,12 +602,38 @@
                                         </div>
                                         <div class="form-group">
                                             <select class="form-control select_formulaire niveau niveau input mt-3" id="niveau" name="niveau" style="height: 50px;">
+                                                @if($res->niveau == 'Débutant')
                                                 <option value="{{$res->niveau_id}}" selected>
                                                     {{$res->niveau}} </option>
-                                                @foreach($niveau as $nv)
+                                                <option value="2">Intermédiaire</option>
+                                                <option value="3">Avancé</option>
+                                                <option value="5">Expert</option>
+                                                @endif
+                                                @if($res->niveau == 'Intermédiaire')
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                <option value="1">Débutant</option>
+                                                <option value="3">Avancé</option>
+                                                <option value="5">Expert</option>
+                                                @endif
+                                                @if($res->niveau == 'Avancé')
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                <option value="1">Débutant</option>
+                                                <option value="2">Intermédiaire</option>
+                                                <option value="5">Expert</option>
+                                                @endif
+                                                @if($res->niveau == 'Expert')
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                <option value="1">Débutant</option>
+                                                <option value="2">Intermédiaire</option>
+                                                <option value="3">Avancé</option>
+                                                @endif
+                                                {{-- @foreach($niveau as $nv)
                                                 <option value="{{$nv->id}}" data-value="{{$nv->niveau}}">
                                                     {{$nv->niveau}}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             </select>
                                             <label for="acf-modalite" class="form-control-placeholder">Modifier le niveau</label>
                                         </div>
@@ -783,8 +822,9 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" class="form-control" name="recuperer_module_id" id="mod_id_rec" value="{{$res->module_id}}">
                 {{-- modification niveau --}}
-                <div class="modal" tabindex="-1" role="dialog" id="ouvrir_flottant">
+                {{-- <div class="modal" tabindex="-1" role="dialog" id="ouvrir_flottant">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -819,7 +859,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -828,6 +868,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
@@ -1039,9 +1080,78 @@ $('.hors_ligne_redirect').on('click', function (e) {
 //     }
 // }
 
+// var marksCanvas = document.getElementById("marksChart");
 
+// var marksData = {
+//   labels: ["English", "Maths", "Physics", "Chemistry", "Biology", "History"],
+//   datasets: [{
+//     label: "Student A",
+//     backgroundColor: "rgba(200,0,0,0.2)",
+//     data: [65, 75, 70, 80, 60, 80]
+//   }, {
+//     label: "Student B",
+//     backgroundColor: "rgba(0,0,200,0.2)",
+//     data: [54, 65, 60, 70, 70, 75]
+//   }]
+// };
 
+// var radarChart = new Chart(marksCanvas, {
+//   type: 'radar',
+//   data: marksData
+// });
 
+function afficher_radar(label,competence){
+
+    let marksCanvas = document.getElementById("marksChart");
+
+    let marksData = {
+    labels: JSON.parse(label),
+    datasets: [{
+        label: "Objectif fixer",
+        backgroundColor: "rgba(200,0,0,0.2)",
+        data: JSON.parse(competence)
+    }]
+    };
+
+    let radarChart = new Chart(marksCanvas, {
+    type: 'radar',
+    data: marksData
+    });
+}
+
+window.onload = function(e){
+    let id_mod = $("#mod_id_rec").val();
+    // alert(id_mod);
+    let labels = '[';
+    let competences = '[';
+    $.ajax({
+        type: "get"
+        ,url: "{{route('competence_module')}}"
+        ,data: {
+            mod_id: id_mod
+        }
+        ,dataType: "html"
+        ,success: function(response){
+            let userData = JSON.parse(response);
+            // alert(JSON.stringify(userData['detail']));
+            // alert(userData['detail'].length);
+            for (let i = 0; i < userData['detail'].length; i++) {
+                if (i == userData['detail'].length - 1) {
+                    labels += '"'+userData['detail'][i].titre_competence+'"]';
+                    competences += userData['detail'][i].objectif+']';
+                }else{
+                    labels += '"'+userData['detail'][i].titre_competence+'",';
+                    competences += userData['detail'][i].objectif+',';
+                }
+            }
+            // alert(competences);
+            afficher_radar(labels,competences);
+        }
+        ,error: function(error){
+            console.log(error);
+        }
+    });
+};
 
 </script>
 @endsection
