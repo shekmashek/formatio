@@ -201,6 +201,7 @@ class FormationController extends Controller
         $formations = DB::select('select * from formations');
 
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_groupe_projet_module where type_formation_id = 2 group by module_id');
+        
         return view('referent.catalogue.liste_formation', compact('formations', 'competences', 'organismes', 'nom_formation', 'pagination', 'infos', 'datas', 'categorie', 'devise', 'nom_formation', 'domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
 
         /*   if ($nom_formation == null) {

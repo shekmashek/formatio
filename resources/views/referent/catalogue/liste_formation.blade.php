@@ -185,7 +185,7 @@
                         <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                         @endif
                     </div>
-                    <div class="col">
+                    {{-- <div class="col">
                         <div class="mb-2 lien_clique"><a href="{{route('demande_devis_client',$info->module_id)}}" class="description ">Démander&nbsp;un&nbsp;devis</a></div>
                         @if (count($datas) <= 0) @else @foreach ($datas as $data) @if($info->module_id == $data->module_id)
                             <div class="pt-1 lien_clique"><a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="description ">S'inscrire</a></div>
@@ -219,7 +219,7 @@
                         </div>
                         @endif
                         @endif
-                        @endforeach
+                        @endforeach --}}
                 </div>
                 @endforeach
                 @else

@@ -402,7 +402,7 @@
                                             @endcanany
                                             <td>{{ $d->nom_module }}</td>
                                             @php
-                                                $salle = explode(',  ', $d->lieu);
+                                                $salle = explode(',', $d->lieu);
                                             @endphp
                                             <td>{{ $salle[0] }}</td>
                                             <td>{{ $salle[1] }}</td>
