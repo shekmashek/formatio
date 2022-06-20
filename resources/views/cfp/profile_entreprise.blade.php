@@ -177,9 +177,10 @@
                     @else
                         @foreach($entreprise as $etp)
                         <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
-                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
+                            <td><a  data-bs-toggle="collapse" href="#collapseExample_{{$etp->entreprise_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a></td>
+                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:40px;height:40px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                             <td role="button"  onclick="afficherInfos();">
-                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:40px; width:40px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                             </td>
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
@@ -210,6 +211,33 @@
                             </div>
                         </div>
                             {{-- fin modal delete --}}
+                        </tr>
+                        <tr  class="collapse" id="collapseExample_{{$etp->entreprise_id}}">
+                            <td style="transition: 0.3s" colspan="4">
+                                <table class="table table-stripted" >
+                                    <thead >
+                                        <tr class="bg-dark text-light">
+                                            <th>Date</th>
+                                            <th>Module</th>
+                                            <th>OF</th>
+                                            <th>Statut</th>
+                                        </tr>
+                                        
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($module as $t )
+                                            @if($t->entreprise_id === $etp->entreprise_id)
+                                            <tr>
+                                                <th>{{$t->date_debut}} au {{$t->date_fin}}</th>
+                                                <th>{{$t->nom_module}}</th>
+                                                <th>{{$t->nom_cfp}}</th>
+                                                <th>{{$t->statuts_projet}}</th>
+                                            </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                         @endforeach
                     @endif
@@ -456,6 +484,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Nom de l'entreprise</th>
                         <th>Réferent principal</th>
                         <th>Action</th>
@@ -469,9 +498,10 @@
                     @else
                         @foreach($entreprise as $etp)
                         <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
-                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
+                            <td><a  data-bs-toggle="collapse" href="#collapseExample_{{$etp->entreprise_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a></td>
+                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:40px;height:40px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                             <td role="button"  onclick="afficherInfos();">
-                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:40px; width:40px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                             </td>
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
@@ -502,6 +532,33 @@
                             </div>
                         </div>
                             {{-- fin modal delete --}}
+                        </tr>
+                        <tr  class="collapse" id="collapseExample_{{$etp->entreprise_id}}">
+                            <td style="transition: 0.3s" colspan="4">
+                                <table class="table table-stripted" >
+                                    <thead >
+                                        <tr class="bg-dark text-light">
+                                            <th>Date</th>
+                                            <th>Module</th>
+                                            <th>OF</th>
+                                            <th>Statut</th>
+                                        </tr>
+                                        
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($module as $t )
+                                            @if($t->entreprise_id === $etp->entreprise_id)
+                                            <tr>
+                                                <th>{{$t->date_debut}} au {{$t->date_fin}}</th>
+                                                <th>{{$t->nom_module}}</th>
+                                                <th>{{$t->nom_cfp}}</th>
+                                                <th>{{$t->statuts_projet}}</th>
+                                            </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                         @endforeach
                     @endif
@@ -746,6 +803,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Nom de l'entreprise</th>
                         <th>Réferent principal</th>
                         <th>Action</th>
@@ -759,9 +817,10 @@
                     @else
                         @foreach($entreprise as $etp)
                         <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
-                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
+                            <td><a  data-bs-toggle="collapse" href="#collapseExample_{{$etp->entreprise_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a></td>
+                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:40px;height:40px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                             <td role="button"  onclick="afficherInfos();">
-                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:40px; width:40px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                             </td>
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
@@ -792,6 +851,33 @@
                             </div>
                         </div>
                             {{-- fin modal delete --}}
+                        </tr>
+                        <tr  class="collapse" id="collapseExample_{{$etp->entreprise_id}}">
+                            <td style="transition: 0.3s" colspan="4">
+                                <table class="table table-stripted" >
+                                    <thead >
+                                        <tr class="bg-dark text-light">
+                                            <th>Date</th>
+                                            <th>Module</th>
+                                            <th>OF</th>
+                                            <th>Statut</th>
+                                        </tr>
+                                        
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($module as $t )
+                                            @if($t->entreprise_id === $etp->entreprise_id)
+                                            <tr>
+                                                <th>{{$t->date_debut}} au {{$t->date_fin}}</th>
+                                                <th>{{$t->nom_module}}</th>
+                                                <th>{{$t->nom_cfp}}</th>
+                                                <th>{{$t->statuts_projet}}</th>
+                                            </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                         @endforeach
                     @endif

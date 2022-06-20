@@ -59,6 +59,10 @@ class EntrepriseController extends Controller
             // dd($refuse_demmande_etp);
             $invitation_etp = $fonct->findWhere("v_invitation_cfp_pour_etp", ["inviter_cfp_id"], [$cfp_id]);
            $entreprise = $entp->getEntreprise($etp2, $etp1);
+           foreach ($entreprise as $m){
+            $id = $m-> entreprise_id;
+            }
+            $module = DB::select('select * from v_groupe_projet_entreprise_module where entreprise_id = ?', [$id]);
             // $entreprise =DB::select('select logo_etp,nom_etp,entreprise_id,photos_resp,nom_resp,prenom_resp ,SUBSTRING(prenom_resp, 1, 1) AS pr, SUBSTRING(nom_resp, 1, 1) AS nm from v_demmande_cfp_etp where cfp_id=?',[$cfp_id]);
             // dd($entreprise);
             //  $entreprisess=DB::select('select * from  v_demmande_cfp_etp where cfp_id= ?',[$cfp_id]);
@@ -67,7 +71,7 @@ class EntrepriseController extends Controller
             // $entreprises=entreprise::findOrFail($entp);
 
 
-            return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp'));
+            return view('cfp.profile_entreprise', compact('entreprise', 'refuse_demmande_etp', 'invitation_etp','module'));
         }
         if (Gate::allows('isSuperAdmin')) {
             $entreprise = entreprise::orderBy('nom_etp')->with('Secteur')->get()->unique('nom_etp');
