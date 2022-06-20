@@ -83,7 +83,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
       <div class="tab-content" id="ex1-content">
         <div
-        class="tab-pane tab-pane fade show active"
+        class="tab-pane fade show active"
         id="collabore"
         role="tabpanel"
         aria-labelledby="ex1-tab-1">
@@ -486,7 +486,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         //         console.log(error)
         //     }
         // });
-    });
+    // });
     //     $(".information").on('click', function(e) {
 
     //         let id = $(this).data("id");
@@ -551,16 +551,17 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     // });
 
 
-
     $('a[data-toggle="tab"]').on('click', function (e) {
-        alert('teste')
         let lien = ($(e.target).attr('href'));
-        localStorage.setItem('collaboration', lien);
-
+        $('a.active').removeClass('active');
+        localStorage.setItem('indicecfp', lien);
+        ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
+        ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     });
-    let Tabactive = localStorage.getItem('collaboration');
-    if(Tabactive){
-        $('#myTab a[href="' + Tabactive + '"]').tab('show');
+    let activeTab = localStorage.getItem('indicecfp');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
     }
+
 </script>
 @endsection
