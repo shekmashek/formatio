@@ -7,10 +7,12 @@
 @section('content')
 {{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
-    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <style>
      .nav-item .nav-link.active {
@@ -37,7 +39,7 @@
         transition: 3s;
     }
     td,tr{
-        color: gray;   
+        color: gray;
     }
 </style>
 <div class="container-fluid mt-4 p-5 " >
@@ -48,7 +50,7 @@
             data-toggle="tab"
             id="ex1-tab-1"
             data-mdb-toggle="tab"
-            
+
             href="#collabore"
             role="tab"
             aria-controls="ex1-tabs-1"
@@ -62,7 +64,7 @@
             data-toggle="tab"
             id="ex1-tab-2"
             data-mdb-toggle="tab"
-            
+
             href="#invitation   "
             role="tab"
             aria-controls="ex1-tabs-2"
@@ -72,11 +74,11 @@
         </li>
 
       </ul>
-    
+
       <!-- Tabs navs -->
 
       <!-- Tabs content -->
-      
+
       {{-- eto --}}
 
       <div class="tab-content" id="ex1-content">
@@ -157,7 +159,7 @@
                                             <th>OF</th>
                                             <th>Statut</th>
                                         </tr>
-                                        
+
                                     </thead>
                                     <tbody>
                                         @foreach ($module as $t )
@@ -398,7 +400,6 @@
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
     // $("#totale_invitations").on('click', function(e) {
@@ -549,13 +550,13 @@
     //     });
     // });
 
-    
+
 
     $('a[data-toggle="tab"]').on('click', function (e) {
         alert('teste')
         let lien = ($(e.target).attr('href'));
         localStorage.setItem('collaboration', lien);
-        
+
     });
     let Tabactive = localStorage.getItem('collaboration');
     if(Tabactive){
