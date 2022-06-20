@@ -47,24 +47,22 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <li class="nav-item active" id="collabore-tab" role="presentation">
           <a
             class="nav-link active collabore"
-            data-toggle="tab"
             id="ex1-tab-1"
             data-mdb-toggle="tab"
-
+            data-toggle="tab"
             href="#collabore"
             role="tab"
             aria-controls="ex1-tabs-1"
             aria-selected="true"
-            ><i class="bi bi-wallet-fill"></i>&nbsp;&nbsp;EN COLABORATION</a
+            ><i class="bi bi-wallet-fill"></i>&nbsp;&nbsp;EN COLABORATIONs</a
           >
         </li>
         <li class="nav-item" id="invitation-tab" role="presentation">
           <a
             class="nav-link invitation"
-            data-toggle="tab"
             id="ex1-tab-2"
             data-mdb-toggle="tab"
-
+            data-toggle="tab"
             href="#invitation   "
             role="tab"
             aria-controls="ex1-tabs-2"
@@ -217,7 +215,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                         <div class="col-md-12">
                             <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list text-center">
                                 <li class="nav-item" style="width: 300px;">
-                                    <a href="#" class="nav-link active " style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
+                                    <a href="#" class="nav-link active "  style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation_attente" type="button" role="tab" aria-controls="invitation_attente" aria-selected="true">
                                         Invitations en attentes
                                     </a>
                                 </li>
@@ -229,7 +227,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                             </ul>
                         </div>
                     </div>
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content" id="invitation_attente">
 
                         <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
                             <div class="table-responsive text-center">
@@ -551,14 +549,14 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     // });
 
 
-    $('a[data-toggle="tab"]').on('click', function (e) {
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
-        $('a.active').removeClass('active');
         localStorage.setItem('indicecfp', lien);
         ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
         ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     });
     let activeTab = localStorage.getItem('indicecfp');
+    console.log($('a[data-toggle="tab"]'));
     if(activeTab){
         $('#myTab a[href="' + activeTab + '"]').tab('show');
     }
