@@ -1114,12 +1114,9 @@
                                 <th>Type de formation</th>
                                 <th> Session </th>
                                 <th> Module </th>
-                                {{-- <th><i class="bx bx-dollar"></i> {{$ref}}</th>
-                                <th> <i class='bx bx-group'></i> </th> --}}
                                 <th>Date session</th>
                                 <th>Ville</th>
                                 <th> Centre de formation </th>
-                                {{-- <th> Date du projet</th> --}}
                                 <th>Modalité</th>
                                 <th> Statut </th>
                                 <th>Actions</th>
@@ -1145,7 +1142,8 @@
                                         </td>
                                         <td class="text-start">
                                             @php
-                                                echo $groupe->module_session($pj->module_id);
+                                            // echo $pj->module_id;
+                                                // echo $groupe->module_session($pj->module_id);
                                             @endphp
                                         </td>
                                         {{-- <td class="text-end">
@@ -1166,7 +1164,7 @@
                                             @php
                                                 echo "<span>-</span>";
                                             @endphp
-                                        </td>
+                                        </td>--}}
                                         <td class="tbody_projet">
                                             @php
                                                 echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));

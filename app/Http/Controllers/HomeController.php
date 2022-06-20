@@ -726,6 +726,7 @@ class HomeController extends Controller
             return view('admin.projet.home', compact('data', 'cfp', 'projet', 'totale_invitation', 'entreprise', 'status'));
         }
         if (Gate::allows('isReferent')) {
+
             if (Gate::allows('isReferentPrincipale')) {
                 $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             }
@@ -796,6 +797,7 @@ class HomeController extends Controller
             $ref = DB::select('select * from devise')[0]->description;
 
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
+      
             return view('projet_session.index2', compact('data','prix_formation','ref','stagiaires','lieu_formations','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isManager')) {
