@@ -10,6 +10,7 @@
         <div class="col-lg-6">
             <div class="card text-white mb-3 mt-3" id="bc">
                 <div class="" style="height:45px; ">
+
                     @foreach($phone_tmp as $item)
                         @if($item->photos == null)
                             <span>

@@ -166,4 +166,5 @@ creation vue v_evaluation_chaud => bdd_suiviformation_view_19(evaluationChaud)
 alter table reponse_evaluationchaud add column statut int(2) default 0;
 
 
+----juin 13
 copier bdd_suiviformation_view_19(evaluationChaud)

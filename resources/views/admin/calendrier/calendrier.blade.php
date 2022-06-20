@@ -15,7 +15,7 @@
             margin: 0;
             padding: 0;
             font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-            font-size: 14px;
+            font-size: 1rem;
         }
 
         #calendar {

@@ -293,3 +293,26 @@ select.list-dt:focus {
     text-decoration: none;
     text-decoration-line: none;
 }
+.facture_table th{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.centrer{
+    margin: auto;
+    width:90%;
+}
+.inner table tr th{
+    color: #6a6969;
+}
+.inner table tr td{
+    color: #807d7d;
+}
+.inner td{
+    border-top:1px solid #dee2e6;
+}
+.inner thead tr th{
+    border-bottom:#dee2e6;
+}
+.inner tr th{
+    border-bottom:2px solid #dee2e6 !important;
+}

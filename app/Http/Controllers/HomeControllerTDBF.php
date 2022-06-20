@@ -35,7 +35,6 @@ class HomeControllerTDBF extends Controller
     public function index()
     {
         if(Gate::allows('isCFP')) {
-            $domaine = $this->fonct->findAll("domaines");
             $user_id = User::where('id', Auth::user()->id)->value('id');
             $centre_fp = cfp::where('user_id', $user_id)->value('id');
             $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
@@ -57,7 +56,7 @@ class HomeControllerTDBF extends Controller
             // fin top 10 par client
 
             // dd($user_id, $centre_fp, $top_10_par_client);
-            return view('cfp.dashboard_cfp.dashboardTDBF', compact('GChart','domaine', 'CA_actuel', 'CA_precedent'));
+            return view('cfp.dashboard_cfp.dashboardTDBF', compact('GChart', 'CA_actuel', 'CA_precedent'));
         }
     }
 

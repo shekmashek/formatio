@@ -502,13 +502,13 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="dte_debut" class="form-label" align="left">Solde min {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <label for="dte_debut" class="form-label" align="left">Solde min {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
                                         <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="dte_fin" class="form-label" align="left"> Solde à max {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <label for="dte_fin" class="form-label" align="left"> Solde à max {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
                                         <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
                                     </div>
                                 </div>
@@ -533,13 +533,13 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <label for="dte_debut" class="form-label" align="left">Solde minimum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
                                         <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="data_debut_filtre" id="data_debut_filtre" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <label for="dte_fin" class="form-label" align="left"> Solde à maximum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
                                         <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
                                     </div>
                                 </div>
@@ -571,7 +571,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="dte_fin" class="form-label" align="left"> Hr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <label for="dte_fin" class="form-label" align="left"> Hr à maximum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
                                         <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
                                     </div>
                                 </div>
@@ -602,7 +602,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="dte_fin" class="form-label" align="left"> Jr à maximum {{$devise->reference." "}}<strong style="color:#ff0000;">*</strong></label>
+                                        <label for="dte_fin" class="form-label" align="left"> Jr à maximum {{$devise->devise." "}}<strong style="color:#ff0000;">*</strong></label>
                                         <input required type="number" name="data_fin_filtre" id="data_fin_filtre" class="form-control" />
                                     </div>
                                 </div>

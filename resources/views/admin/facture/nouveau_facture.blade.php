@@ -172,10 +172,10 @@
                                     <p class="m-0" style="font-size: 80%">Unité</p>
                                 </div>
                                 <div class="col-2">
-                                    <p class="m-0" style="font-size: 80%">PU HT ({{$devise->reference}})</p>
+                                    <p class="m-0" style="font-size: 80%">PU HT ({{$devise->devise}})</p>
                                 </div>
                                 <div class="col-1">
-                                    <p class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</p>
+                                    <p class="m-0" style="font-size: 80%">Total HT ({{$devise->devise}})</p>
                                 </div>
                                 <div class="col-1">
                                     <p class="m-0"></p>
@@ -236,10 +236,10 @@
                                     <p class="m-0" style="font-size: 80%">Quantité</p>
                                 </div>
                                 <div class="col-2">
-                                    <h6 class="m-0" style="font-size: 80%">PU HT ({{$devise->reference}})</h6>
+                                    <h6 class="m-0" style="font-size: 80%">PU HT ({{$devise->devise}})</h6>
                                 </div>
                                 <div class="col-1" align="right">
-                                    <h6 class="m-0" style="font-size: 80%">Total HT ({{$devise->reference}})</h6>
+                                    <h6 class="m-0" style="font-size: 80%">Total HT ({{$devise->devise}})</h6>
                                 </div>
                                 <div class="col-1 text-end">
                                     <h6 class="m-0"></h6>

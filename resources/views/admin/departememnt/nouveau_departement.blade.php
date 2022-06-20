@@ -270,7 +270,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-md-1" style="white-space: nowrap">
-                                                                    
+
                                                                     <a type="button"  href="" data-bs-toggle="modal" data-bs-target="#example_{{$service_departement[$i]->departement_entreprise_id}}"><i class='bx  bx-edit bx_modifier'></i></a>
                                                                     <a type="button"  href="" data-bs-toggle="modal" data-bs-target="#deleteserve_{{$service_departement[$i]->departement_entreprise_id}}"><i class='bx  bx-trash bx_supprimer' ></i></a>
 
@@ -396,7 +396,7 @@
                                         <div class="col">
                                             <input type="text" class="form-control mb-2" id="inlineFormInput"
                                                 name="service[]" placeholder="Nom de service" required />
-                                        </div> --}} 
+                                        </div> --}}
                                         <div class="col ms-2">
                                             <button type="button" class="btn btn_nouveau affiche_btn2" id="addRow2" >
                                                 <i class="bx bx-plus-medical me-1"></i>nouveau service</button>
@@ -438,7 +438,7 @@
                                                         <i class='bx  bx-edit bx_modifier'></i></a>
                                                     <a href="" data-bs-toggle="modal" data-bs-target="#deletebranche_{{$branches[$i]->id}}" type="button" >
                                                        <i class='bx  bx-trash bx_supprimer'></i></a>
-                                                
+
 
                                             </td>
 

@@ -81,7 +81,7 @@
                                         <div class="d-flex justify-content-center">
                                             <button type="submit" class="btn btn_enregistrer mt-2">Modifier</button>
                                         </div>
-                                        
+
                                     </form>
                                 </div>
                             </div>
@@ -117,6 +117,8 @@
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
         localStorage.setItem('activeTab', lien);
+        ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
+        ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     });
     let activeTab = localStorage.getItem('activeTab');
     if(activeTab){

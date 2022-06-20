@@ -218,7 +218,7 @@
     <tbody>
         <tr>
             <td>{{$devise->description}}</td>
-            <td>{{$devise->reference}}</td>
+            <td>{{$devise->devise}}</td>
             <td>{{$devise->valeur_default}}</td>
             <td>{{$devise->valeur_ariary}}</td>
             <td>{{$devise->created_at}}</td>
