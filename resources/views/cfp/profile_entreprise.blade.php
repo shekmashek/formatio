@@ -164,6 +164,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Nom de l'entreprise</th>
                         <th>Réferent principal</th>
                         <th>Action</th>
@@ -216,7 +217,7 @@
                             <td style="transition: 0.3s" colspan="4">
                                 <table class="table table-stripted" >
                                     <thead >
-                                        <tr class="bg-dark text-light">
+                                        <tr style="background: gray;color:white">
                                             <th>Date</th>
                                             <th>Module</th>
                                             <th>OF</th>
@@ -228,7 +229,7 @@
                                         @foreach ($module as $t )
                                             @if($t->entreprise_id === $etp->entreprise_id)
                                             <tr>
-                                                <th>{{$t->date_debut}} au {{$t->date_fin}}</th>
+                                                <th> {{ \Carbon\Carbon::parse($t->date_debut)->format('d/m/Y')}} au  {{ \Carbon\Carbon::parse($t->date_fin)->format('d/m/Y')}}</th>
                                                 <th>{{$t->nom_module}}</th>
                                                 <th>{{$t->nom_cfp}}</th>
                                                 <th>{{$t->statuts_projet}}</th>
@@ -483,7 +484,7 @@
             @endif
             <table class="table table-hover">
                 <thead>
-                    <tr>
+                    <tr >
                         <th>#</th>
                         <th>Nom de l'entreprise</th>
                         <th>Réferent principal</th>
@@ -537,7 +538,7 @@
                             <td style="transition: 0.3s" colspan="4">
                                 <table class="table table-stripted" >
                                     <thead >
-                                        <tr class="bg-dark text-light">
+                                        <tr style="background: gray;color:white">
                                             <th>Date</th>
                                             <th>Module</th>
                                             <th>OF</th>
@@ -549,7 +550,7 @@
                                         @foreach ($module as $t )
                                             @if($t->entreprise_id === $etp->entreprise_id)
                                             <tr>
-                                                <th>{{$t->date_debut}} au {{$t->date_fin}}</th>
+                                                <th> {{ \Carbon\Carbon::parse($t->date_debut)->format('d/m/Y')}} au  {{ \Carbon\Carbon::parse($t->date_fin)->format('d/m/Y')}}</th>
                                                 <th>{{$t->nom_module}}</th>
                                                 <th>{{$t->nom_cfp}}</th>
                                                 <th>{{$t->statuts_projet}}</th>
@@ -856,7 +857,7 @@
                             <td style="transition: 0.3s" colspan="4">
                                 <table class="table table-stripted" >
                                     <thead >
-                                        <tr class="bg-dark text-light">
+                                        <tr style="background: gray;color:white">
                                             <th>Date</th>
                                             <th>Module</th>
                                             <th>OF</th>
@@ -868,7 +869,7 @@
                                         @foreach ($module as $t )
                                             @if($t->entreprise_id === $etp->entreprise_id)
                                             <tr>
-                                                <th>{{$t->date_debut}} au {{$t->date_fin}}</th>
+                                                <th> {{ \Carbon\Carbon::parse($t->date_debut)->format('d/m/Y')}} au  {{ \Carbon\Carbon::parse($t->date_fin)->format('d/m/Y')}}</th>
                                                 <th>{{$t->nom_module}}</th>
                                                 <th>{{$t->nom_cfp}}</th>
                                                 <th>{{$t->statuts_projet}}</th>
