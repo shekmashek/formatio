@@ -177,6 +177,7 @@
                     @else
                         @foreach($entreprise as $etp)
                         <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
+                            <td><a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a></td>
                             <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width: 80px;height: 80px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                             <td role="button"  onclick="afficherInfos();">
                                 <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
@@ -468,6 +469,7 @@
                         </tr>
                     @else
                         @foreach($entreprise as $etp)
+
                         <tr>
                             <td>
                                 <img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"
@@ -764,6 +766,9 @@
                         @foreach($entreprise as $etp)
                         <tr >
                             <td>
+                                <a data-bs-toggle="collapse" href="#collapseExample_{{$etp->entreprise_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a>
+                            </td>
+                            <td>
                                 <img class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();" src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:80px;height:80px;text-align:center; cursor: pointer">
                                 <span class="ms-3 information" style="cursor: pointer;" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();">{{$etp->nom_etp}}</span></td>
                             <td>
@@ -798,6 +803,19 @@
                             </div>
                         </div>
                             {{-- fin modal delete --}}
+                        </tr>
+                        <tr  class="collapse" id="collapseExample_{{$etp->entreprise_id}}">
+                            <td style="transition: 0.3s" colspan="4">
+                                <table class="table table-stripted" style="margin-left:2%;">
+                                    <thead>
+                                        <th>Date</th>
+                                        <th>Thematique</th>
+                                        <th>Module</th>
+                                        <th>OF</th>
+                                        <th>Status</th>
+                                    </thead>
+                                </table>
+                            </td>
                         </tr>
                         @endforeach
                     @endif

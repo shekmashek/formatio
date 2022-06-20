@@ -156,5 +156,20 @@ class Groupe extends Model
         return $info;
     }
 
+    public function dataDetail($cfp_id){
+
+        $user_id = Auth::user()->id;
+        $id = request()->id_session;
+        // $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
+
+        $req = DB::table('v_detail_session')
+            ->select('*')
+            // ->where('groupe_id', $id)
+            ->where('cfp_id', $cfp_id)
+            ->get();
+        
+        return $req;
+    }
+
 }
 ?>

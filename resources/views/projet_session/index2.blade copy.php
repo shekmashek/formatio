@@ -6,9 +6,12 @@
 @inject('groupe', 'App\groupe')
 
 @section('content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
+ 
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+    
 
     <style>
         .dropdown-item.active{
@@ -303,6 +306,8 @@
     }
 
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5-5.1.3/datatables.min.css"/>
 
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
@@ -359,8 +364,36 @@
                                     </ul>
                                 </div>
                             @endif
+                            {{-- datatable --}}
+
+                            <table id="myData" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Projet</th>
+                                        <th>Type</th>
+                                        <th>CFP</th>
+                                        <th>Session</th>
+                                        <th>Modalité</th>
+                                        <th>Status</th>
+                                        <th>Salary</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> hdhd </td>
+                                        <td> fggg </td>
+                                        <td> szzz </td>
+                                        <td> tggg </td>
+                                        <td> dfff </td>
+                                        <td> dddd </td>
+                                        <td> sss </td>
+                                    </tr>
+                                </tbody>
+                    
+                            </table>
+                            {{-- /datatable --}}
                             <div class="fixedTop">
-                                <table class="table shadow-sm p-3 mb-5 bg-body rounded">
+                                <table id="myTableSa" class="table shadow-sm p-3 mb-5 bg-body rounded">
                                     <thead>
                                         <tr style="background: #eff1f3;">
                                             <th scope="col">Projet</th>
@@ -421,9 +454,7 @@
                                                     @foreach ($data as $pj)
                                                         @if ($prj->projet_id == $pj->projet_id)
                                                         <tr>
-                                                        <td>
-                                                            <a data-bs-toggle="collapse" href="#collapseExample_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a>
-                                                        </td>
+                                                        <td></td>
                                                         <td>
                                                             <a href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">
                                                                 <span style="border-bottom: 3px solid #673ab7">{{ $pj->nom_groupe }}</span>
@@ -985,55 +1016,6 @@
                                                             </div>
                                                             {{-- fin --}}
                                                         </tr>
-                                                        
-                                                        <tr  class="collapse" id="collapseExample_{{$pj->groupe_id}}">
-                                                            <td style="transition: 0.3s" colspan="4">
-                                                                <table class="table table-stripted" style="margin-left:2%;">
-                                                                    <thead>
-                                                                        <th>Coût</th>
-                                                                        <th>Formateur</th>
-                                                                        <th>Module</th>
-                                                                        <th>OF</th>
-                                                                        <th>Status</th>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>{{ number_format($pj->prix, 2) }} Ariary</td>
-                                                                            {{-- <td>
-                                                                                @php
-                                                                                    $dataDetails = $groupe->dataDetail($pj->cfp_id);
-                                                                                    foreach ($dataDetails as $dataDetail) {
-                                                                                        echo $dataDetail->nom_module;
-                                                                                    }
-                                                                                @endphp
-                                                                            </td> --}}
-                                                                            {{-- <td>
-                                                                                @php
-                                                                                    $dataDetails = $groupe->dataDetail($pj->cfp_id);
-                                                                                    foreach ($dataDetails as $dataDetail) {
-                                                                                        echo $dataDetail->nom_formateur;
-                                                                                    }
-                                                                                @endphp
-                                                                            </td> --}}
-                                                                            
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                @php
-                                                                                    $dataDetails = $groupe->dataDetail($pj->cfp_id);
-                                                                                    foreach ($dataDetails as $dataDetail) {
-                                                                                        echo $dataDetail->nom_groupe."<br>";
-                                                                                    }
-                                                                                @endphp
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
                                                         @if ($prj->type_formation_id == 2)
                                                             @break
                                                         @endif
@@ -1533,6 +1515,13 @@
                 </div>
 
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                <script type="text/javascript" src="https://cdn.datatables.net/v/bs5-5.1.3/datatables.min.js"></script>
+                <script>
+                    $(document).ready( function () {
+                        $('#myData').DataTable();
+                    } );
+                </script>
+
                 <script src="{{ asset('js/index2.js') }}"></script>
                 <script>
                     $("#formation_session_id").on("change", function() {
