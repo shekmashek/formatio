@@ -315,7 +315,11 @@
                     <tbody>
                         @forelse ($employers as $employe)
                             <tr >
+<<<<<<< HEAD
                                 <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
+=======
+                                <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();">
+>>>>>>> bd45773d2 (fff)
 
                                     @if ($employe->activiter == 1)
                                         <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
@@ -353,7 +357,11 @@
                                                             </div>
                                                         @else
                                                                 <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" src="{{ asset('images/stagiaires/' . $employe->photos) }}"
+<<<<<<< HEAD
                                                                 alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
+=======
+                                                                alt="Image non chargée" style="width: 45px; height: 45px"
+>>>>>>> bd45773d2 (fff)
                                                                 class="rounded-circle empNew" />
                                                         @endif
                                                     <div class="ms-3">
@@ -635,7 +643,11 @@
         </script>
         <script>
             $(".randomColor").each(function() {
+<<<<<<< HEAD
             //On change la couleur de fond au hasard
+=======
+            //On change la couleur de fond au hasard  
+>>>>>>> bd45773d2 (fff)
                 $(this).css("background-color", '#'+(Math.random()*0xFFFFFF<<0).toString(16).slice(-6));
             });
         </script>
