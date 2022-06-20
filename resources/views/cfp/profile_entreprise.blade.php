@@ -5,15 +5,14 @@
 @endsection
 
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
-    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
-<style>
-     .nav-item .nav-link.active {
+        integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+    <style>
+    .nav-item .nav-link.active {
         border-bottom: 3px solid #7635dc !important;
         border: none;
         transform: none;
@@ -359,10 +358,10 @@
             </div>
         </div>
         <div class="tab-pane fade show" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-          Tab 3 content
+        Tab 3 content
         </div>
-      </div>
-      <div class="infos mt-3">
+    </div>
+    <div class="infos mt-3">
         <div class="row">
             <div class="col">
                 <p class="m-0 text-center">INFORMATION</p>
@@ -446,16 +445,16 @@
         </div>
     </div>
 
-      {{-- tapitra --}}
-      @elseif (Session::has('success'))
-      <div class="tab-content" id="ex1-content">
+    {{-- tapitra --}}
+    @elseif (Session::has('success'))
+    <div class="tab-content" id="ex1-content">
         <div
-          class="tab-pane fade show"
-          id="collabore"
-          role="tabpanel"
-          aria-labelledby="ex1-tab-1"
+        class="tab-pane fade show"
+        id="collabore"
+        role="tabpanel"
+        aria-labelledby="ex1-tab-1"
         >
-          {{-- Tab 1 content --}}
+        {{-- Tab 1 content --}}
             <div class="row">
 
             </div>
@@ -492,7 +491,7 @@
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                         </td>
 
-                           {{-- modal delete  --}}
+                        {{-- modal delete  --}}
                         <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -524,7 +523,7 @@
             </table>
 
 
-          {{-- Tab 1 content --}}
+        {{-- Tab 1 content --}}
         </div>
         {{-- <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="ex1-tab-2">
             <div class="row mt-2">
@@ -655,10 +654,10 @@
             </div>
         </div> --}}
         <div class="tab-pane fade show" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-          Tab 3 content
+        Tab 3 content
         </div>
-      </div>
-      <div class="infos mt-3">
+    </div>
+    <div class="infos mt-3">
         <div class="row">
             <div class="col">
                 <p class="m-0 text-center">INFORMATION</p>
@@ -741,15 +740,15 @@
             </div>
         </div>
     </div>
-      @else
-      <div class="tab-content" id="ex1-content">
+    @else
+    <div class="tab-content" id="ex1-content">
         <div
-          class="tab-pane show fade active"
-          id="collabore"
-          role="tabpanel"
-          aria-labelledby="ex1-tab-1"
+        class="tab-pane show fade active"
+        id="collabore"
+        role="tabpanel"
+        aria-labelledby="ex1-tab-1"
         >
-          {{-- Tab 1 content --}}
+        {{-- Tab 1 content --}}
             <div class="row">
 
             </div>
@@ -784,7 +783,7 @@
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                         </td>
 
-                           {{-- modal delete  --}}
+                        {{-- modal delete  --}}
                         <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -816,7 +815,7 @@
             </table>
 
 
-          {{-- Tab 1 content --}}
+        {{-- Tab 1 content --}}
         </div>
         <div class="tab-pane show fade " id="invitation" role="tabpanel" aria-labelledby="ex1-tab-2">
             <div class="row mt-2">
@@ -950,9 +949,9 @@
             </div>
         </div>
         <div class="tab-pane show fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-          Tab 3 content
+        Tab 3 content
         </div>
-      </div>
+    </div>
 
     <div class="infos mt-3">
         <div class="row">
@@ -1037,14 +1036,14 @@
             </div>
         </div>
     </div>
-      @endif
+    @endif
 
 
 
 
 
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
     $("#totale_invitations").on('click', function(e) {
@@ -1195,14 +1194,13 @@
         });
     });
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    $('a[data-toggle="tab"]').on('click', function (e) {
         let lien = ($(e.target).attr('href'));
         localStorage.setItem('indicecfp', lien);
         ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
         ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     });
     let activeTab = localStorage.getItem('indicecfp');
-    console.log($('a[data-toggle="tab"]'));
     if(activeTab){
         $('#myTab a[href="' + activeTab + '"]').tab('show');
     }
