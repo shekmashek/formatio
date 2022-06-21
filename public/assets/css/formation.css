@@ -298,12 +298,12 @@ a:focus {
     position: relative;
     left: 0.8rem;
     padding-top: 1rem;
-    width: 50.8rem;
+    width: auto;
 }
 
 .module_detail_heure .bx {
     position: relative;
-    padding: 0.5rem 0.5rem;
+    /* padding: 0.5rem 0.5rem; */
     /* color: white; */
     color: #637381;
     border: none;
@@ -321,7 +321,7 @@ a:focus {
     position: sticky;
     top: 13rem;
     background-color: white;
-    border: 1px solid rgb(219, 217, 217);
+    /* border: 1px solid rgb(219, 217, 217); */
     /* border-radius: 25px; */
 }
 .detail__prix {
@@ -582,6 +582,8 @@ input{
     --star-size: 20px;
     --star-color: #c8c7c77c;
     --star-background: #fc0;
+    --icon-color: #c8c7c77c;
+    --icon-background: #7635dc;
 }
 
 .Stars{
@@ -624,35 +626,35 @@ input{
 .table-rating-bar .bar-container .bar-5 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: gold;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-4 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: gold;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-3 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: gold;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-2 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: gold;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-1 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: gold;
     border-radius: 20px;
 }
 
@@ -661,10 +663,10 @@ input{
 }
 
 .Stars {
-    color: orangered;
+    color: gold;
 }
 .rating-star .checked {
-    color: orangered;
+    color: gold;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -681,3 +683,73 @@ input{
 .moins_avis{
     visibility: hidden;
 }
+
+.background_contrast{
+    background-color: #a2a4a62c;
+    padding-top: 5px;
+    height: 31px;
+    margin-left: 8px;
+    /* border-radius: 5px; */
+}
+
+.background_contrast .bx{
+    color: #7635dc;
+    font-size: 1.3rem;
+}
+
+.bx_pourcentage{
+    --note: calc(var(--pourcentage) / 5 * 100%);
+    display: inline-block;
+    font-size: var(--star-size);
+    font-family: Times;
+    line-height: 1;
+}
+
+.bx_pourcentage::before{
+    content: "\ef37";
+    background: linear-gradient(90deg, var(--icon-background) var(--note), var(--icon-color) var(--note));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+#marksChart{
+    cursor: pointer;
+}
+
+
+.encre_icon{
+    /* color: #28a7eb; */
+    font-size: 2rem;
+    position: relative;
+    top: 8px;
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.encre__icon{
+    /* color: #28a7eb; */
+    font-size: 2.5rem;
+    position: relative;
+    top: 8px;
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.view_icon{
+    font-size: 2.5rem;
+    position: relative;
+    bottom: 0px;
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* .afficher_pdf{
+    display: none;
+} */

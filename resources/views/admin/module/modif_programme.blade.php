@@ -15,6 +15,7 @@
                 <li class="me-5"><a href="#objectif"><i class='bx bx-target-lock encre_icon me-2'></i>objectif</a></li>
                 <li class="me-5"><a href="#pour_qui"><i class='bx bx-user encre_icon me-2'></i>pour qui ?</a></li>
                 <li class="me-5"><a href="#programme"><i class='bx bx-list-minus encre_icon me-2'></i>programme</a></li>
+                <li class="me-5"><a href="#avis"><i class='bx bx-list-minus encre_icon me-2'></i>Avis</a></li>
             </ul>
         </div>
         <div>
@@ -338,6 +339,7 @@
                                 </div>
                                 <?php $i++ ?>
                                 @endforeach
+                                <div id="avis"></div>
                             </div>
                         </div>
                     </div>

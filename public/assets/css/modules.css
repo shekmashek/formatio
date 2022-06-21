@@ -1115,10 +1115,6 @@ font-size: 0.850rem;
     font-size: 1.3rem;
 }
 
-/* .border_left{
-    border-right: 1px solid #7635dc;
-} */
-
 .bx_pourcentage{
     --note: calc(var(--pourcentage) / 5 * 100%);
     display: inline-block;

@@ -250,7 +250,7 @@
                                     {{-- data-target="#Modal_{{$prgc->id}}" --}}
                                 </div>
                                 <div>
-                                    <div class="modal fade" id="Modal_{{$prgc->id}}" tabindex="-1" role="dialog"
+                                    <div class="modal fade" id="Modal_{{$prgc->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"
                                         aria-labelledby="Modal{{$prgc->id}}" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -290,7 +290,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="modal fade" id="Modal_cours_{{$prgc->id}}" tabindex="-1" role="dialog"
+                                    <div class="modal fade" id="Modal_cours_{{$prgc->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"
                                         aria-labelledby="Modal_cours_{{$prgc->id}}" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -381,7 +381,7 @@
                 </div>
                 {{-- @endif --}}
                 <div>
-                    <div class="modal fade" id="ModalCompetence_{{$id[0]->id}}">
+                    <div class="modal fade" id="ModalCompetence_{{$id[0]->id}}" data-bs-backdrop="static" data-bs-keyboard="false">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('ajout_competence')}}" method="POST">
@@ -441,7 +441,7 @@
                 </div>
                 <div>
                     <?php $i=0 ?>
-                    <div class="modal fade" id="Modal_{{$id[0]->id}}">
+                    <div class="modal fade" id="Modal_{{$id[0]->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modifier_competence')}}" method="POST">
@@ -509,7 +509,7 @@
             <div>
                 {{-- modification nom_module --}}
                 <div>
-                    <div class="modal" id="nom_module" aria-labelledby="nom_module" aria-hidden="true">
+                    <div class="modal" id="nom_module" aria-labelledby="nom_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" >
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modification_nom_module',$res->module_id)}}" method="POST">
@@ -534,7 +534,7 @@
                 </div>
                 {{-- modification description --}}
                 <div>
-                    <div class="modal" id="description" aria-labelledby="description" aria-hidden="true">
+                    <div class="modal" id="description" aria-labelledby="description" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modification_description',$res->module_id)}}" method="POST">
@@ -559,7 +559,7 @@
                 </div>
                 {{-- modification detail --}}
                 <div>
-                    <div class="modal" id="refs" aria-labelledby="refs" aria-hidden="true">
+                    <div class="modal" id="refs" aria-labelledby="refs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modification_detail',$res->module_id)}}" method="POST">
@@ -660,7 +660,7 @@
                 </div>
                 {{-- modification objectif --}}
                 <div>
-                    <div class="modal" id="objectif_module" aria-labelledby="objectif_module" aria-hidden="true">
+                    <div class="modal" id="objectif_module" aria-labelledby="objectif_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_objectif',$res->module_id)}}" method="POST" id="form_objectif">
@@ -688,7 +688,7 @@
                 </div>
                 {{-- modification pour_qui --}}
                 <div>
-                    <div class="modal" id="cible" aria-labelledby="cible" aria-hidden="true">
+                    <div class="modal" id="cible" aria-labelledby="cible" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_pour_qui',$res->module_id)}}" method="POST" id="form_public">
@@ -715,7 +715,7 @@
                 </div>
                 {{-- modification prerequis --}}
                 <div>
-                    <div class="modal" id="prerequis_module" aria-labelledby="prerequis_module" aria-hidden="true">
+                    <div class="modal" id="prerequis_module" aria-labelledby="prerequis_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_prerequis',$res->module_id)}}" method="POST" id="form_prerequis">
@@ -742,7 +742,7 @@
                 </div>
                 {{-- modification equipement --}}
                 <div>
-                    <div class="modal" id="equipement_module" aria-labelledby="equipement_module" aria-hidden="true">
+                    <div class="modal" id="equipement_module" aria-labelledby="equipement_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_equipement',$res->module_id)}}" method="POST" id="form_equipement">
@@ -769,7 +769,7 @@
                 </div>
                 {{-- modification bon_a_savoir --}}
                 <div>
-                    <div class="modal" id="bon_a_savoir_module" aria-labelledby="bon_a_savoir_module" aria-hidden="true">
+                    <div class="modal" id="bon_a_savoir_module" aria-labelledby="bon_a_savoir_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_bon_a_savoir',$res->module_id)}}" method="POST" id="form_bon_a_savoir">
@@ -796,7 +796,7 @@
                 </div>
                 {{-- modification prestation --}}
                 <div>
-                    <div class="modal" id="prestation_module" aria-labelledby="prestation_module" aria-hidden="true">
+                    <div class="modal" id="prestation_module" aria-labelledby="prestation_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_prestation',$res->module_id)}}" method="POST" id="form_prestation">
