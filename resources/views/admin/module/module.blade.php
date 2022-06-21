@@ -1060,9 +1060,6 @@
                                         <div>
                                             <div class="Stars" style="--note: {{ $info->pourcentage }};">
                                             </div>
-
-
-
                                             <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5
                                                 {{-- @if($info->total_avis != null)
                                                 ({{$info->total_avis}} avis)
@@ -1188,35 +1185,34 @@
                                         @endforeach
                                         @endif
                                 </div> --}}
-                                @foreach ($datas as $data)
-                                @if($info->module_id == $data->module_id)
-                                    @if (count($datas) <=0) 
 
-                                    @else
+                                @if (count($datas)<=0)
+
+                                @else
                                     <hr class="mb-1 mt-2">
-                                        <div class="row w-100 justify-content-end">
-                                            <span class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet"><span style="font-size: .8rem;">Afficher les actions de formation</span>&nbsp;<i class="bx bx-caret-down caret-icon"></i>
-                                            </span>
-                                            <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}" style="background: none;">
-                                                <div class="row px-3 py-2">
-                                                    <div class="col-12 date">
-                                                        <table class="table table-striped">
-                                                            <thead class="text-secondary" style="font-size: .8rem;">
-                                                                <tr>
-                                                                    <th scope="col">Date</th>
-                                                                    <th scope="col">Entreprise</th>
-                                                                    <th scope="col">Nombres Stagiaires</th>
-                                                                    <th scope="col">Session</th>
-                                                                    <th scope="col">Type</th>
-                                                                    <th scope="col">Modalité</th>
-                                                                    <th scope="col">Chiffre d'Affaire ({{$devise->reference}})</th>
-                                                                    <th scope="col">Frais Annexe ({{$devise->reference}})</th>
-                                                                    <th scope="col">Status</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody style="font-size: .8rem">
-                                                            @foreach ($datas as $data)
-                                                                @if($info->module_id == $data->module_id)
+                                    <div class="row w-100 justify-content-end">
+                                        <span class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet"><span style="font-size: .8rem;">Afficher les actions de formation</span>&nbsp;<i class="bx bx-caret-down caret-icon"></i>
+                                        </span>
+                                        <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}" style="background: none;">
+                                            <div class="row px-3 py-2">
+                                                <div class="col-12 date">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-secondary" style="font-size: .8rem;">
+                                                            <tr>
+                                                                <th scope="col">Date</th>
+                                                                <th scope="col">Entreprise</th>
+                                                                <th scope="col">Nombres Stagiaires</th>
+                                                                <th scope="col">Session</th>
+                                                                <th scope="col">Type</th>
+                                                                <th scope="col">Modalité</th>
+                                                                <th scope="col">Chiffre d'Affaire ({{$devise->reference}})</th>
+                                                                <th scope="col">Frais Annexe ({{$devise->reference}})</th>
+                                                                <th scope="col">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="font-size: .8rem">
+                                                        @foreach ($datas as $data)
+                                                            @if($info->module_id == $data->module_id)
                                                                 <tr>
                                                                     <td class="text-center text-secondary">
                                                                         @php echo strftime('%d-%m-%y', strtotime($data->date_debut)).' au '.strftime('%d-%m-%y', strtotime($data->date_fin)); @endphp
@@ -1270,21 +1266,17 @@
                                                                             @endphp
                                                                         </td>
                                                                     @endif
-                                                                    
                                                                     <td class="text-secondary">{{$data->item_status_groupe}}</td>
                                                                 </tr>
-                                                                @endif
-                                                            @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+                                                            @endif
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                    @endif
+                                    </div>
                                 @endif
-                                @endforeach 
                             </div>
                             @endforeach
                             @else

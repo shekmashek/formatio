@@ -76,11 +76,11 @@
             <h5 class="ms-5">{{count($infos)}} résultats</h5><br>
             @endif --}}
             @if(isset($nom_entiter))
-            <h5 class="ms-5">{{count($infos)}} résultat trouvé sur &nbsp;{{$nom_entiter}}</h5><br>
+            <span class="ms-5">{{count($infos)}} résultat trouvé sur &nbsp;{{$nom_entiter}}</span><br>
             @elseif(isset($nom_formation))
-            <h5 class="ms-5">{{count($infos)}} résultat trouvé en &nbsp;{{$nom_formation}}</h5><br>
+            <span class="ms-5">{{count($infos)}} résultat trouvé en &nbsp;{{$nom_formation}}</span><br>
             @else
-            <h5 class="ms-5">{{count($infos)}} résultats trouvé</h5><br>
+            <span class="ms-5">{{count($infos)}} résultats trouvé</span><br>
             @endif
 
             @if(Session::has('success'))
@@ -92,6 +92,7 @@
             <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
                 {{-- =========== pagination module =============================================== --}}
+                
                 @include("referent.catalogue.pagination.pagination_liste_formation")
 
                 <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
@@ -185,7 +186,7 @@
                         <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                         @endif
                     </div>
-                    {{-- <div class="col">
+                    <div class="col">
                         <div class="mb-2 lien_clique"><a href="{{route('demande_devis_client',$info->module_id)}}" class="description ">Démander&nbsp;un&nbsp;devis</a></div>
                         @if (count($datas) <= 0) @else @foreach ($datas as $data) @if($info->module_id == $data->module_id)
                             <div class="pt-1 lien_clique"><a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="description ">S'inscrire</a></div>
@@ -219,7 +220,7 @@
                         </div>
                         @endif
                         @endif
-                        @endforeach --}}
+                        @endforeach
                 </div>
                 @endforeach
                 @else
