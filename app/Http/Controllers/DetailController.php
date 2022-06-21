@@ -70,6 +70,24 @@ class DetailController extends Controller
 
         $events = array();
 
+        // si l'utilisateur est un résponsable d'entreprise
+        if (Gate::allows('isReferent')) {
+            $details = detail::where('groupe_id', 5)->get();
+            foreach ($details as $key => $value) {
+
+                // dd($value->groupe->projet->cfp->nom);
+                $events[] = array(
+                    'detail_id' => $value->id,
+                    'title' => $value->groupe->module->formation->nom_formation,
+                    'start' => $value->date_detail,
+                    'end' => $value->h_fin,
+                    'nom_projet' => $value->groupe->projet->nom_projet,
+                    'lieu' => $value->lieu,
+                    'formateur' => $value->formateur->nom_formateur,
+                    'nom_cfp' => $value->groupe->projet->cfp->nom
+                );
+            }
+        }
 
         // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
         return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations'));
@@ -206,7 +224,7 @@ class DetailController extends Controller
 
         }
 
-        
+
 
         if( Gate::allows('isReferent')){
 
@@ -227,6 +245,9 @@ class DetailController extends Controller
             $details = array();
             $detail_id = array();
  
+
+
+
             $details = DB::select('
                 SELECT  *,details.id as details_id  from details
                 inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
@@ -239,6 +260,8 @@ class DetailController extends Controller
                 inner join type_formations on projets.type_formation_id = type_formations.id
                 inner join cfps on details.cfp_id = cfps.id
                 where groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
+
+// $entrepise_id = responsable::where('user_id', Auth::user()->id)->entreprise_id;
 
 
             for ($i=0; $i < count($groupe_entreprises); $i++) {

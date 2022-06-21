@@ -31,9 +31,7 @@ class Detail extends Model
         return $this->belongsTo('App\projet');
     }
     public function groupe(){
-        return $this->belongsTo('App\groupe');
+        return $this->belongsTo('App\groupe', 'groupe_id');
     }
-
-
 
 }

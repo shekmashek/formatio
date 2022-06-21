@@ -11,8 +11,14 @@ class Groupe extends Model
     protected $fillable = [
         'nom_groupe','projet_id','max_participant','min_participant','module_id','date_debut','date_fin','status','activiter'
     ];
+
+
+    public function module(){
+        return $this->belongsTo('App\module', 'module_id');
+    }
+
     public function projet(){
-        return $this->belongsTo('App\projet');
+        return $this->belongsTo('App\projet', 'projet_id');
     }
 
     public function generateNomSession($projet_id){

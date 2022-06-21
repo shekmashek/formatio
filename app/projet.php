@@ -2,15 +2,24 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\cfp;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\Model;
+
 class Projet extends Model
 {
     protected $table = "projets";
     protected $fillable = [
         'id','nom_projet','entreprise_id','cfp_id','type_formation_id','status','activiter'
     ];
+
+
+
+    public function cfp() {
+        return $this->belongsTo(cfp::class, 'cfp_id');
+    }
+
     public function entreprise(){
         return $this->belongsTo('App\entreprise');
     }

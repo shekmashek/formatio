@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\projet;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 class Cfp extends Model
 {
@@ -14,8 +15,6 @@ class Cfp extends Model
         'id', 'Nom', 'Adresse', 'Email', 'Telephone', 'Domaine_de_formation', 'NIF', 'STAT', 'RCS', 'CIF', 'logo', 'user_id',
         'adresse_rue', 'adresse_quartier', 'adresse_code_postal'
     ];
-
-
 
     // ----------------------------------------
     public function getCfpIdCollaborer($list)

@@ -416,6 +416,9 @@
 
     <script>
 
+
+
+
             document.addEventListener('DOMContentLoaded', function() {
                 var calendarEl = document.getElementById('planning');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -429,7 +432,9 @@
                                     left: ''
 
                                 }
-                    
+
+
+
                 });
 
 
@@ -455,10 +460,11 @@
                 , url: "{{route('allEventEntreprise')}}"
                 , dataType: "html"
                 , success: function(data) {
+                 
                     var event = Array();
                     var userDataDetail = JSON.parse(data);
                     var details = userDataDetail['details'];
-
+                  
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
 
                     var detail_id = userDataDetail['detail_id'];
@@ -474,8 +480,9 @@
                             @can('isReferent')
                                 title: details[$i].nom_formation
                             @endcan
-                            , start: details[$i].date_detail
                             ,backgroundColor:getRandomColor()
+
+                            , start: details[$i].date_detail
                             , nom_projet: details[$i].nom_projet
                             , h_debut: details[$i].h_debut
                             , h_fin: details[$i].h_fin
