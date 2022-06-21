@@ -30,7 +30,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="btn_next employeClass" id="referent" data-bs-toggle="tab" data-bs-target="#tab-employe" type="button" role="tab" aria-controls="tab-referent" aria-selected="true">
+                            
+                            <a href="#" class="btn_next employeClass " id="referent" data-bs-toggle="tab" data-bs-target="#tab-employe" type="button" role="tab" aria-controls="tab-referent" aria-selected="true">
                                 Employés
                             </a>
                         </li>

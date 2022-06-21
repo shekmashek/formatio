@@ -90,7 +90,7 @@
                 <strong> {{Session::get('message')}}</strong>
             </div>
         @endif
-        <table class="table table-hover">
+        <table class="table table-hover text-secondary" style="font-size: .8rem;">
             <thead>
                 <tr>
                     <th>Organisme de Formation</th>
@@ -98,7 +98,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="data_collaboration" style="font-size: 11.5px;">
+            <tbody id="data_collaboration">
 
                 @if (count($cfp)<=0) <tr>
                     <td> Aucun centre de formation collaborer</td>
@@ -107,7 +107,7 @@
                     @foreach($cfp as $centre)
                     <tr>
 
-                        <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height 80px; width: 80px;"><span class="ms-3">{{$centre->nom}} </span></td>
+                        <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height:60px; width: 60px;"><span class="ms-3">{{$centre->nom}} </span></td>
                         {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->telephone}}</td> --}}
                         <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>
 
@@ -137,7 +137,7 @@
 
                             <td class="align-middle" >
                                 <a href="{{route('liste_projet',$centre->cfp_id)}}" class="btn btn-info btn-sm text-light" >Voir tous les projets</a>
-                                <a  data-bs-toggle="modal" class="ms-3 mt-5"  data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i  class='bx bx-trash bx_supprimer align-middle'></i></a>
+                                <a  data-bs-toggle="modal" class="ms-3" data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i  class='bx bx-trash bx_supprimer align-middle'></i></a>
                             </td>
 
                     </tr>

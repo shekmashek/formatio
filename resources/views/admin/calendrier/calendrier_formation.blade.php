@@ -276,7 +276,7 @@
                         <div>
                             <i class='bx bx-building-house ms-3' style="font-size: 1rem;"></i> </label> &nbsp;<label id="etp" class="contenu"> </label> <label for="logo" id="logo_etp"></label>
                             <i class='bx bx-buildings ms-3' style="font-size: 1rem;"></i><label id="cfp" class="contenu"> </label><label for="logo" id="logo_cfp"></label><br>
-                            <label class="ps-3 pt-2"">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
+                            <label class="ps-3 pt-2">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
 
                         </div>
 
@@ -285,7 +285,7 @@
 
                         @canany(['isReferent','isCFP','isFormateur'])
                             <label class="gauche" for="">Liste des apprenants</label><br>
-                            <table class="table">
+                            <table class="table text-secondary" style="font-size: .8rem;">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -295,13 +295,13 @@
                                         <th>Detp & Sce</th>
                                     </tr>
                                 </thead>
-                                <tbody id="liste_app" >
+                                <tbody id="liste_app">
 
                                 </tbody>
                             </table>
                         @endcanany
                         <label for="" class="mt-2">Les matériels nécessaires</label><br>
-                        <table class="table">
+                        <table class="table text-secondary" style="font-size: .8rem;">
                         <thead>
                             <tr>
 

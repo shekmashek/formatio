@@ -294,7 +294,7 @@
 
         <div class="row">
             <div class="col-12">
-                <table id="example" class="table " style="width:100%">
+                <table id="example" class="table text-secondary" style="width:100%">
                     <thead>
                         <tr>
                             <th class="id">ID</th>
@@ -305,11 +305,8 @@
                                 <span>Service</span>
                             </th>
                             {{-- <th scope="col" class="table-head font-weight-light align-middle text-center ">Age</th> --}}
-
-
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -324,8 +321,6 @@
                                     @endif
                                     {{ $employe->matricule }}
                                 </td>
-
-
                                 <td>
                                     <div class="d-flex align-items-center">
                                         @if ($employe->photos == null)

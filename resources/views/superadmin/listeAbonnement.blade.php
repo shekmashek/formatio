@@ -13,7 +13,6 @@
         integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
     <div class="container-fluid">
         {{-- <div class="col-md">
@@ -24,13 +23,13 @@
         <div class="m-4" role="tabpanel">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item active">
-                    <a href="#service" class="nav-link active" data-toggle="tab"><i class="bi bi-list-task"></i>&nbsp;&nbsp;Historique des services</a>
+                    <a href="#service" class="nav-link active" data-toggle="tab">Historique des services</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#abonnement" class="nav-link " data-toggle="tab"><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;Abonnements</a>
+                    <a href="#abonnement" class="nav-link " data-toggle="tab">Abonnements</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#facture" class="nav-link" data-toggle="tab"><i class="bi bi-receipt"></i>&nbsp;&nbsp;Factures</a>
+                    <a href="#facture" class="nav-link" data-toggle="tab">Factures</a>
                 </li>
             </ul>
 
@@ -162,7 +161,7 @@
                                     <td><a href="{{route('detail_facture_abonnement',$fact->facture_id)}}" style="text-decoration: underline">{{$fact->num_facture}}</a></td>
 
 
-                                    <td>{{$fact->nom_type}}&nbsp,&nbspMensuel</td>
+                                    <td>{{$fact->nom_type}}</td>
                                     <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
                                     <td>{{$fact->invoice_date}}</td>
                                     <td>{{$fact->due_date}}</td>
@@ -197,7 +196,7 @@
                             </ul>
                         </div>
                     @endif
-                    <table class="table">
+                    <table class="table text-secondary" style="font-size: .8rem;">
                         <thead>
                         <tr>
                             <th scope="col">Date d'inscription</th>
@@ -225,11 +224,11 @@
                                     <td>
                                         <div class="dropdown">
                                             @if($fact->activite == 0)
-                                                <button class="btn btn-secondary dropdown-toggle disabled" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button class="btn btn-secondary dropdown-toggle disabled btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Arrêter le service
                                                 </button>
                                             @else
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Arrêter le service
                                                 </button>
                                             @endif
@@ -376,21 +375,14 @@
     </div> --}}
 
     <script>
-
-
-
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 let lien = ($(e.target).attr('href'));
-                localStorage.setItem('abonnement', lien);
-                ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
-                ($('.btn_racourcis a[href="' + Tabactive + '"]').closest('div')).addClass('active');
-        });
-        let activeTab = localStorage.getItem('abonnement');
-        // console.log(activeTab);
-        if(activeTab){
-            $('#myTab a[href="' + activeTab + '"]').tab('show');
-        }
-
+                localStorage.setItem('activeTab', lien);
+            });
+            let activeTab = localStorage.getItem('activeTab');
+            if(activeTab){
+                $('#myTab a[href="' + activeTab + '"]').tab('show');
+            }
     </script>
 
 

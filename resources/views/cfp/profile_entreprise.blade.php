@@ -7,9 +7,6 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
-    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <style>
@@ -180,7 +177,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="data_collaboration" style="font-size: 15.5px;">
+                <tbody id="data_collaboration text-secondary">
 
                     @if (count($entreprise)<=0) <tr>
                         <td> Aucun entreprise collaborer</td>
@@ -188,7 +185,7 @@
                     @else
                         @foreach($entreprise as $etp)
                         <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
-                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width: 80px;height: 80px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
+                            <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width: 60px;height: 60px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                             <td role="button"  onclick="afficherInfos();">
                                 <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
                             </td>
@@ -464,7 +461,7 @@
                 <strong> {{Session::get('message')}}</strong>
             </div>
             @endif
-            <table class="table table-hover">
+            <table class="table table-hover text-secondary" style="font-size: .8rem;">
                 <thead>
                     <tr>
                         <th>Nom de l'entreprise</th>
@@ -472,7 +469,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="data_collaboration" style="font-size: 15.5px;">
+                <tbody id="data_collaboration text-secondary">
 
                     @if (count($entreprise)<=0) <tr>
                         <td> Aucun entreprise collaborer</td>
@@ -480,8 +477,8 @@
                     @else
                         @foreach($entreprise as $etp)
                         <tr>
-                            <td>
-                                <img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"
+                            <td class="text-center">
+                                <img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:60px;height:60px;"
                                 data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" class="information"  onclick="afficherInfos();"><span class="ms-3">{{$etp->nom_etp}}</span>
                             </td>
                             <td >
@@ -758,7 +755,7 @@
                 <strong> {{Session::get('message')}}</strong>
             </div>
             @endif
-            <table class="table table-hover">
+            <table class="table table-hover text-secondary" style="font-size:.8rem;">
                 <thead>
                     <tr>
                         <th>Nom de l'entreprise</th>
@@ -766,7 +763,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="data_collaboration" style="font-size: 15.5px;">
+                <tbody id="data_collaboration text-secondary">
 
                     @if (count($entreprise)<=0) <tr>
                         <td> Aucun entreprise collaborer</td>
@@ -775,7 +772,7 @@
                         @foreach($entreprise as $etp)
                         <tr >
                             <td>
-                                <img class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();" src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:80px;height:80px;text-align:center; cursor: pointer">
+                                <img class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();" src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:60px;height:60px;text-align:center; cursor: pointer">
                                 <span class="ms-3 information" style="cursor: pointer;" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();">{{$etp->nom_etp}}</span></td>
                             <td>
                                 <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
