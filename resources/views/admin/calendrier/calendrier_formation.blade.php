@@ -232,13 +232,26 @@
 
     </style>
 
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet' />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> --}}
+
     
     <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
     <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
+
+    {{-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script> --}}
     
-    <script src="{{asset('js/fr.js')}}"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/fr.js"></script> --}}
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
+
 </head>
 <body>
     <div class="container-fluid">
@@ -389,12 +402,12 @@
                 </div>
             </div>
         </div> --}}
-{{-- end-filtres --}}
+        {{-- end-filtres --}}
 
     </div>
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></scrip> --}}
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
@@ -403,10 +416,25 @@
 
     <script>
 
-            $(document).ready(function() {
-                $('#planning').fullCalendar({
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('planning');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+                    initialView: 'dayGridMonth',
+                    locale: '{{ app()->getLocale() }}',
+                    firstDay: 0,
+                    headerToolbar: {
+                                    right: 'prev,next',
+                                    center: 'title', 
+                                    left: ''
 
-                })
+                                }
+                    
+                });
+
+
+
+                calendar.render();
             });
 
 
@@ -421,7 +449,6 @@
         
         window.addEventListener("DOMContentLoaded", (event) => {
 
-            // pour le bouton de filtre par module
             var nom_module = $('#nom_module').val();
             $.ajax({
                 type: "GET"
@@ -466,18 +493,17 @@
                     var calendarEl = document.getElementById('calendar');
 
                     var calendar = new FullCalendar.Calendar(calendarEl, {
-                        locale: '{{ config('app.locale') }}',
+                        locale: '{{ app()->getLocale() }}',
                         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives'
                         , timeZone: '{{ config('app.timezone') }}'
                         , initialView: 'dayGridMonth'
                         , headerToolbar: {
                             left: 'prev,next'
                             , center: 'title'
-                            , right: 'dayGridMonth'
+                            , right: 'dayGridMonth,listWeek'
 
                         }
                         , editable: true
-                        ,lang: 'fr'
 
                         // afficher le conteneur des détails lors du clic sur l'événement
                         , eventClick: function(info) {
