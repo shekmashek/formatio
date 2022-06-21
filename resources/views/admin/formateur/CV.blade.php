@@ -35,7 +35,7 @@
             <div class="row" style="font-family: Arial, Helvetica, sans-serif; font-size:12pt;">
                 <div class="col-lg-4">
                     <div class="col-lg-1 offset-md-11">
-                        <a href="{{route('nouveau_formateur')}}" class="mx-auto" aria-label="modifier votre CV" ><i class="bx bx-edit text-dark" style="font-size:150%;"></i></a>
+                        <a href="{{route('profile_formateur')}}" class="mx-auto" aria-label="modifier votre CV" ><i class="bx bx-edit text-dark" style="font-size:150%;"></i></a>
                     </div>
                     <div class="row videhaut"></div>
                     <div class="row-lg-4 mt-5 pb-5 ">
@@ -114,7 +114,7 @@
                     <div class="row-lg-4 mb-1 pb-5 cv_theque_niveau">
                         <div class="col-lg">
                             <h5 class="bordure4">Niveau D'étude</h5>
-                            <p class="text-capitalize">{{$formateur[0]->niveau}}</p>
+                            <p class="text-capitalize">{{$niveau->niveau_etude}}</p>
                         </div>
                     </div>
                 </div>

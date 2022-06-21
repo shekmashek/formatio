@@ -10,7 +10,7 @@ class Formateur extends Model
 {
     protected $table = "formateurs";
     protected $fillable = [
-        'id', 'nom_formateur', 'prenom_formateur', 'photos', 'mail_formateur', 'numero_formateur', 'user_id'
+        'id', 'nom_formateur', 'prenom_formateur', 'photos', 'mail_formateur', 'numero_formateur', 'user_id', 'niveau_etude_id'
     ];
     public function genre()
     {

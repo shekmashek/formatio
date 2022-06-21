@@ -540,7 +540,8 @@ class ProfController extends Controller
         $formateur = formateur::where('id', $id)->get();
         $competence = competenceFormateur::where('formateur_id', $id)->get();
         $experience = experienceFormateur::where('formateur_id', $id)->get();
-        return view('admin.formateur.CV', compact('formateur', 'competence', 'experience'));
+        $niveau = $this->fonct->findWhereMulitOne("niveau_etude",["id"],[$formateur[0]->niveau_etude_id]);
+        return view('admin.formateur.CV', compact('formateur', 'competence', 'experience', 'niveau'));
     }
     public function profile_formateur($id = null)
     {
