@@ -766,9 +766,6 @@
                         @foreach($entreprise as $etp)
                         <tr >
                             <td>
-                                <a data-bs-toggle="collapse" href="#collapseExample_{{$etp->entreprise_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a>
-                            </td>
-                            <td>
                                 <img class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();" src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:80px;height:80px;text-align:center; cursor: pointer">
                                 <span class="ms-3 information" style="cursor: pointer;" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();">{{$etp->nom_etp}}</span></td>
                             <td>
@@ -803,19 +800,6 @@
                             </div>
                         </div>
                             {{-- fin modal delete --}}
-                        </tr>
-                        <tr  class="collapse" id="collapseExample_{{$etp->entreprise_id}}">
-                            <td style="transition: 0.3s" colspan="4">
-                                <table class="table table-stripted" style="margin-left:2%;">
-                                    <thead>
-                                        <th>Date</th>
-                                        <th>Thematique</th>
-                                        <th>Module</th>
-                                        <th>OF</th>
-                                        <th>Status</th>
-                                    </thead>
-                                </table>
-                            </td>
                         </tr>
                         @endforeach
                     @endif
@@ -1180,7 +1164,7 @@
             , dataType: "html"
             , success: function(response) {
                 let userData = JSON.parse(response);
-                console.log(userData);
+                // console.log(userData);
                 //parcourir le premier tableau contenant les info sur les programmes
                 for (let $i = 0; $i < userData.length; $i++) {
 
