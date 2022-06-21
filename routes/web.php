@@ -1461,3 +1461,8 @@ Route::post('modifier_manager','DepartementController@modifier_manager')->name('
 
 /** Ajouter un employé comme référent*/
 Route::get('employes.ajouter.referent','ParticipantController@role_referent')->name('employes.ajouter.referent');
+/** Ajouter un employé comme référent principal*/
+Route::get('employes.ajouter.referent_principal/{id}','ParticipantController@role_referent_principal')->name('employes.ajouter.referent_principal');
+
+/**Supprimer role referent d'un employé */
+Route::get('employes.supprimer.referent','ParticipantController@supprimer_role_referent')->name('employes.supprimer.referent');

@@ -48,7 +48,7 @@
 
 
 
-            @canany(['isReferent'])
+            @canany(['isReferent','isReferentSimple'])
             <li>
                 <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex nav_linke">
                     <i class='bx bxs-pie-chart-alt-2'></i>
@@ -170,7 +170,7 @@
 
             </li>
             @endcan
-            @can('isReferent')
+            @can('isReferent','isReferentSimple')
             <li>
                 <a href="{{route('list_cfp')}}" class="d-flex nav_linke">
                     <i class='bx bxs-business'></i>
@@ -203,7 +203,7 @@
             </li>
             </li>
             @endcanany --}}
-            @canany(['isReferent'])
+            @canany(['isReferent','isReferentSimple'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>
@@ -401,7 +401,7 @@
 
             </li>
             @endcanany --}}
-            @canany(['isCFP','isReferent'])
+            @canany(['isCFP','isReferent','isReferentSimple'])
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -479,7 +479,7 @@
             </li> --}}
             @endcanany
 
-            @canany(['isReferent','isCFP'])
+            @canany(['isReferent','isCFP','isReferentSimple'])
             <li>
                 <a href="{{route('ListeAbonnement')}}" class="d-flex nav_linke">
                     <i class='bx bxl-sketch'></i>
@@ -571,7 +571,7 @@
 
                 </div>
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
-                    @canany(['isReferent','isStagiaire','isManager'])
+                    @canany(['isReferent','isStagiaire','isManager','isReferentSimple'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
 
@@ -591,7 +591,7 @@
                         </div>
                     </div>
                     @endcanany
-                    @canany(['isReferent','isManager'])
+                    @canany(['isReferent','isManager','isReferentSimple'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
                             <div class="btn_racourcis me-4">
@@ -719,7 +719,7 @@
                             </div>
                         </div>
                         @endcan --}}
-                        @can('isReferent')
+                        @canany(['isReferent','isReferentSimple'])
                         <div class="col-5 header-right d-flex flex-row">
                             <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
                                 <div class="btn_racourcis" id="text_apprendre">
@@ -787,7 +787,7 @@
                             </div>
 
                         </div>
-                        @endcan
+                        @endcanany
                         @can('isCFP')
                         <div class="col-5 header-right">
                             <div class="col-12 d-flex flex-row justify-content-end apprendCreer apprendreBox">
@@ -901,7 +901,7 @@
                                 </ul>
                             </div>
                             @endcan --}}
-                            @can('isReferent')
+                            @canany(['isReferent','isReferentSimple'])
                             <div class=" d-flex flex-row">
                                 <div class="btn_creer dropdown">
 
@@ -978,7 +978,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @endcan
+                            @endcanany
                             @can('isCFP')
                             <div class=" d-flex flex-row">
                                 <div class="btn_creer dropdown">
@@ -1298,7 +1298,7 @@
                     <div class="tutorielApprendreStagiaire">Stagiaire</div>
                     @endcan
 
-                    @can('isReferent')
+                    @canany(['isReferent','isReferentSimple'])
                     <div class="tutorielApprendreReferent">Referent</div>
                     @endcan
 

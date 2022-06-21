@@ -278,12 +278,13 @@
                         <span class="d-block">Département</span>
                         <span>Service</span>
                     </th>
-                    {{-- <th scope="col" class="table-head font-weight-light align-middle text-center ">Age</th> --}}
+                    @can('isReferent')
+                        <th scope="col" class="table-head font-weight-light align-middle text-center">Référent Principal</th>
+                    @endcan
 
 
                     <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
 
-                    <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
 
                 </tr>
 
@@ -329,7 +330,7 @@
                                                         </span>
                                                     </div>
                                                 @else
-                                                        <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" src="{{ asset('images/responsables/' . $employe->photos) }}"
+                                                        <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" src="{{ asset('images/employes/' . $employe->photos) }}"
                                                         alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
                                                         class="rounded-circle empNew" />
                                                 @endif
@@ -361,7 +362,19 @@
                                             {{ $employe->nom_service != null ? $employe->nom_service : '----' }} <br>
                                         </p>
                                     </td>
-                                    {{-- <td class="align-middle text-center text-secondary">61</td> --}}
+                                    @can('isReferent')
+                                        <td class="align-middle text-center text-secondary">
+                                            @if($employe->prioriter == 1)
+                                            <span desabled title="Référent principal" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center">
+                                                <i desabled class='bx bxs-star'></i>
+                                            </span>
+                                            @else
+                                            <span data-bs-toggle="modal" data-bs-target="#principal_{{$employe->id }}"  title="Référent" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
+                                                <i desabled class='bx bxs-star'></i>
+                                            </span>
+                                            @endif
+                                        </td>
+                                    @endcan
 
                                     <td class="align-middle text-center text-secondary">
 
@@ -388,43 +401,33 @@
 
                             </td>
 
-                            <td class="align-middle text-center text-secondary">
-                                <button type="button" class="btn " data-bs-toggle="modal"
-                                    data-bs-target="#delete_emp_{{ $employe->id }}">
-                                    <i class=' bx bxs-trash' style='color:#e21717'></i>
-                            </button>
-                        </td>
+
 
                     </tr>
 
-                    <div class="modal fade" id="delete_emp_{{ $employe->id }}" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="principal_{{$employe->id}}" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <form action="{{ route('mettre_fin_cfp_etp') }}" method="POST">
-                            @csrf
-
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header d-flex justify-content-center"
-                                        style="background-color:rgb(235, 20, 45);">
-                                        <h4 class="modal-title text-white">Avertissement !</h4>
+                                        style="background-color:rgb(57, 134, 241);">
+                                        <h4 class="modal-title text-white">Confirmation !</h4>
 
                                     </div>
                                     <div class="modal-body">
-                                        <small>Vous êtes sur le point d'enlever l'employé
-                                            {{ $employe->nom_resp }} {{ $employe->prenom_resp }},
-                                            cette action est irréversible. Continuer ?</small>
+                                        <small>Vous êtes sur le point de designer cette personne comme référent principal?
+                                            </small>
                                     </div>
 
                                     <div class="modal-footer justify-content-center">
                                         <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non
                                         </button>
 
-                                        <a href="{{ route('employeur.destroy', $employe->id) }}"> <button
+                                        <a href="{{ route('employes.ajouter.referent_principal', $employe->id) }}"> <button
                                                 type="button" class="btn btn_creer btnP px-3">Oui</button></a>
                                     </div>
                                 </div>
                             </div>
-                        </form>
 
                     </div>
                 @empty
@@ -436,6 +439,12 @@
 
     </div>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script>
+     $('.referent').click(function() {
+        $('#delete_emp').modal("show");
+     })
+</script>
 
 @endsection

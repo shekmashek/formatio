@@ -526,7 +526,7 @@ class DepartementController extends Controller
             $emp_info = $fonct->findWhereMulitOne("employers",["id"],[$request->manager]);
 
             DB::update('update role_users set prioriter = 0 where user_id = ? and role_id != ?', [$emp_info->user_id,2]);
-            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?,?,?,?)', [$emp_info->user_id,5,1,1]);
+            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?,?,?,?)', [$emp_info->user_id,5,0,1]);
             return back();
         }
         else{
@@ -547,7 +547,7 @@ class DepartementController extends Controller
             $emp_info = $fonct->findWhereMulitOne("employers",["id"],[$request->manager]);
 
             DB::update('update role_users set prioriter = 0 where user_id = ? and role_id != ?', [$emp_info->user_id,2]);
-            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?,?,?,?)', [$emp_info->user_id,5,1,1]);
+            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?,?,?,?)', [$emp_info->user_id,5,0,1]);
             return back();
         }
         else{

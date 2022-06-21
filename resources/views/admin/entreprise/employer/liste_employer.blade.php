@@ -290,11 +290,11 @@
                     import EXCEL employé
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{route('employes.liste_referent')}}" class="nav-link">
-                   Référents
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a href="{{route('employes.liste_referent')}}" class="nav-link">
+                    Référents
+                    </a>
+                </li>
         </ul>
 
         <div class="row">
@@ -309,8 +309,9 @@
                                 <span class="d-block">Département</span>
                                 <span>Service</span>
                             </th>
+                            @can('isReferent')
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th>
-
+                            @endcan
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
 
@@ -320,26 +321,28 @@
 
 
                     </thead>
-                    <tbody>
 
-                        @forelse ($employers as $employe)
-                            @php $i = 0;@endphp
+                    <tbody>
+                        @for ($i = 0;$i < count($employers);$i++ )
+
+
+
 
                             <tr >
-                                <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
+                                <td class="align-middle id empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">
 
-                                    @if ($employe->activiter == 1)
+                                    @if ($employers[$i]->activiter == 1)
                                         <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
                                     @else
                                         <span style="color:red; "> <i class="bx bxs-circle"></i> </span>
                                     @endif
-                                    {{ $employe->matricule }}
+                                    {{ $employers[$i]->matricule }}
                                 </td>
 
 
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        @if ($employe->photos == null)
+                                        @if ($employers[$i]->photos == null)
                                             {{-- image placeholder --}}
                                             {{-- <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Image non chargée"
                                                 style="width: 45px; height: 45px" class="rounded-circle" /> --}}
@@ -350,7 +353,7 @@
 
                                             {{-- actif/inactif color --}}
                                                     {{-- <i class='bx bx-user-circle  h1' style='
-                                                        @if ($employe->activiter == 1) color:#25b900c9;'
+                                                        @if ($employers[$i]->activiter == 1) color:#25b900c9;'
                                                             @else
                                                             color:#e21717;'
                                                             @endif
@@ -359,13 +362,13 @@
                                             {{-- initials --}}
                                                             <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
                                                                 <span class="align-middle text-center profile-initial" style="position:relative;">
-                                                                    <b data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew" style="cursor: pointer">{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
+                                                                    <b data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" class="empNew" style="cursor: pointer">{{substr($employers[$i]->nom_stagiaire, 0, 1)}} {{substr($employers[$i]->prenom_stagiaire, 0, 1)}}</b>
                                                                 </span>
                                                             </div>
                                                         @else
 
 
-                                                                <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" src="{{ asset('images/employes/' . $employe->photos) }}"
+                                                                <img data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" src="{{ asset('images/employes/' . $employers[$i]->photos) }}"
                                                                 alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
                                                                 class="rounded-circle empNew" />
 
@@ -373,21 +376,21 @@
 
                                                         @endif
                                                     <div class="ms-3">
-                                                        <p class="fw-normal mb-1 text-purple empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
+                                                        <p class="fw-normal mb-1 text-purple empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">
                                                         {{-- <p class="fw-bold mb-1 text-purple "> --}}
-                                                            {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
-                                                        <p class="text-muted mb-0 empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">{{ $employe->fonction_stagiaire }}</p>
+                                                            {{ $employers[$i]->nom_stagiaire }} {{ $employers[$i]->prenom_stagiaire }}</p>
+                                                        <p class="text-muted mb-0 empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">{{ $employers[$i]->fonction_stagiaire }}</p>
                                                     </div>
                                                 </div>
                                             </td>
 
-                                            <td class="align-middle text-start empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
+                                            <td class="align-middle text-start empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">
 
                                                 <div class="ms-3">
-                                                    <p class="mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
-                                                    {{-- <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p> --}}
+                                                    <p class="mb-1 text-purple">{{ $employers[$i]->mail_stagiaire }}</p>
+                                                    {{-- <p class="fw-bold mb-1 text-purple">{{ $employers[$i]->mail_stagiaire }}</p> --}}
                                                     <p class="text-muted mb-0">
-                                                        {{ $employe->telephone_stagiaire != null ? $employe->telephone_stagiaire : '----' }}
+                                                        {{ $employers[$i]->telephone_stagiaire != null ? $employers[$i]->telephone_stagiaire : '----' }}
                                                     </p>
 
 
@@ -396,28 +399,31 @@
                                             </td>
                                             <td class="align-middle text-center text-secondary">
                                                 <p class="text-muted mb-0">
-                                                    {{ $employe->nom_departement != null ? $employe->nom_departement : '----' }} <br>
-                                                    {{ $employe->nom_service != null ? $employe->nom_service : '----' }} <br>
+                                                    {{ $employers[$i]->nom_departement != null ? $employers[$i]->nom_departement : '----' }} <br>
+                                                    {{ $employers[$i]->nom_service != null ? $employers[$i]->nom_service : '----' }} <br>
                                                 </p>
                                             </td>
+                                            @can('isReferent')
+                                                <td class="align-middle text-center text-secondary">
+                                                        @if($ref[$i] == 1)
+                                                            <input class="form-check-input referent" type="checkbox" value="{{$employers[$i]->id}}" name = "referent"  id="flexCheckDefault" checked>
+                                                        @else
+                                                        <input class="form-check-input referent" type="checkbox" value="{{$employers[$i]->id}}" name = "referent"  id="flexCheckDefault">
+                                                        @endif
+
+
+
+                                                </td>
+                                            @endcan
+
                                             <td class="align-middle text-center text-secondary">
 
-                                                    @if($roles[$i]->user_id == $employe->user_id)
-                                                        <input class="form-check-input referent" type="checkbox" value="{{$employe->id}}" name = "referent"  id="flexCheckDefault" checked>
-                                                    @else
-                                                    <input class="form-check-input referent" type="checkbox" value="{{$employe->id}}" name = "referent"  id="flexCheckDefault">
-                                                    @endif
-
-                                            </td>
-
-                                            <td class="align-middle text-center text-secondary">
-
-                                            @if ($employe->activiter == 1)
+                                            @if ($employers[$i]->activiter == 1)
                                                 <div class="form-check form-switch">
                                                     <label class="form-check-label" for="flexSwitchCheckChecked"><span
                                                             class="badge bg-success">actif</span></label>
                                                     <input class="form-check-input desactiver_stg" type="checkbox"
-                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
+                                                        data-user-id="{{ $employers[$i]->user_id }}" value="{{ $employers[$i]->id }}"
                                                         checked>
                                                 </div>
                                             @else
@@ -429,7 +435,7 @@
                                                         </span>
                                                     </label>
                                                     <input class="form-check-input activer_stg" type="checkbox"
-                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                        data-user-id="{{ $employers[$i]->user_id }}" value="{{ $employers[$i]->id }}">
                                                 </div>
                                             @endif
 
@@ -437,14 +443,14 @@
 
                                     <td class="align-middle text-center text-secondary">
                                         <button type="button" class="btn " data-bs-toggle="modal"
-                                            data-bs-target="#delete_emp_{{ $employe->id }}">
+                                            data-bs-target="#delete_emp_{{ $employers[$i]->id }}">
                                             <i class=' bx bxs-trash' style='color:#e21717'></i>
                                     </button>
                                 </td>
 
                             </tr>
 
-                            <div class="modal fade" id="delete_emp_{{ $employe->id }}" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="delete_emp_{{ $employers[$i]->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <form action="{{ route('mettre_fin_cfp_etp') }}" method="POST">
                                     @csrf
@@ -458,7 +464,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <small>Vous êtes sur le point d'enlever l'employé
-                                                    {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }},
+                                                    {{ $employers[$i]->nom_stagiaire }} {{ $employers[$i]->prenom_stagiaire }},
                                                     cette action est irréversible. Continuer ?</small>
                                             </div>
 
@@ -466,7 +472,7 @@
                                                 <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non
                                                 </button>
 
-                                                <a href="{{ route('employeur.destroy', $employe->id) }}"> <button
+                                                <a href="{{ route('employeur.destroy', $employers[$i]->id) }}"> <button
                                                         type="button" class="btn btn_creer btnP px-3">Oui</button></a>
                                             </div>
                                         </div>
@@ -474,11 +480,14 @@
                                 </form>
 
                             </div>
-                            @php $i+=1; @endphp
-                        @empty
 
 
-                        @endforelse
+                        {{-- @empty --}}
+                       @endfor
+
+
+
+
 
                     </tbody>
                 </table>
@@ -734,7 +743,6 @@
 
             $('.referent').click(function() {
                 var emp = $(this).val();
-                alert(emp);
                 if ($(this).is(':checked')) {
                     $.ajax({
                         type: "GET"
@@ -743,7 +751,22 @@
                             emp_id: emp
                         }
                         , success: function(response) {
-                            console.log(response);
+                            window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }
+                else{
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.supprimer.referent')}}"
+                        , data: {
+                            emp_id: emp
+                        }
+                        , success: function(response) {
+                            window.location.reload();
                         }
                         , error: function(error) {
                             console.log(error)
