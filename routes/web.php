@@ -1458,3 +1458,6 @@ Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
 Route::post('ajouter_manager','DepartementController@ajouter_manager')->name('ajouter_manager');
 /**Modifier chef de departement */
 Route::post('modifier_manager','DepartementController@modifier_manager')->name('modifier_manager');
+
+/** Ajouter un employé comme référent*/
+Route::get('employes.ajouter.referent','ParticipantController@role_referent')->name('employes.ajouter.referent');

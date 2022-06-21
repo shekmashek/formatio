@@ -656,7 +656,7 @@
                         </div>
                     </div>
                     @endcanany
-                    @canany('isStagiaire')
+                    {{-- @canany('isStagiaire')
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
                             <div class="btn_racourcis me-4">
@@ -671,7 +671,7 @@
                             </div>
                         </div>
                     </div>
-                    @endcanany
+                    @endcanany --}}
                     @canany('isFormateur')
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
@@ -694,18 +694,18 @@
                 </div>
                 <div class="col-5 header-right align-items-center d-flex flex-row">
                     <div class="col-10 d-flex flex-row justify-content-center apprendCreer pb-3">
-                        @can('isStagiaire')
+                        {{-- @can('isStagiaire')
                         <div class="col-5 header-right">
                             <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
                                 <div class="btn_racourcis" id="text_apprendre">
                                     {{-- <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
+                                    {{-- <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        @endcan
+                        @endcan --}}
                         {{-- @can('isManager')
                         <div class="col-5 header-right">
                             <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">

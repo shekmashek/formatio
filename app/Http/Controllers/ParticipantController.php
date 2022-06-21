@@ -222,8 +222,9 @@ class ParticipantController extends Controller
         //     $chefs[] = $sefo[$i];
         // }
 
+        $roles = $this->fonct->findAll("responsables");
 
-        return view("admin.entreprise.employer.liste_employer", compact('responsables', 'employers', 'pagination'));
+        return view("admin.entreprise.employer.liste_employer", compact('roles','responsables', 'employers', 'pagination'));
     }
 
     public function index()
@@ -1252,5 +1253,12 @@ class ParticipantController extends Controller
         $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
         $employers = $this->fonct->findWhere("responsables",["entreprise_id"],[$entreprise_id]);
         return view("admin.entreprise.employer.liste_referent",compact('employers'));
+    }
+    /**Ajouter employé comme référent */
+    public function role_referent(Request $request){
+        $emp_id = $request->emp_id;
+        /**modifier prioriter activiter de l'employé */
+        $user_id = $this->fonct->findWhereMulitOne("employers",["id"],[$emp_id]);
+        return response()->json($user_id);
     }
 }

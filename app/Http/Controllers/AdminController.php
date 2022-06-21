@@ -150,7 +150,7 @@ class AdminController extends Controller
                 $photo = 'non';
                 // $user = 'users/users.png';
             } else{
-                 $user = 'images/responsables/' . $user;
+                 $user = 'images/employes/' . $user;
                 $photo = 'oui';
             }
             // $user = 'responsables/' . $user;
@@ -180,7 +180,7 @@ class AdminController extends Controller
                 $photo = 'non';
                 //  $user = 'users/users.png';
             } else{
-                $user = 'images/chefDepartement/' . $user;
+                $user = 'images/employes/' . $user;
                 $photo = 'oui';
             }
 
@@ -227,7 +227,7 @@ class AdminController extends Controller
 
                 // $user = 'users/users.png';
             } else{
-                $user = 'images/stagiaires/' . $user;
+                $user = 'images/employes/' . $user;
                 $photo = 'oui';
             }
             // $user = 'stagiaires/' . $user;

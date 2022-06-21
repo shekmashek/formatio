@@ -8,7 +8,7 @@
     <a href="{{route('profil_referent')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp"><i class=" bx bxs-chevron-left me-1"></i>Retour</button></a>
 </div>
 <center>
-    
+
     {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
     @if (\Session::has('error'))
     <div class="alert alert-danger col-md-4">
@@ -61,7 +61,7 @@
                                             </div>
                                         </span>
                                         @else
-                                        <img src="{{asset('images/responsables/'.$responsable->photos)}}" id="photo_stg" class="image-ronde">
+                                        <img src="{{asset('images/employes/'.$responsable->photos)}}" id="photo_stg" class="image-ronde">
                                         @endif
                                         {{-- <input type="text" id = 'vartemp'> --}}
                                     </div>

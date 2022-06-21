@@ -321,7 +321,10 @@
 
                     </thead>
                     <tbody>
+
                         @forelse ($employers as $employe)
+                            @php $i = 0;@endphp
+
                             <tr >
                                 <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
 
@@ -360,9 +363,14 @@
                                                                 </span>
                                                             </div>
                                                         @else
-                                                                <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" src="{{ asset('images/stagiaires/' . $employe->photos) }}"
+
+
+                                                                <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" src="{{ asset('images/employes/' . $employe->photos) }}"
                                                                 alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
                                                                 class="rounded-circle empNew" />
+
+
+
                                                         @endif
                                                     <div class="ms-3">
                                                         <p class="fw-normal mb-1 text-purple empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
@@ -393,7 +401,12 @@
                                                 </p>
                                             </td>
                                             <td class="align-middle text-center text-secondary">
-                                                <input class="form-check-input referent" type="checkbox" value="{{$employe->id}}" name = "referent"  id="flexCheckDefault">
+
+                                                    @if($roles[$i]->user_id == $employe->user_id)
+                                                        <input class="form-check-input referent" type="checkbox" value="{{$employe->id}}" name = "referent"  id="flexCheckDefault" checked>
+                                                    @else
+                                                    <input class="form-check-input referent" type="checkbox" value="{{$employe->id}}" name = "referent"  id="flexCheckDefault">
+                                                    @endif
 
                                             </td>
 
@@ -461,7 +474,9 @@
                                 </form>
 
                             </div>
+                            @php $i+=1; @endphp
                         @empty
+
 
                         @endforelse
 
@@ -717,26 +732,27 @@
                     })
             })()
 
-            //changer role referent
+            $('.referent').click(function() {
+                var emp = $(this).val();
+                alert(emp);
+                if ($(this).is(':checked')) {
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.ajouter.referent')}}"
+                        , data: {
+                            emp_id: emp
+                        }
+                        , success: function(response) {
+                            console.log(response);
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }
+            });
 
-            // $(".referent").change(function() {
-            //     $emp_id = $(this).val();
 
-            //     $.ajax({
-            //         type: "GET"
-            //         , url: "{{route('employes.changer_role')}}"
-            //         , data: {
-            //             emp_id: $emp_id
-            //         }
-            //         , success: function(response) {
-            //             $("#estado_cat").prop( "checked", true );
-            //         }
-            //         , error: function(error) {
-            //             console.log(error)
-            //         }
-            //     });
-
-            // });
 
         </script>
 

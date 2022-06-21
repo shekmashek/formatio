@@ -21,7 +21,7 @@
                         </span>
                         @else
                             <span class="text-end">
-                                <img src="{{asset('images/responsables/'.$refs->photos)}}" alt="image du responsable" class="img-fluid rounded-circle">
+                                <img src="{{asset('images/employes/'.$refs->photos)}}" alt="image du responsable" class="img-fluid rounded-circle">
                             </span>
                         @endif
                     </a>
