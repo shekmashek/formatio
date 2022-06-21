@@ -38,7 +38,7 @@
                     </div>
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
-                        <span class="text_black"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb[0]->nb_avis }} avis)</span>
+                        <span class="text_black">{{ $res->pourcentage }}/5 ({{ $nb[0]->nb_avis }} avis)</span>
                     </div>
                     {{-- <div class="col">
                         <span> Nouveau niveau de formation &nbsp;<i class="bx bx-plus-medical bx_ajouter" onclick="changer_niveau()"></i></span>
@@ -78,7 +78,7 @@
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
                 <div id="objectif"></div>
-                <div class="col background_contrast border_left"><i class="bx bxs-alarm bx_icon"></i><i class='bx bx-signal-5' ></i>
+                <div class="col background_contrast"><i class="bx bxs-alarm bx_icon"></i><i class='bx bx-signal-5' ></i>
                     <span>
                         @isset($res->duree_jour)
                         {{$res->duree_jour}} jours
@@ -90,19 +90,19 @@
                         @endisset
                     </span> </p>
                 </div>
-                <div class="col background_contrast border_left"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
+                <div class="col background_contrast"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
                 </div>
-                <div class="col background_contrast border_left">
+                <div class="col background_contrast">
                     @foreach ($niveau as $level)
                     @if($res->niveau_id == $level->id)
                         <i class='bx bx-signal-5 bx_icon bx_pourcentage' style="--pourcentage: {{$level->progression}}"></i><span>&nbsp;{{$res->niveau}}</span>
                     @endif
                     @endforeach
                 </div>
-                <div class="col background_contrast border_left"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col background_contrast border_left" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                <div class="col background_contrast"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
+                <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @if($res->prix_groupe != null)
-                    <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                    <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
                 <div class="col">
                     <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
@@ -247,8 +247,8 @@
                                     {{-- data-target="#Modal_{{$prgc->id}}" --}}
                                 </div>
                                 <div>
-                                    <div class="modal fade" id="Modal_{{$prgc->id}}" tabindex="-1" role="dialog"
-                                        aria-labelledby="Modal{{$prgc->id}}" aria-hidden="true">
+                                    <div class="modal fade" id="Modal_{{$prgc->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" role="dialog"
+                                        aria-labelledby="Modal{{$prgc->id}}">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -294,7 +294,7 @@
                                 </div>
                                 <div>
                                     <div class="modal fade" id="Modal_cours_{{$prgc->id}}" tabindex="-1" role="dialog"
-                                        aria-labelledby="Modal_cours_{{$prgc->id}}" aria-hidden="true">
+                                        aria-labelledby="Modal_cours_{{$prgc->id}}" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <form action="{{route('insertion_cours')}}" method="POST">
@@ -566,19 +566,21 @@
                             </div>
                         </div>
                         @endforeach --}}
-                        <canvas id="libweb" width="400px" height="400px"></canvas>
+                        <canvas id="marksChart" width="1000" height="800" class="justify-content-center"></canvas>
                         <div class="text-center mb-3">
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id}}" id="{{$id}}" title="ajouter une nouvelle competence">
+                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id}}" id="{{$id}}" onclick="competence();" title="ajouter une nouvelle competence">
                                 <i class='bx bx-plus-medical bx_ajouter'></i>
                             </span>
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id}}" id="{{$id}}" title="modifier les competence">
-                                <i class='bx bx-edit bx_modifier'></i>
-                            </span>
+                            @if(count($competences) > 3)
+                                <span class=" ms-2 mb-2 mt-2 pb-2 .show_modal" data-bs-toggle="modal" data-bs-target="#Modal_{{$id}}" id="{{$id}}" title="modifier les competence" role="button">
+                                    <i class='bx bx-edit bx_modifier'></i>
+                                </span>
+                            @endif
                         </div>
                 </div>
                 @endif
                 <div>
-                    <div class="modal fade" id="ModalCompetence_{{$id}}">
+                    <div class="modal fade" id="ModalCompetence_{{$id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('ajout_competence')}}" method="POST">
@@ -589,7 +591,7 @@
                                     </div>
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="mt-2 text-center mb-5">
                                                     <span id="addRow" class="btn_nouveau text-center " onclick="competence();" >
                                                         <i class='bx bx-plus-medical me-1'></i>Ajouter une competence
@@ -623,7 +625,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="newRowComp"></div>
                                         </div>
                                     </div>
@@ -638,7 +640,7 @@
                 </div>
                 <div>
                     <?php $i=0 ?>
-                    <div class="modal fade" id="Modal_{{$id}}">
+                    <div class="modal fade" id="Modal_{{$id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modifier_competence')}}" method="POST">
@@ -650,7 +652,7 @@
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
                                             @foreach ($competences as $comp)
-                                            <div class="d-flex">
+                                            <div class="d-flex count_input" id="countt_{{$comp->id}}">
                                                 <div class="col-9">
                                                     <div class="form-group">
                                                         <div class="form-row">
@@ -704,7 +706,7 @@
             <div>
                 {{-- modification nom_module --}}
                 <div>
-                    <div class="modal" id="nom_module" aria-labelledby="nom_module" aria-hidden="true">
+                    <div class="modal" id="nom_module" aria-labelledby="nom_module" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modification_nom_module',$res->module_id)}}" method="POST">
@@ -729,7 +731,7 @@
                 </div>
                 {{-- modification description --}}
                 <div>
-                    <div class="modal" id="description" aria-labelledby="description" aria-hidden="true">
+                    <div class="modal" id="description" aria-labelledby="description" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modification_description',$res->module_id)}}" method="POST">
@@ -754,7 +756,7 @@
                 </div>
                 {{-- modification detail --}}
                 <div>
-                    <div class="modal" id="refs" aria-labelledby="refs" aria-hidden="true">
+                    <div class="modal" id="refs" aria-labelledby="refs" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modification_detail',$res->module_id)}}" method="POST">
@@ -855,7 +857,7 @@
                 </div>
                 {{-- modification objectif --}}
                 <div>
-                    <div class="modal" id="objectif_module" aria-labelledby="objectif_module" aria-hidden="true">
+                    <div class="modal" id="objectif_module" aria-labelledby="objectif_module" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_objectif',$res->module_id)}}" method="POST" id="form_objectif">
@@ -883,7 +885,7 @@
                 </div>
                 {{-- modification pour_qui --}}
                 <div>
-                    <div class="modal" id="cible" aria-labelledby="cible" aria-hidden="true">
+                    <div class="modal" id="cible" aria-labelledby="cible" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_pour_qui',$res->module_id)}}" method="POST" id="form_public">
@@ -910,7 +912,7 @@
                 </div>
                 {{-- modification prerequis --}}
                 <div>
-                    <div class="modal" id="prerequis_module" aria-labelledby="prerequis_module" aria-hidden="true">
+                    <div class="modal" id="prerequis_module" aria-labelledby="prerequis_module" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_prerequis',$res->module_id)}}" method="POST" id="form_prerequis">
@@ -937,7 +939,7 @@
                 </div>
                 {{-- modification equipement --}}
                 <div>
-                    <div class="modal" id="equipement_module" aria-labelledby="equipement_module" aria-hidden="true">
+                    <div class="modal" id="equipement_module" aria-labelledby="equipement_module" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_equipement',$res->module_id)}}" method="POST" id="form_equipement">
@@ -964,7 +966,7 @@
                 </div>
                 {{-- modification bon_a_savoir --}}
                 <div>
-                    <div class="modal" id="bon_a_savoir_module" aria-labelledby="bon_a_savoir_module" aria-hidden="true">
+                    <div class="modal" id="bon_a_savoir_module" aria-labelledby="bon_a_savoir_module" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_bon_a_savoir',$res->module_id)}}" method="POST" id="form_bon_a_savoir">
@@ -991,7 +993,7 @@
                 </div>
                 {{-- modification prestation --}}
                 <div>
-                    <div class="modal" id="prestation_module" aria-labelledby="prestation_module" aria-hidden="true">
+                    <div class="modal" id="prestation_module" aria-labelledby="prestation_module" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_prestation',$res->module_id)}}" method="POST" id="form_prestation">
@@ -1016,6 +1018,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" class="form-control" name="recuperer_module_id" id="mod_id_rec" value="{{$res->module_id}}">
                 {{-- modification niveau --}}
                 {{-- <div class="modal" tabindex="-1" role="dialog" id="ouvrir_flottant">
                     <div class="modal-dialog" role="document">
@@ -1059,6 +1062,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
@@ -1258,6 +1262,77 @@ $('.plus_avis').on('click', function(e){
         $('.moins_avis').css('visibility','hidden');
     });
 
+function afficher_radar(label,competence){
+
+let marksCanvas = document.getElementById("marksChart");
+
+let marksData = {
+labels: JSON.parse(label),
+datasets: [{
+    label: "Objectif à atteindre",
+    backgroundColor: "rgba(12, 213, 52, 0.2)",
+    borderColor: "rgb(26, 113, 235)",
+    pointBackgroundColor: "rgb(243, 84, 27)",
+    data: JSON.parse(competence)
+}]
+};
+
+let radarChart = new Chart(marksCanvas, {
+type: 'radar',
+data: marksData
+});
+
+var chartOptions = {
+    scale: {
+        ticks: {
+            beginAtZero: true,
+            min: 0,
+            max: 10,
+            stepSize: 1
+        },
+        pointLabels: {
+            fontSize: 18
+        }
+    },
+    legend: {
+        position: 'left'
+    }
+};
+}
+
+window.onload = function(e){
+let id_mod = $("#mod_id_rec").val();
+// alert(id_mod);
+let labels = '[';
+let competences = '[';
+$.ajax({
+    type: "get"
+    ,url: "{{route('competence_module')}}"
+    ,data: {
+        mod_id: id_mod
+    }
+    ,dataType: "html"
+    ,success: function(response){
+        let userData = JSON.parse(response);
+        // alert(JSON.stringify(userData['detail']));
+        // alert(userData['detail'].length);
+        for (let i = 0; i < userData['detail'].length; i++) {
+            if (i == userData['detail'].length - 1) {
+                labels += '"'+userData['detail'][i].titre_competence+'"]';
+                competences += userData['detail'][i].objectif+']';
+            }else{
+                labels += '"'+userData['detail'][i].titre_competence+'",';
+                competences += userData['detail'][i].objectif+',';
+            }
+        }
+        // alert(competences);
+        afficher_radar(labels,competences);
+    }
+    ,error: function(error){
+        console.log(error);
+    }
+});
+};
 
 </script>
 @endsection

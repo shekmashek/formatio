@@ -158,7 +158,7 @@ class ModuleController extends Controller
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id[0]->id . ') as moduleExiste');
         $np = 4;
         $npc = 4;
-        $nc = 4;
+        $nc = 7;
         DB::beginTransaction();
         try {
             for($j = 1; $j < $np; $j++){
@@ -170,7 +170,7 @@ class ModuleController extends Controller
                 }
             }
             for($i = 1; $i < $nc; $i++){
-                DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',['Competence '.$i,10,$id[0]->id]);
+                DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',['Competence '.$i,(4 + $i),$id[0]->id]);
             }
             DB::update('update modules set status = ? where id = ?',[2,$id[0]->id]);
             DB::commit();

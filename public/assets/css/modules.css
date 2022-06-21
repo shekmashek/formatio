@@ -1106,6 +1106,7 @@ font-size: 0.850rem;
     background-color: #a2a4a62c;
     padding-top: 5px;
     height: 31px;
+    margin-left: 8px;
     /* border-radius: 5px; */
 }
 
@@ -1114,9 +1115,9 @@ font-size: 0.850rem;
     font-size: 1.3rem;
 }
 
-.border_left{
+/* .border_left{
     border-right: 1px solid #7635dc;
-}
+} */
 
 .bx_pourcentage{
     --note: calc(var(--pourcentage) / 5 * 100%);
@@ -1134,4 +1135,6 @@ font-size: 0.850rem;
     color: transparent;
 }
 
-canvas {display: block;}
+#marksChart{
+    cursor: pointer;
+}

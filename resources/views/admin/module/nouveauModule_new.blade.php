@@ -66,7 +66,7 @@
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
                 <div id="objectif"></div>
-                <div class="col background_contrast border_left"><i class="bx bxs-alarm bx_icon"></i><i class='bx bx-signal-5' ></i>
+                <div class="col background_contrast"><i class="bx bxs-alarm bx_icon"></i><i class='bx bx-signal-5' ></i>
                     <span>
                         @isset($res->duree_jour)
                         {{$res->duree_jour}} jours
@@ -78,18 +78,18 @@
                         @endisset
                     </span> </p>
                 </div>
-                <div class="col background_contrast border_left"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
+                <div class="col background_contrast"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
                 </div>
 
-                <div class="col background_contrast border_left">
+                <div class="col background_contrast">
                     @foreach ($niveau as $level)
                     @if($res->niveau_id == $level->id)
                         <i class='bx bx-signal-5 bx_icon bx_pourcentage' style="--pourcentage: {{$level->progression}}"></i><span>&nbsp;{{$res->niveau}}</span>
                     @endif
                     @endforeach
                 </div>
-                <div class="col background_contrast border_left"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col background_contrast border_left" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                <div class="col background_contrast"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
+                <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @if($res->prix_groupe != null)
                     <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
@@ -352,7 +352,7 @@
                         <span class="aide_competence"><i class='bx bx-help-circle '></i>
                             <div class="text_aide">
                                 <p>Attribuez des compétences à vos intervenants et à vos programmes de formation pour faciliter le suivi de vos formations. <br>
-                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i> et les modifer sur <i class='bx bx-edit bx_modifier'></i>. Vous pouvez entrer au maximum 10 compétences et 3 minimum!</p>
+                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i> et les modifer sur <i class='bx bx-edit bx_modifier'></i>. Vous pouvez entrer au maximum 10 compétences et 3 minimum et une note allant de 1 à 10 !</p>
                             </div>
                         </span>
                     </h5>
@@ -377,7 +377,6 @@
                                     <i class='bx bx-edit bx_modifier'></i>
                                 </span>
                             @endif
-
                         </div>
                 </div>
                 {{-- @endif --}}
@@ -865,7 +864,7 @@
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
@@ -1046,59 +1045,16 @@
         $("#prestation_textarea").val($("#prestation_id").html());
     });
 
-//     function changer_niveau() {
+// function changer_niveau() {
 //     var x = document.getElementById("myDIV");
-//     if (x.style.display === "none") {
-//         x.style.display = "block";
 //         $('.dismis_buton').show();
 //         $("#ouvrir_flottant").modal("show");
-//     } else {
-//         x.style.display = "none";
-//         $("#ouvrir_flottant").modal("hide");
-//     }
 // }
 
-function changer_niveau() {
-    var x = document.getElementById("myDIV");
-        $('.dismis_buton').show();
-        $("#ouvrir_flottant").modal("show");
-}
+// $('.hors_ligne_redirect').on('click', function (e) {
+//         localStorage.setItem('ActiveTabMod', '#hors_ligne');
+//     });
 
-$('.hors_ligne_redirect').on('click', function (e) {
-        localStorage.setItem('ActiveTabMod', '#hors_ligne');
-    });
-
-// function ajouter_niveau() {
-//     var x = document.getElementById("mydiv");
-//     if (x.style.display === "none") {
-//         x.style.display = "block";
-//         $('.dismis_buton').hide();
-//         $("#ouvrir_flottant").modal("show");
-//     } else {
-//         x.style.display = "none";
-//         $("#ouvrir_flottant").modal("hide");
-//     }
-// }
-
-// var marksCanvas = document.getElementById("marksChart");
-
-// var marksData = {
-//   labels: ["English", "Maths", "Physics", "Chemistry", "Biology", "History"],
-//   datasets: [{
-//     label: "Student A",
-//     backgroundColor: "rgba(200,0,0,0.2)",
-//     data: [65, 75, 70, 80, 60, 80]
-//   }, {
-//     label: "Student B",
-//     backgroundColor: "rgba(0,0,200,0.2)",
-//     data: [54, 65, 60, 70, 70, 75]
-//   }]
-// };
-
-// var radarChart = new Chart(marksCanvas, {
-//   type: 'radar',
-//   data: marksData
-// });
 
 function afficher_radar(label,competence){
 
@@ -1107,8 +1063,10 @@ function afficher_radar(label,competence){
     let marksData = {
     labels: JSON.parse(label),
     datasets: [{
-        label: "Objectif fixer",
-        backgroundColor: "rgba(200,0,0,0.2)",
+        label: "Objectif à atteindre",
+        backgroundColor: "rgba(12, 213, 52, 0.2)",
+        borderColor: "rgb(26, 113, 235)",
+        pointBackgroundColor: "rgb(243, 84, 27)",
         data: JSON.parse(competence)
     }]
     };
@@ -1117,6 +1075,23 @@ function afficher_radar(label,competence){
     type: 'radar',
     data: marksData
     });
+
+    var chartOptions = {
+        scale: {
+            ticks: {
+                beginAtZero: true,
+                min: 0,
+                max: 10,
+                stepSize: 1
+            },
+            pointLabels: {
+                fontSize: 18
+            }
+        },
+        legend: {
+            position: 'left'
+        }
+    };
 }
 
 window.onload = function(e){

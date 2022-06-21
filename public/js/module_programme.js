@@ -659,7 +659,7 @@ function Cours() {
 }
 
 let count_input = $('.count_input');
-alert(count_input.length);
+// alert(count_input.length);
 
 // let nb_input = count_input.length;
 
@@ -722,8 +722,8 @@ $('#fermerComp').click(function(e){
     $('.newRowComp').empty();
 });
 
-$(document).on('click',function(e){
-  if(!(($(e.target).closest("#modalBox").length > 0 ) || ($(e.target).closest("#modal-btn").length > 0))){
-  $("#modalBox").hide();
- }
+$('#fermer4').click(function(e){
+  window.location.reload();
 });
+
+
