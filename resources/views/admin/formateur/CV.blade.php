@@ -74,7 +74,13 @@
                         <h5 class="bordure4">Compétences</h5>
                         <!-- liste de competence faire un boucle pour les afficher donc juste une seule liste -->
                         <div class="row ms-4 mt-4">
-
+                            <div class="row ms-4 mt-4">
+                                <ul class="list-group ">
+                                    @foreach ($competence as $comp)
+                                        <li class="text-capitalize mt-2">{{$comp->domaine}}&nbsp;:&nbsp;{{$comp->competence}}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,14 +93,14 @@
                         @foreach ($experience as $exps)
                         <div class="row">
                             <div class="row mt-4 d-flex flex-row">
-                                <h3 class="text-white"><span class="text-capitalize societe">{{$exps->nom_entreprise}}</span>&sbquo;&nbsp;{{$exps->poste_occuper}}&nbsp;&nbsp;<span class="text-white date_exp" style="text-transform: uppercase;">{{$exps->debut_travail}}&nbsp;-&nbsp;{{$exps->fin_travail}}</span></h3>
+                                <h3 class=""><span class="text-capitalize societe">{{$exps->nom_entreprise}}</span>&sbquo;&nbsp;{{$exps->poste_occuper}}&nbsp;&nbsp;<span class=" date_exp" style="text-transform: uppercase;">{{$exps->debut_travail}}&nbsp;-&nbsp;{{$exps->fin_travail}}</span></h3>
                             </div>
                     <!-- date de l'experience -->
                         </div>
                         {{-- domaine et experience --}}
                         <div class="row">
                             <div class="row ms-4">
-                                <ul class="list-group text-white">
+                                <ul class="list-group ">
                                     <li class="text-capitalize">{{$exps->taches}}</li>
                                 </ul>
                             </div>
