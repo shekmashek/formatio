@@ -159,6 +159,7 @@ class ProfController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function  nouveau_formateur(){
+        $id = formateur::where('user_id', Auth::user()->id)->value('id');
         $fonct = new FonctionGenerique();
         $niveau = $fonct->findAll('niveau_etude');
         return view('admin.formateur.nouveauFormateur',compact('niveau'));

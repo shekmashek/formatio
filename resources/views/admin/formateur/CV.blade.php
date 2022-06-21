@@ -25,7 +25,7 @@
                 <div class="offset-md-1 col-lg-3 ">
                     <img src="{{asset('images/formateurs/'.$formateur[0]->photos)}}" class="img-fluid img" style="width : 150px; height : 150px;border-radius : 100%; cursor: pointer;">
                 </div>
-                <div class="col-lg-8 text-center">
+                <div class="col-lg-7 text-center">
                     <h1 class="mt-5 " style="font-family:'Times New Roman', Times, serif">{{$formateur[0]->nom_formateur." ".$formateur[0]->prenom_formateur}}</h1>
                     <span class="font-weight-bold">{{$formateur[0]->specialite}}</span>
                 </div>
@@ -34,8 +34,10 @@
             <!-- partie gauche -->
             <div class="row" style="font-family: Arial, Helvetica, sans-serif; font-size:12pt;">
                 <div class="col-lg-4">
-                    <div class="row videhaut">
+                    <div class="col-lg-1 offset-md-11">
+                        <a href="{{route('nouveau_formateur')}}" class="mx-auto" aria-label="modifier votre CV" ><i class="bx bx-edit text-dark" style="font-size:150%;"></i></a>
                     </div>
+                    <div class="row videhaut"></div>
                     <div class="row-lg-4 mt-5 pb-5 ">
                         <div class="col-lg">
                             <div class="row mt-4">
