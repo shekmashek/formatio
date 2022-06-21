@@ -538,9 +538,7 @@ class ProfController extends Controller
         $id = formateur::where('user_id', $id)->value('id');
         $formateur = formateur::where('id', $id)->get();
         $competence = competenceFormateur::where('formateur_id', $id)->get();
-        // dd($competence);
         $experience = experienceFormateur::where('formateur_id', $id)->get();
-        // dd($experience);
         return view('admin.formateur.CV', compact('formateur', 'competence', 'experience'));
     }
     public function profile_formateur($id = null)
