@@ -33,6 +33,8 @@ use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
 use App\EvaluationChaud;
+use App\competenceFormateur;
+use App\experienceFormateur;
 use App\Groupe;
 use App\Models\getImageModel;
 use Carbon\Carbon;
@@ -198,7 +200,12 @@ class HomeController extends Controller
     public function index(Request $request, $id = null)
     {
         if (Gate::allows('isFormateurPrincipale')) {
-            return redirect()->route('calendrier');
+            $id = Auth::user()->id;
+            $formateur = formateur::where('user_id', $id)->get();
+            $competence = competenceFormateur::where('formateur_id', $id)->get();
+            $experience = experienceFormateur::where('formateur_id', $id)->get();
+            return view('admin.formateur.accueil', compact('formateur', 'competence', 'experience'));
+            // return redirect()->route('calendrier');
         }
         if (Gate::allows('isManagerPrincipale')) {
 
