@@ -436,7 +436,6 @@
         color: #637381;
         font-size: 14px;
     }
-
 </style>
     <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -1484,7 +1483,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="mt-1">
                         <div class="row">
                             <div class="col-md-1"></div>

@@ -465,6 +465,7 @@ Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('
 Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('ajout_competence');
 Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
 Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
+Route::get('competence_module','ModuleController@afficher_radar')->name('competence_module');
 
 // ==================== modifications modules ========================//
 Route::post('modification_nom_module/{id}','ModuleController@edit_name_module')->name('modification_nom_module');
@@ -1441,9 +1442,16 @@ Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
 
 
 Route::get('/raport','SessionController@fiche')->name('fichePDF');
+// <<<<<<< HEAD
 //plus d'avis
 Route::get('plus_avis','FormationController@plus_avis')->name('plus_avis');
 Route::get('plus_avis_module','FormationController@plus_avis_module')->name('plus_avis_module');
+Route::get('plus_avis_mod_cfp','FormationController@plus_avis_mod_cfp')->name('plus_avis_mod_cfp');
+
+//Affiche infos SESSION
+//etp
+Route::get('/info/session/etp/{id?}', 'SessionController@infoSessionEtp');
+// =======
 
 //Affiche infos SESSION
 //etp
@@ -1453,3 +1461,4 @@ Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
 
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
+// >>>>>>> origin/debug_version_1

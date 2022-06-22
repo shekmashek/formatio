@@ -46,9 +46,9 @@
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
                         <span class="text_black"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
-                        <div class="col">
+                        {{-- <div class="col">
                             <p class="mb-0"> Nouveau niveau de formation &nbsp;<i class="bx bx-plus-medical bx_ajouter" onclick="changer_niveau()"></i></p>
-                        </div>
+                        </div> --}}
                     </div>
 
 
@@ -66,7 +66,7 @@
             </div>
             <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between py-4">
                 <div id="objectif"></div>
-                <div class="col"><i class="bx bxs-alarm bx_icon"></i>
+                <div class="col background_contrast"><i class="bx bxs-alarm bx_icon"></i><i class='bx bx-signal-5' ></i>
                     <span>
                         @isset($res->duree_jour)
                         {{$res->duree_jour}} jours
@@ -78,13 +78,20 @@
                         @endisset
                     </span> </p>
                 </div>
-                <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
+                <div class="col background_contrast"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
                 </div>
-                <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
-                <div class="col"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+
+                <div class="col background_contrast">
+                    @foreach ($niveau as $level)
+                    @if($res->niveau_id == $level->id)
+                        <i class='bx bx-signal-5 bx_icon bx_pourcentage' style="--pourcentage: {{$level->progression}}"></i><span>&nbsp;{{$res->niveau}}</span>
+                    @endif
+                    @endforeach
+                </div>
+                <div class="col background_contrast"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
+                <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @if($res->prix_groupe != null)
-                    <div class="col" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                    <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
                 <div class="col">
                     <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
@@ -243,7 +250,7 @@
                                     {{-- data-target="#Modal_{{$prgc->id}}" --}}
                                 </div>
                                 <div>
-                                    <div class="modal fade" id="Modal_{{$prgc->id}}" tabindex="-1" role="dialog"
+                                    <div class="modal fade" id="Modal_{{$prgc->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"
                                         aria-labelledby="Modal{{$prgc->id}}" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -283,7 +290,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="modal fade" id="Modal_cours_{{$prgc->id}}" tabindex="-1" role="dialog"
+                                    <div class="modal fade" id="Modal_cours_{{$prgc->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"
                                         aria-labelledby="Modal_cours_{{$prgc->id}}" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -345,12 +352,12 @@
                         <span class="aide_competence"><i class='bx bx-help-circle '></i>
                             <div class="text_aide">
                                 <p>Attribuez des compétences à vos intervenants et à vos programmes de formation pour faciliter le suivi de vos formations. <br>
-                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i> et les modifer sur <i class='bx bx-edit bx_modifier'></i></p>
+                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i> et les modifer sur <i class='bx bx-edit bx_modifier'></i>. Vous pouvez entrer au maximum 10 compétences et 3 minimum et une note allant de 1 à 10 !</p>
                             </div>
                         </span>
                     </h5>
                     </div>
-                        @foreach ($competences as $comp)
+                        {{-- @foreach ($competences as $comp)
                         <div class="row text-start g-0 px-1" id="competence_{{$comp->id}}">
                             <div class="col-1">
                                 <i class="bx bx-check-double check_comp"></i>&nbsp;
@@ -359,19 +366,22 @@
                                 <span class="text-capitalize">{{$comp->titre_competence}}</span>
                             </div>
                         </div>
-                        @endforeach
+                        @endforeach --}}
+                        <canvas id="marksChart" width="1000" height="800" class="justify-content-center"></canvas>
                         <div class="text-center mb-3">
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id[0]->id}}" id="{{$id[0]->id}}" title="ajouter une nouvelle competence">
+                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id[0]->id}}" id="{{$id[0]->id}}" onclick="competence();" title="ajouter une nouvelle competence">
                                 <i class='bx bx-plus-medical bx_ajouter'></i>
                             </span>
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id[0]->id}}" id="{{$id[0]->id}}" title="modifier les competence">
-                                <i class='bx bx-edit bx_modifier'></i>
-                            </span>
+                            @if(count($competences) > 3)
+                                <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id[0]->id}}" id="{{$id[0]->id}}" title="modifier les competence">
+                                    <i class='bx bx-edit bx_modifier'></i>
+                                </span>
+                            @endif
                         </div>
                 </div>
                 {{-- @endif --}}
                 <div>
-                    <div class="modal fade" id="ModalCompetence_{{$id[0]->id}}">
+                    <div class="modal fade" id="ModalCompetence_{{$id[0]->id}}" data-bs-backdrop="static" data-bs-keyboard="false">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('ajout_competence')}}" method="POST">
@@ -382,9 +392,9 @@
                                     </div>
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="mt-2 text-center mb-5">
-                                                    <span id="addRow" class="btn_nouveau text-center " onclick="competence();" >
+                                                    <span id="addRow" class="btn_nouveau text-center " >
                                                         <i class='bx bx-plus-medical me-1'></i>Ajouter une competence
                                                     </span>
 
@@ -416,7 +426,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="newRowComp"></div>
                                         </div>
                                     </div>
@@ -431,7 +441,7 @@
                 </div>
                 <div>
                     <?php $i=0 ?>
-                    <div class="modal fade" id="Modal_{{$id[0]->id}}">
+                    <div class="modal fade" id="Modal_{{$id[0]->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modifier_competence')}}" method="POST">
@@ -443,7 +453,7 @@
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
                                             @foreach ($competences as $comp)
-                                            <div class="d-flex">
+                                            <div class="d-flex count_input" id="countt_{{$comp->id}}">
                                                 <div class="col-9">
                                                     <div class="form-group">
                                                         <div class="form-row">
@@ -476,7 +486,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-1">
-                                                    <div class="suppre_{{$comp->id}} suppression_competence" role="button" title="Supprimer le competence" id="{{$comp->id}}" data-id="{{$comp->id}}"><i class='bx bx-trash bx_supprimer mt-1 ms-2'></i></div>
+                                                    @if(count($competences) >= 4)
+                                                        <div class="suppre_{{$comp->id}} suppression_competence" role="button" title="Supprimer le competence" id="{{$comp->id}}" data-id="{{$comp->id}}"><i class='bx bx-trash bx_supprimer mt-1 ms-2'></i></div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             @endforeach
@@ -497,7 +509,7 @@
             <div>
                 {{-- modification nom_module --}}
                 <div>
-                    <div class="modal" id="nom_module" aria-labelledby="nom_module" aria-hidden="true">
+                    <div class="modal" id="nom_module" aria-labelledby="nom_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" >
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modification_nom_module',$res->module_id)}}" method="POST">
@@ -522,7 +534,7 @@
                 </div>
                 {{-- modification description --}}
                 <div>
-                    <div class="modal" id="description" aria-labelledby="description" aria-hidden="true">
+                    <div class="modal" id="description" aria-labelledby="description" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modification_description',$res->module_id)}}" method="POST">
@@ -547,7 +559,7 @@
                 </div>
                 {{-- modification detail --}}
                 <div>
-                    <div class="modal" id="refs" aria-labelledby="refs" aria-hidden="true">
+                    <div class="modal" id="refs" aria-labelledby="refs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modification_detail',$res->module_id)}}" method="POST">
@@ -589,12 +601,38 @@
                                         </div>
                                         <div class="form-group">
                                             <select class="form-control select_formulaire niveau niveau input mt-3" id="niveau" name="niveau" style="height: 50px;">
+                                                @if($res->niveau == 'Débutant')
                                                 <option value="{{$res->niveau_id}}" selected>
                                                     {{$res->niveau}} </option>
-                                                @foreach($niveau as $nv)
+                                                <option value="2">Intermédiaire</option>
+                                                <option value="3">Avancé</option>
+                                                <option value="5">Expert</option>
+                                                @endif
+                                                @if($res->niveau == 'Intermédiaire')
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                <option value="1">Débutant</option>
+                                                <option value="3">Avancé</option>
+                                                <option value="5">Expert</option>
+                                                @endif
+                                                @if($res->niveau == 'Avancé')
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                <option value="1">Débutant</option>
+                                                <option value="2">Intermédiaire</option>
+                                                <option value="5">Expert</option>
+                                                @endif
+                                                @if($res->niveau == 'Expert')
+                                                <option value="{{$res->niveau_id}}" selected>
+                                                    {{$res->niveau}} </option>
+                                                <option value="1">Débutant</option>
+                                                <option value="2">Intermédiaire</option>
+                                                <option value="3">Avancé</option>
+                                                @endif
+                                                {{-- @foreach($niveau as $nv)
                                                 <option value="{{$nv->id}}" data-value="{{$nv->niveau}}">
                                                     {{$nv->niveau}}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             </select>
                                             <label for="acf-modalite" class="form-control-placeholder">Modifier le niveau</label>
                                         </div>
@@ -622,7 +660,7 @@
                 </div>
                 {{-- modification objectif --}}
                 <div>
-                    <div class="modal" id="objectif_module" aria-labelledby="objectif_module" aria-hidden="true">
+                    <div class="modal" id="objectif_module" aria-labelledby="objectif_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_objectif',$res->module_id)}}" method="POST" id="form_objectif">
@@ -650,7 +688,7 @@
                 </div>
                 {{-- modification pour_qui --}}
                 <div>
-                    <div class="modal" id="cible" aria-labelledby="cible" aria-hidden="true">
+                    <div class="modal" id="cible" aria-labelledby="cible" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_pour_qui',$res->module_id)}}" method="POST" id="form_public">
@@ -677,7 +715,7 @@
                 </div>
                 {{-- modification prerequis --}}
                 <div>
-                    <div class="modal" id="prerequis_module" aria-labelledby="prerequis_module" aria-hidden="true">
+                    <div class="modal" id="prerequis_module" aria-labelledby="prerequis_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_prerequis',$res->module_id)}}" method="POST" id="form_prerequis">
@@ -704,7 +742,7 @@
                 </div>
                 {{-- modification equipement --}}
                 <div>
-                    <div class="modal" id="equipement_module" aria-labelledby="equipement_module" aria-hidden="true">
+                    <div class="modal" id="equipement_module" aria-labelledby="equipement_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_equipement',$res->module_id)}}" method="POST" id="form_equipement">
@@ -731,7 +769,7 @@
                 </div>
                 {{-- modification bon_a_savoir --}}
                 <div>
-                    <div class="modal" id="bon_a_savoir_module" aria-labelledby="bon_a_savoir_module" aria-hidden="true">
+                    <div class="modal" id="bon_a_savoir_module" aria-labelledby="bon_a_savoir_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_bon_a_savoir',$res->module_id)}}" method="POST" id="form_bon_a_savoir">
@@ -758,7 +796,7 @@
                 </div>
                 {{-- modification prestation --}}
                 <div>
-                    <div class="modal" id="prestation_module" aria-labelledby="prestation_module" aria-hidden="true">
+                    <div class="modal" id="prestation_module" aria-labelledby="prestation_module" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog width_large">
                             <div class="modal-content ">
                                 <form action="{{route('modification_prestation',$res->module_id)}}" method="POST" id="form_prestation">
@@ -783,8 +821,9 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" class="form-control" name="recuperer_module_id" id="mod_id_rec" value="{{$res->module_id}}">
                 {{-- modification niveau --}}
-                <div class="modal" tabindex="-1" role="dialog" id="ouvrir_flottant">
+                {{-- <div class="modal" tabindex="-1" role="dialog" id="ouvrir_flottant">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -819,15 +858,16 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
@@ -1005,43 +1045,88 @@
         $("#prestation_textarea").val($("#prestation_id").html());
     });
 
-//     function changer_niveau() {
+// function changer_niveau() {
 //     var x = document.getElementById("myDIV");
-//     if (x.style.display === "none") {
-//         x.style.display = "block";
 //         $('.dismis_buton').show();
 //         $("#ouvrir_flottant").modal("show");
-//     } else {
-//         x.style.display = "none";
-//         $("#ouvrir_flottant").modal("hide");
-//     }
 // }
 
-function changer_niveau() {
-    var x = document.getElementById("myDIV");
-        $('.dismis_buton').show();
-        $("#ouvrir_flottant").modal("show");
-}
+// $('.hors_ligne_redirect').on('click', function (e) {
+//         localStorage.setItem('ActiveTabMod', '#hors_ligne');
+//     });
 
-$('.hors_ligne_redirect').on('click', function (e) {
-        localStorage.setItem('ActiveTabMod', '#hors_ligne');
+
+function afficher_radar(label,competence){
+
+    let marksCanvas = document.getElementById("marksChart");
+
+    let marksData = {
+    labels: JSON.parse(label),
+    datasets: [{
+        label: "Objectif à atteindre",
+        backgroundColor: "rgba(12, 213, 52, 0.2)",
+        borderColor: "rgb(26, 113, 235)",
+        pointBackgroundColor: "rgb(243, 84, 27)",
+        data: JSON.parse(competence)
+    }]
+    };
+
+    let radarChart = new Chart(marksCanvas, {
+    type: 'radar',
+    data: marksData
     });
 
-// function ajouter_niveau() {
-//     var x = document.getElementById("mydiv");
-//     if (x.style.display === "none") {
-//         x.style.display = "block";
-//         $('.dismis_buton').hide();
-//         $("#ouvrir_flottant").modal("show");
-//     } else {
-//         x.style.display = "none";
-//         $("#ouvrir_flottant").modal("hide");
-//     }
-// }
+    var chartOptions = {
+        scale: {
+            ticks: {
+                beginAtZero: true,
+                min: 0,
+                max: 10,
+                stepSize: 1
+            },
+            pointLabels: {
+                fontSize: 18
+            }
+        },
+        legend: {
+            position: 'left'
+        }
+    };
+}
 
-
-
-
+window.onload = function(e){
+    let id_mod = $("#mod_id_rec").val();
+    // alert(id_mod);
+    let labels = '[';
+    let competences = '[';
+    $.ajax({
+        type: "get"
+        ,url: "{{route('competence_module')}}"
+        ,data: {
+            mod_id: id_mod
+        }
+        ,dataType: "html"
+        ,success: function(response){
+            let userData = JSON.parse(response);
+            // alert(JSON.stringify(userData['detail']));
+            // alert(userData['detail'].length);
+            for (let i = 0; i < userData['detail'].length; i++) {
+                if (i == userData['detail'].length - 1) {
+                    labels += '"'+userData['detail'][i].titre_competence+'"]';
+                    competences += userData['detail'][i].objectif+']';
+                }else{
+                    labels += '"'+userData['detail'][i].titre_competence+'",';
+                    competences += userData['detail'][i].objectif+',';
+                }
+            }
+            // alert(competences);
+            afficher_radar(labels,competences);
+        }
+        ,error: function(error){
+            console.log(error);
+        }
+    });
+};
 
 </script>
 @endsection

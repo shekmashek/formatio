@@ -72,23 +72,26 @@
         </ul>
     </div>
 </div>
-<section class="detail__formation mb-5">
+<section class="detail__formation mb-5" >
     <nav class="navigation_details d-flex flex-row justify-content-between">
         <div>
             <ul class="d-flex flex-row">
-                <li class="me-5"><a href="#objectif">objectif</a></li>
-                <li class="me-5"><a href="#pour_qui">pour qui ?</a></li>
-                <li class="me-5"><a href="#programme">programme</a></li>
-                <li class="me-5"><a href="#avis">avis</a></li>
-                <li class="me-5"><a href="#dates">dates</a></li>
+                <li class="me-5"><a href="#objectif"><i class='bx bx-target-lock encre_icon me-2'></i>objectif</a></li>
+                <li class="me-5"><a href="#pour_qui"><i class='bx bx-user encre_icon me-2'></i>pour qui ?</a></li>
+                <li class="me-5"><a href="#programme"><i class='bx bx-list-minus encre_icon me-2'></i>programme</a></li>
+                <li class="me-5"><a href="#avis"><i class='bx bxs-edit-alt encre_icon me-2'></i>Avis</a></li>
+                <li class="me-5"><a href="#dates"><i class='bx bxs-calendar-check encre_icon me-2'></i>dates</a></li>
+                <li class="me-5"><a href="{{route('demande_devis_client',$infos[0]->module_id)}}"><i class='bx bxs-cart-download encre_icon me-2'></i>Demander un devis</a></li>
+                <li class="me-5"><a class="print_to_pdf"><i class='bx bxs-download encre_icon me-2'></i>telecharger en pdf</a></li>
+
             </ul>
         </div>
         {{-- <div>
             <button class="btn_pdf px-4 py-1" type="button"><i class='bx bxs-cloud-download me-3'></i>PDF</button>
         </div> --}}
     </nav>
-    <div class="container py-5">
-        <div class="row justify-content-space-between py-3 px-5 back" id="border_premier">
+    <div class="container py-5" id="printToPdf">
+        <div class="row justify-content-space-between py-3 back" id="border_premier">
             <div class="col-lg-8 col-md-8 pe-5 module_detail">
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
@@ -97,8 +100,14 @@
                     <p>{{$res->description}}</p>
                     <div class="detail__formation__result__avis d-flex flex-row">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
-                        {{-- <div class="Stars" style="--note: 2.5"></div> --}}
-                        <span class="ms-2"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
+                        <div class="stars">
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star-half' ></i>
+                            <i class='bx bx-star'></i>
+                            <i class='bx bx-star'></i>
+                        </div>
+                        <span class="ms-2">{{ $res->pourcentage }}/5 ({{ $nb_avis }} avis)</span>
                     </div>
                 </div>
             </div>
@@ -106,16 +115,42 @@
                 <div class="">
                     <a href="{{route('detail_cfp',$res->cfp_id)}}">
                         <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
-
                         <div class="text-center">
                             <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
                         </div>
                     </a>
+                    @if($avis_etoile[0]->pourcentage != null)
+                    <div class="d-flex flex-row justify-content-center mt-2">
+                        @if($avis_etoile[0]->pourcentage != null)
+                            <div class="Stars" style="--note: {{ $avis_etoile[0]->pourcentage }};"></div>
+                            <div class="stars">
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star-half' ></i>
+                                <i class='bx bx-star'></i>
+                                <i class='bx bx-star'></i>
+                            </div>
+                        @else
+                            <div class="Stars" style="--note: 0;"></div>
+                        @endif
+                        <div class="rating-box ms-2">
+                            @if($avis_etoile[0]->pourcentage != null)
+                                <span class="avis_verif"><span class="">{{ $avis_etoile[0]->pourcentage }}</span> ({{$avis_etoile[0]->nb_avis}} avis)</span><br>
+                            @else
+                                <span class="">0 sur 5 (0 avis)</span>
+                            @endif
+                        </div>
+                        <br>
+                    </div>
+                    <div class="text-center">
+                        <span>Avis sur le centre de formation</span>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div id="objectif"></div>
-            <div class="row row-cols-auto module_detail_heure justify-content-around w-100">
-                <div class="col"><i class="bx bxs-alarm bx_icon"></i>
+            <div class="row row-cols-auto module_detail_heure py-3">
+                <div class="col background_contrast"><i class="bx bxs-alarm bx_icon"></i>
                     <span>
                         @isset($res->duree_jour)
                         {{$res->duree_jour}} jours
@@ -127,33 +162,42 @@
                         @endisset
                     </span> </p>
                 </div>
-                <div class="col"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
+                <div class="col background_contrast"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$res->modalite_formation}}</span>
                 </div>
-                <div class="col"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$res->niveau}}</span></div>
-                <div class="col"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                <div class="col background_contrast">
+                    @foreach ($niveau as $level)
+                    @if($res->niveau_id == $level->id)
+                        <i class='bx bx-signal-5 bx_icon bx_pourcentage' style="--pourcentage: {{$level->progression}}"></i><i class='bx bx-signal-5 bx_icon level_cacher'></i><span>&nbsp;{{$level->niveau}}</span>
+                    @endif
+                    @endforeach
+                </div>
+                <div class="col background_contrast"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
+                <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @if($res->prix_groupe != null)
-                    <div class="col pt-1" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                    <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
                 {{-- <div class="col pt-1" ><a href="#" role="button" class="btn_demander">Demander un dévis</a></div>
                  <div class="text-center mt-5"><a href="#" role="button" class="btn_demander">Demander un dévis</a></div> --}}
             </div>
         </div>
+        {{-- <div class="html2pdf__page-break"></div> --}}
+
         <div class="row detail__formation__detail py-5">
 
-            <div class="col-lg-9 pe-5">
+            <div class="col-lg pe-5">
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pb-3">Objectifs de la formation</h3>
-                <div class="row module_detail_content p-5">
+                <h3 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i><i class='bx bx-target-lock encre__icon_cacher me-2'></i>Objectifs de la formation</h3>
+                <div class="row module_detail_content p-2">
                     <div class="col-lg-12">
                         <p id="objectif_content">{{$res->objectif}}</p>
                         <div id="pour_qui"></div>
                     </div>
                 </div>
+                <div class="html2pdf__page-break"></div>
                 {{-- section 1 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pt-3 pb-3 mt-5">A qui s'adresse cette formation?</h3>
+                <h3 class="pt-3 pb-3 mt-5"><i class='bx bx-user encre__icon me-2'></i><i class='bx bx-user encre__icon_cacher me-2'></i>A qui s'adresse cette formation?</h3>
                 <div class="row justify-content-between">
                     <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
@@ -212,7 +256,7 @@
                         </div>
                     </div>
                 </div>
-
+                {{-- <div class="html2pdf__page-break"></div> --}}
                 <div class="row detail__formation__item__left__adresse">
                     <div class="col-lg-12 d-flex flex-row module_detail_objet">
                         <div class="row d-flex flex-row">
@@ -230,16 +274,17 @@
                 </div>
                 @endforeach
                 <div id="programme__formation"></div>
+                <div class="html2pdf__page-break"></div>
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pt-3">Programme de la formation</h3>
+                <h3 class="pt-3"><i class='bx bx-list-minus encre__icon me-2'></i><i class='bx bx-list-minus encre__icon_cacher me-2'></i>Programme de la formation</h3>
                 <div class="row mt-5">
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="accordion" id="accordion__program">
                                 <?php $i=1 ?>
                                 @foreach ($programmes as $prgc)
-                                <div class="card mb-5">
+                                <div class="card mb-4">
                                     <div class="card-header" id="heading1">
                                         <h2 class="mb-0"><button class="btn btn-block text-left" type="button"
                                                 data-toggle="collapse" data-target="#collapse{{$i}}"
@@ -262,11 +307,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="html2pdf__page-break"></div>
+                <div class="row afficher_pdf">
+                    <div class="col justify-content-center">
+                        <div>
+                            <h3 class="pt-3 pb-0"><i class='bx bxs-cog encre__icon me-2'></i><i class='bx bxs-cog encre__icon_cacher me-2'></i>Compétences à acquérir</h3>
+                        </div>
+                        <canvas id="marksChart1" width="500" height="300"></canvas>
+                    </div>
+
+                </div>
+
                 {{-- section 5 --}}
                 {{-- FIXME:mise en forme de design --}}
+                <div class="html2pdf__page-break"></div>
                 <div class="row detail__formation__programme__avis">
                     <div>
-                        <h3 class="pt-5 pb-0">Avis sur la formation</h3>
+                        <h3 class="pt-5 pb-0"><i class='bx bxs-edit-alt encre__icon me-2'></i><i class='bx bxs-edit-alt encre__icon_cacher me-2'></i>Avis sur la formation</h3>
                     </div>
                     <div class="col-12 mb-5">
                         <div class="card p-2 pt-1">
@@ -283,6 +340,13 @@
                                         <p class="">sur 5</p>
                                     </div>
                                     <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
+                                    <div class="stars">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star-half' ></i>
+                                        <i class='bx bx-star'></i>
+                                        <i class='bx bx-star'></i>
+                                    </div>
                                 </div>
                                 <div class="col-md-8 pt-2 ">
                                     <div class="table-rating-bar justify-content-center">
@@ -363,10 +427,18 @@
                                     <div class="col">
                                         <p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p>
                                     </div>
-                                    <div class="col">
-                                        <p class="text-left d-flex flex-row">
-                                        <div class="Stars" style="--note: {{ $avis->note }};"></div>&nbsp;<span
-                                            class="text-muted">{{ $avis->note }}</span></p>
+                                    <div class="col text-left d-flex flex-row">
+                                        {{-- <p class=""> --}}
+                                            <div class="Stars" style="--note: {{ $avis->note }};"></div>
+                                            <div class="stars">
+                                                <i class='bx bxs-star'></i>
+                                                <i class='bx bxs-star'></i>
+                                                <i class='bx bxs-star-half'></i>
+                                                <i class='bx bx-star'></i>
+                                                <i class='bx bx-star'></i>
+                                            </div>
+                                        &nbsp;<span class="text-muted">{{ $avis->note }}</span>
+                                        {{-- </p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -416,7 +488,7 @@
                 </div>
             </div>
             {{-- FIXME:mise en forme de design --}}
-            <div class="col-lg-3 ">
+            <div class="col-lg-3 cacher_pdf">
                 <div class="row detail__intra">
                     <div class="row g-0 m-0">
                         <div class="detail__prix">
@@ -426,25 +498,28 @@
                         </div>
                     </div>
                     <div class="pt-3">
-                        @foreach ($competences as $compt)
+                        {{-- @foreach ($competences as $compt)
                             <p><i class='bx bx-check-double text-success' ></i>&nbsp;{{$compt->titre_competence}}</p>
-                        @endforeach
+                        @endforeach --}}
+                        <canvas id="marksChart" width="1000" height="800" class="justify-content-center"></canvas>
+
                     </div>
-                    <div class="row g-0 m-0 detail_ref_ref">
+                    {{-- <div class="row g-0 m-0 detail_ref_ref">
                         <div class="col-lg-12 py-5">
                             <a href="{{route('demande_devis_client',$infos[0]->module_id)}}" role="button" class="btn_demander">Demander un dévis</a>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
+            <input type="hidden" class="form-control" name="recuperer_module_id" id="mod_id_rec" value="{{$infos[0]->module_id}}">
         </div>
-
+        <div class="html2pdf__page-break"></div>
         <div class="container">
             @if($datas == null)
 
             @else
             <div class="row ">
-                <h3 class="pt-3 pb-3">Dates et Villes Session Inter</h3>
+                <h3 class="pt-3 pb-3"><i class='bx bxs-calendar-check encre__icon me-2'></i><i class='bx bxs-calendar-check encre__icon_cacher me-2'></i>Dates et Villes Session Inter</h3>
                 <div class="col-lg-12">
                     <div class="row">
                         <div id="dates"></div>
@@ -468,7 +543,7 @@
                                     {{-- @canany(['isManager','isReferent','isStagiaire']) --}}
                                     @canany(['isReferent'])
                                         <div class="col-3 text-center">
-                                            <a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="btn_inscription" role="button">
+                                            <a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="btn_enregistrer" role="button">
                                                 @php
                                                     $inscrit = $groupe->inscrit_session_inter($data->groupe_id);
                                                     if ($inscrit == 0) {
@@ -491,9 +566,13 @@
             @endif
         </div>
     </div>
+    <div id="elementH"></div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
     // CSRF Token
@@ -726,6 +805,149 @@
         $('.newRowAvis').empty();
         $('.plus_avis').show();
         $('.moins_avis').css('visibility','hidden');
-    })
+    });
+
+function afficher_radar(label,competence){
+
+let marksCanvas = document.getElementById("marksChart");
+
+let marksData = {
+labels: JSON.parse(label),
+datasets: [{
+    label: "Objectif à atteindre",
+    backgroundColor: "rgba(12, 213, 52, 0.2)",
+    borderColor: "rgb(26, 113, 235)",
+    pointBackgroundColor: "rgb(243, 84, 27)",
+    data: JSON.parse(competence)
+}]
+};
+
+let radarChart = new Chart(marksCanvas, {
+type: 'radar',
+data: marksData
+});
+
+var chartOptions = {
+    scale: {
+        ticks: {
+            beginAtZero: true,
+            min: 0,
+            max: 10,
+            stepSize: 1
+        },
+        pointLabels: {
+            fontSize: 18
+        }
+    },
+    legend: {
+        position: 'left'
+    }
+};
+}
+function afficher_radar1(label,competence){
+
+let marksCanvas = document.getElementById("marksChart1");
+
+let marksData = {
+labels: JSON.parse(label),
+datasets: [{
+    label: "Objectif à atteindre",
+    backgroundColor: "rgba(12, 213, 52, 0.2)",
+    borderColor: "rgb(26, 113, 235)",
+    pointBackgroundColor: "rgb(243, 84, 27)",
+    data: JSON.parse(competence)
+}]
+};
+
+let radarChart = new Chart(marksCanvas, {
+type: 'radar',
+data: marksData
+});
+
+var chartOptions = {
+    scale: {
+        ticks: {
+            beginAtZero: true,
+            min: 0,
+            max: 10,
+            stepSize: 1
+        },
+        pointLabels: {
+            fontSize: 18
+        }
+    },
+    legend: {
+        position: 'left'
+    }
+};
+}
+
+window.onload = function(e){
+let id_mod = $("#mod_id_rec").val();
+// alert(id_mod);
+let labels = '[';
+let competences = '[';
+$.ajax({
+    type: "get"
+    ,url: "{{route('competence_module')}}"
+    ,data: {
+        mod_id: id_mod
+    }
+    ,dataType: "html"
+    ,success: function(response){
+        let userData = JSON.parse(response);
+        // alert(JSON.stringify(userData['detail']));
+        // alert(userData['detail'].length);
+        for (let i = 0; i < userData['detail'].length; i++) {
+            if (i == userData['detail'].length - 1) {
+                labels += '"'+userData['detail'][i].titre_competence+'"]';
+                competences += userData['detail'][i].objectif+']';
+            }else{
+                labels += '"'+userData['detail'][i].titre_competence+'",';
+                competences += userData['detail'][i].objectif+',';
+            }
+        }
+        // alert(competences);
+        afficher_radar(labels,competences);
+        afficher_radar1(labels,competences);
+    }
+    ,error: function(error){
+        console.log(error);
+    }
+});
+};
+$(".print_to_pdf").on('click', function(e){
+    $(".cacher_pdf").css("display","none");
+    $(".Stars").css("display","none");
+    $(".bx_pourcentage").css("display","none");
+    $(".encre__icon").css("display","none");
+    $(".level_cacher").css("display","inline-block");
+    $(".stars").css("display","inline-block");
+    $(".encre__icon_cacher").css("display","inline-block");
+    $(".stars").css("color","yellow");
+    $(".background_contrast").css("margin-left","2px");
+    $(".background_contrast").css("fontSize","0.8rem");
+    $("span").css("fontSize","0.8rem");
+    $("p").css("fontSize","0.8rem");
+    $(".card-body").css("fontSize","0.8rem");
+    $(".background_contrast").css("padding-left","5px");
+    $(".background_contrast").css("padding-right","5px");
+    $(".module_detail_objet").css("margin-bottom","10px");
+    $(".btn-block").css("border","none");
+    $("#marksChart1").css("border","none");
+
+    let element = document.getElementById('printToPdf');
+    var opt = {
+        margin:       0.5,
+        filename:     'programme de formation.pdf',
+        image:        { type: 'jpeg', quality: 1},
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    // html2pdf().set(opt).from(element).save();
+    html2pdf().set(opt).from(element).save().then(function () {window.location.reload()});
+
+});
+
 </script>
 @endsection

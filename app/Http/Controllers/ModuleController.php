@@ -56,19 +56,19 @@ class ModuleController extends Controller
             $categorie = formation::all();
             $date_creation = module::all();
             $niveau = Niveau::all();
-            $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
-                select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ? order by mf.module_id desc',[$cfp_id]);
-            $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
-                select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by module_id desc',[$cfp_id]);
-            $mod_hors_ligne = DB::select('select * from moduleformation where status = 2 and etat_id = 2 and cfp_id = ? order by module_id desc',[$cfp_id]);
-            $mod_publies = DB::select('select * from moduleformation where status = 2 and etat_id = 1 and cfp_id = ? order by module_id desc',[$cfp_id]);
+            // $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (
+            //     select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ? order by mf.module_id desc',[$cfp_id]);
+            // $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
+            //     select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by module_id desc',[$cfp_id]);
+            $mod_hors_ligne = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 2 and md.cfp_id = ? order by md.module_id desc',[$cfp_id]);
+            $mod_publies = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.cfp_id = ? order by md.module_id desc',[$cfp_id]);
 
 
             if (count($infos) <= 0) {
                 return view('admin.module.guide');
             } else {
                 // return view('admin.module.module', compact('devise','infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
-                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp', 'mod_hors_ligne','domaine','liste'));
+                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_publies', 'cfp', 'mod_hors_ligne','domaine','liste'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -77,7 +77,7 @@ class ModuleController extends Controller
         }
 
         // return view('admin.module.module', compact('devise','categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies','infos'));
-        return view('admin.module.module', compact('devise','categorie','niveau','date_creation','mod_en_cours', 'mod_non_publies', 'mod_publies','infos','domaine'));
+        return view('admin.module.module', compact('devise','categorie','niveau','date_creation','mod_hors_ligne', 'mod_publies','infos','domaine'));
     }
 
 
@@ -158,7 +158,7 @@ class ModuleController extends Controller
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id[0]->id . ') as moduleExiste');
         $np = 4;
         $npc = 4;
-        $nc = 4;
+        $nc = 7;
         DB::beginTransaction();
         try {
             for($j = 1; $j < $np; $j++){
@@ -170,7 +170,7 @@ class ModuleController extends Controller
                 }
             }
             for($i = 1; $i < $nc; $i++){
-                DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',['Competence '.$i,10,$id[0]->id]);
+                DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',['Competence '.$i,(4 + $i),$id[0]->id]);
             }
             DB::update('update modules set status = ? where id = ?',[2,$id[0]->id]);
             DB::commit();
@@ -578,6 +578,7 @@ class ModuleController extends Controller
     {
         $id = $request->Id;
         DB::delete('delete from competence_a_evaluers where id = ?', [$id]);
+        // $test = DB::select('select * from competence_a_evaluers')
         return response()->json(
             [
                 'success' => true,
@@ -659,6 +660,11 @@ class ModuleController extends Controller
         $etat = 2;
         DB::update('update modules set etat_id = ? where id = ?',[$etat, $id]);
         return response()->json(['success' =>'ok']);
+    }
+
+    public function afficher_radar(Request $request){
+        $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$request->mod_id]);
+        return response()->json(['detail'=>$competences]);
     }
 
 }
