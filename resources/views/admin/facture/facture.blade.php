@@ -550,6 +550,7 @@
                                                     @endif
 
                                                 </td>
+                                                </tr>
                                                 <tr>
                                                     <td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
                                                         @if($actif->facture_encour != "valider" && count($encaissement)>0)

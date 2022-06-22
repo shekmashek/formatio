@@ -105,7 +105,8 @@ class Groupe extends Model
     }
 
     public function module_session($module_id){
-        return DB::select('select nom_module from modules where id = ?',[$module_id])[0]->nom_module;
+        $data = DB::select('select nom_module FROM modules WHERE id = ?',[$module_id]);
+        return $data[0]->nom_module;
     }
 
     public function nombre_apprenant_session($groupe_id){

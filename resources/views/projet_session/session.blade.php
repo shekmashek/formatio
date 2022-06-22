@@ -591,6 +591,8 @@
                                     height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                             </div>
                         </div>
+                    </div>
+
 
                         @canany(['isCFP'])
                             <div class="chiffre_d_affaire">
@@ -954,97 +956,7 @@
                             <div class="col-md-10">
                                 <p id="nEtp" style="color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
 
-                                </p>
-                                <p id="status" class="saSpan">
 
-                                </p>
-                            </div>
-                            <div class="col-md-1"></div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-donate-heart saClass'></i></div>
-                            <div class="col-md-3" style="color: #637381">Type</div>
-                            <div class="col-md">
-                                <span id="juridic" class="saSpan">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-credit-card-front saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">NIF</div>
-                            <div class="col-md">
-                                <span id="nif" class="saSpan">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-credit-card saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">STAT</div>
-                            <div class="col-md">
-                                <span id="stat" class="saSpan">
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-phone saClass'></i></div>
-                            <div class="col-md-3" style="color: #637381">Tel</div>
-                            <div class="col-md">
-                                <span id="tel" class="saSpan">
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-envelope saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">E-mail</div>
-                            <div class="col-md">
-                                <span id="mail" class="saSpan">
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-location-plus saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">Adresse</div>
-                            <div class="col-md">
-                                <span id="adrlot" class="saSpan"></span>
-                                <span id="adrlot2" class="saSpan"></span>
-                                <span id="adrlot3" class="saSpan"></span>
-                                <span id="adrlot4" class="saSpan"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-globe saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">Site web</div>
-                            <div class="col-md">
-                                <span id="site" class="saSpan">
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
 
                 @endif
             </div>
@@ -1141,42 +1053,6 @@
                         </div>
                     </div>
 
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-envelope saClass' ></i></div>
-                            <div class="col-md-3 saSpan">E-mail</div>
-                            <div class="col-md">
-                                <span id="matriculess" class="saSpan">
-                                    @if ($etp->email_resp == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $etp->email_resp }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-phone saClass' ></i></div>
-                            <div class="col-md-3 saSpan">Télephone</div>
-                            <div class="col-md">
-                                <span id="mail_stagiaire" class="saSpan">
-                                    @if ($etp->telephone_resp == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $etp->telephone_resp }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="mt-1">
                         <div class="row">

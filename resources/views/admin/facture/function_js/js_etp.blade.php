@@ -43,7 +43,7 @@
 
 
 
-    function getDataFactureTous(full_facture, devise) {
+    function getDataFactureTous(full_facture, devise,encaissement) {
         var html_tous = '';
         if (full_facture.length > 0) {
 
@@ -67,8 +67,11 @@
                 url_pdf_liste_encaissement_facture = url_pdf_liste_encaissement_facture.replace(":id", full_facture[i_act].num_facture);
 
                 var url_form_encaissement = "{{ route('encaisser') }}";
-
-                html_tous += " <tr><td> <a href=" + url_detail_facture + ">";
+                html_tous += '<tr><td>';
+                    if(full_facture[i_act].facture_encour =="en_cour" || full_facture[i_act].facture_encour=="terminer"){
+                        html_tous +='<h6><a href="#collapseprojet_actif_'+full_facture[i_act].num_facture+'" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>';
+                    }
+                html_tous += " </td><td> <a href=" + url_detail_facture + ">";
 
                 if (full_facture[i_act].reference_type_facture == "Facture") {
 
@@ -86,8 +89,8 @@
                         " </div> ";
                 }
 
-                html_tous += "  </a></td><th>";
-                html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].num_facture + "   </a> </th> <td>";
+                html_tous += "  </a></td><td>";
+                html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].num_facture + "   </a> </td> <td>";
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].nom_etp + " </a></td><td>";
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].invoice_date + " </a> </td><td>";
                 html_tous += "  <a href=" + url_detail_facture + ">" + full_facture[i_act].due_date + " </a> </td><td>";
@@ -117,10 +120,44 @@
                 }
 
 
-                html_tous += "   </a> </td>";
-
-
-                html_tous += "</tr>";
+                html_tous += "   </a> </td></tr> <tr>";
+                    html_tous +='<td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_actif_'+full_facture[i_act].num_facture+'" aria-labelledby="collapseprojet_'+full_facture[i_act].num_facture+'">';
+                        if(full_facture[i_act].facture_encour != "valider" && encaissement.length>0){
+                        html_tous +='<div class="centrer"><div class="alert alert-light" role="alert">Vos Encaissements:</div><table  class="table table-hover">';
+                                html_tous +='<thead><tr>';
+                                        html_tous +='<th scope="col">N° F#</th>';
+                                        html_tous +='<th scope="col">Montant facturer</th>';
+                                        html_tous +='<th scope="col">Paiement</th>';
+                                        html_tous +='<th scope="col">Montant ouvert</th>';
+                                        html_tous +='<th scope="col">Mode de paiement</th>';
+                                        html_tous +='<th scope="col">Date de paiement</th>';
+                                        html_tous +='<th scope="col">Memo/Notes</th>';
+                                html_tous +='</tr></thead><tbody>';
+                                    for(var iencaiss=0; iencaiss<encaissement.length; iencaiss+=1){
+                                        var url_encais_facture = "{{ route('detail_facture', ':id') }}";
+                                        url_encais_facture = url_encais_facture.replace(":id", encaissement[iencaiss].num_facture);
+                                        var url_supprimer = "{{route('supprimer',':id')}}";
+                                        url_supprimer = url_supprimer.replace(":id", encaissement[iencaiss].id);
+                                        if (full_facture[i_act].num_facture == encaissement[iencaiss].num_facture){
+                                            html_tous +='<tr><td> <a href="'+url_encais_facture+'">'+encaissement[iencaiss].num_facture+'</a></td>';
+                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_tous +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() +'</td>';
+                                            html_tous +='<td>'+encaissement[iencaiss].description+'</td>';
+                                            html_tous +='<td>'+encaissement[iencaiss].date_encaissement+'</td>';
+                                            if(encaissement[iencaiss].libelle!=null){
+                                                html_tous +='<td>'+encaissement[iencaiss].libelle+'</td>';
+                                            }else{
+                                                html_tous +='<td></td>';
+                                            }
+                                            html_tous +='</tr>';
+                                        }
+                                    }
+                                html_tous +='</tbody></table></div>';
+                        }
+                    html_tous +='</td></tr>';
+                
+                
 
             }
         } else {
@@ -129,7 +166,7 @@
         return html_tous;
     }
 
-    function getDataFactureValider(facture_actif, devise) {
+    function getDataFactureValider(facture_actif, devise,encaissement) {
         var html_actif = '';
 
         if (facture_actif.length > 0) {
@@ -155,8 +192,11 @@
                 url_delete_facture = url_delete_facture.replace(":id", facture_actif[i_actif].num_facture);
 
                 var url_form_encaissement = "{{ route('encaisser') }}";
-
-                html_actif += " <tr><td> <a href=" + url_detail_facture + ">";
+                html_actif += '<tr><td>';
+                    if(facture_actif[i_actif].facture_encour=="terminer" || facture_actif[i_actif].facture_encour=="en_cour"){
+                        html_actif +='<h6><a href="#collapseprojet_valider_'+facture_actif[i_actif].num_facture+'" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>';
+                    }
+                html_actif += " </td><td> <a href=" + url_detail_facture + ">";
 
                 if (facture_actif[i_actif].reference_type_facture == "Facture") {
 
@@ -180,8 +220,8 @@
                         " </div>";
                 }
 
-                html_actif += "  </a></td><th>";
-                html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].num_facture + "   </a> </th> <td>";
+                html_actif += "  </a></td><td>";
+                html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].num_facture + "   </a> </td> <td>";
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].nom_cfp + " </a></td><td>";
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].invoice_date + " </a> </td><td>";
                 html_actif += "  <a href=" + url_detail_facture + ">" + facture_actif[i_actif].due_date + " </a> </td><td>";
@@ -194,7 +234,7 @@
                 html_actif += "  <a href=" + url_detail_facture + "> ";
 
                 if (facture_actif[i_actif].jour_restant > 0) {
-                    if ($facture_actif[i_actif].facture_encour == "en_cour") {
+                    if (facture_actif[i_actif].facture_encour == "en_cour") {
                         html_actif += '<div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white"> partiellement payé</html_actif+=div>';
                     } else {
                         html_actif += '<div style="background-color: rgb(124, 151, 177); border-radius: 10px; text-align: center;color:white"> envoyé </div>';
@@ -202,11 +242,43 @@
                 } else {
                     html_actif += " <div style='background-color: rgb(235, 122, 122); border-radius: 10px; text-align: center;color:white'> en retard </div>";
                 }
-                html_actif += " </a> </td>";
-
-
-
-                html_actif += "</tr>";
+                html_actif += " </a> </td></tr> <tr>";
+                html_actif += "</tr> <tr>";
+                    html_actif +='<td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_valider_'+facture_actif[i_actif].num_facture+'" aria-labelledby="collapseprojet_'+facture_actif[i_actif].num_facture+'">';
+                        if(encaissement.length>0){
+                        html_actif +='<div class="centrer"><div class="alert alert-light" role="alert">Vos Encaissements:</div><table  class="table table-hover">';
+                                html_actif +='<thead><tr>';
+                                        html_actif +='<th scope="col">N° F#</th>';
+                                        html_actif +='<th scope="col">Montant facturer</th>';
+                                        html_actif +='<th scope="col">Paiement</th>';
+                                        html_actif +='<th scope="col">Montant ouvert</th>';
+                                        html_actif +='<th scope="col">Mode de paiement</th>';
+                                        html_actif +='<th scope="col">Date de paiement</th>';
+                                        html_actif +='<th scope="col">Memo/Notes</th>';
+                                html_actif +='</tr></thead><tbody>';
+                                    for(var iencaiss=0; iencaiss<encaissement.length; iencaiss+=1){
+                                        var url_encais_facture = "{{ route('detail_facture', ':id') }}";
+                                        url_encais_facture = url_encais_facture.replace(":id", encaissement[iencaiss].num_facture);
+                                        var url_supprimer = "{{route('supprimer',':id')}}";
+                                        url_supprimer = url_supprimer.replace(":id", encaissement[iencaiss].id);
+                                        if (facture_actif[i_actif].num_facture == encaissement[iencaiss].num_facture){
+                                            html_actif +='<tr><td> <a href="' + url_encais_facture + '">'+encaissement[iencaiss].num_facture+'</a></td>';
+                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_actif +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() +'</td>';
+                                            html_actif +='<td>'+encaissement[iencaiss].description+'</td>';
+                                            html_actif +='<td>'+encaissement[iencaiss].date_encaissement+'</td>';
+                                            if(encaissement[iencaiss].libelle!=null){
+                                                html_actif +='<td>'+encaissement[iencaiss].libelle+'</td>';
+                                            }else{
+                                                html_actif +='<td></td>';
+                                            }
+                                            html_actif +='</tr>';
+                                        }
+                                    }
+                                html_actif +='</tbody></table></div>';
+                        }
+                    html_actif +='</td></tr>';
 
 
             }
@@ -218,7 +290,7 @@
         return html_actif;
     }
 
-    function getDataFacturePayer(facture_payer, devise) {
+    function getDataFacturePayer(facture_payer, devise,encaissement) {
         var html_payer = '';
         if (facture_payer.length > 0) {
 
@@ -237,8 +309,11 @@
                 var url_pdf_facture_facture = "{{ route('imprime_feuille_facture', ':id') }}";
                 url_pdf_facture_facture = url_pdf_facture_facture.replace(":id", facture_payer[i_payer].num_facture);
 
-
-                html_payer += " <tr><td> <a href=" + url_detail_facture + ">";
+                html_payer += '<tr><td>';
+                    if(facture_payer[i_payer].facture_encour=="terminer"){
+                        html_payer +='<h6><a href="#collapseprojet_payer_'+facture_payer[i_payer].num_facture+'" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>';
+                    }
+                html_payer += " </td><td> <a href=" + url_detail_facture + ">";
 
                 if (facture_payer[i_payer].reference_type_facture == "Facture") {
 
@@ -262,7 +337,7 @@
                         " </div>";
                 }
 
-                html_payer += "  </a></td><th>";
+                html_payer += "  </a></td><td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].num_facture + "   </a> </th> <td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].nom_cfp + " </a></td><td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].invoice_date + " </a> </td><td>";
@@ -273,9 +348,42 @@
 
                 html_payer += "  <a href=" + url_detail_facture + "> ";
                 html_payer += '<div style="background-color:  rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">  payé </div>';
-                html_payer += " </a> </td>";
-
-                html_payer += "</tr>";
+                html_payer += " </a> </td></tr><tr>";
+                    html_payer +='<td colspan="10" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_payer_'+facture_payer[i_payer].num_facture+'" aria-labelledby="collapseprojet_'+facture_payer[i_payer].num_facture+'">';
+                        if(encaissement.length>0){
+                        html_payer +='<div class="centrer"><div class="alert alert-light" role="alert">Vos Encaissements:</div><table  class="table table-hover">';
+                                html_payer +='<thead><tr>';
+                                        html_payer +='<th scope="col">N° F#</th>';
+                                        html_payer +='<th scope="col">Montant facturer</th>';
+                                        html_payer +='<th scope="col">Paiement</th>';
+                                        html_payer +='<th scope="col">Montant ouvert</th>';
+                                        html_payer +='<th scope="col">Mode de paiement</th>';
+                                        html_payer +='<th scope="col">Date de paiement</th>';
+                                        html_payer +='<th scope="col">Memo/Notes</th>';
+                                html_payer +='</tr></thead><tbody>';
+                                    for(var iencaiss=0; iencaiss<encaissement.length; iencaiss+=1){
+                                        var url_encais_facture = "{{ route('detail_facture', ':id') }}";
+                                        url_encais_facture = url_encais_facture.replace(":id", encaissement[iencaiss].num_facture);
+                                        var url_supprimer = "{{route('supprimer',':id')}}";
+                                        url_supprimer = url_supprimer.replace(":id", encaissement[iencaiss].id);
+                                        if (facture_payer[i_payer].num_facture == encaissement[iencaiss].num_facture){
+                                            html_payer +='<tr><td> <a href="'+url_encais_facture+'">'+encaissement[iencaiss].num_facture+'</a></td>';
+                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_facture.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].payement.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() + '</td>';
+                                            html_payer +='<td>'+devise.devise+' '+encaissement[iencaiss].montant_ouvert.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace('.00', '').trim() +'</td>';
+                                            html_payer +='<td>'+encaissement[iencaiss].description+'</td>';
+                                            html_payer +='<td>'+encaissement[iencaiss].date_encaissement+'</td>';
+                                            if(encaissement[iencaiss].libelle!=null){
+                                                html_payer +='<td>'+encaissement[iencaiss].libelle+'</td>';
+                                            }else{
+                                                html_payer +='<td></td>';
+                                            }
+                                            html_payer +='</tr>';
+                                        }
+                                    }
+                                html_payer +='</tbody></table></div>';
+                        }
+                    html_payer +='</td></tr>';
             }
         } else {
             html_payer += '<tr><td colspan = "10" class = "text-center" style = "color:red;" > Aucun Résultat </td> </tr> ';
@@ -287,14 +395,14 @@
     function getDataFacture(response) {
         var valiny = JSON.parse(response);
         var devise = valiny["devise"];
-
+        var encaissement = valiny["encaissement"];
         var full_facture = valiny["full_facture"];
         var facture_actif = valiny["facture_actif"];
         var facture_payer = valiny["facture_payer"];
 
-        var html_full = getDataFactureTous(full_facture, devise);
-        var html_actif = getDataFactureValider(facture_actif, devise);
-        var html_payer = getDataFacturePayer(facture_payer, devise);
+        var html_full = getDataFactureTous(full_facture, devise,encaissement);
+        var html_actif = getDataFactureValider(facture_actif, devise,encaissement);
+        var html_payer = getDataFacturePayer(facture_payer, devise,encaissement);
         return {
             "html_full": html_full
             ,"html_actif": html_actif
@@ -489,9 +597,18 @@
     });
 
     /*==============================================================================================*/
-
+    var count_fact_trie =0;
+    var count_rest_payer_trie = 0;
+    var count_entiter_trie =0;
+    var count_reglement_trie = 0;
+    var count_total_payer_trie = 0;
     $(".num_fact_trie").on('click', function(e) {
         var valiny = $(this).val();
+        count_fact_trie++;
+        count_rest_payer_trie = 0;
+        count_entiter_trie =0;
+        count_reglement_trie = 0;
+        count_total_payer_trie = 0;
 
 
         if ($(".num_fact_trie").val() == 0) {
@@ -501,7 +618,7 @@
             $(".num_fact_trie").val(0);
         }
 
-        if (
+        /* if (
             $(".num_fact_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -541,9 +658,16 @@
             .find(".icon_trie")
             .removeClass("fa-arrow-up")
             .removeClass("color-text-trie")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
 
-        var dataValue = getDataRequetTrie(".num_fact_trie", "NUM_FACT");
+            $('.icon_trie').remove();
+            var dataValue=null;
+            if(count_fact_trie < 3){
+                var dataValue = getDataRequetTrie(".num_fact_trie", "NUM_FACT");
+            }else{
+                dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+                $(".dte_reglement_trie").val(0);
+            }
 
         $.ajax({
             method: "GET"
@@ -558,6 +682,15 @@
                 $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                 $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                 $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
+                
+                var arrow = valiny["arrow"];
+                if(count_fact_trie < 3){
+                    $('.num_has_arrow').append(arrow);
+                    $('.num_fact_trie').parent().click();
+                }else{
+                    count_fact_trie=0;
+                    $('.num_fact_trie').parent().click();
+                }
 
             }
             , error: function(error) {
@@ -570,8 +703,13 @@
 
     $(".nom_entiter_trie").on('click', function(e) {
         var valiny = $(this).val();
+        count_entiter_trie++;
+        count_fact_trie =0;
+        count_rest_payer_trie = 0;
+        count_reglement_trie = 0;
+        count_total_payer_trie = 0;
 
-        if (
+        /* if (
             $(".nom_entiter_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -611,7 +749,7 @@
             .find(".icon_trie")
             .removeClass("color-text-trie")
             .removeClass("fa-arrow-up")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
 
         if ($(".nom_entiter_trie").val() == 0) {
             $(".nom_entiter_trie").val(1);
@@ -619,7 +757,14 @@
             $(".nom_entiter_trie").val(0);
         }
 
-        var dataValue = getDataRequetTrie(".nom_entiter_trie", "ENTITE");
+        $('.icon_trie').remove();
+        var dataValue=null;
+        if(count_entiter_trie < 3){
+            dataValue = getDataRequetTrie(".nom_entiter_trie", "ENTITE");
+        }else{
+            dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+            $(".dte_reglement_trie").val(0);
+        }
 
         $.ajax({
             method: "GET"
@@ -635,6 +780,14 @@
                 $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                 $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
 
+                var arrow = valiny["arrow"];
+                if(count_entiter_trie < 3){
+                    $('.nom_has_arrow').append(arrow);
+                    $('.nom_entiter_trie').parent().click();
+                }else{
+                    count_entiter_trie=0;
+                    $('.nom_entiter_trie').parent().click();
+                }
             }
             , error: function(error) {
                 console.log(error)
@@ -647,8 +800,13 @@
 
     $(".dte_reglement_trie").on('click', function(e) {
         var valiny = $(this).val();
+        count_reglement_trie++;
+        count_fact_trie =0;
+        count_rest_payer_trie = 0;
+        count_entiter_trie =0;
+        count_total_payer_trie = 0;
 
-        if (
+        /* if (
             $(".dte_reglement_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -689,15 +847,21 @@
             .find(".icon_trie")
             .removeClass("fa-arrow-up")
             .removeClass("color-text-trie")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
 
         if ($(".dte_reglement_trie").val() == 0) {
             $(".dte_reglement_trie").val(1);
         } else {
             $(".dte_reglement_trie").val(0);
         }
-
-        var dataValue = getDataRequetTrie(".dte_reglement_trie", "DUE_DTE");
+        $('.icon_trie').remove();
+        var dataValue=null;
+        if(count_reglement_trie < 3){
+            dataValue = getDataRequetTrie(".dte_reglement_trie", "DUE_DTE");
+        }else{
+            dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+            $(".dte_reglement_trie").val(0);
+        }
 
         $.ajax({
             method: "GET"
@@ -712,6 +876,14 @@
                 $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                 $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                 $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
+                var arrow = valiny["arrow"];
+                if(count_reglement_trie < 3){
+                    $('.dte_has_arrow').append(arrow);
+                    $('.dte_reglement_trie').parent().click();
+                }else{
+                    count_reglement_trie=0;
+                    $('.dte_reglement_trie').parent().click();
+                }
             }
             , error: function(error) {
                 console.log(error)
@@ -723,8 +895,13 @@
 
     $(".total_payer_trie").on('click', function(e) {
         var valiny = $(this).val();
+        count_total_payer_trie++;
+        count_fact_trie =0;
+        count_rest_payer_trie = 0;
+        count_entiter_trie =0;
+        count_reglement_trie = 0;
 
-        if (
+        /* if (
             $(".total_payer_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -764,14 +941,21 @@
             .find(".icon_trie")
             .removeClass("fa-arrow-up")
             .removeClass("color-text-trie")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
         if ($(".total_payer_trie").val() == 0) {
             $(".total_payer_trie").val(1);
         } else {
             $(".total_payer_trie").val(0);
         }
 
-        var dataValue = getDataRequetTrie(".total_payer_trie", "TOTAL_SOLDE");
+        $('.icon_trie').remove();
+        var dataValue=null;
+        if(count_total_payer_trie < 3){
+            dataValue = getDataRequetTrie(".total_payer_trie", "TOTAL_SOLDE");
+        }else{
+            dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+            $(".total_payer_trie").val(0);
+        }
 
         $.ajax({
             method: "GET"
@@ -786,6 +970,14 @@
                 $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                 $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                 $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
+                var arrow = valiny["arrow"];
+                if(count_total_payer_trie < 3){
+                    $('.total_has_arrow').append(arrow);
+                    $('.total_payer_trie').parent().parent().click();
+                }else{
+                    count_total_payer_trie=0;
+                    $('.total_payer_trie').parent().parent().click();
+                }
             }
             , error: function(error) {
                 console.log(error)
@@ -798,8 +990,13 @@
 
     $(".rest_payer_trie").on('click', function(e) {
         var valiny = $(this).val();
+        count_rest_payer_trie++;
+        count_fact_trie =0;
+        count_entiter_trie =0;
+        count_reglement_trie = 0;
+        count_total_payer_trie = 0;
 
-        if (
+        /* if (
             $(".rest_payer_trie")
             .find(".icon_trie")
             .hasClass("fa-arrow-down")
@@ -839,14 +1036,21 @@
             .find(".icon_trie")
             .removeClass("color-text-trie")
             .removeClass("fa-arrow-up")
-            .addClass("fa-arrow-down");
+            .addClass("fa-arrow-down"); */
         if ($(".rest_payer_trie").val() == 0) {
             $(".rest_payer_trie").val(1);
         } else {
             $(".rest_payer_trie").val(0);
         }
 
-        var dataValue = getDataRequetTrie(".rest_payer_trie", "RESTE_SOLDE");
+        $('.icon_trie').remove();
+        var dataValue=null; 
+        if(count_rest_payer_trie < 3){
+            dataValue = getDataRequetTrie(".rest_payer_trie", "RESTE_SOLDE");
+        }else{
+            dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
+            $(".rest_payer_trie").val(0);
+        }
 
         $.ajax({
             method: "GET"
@@ -861,6 +1065,14 @@
                     $('#list_data_trie_tous').empty().append(resultat["html_full"]);
                     $('#list_data_trie_valider').empty().append(resultat["html_actif"]);
                     $('#list_data_trie_payer').empty().append(resultat["html_payer"]);
+                var arrow = valiny["arrow"];
+                if(count_rest_payer_trie < 3){
+                    $('.rest_has_arrow').append(arrow);
+                    $('.rest_payer_trie').parent().parent().click();
+                }else{
+                    count_rest_payer_trie=0;
+                    $('.rest_payer_trie').parent().parent().click();
+                }
 
             }
             , error: function(error) {
@@ -869,7 +1081,28 @@
         });
     });
 
-
+$('.facture_table th').on('click', function(e) {
+    var th = this.cellIndex;
+    if(th!=0){
+        $('.facture_table td').removeClass("colored_td");
+        $('.facture_table td').removeAttr("style");
+        $('.facture_table th').removeClass("colored_td");
+        $('.facture_table th').removeAttr("style");
+        
+        $('.facture_table tr').each(function() {
+            /* $('.facture_table tr').removeProp("background-color"); */
+            var self = $(this);
+            self.find('th:eq(' + th + ')').addClass("colored_td");
+            self.find('td:eq(' + th + ')').addClass("colored_td");
+            self.find('th:eq(' + th + ')').css('background-color', '#cccccc');
+            self.find('td:eq(' + th + ')').css('background-color', '#cccccc');
+        });
+        $('.inner td').removeClass("colored_td");
+        $('.inner td').removeAttr("style");
+        $('.inner th').removeClass("colored_td");
+        $('.inner th').removeAttr("style");
+    }
+});
 
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function() {
