@@ -556,43 +556,17 @@
                     <div class="d-flex height_default m-0 mt-2 p-0">
                         @if ($type_formation_id == 1)
                             <div class="chiffre_d_affaire m-0 p-0 me-3">
-
+    
                                 <div class="d-flex flex-row">
-                                    <p class="mt-2 text-center">Entreprise client {{ $projet[0]->nom_etp }} </p>&nbsp;&nbsp;
-
-                                    <img data-bs-toggle="offcanvas" data-bs-target="#etpCanvas" aria-controls="offcanvasRight" src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
-                                    class="showSessionEtp mt-2" height="30px" width="30px" style="border-radius: 50%; cursor: pointer;"
-                                    data-id="{{ $projet[0]->entreprise_id }}" id="{{ $projet[0]->entreprise_id }}">
-                                </div>
-                            </div>
-                            <div class="chiffre_d_affaire m-0 p-0 me-3">
-                                @php
-                                    $etp = $groupe->info_resp_etp($projet[0]->entreprise_id);
-                                @endphp
-
-                                <div class="d-flex flex-row">
-                                    <p class="mt-2 text-center">Réferent de l'entreprise {{ $projet[0]->nom_etp }} </p>
+                                    <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>
                                     &nbsp;&nbsp;
-                                    <span>
-                                        @if ($etp->photos == NULL or $etp->photos == '' or $etp->photos == 'XXXXXXX')
-                                            <td role="button" >
-                                                <span  class="randomColor m-auto mt-2 text-uppercase resp_etp" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
-                                                    <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 15px; cursor: pointer"
-                                                    data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}} class="resp_etp">{{$etp->nomEtresp}}{{$etp->prenomEtpresp}}</span>
-                                                </span>
-                                            </td>
-                                        @else
-                                            <td class="td_hover" role="button" style="display: grid; place-content: center">
-                                                <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" src="{{asset("images/responsables/".$etp->photos)}}" style="width:30px;height:30px; border-radius:100% ;cursor: pointer"
-                                                data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}} class="resp_etp mt-3">
-                                            </td>
-                                        @endif
-                                    </span>
+                                    <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
+                                        class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                                 </div>
                             </div>
                         @endif
                         <div class="chiffre_d_affaire me-2">
-
+    
                             <div class="d-flex flex-row">
                                 <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
                                     {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
@@ -943,7 +917,7 @@
 </div>
 
     {{-- ETP --}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="etpCanvas" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="etpCanvas" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -1058,10 +1032,10 @@
                 @endif
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{--Responsable ETP--}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -1211,7 +1185,7 @@
                 @endif
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{--OF--}}
     {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
