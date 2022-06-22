@@ -9,6 +9,14 @@
     <a href="{{route('edit_cv')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp"><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
 </div>
 <center>
+
+  @if (\Session::has('error_date'))
+  <div class="alert alert-danger col-md-4">
+      <ul>
+          <li>{!! \Session::get('error_date') !!}</li>
+      </ul>
+  </div>
+  @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
             <form class="btn-submit" action="{{route('update_fin_travail',$entreprise->id)}}" method="post" enctype="multipart/form-data">

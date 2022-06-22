@@ -439,7 +439,6 @@ class ProfController extends Controller
         // $user_id =  $users = Auth::user()->id;
         // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $entreprise = experienceFormateur::findOrFail($id);
-        //dd($formateur);
         return view('admin.formateur.edit_fin_travail', compact('entreprise'));
     }
     public function editer_fonction($id, Request $request)
@@ -653,14 +652,14 @@ class ProfController extends Controller
 
     }
     public function update_fin_travail(Request $request, $id)
-
     {
+        $entreprise = experienceFormateur::findOrFail($id);
+        if($request->fin <= $entreprise->debut_travail) return back()->with('error_date','La date de fin de travail doit être après la date de début. Merci de réctifier.');
         experienceFormateur::where('id',$id)
         ->update([
             'fin_travail'=>$request->fin
         ]);
         return redirect()->route('edit_cv', $id);
-
     }
     public function update_debut_travail(Request $request, $id)
 

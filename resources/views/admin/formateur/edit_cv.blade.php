@@ -239,7 +239,7 @@
             <div class="form-control">
                 <div class="row">
                     <div class="col-10 text-center">Experiences professionnelles </div>
-                    <div class="col-2"><i class='bx bx-plus text-success ' style="font-size:150%"></i></div>
+                    <div class="col-2"><a href="#"><i class='bx bx-plus text-success ' style="font-size:150%"></i></a></div>
                 </div>
             @foreach($experience as $exp)
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">
@@ -275,7 +275,7 @@
             <div class="form-control">
                 <div class="row">
                     <span class="col-md-10"><p class="text-center">Compétences </p></span>
-                    <span class="col-md-2"><i class='bx bx-plus text-success ' style="font-size:150%"></i></span>
+                    <span class="col-md-2"><a href="{{route('ajout_competence')}}"><i class='bx bx-plus text-success ' style="font-size:150%"></i></a></span>
                 </div>
                 @foreach($competence as $comp)
                 <div style="border-bottom: solid 1px #e8dfe5;" class="hover">

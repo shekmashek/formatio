@@ -246,7 +246,9 @@ Route::get('/editer_specialite/{id?}', 'ProfController@editer_specialite')->name
 Route::get('/editer_about/{id?}', 'ProfController@editer_about')->name('editer_about');
 Route::get('/editer_debut/{id?}', 'ProfController@editer_debut')->name('editer_debut');
 Route::get('/editer_fin/{id?}', 'ProfController@editer_fin')->name('editer_fin');
-
+Route::get('/ajout_competence', function () {
+    return view('admin.formateur.ajout_competence');
+});
 
 
 
