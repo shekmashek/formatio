@@ -1044,35 +1044,35 @@ font-size: 0.850rem;
 .table-rating-bar .bar-container .bar-5 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: #fc0;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-4 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: #fc0;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-3 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: #fc0;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-2 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: #fc0;
     border-radius: 20px;
 }
 
 .table-rating-bar .bar-container .bar-1 {
     width: var(--progress_bar);
     height: 13px;
-    background-color: orangered;
+    background-color: #fc0;
     border-radius: 20px;
 }
 
@@ -1081,10 +1081,10 @@ font-size: 0.850rem;
 }
 
 .Stars {
-    color: orangered;
+    color: #fc0;
 }
 .rating-star .checked {
-    color: orangered;
+    color: #fc0;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -1131,6 +1131,24 @@ font-size: 0.850rem;
     color: transparent;
 }
 
-#marksChart{
+#marksChart,
+#marksChart1{
     cursor: pointer;
+}
+
+.encre__icon_cacher{
+    color: #5433FF;
+    font-size: 2.5rem;
+    position: relative;
+    top: 8px;
+}
+
+.stars,
+.level_cacher,
+.encre__icon_cacher{
+    display: none;
+}
+
+.stars .bx{
+    color: var(--star-background);
 }

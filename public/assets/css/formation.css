@@ -594,6 +594,8 @@ input{
     line-height: 1;
 
 }
+
+
 .Stars::before {
     content: '★★★★★';
     letter-spacing: 3px;
@@ -713,10 +715,10 @@ input{
     color: transparent;
 }
 
-#marksChart{
+#marksChart,
+#marksChart1{
     cursor: pointer;
 }
-
 
 .encre_icon{
     /* color: #28a7eb; */
@@ -738,6 +740,23 @@ input{
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+}
+
+.encre__icon_cacher{
+    color: #5433FF;
+    font-size: 2.5rem;
+    position: relative;
+    top: 8px;
+}
+
+.stars,
+.level_cacher,
+.encre__icon_cacher{
+    display: none;
+}
+
+.stars .bx{
+    color: var(--star-background);
 }
 
 .view_icon{

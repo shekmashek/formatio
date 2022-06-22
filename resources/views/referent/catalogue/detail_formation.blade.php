@@ -91,7 +91,7 @@
         </div> --}}
     </nav>
     <div class="container py-5" id="printToPdf">
-        <div class="row justify-content-space-between py-3 px-5 back" id="border_premier">
+        <div class="row justify-content-space-between py-3 back" id="border_premier">
             <div class="col-lg-8 col-md-8 pe-5 module_detail">
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
@@ -100,8 +100,14 @@
                     <p>{{$res->description}}</p>
                     <div class="detail__formation__result__avis d-flex flex-row">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
-                        {{-- <div class="Stars" style="--note: 2.5"></div> --}}
-                        <span class="ms-2"><strong>{{ $res->pourcentage }}</strong>/5 ({{ $nb_avis }} avis)</span>
+                        <div class="stars">
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star-half' ></i>
+                            <i class='bx bx-star'></i>
+                            <i class='bx bx-star'></i>
+                        </div>
+                        <span class="ms-2">{{ $res->pourcentage }}/5 ({{ $nb_avis }} avis)</span>
                     </div>
                 </div>
             </div>
@@ -117,6 +123,13 @@
                     <div class="d-flex flex-row justify-content-center mt-2">
                         @if($avis_etoile[0]->pourcentage != null)
                             <div class="Stars" style="--note: {{ $avis_etoile[0]->pourcentage }};"></div>
+                            <div class="stars">
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star-half' ></i>
+                                <i class='bx bx-star'></i>
+                                <i class='bx bx-star'></i>
+                            </div>
                         @else
                             <div class="Stars" style="--note: 0;"></div>
                         @endif
@@ -136,7 +149,7 @@
                 </div>
             </div>
             <div id="objectif"></div>
-            <div class="row row-cols-auto module_detail_heure ">
+            <div class="row row-cols-auto module_detail_heure py-3">
                 <div class="col background_contrast"><i class="bx bxs-alarm bx_icon"></i>
                     <span>
                         @isset($res->duree_jour)
@@ -154,7 +167,7 @@
                 <div class="col background_contrast">
                     @foreach ($niveau as $level)
                     @if($res->niveau_id == $level->id)
-                        <i class='bx bx-signal-5 bx_icon bx_pourcentage' style="--pourcentage: {{$level->progression}}"></i><span>&nbsp;{{$level->niveau}}</span>
+                        <i class='bx bx-signal-5 bx_icon bx_pourcentage' style="--pourcentage: {{$level->progression}}"></i><i class='bx bx-signal-5 bx_icon level_cacher'></i><span>&nbsp;{{$level->niveau}}</span>
                     @endif
                     @endforeach
                 </div>
@@ -167,12 +180,14 @@
                  <div class="text-center mt-5"><a href="#" role="button" class="btn_demander">Demander un dévis</a></div> --}}
             </div>
         </div>
+        {{-- <div class="html2pdf__page-break"></div> --}}
+
         <div class="row detail__formation__detail py-5">
 
             <div class="col-lg pe-5">
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i>Objectifs de la formation</h3>
+                <h3 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i><i class='bx bx-target-lock encre__icon_cacher me-2'></i>Objectifs de la formation</h3>
                 <div class="row module_detail_content p-2">
                     <div class="col-lg-12">
                         <p id="objectif_content">{{$res->objectif}}</p>
@@ -182,7 +197,7 @@
                 <div class="html2pdf__page-break"></div>
                 {{-- section 1 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pt-3 pb-3 mt-5"><i class='bx bx-user encre__icon me-2'></i>A qui s'adresse cette formation?</h3>
+                <h3 class="pt-3 pb-3 mt-5"><i class='bx bx-user encre__icon me-2'></i><i class='bx bx-user encre__icon_cacher me-2'></i>A qui s'adresse cette formation?</h3>
                 <div class="row justify-content-between">
                     <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
@@ -241,7 +256,7 @@
                         </div>
                     </div>
                 </div>
-
+                {{-- <div class="html2pdf__page-break"></div> --}}
                 <div class="row detail__formation__item__left__adresse">
                     <div class="col-lg-12 d-flex flex-row module_detail_objet">
                         <div class="row d-flex flex-row">
@@ -262,14 +277,14 @@
                 <div class="html2pdf__page-break"></div>
                 {{-- section 3 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h3 class="pt-3"><i class='bx bx-list-minus encre__icon me-2'></i>Programme de la formation</h3>
+                <h3 class="pt-3"><i class='bx bx-list-minus encre__icon me-2'></i><i class='bx bx-list-minus encre__icon_cacher me-2'></i>Programme de la formation</h3>
                 <div class="row mt-5">
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="accordion" id="accordion__program">
                                 <?php $i=1 ?>
                                 @foreach ($programmes as $prgc)
-                                <div class="card mb-5">
+                                <div class="card mb-4">
                                     <div class="card-header" id="heading1">
                                         <h2 class="mb-0"><button class="btn btn-block text-left" type="button"
                                                 data-toggle="collapse" data-target="#collapse{{$i}}"
@@ -293,11 +308,14 @@
                     </div>
                 </div>
                 <div class="html2pdf__page-break"></div>
-                <div class="afficher_pdf">
-                    <div>
-                        <h3 class="pt-3 pb-0"><i class='bx bxs-cog encre__icon me-2'></i>Compétences à acquérir</h3>
+                <div class="row afficher_pdf">
+                    <div class="col justify-content-center">
+                        <div>
+                            <h3 class="pt-3 pb-0"><i class='bx bxs-cog encre__icon me-2'></i><i class='bx bxs-cog encre__icon_cacher me-2'></i>Compétences à acquérir</h3>
+                        </div>
+                        <canvas id="marksChart1" width="500" height="300"></canvas>
                     </div>
-                    <canvas id="marksChart1" width="600" height="400" class="justify-content-center"></canvas>
+
                 </div>
 
                 {{-- section 5 --}}
@@ -305,7 +323,7 @@
                 <div class="html2pdf__page-break"></div>
                 <div class="row detail__formation__programme__avis">
                     <div>
-                        <h3 class="pt-5 pb-0"><i class='bx bxs-edit-alt encre__icon me-2'></i>Avis sur la formation</h3>
+                        <h3 class="pt-5 pb-0"><i class='bx bxs-edit-alt encre__icon me-2'></i><i class='bx bxs-edit-alt encre__icon_cacher me-2'></i>Avis sur la formation</h3>
                     </div>
                     <div class="col-12 mb-5">
                         <div class="card p-2 pt-1">
@@ -322,6 +340,13 @@
                                         <p class="">sur 5</p>
                                     </div>
                                     <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
+                                    <div class="stars">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star-half' ></i>
+                                        <i class='bx bx-star'></i>
+                                        <i class='bx bx-star'></i>
+                                    </div>
                                 </div>
                                 <div class="col-md-8 pt-2 ">
                                     <div class="table-rating-bar justify-content-center">
@@ -402,10 +427,18 @@
                                     <div class="col">
                                         <p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p>
                                     </div>
-                                    <div class="col">
-                                        <p class="text-left d-flex flex-row">
-                                        <div class="Stars" style="--note: {{ $avis->note }};"></div>&nbsp;<span
-                                            class="text-muted">{{ $avis->note }}</span></p>
+                                    <div class="col text-left d-flex flex-row">
+                                        {{-- <p class=""> --}}
+                                            <div class="Stars" style="--note: {{ $avis->note }};"></div>
+                                            <div class="stars">
+                                                <i class='bx bxs-star'></i>
+                                                <i class='bx bxs-star'></i>
+                                                <i class='bx bxs-star-half'></i>
+                                                <i class='bx bx-star'></i>
+                                                <i class='bx bx-star'></i>
+                                            </div>
+                                        &nbsp;<span class="text-muted">{{ $avis->note }}</span>
+                                        {{-- </p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -486,7 +519,7 @@
 
             @else
             <div class="row ">
-                <h3 class="pt-3 pb-3"><i class='bx bxs-calendar-check encre__icon me-2'></i>Dates et Villes Session Inter</h3>
+                <h3 class="pt-3 pb-3"><i class='bx bxs-calendar-check encre__icon me-2'></i><i class='bx bxs-calendar-check encre__icon_cacher me-2'></i>Dates et Villes Session Inter</h3>
                 <div class="col-lg-12">
                     <div class="row">
                         <div id="dates"></div>
@@ -510,7 +543,7 @@
                                     {{-- @canany(['isManager','isReferent','isStagiaire']) --}}
                                     @canany(['isReferent'])
                                         <div class="col-3 text-center">
-                                            <a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="btn_inscription" role="button">
+                                            <a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="btn_enregistrer" role="button">
                                                 @php
                                                     $inscrit = $groupe->inscrit_session_inter($data->groupe_id);
                                                     if ($inscrit == 0) {
@@ -539,7 +572,6 @@
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script> --}}
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
@@ -886,53 +918,36 @@ $.ajax({
 };
 $(".print_to_pdf").on('click', function(e){
     $(".cacher_pdf").css("display","none");
+    $(".Stars").css("display","none");
+    $(".bx_pourcentage").css("display","none");
+    $(".encre__icon").css("display","none");
+    $(".level_cacher").css("display","inline-block");
+    $(".stars").css("display","inline-block");
+    $(".encre__icon_cacher").css("display","inline-block");
+    $(".stars").css("color","yellow");
+    $(".background_contrast").css("margin-left","2px");
+    $(".background_contrast").css("fontSize","0.8rem");
+    $("span").css("fontSize","0.8rem");
+    $("p").css("fontSize","0.8rem");
+    $(".card-body").css("fontSize","0.8rem");
+    $(".background_contrast").css("padding-left","5px");
+    $(".background_contrast").css("padding-right","5px");
+    $(".module_detail_objet").css("margin-bottom","10px");
+    $(".btn-block").css("border","none");
+    $("#marksChart1").css("border","none");
+
     let element = document.getElementById('printToPdf');
     var opt = {
-    margin:       0.5,
-    filename:     'programme de formation.pdf',
-    image:        { type: 'jpeg', quality: 1},
-    html2canvas:  { scale: 2 },
-    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+        margin:       0.5,
+        filename:     'programme de formation.pdf',
+        image:        { type: 'jpeg', quality: 1},
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
-
-    // html2pdf().from(element).set({
-    //         margin: 1,
-    //         filename: 'programme de formation.pdf',
-    //         image: { type: "jpeg", quality: 1},
-    //         jsPDF: {orientation: 'portrait', unit: 'in', format: 'letter', compressPDF: false},
-    //         pagebreak: {mode: ['avoid-all']}
-    //     }).save().then(function () {
-    //         console.log("finish!");
-    //     });
-
-
-    html2pdf().set(opt).from(element).save();
-
-    // Old monolithic-style usage:
-    // html2pdf(element, opt);
-
-//     var doc = new jsPDF();
-//     var elementHTML = $('#printToPdf').html();
-//     var specialElementHandlers = {
-//         '#elementH': function (element, renderer) {
-//             return true;
-//         }
-//     };
-//     doc.fromHTML(elementHTML, 15, 15, {
-//         'width': 170,
-//         'elementHandlers': specialElementHandlers
-//     },
-//     setTimeout(function () {
-//     doc.save(`fileName`);
-// }, 0);
-
-//     // Save the PDF
-//     doc.save('sample-document.pdf');
+    // html2pdf().set(opt).from(element).save();
+    html2pdf().set(opt).from(element).save().then(function () {window.location.reload()});
 
 });
-
-
-
 
 </script>
 @endsection
