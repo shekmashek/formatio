@@ -18,7 +18,8 @@
 }
 </style>
 <div class="container" style="background-color: #e6e3e3">
-    <div class="container w-75 bg-white ">
+<div class="row">
+    <div class="container w-75 my-5 bg-white ">
         <div class=" mx-5 ">
             <!-- partie haut du cv -->
             <div class="row pt-5 pb-5 " id="en_tete">
@@ -35,7 +36,7 @@
             <div class="row" style="font-family: Arial, Helvetica, sans-serif; font-size:12pt;">
                 <div class="col-lg-4">
                     <div class="col-lg-1 offset-md-11">
-                        <a href="{{route('profile_formateur')}}" class="mx-auto" aria-label="modifier votre CV" ><i class="bx bx-edit text-dark" style="font-size:150%;"></i></a>
+                        <a href="{{route('edit_cv')}}" class="mx-auto" aria-label="modifier votre CV" ><i class="bx bx-edit text-dark" style="font-size:150%;"></i></a>
                     </div>
                     <div class="row videhaut"></div>
                     <div class="row-lg-4 mt-5 pb-5 ">
@@ -68,9 +69,9 @@
                                 <div class="col-lg">
                                     <h5 class="bordure4">Compétences</h5>
                                     <!-- liste de competence faire un boucle pour les afficher donc juste une seule liste -->
-                                    <div class="row">
+                                    <div class="row mt-4">
                                         @foreach ($competence as $comp)
-                                            <p class="text-capitapze mt-2">{{"-".$comp->domaine}}&nbsp;:&nbsp;{{$comp->competence}}</p>
+                                            <p class="text-capitapze">{{"-".$comp->domaine}}&nbsp;:&nbsp;{{$comp->competence}}</p>
                                         @endforeach
                                     </div>
                                 </div>
@@ -98,7 +99,7 @@
                             <!-- liste de competence faire un boucle pour les afficher donc juste une seule liste -->
                             <!-- titre de l'experience -->
                             @foreach ($experience as $exps)
-                            <div class="row">
+                            <div class="row mt-5">
                                 <div class="row d-flex flex-row">
                                     <span class="text-capitalize text-secondary col-md-7">{{$exps->poste_occuper." chez ".$exps->nom_entreprise}}</span>
                                     <span class="col-md-5" style="font-size:89%"><small>{{$exps->debut()." - ".$exps->fin()}}</small></span>
@@ -119,9 +120,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row w-100 h-25 vide">
-            </div>
         </div>
     </div>
+</div>
 </div>
 @endsection

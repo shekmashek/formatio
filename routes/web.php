@@ -219,6 +219,7 @@ Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
     Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 });
 //Route update par champs prof
+Route::get('/editer_cv/{id?}', 'ProfController@editCVProf')->name('edit_cv');
 Route::get('/editer_nom/{id}', 'ProfController@editer_nom')->name('editer_nom');
 Route::get('/editer_naissance/{id}', 'ProfController@editer_naissance')->name('editer_naissance');
 Route::get('/editer_genre/{id}', 'ProfController@editer_genre')->name('editer_genre');

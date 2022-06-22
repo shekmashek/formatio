@@ -535,7 +535,6 @@ class ProfController extends Controller
 
     public function cvProf(Request $request,$id)
     {
-
         $id = formateur::where('user_id', $id)->value('id');
         $formateur = formateur::where('id', $id)->get();
         $competence = competenceFormateur::where('formateur_id', $id)->get();
@@ -543,10 +542,19 @@ class ProfController extends Controller
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",["id"],[$formateur[0]->niveau_etude_id]);
         return view('admin.formateur.CV', compact('formateur', 'competence', 'experience', 'niveau'));
     }
+    public function editCVProf($id=null)
+    {
+        $id = formateur::where('user_id', Auth::user()->id)->value('id');
+        $competence = competenceFormateur::where('formateur_id', $id)->get();
+        $experience = experienceFormateur::where('formateur_id', $id)->get();
+        $formateur = formateur::findOrFail($id);
+        $niveau = $this->fonct->findWhereMulitOne("niveau_etude",["id"],[$formateur->niveau_etude_id]);
+        return view('admin.formateur.edit_cv', compact('formateur', 'competence', 'experience', 'niveau'));
+    }
     public function profile_formateur($id = null)
     {
         // $user_id =  $users = Auth::user()->id;
-         if (Gate::allows('isFormateur')){
+        if (Gate::allows('isFormateur')){
             $id = formateur::where('user_id', Auth::user()->id)->value('id');
             $competence = competenceFormateur::where('formateur_id', $id)->get();
             $experience = experienceFormateur::where('formateur_id', $id)->get();
@@ -556,8 +564,8 @@ class ProfController extends Controller
             if($formateur->genre_id == 2) $genre = "Homme";
             if($formateur->genre_id == null) $genre = " ";
             return view('admin.formateur.profile_formateur', compact('niveau','formateur','genre','competence','experience'));
-         }
-         else{
+        }
+        else{
             $formateur = formateur::findOrFail($id);
             $initial_formateur = DB::select('select SUBSTRING(nom_formateur, 1, 1) AS nm,  SUBSTRING(prenom_formateur, 1, 1) AS pr from formateurs where id =  ?', [$id ]);
 
@@ -568,7 +576,7 @@ class ProfController extends Controller
             if($formateur->genre_id == null) $genre = " ";
             return view('profil_public.formateur', compact('initial_formateur','formateur','genre','competence','experience'));
 
-         }
+        }
 
 
     }
