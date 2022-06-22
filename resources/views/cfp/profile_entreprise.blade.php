@@ -188,6 +188,7 @@
                     @else
                         @foreach($entreprise as $etp)
                         <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
+                            <td><a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a></td>
                             <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width: 80px;height: 80px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                             <td role="button"  onclick="afficherInfos();">
                                 <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
@@ -479,6 +480,7 @@
                         </tr>
                     @else
                         @foreach($entreprise as $etp)
+
                         <tr>
                             <td>
                                 <img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"
@@ -1173,7 +1175,7 @@
             , dataType: "html"
             , success: function(response) {
                 let userData = JSON.parse(response);
-                console.log(userData);
+                // console.log(userData);
                 //parcourir le premier tableau contenant les info sur les programmes
                 for (let $i = 0; $i < userData.length; $i++) {
 
