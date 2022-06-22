@@ -405,14 +405,16 @@
                                             </td>
                                             @can('isReferent')
                                                 <td class="align-middle text-center text-secondary">
+                                                    @if($employers[$i]->activiter == 1)
                                                         @if($ref[$i] == 1)
                                                             <input class="form-check-input referent" type="checkbox" value="{{$employers[$i]->id}}" name = "referent"  id="flexCheckDefault" checked>
                                                         @else
                                                         <input class="form-check-input referent" type="checkbox" value="{{$employers[$i]->id}}" name = "referent"  id="flexCheckDefault">
                                                         @endif
-
-
-
+                                                    @endif
+                                                    @if($employers[$i]->activiter == 0)
+                                                    <input disabled class="form-check-input referent" type="checkbox" value="{{$employers[$i]->id}}" name = "referent"  id="flexCheckDefault">
+                                                    @endif
                                                 </td>
                                             @endcan
 

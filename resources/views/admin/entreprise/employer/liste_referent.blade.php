@@ -364,15 +364,23 @@
                                     </td>
                                     @can('isReferent')
                                         <td class="align-middle text-center text-secondary">
-                                            @if($employe->prioriter == 1)
-                                            <span desabled title="Référent principal" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center">
-                                                <i desabled class='bx bxs-star'></i>
-                                            </span>
-                                            @else
-                                            <span data-bs-toggle="modal" data-bs-target="#principal_{{$employe->id }}"  title="Référent" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
-                                                <i desabled class='bx bxs-star'></i>
-                                            </span>
+                                            @if($employe->activiter == 1)
+                                                @if($employe->prioriter == 1)
+                                                <span desabled title="Référent principal" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center">
+                                                    <i desabled class='bx bxs-star'></i>
+                                                </span>
+                                                @else
+                                                <span data-bs-toggle="modal" data-bs-target="#principal_{{$employe->id }}"  title="Référent" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
+                                                    <i desabled class='bx bxs-star'></i>
+                                                </span>
+                                                @endif
                                             @endif
+                                            @if($employe->activiter == 0)
+                                                <span disabled  title="Référent" role="button"  class="td_hover" style="vertical-align: middle; font-size:23px; color:rgb(168, 168, 168)" align="center">
+                                                    <i desabled class='bx bxs-star'></i>
+                                                </span>
+                                            @endif
+
                                         </td>
                                     @endcan
 
@@ -382,9 +390,10 @@
                                         <div class="form-check form-switch">
                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span
                                                     class="badge bg-success">actif</span></label>
-                                            <input class="form-check-input desactiver_stg" type="checkbox"
+
+                                            {{-- <input class="form-check-input desactiver_stg" type="checkbox"
                                                 data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
-                                                checked>
+                                                checked> --}}
                                         </div>
                                     @else
                                         <div class="form-check form-switch">
@@ -394,8 +403,8 @@
                                                     inactif
                                                 </span>
                                             </label>
-                                            <input class="form-check-input activer_stg" type="checkbox"
-                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                            {{-- <input class="form-check-input activer_stg" type="checkbox"
+                                                data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"> --}}
                                         </div>
                                     @endif
 
