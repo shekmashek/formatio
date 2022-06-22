@@ -766,7 +766,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
     .timeline-1 .event:after {
         -webkit-box-shadow: 0 0 0 3px #b565a7;
         box-shadow: 0 0 0 3px #b565a7;
-        left: -37.8px;
+        left: -35.8px;
         background: #fff;
         border-radius: 50%;
         height: 9px;
@@ -820,7 +820,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
     .timeline-1 .event_terminer:after {
         -webkit-box-shadow: 0 0 0 3px #b565a7;
         box-shadow: 0 0 0 3px #b565a7;
-        left: -37.8px;
+        left: -35.8px;
         background: rgb(168, 246, 108);
         border-radius: 50%;
         height: 9px;
@@ -846,7 +846,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
         border-left: 7px solid rgba(191, 26, 160, 0.593);
         border-bottom: 7px solid transparent;
         position: absolute;
-        margin-left: 279px;
+        margin-left: 277px;
         margin-top: -46px;
     }
 /* timeline */
@@ -1680,9 +1680,9 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                         </td>
                                         <td class="text-center">
                                             <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
-                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
-                                              </ul>
+                                                <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                                </ul>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -1807,10 +1807,8 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                         $statut_eval = $groupe->statut_valuation_chaud($pj->groupe_id,$pj->stagiaire_id);
                                     @endphp
                                     @if ($statut_eval == 0)
-                                        {{-- <li class="event" data-date="@php echo /* date('F-Y', strtotime($pj->date_debut)) */ strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp"> --}}
                                         <li class="event">
                                     @elseif ($statut_eval == 1)
-                                        {{-- <li class="event_terminer" data-date="@php echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp"> --}}
                                         <li class="event_terminer">
                                     @endif
                                         <div class="row mt-2 titre_projet mb-1 w-100 g-0">
