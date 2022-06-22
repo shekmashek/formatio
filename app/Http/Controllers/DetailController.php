@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\cfp;
-use App\chefDepartement;
-use Illuminate\Http\Request;
-use App\detail;
-use App\projet;
-use App\module;
-use App\groupe;
-use App\entreprise;
-use App\formation;
-use App\formateur;
-use App\stagiaire;
-use App\responsable;
-use App\session;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use App\Models\FonctionGenerique;
-use Exception;
 use PDF;
+use App\cfp;
+use Exception;
+use App\detail;
+use App\groupe;
+use App\module;
+use App\projet;
+use App\session;
+use App\formateur;
+use App\formation;
+use App\stagiaire;
+use App\entreprise;
+use App\responsable;
+use App\chefDepartement;
+use App\GroupeEntreprise;
+use Illuminate\Http\Request;
+use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class DetailController extends Controller
 {
@@ -66,16 +67,63 @@ class DetailController extends Controller
         $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
         $statut = $this->fonct->findAll('status');
         $formations = DB::select('select * from formations ');
+        $entreprise_id = responsable::where('user_id', Auth::user()->id)->first()->entreprise_id;
+
+        // foreach ($groupe_entreprises as $key => $value) {
+        //     dump($value);
+        // }
+
+        // foreach ($groupe_entreprises as $key) {
+        //     $detail_id = DB::select('SELECT  id as details_id  from details
+        //     where details.groupe_id = ?',[$key->groupe_id]);
+        //     dump($detail_id);
+
+        // }
+
 
 
         $events = array();
 
         // si l'utilisateur est un résponsable d'entreprise
         if (Gate::allows('isReferent')) {
-            $details = detail::where('groupe_id', 5)->get();
+
+            $details = DB::select('
+            SELECT  *,details.id as details_id  from details
+            inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
+            INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+            INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+            INNER JOIN modules ON groupes.module_id = modules.id
+            INNER JOIN formations ON modules.formation_id = formations.id
+            inner join formateurs on details.formateur_id = formateurs.id
+            inner join projets on details.projet_id = projets.id
+            inner join type_formations on projets.type_formation_id = type_formations.id
+            inner join cfps on details.cfp_id = cfps.id
+            where groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
+
+
+            // dd($details);
+
+            $groupe_etp = GroupeEntreprise::where('entreprise_id', $entreprise_id)->first();
+            // dd($groupe_etp->id);
+
+        $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
+        INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+        INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+        INNER JOIN modules ON groupes.module_id = modules.id
+        INNER JOIN formations ON modules.formation_id = formations.id
+        WHERE groupe_entreprises.entreprise_id = ?', [$entreprise_id]);
+
+            // dd($groupe_etp->groupe->nom_groupe);
+
+        foreach ($groupe_etp as $key => $value) {
+            $groupe = groupe::where('id', $value->id)->get();
+            dump($groupe);
+        }
+            
+            // $details = detail::where('groupe_id', 4)->get();
+dd('end');
             foreach ($details as $key => $value) {
 
-                // dd($value->groupe->projet->cfp->nom);
                 $events[] = array(
                     'detail_id' => $value->id,
                     'title' => $value->groupe->module->formation->nom_formation,
@@ -86,7 +134,11 @@ class DetailController extends Controller
                     'formateur' => $value->formateur->nom_formateur,
                     'nom_cfp' => $value->groupe->projet->cfp->nom
                 );
+                
+                
+
             }
+            dd($events);
         }
 
         // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
@@ -245,8 +297,6 @@ class DetailController extends Controller
             $details = array();
             $detail_id = array();
  
-
-
 
             $details = DB::select('
                 SELECT  *,details.id as details_id  from details

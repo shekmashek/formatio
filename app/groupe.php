@@ -13,6 +13,14 @@ class Groupe extends Model
     ];
 
 
+    public function groupe_entreprise (){
+        return $this->hasMany('App\GroupeEntreprise', 'groupe_id');
+    }
+
+    public function detail(){
+        return $this->hasMany('App\detail', 'groupe_id');
+    }
+
     public function module(){
         return $this->belongsTo('App\module', 'module_id');
     }
