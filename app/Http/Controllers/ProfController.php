@@ -361,7 +361,24 @@ class ProfController extends Controller
 
         return view('admin.formateur.edit_adresse', compact('niveau','formateur'));
     }
-    public function editer_etp($id, Request $request)
+    public function editer_about($id, Request $request)
+    {
+        $user_id =  $users = Auth::user()->id;
+        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
+        $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
+
+        return view('admin.formateur.edit_about', compact('niveau','formateur'));
+    }
+    public function editer_specialite($id, Request $request)
+    {
+        $user_id =  $users = Auth::user()->id;
+        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
+        $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
+
+        return view('admin.formateur.edit_specialite', compact('niveau','formateur'));
+    }public function editer_etp($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
         $formateur_connecte = formateur::where('user_id', $user_id)->exists();
@@ -405,9 +422,25 @@ class ProfController extends Controller
     {
         // $user_id =  $users = Auth::user()->id;
         // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
-        $formateur = experienceFormateur::findOrFail($id);
+        $entreprise = experienceFormateur::findOrFail($id);
         //dd($formateur);
-        return view('admin.formateur.edit_nom_etp', compact('formateur'));
+        return view('admin.formateur.edit_nom_etp', compact('entreprise'));
+    }
+    public function editer_debut($id, Request $request)
+    {
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        $entreprise = experienceFormateur::findOrFail($id);
+        //dd($formateur);
+        return view('admin.formateur.edit_debut_travail', compact('entreprise'));
+    }
+    public function editer_fin($id, Request $request)
+    {
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        $entreprise = experienceFormateur::findOrFail($id);
+        //dd($formateur);
+        return view('admin.formateur.edit_fin_travail', compact('entreprise'));
     }
     public function editer_fonction($id, Request $request)
     {
@@ -452,7 +485,7 @@ class ProfController extends Controller
             $new_password = Hash::make($request->new_password);
             if (Hash::check($request->get('ancien_password'), $pwd)) {
                 DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
-                       return redirect()->route('profile_formateur', $id);
+                       return redirect()->route('edit_cv', $id);
 
             } else {
                 return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
@@ -463,12 +496,22 @@ class ProfController extends Controller
     public function update_email_formateur($id,Request $request){
         DB::update('update users set email = ? where id = ?', [$request->mail, Auth::id()]);
         DB::update('update formateurs set mail_formateur = ? where user_id = ?', [$request->mail, Auth::id()]);
-        return redirect()->route('profile_formateur', $id);
+        return redirect()->route('edit_cv', $id);
+
+    }
+    public function update_description_formateur($id,Request $request){
+        DB::update('update formateurs set description = ? where user_id = ?', [$request->description, Auth::id()]);
+        return redirect()->route('edit_cv', $id);
+
+    }
+    public function update_specialite_prof($id,Request $request){
+        DB::update('update formateurs set specialite = ? where user_id = ?', [$request->specialite, Auth::id()]);
+        return redirect()->route('edit_cv', $id);
 
     }
     public function update_niveau_prof(Request $request,$id){
         DB::update('update formateurs set niveau_etude_id = ? where id = ?', [$request->niveau, $id]);
-        return redirect()->route('profile_formateur', $id);
+        return redirect()->route('edit_cv', $id);
     }
     public function update(Request $request)
     {
@@ -563,7 +606,7 @@ class ProfController extends Controller
             if($formateur->genre_id == 1) $genre = "Femme";
             if($formateur->genre_id == 2) $genre = "Homme";
             if($formateur->genre_id == null) $genre = " ";
-            return view('admin.formateur.profile_formateur', compact('niveau','formateur','genre','competence','experience'));
+            return view('admin.formateur.edit_cv', compact('niveau','formateur','genre','competence','experience'));
         }
         else{
             $formateur = formateur::findOrFail($id);
@@ -606,7 +649,27 @@ class ProfController extends Controller
             'poste_occuper'=>$request->poste,
             'taches'=>$request->tache
         ]);
-        return redirect()->route('profile_formateur', $id);
+        return redirect()->route('edit_cv', $id);
+
+    }
+    public function update_fin_travail(Request $request, $id)
+
+    {
+        experienceFormateur::where('id',$id)
+        ->update([
+            'fin_travail'=>$request->fin
+        ]);
+        return redirect()->route('edit_cv', $id);
+
+    }
+    public function update_debut_travail(Request $request, $id)
+
+    {
+        experienceFormateur::where('id',$id)
+        ->update([
+            'debut_travail'=>$request->debut
+        ]);
+        return redirect()->route('edit_cv', $id);
 
     }
     public function update_domaine(Request $request, $id)
@@ -616,13 +679,13 @@ class ProfController extends Controller
                 ->update([
                     'competence'=>$request->competence,
                     'domaine'=>$request->domaine]);
-        return redirect()->route('profile_formateur', $id);
+        return redirect()->route('edit_cv', $id);
     }
     public function update_telephone_prof(Request $request,$id){
 
         DB::update('update users set telephone = ? where id = ?', [$request->phone,Auth::id()]);
         DB::update('update formateurs set numero_formateur = ? where id = ?', [$request->phone,$id]);
-        return redirect()->route('profile_formateur');
+        return redirect()->route('edit_cv');
     }
     public function update_photos_prof(Request $request,$id){
         $image = $request->file('image');
@@ -652,7 +715,7 @@ class ProfController extends Controller
                 ->update([
                     'photos' => $input,
                 ]);
-                return redirect()->route('profile_formateur', $id);
+                return redirect()->route('edit_cv', $id);
             }
         }
     }
@@ -690,7 +753,7 @@ class ProfController extends Controller
                     'adresse' => $request->adresse,
                     'specialite' => $splt,
                 ]);
-            return redirect()->route('profile_formateur', $id);
+            return redirect()->route('edit_cv', $id);
         }
     }
 

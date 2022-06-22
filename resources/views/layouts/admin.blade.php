@@ -1093,7 +1093,7 @@
                                                             compte</button></a><br>
                                                     @endcan
                                                     @can('isFormateurPrincipale')
-                                                    <a class="vous" href="{{route('profile_formateur')}}"><button
+                                                    <a class="vous" href="{{route('edit_cv')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcan
