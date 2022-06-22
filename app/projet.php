@@ -33,7 +33,7 @@ class Projet extends Model
         $sql = "select * from ".$table." where 1=1 ";
         if (Gate::allows('isCFP') || Gate::allows('isFormateur')){
             $sql = $sql." and cfp_id = ".$role;
-        }elseif(Gate::allows('isReferent') || Gate::allows('isManager') || Gate::allows('isStagiaire')){
+        }elseif(Gate::allows('isReferent') || Gate::allows('isReferentSimple')  || Gate::allows('isManager') || Gate::allows('isStagiaire')){
             $sql = $sql." and entreprise_id = ".$role;
         }
 
@@ -131,5 +131,5 @@ class Projet extends Model
     }
 
 
-    
+
 }

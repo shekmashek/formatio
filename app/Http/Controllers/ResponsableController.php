@@ -278,7 +278,7 @@ class ResponsableController extends Controller
         $fonct = new FonctionGenerique();
 
         $user_id = Auth::user()->id;
-         if (Gate::allows('isReferentPrincipale')) {
+         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
 
 
             // if ($id != null) {

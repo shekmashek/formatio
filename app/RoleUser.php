@@ -78,7 +78,8 @@ class RoleUser extends Model
             DB::rollback();
             echo $e->getMessage();
         }
-        return redirect()->route('logout');
+        // return redirect()->route('logout');
+        return redirect()->route('home');
     }
 
 

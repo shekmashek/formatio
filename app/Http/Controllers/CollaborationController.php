@@ -74,6 +74,7 @@ class CollaborationController extends Controller
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
             $responsable_etp = $this->fonct->findWhereMulitOne("responsables", ["entreprise_id", "user_id"], [$entreprise_id, $user_id]);
+
             $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["email_resp_cfp"], [$req->email_cfp]);
 
             if ($responsable_cfp != null) {
@@ -432,7 +433,7 @@ class CollaborationController extends Controller
                 DB::update("update demmande_etp_cfp set activiter = 1 where demmandeur_etp_id = ?", [$id]);
                 DB::commit();
             }
-            
+
         } catch (Exception $e) {
             DB::rollback();
             echo $e->getMessage();

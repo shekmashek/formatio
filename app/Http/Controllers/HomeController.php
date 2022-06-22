@@ -200,14 +200,14 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
-        if (Gate::allows('isFormateurPrincipale')) {
+        if (Gate::allows('isFormateur')) {
             return redirect()->route('calendrier');
         }
-        if (Gate::allows('isManagerPrincipale')) {
+        if (Gate::allows('isManager')) {
 
             return redirect()->route('calendrier');
         }
-        if (Gate::allows('isStagiairePrincipale')) {
+        if (Gate::allows('isStagiaire')) {
 
             //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
@@ -423,7 +423,7 @@ class HomeController extends Controller
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "genre_id"  and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "sexe_resp" and $colonnes[$i]->COLUMN_NAME != "fonction_resp" and  $colonnes[$i]->COLUMN_NAME != "user_id" and $colonnes[$i]->COLUMN_NAME != "entreprise_id" and   $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "activiter" and $colonnes[$i]->COLUMN_NAME != "prioriter" and   $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
+                if ($colonnes[$i]->COLUMN_NAME!= "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "genre_id"  and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "sexe_resp" and $colonnes[$i]->COLUMN_NAME != "fonction_resp" and  $colonnes[$i]->COLUMN_NAME != "user_id" and $colonnes[$i]->COLUMN_NAME != "entreprise_id" and   $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "activiter" and $colonnes[$i]->COLUMN_NAME != "prioriter" and   $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }
@@ -761,16 +761,9 @@ class HomeController extends Controller
             $entreprise = entreprise::all();
             return view('admin.projet.home', compact('data', 'cfp', 'projet', 'totale_invitation', 'entreprise', 'status'));
         }
-        if (Gate::allows('isReferent')) {
-            if (Gate::allows('isReferentPrincipale')) {
-                $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isStagiairePrincipale')) {
-                $entreprise_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isManagerPrincipale')) {
-                $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            }
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
+            $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
+
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?', [$entreprise_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);

@@ -115,11 +115,10 @@ class EmployeurController extends Controller
 
                         DB::beginTransaction();
                         try {
-                            $this->fonct->insert_role_user($user_id, "3",false,true); // EMPLOYEUR
+                            $this->fonct->insert_role_user($user_id, "3",false,true); // role stagiaire
                             $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
                             DB::insert("insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp,telephone_emp,fonction_emp,
                             entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
-                            $this->fonct->insert_role_user($user_id, "2",true, true);
                             DB::commit();
                         } catch (Exception $e) {
                             DB::rollback();
@@ -133,7 +132,7 @@ class EmployeurController extends Controller
 
                     DB::beginTransaction();
                     try {
-                        $this->fonct->insert_role_user($user_id, "3",false,true); // EMPLOYEUR
+                        $this->fonct->insert_role_user($user_id, "3",false,true); //  role stagiaire
                         $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
                         DB::insert("insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp,telephone_emp,fonction_emp,
                         entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);

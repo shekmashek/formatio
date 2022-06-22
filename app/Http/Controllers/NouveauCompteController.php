@@ -256,7 +256,7 @@ class NouveauCompteController extends Controller
                                     DB::beginTransaction();
                                     try {
                                         $this->fonct->insert_role_user($user_id, "2",true, true); // referent (user_id, role_id, prioriter, activiter)
-                                        $this->fonct->insert_role_user($user_id, "3",false, true); // stagiaires (user_id, role_id, prioriter, activiter)
+                                        $this->fonct->insert_role_user($user_id, "3",false, false); // stagiaires (user_id, role_id, prioriter, activiter)
                                         DB::commit();
                                     } catch (Exception $e) {
                                         DB::rollback();

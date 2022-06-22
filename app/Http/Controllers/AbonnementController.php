@@ -365,7 +365,7 @@ class AbonnementController extends Controller
              for ($i=0; $i < count($facture); $i++) {
                 array_push($facture_suivant,  date('Y-m-d', strtotime($facture[$i]->invoice_date. ' + 1 month')));
              }
-         
+
             //generation nouvelle facture chaque mois si l'utilisateur a choisi l'offre mensuel
             $max_id_facture = $this->abonnement_model->findMax('v_abonnement_facture','facture_id');
 
@@ -491,7 +491,7 @@ class AbonnementController extends Controller
         // $nb = abonnement::where('entreprise_id', $entreprise_id)->count();
 
         $user_id = Auth::user()->id;
-        if (Gate::allows('isReferent')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
             $typeAbonnement =$this->fonct->findWhereMulitOne('type_abonnements_etp',['id'],[$id]);
 
             $resp =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
@@ -755,12 +755,12 @@ class AbonnementController extends Controller
 
         $dt = Carbon::today()->toDateString();
 
-       
+
         $annuel = strtotime(date("Y-m-d", strtotime($dt)) . " +1 year");
 
         // $ctg_id =abonnement::where('id', $id)->value('categorie_paiement_id');
-       
-        
+
+
         $date_fin =  Carbon::now()->addMonths(1)->subDays(1)->toDateString();
         // $date_fin = date("Y-m-d", $annuel);
         if($Statut == "Activé") {
@@ -803,12 +803,12 @@ class AbonnementController extends Controller
         $cfp_id = $request->cfp_id;
 
         $dt = Carbon::today()->toDateString();
-    
+
         $annuel = strtotime(date("Y-m-d", strtotime($dt)) . " +1 year");
 
 
         // $ctg_id = abonnement_cfp::where('id', $id)->value('categorie_paiement_id');
-           
+
         $date_fin =    Carbon::now()->addMonths(1)->subDays(1)->toDateString();
         // if ($ctg_id == 2)  $date_fin = date("Y-m-d", $annuel);
         if($Statut == "Activé") {

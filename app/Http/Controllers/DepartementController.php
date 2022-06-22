@@ -351,9 +351,9 @@ class DepartementController extends Controller
     {
         $fonct = new FonctionGenerique();
 
-        if (Gate::allows('isReferentPrincipale')) {
+        if (Gate::allows('isReferent')) {
             $rqt = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-            $employes = $fonct->findWhere("employers",["entreprise_id"],[$rqt[0]->entreprise_id]);
+            $employes = $fonct->findWhere("employers",["entreprise_id","activiter"],[$rqt[0]->entreprise_id,1]);
             $id_etp = $rqt[0]->entreprise_id;
         }
         if (Gate::allows('isStagiairePrincipale')) {

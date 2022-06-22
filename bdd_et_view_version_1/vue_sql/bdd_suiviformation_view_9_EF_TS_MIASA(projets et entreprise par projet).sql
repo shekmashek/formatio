@@ -78,6 +78,7 @@ create or replace view  v_responsable_entreprise as
         r.entreprise_id as entreprise_id_responsable,
         r.activiter as activiter_responsable,
         r.user_id,
+        r.prioriter,
         e.id as entreprise_id,
         e.nom_etp,
         e.adresse_rue as adresse_etp,

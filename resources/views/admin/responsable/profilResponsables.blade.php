@@ -67,8 +67,10 @@
                 <i class='bx bxs-user-pin icon_infos3 p-0'></i>
             </div>
             <div class="row ps-2 ">
-                <p class="nb_modules m-0 p-0">{{count($chef_departements_counts)}}</p>
-                <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Managers</p>
+                <a href="{{route('liste_departement')}}">
+                    <p class="nb_modules m-0 p-0">{{count($chef_departements_counts)}}</p>
+                    <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Managers</p>
+                </a>
             </div>
         </div>
         <div class="row row_bas g-0">

@@ -141,7 +141,7 @@ class AdminController extends Controller
         $fonct = new FonctionGenerique();
         $entp = new entreprise();
 
-        if (Gate::allows('isReferent')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple') ) {
             // $user = responsable::where('user_id', $id_user)->value('photos');
             $user = $fonct->findWhereMulitOne(("responsables"),["user_id"],[$id_user])->photos;
             $photo ='';

@@ -134,3 +134,38 @@ JOIN role_users ON role_users.user_id =  employers.user_id
 JOIN genre ON genre.id = employers.genre_id
 JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
 WHERE role_users.role_id=5;
+
+create or replace view  v_responsable_entreprise as
+    select r.id as responsable_id,
+        r.nom_resp,
+        r.prenom_resp,
+        r.fonction_resp,
+        r.email_resp,
+        r.cin_resp,
+        r.telephone_resp,
+        r.user_id as user_id_responsable,
+        r.photos,
+        r.entreprise_id as entreprise_id_responsable,
+        r.activiter as activiter_responsable,
+        r.user_id,
+        r.prioriter,
+        e.id as entreprise_id,
+        e.nom_etp,
+        e.adresse_rue as adresse_lot,
+        e.adresse_quartier,
+        e.adresse_code_postal,
+        e.adresse_ville,
+        e.adresse_region,
+        e.logo as logo_entreprise,
+        e.nif as nif_etp,
+        e.stat as stat_etp,
+        e.rcs as rcs_etp,
+        e.cif as cif_etp,
+        e.secteur_id as secteur_id_etp,
+        e.email_etp,
+        e.site_etp,
+        e.activiter as activiter_etp,
+        e.telephone_etp
+        from responsables r
+        join
+            entreprises e on e.id = r.entreprise_id;

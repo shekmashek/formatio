@@ -591,20 +591,24 @@
                         </div>
                     </div>
                     @endcanany
-                    @canany(['isReferent','isManager','isReferentSimple'])
+
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
+                            @canany(['isReferent','isManager','isReferentSimple','isStagiaire'])
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('calendrier_formation')}}" class="text-center" role="button"><span
                                         class="d-flex flex-column text-center"><i
                                             class='bx bxs-calendar-edit mb-2 mt-1'></i><span
                                             class="text_racourcis">Agenda</span></span></a>
                             </div>
+                            @endcanany
+                            @canany(['isReferent','isManager','isReferentSimple'])
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('employes.liste')}}" class="text-center" role="button"><span
                                         class="d-flex flex-column"><i class='bx bxs-user-detail mb-2 mt-1'></i><span
                                             class="text_racourcis">employés</span></span></a>
                             </div class="btn_racourcis">
+                            @endcan
                             {{-- <div class="btn_racourcis me-4">
                                 <a href="{{route('employes')}}" class="text-center" role="button"><span
                                         class="d-flex flex-column"><i class='bx bxs-group mb-2 mt-1'></i><span
@@ -612,7 +616,8 @@
                             </div> --}}
                         </div>
                     </div>
-                    @endcan
+
+
 
                     {{-- @canany(['isCFP','isFormateur'])
                     <div class="row">
@@ -1097,11 +1102,11 @@
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcan
-                                                    @can('isReferentPrincipale')
+                                                    @canany(['isReferent','isReferentSimple'])
                                                     <a href="{{route('profil_referent')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
-                                                    @endcan
+                                                    @endcanany
                                                     @can('isCFPPrincipale')
                                                     <a href="{{route('profil_du_responsable')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
