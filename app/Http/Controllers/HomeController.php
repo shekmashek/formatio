@@ -317,7 +317,7 @@ class HomeController extends Controller
             // $drive = new getImageModel();
             // $drive->create_folder($cfp);
             // $drive->create_sub_folder($cfp, "Mes documents");
-
+      
             $formateur = DB::select('select * from demmande_cfp_formateur where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $dmd_cfp_etp = DB::select('select * from demmande_cfp_etp where demmandeur_cfp_id = ' . $centre_fp . ' ');
             $resp_cfp = DB::select('select * from responsables_cfp where user_id = ' . $user_id . ' ');
@@ -738,6 +738,7 @@ class HomeController extends Controller
     public function liste_projet(Request $request, $id = null, $page = null)
     {
         $projet_model = new projet();
+        $drive = new getImageModel();
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
         $totale_invitation = 0;
@@ -949,9 +950,24 @@ class HomeController extends Controller
                 $debut = (($page - 1) * $nb_par_page) + 1;
                 $fin =  $page * $nb_par_page;
             }
-
             $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc limit ? offset ?', [$stg_id, $nb_par_page, $offset]);
-            return view('projet_session.index2', compact('data', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            $var = [];
+            for($i=0; $i<count($data) ;$i++){
+                $var[$i] = $data[$i]->groupe_id;
+            }
+            $ressource = DB::select('select * from ressources where groupe_id in (' . implode(',',$var) .')');
+            $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id in (' . implode(',',$var) .') order by stagiaire_id asc');
+            $data_detail = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_participant_groupe_detail where stagiaire_id = ? order by date_debut desc limit ? offset ?', [$stg_id, $nb_par_page, $offset]);
+            
+            $documents = [];
+            // $documents = $drive->file_list($cfp_nom,"Mes documents");
+            foreach($data as $d){
+                $test =  $drive->file_list($d->nom_cfp,"Mes documents");
+                if(count($test) > 0){
+                    array_push($documents , $drive->file_list($d->nom_cfp,"Mes documents"));
+                } 
+            }
+            return view('projet_session.index2', compact('documents','data', 'status','data_detail','ressource','stagiaire', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
     }
 
