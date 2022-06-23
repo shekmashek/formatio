@@ -374,15 +374,15 @@
                                 <table class="table shadow-sm p-3 mb-5 bg-body rounded">
                                     <thead>
                                         <tr style="background: #eff1f3;">
-                                            <th scope="col">Projet</th>
-                                            <th scope="col">Session</th>
-                                            <th scope="col">Module</th>
-                                            <th scope="col">Entrepise</th>
-                                            <th scope="col">Modalité</th>
-                                            <th scope="col">Date du projet</th>
-                                            <th scope="col">Ville</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Actions</th>
+                                            <th scope="col"><i class='bx bx-library'></i> Projet</th>
+                                            <th scope="col"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
+                                            <th scope="col"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
+                                            <th scope="col"><i class='bx bx-building-house'></i> Entreprise</th>
+                                            <th scope="col"><i class='bx bx-calendar-check' ></i> Modalité</th>
+                                            <th scope="col"><i class='bx bx-time-five' ></i> Date du projet</th>
+                                            <th scope="col"><i class='bx bx-home' ></i> Ville</th>
+                                            <th scope="col"><i class="bi bi-check2-square"></i> Status</th>
+                                            <th scope="col"><i class="bi bi-list-ul"></i> Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1149,7 +1149,7 @@
                                                                                                 </div>
                                                                                                 <div class="col-md-2" >
                                                                                                     @foreach ($dataSessions as $dataSession)
-                                                                                                        <p style="font-size: 13px">{{ date('d M Y', strtotime($dataSession->date_detail)) }}</p>
+                                                                                                        <p style="font-size: 13px">{{ \Carbon\Carbon::parse($dataSession->date_detail)->translatedFormat('d M Y') }}</p>
                                                                                                     @endforeach
                                                                                                 </div>
                                                                                                 <div class="col-md-4">
