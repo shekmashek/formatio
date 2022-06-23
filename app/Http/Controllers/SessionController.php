@@ -177,7 +177,7 @@ class SessionController extends Controller
             $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
 
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
-
+            // dd($stagiaire);
             $drive = new getImageModel();
             $drive->create_folder($cfp_nom);
             $drive->create_sub_folder($cfp_nom, "Mes documents");

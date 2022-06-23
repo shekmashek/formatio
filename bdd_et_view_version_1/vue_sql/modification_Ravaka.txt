@@ -1,0 +1,35 @@
+Créer une nouvelle view  v_detail_presence_evaluation_stagiaire
+
+create or replace view v_detail_presence_evaluation_stagiaire as
+    select
+        dps.projet_id,
+        dps.cfp_id,
+        dps.user_id, 
+        sg.entreprise_id, 
+        dps.detail_id,
+        sg.groupe_id,
+        sg.date_debut,
+        sg.date_fin,
+        sg.stagiaire_id,
+        sg.nom_module,
+        sg.nom_cfp,
+        sg.module_id,
+        case 
+            when (SUM(dps.status)-count(dps.detail_id)) <> 0 then 'Partiellement Présent' 
+            when SUM(dps.status) = count(dps.detail_id) then 'Présent' 
+            else 'Absent' end presence,
+        case 
+            when esc.status = 3 then 'Acquis'
+            when esc.status = 2 then 'En cours'
+            when esc.status = 1 then 'Non Acquis'end status_formation
+            from v_detail_presence_stagiaire dps 
+            JOIN v_stagiaire_groupe sg 
+                ON sg.groupe_id = dps.groupe_id 
+                    AND sg.projet_id = dps.projet_id 
+                    AND sg.user_id = dps.user_id 
+                    AND sg.cfp_id = dps.cfp_id 
+            LEFT JOIN v_evaluation_stagiaire_competence esc
+                ON esc.groupe_id =sg.groupe_id 
+                    AND esc.module_id = sg.module_id 
+                    AND esc.stagiaire_id = sg.stagiaire_id
+                    group by dps.groupe_id,dps.cfp_id,dps.stagiaire_id,dps.user_id;

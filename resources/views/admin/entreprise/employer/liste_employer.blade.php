@@ -297,6 +297,7 @@
                 <table id="example" class="table text-secondary" style="width:100%">
                     <thead>
                         <tr>
+                            <th style="width: .5rem;"></th>
                             <th class="id">ID</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Employé</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Contacts</th>
@@ -311,9 +312,19 @@
                     </thead>
                     <tbody>
                         @forelse ($employers as $employe)
-                            <tr >
+                            <tr>
+                                <td>
+                                    @if (count($detail_formation)>0)
+                                        @foreach ($detail_formation as $item)
+                                            @if ($employe->user_id == $item->user_id)
+                                            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEmployee{{$employe->user_id}}" aria-expanded="false" aria-controls="collapseEmployee{{$employe->user_id}}">
+                                                <i class="bx bx-caret-down text-secondary"></i>
+                                            </button>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    </td>
                                 <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
-
                                     @if ($employe->activiter == 1)
                                         <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
                                     @else
@@ -359,25 +370,19 @@
                                                     </div>
                                                 </div>
                                             </td>
-
                                             <td class="align-middle text-start empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
-
                                                 <div class="ms-3">
                                                     <p class="mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
                                                     {{-- <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p> --}}
                                                     <p class="text-muted mb-0">
                                                         {{ $employe->telephone_stagiaire != null ? $employe->telephone_stagiaire : '----' }}
                                                     </p>
-
-
                                                 </div>
-
                                             </td>
                                             <td class="align-middle text-center text-secondary">
                                                 <span>----</span>
                                             </td>
                                             {{-- <td class="align-middle text-center text-secondary">61</td> --}}
-
                                             <td class="align-middle text-center text-secondary">
 
                                             @if ($employe->activiter == 1)
@@ -407,9 +412,55 @@
                                             <i class=' bx bxs-trash' style='color:#e21717'></i>
                                     </button>
                                 </td>
-
                             </tr>
-
+                            @if (count($detail_formation)>0)
+                                <tr>
+                                    <td class="collapse m-auto" id="collapseEmployee{{$employe->user_id}}" colspan="8">
+                                        <table class="table table-striped text-secondary">
+                                            <thead>
+                                                <tr>
+                                                    <th>OF</th>
+                                                    <th>Module</th>
+                                                    <th class="text-center">Durée</th>
+                                                    <th>Présence</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($detail_formation as $formation)
+                                                    @if ($formation->user_id == $employe->user_id)
+                                                        <tr>
+                                                            <td class="text-secondary">{{$formation->nom_cfp}}</td>
+                                                            <td class="text-secondary">{{$formation->nom_module}}</td>
+                                                            <td class="text-center text-secondary">{{ date("d-m-Y",strtotime($formation->date_debut))}} au {{date("d-m-Y",strtotime($formation->date_fin))}}</td>
+                                                            <td class="text-secondary">{{$formation->presence}}</td>
+                                                            <td class="text-secondary">{{$formation->status_formation}}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            @endif
+                           
+                            {{-- <tr id="collapseEmployee">
+                                <div class="row">
+                                    <tr>
+                                        <th>OF</th>
+                                        <th>Module</th>
+                                        <th>Durée</th>
+                                        <th>Présence</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </div>
+                            </tr> --}}
+                                                        
                             <div class="modal fade" id="delete_emp_{{ $employe->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <form action="{{ route('mettre_fin_cfp_etp') }}" method="POST">
@@ -442,15 +493,12 @@
 
                             </div>
                         @empty
-
                         @endforelse
-
                     </tbody>
                 </table>
 
             </div>
         </div>
-
 
         <div class="filtrer mt-3">
             <div class="row">
@@ -511,7 +559,6 @@
                 </div>
             </div>
         </div>
-
 
         {{--AfficheInfos--}}
         <div class="infos mt-3">
@@ -584,13 +631,11 @@
             </div>
         </div>
 
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <script>
-
 
             $('.empNew').on('click', function(){
                 var user_id = $(this).data("id");

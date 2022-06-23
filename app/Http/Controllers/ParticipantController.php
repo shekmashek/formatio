@@ -145,7 +145,8 @@ class ParticipantController extends Controller
         $totale_pag_chef = $this->fonct->getNbrePagination("chef_departements", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
 
         $totale_pag = ($totale_pag_stg + $totale_pag_resp);
-
+        $detail_formation = $this->fonct->findWhere("v_detail_presence_evaluation_stagiaire",["entreprise_id"],[$entreprise_id]);
+        
         // $totale_pag =  $totale_pag_stg;
 
         $service = $this->fonct->findWhere("v_departement_service_entreprise", ["entreprise_id"], [$entreprise_id]);
@@ -202,8 +203,9 @@ class ParticipantController extends Controller
                 $resp[$i]->nom_service = null;
                 $resp[$i]->nom_departement = null;
             }
-            $responsables[] = $resp[$i];
+            $responsables[] = $resp[$i];  
         }
+        
 
         // for ($i = 0; $i < count($sefo); $i += 1) {
         //     if (count($service) > 0) {
@@ -223,7 +225,7 @@ class ParticipantController extends Controller
         // }
 
 
-        return view("admin.entreprise.employer.liste_employer", compact('responsables', 'employers', 'pagination'));
+        return view("admin.entreprise.employer.liste_employer", compact('responsables', 'employers', 'pagination','detail_formation'));
     }
 
     public function index()
