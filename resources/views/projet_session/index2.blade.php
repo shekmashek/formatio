@@ -1075,7 +1075,7 @@
                                                                                                 }
                                                                                             @endphp
                                                                                             
-                                                                                        <span style="color: #275b75; font-size: 15px">{{ number_format($somme, 2, ',', ' ') }} <span style="color: #ff0000">{{ $devise }}</span></span>  
+                                                                                        <span style="color: #275b75; font-size: 15px">{{ number_format($somme, 2, ',', ' ') }} <span>{{ $devise }}</span></span>  
                                                                                             
                                                                                     </div>
                                                                                 </div>
@@ -1098,7 +1098,7 @@
                                                                                                 }
                                                                                             @endphp
                                                                                             
-                                                                                        <span style="color: #275b75; font-size: 15px">{{ number_format($pj->prix, 2) }} <span style="color: #ff0000">{{ $devise }}</span></span>
+                                                                                        <span style="color: #275b75; font-size: 15px">{{ number_format($pj->prix, 2) }} <span>{{ $devise }}</span></span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1173,7 +1173,7 @@
                                                                                             @elseif( count($dataSessions) <= 0)
                                                                                                <div class="row">
                                                                                                     <div class="col-md-12">
-                                                                                                        <span style="color: rgb(179, 95, 95)">Aucune séance</span>
+                                                                                                        <span style="color: rgb(56, 121, 207)">Aucune séance</span>
                                                                                                     </div>
                                                                                                </div>
                                                                                             @endif
