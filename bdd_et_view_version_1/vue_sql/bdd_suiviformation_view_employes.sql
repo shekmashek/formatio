@@ -93,6 +93,7 @@ CREATE OR REPLACE view chef_departements as
 SELECT
     employers.id,
     employers.entreprise_id,
+    e.nom_etp,
     (employers.matricule_emp) matricule,
     (employers.nom_emp) nom_chef,
     (employers.prenom_emp) prenom_chef,
@@ -133,6 +134,7 @@ LEFT JOIN branches bc ON bc.id = employers.branche_id
 JOIN role_users ON role_users.user_id =  employers.user_id
 JOIN genre ON genre.id = employers.genre_id
 JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
+JOIN entreprises e ON e.id = employers.entreprise_id
 WHERE role_users.role_id=5;
 
 create or replace view  v_responsable_entreprise as

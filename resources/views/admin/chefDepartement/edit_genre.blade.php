@@ -8,20 +8,20 @@
 
 
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('affProfilChefDepartement')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
+  <a href="{{route('update_responsable')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
 </div>
 <center>
 <div class="col-lg-4">
     <div class="p-3 form-control">
 
-        <form   class="btn-submit" action="{{route('update_chef',$chef->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_responsable',$chef->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                                <select   value="{{$genre}}" name="genre" class="form-select test input" id="genre"  >
-                                    <option value="Homme"  >Homme</option>
-                                    <option value="Femme">Femme</option>
+                                <select value="{{$chef->genre_id}}" name="genre" class="form-select test input" id="genre"  >
+                                    <option value="2">Homme</option>
+                                    <option value="1">Femme</option>
 
                                   </select>
                                   <label class="ml-3 form-control-placeholder">Genre</label>
@@ -30,13 +30,13 @@
                     </div>
 
 
-                    <input type="hidden" value="   {{ $chef->nom_chef }}" class="form-control test input"  name="nom_chef">
+                    <input type="hidden" value="{{ $chef->nom_chef }}" class="form-control test input"  name="nom">
                     {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
 
 
 
 
-                        <input type="hidden" class="form-control test input" value="   {{ $chef->prenom_chef }}"  name="prenom_chef">
+                        <input type="hidden" class="form-control test input" value="{{ $chef->prenom_chef }}"  name="prenom">
 
                         {{-- <select hidden  value="{{$chef->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
                           <option value="{{$chef->sexe_resp}}"  >Homme</option>
@@ -45,17 +45,26 @@
                         </select> --}}
 
 
-                        <input type="hidden" class="form-control test" name="genre_chef" value="{{ $genre}}">
 
-                          <input type="hidden" value="{{ $chef->cin_chef}}" class="form-control test"  name="cin_chef" >
 
-                        <input type="hidden" class="form-control test"  name="mail_chef" value="{{ $chef->mail_chef}}" >
+                          <input type="hidden" value="{{ $chef->cin_chef}}" class="form-control test"  name="cin" >
 
-                        <input type="hidden" class="form-control test"  name="telephone_chef" value="{{ $chef->telephone_chef }}">
-                        <input type="hidden" value="{{ $chef->fonction_chef}}" class="form-control test"  name="fonction_chef" >
+                        <input type="hidden" class="form-control test"  name="mail" value="{{ $chef->mail_chef}}" >
 
-                        <input type="hidden" class="form-control test"  name="matricule_chef" value="{{ $chef->matricule}}" >
-                        <input type="hidden" class="form-control test"  name="etpnom_etp">
+                        <input type="hidden" class="form-control test"  name="phone" value="{{ $chef->telephone_chef }}">
+                        <input type="hidden" value="{{ $chef->fonction_chef}}" class="form-control test"  name="fonction" >
+
+                        <input type="hidden" class="form-control test"  name="matricule" value="{{ $chef->matricule}}" >
+
+                        <input type="hidden" class="form-control test" id="lot" name="lot" placeholder="Lot" value="{{ $chef->adresse_lot}}">
+                        <input type="hidden" class="form-control test" id="quartier" name="quartier" placeholder="Quartier" value="{{ $chef->adresse_quartier}}">
+
+
+                        <input type="hidden" class="form-control test" id="code_postal" name="code_postal" placeholder="Code Postale" value="{{ $chef->adresse_code_postal}}">
+
+
+                        <input type="hidden" class="form-control test" id="ville" name="ville" placeholder="Ville" value="{{ $chef->adresse_ville}}">
+                        <input type="hidden" class="form-control test" id="region" name="region" placeholder="Region" value="{{ $chef->adresse_region}}">
 
 
 

@@ -11,13 +11,13 @@
                         <div class="row m-l-2 m-r-2">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-                                    @foreach ($vars  as $var)
-                                    <div class="m-b-25"> <img src="/stagiaire-image/{{$var->photos}}" width="25%" height="25%" class="img-radius">
+                                    @foreach ($vars  as $id_chef)
+                                    <div class="m-b-25"> <img src="/stagiaire-image/{{$id_chef->photos}}" width="25%" height="25%" class="img-radius">
                                     </div>
-                                    <h6 class="f-w-600">{{$var->nom_chef}} {{$var->prenom_chef}}</h6>
-                                    <p>{{$var->fonction_chef}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                    <h6 class="f-w-600">{{$id_chef->nom_chef}} {{$id_chef->prenom_chef}}</h6>
+                                    <p>{{$id_chef->fonction_chef}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                     @can('isManager')
-                                        <a href="{{route('edit_manager',$var->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
+                                        <a href="{{route('edit_manager',$id_chef->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
                                     @endcan
                                 </div>
                             </div>
@@ -27,11 +27,11 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-envelope"></i>&nbsp;E-mail</p>
-                                            <h6 class="text-muted f-w-400">{{$var->mail_chef}}</h6>
+                                            <h6 class="text-muted f-w-400">{{$id_chef->mail_chef}}</h6>
                                         </div>
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-phone"></i>&nbsp;Téléphone</p>
-                                            <h6 class="text-muted f-w-400">{{$var->telephone_chef}}</h6>
+                                            <h6 class="text-muted f-w-400">{{$id_chef->telephone_chef}}</h6>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600"><i class="bx bx-building-house"></i>&nbsp;Entreprise</p>
-                                            <h6 class="text-muted f-w-400">{{$var->entreprise->nom_etp}}</h6>
+                                            <h6 class="text-muted f-w-400">{{$id_chef->entreprise->nom_etp}}</h6>
                                         </div>
                                     </div>
 
@@ -83,11 +83,11 @@
                                      <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-image-alt'></i>&nbsp; PHOTO
 
                                      </p>
-                                     @foreach ($vars  as $var)
 
 
-                                     <a href="{{route('editer_photos_manager',$var->id)}}" >
-                                        @if($var->photos==null)
+
+                                     <a href="{{route('editer_photos_manager',$id_chef->id)}}" >
+                                        @if($id_chef->photos==null)
                                                 <span>
                                                     <div style="display: grid; place-content: center">
                                                         <div class='randomColor photo_users' style="color:white; font-size: 12px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center">
@@ -95,21 +95,21 @@
                                                     </div>
                                                 </span>
                                             @else
-                                        <img src="{{asset('images/chefDepartement/'.$var->photos)}}" class="image-ronde">
+                                        <img src="{{asset('images/employes/'.$id_chef->photos)}}" class="image-ronde">
 
                                             @endif
                                     </a>
                                     </div>
                                     <div  style="border-bottom: solid 1px #e8dfe5;">
-                                     <a href="{{route('editer_nom_manager',$var->id)}}" >
-                                     <p class="p-1 m-0" id="nom" style="font-size: 12px;"><i class='bx bx-user' ></i>&nbsp; NOM<span style="float: right;">{{$var->nom_chef}} {{$var->prenom_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <a href="{{route('editer_nom_manager',$id_chef->id)}}" >
+                                     <p class="p-1 m-0" id="nom" style="font-size: 12px;"><i class='bx bx-user' ></i>&nbsp; NOM<span style="float: right;">{{$id_chef->nom_chef}} {{$id_chef->prenom_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p></a>
 
                                     </div>
 
                                     <div id="nom"style="border-bottom: solid 1px #e8dfe5;">
-                                     <a href="{{route('editer_genre_manager',$var->id)}}" >
+                                     <a href="{{route('editer_genre_manager',$id_chef->id)}}" >
                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-male-female' style="color: rgb(116, 116, 116)"></i>&nbsp; GENRE
                                         @if ($genre ==null)
                                         <span style="float: right; color:red">incomplète&nbsp;
@@ -123,7 +123,7 @@
 
                                     </div>
                                     <div id="nom"style="border-bottom: solid 1px #e8dfe5;">
-                                        <a href="{{route('editer_pwd_manager',$var->id)}}" >
+                                        <a href="{{route('editer_pwd_manager',$id_chef->id)}}" >
                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-key' style='' ></i>&nbsp; Mot de passe<span style="float: right;">Mot de passe&nbsp;<i class="fas fa-angle-right"></i></span>
                                         </p>
                                         </a>
@@ -139,23 +139,23 @@
                                          <p class="text-center">Coordonnées</p>
 
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                                             <a href="{{route('editer_mail_manager',$var->id)}}" >
-                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-envelope' style='' ></i>&nbsp;ADRESSE E-MAIL<span style="float: right;">{{$var->mail_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                             <a href="{{route('editer_mail_manager',$id_chef->id)}}" >
+                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-envelope' style='' ></i>&nbsp;ADRESSE E-MAIL<span style="float: right;">{{$id_chef->mail_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                          </p>
                                              </a>
                                          </div>
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                                             <a href=" {{route('editer_phone_manager',$var->id)}}" >
-                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone' style='' ></i>&nbsp;TELEPHONE<span style="float: right;">{{$var->telephone_chef}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                                             <a href=" {{route('editer_phone_manager',$id_chef->id)}}" >
+                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone' style='' ></i>&nbsp;TELEPHONE<span style="float: right;">{{$id_chef->telephone_chef}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                                          </p>
                                              </a>
                                          </div>
 
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                                             <a href="{{route('editer_cin_manager',$var->id)}} " >
-                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bxs-user-badge' style='color:rgba(0,0,0,0.49)'  ></i>&nbsp;CIN<span style="float: right;">{{$var->cin_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                             <a href="{{route('editer_cin_manager',$id_chef->id)}} " >
+                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bxs-user-badge' style='color:rgba(0,0,0,0.49)'  ></i>&nbsp;CIN<span style="float: right;">{{$id_chef->cin_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          </p>
                                              </a>
                                          </div>
@@ -170,32 +170,32 @@
                                      <p class="text-center">Informations professionnelles</p>
 
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                                         <a href="{{route('editer_matricule_manager',$var->id)}} " >
-                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-id-card'></i>&nbsp;Matricule<span style="float: right;">{{$var->matricule}}&nbsp;<i class="fas fa-angle-right"></i></span>
+
+                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-id-card'></i>&nbsp;Matricule<span style="float: right;">{{$id_chef->matricule}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p>
-                                         </a>
+
                                      </div>
 
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                                         <a href="{{route('editer_fonction_manager',$var->id)}}  " >
-                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-list-minus'  ></i>&nbsp;Fonction<span style="float: right;">{{$var->fonction_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                         <a href="{{route('editer_fonction_manager',$id_chef->id)}}  " >
+                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-list-minus'  ></i>&nbsp;Fonction<span style="float: right;">{{$id_chef->fonction_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p>
                                          </a>
 
                                      </div>
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
-                                        {{-- <a href="{{route('editer_niveau',$var->id)}}  " > --}}
-                                    <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-building'  ></i>&nbsp;Entreprise<span style="float: right;">{{optional(optional($var)->entreprise)->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                        {{-- <a href="{{route('editer_niveau',$id_chef->id)}}  " > --}}
+                                    <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-building'  ></i>&nbsp;Entreprise<span style="float: right;">{{$id_chef->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                     </p>
                                         </a>
 
-                                    </div
+                                    </div>
 
 
-                         @endforeach
+
 
      </div>
 @endsection

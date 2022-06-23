@@ -133,6 +133,7 @@ Route::get('destroy_groupe/{id}', 'GroupeController@destroy')->name('destroy_gro
 Route::post('update_groupe/{idGroupe}', 'GroupeController@update')->name('update_groupe');
 Route::post('nouveau_session_inter', 'GroupeController@storeInter')->name('nouveau_session_inter');
 Route::get('session_inter/{id?}', 'GroupeController@sessionInter')->name('session_inter');
+Route::get('controlle_module','GroupeController@controlle_module')->name('controlle_module');
 //route entreprise
 Route::resource('entreprise', 'EntrepriseController')->except([
     'create', 'edit', 'destroy', 'update'
@@ -765,7 +766,7 @@ Route::get('ajoutPlan', 'PlanFormationController@afficherDetail')->name('ajoutPl
 Route::resource('departement','DepartementController');
 Route::get('/show_dep','DepartementController@show')->name('show_dep');
 Route::get('employes','DepartementController@liste')->name('employes');
-Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')->name('affProfilChefDepartement');
+Route::get('/profil_manager', 'DepartementController@affProfilChefDepart')->name('profil_manager');
 
 
 Route::get('employes.liste/{nbPag?}','ParticipantController@liste_employer')->name('employes.liste');

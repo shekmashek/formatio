@@ -261,6 +261,7 @@
             text-align: center;
         }
     </style>
+
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
             <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur

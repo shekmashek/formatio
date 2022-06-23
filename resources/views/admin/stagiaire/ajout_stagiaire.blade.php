@@ -134,7 +134,7 @@
                 <tr id="row_{{ $stg->stagiaire_id }}">
                     <td>
                         @if ($stg->photos != null)
-                            <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">
+                            <img src="{{ asset('images/employes/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">
                         @else
                             <span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">{{ $stg->sans_photos }}
                             </span>
@@ -321,7 +321,7 @@ td{
                         if(userData[0].photos == null){
                             html = '<span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">'+userData[0].sans_photo+'</span>';
                         }else{
-                            html = '<img src="{{ asset("images/stagiaires/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
+                            html = '<img src="{{ asset("images/employes/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
                             html = html.replace(":?",userData[0].photos);
                         }
                         $("#image_stg").append(html);

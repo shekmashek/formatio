@@ -206,7 +206,7 @@ class HomeController extends Controller
         }
         if (Gate::allows('isManager')) {
 
-            return redirect()->route('calendrier');
+            return redirect()->route('profil_manager');
         }
         if (Gate::allows('isStagiaire')) {
 

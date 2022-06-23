@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('affProfilChefDepartement')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
+  <a href="{{route('profil_manager')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
 </div>
 <center>
 <div class="col-lg-4">
     <div class="p-3 form-control">
 
-        <form   class="btn-submit" action="{{route('update_mdp_manager',$chef->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_responsable_mdp',$chef->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
                         <div class="row px-3 mt-4">

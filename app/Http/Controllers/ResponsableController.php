@@ -621,6 +621,7 @@ class ResponsableController extends Controller
                 DB::update('update employers set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
                 if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
                 if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
+                if(Gate::allows('isManager')) return redirect()->route('profil_manager');
             }
             else{
                 return redirect()->back()->with('error_format', 'Le format de votre fichier n\'est pas acceptable,choisissez entre : .jpeg,.jpg,.png,.gif,.psd,.ai,.svg');
@@ -648,6 +649,7 @@ class ResponsableController extends Controller
                 DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
                 if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
                 if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
+                if(Gate::allows('isManager')) return redirect()->route('profil_manager');
             } else {
                 return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
             }
@@ -693,6 +695,7 @@ class ResponsableController extends Controller
             $date_naiss = $request->date_naissance;
             $cin = $request->cin;
             $genre = $request->genre;
+
             $code_postal = $request->code_postal;
             $ville = $request->ville;
             $region = $request->region;
@@ -733,9 +736,11 @@ class ResponsableController extends Controller
                 return back()->with('error_cin','Entrez votre CIN avant  de cliquer sur enregistrer');
             }
             elseif($lot == null || $ville == null || $region == null || $quartier == null || $code_postal == null){
+               
                 return back()->with('error_adresse','Entrez votre adresse complète avant  de cliquer sur enregistrer');
             }
             elseif($fonction == null){
+                
                 return back()->with('error_fonction','Entrez votre fonction avant de cliquer sur enregistrer');
             }
             else{
@@ -758,6 +763,7 @@ class ResponsableController extends Controller
 
             if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
             if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
+            if(Gate::allows('isManager')) return redirect()->route('profil_manager');
     }
 
     public function destroy(Request $request)

@@ -280,16 +280,19 @@
                     employés
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{route('employes.new')}}" class="nav-link">
-                    nouveau employé
-                </a>
-            </li>
+            @canany(['isReferent','isReferentSimple'])
+                <li class="nav-item">
+                    <a href="{{route('employes.new')}}" class="nav-link">
+                        nouveau employé
+                    </a>
+                </li>
+
             <li class="nav-item">
                 <a href="{{route('employes.export.nouveau')}}" class="nav-link">
                     import EXCEL employé
                 </a>
             </li>
+            @endcanany
                 <li class="nav-item">
                     <a href="{{route('employes.liste_referent')}}" class="nav-link">
                     Référents
@@ -425,9 +428,11 @@
                                                 <div class="form-check form-switch">
                                                     <label class="form-check-label" for="flexSwitchCheckChecked"><span
                                                             class="badge bg-success">actif</span></label>
-                                                    <input class="form-check-input desactiver_stg" type="checkbox"
-                                                        data-user-id="{{ $employers[$i]->user_id }}" value="{{ $employers[$i]->id }}"
-                                                        checked>
+                                                    @can('isReferent')
+                                                        <input class="form-check-input desactiver_stg" type="checkbox"
+                                                            data-user-id="{{ $employers[$i]->user_id }}" value="{{ $employers[$i]->id }}"
+                                                            checked>
+                                                    @endcan
                                                 </div>
                                             @else
                                                 <div class="form-check form-switch">
@@ -437,8 +442,10 @@
                                                             inactif
                                                         </span>
                                                     </label>
+                                                    @can('isReferent')
                                                     <input class="form-check-input activer_stg" type="checkbox"
                                                         data-user-id="{{ $employers[$i]->user_id }}" value="{{ $employers[$i]->id }}">
+                                                    @endcan
                                                 </div>
                                             @endif
 

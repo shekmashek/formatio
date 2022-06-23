@@ -573,7 +573,7 @@
                                             </td>
                                         @else
                                             <td class="td_hover" role="button" style="display: grid; place-content: center">
-                                                <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" src="{{asset("images/responsables/".$etp->photos)}}" style="width:30px;height:30px; border-radius:100% ;cursor: pointer"
+                                                <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" src="{{asset("images/employes/".$etp->photos)}}" style="width:30px;height:30px; border-radius:100% ;cursor: pointer"
                                                 data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}} class="resp_etp mt-3">
                                             </td>
                                         @endif
@@ -1070,7 +1070,7 @@
                                 </td>
                             @else
                                 <td class="td_hover" role="button" style="display: grid; place-content: center">
-                                    <img src="{{asset("images/responsables/".$etp->photos)}}" style="width:120px;height:120px; border-radius:100%">
+                                    <img src="{{asset("images/employes/".$etp->photos)}}" style="width:120px;height:120px; border-radius:100%">
                                 </td>
                             @endif
                         </span>

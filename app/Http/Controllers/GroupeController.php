@@ -14,6 +14,8 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Excel;
 use Carbon\Carbon;
+use Session;
+
 class GroupeController extends Controller
 {
     public function __construct()
@@ -63,18 +65,25 @@ class GroupeController extends Controller
         return view('projet_session.projet_intra_form', compact('type_formation', 'modules', 'entreprise', 'payement'));
     }
 
-    public function createInter()
+    public function createInter(Request $request)
     {
-        $fonct = new FonctionGenerique();
-        $formations = [];
-        $modules = [];
-        $user_id = Auth::user()->id;
-        $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-        $type_formation = request()->type_formation;
-        $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
-        $modules = $fonct->findWhere("moduleformation", ["cfp_id", "status", "etat_id"], [$cfp_id, 2, 1]);
-        // dd($formations,$modules);
-        return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
+        $last_url = url()->previous();
+        try{
+            $fonct = new FonctionGenerique();
+            $formations = [];
+            $modules = [];
+            $user_id = Auth::user()->id;
+            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+            $type_formation = request()->type_formation;
+            $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
+            $modules = $fonct->findWhere("moduleformation", ["cfp_id", "status", "etat_id"], [$cfp_id, 2, 1]);
+            if(count($formations)==0 or count($modules)==0){
+                throw new Exception("Vous n'avez pas encore des modules.");
+            }
+            return view('projet_session.projet_inter_form', compact('type_formation', 'formations', 'modules'));
+        }catch(Exception $e){
+            return redirect('liste_module');
+        }
     }
 
     public function sessionInter($id)

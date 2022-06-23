@@ -116,7 +116,7 @@
                                 </div>
                             </span>
                             @else
-                                <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" class="image-ronde">
+                                <img src="{{asset('images/employes/'.$stagiaire->photos)}}" class="image-ronde">
                             @endif
                         </a>
                     </div>

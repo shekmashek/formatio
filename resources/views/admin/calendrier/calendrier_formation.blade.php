@@ -283,7 +283,7 @@
                         <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
 
-                        @canany(['isReferent','isCFP','isFormateur'])
+                        @canany(['isReferent','isCFP','isFormateur','isManager'])
                             <label class="gauche" for="">Liste des apprenants</label><br>
                             <table class="table">
                                 <thead>
@@ -419,9 +419,9 @@
                             @can('isStagiaire')
                                 title: details[$i].nom_formation
                             @endcan
-                            @can('isReferent')
+                            @canany(['isReferent','isManager'])
                             title: details[$i].nom_formation
-                            @endcan
+                            @endcanany
                             , start: details[$i].date_detail
                             ,backgroundColor:getRandomColor()
                             , nom_projet: details[$i].nom_projet
@@ -527,7 +527,7 @@
                                         lieu.innerHTML = '';
                                         var salle = document.getElementById('salle');
                                         salle.innerHTML = '';
-                                        @canany(['isReferent','isCFP','isFormateur'])
+                                        @canany(['isReferent','isCFP','isFormateur','isManager'])
                                         var liste_app = document.getElementById('liste_app');
                                         liste_app.innerHTML = '';
                                         var nb_apprenant = document.getElementById('nb_apprenant');

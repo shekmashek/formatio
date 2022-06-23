@@ -28,6 +28,25 @@
 
 </style>
 <body>
+    @if ($message = Session::get('creation_inter_error'))
+        <div class="modal" tabindex="-1">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger ms-2 me-2">
+                        <ul>
+                            <li>{{ $message }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    @endif
+
     <div class="sidebar active">
         {{-- <div class="logo_content">
             <div class="logo">
@@ -1016,7 +1035,7 @@
                                         </li>
                                         @can('isPremium')
                                         <li>
-                                            <a class="dropdown-item"
+                                            <a class="dropdown-item" id="creation_inter"
                                                 href="{{route('nouveau_groupe_inter',['type_formation'=>2])}}">
                                                 <i class='bx bx-library icon_plus'></i>&nbsp;Projet Inter
                                             </a>
@@ -1088,7 +1107,7 @@
                                                 <h6 class="mb-0 text-center text-muted">{{Auth::user()->email}}</h6>
                                                 <div class="text-center">
                                                     @can('isManagerPrincipale')
-                                                    <a href="{{route('affProfilChefDepartement')}}"><button
+                                                    <a href="{{route('profil_manager')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcan
@@ -1582,9 +1601,6 @@
         //         container.hide();
         //     }
         // });
-
-    </script>
-    <script type="text/javascript">
 
     </script>
 </body>

@@ -269,7 +269,7 @@ class ProfController extends Controller
                         $experience->save();
                     }
                     if (Gate::allows('isCFP')) {
-
+                        dd('et');
                         DB::insert("insert into demmande_cfp_formateur(demmandeur_cfp_id,inviter_formateur_id,activiter,created_at,updated_at) values(?,?,true,NOW(),NOW())", [$cfp_id, $idmail_formateur]);
                     }
                 //   $request->image->move(public_path('images/formateurs'), $nom_image);  //save image cfp

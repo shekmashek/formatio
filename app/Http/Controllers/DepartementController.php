@@ -272,26 +272,17 @@ class DepartementController extends Controller
 
     public function affProfilChefDepart()
     {
-
-        $idChef = chefDepartement::where('user_id', Auth::user()->id)->value('id');
-        $depEtpId = chefDepartementEntreprise::where('chef_departement_id', $idChef)->value('departement_entreprise_id');
-        $departement = DepartementEntreprise::with('departement', 'entreprise')->where('id', $depEtpId)->get();
+        $fonct = new FonctionGenerique();
+        // $idChef = chefDepartement::where('user_id', Auth::user()->id)->value('id');
+        $id_chef = $fonct->findWhereMulitOne("chef_departements",["user_id"],[Auth::user()->id]);
+        $departement = $fonct->findWhereMulitOne("v_chef_departement_entreprise",["chef_departements_id"],[$id_chef->id]);
         $user_id =  $users = Auth::user()->id;
         $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
 
-        if ($chef_connecte) {
-
-            $vars = chefDepartement::with('entreprise')->where('user_id', $user_id)->get();
-        } else {
-            $idChef = request()->id_chef;
-            $depEtpId = chefDepartementEntreprise::where('chef_departement_id', $idChef)->value('departement_entreprise_id');
-            $departement = DepartementEntreprise::with('departement', 'entreprise')->where('id', $depEtpId)->get();
-            $vars = chefDepartement::with('entreprise')->where('id', $idChef)->get();
-        }
-        if($vars[0]->genre_id == 1) $genre = "Femme";
-        if($vars[0]->genre_id == 2) $genre = "Homme";
-        if($vars[0]->genre_id == null) $genre = '';
-        return view('admin/chefDepartement/profilChefDepartement', compact('genre','vars', 'departement'));
+        if($id_chef->genre_id == 1) $genre = "Femme";
+        if($id_chef->genre_id == 2) $genre = "Homme";
+        if($id_chef->genre_id == null) $genre = '';
+        return view('admin/chefDepartement/profilChefDepartement', compact('genre','id_chef', 'departement'));
     }
     //enregistrer departement
     public function store(Request $request)
