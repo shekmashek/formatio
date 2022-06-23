@@ -211,6 +211,13 @@ Route::post('/update_email_formateur/{id}', 'ProfController@update_email_formate
 Route::post('/update_telephone_prof/{id}','ProfController@update_telephone_prof')->name('update_telephone_prof');
 Route::post('/update_niveau_prof/{id}','ProfController@update_niveau_prof')->name('update_niveau_prof');
 Route::post('/update_photos_prof/{id}','ProfController@update_photos_prof')->name('update_photos_prof');
+Route::post('/update_description_formateur/{id}','ProfController@update_description_formateur')->name('update_description_formateur');
+Route::post('/update_specialite_prof/{id}','ProfController@update_specialite_prof')->name('update_specialite_prof');
+Route::post('/update_fin_travail/{id}','ProfController@update_fin_travail')->name('update_fin_travail');
+Route::post('/update_debut_travail/{id}','ProfController@update_debut_travail')->name('update_debut_travail');
+Route::post('/addCompetence/{id}','ProfController@addCompetence')->name('addCompetence');
+Route::post('/addExperience/{id}','ProfController@addExperience')->name('addExperience');
+
 //collabforfateur
 Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur');
 //route formateur profil
@@ -219,6 +226,7 @@ Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
     Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 });
 //Route update par champs prof
+Route::get('/editer_cv/{id?}', 'ProfController@editCVProf')->name('edit_cv');
 Route::get('/editer_nom/{id}', 'ProfController@editer_nom')->name('editer_nom');
 Route::get('/editer_naissance/{id}', 'ProfController@editer_naissance')->name('editer_naissance');
 Route::get('/editer_genre/{id}', 'ProfController@editer_genre')->name('editer_genre');
@@ -236,8 +244,12 @@ Route::get('/editer_domaine/{id}', 'ProfController@editer_domaine')->name('edite
 Route::get('/editer_poste/{id}', 'ProfController@editer_poste')->name('editer_poste');
 Route::get('/editer_nom_etp/{id}', 'ProfController@editer_nom_etp')->name('editer_nom_etp');
 Route::get('/editer_fonction/{id}', 'ProfController@editer_fonction')->name('editer_fonction');
-
-
+Route::get('/editer_specialite/{id?}', 'ProfController@editer_specialite')->name('editer_specialite');
+Route::get('/editer_about/{id?}', 'ProfController@editer_about')->name('editer_about');
+Route::get('/editer_debut/{id?}', 'ProfController@editer_debut')->name('editer_debut');
+Route::get('/editer_fin/{id?}', 'ProfController@editer_fin')->name('editer_fin');
+Route::get('/ajout_competence/{id?}', 'ProfController@ajout_competence')->name('ajout_competence');
+Route::get('/ajout_experience/{id?}', 'ProfController@ajout_experience')->name('ajout_experience');
 
 
 

@@ -4,16 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Formateur extends Model
 {
     protected $table = "formateurs";
     protected $fillable = [
-        'id', 'nom_formateur', 'prenom_formateur', 'photos', 'mail_formateur', 'numero_formateur'
+        'id', 'nom_formateur', 'prenom_formateur', 'photos', 'mail_formateur', 'numero_formateur', 'user_id', 'niveau_etude_id'
     ];
     public function genre()
     {
         return $this->belongsTo('App\genre');
+    }
+
+    public function age()
+    {
+        return Carbon::parse($this->attributes['date_naissance'])->age;
     }
 
     public function getFormateur($etp1, $etp2)

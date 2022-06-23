@@ -45,3 +45,4 @@ alter table formateurs
   add column niveau_etude_id bigint(20) UNSIGNED NOT NULL REFERENCES niveau_etude(id) ON DELETE CASCADE;
 
 UPDATE formateurs set niveau_etude_id = 1;
+alter Table formateurs add COLUMN description text not null default "";

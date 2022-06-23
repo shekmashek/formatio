@@ -6,26 +6,26 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{{asset('assets/css/inputControl.css')}}">
 <div class="col" style="margin-left: 25px">
-    <a href="{{route('profile_formateur')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp"><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
+    <a href="{{route('edit_cv')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp"><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
 </div>
 <center>
     <div class="col-lg-4">
         <div class="p-3 form-control">
 
-            <form class="btn-submit" action="{{route('update_experience',$formateur->id)}}" method="post" enctype="multipart/form-data">
+            <form class="btn-submit" action="{{route('update_experience',$entreprise->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
 
-                <input type="hidden" class="form-control test" name="poste" value="{{ $formateur->poste_occuper }}  ">
+                <input type="hidden" class="form-control test" name="poste" value="{{ $entreprise->poste_occuper }}  ">
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control test input" name="nom_etp" value="  {{ $formateur->nom_entreprise }}">
+                        <input type="text" class="form-control test input" name="nom_etp" value="  {{ $entreprise->nom_entreprise }}">
 
                         <label class="ml-3 form-control-placeholder">Entreprise</label>
 
                     </div>
                 </div>
 
-                <input type="hidden" class="form-control test input" name="tache" value="  {{ $formateur->taches }}  ">
+                <input type="hidden" class="form-control test input" name="tache" value="  {{ $entreprise->taches }}  ">
 
 
 
