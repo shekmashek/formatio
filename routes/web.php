@@ -109,6 +109,8 @@ Route::get('projet_interne', 'ProjetControlleur@projetInterne')->name('projet_in
 Route::get('formations', 'ProjetControlleur@formations')->name('formations');
 Route::get('formateurs', 'ProjetControlleur@formateurs')->name('formateurs');
 Route::get('projets', 'ProjetControlleur@projets')->name('projets');
+Route::get('module_interne', 'ProjetControlleur@module_interne')->name('module_interne');
+Route::get('module_interne_new', 'ProjetControlleur@module_interne_new')->name('module_interne_new');
 
 
 

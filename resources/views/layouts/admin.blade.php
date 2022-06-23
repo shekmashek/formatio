@@ -206,13 +206,22 @@
             </li>
             @endcanany --}}
             @canany(['isReferent'])
-            {{-- <li>
-                <a href="{{route('projet_interne')}}" class="d-flex nav_linke">
+            <li>
+                <a href="{{route('formations')}}" class="d-flex nav_linke">
                     <i class='bx bxl-netlify'></i>
-                    <span class="links_name">Formation Interne</span>
+                    <span class="links_name">Formations</span>
                 </a>
 
-            </li> --}}
+            </li>
+            @endcanany
+            @canany(['isReferent'])
+            <li>
+                <a href="{{route('formateurs')}}" class="d-flex nav_linke">
+                    <i class='bx bxs-user-pin'></i>
+                    <span class="links_name">Formateurs</span>
+                </a>
+
+            </li>
             @endcanany
             @canany(['isStagiaire'])
             <li>

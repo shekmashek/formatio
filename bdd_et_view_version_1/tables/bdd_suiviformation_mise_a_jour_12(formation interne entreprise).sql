@@ -17,6 +17,7 @@ CREATE TABLE formateurs_interne (
   activiter boolean not null default true,
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ts de ilaina ^
 
 
 CREATE TABLE projets_interne (
@@ -126,6 +127,9 @@ ALTER TABLE `domaines_interne`
 ALTER TABLE `domaines_interne`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 COMMIT;
+
+alter table domaines_interne add etp_id bigint(20) NOT NULL DEFAULT 0 REFERENCES entreprises(id) ON DELETE CASCADE;
+
 
 CREATE TABLE `formations_interne` (
   `id` bigint(20) UNSIGNED NOT NULL,
@@ -238,10 +242,9 @@ CREATE TABLE modules_interne (
   reference varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   nom_module varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   formation_id bigint(20) UNSIGNED NOT NULL REFERENCES formations(id) ON DELETE CASCADE,
-  cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  etp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp(),
-  prix int(11) NOT NULL,
   duree int(11) NOT NULL,
   duree_jour int(11) NOT NULL,
   prerequis TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -258,7 +261,7 @@ CREATE TABLE modules_interne (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 alter table modules_interne add status int(11) default 0;
-alter table modules_interne add etp_id bigint(20);
+alter table modules_interne add etat_id bigint(20) NOT NULL DEFAULT 1 REFERENCES etats(id) ON DELETE CASCADE;
 
 CREATE TABLE programmes_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -286,3 +289,29 @@ CREATE TABLE `competence_a_evaluers_interne` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `niveaux_interne` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `niveau` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `progression` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT  current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT  current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `niveaux_interne` (`id`,`niveau`,`progression`, `created_at`, `updated_at`) VALUES
+(1,'Débutant',1,NOW(),NOW()),
+(2,'intermédiaire',3,NOW(),NOW()),
+(3,'avancé',4,NOW(),NOW()),
+(4,'avancé',5,NOW(),NOW());
+
+CREATE TABLE avis_interne(
+    id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
+    module_id bigint(20) UNSIGNED NOT NULL REFERENCES modules_interne(id) ON DELETE CASCADE,
+    note decimal(5,2) not null default 0,
+    commentaire text,
+    status varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+    date_avis date NOT NULL,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL
+);

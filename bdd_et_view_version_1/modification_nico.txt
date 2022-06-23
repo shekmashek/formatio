@@ -247,5 +247,7 @@ Ajouter par defaut dans progression :   Débutant = 1
                                         Intermédiaire = 3
                                         Avancé = 4
                                         Expert = 5
-
+---------- 23 juin ----------------
+creation des tables dans bdd_suiviformation_mise_a_jour_12(formation interne entreprise).sql
+creation des view dans bdd_suiviformation_view_30(formation_interne).sql
 
