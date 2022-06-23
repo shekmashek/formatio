@@ -849,6 +849,23 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
         margin-left: 279px;
         margin-top: -32px;
     }
+    .text_retourner {
+        position: relative;
+    }
+    .text_retourner span {
+        position: relative;
+        display: inline-block;
+        font-size: 25px;
+        color: rgba(0,0,0,.5);
+        text-transform: uppercase;
+        animation: flip 3s infinite;
+        animation-delay: calc(.2s * var(--i))
+    }
+    @keyframes flip {
+        0%,80% {
+            transform: rotateY(360deg)
+        }
+    }
 /* timeline */
     </style>
     <div class="container-fluid mb-5">
@@ -1796,14 +1813,32 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     @else
                         <div class="row mb-5 justify-content-md-start">
                             <div class="col-md-3 border-bottom">
-                                <h2 class="text-black-50 ms-5">Projects Timeline</h2>
+                                <div class="text_retourner">
+                                    <span style="--i:1">P</span>
+                                    <span style="--i:2">r</span>
+                                    <span style="--i:3">o</span>
+                                    <span style="--i:4">j</span>
+                                    <span style="--i:5">e</span>
+                                    <span style="--i:6">c</span>
+                                    <span style="--i:7">t</span>
+                                    <span style="--i:8">s</span>
+                                    <span style="--i:9"> </span>
+                                    <span style="--i:10">T</span>
+                                    <span style="--i:11">i</span>
+                                    <span style="--i:12">m</span>
+                                    <span style="--i:13">e</span>
+                                    <span style="--i:14">l</span>
+                                    <span style="--i:15">i</span>
+                                    <span style="--i:16">n</span>
+                                    <span style="--i:17">e</span>
+                                </div>
                             </div>
                         </div>
                         @foreach ($data as $pj)
                         <div class="row justify-content-md-center">
                             <div class="col-md-2" style="background-color:rgba(177, 99, 163, 0.09);;">
                                 <h5 class="p_date mt-5"> {{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
-                                <h6 class="p_date">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</h6>
+                                <h6 class="p_date text-black-50">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</h6>
                                 <div class="triangle-right"></div>
                             </div>
                             <div class="col-md-8">
@@ -1957,64 +1992,64 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                             </div>
                                                         </div>
                                                         <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="ressource_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
-                                                            @if (count($ressource)>0)
-                                                            <div class="mb-3 pe-5 ps-1 col-12 pb-5">
-                                                                <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
-                                                                    <div class="col-md-3">
-                                                                        <span>
-                                                                            <h6>Matériel nécessaire</h6>
-                                                                        </span>
+                                                           {{--  @if (count($ressource)>0) --}}
+                                                                <div class="mb-3 pe-5 ps-1 col-12 pb-5">
+                                                                    <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
+                                                                        <div class="col-md-3">
+                                                                            <span>
+                                                                                <h6>Matériel nécessaire</h6>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="col-md-3 p-0">
+                                                                            <span>
+                                                                                <h6>Demandé(e) par </h6>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="col-md-3 p-0">
+                                                                            <span>
+                                                                                <h6>Pris en charge par </h6>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="col-md-3 p-0">
+                                                                            <span>
+                                                                                <h6>Note </h6>
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-md-3 p-0">
-                                                                        <span>
-                                                                            <h6>Demandé(e) par </h6>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="col-md-3 p-0">
-                                                                        <span>
-                                                                            <h6>Pris en charge par </h6>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="col-md-3 p-0">
-                                                                        <span>
-                                                                            <h6>Note </h6>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-0 align-content-center">
-                                                                    <div id="affiche_ressource">
-                                                                        @foreach ($ressource as $r)
-                                                                            @if ($r->groupe_id == $pj->groupe_id)
-                                                                                
-                                                                            <div class="d-flex mt-1" id="ressource_{{ $r->id }}">
-                                                                                <div class="col-md-3">
-                                                                                    <section>
-                                                                                        <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
-                                                                                    </section>
+                                                                    <div class="row mt-0 align-content-center">
+                                                                        <div id="affiche_ressource">
+                                                                            @foreach ($ressource as $r)
+                                                                                @if ($r->groupe_id == $pj->groupe_id)
+                                                                                    
+                                                                                <div class="d-flex mt-1" id="ressource_{{ $r->id }}">
+                                                                                    <div class="col-md-3">
+                                                                                        <section>
+                                                                                            <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <section>
+                                                                                            {{ $r->demandeur }}
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <section>
+                                                                                            {{ $r->pris_en_charge }}
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <section>
+                                                                                            {{ $r->note }}
+                                                                                        </section>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="col-md-3">
-                                                                                    <section>
-                                                                                        {{ $r->demandeur }}
-                                                                                    </section>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <section>
-                                                                                        {{ $r->pris_en_charge }}
-                                                                                    </section>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <section>
-                                                                                        {{ $r->note }}
-                                                                                    </section>
-                                                                                </div>
-                                                                            </div>
-                                                                            @endif
-                                                                        @endforeach
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                @else
+                                                            {{-- @else
                                                                 <div class="mb-3 pe-5 ps-1 col-12 pb-5">Vous n'avez pas besoin de ressources!</div>
-                                                                @endif
+                                                            @endif --}}
                                                             </div>
                                                         </div>
                                                         
