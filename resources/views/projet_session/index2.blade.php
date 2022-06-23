@@ -811,7 +811,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
     }
 
     @media (max-width: 767px) {
-        .timeline-1 .event_terminer:before { 
+        .timeline-1 .event_terminer:before {
             left: 0px;
             text-align: left;
         }
@@ -1749,9 +1749,9 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                 href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
                                         </td>
                                         <td class="text-start">
-                                            @php
+                                            {{-- @php
                                                 echo $groupe->module_session($pj->module_id);
-                                            @endphp
+                                            @endphp --}}
                                         </td>
                                         <td class="text-end">
                                            @if($pj->hors_taxe_net!=null)
@@ -1859,7 +1859,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                 <h6>{{ $pj->nom_module }}</h6>
                                                 <span class="text-black-50">{{ $pj->nom_formation }}</span>
                                             </div>
-                                            <div class="col-md-3 p-0 d-flex justify-content-start">
+                                            <div class="col-md-2 p-0 d-flex justify-content-start">
                                                 <img src="{{ asset('images/CFP/' . $pj->logo) }}" alt="{{ $pj->logo }}" style="width:64px;height:64px"/>
                                             </div>
                                             <div class="col-md-1 p-0 d-flex justify-content-start">
@@ -1874,6 +1874,9 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                             </div>
                                             <div class="col-md-1 p-0 d-flex justify-content-start">
                                                 <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn" style="width:63px;height:20px;font-size: 11px;padding-top: initial;">Résultat</button></a>
+                                            </div>
+                                            <div class="col-md-2 p-0 d-flex justify-content-start">
+                                                <p class="{{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
                                             </div>
                                         </div>
                                         <div class="collapse" id="collapseprojet_{{ $pj->module_id }}">
@@ -2175,6 +2178,17 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                 <option value="null" selected>Nom de formation</option>
                                 @foreach ($formations as $form)
                                     <option value="{{$form->nom_formation}}">{{$form->nom_formation}}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
+                            </div>
+                        </form>
+                        <form action="{{ route('liste_projet') }}" method="GET">
+                            <div class="row px-3 mt-2">
+                            <select name="status" id="status" class="filtre_projet">
+                                <option value="null" selected>Status</option>
+                                @foreach ($status as $stt)
+                                    <option value="{{$stt->status}}">{{$stt->status}}</option>
                                 @endforeach
                             </select>
                             <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>

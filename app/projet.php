@@ -86,7 +86,7 @@ class Projet extends Model
             // $domaine = $fonct->findAll("domaines");
             $sql = $sql." and stagiaire_id = ".$id_stagiaire;
         }
-        if(empty($request->module) && empty($request->formation) && empty($request->annee) && empty($request->mois) && empty($request->trimestre) && empty($request->semestre)){
+        if(empty($request->status) && empty($request->module) && empty($request->formation) && empty($request->annee) && empty($request->mois) && empty($request->trimestre) && empty($request->semestre)){
             return $sql." order by date_debut desc";
         }
         if (!empty($request->annee)) {
@@ -128,6 +128,11 @@ class Projet extends Model
         if(!empty($request->formation)){
             if($request->formation!='null'){
                 $sql = $sql." and nom_formation = '".$request->formation."'";
+            }
+        }
+        if(!empty($request->status)){
+            if($request->status!='null'){
+                $sql = $sql." and item_status_groupe = '".$request->status."'";
             }
         }
         $sql = $sql." order by date_debut desc";

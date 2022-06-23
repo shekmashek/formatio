@@ -65,7 +65,31 @@ select
         mf.nom_formation,
         mf.nom as nom_cfp,
         mf.cfp_id,
-        mf.logo
+        mf.logo,
+        case
+            when g.status = 8 then 'Reprogrammer'
+            when g.status = 7 then 'Annulée'
+            when g.status = 6 then 'Reporté'
+            when g.status = 5 then 'Cloturé'
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'Terminé'
+                    when (g.date_debut - curdate()) <= 0 then 'En cours'
+                    else 'A venir' end
+            when g.status = 1 then 'Prévisionnel'
+            when g.status = 0 then 'Créer'end item_status_groupe,
+        case
+            when g.status = 8 then 'status_reprogrammer'
+            when g.status = 7 then 'status_annulee'
+            when g.status = 6 then 'status_reporter'
+            when g.status = 5 then 'status_cloturer'
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'status_termine'
+                    when (g.date_debut - curdate()) < 0 then 'statut_active'
+                    else 'status_confirme' end
+            when g.status = 1 then 'status_grise'
+            when g.status = 0 then 'Créer'end class_status_groupe
     from
         participant_groupe p
     join

@@ -961,6 +961,7 @@ class HomeController extends Controller
             $data_detail='';
             $modules = DB::select('select nom_module,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by nom_module');
             $formations = DB::select('select nom_formation,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by nom_formation');
+            $status = DB::select('select item_status_groupe as status,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by item_status_groupe');
             if($data != null){
                 $ressource = DB::select('select * from ressources where groupe_id in (' . implode(',',$var) .')');
                 $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id in (' . implode(',',$var) .') order by stagiaire_id asc');
@@ -975,7 +976,7 @@ class HomeController extends Controller
                     array_push($documents , $drive->file_list($d->nom_cfp,"Mes documents"));
                 } 
             }
-            return view('projet_session.index2', compact('documents','data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations'));
+            return view('projet_session.index2', compact('documents','data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status'));
         }
     }
 
