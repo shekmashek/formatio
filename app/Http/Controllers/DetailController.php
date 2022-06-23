@@ -17,7 +17,9 @@ use App\entreprise;
 use App\responsable;
 use App\chefDepartement;
 use App\GroupeEntreprise;
+use RecursiveArrayIterator;
 use Illuminate\Http\Request;
+use RecursiveIteratorIterator;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -69,80 +71,83 @@ class DetailController extends Controller
         $formations = DB::select('select * from formations ');
         $entreprise_id = responsable::where('user_id', Auth::user()->id)->first()->entreprise_id;
 
-        // foreach ($groupe_entreprises as $key => $value) {
-        //     dump($value);
-        // }
-
-        // foreach ($groupe_entreprises as $key) {
-        //     $detail_id = DB::select('SELECT  id as details_id  from details
-        //     where details.groupe_id = ?',[$key->groupe_id]);
-        //     dump($detail_id);
-
-        // }
-
-
-
         $events = array();
 
         // si l'utilisateur est un résponsable d'entreprise
         if (Gate::allows('isReferent')) {
+        
+            // getting the entreprise if the connected user
+            $entreprise = entreprise::find($entreprise_id);
 
-            $details = DB::select('
-            SELECT  *,details.id as details_id  from details
-            inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
-            INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-            INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-            INNER JOIN modules ON groupes.module_id = modules.id
-            INNER JOIN formations ON modules.formation_id = formations.id
-            inner join formateurs on details.formateur_id = formateurs.id
-            inner join projets on details.projet_id = projets.id
-            inner join type_formations on projets.type_formation_id = type_formations.id
-            inner join cfps on details.cfp_id = cfps.id
-            where groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
+            // getting the groupe_entreprises belonging to $entreprise
+            $groupe_etp = GroupeEntreprise::where('entreprise_id', $entreprise_id)->get();
 
+            // we get many groupe_entreprises so loop foreach element to get the details
+            // matching with the groupe_id
 
-            // dd($details);
-
-            $groupe_etp = GroupeEntreprise::where('entreprise_id', $entreprise_id)->first();
-            // dd($groupe_etp->id);
-
-        $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
-        INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-        INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-        INNER JOIN modules ON groupes.module_id = modules.id
-        INNER JOIN formations ON modules.formation_id = formations.id
-        WHERE groupe_entreprises.entreprise_id = ?', [$entreprise_id]);
-
-            // dd($groupe_etp->groupe->nom_groupe);
-
-        foreach ($groupe_etp as $key => $value) {
-            $groupe = groupe::where('id', $value->id)->get();
-            dump($groupe);
-        }
+            // details['groupe_id'] -> groupe_entreprises['groupe_id'] -> groupe['id']
+            foreach ($groupe_etp as $key => $value) {
+                $details[] = detail::whereHas('groupe', function($query) use($value){
+                    $query->where('id', $value->groupe_id);
+                })->get();
+               
             
-            // $details = detail::where('groupe_id', 4)->get();
-dd('end');
-            foreach ($details as $key => $value) {
+            }
 
+            // $details get all data but it is a multidimansionnal array.
+            // We need to get each details as raveled_details (ref numpy.ravel() in python)
+            foreach ($details as $key => $detail) {
+                
+                // generate a random color as another attribute
+                $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                foreach ($detail as $key => $value) {
+
+                    $value->color = $detail->color;
+                    $raveled_details[] = $value;
+
+                }
+                
+                
+            }
+
+
+            // getting the elements for ech events from the groupe class relationships 
+            foreach ($raveled_details as $key => $value) {
                 $events[] = array(
                     'detail_id' => $value->id,
                     'title' => $value->groupe->module->formation->nom_formation,
-                    'start' => $value->date_detail,
-                    'end' => $value->h_fin,
+                    'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
+                    'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
                     'nom_projet' => $value->groupe->projet->nom_projet,
                     'lieu' => $value->lieu,
                     'formateur' => $value->formateur->nom_formateur,
-                    'nom_cfp' => $value->groupe->projet->cfp->nom
+                    'nom_cfp' => $value->groupe->projet->cfp->nom,
+                    'backgroundColor' => $value->color,
+                    'borderColor' => 'red'
                 );
-                
-                
 
             }
-            dd($events);
+
+            // grouping groupe, entreprise, module, projet, formation related to the connected user
+            foreach ($groupe_etp as $key => $value) {
+                $groupe_entreprises[] = array(
+                    'id' => $value->id,
+                    'groupe_id' => $value->groupe_id,
+                    'groupe' => $value->groupe,
+                    'entreprise' => $value->entreprise,
+                    'module' => $value->groupe->module,
+                    'projet' => $value->groupe->projet,
+                    'formation' => $value->groupe->module->formation,
+                );
+
+            }
+
         }
 
+
+
         // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
-        return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations'));
+        return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations','events'));
     }
 
     

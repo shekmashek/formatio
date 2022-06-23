@@ -230,6 +230,11 @@
             vertical-align: middle
         }
 
+
+        #planning .fc-daygrid-event{
+            background-color: #74747400!important;
+        }
+
     </style>
 
 
@@ -263,7 +268,7 @@
                 <div id='calendar'></div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-6 mt-5">
                 <div id='planning'></div>
             </div>
 
@@ -420,22 +425,60 @@
 
 
             document.addEventListener('DOMContentLoaded', function() {
+                
+                var events = {!! json_encode($events, JSON_HEX_TAG) !!};
                 var calendarEl = document.getElementById('planning');
-                var calendar = new FullCalendar.Calendar(calendarEl, {
+                
+                var calendar = new FullCalendar.Calendar(calendarEl, 
+                {
+                
                     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-                    initialView: 'dayGridMonth',
+                    initialView: 'listMonth',
                     locale: '{{ app()->getLocale() }}',
                     firstDay: 0,
+                    nowIndicator: true,
                     headerToolbar: {
-                                    right: 'prev,next',
+                                    right: 'prev,next today',
                                     center: 'title', 
-                                    left: ''
+                                    left: 'dayGridMonth,timeGridWeek,listMonth'
+                                },
 
-                                }
+                    events: events,
+                    close: 'fa-times',
+                    prev: 'fa-chevron-left',
+                    next: 'fa-chevron-right',
+                    prevYear: 'fa-angle-double-left',
+                    nextYear: 'fa-angle-double-right'
 
+                }
 
+                // {
+                //         headerToolbar: {
+                //             left: "prev,next today",
+                //             center: "title",
+                //             right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+                //         },
 
-                });
+                //         height: 800,
+                //         contentHeight: 780,
+                //         aspectRatio: 3,  // see: https://fullcalendar.io/docs/aspectRatio
+
+                //         nowIndicator: true,
+
+                //         views: {
+                //             dayGridMonth: { buttonText: "month" },
+                //             timeGridWeek: { buttonText: "week" },
+                //             timeGridDay: { buttonText: "day" }
+                //         },
+
+                //         initialView: "dayGridMonth",
+
+                //         editable: true,
+                //         dayMaxEvents: true, // allow "more" link when too many events
+                //         navLinks: true,
+                //         events: events,
+                //     }
+                );
 
 
 
