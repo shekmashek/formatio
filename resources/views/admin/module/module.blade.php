@@ -1068,8 +1068,8 @@
                                         @endif
                                 </div> --}}
 
-                                @if (count($datas)<=0)
-
+                                {{-- @if (count($datas)<=0) --}}
+{{--
                                 @else
                                     <hr class="mb-1 mt-2">
                                     <div class="row w-100 justify-content-end">
@@ -1158,7 +1158,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endif
+                                @endif --}}
                             </div>
                             @endforeach
                             @else
