@@ -4,7 +4,7 @@
 @endsection
 
 @inject('groupe', 'App\groupe')
-@inject('getImageModel', 'App\Models\getImageModel')
+@inject('carbon', 'Carbon\Carbon')
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
@@ -298,10 +298,10 @@
             color: #5433FF;
             text-align: center;
         }
-        .wrapper_nom{
-            width: 160px;
-            height:35px;
+        .wrapper_stg{
+            height:26px;
             border-radius: 30px;
+            background-color: #014f70;
         }
         .shadow {
         height: auto;
@@ -772,7 +772,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
         height: 9px;
         width: 9px;
         content: "";
-        top: 15px;
+        top: 31px;
     }
     /* event terminer */
     .timeline-1 .event_terminer {
@@ -826,7 +826,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
         height: 9px;
         width: 9px;
         content: "";
-        top: 15px;
+        top: 31px;
     }
     @media (max-width: 767px) {
         .timeline-1 .event:after {
@@ -846,40 +846,40 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
         border-left: 7px solid rgba(191, 26, 160, 0.593);
         border-bottom: 7px solid transparent;
         position: absolute;
-        margin-left: 277px;
-        margin-top: -46px;
+        margin-left: 279px;
+        margin-top: -32px;
     }
 /* timeline */
     </style>
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
-            <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
-                    {{ $nb_projet }}</span>
-                @if ($nb_par_page >= $nb_projet)
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($page == 1)
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
-                            class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($page == $fin_page || $page > $fin_page)
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
-                            class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                @else
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
-                            class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
-                            class='bx bx-chevron-right pagination'></i></a>
-                @endif
-            </span>
-            <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i
-                    class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
-
+            @canany(['isReferent', 'isCFP', 'isFormateur'])
+                <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
+                        {{ $nb_projet }}</span>
+                    @if ($nb_par_page >= $nb_projet)
+                        <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
+                            style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
+                            style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                    @elseif ($page == 1)
+                        <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
+                            style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
+                                class='bx bx-chevron-right pagination'></i></a>
+                    @elseif ($page == $fin_page || $page > $fin_page)
+                        <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
+                                class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
+                            style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                    @else
+                        <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
+                                class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
+                                class='bx bx-chevron-right pagination'></i></a>
+                    @endif
+                </span>
+            @endcanany
+            <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
         </div>
         @if (Session::has('pdf_error'))
             <div class="alert alert-danger ms-4 me-4">
@@ -1794,10 +1794,15 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
+                        <div class="row mb-5 justify-content-md-start">
+                            <div class="col-md-3 border-bottom">
+                                <h2 class="text-black-50 ms-5">Projects Timeline</h2>
+                            </div>
+                        </div>
                         @foreach ($data as $pj)
                         <div class="row justify-content-md-center">
                             <div class="col-md-2" style="background-color:rgba(177, 99, 163, 0.09);;">
-                                <h5 class="p_date mt-5">@php echo strftime('%B %G', strtotime($pj->date_debut)) @endphp</h5>
+                                <h5 class="p_date mt-5"> {{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
                                 <h6 class="p_date">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</h6>
                                 <div class="triangle-right"></div>
                             </div>
@@ -1811,33 +1816,29 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                     @elseif ($statut_eval == 1)
                                         <li class="event_terminer">
                                     @endif
-                                        <div class="row mt-2 titre_projet mb-1 w-100 g-0">
+                                        <div class="row mt-2 titre_projet mb-1 pt-2 pb-2 w-100 g-0">
                                             <div class="col-md-1 p-0">
                                             <h6 class="m-0"><a href="#collapseprojet_{{ $pj->module_id }}" class="mb-0 changer_carret d-flex" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
                                             </div>
-                                            <div class="col-md-2 p-0 d-flex text-center">
-                                                <h6 class="m-0">{{ $pj->nom_module }}</h6>
-                                            </div>
-                                            <div class="col-md-2 p-0 d-flex justify-content-start">
-                                                    <h6 class="m-0">
-                                                        {{ $pj->nom_formation }}
-                                                    </h6>&nbsp;
+                                            <div class="col-md-2 text-start">
+                                                <h6>{{ $pj->nom_module }}</h6>
+                                                <span class="text-black-50">{{ $pj->nom_formation }}</span>
                                             </div>
                                             <div class="col-md-3 p-0 d-flex justify-content-start">
-                                                    <h6 class="m-0">{{ $pj->nom_cfp }}</h6>&nbsp;
+                                                <img src="{{ asset('images/CFP/' . $pj->logo) }}" alt="{{ $pj->logo }}" style="width:64px;height:64px"/>
                                             </div>
                                             <div class="col-md-1 p-0 d-flex justify-content-start">
-                                                <a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn btn-sm"><i class="bx bxs-file-pdf"></i>PDF</button></a>
+                                                <a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn" style="width:57x;height:20px;font-size: 11px;padding-top: initial;"><i class="bx bxs-file-pdf"></i>PDF</button></a>
                                             </div>
                                             <div class="col-md-2 p-0 d-flex justify-content-start">
                                             @if ($statut_eval == 0)
-                                                <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn btn-sm pb-2" style="color: #ffffff !important">Evaluation à faire</button></a>
+                                                <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn" style="width:116px;height:20px;font-size: 11px;padding-top: initial;color: #ffffff !important">Evaluation à faire</button></a>
                                             @elseif ($statut_eval == 1)
                                                 <p class="mt-3" style="color: green">Evaluation terminé</p>
                                             @endif
                                             </div>
                                             <div class="col-md-1 p-0 d-flex justify-content-start">
-                                                <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn btn-sm pb-2">Résultat</button></a>
+                                                <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn" style="width:63px;height:20px;font-size: 11px;padding-top: initial;">Résultat</button></a>
                                             </div>
                                         </div>
                                         <div class="collapse" id="collapseprojet_{{ $pj->module_id }}">
@@ -1920,106 +1921,13 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                             <td>{{ $dt->h_debut }} h</td>
                                                                             <td>{{ $dt->h_fin }} h</td>
                                                                             {{-- test commit --}}
-                                                                            <td>
-                                                                                @if ($dt->photos == null)
-                                                                                    <span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $dt->sans_photos }}</span>{{ $dt->nom_formateur . ' ' . $dt->prenom_formateur }}
-                                                                                @else
-                                                                                    <img src="{{ asset('images/formateurs/' . $dt->photos) }}" alt=""
-                                                                                        height="30px" width="30px" style="border-radius: 50%;">
-                                                                                    {{ $dt->nom_formateur . ' ' . $dt->prenom_formateur }}
-                                                                                @endif
-                                                                            </td>
+                                                                            <td>{{ $dt->nom_formateur . ' ' . $dt->prenom_formateur }}</td>
                                                                         </tr>
                                                                         @endif
                                                                     @endforeach
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                    <div>
-                                                    <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="apprenant_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
-                                                        <div class="wrapper_nom randomColor">
-                                                            <div class="d-flex align-items-center">
-                                                            @foreach($stagiaire as $stg)
-                                                                @if($pj->module_id == $stg->module_id)
-                                                                    @if ($stg->photos == null)
-                                                                    <div class="randomColor p-2 mb-3 profile-circle" style="width: 35px; height: 35px; border-radius:35px">
-                                                                        <span class="align-middle text-center profile-initial" style="position:relative;">
-                                                                            <b class="empNew" style="font_size:13px ; cursor: pointer">{{substr($stg->nom_stagiaire, 0, 1)}}{{substr($stg->prenom_stagiaire, 0, 1)}}</b>
-                                                                        </span>
-                                                                    </div>
-                                                                    @else
-                                                                        <img src="{{ asset('images/stagiaires/' . $stg->photos) }}" alt="Image non chargée" style="width: 35px; height: 35px; border-radius=35px;cursor: pointer" {{-- class="rounded-circle empNew" --}} />
-                                                                    @endif
-                                                                    <div class="stg_names p-2 mb-3">
-                                                                        <span><b>{{$stg->nom_stagiaire}}&nbsp;{{$stg->prenom_stagiaire}}</b></span>
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="ressource_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
-                                                        @if (count($ressource)>0)
-                                                        <div class="mb-3 pe-5 ps-1 col-12 pb-5">
-                                                            <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
-                                                                <div class="col-md-3">
-                                                                    <span>
-                                                                        <h6>Matériel nécessaire</h6>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="col-md-3 p-0">
-                                                                    <span>
-                                                                        <h6>Demandé(e) par </h6>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="col-md-3 p-0">
-                                                                    <span>
-                                                                        <h6>Pris en charge par </h6>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="col-md-3 p-0">
-                                                                    <span>
-                                                                        <h6>Note </h6>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row mt-0 align-content-center">
-                                                                <div id="affiche_ressource">
-                                                                    @foreach ($ressource as $r)
-                                                                        @if ($r->groupe_id == $pj->groupe_id)
-                                                                            
-                                                                        <div class="d-flex mt-1" id="ressource_{{ $r->id }}"
-                                                                            >
-                                                                            <div class="col-md-3">
-                                                                                <section>
-                                                                                    <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
-                                                                                </section>
-                                                                            </div>
-                                                                            <div class="col-md-3">
-                                                                                <section>
-                                                                                    {{ $r->demandeur }}
-                                                                                </section>
-                                                                            </div>
-                                                                            <div class="col-md-3">
-                                                                                <section>
-                                                                                    {{ $r->pris_en_charge }}
-                                                                                </section>
-                                                                            </div>
-                                                                            <div class="col-md-3">
-                                                                                <section>
-                                                                                    {{ $r->note }}
-                                                                                </section>
-                                                                            </div>
-                                                                        </div>
-                                                                        @endif
-                                                                    @endforeach
-                                                                </div>
-                                                            </div>
-                                                            @else
-                                                            <div class="mb-3 pe-5 ps-1 col-12 pb-5">Vous n'avez pas besoin de ressources!</div>
-                                                            @endif
-                                                        </div>
-                                                    </div>
                                                         <div id="document_{{ $pj->module_id }}" class="tab-pane fade show tabcontent_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="document-tab" style="display: none">
                                                             {{-- @php 
                                                                 $documents = getImageModel::file_list($pj->groupe_id,"Mes documents");
@@ -2029,17 +1937,89 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                             </nav>
                                                             <div class="col-12 d-flex flex-wrap">
                                                                 <div class="d-flex flex-row">
-                                                                        @foreach ($documents as $docs)
-                                                                            <div class="form-check me-5">
-                                                                                <span><i class="fa fa-file-download"></i>&nbsp; <a href="{{route('telecharger_fichier',['cfp'=>$pj->nom_cfp,'filename'=>$docs->nom_doc,'extension'=>$docs->extension])}}"> {{$docs->nom_doc.'.'.$docs->extension}} </a> </span>
-                                                                            </div>
-                                                                        @endforeach
-                                                                   
+                                                                    @foreach ($documents as $docs)
+                                                                        <div class="form-check me-5">
+                                                                            <span><i class="fa fa-file-download"></i>&nbsp; <a href="{{route('telecharger_fichier',['cfp'=>$pj->nom_cfp,'filename'=>$docs->nom_doc,'extension'=>$docs->extension])}}"> {{$docs->nom_doc.'.'.$docs->extension}} </a> </span>
+                                                                        </div>
+                                                                    @endforeach
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="apprenant_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
+                                                            <div style="display: inline-block">
+                                                                @foreach($stagiaire as $stg)
+                                                                    @if($pj->module_id == $stg->module_id)
+                                                                    <div class="float-start wrapper_stg mt-3 p-1 pe-2 ps-2 me-2">
+                                                                        <span style="color:#ececec;">{{$stg->nom_stagiaire}}&nbsp;{{$stg->prenom_stagiaire}}</span>
+                                                                    </div>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="ressource_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
+                                                            @if (count($ressource)>0)
+                                                            <div class="mb-3 pe-5 ps-1 col-12 pb-5">
+                                                                <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
+                                                                    <div class="col-md-3">
+                                                                        <span>
+                                                                            <h6>Matériel nécessaire</h6>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="col-md-3 p-0">
+                                                                        <span>
+                                                                            <h6>Demandé(e) par </h6>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="col-md-3 p-0">
+                                                                        <span>
+                                                                            <h6>Pris en charge par </h6>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="col-md-3 p-0">
+                                                                        <span>
+                                                                            <h6>Note </h6>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-0 align-content-center">
+                                                                    <div id="affiche_ressource">
+                                                                        @foreach ($ressource as $r)
+                                                                            @if ($r->groupe_id == $pj->groupe_id)
+                                                                                
+                                                                            <div class="d-flex mt-1" id="ressource_{{ $r->id }}">
+                                                                                <div class="col-md-3">
+                                                                                    <section>
+                                                                                        <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
+                                                                                    </section>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <section>
+                                                                                        {{ $r->demandeur }}
+                                                                                    </section>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <section>
+                                                                                        {{ $r->pris_en_charge }}
+                                                                                    </section>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <section>
+                                                                                        {{ $r->note }}
+                                                                                    </section>
+                                                                                </div>
+                                                                            </div>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                                @else
+                                                                <div class="mb-3 pe-5 ps-1 col-12 pb-5">Vous n'avez pas besoin de ressources!</div>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        
                                                     </div>
-                                                </div>
+                                                <div>
                                             </section>
                                             {{-- /section --}}
                                         </div>
@@ -2090,7 +2070,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
                 </div>
                 <hr class="mt-2">
-                @canany(['isReferent', 'isCFP'])
+                @canany(['isReferent', 'isCFP','isStagiaire'])
                     <div class="col-12 pe-3">
                         <div class="row mb-3 p-2 pt-0">
                             <form action="{{ route('liste_projet') }}" method="GET">
@@ -2122,7 +2102,6 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                     </select>
 
                                 </div>
-
                                 <div class="row px-3 mt-2">
                                     <select name="semestre" id="semestre" class="filtre_projet">
                                         <option value="null" selected>Semestres</option>
@@ -2131,19 +2110,44 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                     </select>
 
                                 </div>
-
                                 <div class="row px-3 mt-2">
                                     <select name="annee" id="annee" class="filtre_projet">
                                         <option value="null" selected>Années</option>
                                     </select>
                                     <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
-
                                 </div>
-
                             </form>
                         </div>
-                    @endcanany
+                    </div>
+                @endcanany
+                @can('isStagiaire')
+                <div class="col-12 pe-3">
+                    <div class="row mb-3 p-2 pt-0">
+                        <form action="{{ route('liste_projet') }}" method="GET">
+                            <div class="row px-3 mt-2">
+                                <select name="module" id="module" class="filtre_projet">
+                                    <option value="null" selected>Nom de module</option>
+                                    @foreach ($modules as $mod)
+                                        <option value="{{$mod->nom_module}}">{{$mod->nom_module}}</option>
+                                    @endforeach
+                                </select>
+                                <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
+                            </div>
+                        </form>
+                        <form action="{{ route('liste_projet') }}" method="GET">
+                            <div class="row px-3 mt-2">
+                            <select name="formation" id="formation" class="filtre_projet">
+                                <option value="null" selected>Nom de formation</option>
+                                @foreach ($formations as $form)
+                                    <option value="{{$form->nom_formation}}">{{$form->nom_formation}}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+                @endcan 
                 @can('isReferent')
                     <div class="row px-3 mt-2">
                         <form action="{{ route('recherche_cfp') }}" method="POST">

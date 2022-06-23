@@ -494,7 +494,8 @@ select
         mf.nom_module,
         mf.nom_formation,
         mf.nom as nom_cfp,
-        mf.cfp_id
+        mf.cfp_id,
+        mf.logo
     from
         participant_groupe p
     join
