@@ -752,10 +752,24 @@ Route::get('formationParDomaine', 'PlanFormationController@domaineParFormation')
 Route::post('enregistrerPlan', 'PlanFormationController@enregistrer_planFormation')->name('enregistrerPlan');
 Route::get('recherchePlanAnnee/{annee?}', 'PlanFormationController@rechercheDemandeAnnee')->name('recherchePlanAnnee');
 Route::get('/searchDemandeAnnee', 'PlanFormationController@getAnnee')->name('searchDemandeAnnee');
+
+
+
+
+
+////////////////// modification mahafaly /////////////////////////////////
+Route::get('/demandeFormation/{id}','PlanFormationController@demande')->name('plan.demande');
+Route::get('/ListedemandeFormation','PlanFormationController@liste')->name('liste.demande');
+Route::get('/ListedemandeFormationValidé','PlanFormationController@listeV')->name('liste.demandeV');
+Route::get('/ajoutPlan/{id}','PlanFormationController@ajout')->name('ajout.plan');
+Route::post('/creationPla','PlanFormationController@cree')->name('plan.cree');
+Route::post('/edtitPlan/{id}','PlanFormationController@modifier')->name('plan.modifier');
+/////////////////fin modification Mahafaly //////////////////////////////
+
 //ajouter nouveau plan
-Route::get('ajout_plan', function () {
-    return view('referent.ajout_plan');
-})->name('ajout_plan');
+// Route::get('ajout_plan', function () {
+//     return view('referent.ajout_plan');
+// })->name('ajout_plan');
 //Route::get('enregistrer','PlanFormationController@enregistrer_plan')->name('enregistrer');
 Route::get('listePlanFormation', 'PlanFormationController@liste_plan')->name('listePlanFormation');
 
@@ -851,9 +865,9 @@ Route::post('enregistrer_modification_abonnement_of/{id}','AbonnementController@
 Route::get('modifier_abonnement_entreprise/{id}','AbonnementController@modifier_abonnement_entreprise')->name('modifier_abonnement_entreprise');
 Route::post('enregistrer_modification_abonnement_etp/{id}','AbonnementController@enregistrer_modification_abonnement_etp')->name('enregistrer_modification_abonnement_etp');
 //ajouter nouveau plan
-Route::get('ajout_plan', function () {
-    return view('referent.ajout_plan');
-})->name('ajout_plan');
+// Route::get('ajout_plan', function () {
+//     return view('referent.ajout_plan');
+// })->name('ajout_plan');
 Route::get('enregistter', 'PlanFormationController@enregistrer_plan')->name('enregistrer');
 //Route::get('enregistrer','PlanFormationController@enregistrer_plan')->name('enregistrer');
 Route::get('listePlanFormation', 'PlanFormationController@liste_plan')->name('listePlanFormation');

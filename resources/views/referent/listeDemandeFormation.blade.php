@@ -1,260 +1,157 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Plan de formation et budgetisation</p>
+    <p class="text_header m-0 mt-1">Plan de formation </p>
 @endsection
 @section('content')
+<style>
+    h4,label,p{
+        font-weight: lighter;
+    }
+    .disabled > a {
+    color: currentColor;
+    display: inline-block;  /* For IE11/ MS Edge bug */
+    pointer-events: none;
+    text-decoration: none;
+    }
+    .disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    }
+    input[type="text"]:disabled {
+    background: rgb(245, 242, 242);
+    }
+</style>
 <div id="page-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-            	<br>
-                <div class="shadow-sm p-3 bg-body rounded">
-                    <div class="container-fluid">
-                    <div class="shadow p-3 mb-5 bg-body rounded">
-                        <div class="row">
-                            <div class="col-lg-10">
-                                {{-- <br>
-                                <h3>Plan de formation et budgetisation</h3>
-                                <br> --}}
-                                <div class="panel-heading">
-                                        <ul class="nav nav-pills">
-                                            <button type = "button" class ="btn_next {{ Route::currentRouteNamed('planFormation') ? 'active' : '' }}"><a href="{{route('planFormation.index')}}" ><span class="fa fa-th-list"></span>  Nouvelle demande</a></button>&nbsp;&nbsp;
-                                            @can('isReferent')
-                                                <button type = "button" class ="btn_next {{ Route::currentRouteNamed('liste_demande_stagiaire') ? 'active' : '' }}"><a href="{{route('liste_demande_stagiaire')}}" ><span class="fa fa-th-list"></span>  Liste des demandes</a></button>&nbsp;&nbsp;
-                                            @endcan
-                                            <button type = "button" class ="btn_next {{ Route::currentRouteNamed('listePlanFormation') ? 'active' : '' }}"><a href="{{route('listePlanFormation')}}" ><span class="fa fa-th-list"></span>  Liste des Plan de formation</a></button>&nbsp;&nbsp;
-                                            <button  type = "button" class ="btn_next {{ Route::currentRouteNamed('ajout_plan') ? 'active' : '' }}" ><a href="{{route('ajout_plan')}}"><span class="fa fa-plus-sign"></span> Nouveau Plan de formation</a></button>&nbsp;&nbsp;
-                                            <button  type = "button" class ="btn_next {{ Route::currentRouteNamed('budget') ? 'active' : '' }}" ><a href="{{route('budget')}}"><span class="fas fa-sack-dollar"></span> Budgetisation</a></button>&nbsp;&nbsp;
-                                            <button type = "button" class ="btn_next"><form class="d-flex mx-1" method="GET" action="{{ route('recherchePlanAnnee') }}">
+    <div class="container mt-5 p-4" >
+       <div class="row">
+           <div class="col-md-12 ">
+               <div class="float-start">
+                    <h4>Plan de formation </h4>
+               </div>
+               <div class="float-end">
+                    <button class="btn btn-info text-light text-sm" class="btn btn-primary" > <a href="{{route('ajout.plan',$entreprise_id)}}">Crée un nouveaux plan</a> </button>
+               </div>
+           </div>
+       </div>
+       <div class="row mt-4">
+           <div class="col-md-12">
+                @foreach ($plan as $p)
+                    <table class="table " >
+                        <thead>
+                            <tr style="background: rgb(245, 242, 242);" >
+                                <th style="border: none">{{$p->AnneePlan}}</th>
+                                <th style="float: right;border:none">
+                                    <a data-bs-toggle="collapse" href="#collapseExample_{{$p->AnneePlan}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <i class="fa-solid fa-angle-down"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr> 
+                            <td>
+                                <div class="collapse" id="collapseExample_{{$p->AnneePlan}}">
+                                    <div class="row">
+                                        <div class="col-md-6 p-4">
+                                            <h5>Plan Previsionnel</h5>
+                                            <form action="{{route('plan.modifier',$p->id)}}" method="post">
+                                                @csrf
+                                                
                                                 <div class="form-group">
-                                                    <input style="margin-top:-5px;" type="text" id="annee_search" name="annee" class="form-control" placeholder="Rechercher par année"/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <button style="margin-top:-5px;" type="submit" class="btn btn-primary"> <i class="fa fa-search"></i></button>
-                                                </div>
-                                            </form></button>
-
-                                        </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg">
-                                <div class="">
-                                    <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                {{-- <h3>Liste des demandes du plan de formation: {{$liste[0]->annee_plan->Annee}}</h3> --}}
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Photo</th>
-                            <th>Collaborateurs</th>
-                            <th>Formation</th>
-                            <th>Durée</th>
-                            <th>Date prev.</th>
-                            <th>Statut</th>
-                            <th>Date dde</th>
-                            <th colspan = "2">Actions</th>
-
-                        </tr>
-                    </thead>
-                    <tbody id = "liste_projet">
-                            @foreach($liste as $rec)
-
-
-                                    <tr>
-
-                                        @foreach ($stagiaire as $stg )
-                                            @if($stg->id == $rec->stagiaire_id)
-                                                <td> <img src="{{asset('images/stagiaires/'.$stg->photos)}} " style="width: 60px;border-radius:50%""></td>
-                                            @endif
-                                        @endforeach
-                                        @foreach ($stagiaire as $stg )
-                                            @if($stg->id == $rec->stagiaire_id)
-                                                <td>{{$stg->nom_stagiaire}} {{$stg->prenom_stagiaire}} <br>{{$stg->fonction_stagiaire}}</td>
-                                            @endif
-                                        @endforeach
-                                        @foreach ($domaine as $d)
-                                            @if($d->id == $rec->formation->domaine_id)
-                                                <td>{{$d->nom_domaine}} <br> {{$rec->formation->nom_formation}} </td>
-                                            @endif
-                                        @endforeach
-                                        <td>{{$rec->duree_formation}} j</td>
-                                        {{-- <td><?php setlocale(LC_ALL, 'fr_FR'); ?>{{date('F', mktime(0, 0, 0, $rec->mois_previsionnelle, 10)).' '.$rec->annee_previsionnelle}} </td> --}}
-                                        <td>{{$rec->mois_previsionnelle}}/{{$rec->annee_previsionnelle}}</td>
-                                        @if($rec->statut == "En attente")
-                                            <td id = "statut_demande"><span id = "span_statut_{{$rec->id}}" style="background-color:orange;color:white" class="py-1 px-1">{{$rec->statut}}</span></td>
-                                        @elseif($rec->statut == "Acceptée")
-                                            <td id = "statut_demande"><span id = "span_statut_{{$rec->id}}" style="background-color:green;color:white" class="py-1 px-1">{{$rec->statut}}</span></td>
-                                        @else
-                                            <td id = "statut_demande"><span id = "span_statut_{{$rec->id}}" style="background-color:red;color:white" class="py-1 px-2">{{$rec->statut}}</span></td>
-                                        @endif
-                                        <td>{{$rec->date_demande}}</td>
-                                        @if ($rec->statut == "Acceptée"  )
-                                            <td>
-                                                <!-- Default switch -->
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input accepter" data-id="{{$rec->id}}" type="checkbox" role="switch"/>
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$rec->id}}">Refusée</label>
-                                                </div>
-                                            </td>
-                                        @elseif($rec->statut == "Refusée"  or $rec->statut == "En attente")
-                                            <td>
-                                                <!-- Default switch -->
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input accepter"  data-id="{{$rec->id}}" type="checkbox" role="switch"/>
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$rec->id}}">Acceptée</label>
-                                                </div>
-                                            </td>
-                                        @endif
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                {{-- @foreach ($plan as $plans)
-                                                    <label for="">Collaborateur : {{ $plans->stagiaire->nom_stagiaire }} {{ $plans->stagiaire->prenom_stagiaire }} - {{$plans->stagiaire->fonction_stagiaire }}</label><br>
-                                                    <label for="">Formation: {{ $plans->formation->nom_formation }}</label>
-                                                @endforeach --}}
-                                            </div>
-                                        </div>
-                                        <td><button type = "button" class = "btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Budget</button></a></td>
-                                    </tr>
-
-
-                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="staticBackdropLabel">Ajout Plan</h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action = "{{route('enregistrerPlan')}}" method = "POST" >
-                                                    @csrf
-
-                                                    <input type = "hidden"   name = "idRecueil" value="{{$liste[0]->id}}">
-                                                    <input type = "hidden"    name = "idAnnee" value="{{$liste[0]->annee_plan_id}}">
-
-                                                   <br>
-
-
-                                                    <div class="row">
-                                                        <div class="col">
-
-                                                            <label for="coutPrevisionnel">Coût prév en Ar</label><br><br>
-                                                            <input type="text" autocomplete="off" class="form-control" id="coutPrevisionnel" name="cout" placeholder="Coût prévisionnel">
-                                                            @error('cout')
-                                                              <div class ="col-sm-6">
-                                                                  <span style = "color:#ff0000;"> {{$message}} </span>
-                                                              </div>
-                                                              @enderror
-
-                                                        </div>
-                                                        <div class="col">
-
-                                                        <label for="modeFinancement">Mode de financement</label><br><br>
-                                                            <select class="form-select" aria-label="Default select example" id="typologieFormation" name="mode_financement">
-                                                                <option value="Choisissez un mode de financement...">Choisissez un mode de financement...</option>
-                                                                <option value="Fonds propre">Fonds propre</option>
-                                                                <option value="FMFP">FMFP</option>
-                                                            </select>
-
-                                                        </div>
+                                                    <div class="input-groupe">
+                                                        <label for="">Demande de recueil:</label>
+                                                        <input type="date" value="{{$p->debut_rec}}" name="debut" class="form-control" id="inp" >
                                                     </div>
-
-
-                                                    <button type = "submit" class="btn btn-outline-success "><span class="fa fa-save"></span>&nbsp; Ajouter
-
-                                                </form>
+                                                    <div class="input-groupe">
+                                                        <label for="">Fin de recueil:</label>
+                                                        <input type="date" placeholder="test" value="{{ $p->fin_rec}}" name="fin" id="inp2" class="form-control" >
+                                                    </div>
+                                                    <div class="input-groupe">
+                                                    <label for="">Salarie:</label>
+                                                    <input type="text" class="form-control" value="{{$nombr}}" disabled>
+                                                    <button type="submit" class="btn btn-info text-light mt-1" style="margin-left: 503px" >Editer</button>
+                                                </div>
+                                            </form>  
+                                            <div style="display: flex"> 
+                                            <button class="btn btn-info mt-3 text-light">Email de collecte</button>&nbsp;
+                                            <p class="mt-4" style="font-weight: lighter;font-size:12px;"> Envoie à tout les salarié une email pour reccueillir leur formation</p>
                                             </div>
-
+                                            <div style="display: flex"> 
+                                            <button class="btn btn-warning mt-2 text-light">Email de rappele</button>&nbsp;
+                                            <p class="mt-3" style="font-weight: lighter;font-size:12px;"> rappele par email pour reccueillir leur formation</p>
+                                            </div>
                                         </div>
-                                      </div>
+                                    </div>
+                                    <div class="col-md-6 p-4 ">
+                                        <h5>Reccueil de besoins</h5>
+                                        <div class="row ">
+                                            <div class="col">
+                                                <div class="float-start">
+                                                    <p>Nombre de Salarie ayant exprimer</p>
+                                                </div>
+                                                <div class="float-end">
+                                                    <p><input type="hidden" value="0" id="teste"> <span id="test">0</span>/{{$nombr}}</p>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row p-2" style="margin-top: -20px">
+                                            <div class="progress ">
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                                </div>
+                                                <div>
+                                                    <span  class="te "><a href="{{route('liste.demande')}}" class="btn btn-info mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
+                                                    <span class="te "> <a href="" class="btn btn-primary mt-2 text-light"> <i class="fa-solid fa-file-pdf" ></i>&nbsp; Export liste</a> </span>
 
-
-                         @endforeach
-
-                    </tbody>
-                </table>
-        </div>
-
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
+                                            </div>
+                                        </div>
+                                        <div class="row " >
+                                            <div class="col mt-3">
+                                                <div class="float-start">
+                                                    <p>Nombre valide par le N+</p>
+                                                </div>
+                                                <div class="float-end">
+                                                    <p>0/{{$nombr}}</p>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                        <div class="row p-2" style="margin-top: -20px">
+                                            <div class="progress">
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                            </div>
+                                            <div>
+                                                <a href="{{route('liste.demandeV')}}" class="btn btn-warning mt-2 text-light"><i class="fa-solid fa-eye"></i>&nbsp;Voir liste</a>
+                                                <a href="" class="btn btn-primary mt-2 text-light"><i class="fa-solid fa-file-pdf"></i>&nbsp; Export liste</a>
+                                            </div>
+                                        </div> 
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>  
+                @endforeach 
+           </div>
+       </div>
+       
+      
+</div>
 <script>
-     $( ".accepter" ).on( "change", function() {
-        $idAcueil = $('#id_recueil').val();
-        if($( this ).prop('checked')){
-            $statut = "Acceptée";
-            $idAcueil = $(this).data('id');
-        }
-        else{
-            $statut = "Refusée";
-            $idAcueil = $(this).data('id');
-        }
-
-        $.ajax({
-            type: "GET",
-            url: "{{route('accepter_demande')}}",
-            data:{Id:$idAcueil,Statut:$statut},
-            dataType: "html",
-            success:function(response){
-            //    alert(response[0]);
-                var userData=JSON.parse(response);
-                for (var $i = 0; $i < userData.length; $i++){
-                    $('#span_statut').text(userData[$i].statut);
-                    if (userData[$i].statut == "Acceptée") {
-                        $('#span_statut_'+userData[$i].id).css('background-color','green');
-                        $('#span_statut_'+userData[$i].id).css('color','white');
-                        $('#span_statut_'+userData[$i].id).css('padding','10px');
-                        $('#span_statut_'+userData[$i].id).text(userData[$i].statut);
-                        $('#statut_'+userData[$i].id).text('Refusée');
-                    }
-                    else{
-                        $('#span_statut_'+userData[$i].id).css('background-color','red');
-                        $('#span_statut_'+userData[$i].id).css('color','white');
-                        $('#span_statut_'+userData[$i].id).css('padding','10px');
-                        $('#span_statut_'+userData[$i].id).text(userData[$i].statut);
-
-                        $('#statut_'+userData[$i].id).text('Acceptée');
-                    }
-                }
-            },
-            error:function(error){
-                console.log(error)
-            }
-        });
-    });
-      // CSRF Token
-      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $(document).ready(function(){
-
-      $( "#annee_search" ).autocomplete({
-        source: function( request, response ) {
-          // Fetch data
-          $.ajax({
-            url:"{{route('searchDemandeAnnee')}}",
-            type: 'get',
-            dataType: "json",
-            data: {
-            //    _token: CSRF_TOKEN,
-               search: request.term
-            },
-            success: function( data ) {
-                // alert("eto");
-               response( data );
-            },error:function(data){
-                alert("error");
-                //alert(JSON.stringify(data));
-            }
-          });
-        },
-        select: function (event, ui) {
-           // Set selection
-           $('#annee_search').val(ui.item.label); // display the selected text
-           $('#annee_searchid').val(ui.item.value); // save selected id to input
-           return false;
-        }
-      });
-    });
+    var a = document.getElementById('teste').value;
+    var b = document.getElementById('test').innerHTML = a;
+    var c = document.querySelector('.te');
+    if (a == 0){
+       
+        c.classList.add ('disabled');
+    }
+    else{
+        c.classList.remove("disabled");
+    }
+    //  function msokatra(){
+    //     document.getElementById("inp").disabled = false;
+    //     document.getElementById("inp2").disabled = false;
+    //  }
 </script>
 @endsection
