@@ -865,9 +865,9 @@ Route::post('enregistrer_modification_abonnement_of/{id}','AbonnementController@
 Route::get('modifier_abonnement_entreprise/{id}','AbonnementController@modifier_abonnement_entreprise')->name('modifier_abonnement_entreprise');
 Route::post('enregistrer_modification_abonnement_etp/{id}','AbonnementController@enregistrer_modification_abonnement_etp')->name('enregistrer_modification_abonnement_etp');
 //ajouter nouveau plan
-// Route::get('ajout_plan', function () {
-//     return view('referent.ajout_plan');
-// })->name('ajout_plan');
+Route::get('ajout_plan', function () {
+    return view('referent.ajout_plan');
+})->name('ajout_plan');
 Route::get('enregistter', 'PlanFormationController@enregistrer_plan')->name('enregistrer');
 //Route::get('enregistrer','PlanFormationController@enregistrer_plan')->name('enregistrer');
 Route::get('listePlanFormation', 'PlanFormationController@liste_plan')->name('listePlanFormation');

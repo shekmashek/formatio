@@ -83,6 +83,7 @@ class DepartementController extends Controller
         // $referent = DB::select(' where entreprise_id = ? and prioriter=false', [$etp_id]);
         // $chef = chefDepartement::where('entreprise_id', $etp_id)->get();
         $chef =  $fonct->findWhere('chef_departements',['entreprise_id'],[$etp_id]);
+        // dd($chef);
         $nom_chef = [];
         $prenom_chef = [];
         for ($i=0; $i < count($chef); $i++) {

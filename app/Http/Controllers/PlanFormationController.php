@@ -142,12 +142,12 @@ class PlanFormationController extends Controller
         $plan = DB::select('select * from plan_formation_valide where entreprise_id = ?', [$entreprise_id]);
         $employ = DB::select('select * from stagiaires where entreprise_id = ?', [$entreprise_id]);
         $nombr = count($employ);
-        // $yearNow = Carbon::now()->format('Y');
-        // $idAnnee = annee_plan::where('Annee', $yearNow)->value('id');
-        // $test = annee_plan::where('Annee', $yearNow)->exists();
-        // $domaine = Domaine::all();
-        // $stagiaire = stagiaire::all();
-        // $role_id = User::where('email', Auth::user()->email)->value('role_id');
+        $yearNow = Carbon::now()->format('Y');
+        $idAnnee = annee_plan::where('Annee', $yearNow)->value('id');
+        $test = annee_plan::where('Annee', $yearNow)->exists();
+        $domaine = Domaine::all();
+        $stagiaire = stagiaire::all();
+        $role_id = User::where('email', Auth::user()->email)->value('role_id');
 
         if (Gate::allows('isReferent')) {
             $liste = recueil_information::with('formation', 'annee_plan')->where('entreprise_id', $entreprise_id)->get();
@@ -165,8 +165,8 @@ class PlanFormationController extends Controller
             $liste = recueil_information::with('formation')->get();
         }
         // echo ($entreprise_id);
-        // return view('referent.listeDemandeFormation', compact('liste', 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id'));
-        return view('referent.listeDemandeFormation',compact('entreprise_id','plan','employ','nombr'));
+        return view('referent.listeDemandeFormation', compact('liste', 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','entreprise_id','plan','employ','nombr'));
+        // return view('referent.listeDemandeFormation',compact('entreprise_id','plan','employ','nombr'));
         
     }
 

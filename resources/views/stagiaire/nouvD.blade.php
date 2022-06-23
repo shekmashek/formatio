@@ -5,7 +5,7 @@
 @section('content')
 <style>
     h2,label{
-        font-weight: lighter;
+        font-weight: 400;
     }
 </style>
 <div class="container shadow-sm mt-5 p-5">
