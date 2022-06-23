@@ -54,6 +54,7 @@ class ModuleController extends Controller
             $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             $categorie = formation::all();
+
             $date_creation = module::all();
             $niveau = Niveau::all();
             // $mod_en_cours = DB::select('select * from moduleformation as mf where NOT EXISTS (

@@ -487,7 +487,6 @@
                         <i class='bx bx-group' style="font-size: 1rem;"></i>
                         <span class="m-0 ms-1 me-3"> Apprenant inscrit : {{ count($stagiaire) }}</span>
                         @can('isCFP')
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> CA :<strong>
                                 {{-- @if(count($dataMontantSession)>0)
                                     @if( $dataMontantSession[0]->hors_taxe != null)
@@ -514,7 +513,6 @@
                                 @endphp&nbsp;
                             </span>
                             {{$ref}}</strong> </p>&nbsp;&nbsp;
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> FA : <strong>
                                 <span>
                                     @php
@@ -535,8 +533,7 @@
                                 @endif --}}
                                 {{$ref}}</strong></p>
                         @endcan
-                    @can('isReferent')
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
+                        @can('isReferent')
                             <p class="text-dark mt-3"> CP : <strong>
                                 @if (count($dataMontantSession) >0)
                                     {{ number_format($dataMontantSession[0]->hors_taxe, 0, ',', ' ')}}
@@ -544,10 +541,7 @@
                                     @php
                                         echo "<span>-</span>";
                                     @endphp
-                                @endif
-
-                                          {{$ref}}</strong> </p>&nbsp;&nbsp;
-                            <p class="m-0"><i class="bx bx-dollar-circle mt-2"></i></p>&nbsp;
+                                @endif{{$ref}}</strong> </p>&nbsp;&nbsp;
                             <p class="text-dark mt-3"> FA : <strong id="frais_annex_entreprise">
                                 @php
                                     $Totalfa = 0;

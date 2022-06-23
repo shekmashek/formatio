@@ -151,7 +151,7 @@ class SessionController extends Controller
                 $entreprise_id = null;
             }
 
-            // $frais_annex = DB::select("select * from v_montant_frais_annexe where cfp_id=?",[$cfp_id]);
+            $frais_annex = DB::select("select * from v_montant_frais_annexe where cfp_id=?",[$cfp_id]);
             // if(count($frais_annex)>0){
             //     if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id  && $frais_annex[0]->projet_id == $projet[0]->projet_id){
             //         $frais_annex[0] = $frais_annex[0]->hors_taxe;
@@ -171,6 +171,14 @@ class SessionController extends Controller
             //         $dataMontantSession[0]->hors_taxe=null;
             //     }
             // }
+            if(count($frais_annex)>0){
+                if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id && $frais_annex[0]->projet_id == $projet[0]->projet_id){
+                    $frais_annex[0] = $frais_annex[0]->hors_taxe;
+                }
+                else{
+                    $frais_annex[0] =null;
+                }
+            }
 
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
