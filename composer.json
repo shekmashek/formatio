@@ -21,7 +21,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
         "maatwebsite/excel": "^3.1",
-        "nao-pon/flysystem-google-drive": "~1.1"
+        "nao-pon/flysystem-google-drive": "~1.1",
+        "nesbot/carbon": "^2.58"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

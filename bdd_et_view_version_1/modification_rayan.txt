@@ -1,0 +1,2 @@
+modification table formateurs pour ajout de colonne"description" dans son CV:
+alter Table formateurs add COLUMN description text not null default "";
