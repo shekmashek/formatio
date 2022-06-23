@@ -1297,13 +1297,13 @@
                                                                         <div class="row">
                                                                             <div class="col">
                                                                                 <div class="form-group">
-                                                                                    <label for="dte_debut" class="form-label" align="left">Solde minimum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
+                                                                                    <label for="dte_debut" class="form-label" align="left">Solde minimum({{$devise->devise}})<strong style="color:#ff0000;">*</strong></label>
                                                                                     <input autocomplete="off" required type="number" min="0" placeholder="valeur" name="solde_debut" id="solde_debut" class="form-control" />
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col">
                                                                                 <div class="form-group">
-                                                                                    <label for="dte_fin" class="form-label" align="left"> Solde maximum({{$devise->reference}})<strong style="color:#ff0000;">*</strong></label>
+                                                                                    <label for="dte_fin" class="form-label" align="left"> Solde maximum({{$devise->devise}})<strong style="color:#ff0000;">*</strong></label>
                                                                                     <input required type="number" name="solde_fin" id="solde_fin" class="form-control" />
                                                                                 </div>
                                                                             </div>

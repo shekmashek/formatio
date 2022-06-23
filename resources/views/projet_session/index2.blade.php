@@ -1101,7 +1101,7 @@
                         </table>
                     @endif
                 @endcan
-                @can('isReferent')
+                @canany(['isReferent','isReferentSimple'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
@@ -1198,7 +1198,7 @@
                             </tbody>
                         </table>
                     @endif
-                @endcan
+                @endcanany
                 @can('isStagiaire')
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
@@ -1279,7 +1279,7 @@
                     <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
                 </div>
                 <hr class="mt-2">
-                @canany(['isReferent', 'isCFP'])
+                @canany(['isReferent', 'isCFP','isReferentSimple'])
                     <div class="col-12 pe-3">
                         <div class="row mb-3 p-2 pt-0">
                             <form action="{{ route('liste_projet') }}" method="GET">
@@ -1333,7 +1333,7 @@
                         </div>
                     @endcanany
                 </div>
-                @can('isReferent')
+                @canany(['isReferent','isReferentSimple'])
                     <div class="row px-3 mt-2">
                         <form action="{{ route('recherche_cfp') }}" method="POST">
                             @csrf
@@ -1346,7 +1346,7 @@
                             </div>
                         </form>
                     </div>
-                @endcan
+                @endcanany
                 {{-- @can('isCFP')
                 <div class="row px-3 mt-2">
                     <form  action="{{ route('recherche_entreprise') }}" method="POST">
@@ -1361,7 +1361,7 @@
                     </form>
                 </div>
                 @endcan --}}
-                @canany(['isReferent', 'isCFP'])
+                @canany(['isReferent', 'isCFP','isReferentSimple'])
                     <div class="col-12 ps-5">
                     @endcanany
                     @canany(['isFormateur', 'isStagiaire'])

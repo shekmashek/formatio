@@ -186,17 +186,10 @@ class SessionController extends Controller
             $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
-        if(Gate::allows('isReferent')){
+        if(Gate::allows('isReferent') or Gate::allows('isReferentSimple')){
 
-            if (Gate::allows('isReferentPrincipale')) {
-                $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isStagiairePrincipale')) {
-                $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isManagerPrincipale')) {
-                $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            }
+            $etp_id = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
+
             $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
             $datas = $fonct->findWhere("v_detail_session", ["groupe_id"], [$id]);
 
@@ -247,6 +240,7 @@ class SessionController extends Controller
 
 
         // public
+
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);

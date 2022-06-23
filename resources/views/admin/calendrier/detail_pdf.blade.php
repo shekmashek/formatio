@@ -112,7 +112,7 @@
                                 @endphp
                                 <tr>
                                     @if($stg[$k]->photos != null)
-                                        <td> <img src= "{{ public_path('images/stagiaires/'.$stg[$k]->photos)}}" width="50px" class="photo" alt=""></td>
+                                        <td> <img src= "{{ public_path('images/employes/'.$stg[$k]->photos)}}" width="50px" class="photo" alt=""></td>
                                     @else
                                         <td></td>
                                     @endif
@@ -128,7 +128,7 @@
                         </div>
             <div style="margin-top: 20px">
 
-           
+
             <label for=""><strong >Les matériels nécessaires</strong></label>
             <table>
                 <tr>
@@ -146,7 +146,7 @@
                     <td>{{$res->note}}</td>
                 </tr>
                    @endforeach
-                    
+
             </table>
         </div>
             </div>

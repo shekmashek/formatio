@@ -283,7 +283,7 @@
                         <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
 
-                        @canany(['isReferent','isCFP','isFormateur','isManager'])
+                        @canany(['isReferent','isCFP','isFormateur','isManager','isReferentSimple'])
                             <label class="gauche" for="">Liste des apprenants</label><br>
                             <table class="table">
                                 <thead>
@@ -419,7 +419,7 @@
                             @can('isStagiaire')
                                 title: details[$i].nom_formation
                             @endcan
-                            @canany(['isReferent','isManager'])
+                            @canany(['isReferent','isReferentSimple','isManager'])
                             title: details[$i].nom_formation
                             @endcanany
                             , start: details[$i].date_detail
@@ -527,7 +527,7 @@
                                         lieu.innerHTML = '';
                                         var salle = document.getElementById('salle');
                                         salle.innerHTML = '';
-                                        @canany(['isReferent','isCFP','isFormateur','isManager'])
+                                        @canany(['isReferent','isCFP','isFormateur','isManager','isReferentSimple'])
                                         var liste_app = document.getElementById('liste_app');
                                         liste_app.innerHTML = '';
                                         var nb_apprenant = document.getElementById('nb_apprenant');
@@ -553,7 +553,7 @@
                                         var nombre_stg = userDataDetail['nombre_stg'];
                                         var id_detail = userDataDetail['id_detail'];
                                         var res=userDataDetail["ressource"];
-                                        console.log(res);
+
                                         var images = '';
                                         var html = '';
                                         var formation = '';
@@ -680,7 +680,7 @@
                                                 html += '</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + "&nbsp" + t2 + "&nbsp"+ t3 + "&nbsp" + t4 + '</td><td>'+stg[$a].nom_departement +'<br>'+stg[$a].nom_service+'</td></tr>'
                                             }
                                             else{
-                                                html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + '&nbsp' + t2 + '&nbsp'+ t3 + '&nbsp' + t4 + '</td><td>'+stg[$a].nom_departement+'<br>'+stg[$a].nom_service+'</td></tr>'
+                                                html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/employes/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + '&nbsp' + t2 + '&nbsp'+ t3 + '&nbsp' + t4 + '</td><td>'+stg[$a].nom_departement+'<br>'+stg[$a].nom_service+'</td></tr>'
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html = html.replace(":!",stg[$a].photos);
                                             }

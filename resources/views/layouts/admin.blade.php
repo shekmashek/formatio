@@ -222,7 +222,7 @@
             </li>
             </li>
             @endcanany --}}
-            @canany(['isReferent','isReferentSimple'])
+            @canany(['isReferent','isReferentSimple','isManager'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex nav_linke">
                     <i class='bx bx-library'></i>

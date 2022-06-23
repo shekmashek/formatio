@@ -61,7 +61,7 @@ class FormationController extends Controller
             $domaine_col4 = DB::select('select * from domaines limit ' . $offset . ' offset ' . ($offset * 3) . '');
             return view('referent.catalogue.formation', compact('domaines', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
-        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
+        if (Gate::allows('isReferent') || Gate::allows('isReferentSimple') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             //liste formation
             $categorie = formation::orderBy('nom_formation')->get();
             // $domaines = Domaine::all();
@@ -402,7 +402,7 @@ class FormationController extends Controller
             $nbPagination = 1;
         }
         $entreprise_id = $this->fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id]);
-        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
+        if (Gate::allows('isReferent') || Gate::allows('isReferentSimple') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
             $cfps = $this->fonct->findWhereTrieOrderBy("cfps", [1], ["="], [1], ["nom"], "ASC", ($nbPagination), $nb_limit);
             $totaleData = $this->fonct->getNbrePagination("cfps", "id", [], [], [], "");

@@ -352,7 +352,8 @@ CREATE OR REPLACE VIEW v_demmande_etp_cfp AS SELECT
     rc.prenom_resp_cfp,
     rc.photos_resp_cfp,
     d.resp_cfp_id,
-    d.resp_etp_id
+    d.resp_etp_id,
+    concat(SUBSTRING(rc.prenom_resp_cfp, 1, 1),SUBSTRING(rc.nom_resp_cfp, 1, 1)) as initial
 FROM
     demmande_etp_cfp d
 JOIN cfps c ON
