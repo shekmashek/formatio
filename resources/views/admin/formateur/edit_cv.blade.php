@@ -239,7 +239,7 @@
             <div class="form-control">
                 <div class="row">
                     <div class="col-10 text-center">Experiences professionnelles </div>
-                    <div class="col-2"><a href="#"><i class='bx bx-plus text-success ' style="font-size:150%"></i></a></div>
+                    <div class="col-2"><a href="{{route('ajout_experience')}}"><i class='bx bx-plus text-success ' style="font-size:150%"></i></a></div>
                 </div>
             @foreach($experience as $exp)
                 <div style="border-bottom: solid 1px #d399c2;" class="hover">

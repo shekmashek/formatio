@@ -215,6 +215,8 @@ Route::post('/update_description_formateur/{id}','ProfController@update_descript
 Route::post('/update_specialite_prof/{id}','ProfController@update_specialite_prof')->name('update_specialite_prof');
 Route::post('/update_fin_travail/{id}','ProfController@update_fin_travail')->name('update_fin_travail');
 Route::post('/update_debut_travail/{id}','ProfController@update_debut_travail')->name('update_debut_travail');
+Route::post('/addCompetence/{id}','ProfController@addCompetence')->name('addCompetence');
+Route::post('/addExperience/{id}','ProfController@addExperience')->name('addExperience');
 
 //collabforfateur
 Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur');
@@ -246,10 +248,8 @@ Route::get('/editer_specialite/{id?}', 'ProfController@editer_specialite')->name
 Route::get('/editer_about/{id?}', 'ProfController@editer_about')->name('editer_about');
 Route::get('/editer_debut/{id?}', 'ProfController@editer_debut')->name('editer_debut');
 Route::get('/editer_fin/{id?}', 'ProfController@editer_fin')->name('editer_fin');
-Route::get('/ajout_competence', function () {
-    return view('admin.formateur.ajout_competence');
-});
-
+Route::get('/ajout_competence/{id?}', 'ProfController@ajout_competence')->name('ajout_competence');
+Route::get('/ajout_experience/{id?}', 'ProfController@ajout_experience')->name('ajout_experience');
 
 
 

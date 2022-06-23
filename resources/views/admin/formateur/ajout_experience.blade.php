@@ -25,17 +25,35 @@
   @endif
     <div class="col-lg-4">
         <div class="p-3 form-control">
-            <form class="btn-submit" action="{{route('addCompetence',$formateur->id)}}" method="post" enctype="multipart/form-data">
+            <form class="btn-submit" action="{{route('addExperience',$formateur->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control  input" name="domaine" required>
-                        <label class="form-control-placeholder">Domaine</label>
+                        <input type="text" class="form-control  input" value="{{ Session::get('experience')->nom_entreprise ?? '' }}" name="entreprise" required>
+                        <label class="form-control-placeholder">Nom de l'entreprise</label>
                     </div>
                 </div>
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                        <input type="text" class="form-control  input" name="competence" required>
+                        <input type="text" class="form-control  input" value="{{ Session::get('experience')->poste_occuper ?? '' }}" name="poste" required>
+                        <label class="form-control-placeholder ">Poste occupé</label>
+                    </div>
+                </div>
+                <div class="row px-3 mt-4">
+                    <div class="form-group mt-1 mb-1">
+                        <input type="text" class="form-control  input" value="{{ Session::get('experience')->taches ?? '' }}" name="taches" required>
+                        <label class="form-control-placeholder">Tache</label>
+                    </div>
+                </div>
+                <div class="row px-3 mt-4">
+                    <div class="form-group mt-1 mb-1">
+                        <input type="date" class="form-control  input" value="{{ Session::get('experience')->debut_travail ?? '' }}" name="date_debut" required>
+                        <label class="form-control-placeholder ">Compétence</label>
+                    </div>
+                </div>
+                <div class="row px-3 mt-4">
+                    <div class="form-group mt-1 mb-1">
+                        <input type="date" class="form-control  input" value="{{ Session::get('experience')->fin_travail ?? '' }}" name="date_fin" required>
                         <label class="form-control-placeholder ">Compétence</label>
                     </div>
                 </div>

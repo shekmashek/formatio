@@ -283,7 +283,46 @@ class ProfController extends Controller
         }
 
     }
+    public function addCompetence(Request $request,$id){
+        $competence = new competenceFormateur();
+        $competence->competence = $request->competence;
+        $competence->domaine = $request->domaine;
+        $competence->formateur_id = $id;
+        $competence->save();
+        return back()->with('success', 'Domaine ajouté avec succès!');
+    }
 
+    public function addExperience(Request $request,$id){
+        $experience = new experienceFormateur();
+        $experience->nom_entreprise = $request->entreprise;
+        $experience->poste_occuper = $request->poste;
+        $experience->debut_travail = $request->date_debut;
+        $experience->fin_travail = $request->date_fin;
+        $experience->taches = $request->taches;
+        $experience->formateur_id = $id;
+        if($request->date_fin <= $request->date_debut) {
+            $error = 'La date de fin de travail doit être après la date de début. Merci de réctifier.';
+            return back()->with(compact('error','experience'));
+        }
+        $experience->save();
+        return back()->with('success', 'Experience ajoutée avec succès!');
+    }
+
+
+    public function ajout_competence()
+    {
+        $id = formateur::where('user_id', Auth::user()->id)->value('id');
+        $formateur = formateur::findOrFail($id);
+        return view('admin.formateur.ajout_competence', compact('formateur'));
+    }
+
+
+    public function ajout_experience()
+    {
+        $id = formateur::where('user_id', Auth::user()->id)->value('id');
+        $formateur = formateur::findOrFail($id);
+        return view('admin.formateur.ajout_experience', compact('formateur'));
+    }
 
     public function show($id)
     {
@@ -298,64 +337,64 @@ class ProfController extends Controller
     }
     public function editer_photos($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur =DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
         return view('admin.formateur.edit_photos', compact('formateur','niveau'));
     }
     public function editer_nom($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
         return view('admin.formateur.edit_nom', compact('niveau','formateur'));
     }
     public function editer_genre($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
         return view('admin.formateur.edit_genre', compact('niveau','formateur'));
     }
     public function editer_naissance($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
         return view('admin.formateur.editer_naissance', compact('niveau','formateur'));
     }
     public function editer_mail($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
         return view('admin.formateur.edit_mail', compact('formateur','niveau'));
     }
     public function editer_phone($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
         return view('admin.formateur.edit_phone', compact('formateur','niveau'));
     }
     public function editer_cin($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
         return view('admin.formateur.edit_cin', compact('formateur','niveau'));
     }
     public function editer_adresse($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
 
@@ -363,8 +402,8 @@ class ProfController extends Controller
     }
     public function editer_about($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
 
@@ -372,24 +411,24 @@ class ProfController extends Controller
     }
     public function editer_specialite($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
 
         return view('admin.formateur.edit_specialite', compact('niveau','formateur'));
     }public function editer_etp($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
         return view('admin.formateur.edit_etp', compact('formateur','niveau'));
     }
     public function editer_niveau($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findAll("niveau_etude");
         return view('admin.formateur.edit_niveau', compact('formateur','niveau'));
@@ -452,8 +491,8 @@ class ProfController extends Controller
 
     public function editer_pwd($id, Request $request)
     {
-        $user_id =  $users = Auth::user()->id;
-        $formateur_connecte = formateur::where('user_id', $user_id)->exists();
+        // $user_id =  $users = Auth::user()->id;
+        // $formateur_connecte = formateur::where('user_id', $user_id)->exists();
         $formateur = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end genre from formateurs where id = ?',[$id])[0];
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",['id'],[$formateur->niveau_etude_id]);
         return view('admin.formateur.edite_pwd', compact('formateur','niveau'));
@@ -587,9 +626,9 @@ class ProfController extends Controller
     public function editCVProf($id=null)
     {
         $id = formateur::where('user_id', Auth::user()->id)->value('id');
+        $formateur = formateur::findOrFail($id);
         $competence = competenceFormateur::where('formateur_id', $id)->get();
         $experience = experienceFormateur::where('formateur_id', $id)->get();
-        $formateur = formateur::findOrFail($id);
         $niveau = $this->fonct->findWhereMulitOne("niveau_etude",["id"],[$formateur->niveau_etude_id]);
         return view('admin.formateur.edit_cv', compact('formateur', 'competence', 'experience', 'niveau'));
     }
