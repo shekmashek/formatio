@@ -1087,8 +1087,8 @@
                                                                 <th scope="col">Session</th>
                                                                 <th scope="col">Type</th>
                                                                 <th scope="col">Modalité</th>
-                                                                <th scope="col">Chiffre d'Affaire ({{$devise->reference}})</th>
-                                                                <th scope="col">Frais Annexe ({{$devise->reference}})</th>
+                                                                <th scope="col">Chiffre d'Affaire ({{$devise->devise}})</th>
+                                                                <th scope="col">Frais Annexe ({{$devise->devise}})</th>
                                                                 <th scope="col">Status</th>
                                                             </tr>
                                                         </thead>
