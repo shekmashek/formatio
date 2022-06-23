@@ -248,6 +248,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_etp AS SELECT
     c.id AS cfp_id,
     c.nom,
     c.adresse_lot,
+    c.adresse_quartier,
     c.adresse_ville,
     c.adresse_region,
     c.email,

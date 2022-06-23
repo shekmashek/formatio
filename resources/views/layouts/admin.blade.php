@@ -197,14 +197,14 @@
             </li>
             </li>
             @endcanany --}}
-            @canany(['isReferent'])
+            {{-- @canany(['isReferent'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex projet nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
             </li>
-            @endcanany
+            @endcanany --}}
             @canany(['isReferent'])
             {{-- <li>
                 <a href="{{route('projet_interne')}}" class="d-flex nav_linke">
@@ -575,6 +575,12 @@
                                             class="text_racourcis">Catalogue</span></span></a>
                             </div>
                             <div class="btn_racourcis me-4">
+                                <a href="{{route('liste_projet')}}" class="text-center annuaire" role="button"
+                                    onclick="afficher_annuaire()"><span class="d-flex flex-column"><i
+                                            class='bx bx-library mb-2 mt-1'></i><span
+                                            class="text_racourcis">Projets</span></span></a>
+                            </div>
+                            <div class="btn_racourcis me-4">
                                 <a href="{{route('annuaire')}}" class="text-center annuaire" role="button"
                                     onclick="afficher_annuaire()"><span class="d-flex flex-column"><i
                                             class='bx bx-analyse mb-2 mt-1'></i><span
@@ -598,11 +604,11 @@
                                         class="d-flex flex-column"><i class='bx bxs-user-detail mb-2 mt-1'></i><span
                                             class="text_racourcis">employés</span></span></a>
                             </div class="btn_racourcis">
-                            <div class="btn_racourcis me-4">
+                            {{-- <div class="btn_racourcis me-4">
                                 <a href="{{route('employes')}}" class="text-center equipe" role="button"><span
                                         class="d-flex flex-column"><i class='bx bxs-group mb-2 mt-1'></i><span
                                             class="text_racourcis">Equipe</span></span></a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     @endcan

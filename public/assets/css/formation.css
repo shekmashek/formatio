@@ -606,7 +606,7 @@ input{
 }
 
 .table-rating-bar .rating-label {
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .table-rating-bar .rating-bar {

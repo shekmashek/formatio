@@ -66,37 +66,38 @@ class ModuleController extends Controller
             $mod_publies = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.cfp_id = ? order by md.module_id desc',[$cfp_id]);
 
 
-            $datas = DB::select('select type_formation_id,module_id,cfp_id,groupe_id,projet_id,nom_groupe,date_debut,date_fin,modalite,item_status_groupe,groupe_entreprise_id, entreprise_id,nom_etp,formation_id FROM v_groupe_projet_module JOIN entreprises ON v_groupe_projet_module.entreprise_id= entreprises.id WHERE cfp_id= ? group by module_id,projet_id',[$cfp_id]);
-            // $datas =DB::select('select type_formation_id,cfp_id,groupe_entreprise_id,groupe_id,entreprise_id,nom_etp,projet_id,module_id,date_debut,date_fin,modalite,item_status_groupe,nom_groupe FROM v_groupe_projet_entreprise where cfp_id = ? group by module_id',[$cfp_id]);
+            // $datas = DB::select('select type_formation_id,module_id,cfp_id,groupe_id,projet_id,nom_groupe,date_debut,date_fin,modalite,item_status_groupe,groupe_entreprise_id, entreprise_id,nom_etp,formation_id FROM v_groupe_projet_module JOIN entreprises ON v_groupe_projet_module.entreprise_id= entreprises.id WHERE cfp_id= ? group by module_id,projet_id',[$cfp_id]);
+            // // $datas =DB::select('select type_formation_id,cfp_id,groupe_entreprise_id,groupe_id,entreprise_id,nom_etp,projet_id,module_id,date_debut,date_fin,modalite,item_status_groupe,nom_groupe FROM v_groupe_projet_entreprise where cfp_id = ? group by module_id',[$cfp_id]);
 
-            $frais_annexe = DB::select('select cfp_id,projet_id,entreprise_id,num_facture,hors_taxe FROM v_montant_frais_annexe where cfp_id=?',[$cfp_id]);
-            $facture = DB::select('select cfp_id,projet_id,entreprise_id,num_facture,(hors_taxe-valeur_remise_par_session) as chiffre_affaire,qte,groupe_id,groupe_entreprise_id FROM v_liste_facture where cfp_id=?',[$cfp_id]);
+            // $frais_annexe = DB::select('select cfp_id,projet_id,entreprise_id,num_facture,hors_taxe FROM v_montant_frais_annexe where cfp_id=?',[$cfp_id]);
+            // $facture = DB::select('select cfp_id,projet_id,entreprise_id,num_facture,(hors_taxe-valeur_remise_par_session) as chiffre_affaire,qte,groupe_id,groupe_entreprise_id FROM v_liste_facture where cfp_id=?',[$cfp_id]);
 
 
-            for($i=0;$i<count($datas);$i+=1){
-                if(count($facture)>0){
-                    if($datas[$i]->groupe_id == $facture[0]->groupe_id){
-                        $datas[$i]->chiffre_affaire = round($facture[0]->chiffre_affaire,2);
-                        $datas[$i]->qte = $facture[0]->qte;
-                        $datas[$i]->num_facture = $facture[0]->num_facture;
-                    }
-                    else {
-                        $datas[$i]->chiffre_affaire = null;
-                        $datas[$i]->qte =null;
-                        $datas[$i]->num_facture = null;
-                    }
-                } else {
-                    $datas[$i]->chiffre_affaire = null;
-                    $datas[$i]->qte =null;
-                    $datas[$i]->num_facture = null;
-                }
-            }
+            // for($i=0;$i<count($datas);$i+=1){
+            //     if(count($facture)>0){
+            //         if($datas[$i]->groupe_id == $facture[0]->groupe_id){
+            //             $datas[$i]->chiffre_affaire = round($facture[0]->chiffre_affaire,2);
+            //             $datas[$i]->qte = $facture[0]->qte;
+            //             $datas[$i]->num_facture = $facture[0]->num_facture;
+            //         }
+            //         else {
+            //             $datas[$i]->chiffre_affaire = null;
+            //             $datas[$i]->qte =null;
+            //             $datas[$i]->num_facture = null;
+            //         }
+            //     } else {
+            //         $datas[$i]->chiffre_affaire = null;
+            //         $datas[$i]->qte =null;
+            //         $datas[$i]->num_facture = null;
+            //     }
+            // }
 
             if (count($infos) <= 0) {
                 return view('admin.module.guide');
             } else {
                 // return view('admin.module.module', compact('devise','infos', 'categorie', 'mod_en_cours', 'mod_non_publies', 'mod_publies', 'cfp','page','nb_module_mod_en_cours','nb_module_mod_non_publies','nb_module_mod_publies','debut','fin_page_en_cours','fin_page_non_publies','fin_page_publies','nb_par_page'));
-                return view('admin.module.module', compact('datas','frais_annexe','devise','infos','niveau','date_creation','categorie', 'mod_publies', 'cfp', 'mod_hors_ligne','domaine','liste'));
+                // return view('admin.module.module', compact('datas','frais_annexe','devise','infos','niveau','date_creation','categorie', 'mod_publies', 'cfp', 'mod_hors_ligne','domaine','liste'));
+                return view('admin.module.module', compact('devise','infos','niveau','date_creation','categorie', 'mod_publies', 'cfp', 'mod_hors_ligne','domaine','liste'));
             }
         }
         if (Gate::allows('isSuperAdmin')) {
