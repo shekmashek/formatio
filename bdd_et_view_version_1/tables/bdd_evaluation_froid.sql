@@ -62,10 +62,10 @@ create table resultat_eval_froid_stagiaire(
     question_id bigint(20) NOT NULL REFERENCES question_evaluation_froid(id) ON DELETE CASCADE,
     groupe_id bigint(20) NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
     stagiaire_id bigint(20) NOT NULL REFERENCES chef_departements(id) ON DELETE CASCADE,
-    reponse_eval text,
-    date_eval timestamp default now(),
-    point int(2) default 0
+    reponse_id bigint(20) NOT NULL REFERENCES reponse_question_eval_froid(id) ON DELETE CASCADE,
+    date_eval timestamp default now()
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+alter table resultat_eval_froid_stagiaire add reponse_text text;
 
 create table resultat_eval_froid_manager(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -73,8 +73,7 @@ create table resultat_eval_froid_manager(
     groupe_id bigint(20) NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
     manager_id bigint(20) NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
     reponse_eval text,
-    date_eval timestamp default now(),
-    point int(2) default 0
+    date_eval timestamp default now()
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -88,3 +87,7 @@ select
     tc.desc_champ
 from question_evaluation_froid q
 join type_champs tc on q.type_champ_id = tc.id;
+
+create or replace view v_resultat_froid_evaluation as
+    select
+        
