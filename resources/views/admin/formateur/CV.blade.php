@@ -36,7 +36,7 @@
             <div class="row" style="font-family: Arial, Helvetica, sans-serif; font-size:12pt;">
                 <div class="col-lg-4">
                     <div class="col-lg-1 offset-md-11">
-                        <a href="{{route('edit_cv')}}" class="mx-auto" aria-label="modifier votre CV" ><i class="bx bx-edit text-dark" style="font-size:150%;"></i></a>
+                        <a href="{{route('edit_cv')}}" class="mx-auto" title="modifier votre CV" ><i class="bx bx-edit text-dark" style="font-size:150%;"></i></a>
                     </div>
                     <div class="row videhaut"></div>
                     <div class="row-lg-4 mt-5 pb-5 ">
