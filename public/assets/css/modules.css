@@ -154,7 +154,7 @@
 
 .detail__formation__programme__avis__donnes {
     border-radius: 5px;
-    background-color: rgb(226, 226, 226);
+    background-color: rgba(226, 226, 226, 0.421);
     padding-left: 10px;
     padding-right: 10px;
     margin-top: 15px;
@@ -659,7 +659,7 @@ font-size: 0.850rem;
 }
 
 .competence_box{
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
     position: sticky;
     top: 8.5rem;
 }
@@ -994,4 +994,161 @@ font-size: 0.850rem;
 
 .form-check-input{
     cursor: pointer;
+}
+
+:root {
+    --star-size: 20px;
+    --star-color: #c8c7c77c;
+    --icon-color: #c8c7c77c;
+    --star-background: #fc0;
+    --icon-background: #7635dc;
+}
+
+.Stars{
+    --poucentage: calc(var(--note) / 5 * 100%);
+    display: inline-block;
+    font-size: var(--star-size);
+    font-family: Times;
+    line-height: 1;
+
+}
+.Stars::before {
+    content: '★★★★★';
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--star-background) var(--poucentage), var(--star-color) var(--poucentage));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.table-rating-bar .rating-label {
+    font-weight: bold;
+}
+
+.table-rating-bar .rating-bar {
+    width: 300px;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.table-rating-bar .bar-container {
+    width: 100%;
+    background-color: #c8c7c752;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.table-rating-bar .bar-container .bar-5 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: #fc0;
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-4 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: #fc0;
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-3 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: #fc0;
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-2 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: #fc0;
+    border-radius: 20px;
+}
+
+.table-rating-bar .bar-container .bar-1 {
+    width: var(--progress_bar);
+    height: 13px;
+    background-color: #fc0;
+    border-radius: 20px;
+}
+
+.table-rating-bar td {
+    padding-bottom: 10px;
+}
+
+.Stars {
+    color: #fc0;
+}
+.rating-star .checked {
+    color: #fc0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.rating-star .checked:hover {
+    color: #f9a825;
+    cursor: pointer;
+}
+
+.text_minifier{
+    font-size: .8rem;
+}
+
+.moins_avis{
+    visibility: hidden;
+}
+
+.background_contrast{
+    background-color: #a2a4a62c;
+    padding-top: 5px;
+    height: 31px;
+    margin-left: 8px;
+    /* border-radius: 5px; */
+}
+
+.background_contrast .bx{
+    color: #7635dc;
+    font-size: 1.3rem;
+}
+
+.bx_pourcentage{
+    --note: calc(var(--pourcentage) / 5 * 100%);
+    display: inline-block;
+    font-size: var(--star-size);
+    font-family: Times;
+    line-height: 1;
+}
+
+.bx_pourcentage::before{
+    content: "\ef37";
+    background: linear-gradient(90deg, var(--icon-background) var(--note), var(--icon-color) var(--note));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+#marksChart,
+#marksChart1{
+    cursor: pointer;
+}
+
+.encre__icon_cacher{
+    color: #5433FF;
+    font-size: 2.5rem;
+    position: relative;
+    top: 8px;
+}
+
+.stars,
+.level_cacher,
+.encre__icon_cacher{
+    display: none;
+}
+
+.stars .bx{
+    color: var(--star-background);
 }

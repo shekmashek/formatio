@@ -26,7 +26,7 @@
                 <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
             </li>
             <li class="nav-item">
-                <a href="#publies" class="nav-link" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
+                <a href="#publies" class="nav-link active" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
@@ -83,13 +83,13 @@
                                             <div class="d-flex ">
                                                 <div class="col-6 detail__formation__result__avis">
                                                     <div class="Stars" style="--note: {{ $mod->pourcentage }};"></div>
-                                                    <span class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
-                                                        {{-- @if($info->total_avis != null)
-                                                        ({{$info->total_avis}} avis)
+                                                    <div class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
+                                                        @if($mod->total_avis != null)
+                                                        ({{$mod->total_avis}} avis)
                                                         @else
                                                         (0 avis)
-                                                        @endif --}}
-                                                    </span>
+                                                        @endif
+                                                    </div>
                                                     @if($mod->min_pers != 0 && $mod->max_pers != 0)
                                                     <span
                                                         class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
@@ -267,13 +267,13 @@
                                             <div class="d-flex ">
                                                 <div class="col-6 detail__formation__result__avis">
                                                     <div class="Stars" style="--note: {{ $mod->pourcentage }};"></div>
-                                                    <span class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
-                                                        {{-- @if($info->total_avis != null)
-                                                        ({{$info->total_avis}} avis)
+                                                    <div class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
+                                                        @if($mod->total_avis != null)
+                                                        ({{$mod->total_avis}} avis)
                                                         @else
                                                         (0 avis)
-                                                        @endif --}}
-                                                    </span>
+                                                        @endif
+                                                    </div>
                                                     @if($mod->min_pers != 0 && $mod->max_pers != 0)
                                                     <span
                                                         class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
@@ -455,116 +455,6 @@
                 <div class="row gutter_none">
                     <div class="col">
                         <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        PROGRAMME À COMPLÉTER
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <form action="">
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6 me-1 justify-content-center">
-                                                    <select name="ref" id="ref" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Référence</option>
-                                                        @foreach($mod_en_cours as $mod_prog)
-                                                        <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-6 justify-content-center">
-                                                    <select name="niveau" id="niveau" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Niveau</option>
-                                                        @foreach($niveau as $niv)
-                                                        <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col justify-content-center">
-                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Nom de module</option>
-                                                        @foreach($mod_en_cours as $mod_prog)
-                                                        <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select name="thematique" id="thematique" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Thématique</option>
-                                                        @foreach($categorie as $categ)
-                                                        <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-5 me-1 justify-content-center">
-                                                    <div class="form-groupe">
-                                                        <select name="date_creation" id="date_creation" class="form-control mb-2 outline_none">
-                                                            <option value="null" disable selected hidden>Création</option>
-                                                            @foreach($date_creation as $date)
-                                                            <option value="{{$date->created_at}}">{{date('d/m/Y', strtotime($date->created_at,))}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-7 justify-content-center">
-                                                    <select name="modalites" id="modalites" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Modalité Formation</option>
-                                                        <option value="En ligne">En ligne</option>
-                                                        <option value="Presentiel">Présentiel</option>
-                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6">
-                                                    <label>Durée en Heure</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour.value=value" class="slide_range slide_hour">
-                                                        <input type="text" id="rangeHour" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label>Durée en Jours</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay.value=value" class="slide_range slider_day">
-                                                        <input type="text" id="rangeDay" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par personne en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangePrimary" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">1&sbquo;000&sbquo;000</span><input type="range" name="range" step="100000" min="1000000" max="5000000" value="" class="slide_range w-100" id="prix_groupe">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangePrimary1" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <div class="text-center mt-1">
-                                                <input type="submit" class="btn_enregistrer text-center" value="Appliquer">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingTwo">
@@ -581,7 +471,7 @@
                                                 <div class="col-6 me-1 justify-content-center">
                                                     <select name="ref" id="ref" class="form-control mb-2 outline_none">
                                                         <option value="null" disable selected hidden>Référence</option>
-                                                        @foreach($mod_non_publies as $mod_prog)
+                                                        @foreach($mod_hors_ligne as $mod_prog)
                                                         <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
                                                         @endforeach
                                                     </select>
@@ -599,7 +489,7 @@
                                                 <div class="col justify-content-center">
                                                     <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
                                                         <option value="null" disable selected hidden>Nom de module</option>
-                                                        @foreach($mod_non_publies as $mod_prog)
+                                                        @foreach($mod_hors_ligne as $mod_prog)
                                                         <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
                                                         @endforeach
                                                     </select>
@@ -805,7 +695,7 @@
                 <a href="#hors_lignes" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
             </li>
             <li class="nav-item ">
-                <a href="#publiees" class="nav-link" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
+                <a href="#publiees" class="nav-link active" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
@@ -856,11 +746,11 @@
 
 
                                             <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5
-                                                {{-- @if($info->total_avis != null)
+                                                @if($info->total_avis != null)
                                                 ({{$info->total_avis}} avis)
                                                 @else
                                                 (0 avis)
-                                                @endif --}}
+                                                @endif
                                             </span>
                                         </div>
                                         <div>
@@ -973,14 +863,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="col">
-                                    <div class="mb-2 lien_clique"><a href="{{route('demande_devis_client',$info->module_id)}}" class="description ">Démander&nbsp;un&nbsp;devis</a></div>
-                                    @if (count($datas) <= 0) @else @foreach ($datas as $data) @if($info->module_id == $data->module_id)
-                                        <div class="pt-1 lien_clique"><a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="description ">S'inscrire</a></div>
-                                        @endif
-                                        @endforeach
-                                        @endif
-                                </div> --}}
                                 {{-- @foreach ($datas as $data)
                                 @if($info->module_id == $data->module_id)
                                 @if (count($datas) <= 0) @else <hr class="mb-1 mt-2">
@@ -1060,15 +942,12 @@
                                         <div>
                                             <div class="Stars" style="--note: {{ $info->pourcentage }};">
                                             </div>
-
-
-
                                             <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5
-                                                {{-- @if($info->total_avis != null)
+                                                @if($info->total_avis != null)
                                                 ({{$info->total_avis}} avis)
                                                 @else
                                                 (0 avis)
-                                                @endif --}}
+                                                @endif
                                             </span>
                                         </div>
                                         <div>
@@ -1188,33 +1067,98 @@
                                         @endforeach
                                         @endif
                                 </div> --}}
-                                {{-- @foreach ($datas as $data)
-                                @if($info->module_id == $data->module_id)
-                                @if (count($datas) <= 0) @else <hr class="mb-1 mt-2">
+
+                                @if (count($datas)<=0)
+
+                                @else
+                                    <hr class="mb-1 mt-2">
                                     <div class="row w-100 justify-content-end">
-                                        <h6 class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet">Afficher les dates du Session Inter&nbsp;<i class="bx bx-caret-down caret-icon"></i>
-                                        </h6>
-                                    </div>
-                                    <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}">
-                                        <div class="row px-3 py-2">
-                                            <div class="col-2">
-                                                <p>Prochaines Sessions</p>
-                                            </div>
-                                            <div class="col-5 date text-center">
-                                                @foreach ($datas as $data)
-                                                @if($info->module_id == $data->module_id)
-                                                <p>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</p>
-                                                @endif
-                                                @endforeach
-                                            </div>
-                                            <div class="col-5 text-center">
-                                                <p class="">Cette thématique vous intéresse?<button type="button" class="btn_next ms-4"><a href="{{route('select_par_module',$info->module_id)}}">Voir la Formation</a></button> </p>
+                                        <span class="mb-0 changer_caret d-flex pt-2 w-100" data-bs-toggle="collapse" href="#collapseprojet_{{$info->module_id}}" role="button" aria-expanded="false" aria-controls="collapseprojet"><span style="font-size: .8rem;">Afficher les actions de formation</span>&nbsp;<i class="bx bx-caret-down caret-icon"></i>
+                                        </span>
+                                        <div class="details collapse detail_inter" id="collapseprojet_{{$info->module_id}}" style="background: none;">
+                                            <div class="row px-3 py-2">
+                                                <div class="col-12 date">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-secondary" style="font-size: .8rem;">
+                                                            <tr>
+                                                                <th scope="col">Date</th>
+                                                                <th scope="col">Entreprise</th>
+                                                                <th scope="col">Nombres Stagiaires</th>
+                                                                <th scope="col">Session</th>
+                                                                <th scope="col">Type</th>
+                                                                <th scope="col">Modalité</th>
+                                                                <th scope="col">Chiffre d'Affaire ({{$devise->devise}})</th>
+                                                                <th scope="col">Frais Annexe ({{$devise->devise}})</th>
+                                                                <th scope="col">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="font-size: .8rem">
+                                                        @foreach ($datas as $data)
+                                                            @if($info->module_id == $data->module_id)
+                                                                <tr>
+                                                                    <td class="text-center text-secondary">
+                                                                        @php echo strftime('%d-%m-%y', strtotime($data->date_debut)).' au '.strftime('%d-%m-%y', strtotime($data->date_fin)); @endphp
+                                                                    </td>
+                                                                    <td class="text-secondary">{{$data->nom_etp}}</td>
+                                                                    @if ($data->qte!=null)
+                                                                        <td class="text-end text-secondary">{{$data->qte}}</td>
+                                                                    @else
+                                                                        <td class="text-center text-secondary">
+                                                                            @php
+                                                                                echo "<span>-</span>";
+                                                                            @endphp
+                                                                        </td>
+                                                                    @endif
+                                                                    <td class="text-secondary">{{$data->nom_groupe}}</td>
+                                                                    <td class="text-secondary">
+                                                                        @if ($data->type_formation_id ==1)
+                                                                            @php
+                                                                                echo"Intra";
+                                                                            @endphp
+                                                                        @elseif ($data->type_formation_id==2)
+                                                                            @php
+                                                                                echo"Inter";
+                                                                            @endphp
+                                                                        @endif
+                                                                    </td>
+                                                                    <td class="text-secondary">{{$data->modalite}}</td>
+                                                                    @if ($data->chiffre_affaire!=null)
+                                                                        <td class="text-center text-secondary">{{number_format($data->chiffre_affaire,0,",","")}}</td>
+                                                                    @else
+                                                                        <td class="text-center text-secondary">
+                                                                            @php
+                                                                                echo "<span>-</span>";
+                                                                            @endphp
+                                                                        </td>
+                                                                    @endif
+                                                                    @if (count($frais_annexe)>0)
+                                                                        @if ($frais_annexe[0]->num_facture == $data->num_facture)
+                                                                            <td class="text-center text-secondary">{{number_format($frais_annexe[0]->hors_taxe,0,",","")}}</td>
+                                                                        @else
+                                                                            <td class="text-center text-secondary">
+                                                                                @php
+                                                                                    echo "<span>-</span>";
+                                                                                @endphp
+                                                                            </td>
+                                                                        @endif
+                                                                    @else
+                                                                        <td class="text-center text-secondary">
+                                                                            @php
+                                                                                echo "<span>-</span>";
+                                                                            @endphp
+                                                                        </td>
+                                                                    @endif
+                                                                    <td class="text-secondary">{{$data->item_status_groupe}}</td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 @endif
-                                @endif
-                                @endforeach --}}
                             </div>
                             @endforeach
                             @else
@@ -1225,44 +1169,6 @@
                                 </a>
                             </div>
                             @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="modal fade" id="nouveau_module" tabindex="-1"
-                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <form action="{{route('nouveau_module_new')}}" method="POST" id="frm_new_module">
-                                @csrf
-                                <div class="modal-header .avertissement  d-flex justify-content-center"
-                                    style="color: white">
-                                    <h6 class="modal-title">Domaine de Formation</h6>
-                                </div>
-                                <div class="modal-body mb-3">
-                                    <div class="form-group" >
-                                        <select class="form-control select_formulaire input" id="acf-domaine" name="domaine" style="height: 40px;" required>
-                                            <option value="null" disable selected hidden>Choisissez la
-                                                domaine de formation ...</option>
-                                            @foreach($domaine as $do)
-                                            <option value="{{$do->id}}" data-value="{{$do->nom_domaine}}">
-                                                {{$do->nom_domaine}}</option>
-                                            @endforeach
-                                        </select>
-                                        <label for="acf-domaine" class="form-control-placeholder mb-2">Domaine de Formation</label>
-                                    </div>
-                                    <div class="form-group mt-3" >
-                                        <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="categorie" style="height: 40px;" required>
-                                        </select>
-                                        <label for="acf-categorie" class="form-control-placeholder mb-2">Thématique par Domaine</label>
-                                        <p id="domaine_id_err" class="text-danger">Choisir le domaine de formation valide</p>
-                                    </div>
-                                <div class="modal-footer justify-content-center">
-                                    <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
-                                    <button type="submit" class="btn btn_enregistrer"><i class='bx bx-check me-1'></i>Créer votre module</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -1279,118 +1185,6 @@
                 <hr class="mt-2 mb-0">
                 <div class="row gutter_none">
                     <div class="col">
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        PROGRAMME À COMPLÉTER
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <form action="">
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6 me-1 justify-content-center">
-                                                    <select name="ref" id="ref" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Référence</option>
-                                                        @foreach($mod_en_cours as $mod_prog)
-                                                        <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-6 justify-content-center">
-                                                    <select name="niveau" id="niveau" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Niveau</option>
-                                                        @foreach($niveau as $niv)
-                                                        <option value="{{$niv->niveau}}">{{$niv->niveau}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col justify-content-center">
-                                                    <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Nom de module</option>
-                                                        @foreach($mod_en_cours as $mod_prog)
-                                                        <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select name="thematique" id="thematique" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Thématique</option>
-                                                        @foreach($categorie as $categ)
-                                                        <option value="{{$categ->nom_formation}}">{{$categ->nom_formation}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-5 me-1 justify-content-center">
-                                                    <div class="form-groupe">
-                                                        <select name="date_creation" id="date_creation" class="form-control mb-2 outline_none">
-                                                            <option value="null" disable selected hidden>Création</option>
-                                                            @foreach($date_creation as $date)
-                                                            <option value="{{$date->created_at}}">{{date('d/m/Y', strtotime($date->created_at,))}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-7 justify-content-center">
-                                                    <select name="modalites" id="modalites" class="form-control mb-2 outline_none">
-                                                        <option value="null" disable selected hidden>Modalité Formation</option>
-                                                        <option value="En ligne">En ligne</option>
-                                                        <option value="Presentiel">Présentiel</option>
-                                                        <option value="En ligne/Presentiel">En ligne/Présentiel</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-6">
-                                                    <label>Durée en Heure</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="4" min="4" max="40" value="" onchange="rangeHour.value=value" class="slide_range slide_hour">
-                                                        <input type="text" id="rangeHour" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label>Durée en Jours</label>
-                                                    <div class="d-flex flex-row">
-                                                        <input type="range" name="range" step="1" min="1" max="5" value="" onchange="rangeDay.value=value" class="slide_range slider_day">
-                                                        <input type="text" id="rangeDay" class="prix_range prix_slide" readonly/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par personne en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">100&sbquo;000</span><input type="range" name="range" step="50000" min="100000" max="500000" value=""  class="slide_range w-100" id="prix_pers">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangePrimary" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <p class="m-0 mb-1">Intervalle de prix par groupe en {{$devise->devise}}</p>
-                                            <div class="form-row d-flex flex-row">
-                                                <div class="col-8">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="me-4 text_prix">1&sbquo;000&sbquo;000</span><input type="range" name="range" step="100000" min="1000000" max="5000000" value="" class="slide_range w-100" id="prix_groupe">
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <input type="text" id="rangePrimary1" class="prix_range" readonly/>
-                                                </div>
-                                            </div>
-                                            <div class="text-center mt-1">
-                                                <input type="submit" class="btn_enregistrer text-center" value="Appliquer">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingTwo">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -1406,7 +1200,7 @@
                                                 <div class="col-6 me-1 justify-content-center">
                                                     <select name="ref" id="ref" class="form-control mb-2 outline_none">
                                                         <option value="null" disable selected hidden>Référence</option>
-                                                        @foreach($mod_non_publies as $mod_prog)
+                                                        @foreach($mod_hors_ligne as $mod_prog)
                                                         <option value="{{$mod_prog->reference}}">{{$mod_prog->reference}}</option>
                                                         @endforeach
                                                     </select>
@@ -1424,7 +1218,7 @@
                                                 <div class="col justify-content-center">
                                                     <select name="nom_mod" id="nom_mod" class="form-control mb-2 outline_none">
                                                         <option value="null" disable selected hidden>Nom de module</option>
-                                                        @foreach($mod_non_publies as $mod_prog)
+                                                        @foreach($mod_hors_ligne as $mod_prog)
                                                         <option value="{{$mod_prog->nom_module}}">{{$mod_prog->nom_module}}</option>
                                                         @endforeach
                                                     </select>
@@ -1619,7 +1413,6 @@
         </div>
     </div>
 </div>
-</div>
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -1627,45 +1420,6 @@
 <script >
 
 localStorage.removeItem('popState');
-$("#acf-domaine").change(function() {
-    var id = $(this).val();
-    $(".categ").empty();
-    // $(".categ").append(
-    //     '<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>'
-    // );
-
-    $.ajax({
-        url: "/get_formation",
-        type: "get",
-        data: {
-            id: id,
-        },
-        success: function(response) {
-            var userData = response;
-
-            if (userData.length > 0) {
-                document.getElementById("domaine_id_err").innerHTML = "";
-                for (var $i = 0; $i < userData.length; $i++) {
-                    $(".categ").append(
-                        '<option value="' +
-                            userData[$i].id +
-                            '" data-value="' +
-                            userData[$i].nom_formation +
-                            '" >' +
-                            userData[$i].nom_formation +
-                            "</option>"
-                    );
-                }
-            } else {
-                document.getElementById("domaine_id_err").innerHTML =
-                    "choisir le type de domaine valide pour avoir ses formations";
-            }
-        },
-        error: function(error) {
-            console.log(error);
-        },
-    });
-});
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
         localStorage.setItem('ActiveTabMod', lien);

@@ -92,7 +92,9 @@ $(".suppression_programme").on("click", function(e) {
 
 $(".suppression_competence").on("click", function(e) {
   // let id = $(e.target).closest('.suppression_programme').attr("id");
+  let count_input = $('.count_input');
   let id = $(this).data("id");
+
   $.ajax({
     type: "GET",
     url: "/suppression_competence",
@@ -101,8 +103,14 @@ $(".suppression_competence").on("click", function(e) {
     },
     success: function(response) {
       if (response.success) {
-        $("#competence_" + id).remove();
-        $(".suppre_" + id).remove();
+
+        $("#countt_" + id).remove();
+        if (count_input.length <= 4) {
+          // alert(count_input.length);
+          // $('.modal').modal('hide');
+          window.location.reload();
+        }
+
       } else {
         alert("Error");
       }
@@ -650,42 +658,49 @@ function Cours() {
   $(".newRowCours").append(html);
 }
 
+let count_input = $('.count_input');
+// alert(count_input.length);
+
+// let nb_input = count_input.length;
+
 function competence() {
+
   var html = "";
-  html += '<div class="d-flex mt-2" id="row_newComp">';
-  html += '<div class="col-7">';
-  html += '<div class="form-group">';
-  html += '<div class="form-row">';
-  html +=
-    '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>';
-  html +=
-    '<label for="titre_competence" class="form-control-placeholder">Compétences';
-  html += "</label>";
-  html += "</div>";
-  html += "</div>";
-  html += "</div>";
+  for (let i = 0; i < (10 - count_input.length); i++) {
+    html += '<div class="d-flex mt-2" id="row_newComp">';
+    html += '<div class="col-7">';
+    html += '<div class="form-group">';
+    html += '<div class="form-row">';
+    html +=
+      '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>';
+    html +=
+      '<label for="titre_competence" class="form-control-placeholder">Compétences';
+    html += "</label>";
+    html += "</div>";
+    html += "</div>";
+    html += "</div>";
 
-  html += '<div class="col-4">';
-  html += '<div class="form-group ms-1">';
-  html += '<div class="form-row">';
-  html +=
-    '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
-  html += '<label for="objectif" class="form-control-placeholder">Notes';
-  html += "</label>";
-  html += "</div>";
-  html += "</div>";
-  html += "</div>";
+    html += '<div class="col-4">';
+    html += '<div class="form-group ms-1">';
+    html += '<div class="form-row">';
+    html +=
+      '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
+    html += '<label for="objectif" class="form-control-placeholder">Notes';
+    html += "</label>";
+    html += "</div>";
+    html += "</div>";
+    html += "</div>";
 
-  html += '<div class="col-1">';
-  html += '<div class="mt-2">';
-  html += '<span id="removeRow" role="button">';
-  html += '<i class="bx bx-trash bx_supprimer ms-1 mt-1">';
-  html += "</i>";
-  html += "</span>";
-  html += "</div>";
-  html += "</div>";
-  html += "</div>";
-
+    html += '<div class="col-1">';
+    html += '<div class="mt-2">';
+    html += '<span id="removeRow" role="button">';
+    html += '<i class="bx bx-trash bx_supprimer ms-1 mt-1">';
+    html += "</i>";
+    html += "</span>";
+    html += "</div>";
+    html += "</div>";
+    html += "</div>";
+  }
   $(".newRowComp").append(html);
 }
 
@@ -702,3 +717,13 @@ $(document).on("click", "#removeRow", function() {
     .closest("#row_newComp")
     .remove();
 });
+
+$('#fermerComp').click(function(e){
+    $('.newRowComp').empty();
+});
+
+$('#fermer4').click(function(e){
+  window.location.reload();
+});
+
+

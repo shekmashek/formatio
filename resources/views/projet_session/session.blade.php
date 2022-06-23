@@ -436,7 +436,6 @@
         color: #637381;
         font-size: 14px;
     }
-
 </style>
     <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -464,7 +463,7 @@
                         <span class="text-dark ms-5" style="font-weight: bold;"> {{ $projet[0]->nom_groupe }} </span>
                         <i class='bx bx-time-five ms-3 me-1' style="font-size: 1rem;"></i>
                         <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>&nbsp;&nbsp;
-    
+
                         {{-- @if(count($dataMontantSession)>0)
                             @if ($dataMontantSession[0]->qte != null)
                                 <span class="m-0 ms-1"> apprenant inscrit : {{$dataMontantSession[0]->qte}}</span> &nbsp;&nbsp;
@@ -475,7 +474,7 @@
                             <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
                         @endif --}}
 
-                        
+
                         @if(count($lieu_formation)>0)
                             <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
                             <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
@@ -488,7 +487,6 @@
                         <i class='bx bx-group' style="font-size: 1rem;"></i>
                         <span class="m-0 ms-1 me-3"> Apprenant inscrit : {{ count($stagiaire) }}</span>
                         @can('isCFP')
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> CA :<strong>
                                 {{-- @if(count($dataMontantSession)>0)
                                     @if( $dataMontantSession[0]->hors_taxe != null)
@@ -512,10 +510,9 @@
                                     }else{
                                         number_format($montant,0,","," ");
                                     }
-                                @endphp&nbsp;    
+                                @endphp&nbsp;
                             </span>
                             {{$ref}}</strong> </p>&nbsp;&nbsp;
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> FA : <strong>
                                 <span>
                                     @php
@@ -525,7 +522,7 @@
                                         }else{
                                             number_format($frais,0,","," ");
                                         }
-                                    @endphp&nbsp;    
+                                    @endphp&nbsp;
                                 </span>
                                 {{-- @if ($frais_annex !=null)
                                     {{ number_format($frais_annex, 0, ',', ' ')}}
@@ -536,8 +533,7 @@
                                 @endif --}}
                                 {{$ref}}</strong></p>
                         @endcan
-                    @can('isReferent')
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
+                        @can('isReferent')
                             <p class="text-dark mt-3"> CP : <strong>
                                 @if (count($dataMontantSession) >0)
                                     {{ number_format($dataMontantSession[0]->hors_taxe, 0, ',', ' ')}}
@@ -545,10 +541,7 @@
                                     @php
                                         echo "<span>-</span>";
                                     @endphp
-                                @endif
-
-                                          {{$ref}}</strong> </p>&nbsp;&nbsp;
-                            <p class="m-0"><i class="bx bx-dollar-circle mt-2"></i></p>&nbsp;
+                                @endif{{$ref}}</strong> </p>&nbsp;&nbsp;
                             <p class="text-dark mt-3"> FA : <strong id="frais_annex_entreprise">
                                 @php
                                     $Totalfa = 0;
@@ -572,18 +565,19 @@
                     </div>
                     <div class="d-flex height_default m-0 mt-2 p-0">
                         @if ($type_formation_id == 1)
-                        <div class="chiffre_d_affaire m-0 p-0 me-3">
-    
-                            <div class="d-flex flex-row">
-                                <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>
-                                &nbsp;&nbsp;
-                                <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
-                                    class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                            <div class="chiffre_d_affaire m-0 p-0 me-3">
+
+                                <div class="d-flex flex-row">
+                                    <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>
+                                    &nbsp;&nbsp;
+                                    <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
+                                        class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                                </div>
                             </div>
                         </div>
                         @endif
                         <div class="chiffre_d_affaire me-2">
-    
+
                             <div class="d-flex flex-row">
                                 <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
                                     {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
@@ -591,6 +585,8 @@
                                     height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                             </div>
                         </div>
+                    </div>
+
 
                         @canany(['isCFP'])
                             <div class="chiffre_d_affaire">
@@ -933,6 +929,151 @@
 
 </div>
 
+    {{-- ETP --}}
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="etpCanvas" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">INFORMATION</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <hr style="margin-top: 0.1px">
+        <div class="offcanvas-body">
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1)
+                    <div class="mt-1 text-center mb-3">
+                        <span id="lEtp">
+
+                        </span>
+                    </div>
+                    <div class="mt-1 text-center">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <p id="nEtp" style="color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+
+
+
+                @endif
+            </div>
+        </div>
+    </div> --}}
+
+    {{--Responsable ETP--}}
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">INFORMATION</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <hr style="margin-top: 0.1px">
+        <div class="offcanvas-body">
+            <div class="mt-2" style="font-size:14px">
+                @if ($type_formation_id == 1)
+                    <div class="mt-1 text-center mb-3">
+                        <span>
+                            @if($etp->photos == NULL or $etp->photos == '' or $etp->photos == 'XXXXXXX')
+                                <td role="button" >
+                                    <span  class="randomColor m-auto mt-2 text-uppercase" style="width:120px;height:120px; border-radius:100%; color:white; display: grid; place-content: center">
+                                        <span style="text-transform: uppercase; font-weight: bold; font-size: 18px">{{$etp->nomEtresp}} {{$etp->prenomEtpresp}}</span>
+                                    </span>
+                                </td>
+                            @else
+                                <td class="td_hover" role="button" style="display: grid; place-content: center">
+                                    <img src="{{asset("images/responsables/".$etp->photos)}}" style="width:120px;height:120px; border-radius:100%">
+                                </td>
+                            @endif
+                        </span>
+                    </div>
+                    <div class="mt-1 text-center">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <p id="nomEtp" style="border-bottom: 3px solid rgb(137, 56, 243); color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
+                                </p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-bookmark saClass'></i></div>
+                            <div class="col-md-3 saSpan">Matricule</div>
+                            <div class="col-md">
+                                <span id="nom" style="font-size: 14px;" class="saSpan">
+                                    @if ($etp->matricule == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $etp->matricule }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-user saClass'></i></div>
+                            <div class="col-md-3 saSpan">Nom_prénoms</div>
+                            <div class="col-md">
+                                <span id="nomd" style="font-size: 14px;" class="saSpan">
+                                    @if ($etp->nom_resp  == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $etp->nom_resp }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3 saSpan"></div>
+                            <div class="col-md">
+                                <span id="nomd" style="font-size: 14px;" class="saSpan">
+                                    @if ($etp->prenom_resp  == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $etp->prenom_resp }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1"><i class='bx bx-location-plus saClass' ></i></div>
+                            <div class="col-md-3 saSpan">Adresse</div>
+                            <div class="col-md">
+                                <span id="mail_stagiaire" class="saSpan">
+                                    @if ($etp->adresse_quartier == null)
+                                        @php
+                                            echo ": ---"
+                                        @endphp
+                                    @else
+                                        : {{ $etp->adresse_quartier }}
+                                        {{ $etp->adresse_lot }} {{ $etp->adresse_ville }}
+                                        {{ $etp->adresse_region }}
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                @endif
+            </div>
+        </div>
+    </div> --}}
+
     {{--OF--}}
     {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
@@ -1212,7 +1353,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="mt-1">
                         <div class="row">
                             <div class="col-md-1"></div>

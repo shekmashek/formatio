@@ -76,11 +76,11 @@
             <h5 class="ms-5">{{count($infos)}} résultats</h5><br>
             @endif --}}
             @if(isset($nom_entiter))
-            <h5 class="ms-5">{{count($infos)}} résultat trouvé sur &nbsp;{{$nom_entiter}}</h5><br>
+            <span class="ms-5">{{count($infos)}} résultat trouvé sur &nbsp;{{$nom_entiter}}</span><br>
             @elseif(isset($nom_formation))
-            <h5 class="ms-5">{{count($infos)}} résultat trouvé en &nbsp;{{$nom_formation}}</h5><br>
+            <span class="ms-5">{{count($infos)}} résultat trouvé en &nbsp;{{$nom_formation}}</span><br>
             @else
-            <h5 class="ms-5">{{count($infos)}} résultats trouvé</h5><br>
+            <span class="ms-5">{{count($infos)}} résultats trouvé</span><br>
             @endif
 
             @if(Session::has('success'))
@@ -92,6 +92,7 @@
             <span class="nombre_pagination text-center filter"><span style="position: relative; bottom: -0.2rem">{{$pagination["debut_aff"]."-".$pagination["fin_aff"]." sur ".$pagination["totale_pagination"]}}</span>
 
                 {{-- =========== pagination module =============================================== --}}
+                
                 @include("referent.catalogue.pagination.pagination_liste_formation")
 
                 <a href="#" class="btn_creer text-center filter ms-2" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>

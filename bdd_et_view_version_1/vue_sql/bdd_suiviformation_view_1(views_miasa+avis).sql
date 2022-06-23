@@ -338,7 +338,7 @@ CREATE OR REPLACE VIEW moduleformation AS SELECT
                 DATEDIFF(m.created_at, NOW()) +3),
                 0
             )
-    ) case jours_restant,
+    ) jours_restant,
     IFNULL(m.max, 0) AS max_pers,
     IFNULL(m.min, 0) AS min_pers,
     n.niveau,
@@ -360,6 +360,7 @@ JOIN niveaux n ON
     n.id = m.niveau_id
 LEFT JOIN v_moyenne_avis_module a ON
     m.id = a.module_id;
+
 
 CREATE OR REPLACE VIEW cfpcours AS SELECT
     m.id AS module_id,

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\FonctionGenerique;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -104,7 +105,8 @@ class Groupe extends Model
     }
 
     public function module_session($module_id){
-        return DB::select('select nom_module from modules where id = ?',[$module_id])[0]->nom_module;
+        $data = DB::select('select nom_module FROM modules WHERE id = ?',[$module_id]);
+        return $data[0]->nom_module;
     }
 
     public function nombre_apprenant_session($groupe_id){
@@ -174,6 +176,106 @@ class Groupe extends Model
         }
     }
 
-    
+    public function dataDetail($cfp_id){
+
+        $req = DB::table('v_detail_session')
+            ->select('*')
+            ->where('cfp_id', $cfp_id)
+            ->get();
+
+        return $req;
+    }
+
+    public function formateurData($groupe_id){
+        $fonct = new FonctionGenerique();
+        $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$groupe_id]);
+
+        return $formateur;
+    }
+
+    public function dataFraisAnnexe($groupe_id, $etp_id){
+        $all_frais_annexe = DB::table('frais_annexe_formation')
+            ->select('entreprise_id', 'groupe_id', 'description', DB::raw("SUM(montant) as montantTotal"))
+            ->where('groupe_id', $groupe_id)
+            ->where('entreprise_id', $etp_id)
+            ->groupBy('entreprise_id', 'groupe_id', 'description')
+            ->get();
+
+            // $all_frais_annexe = DB::select('select SUM(montant) as "montantTotal", entreprise_id, groupe_id, description from frais_annexe_formation where groupe_id = ? and entreprise_id = ? group by entreprise_id, groupe_id, description',[$groupe_id,$etp_id]);
+        return $all_frais_annexe;
+    }
+
+    public function dataApprenant($cfp_id, $groupe_id){
+        $type_formation_id = request()->type_formation;
+
+
+        if ($type_formation_id == 1){
+            $projet = DB::table('v_groupe_projet_entreprise')
+                ->select('*')
+                ->where('cfp_id', $cfp_id)
+                ->where('groupe_id', $groupe_id)
+                ->get();
+
+            $entreprise_id = $projet[0]->entreprise_id;
+
+        }elseif ($type_formation_id == 2){
+            $projet = DB::table('v_projet_session_inter')
+                ->select('*')
+                ->where('cfp_id', $cfp_id)
+                ->where('groupe_id', $groupe_id)
+                ->get();
+
+        }
+
+        $stagiaire = DB::table('v_stagiaire_groupe')
+            ->select('*')
+            ->where('groupe_id', $groupe_id)
+            ->get();
+
+        return $stagiaire;
+    }
+
+    public function dataSession($groupe_id){
+
+        $datas = DB::table('v_detail_session')
+                ->select('*')
+                ->where('groupe_id', $groupe_id)
+                ->get();
+        return $datas;
+    }
 }
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
