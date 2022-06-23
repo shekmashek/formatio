@@ -36,8 +36,9 @@ class ModuleController extends Controller
 
     public function index($id = null, $page = null, $index = null)
     {
+        //ato
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
-        
+
         $module_model = new module();
         $fonct = new FonctionGenerique();
         $infos =null;
@@ -60,17 +61,17 @@ class ModuleController extends Controller
                 select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by module_id desc',[$cfp_id]);
             $mod_hors_ligne = DB::select('select * from moduleformation where status = 2 and etat_id = 2 and cfp_id = ? order by module_id desc',[$cfp_id]);
             $mod_publies = DB::select('select * from moduleformation where status = 2 and etat_id = 1 and cfp_id = ? order by module_id desc',[$cfp_id]);
-            
+
             $datas = DB::select('select type_formation_id,module_id,cfp_id,groupe_id,projet_id,nom_groupe,date_debut,date_fin,modalite,item_status_groupe,groupe_entreprise_id, entreprise_id,nom_etp,formation_id FROM v_groupe_projet_module JOIN entreprises ON v_groupe_projet_module.entreprise_id= entreprises.id WHERE cfp_id= ? group by module_id,projet_id',[$cfp_id]);
             // $datas =DB::select('select type_formation_id,cfp_id,groupe_entreprise_id,groupe_id,entreprise_id,nom_etp,projet_id,module_id,date_debut,date_fin,modalite,item_status_groupe,nom_groupe FROM v_groupe_projet_entreprise where cfp_id = ? group by module_id',[$cfp_id]);
-           
+
             $frais_annexe = DB::select('select cfp_id,projet_id,entreprise_id,num_facture,hors_taxe FROM v_montant_frais_annexe where cfp_id=?',[$cfp_id]);
-            $facture = DB::select('select cfp_id,projet_id,entreprise_id,num_facture,(hors_taxe-valeur_remise_par_session) as chiffre_affaire,qte,groupe_id,groupe_entreprise_id FROM v_liste_facture where cfp_id=?',[$cfp_id]);     
-            
-           
+            $facture = DB::select('select cfp_id,projet_id,entreprise_id,num_facture,(hors_taxe-valeur_remise_par_session) as chiffre_affaire,qte,groupe_id,groupe_entreprise_id FROM v_liste_facture where cfp_id=?',[$cfp_id]);
+
+
             for($i=0;$i<count($datas);$i+=1){
                 if(count($facture)>0){
-                    if($datas[$i]->groupe_id == $facture[0]->groupe_id){                        
+                    if($datas[$i]->groupe_id == $facture[0]->groupe_id){
                         $datas[$i]->chiffre_affaire = round($facture[0]->chiffre_affaire,2);
                         $datas[$i]->qte = $facture[0]->qte;
                         $datas[$i]->num_facture = $facture[0]->num_facture;
