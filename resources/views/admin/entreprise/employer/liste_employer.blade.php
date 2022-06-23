@@ -314,8 +314,9 @@
                             @endcan
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
-
+                            @can('isReferent')
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
+                            @endcan
 
                         </tr>
 
@@ -442,12 +443,13 @@
                                             @endif
 
                                     </td>
-
-                                    <td class="align-middle text-center text-secondary">
-                                        <button type="button" class="btn " data-bs-toggle="modal"
-                                            data-bs-target="#delete_emp_{{ $employers[$i]->id }}">
-                                            <i class=' bx bxs-trash' style='color:#e21717'></i>
-                                    </button>
+                                    @can('isReferent')
+                                        <td class="align-middle text-center text-secondary">
+                                            <button type="button" class="btn " data-bs-toggle="modal"
+                                                data-bs-target="#delete_emp_{{ $employers[$i]->id }}">
+                                                <i class=' bx bxs-trash' style='color:#e21717'></i>
+                                        </button>
+                                    @endcan
                                 </td>
 
                             </tr>

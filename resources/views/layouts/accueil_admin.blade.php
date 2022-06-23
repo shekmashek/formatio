@@ -21,12 +21,12 @@
                                 </div>
                             </span>
                         @else
-                            <img id="example2" src="{{asset('images/stagiaires/'.$item->photos)}}" alt="image stagiaire">
+                            <img id="example2" src="{{asset('images/employes/'.$item->photos)}}" alt="image stagiaire">
                         @endif
 
                     @endforeach
 
-                    <img id="exemple1" class="ms-3" src="{{asset('images/stagiaires/ilaina.png')}}">
+                    <img id="exemple1" class="ms-3" src="{{asset('images/employes/ilaina.png')}}">
                 </div>
                 <div class="card-body text-dark mt-3" id="cl">
                     <div class="mt-4">

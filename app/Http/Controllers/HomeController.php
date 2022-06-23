@@ -200,6 +200,7 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
+
         if (Gate::allows('isFormateur')) {
             return redirect()->route('calendrier');
         }
