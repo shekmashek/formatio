@@ -12,6 +12,7 @@ use App\cfp;
 use App\formateur;
 use App\responsable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\collaboration\inscription_cfp_etp_mail;
@@ -128,10 +129,37 @@ class CollaborationController extends Controller
     {
         $user_id = Auth::user()->id;
         $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
-
-        $formateur = $this->fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$req->email_format]);
+        $fonct = new FonctionGenerique();
         if (Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
         else {
+            if(User::where('email', $req->email_format)->exists() == false){
+            /**creer formateur(nom, email) */
+                $user = new User();
+                $user->name = $req->nom_format . " " . $req->prenom_format;
+                $user->email = $req->email_format;
+                $ch1 = '0000';
+                $user->password = Hash::make($ch1);
+                $user->save();
+
+                $user_formateur_id = $fonct->findWhereMulitOne("users", ["email"], [$req->email_format])->id;
+                DB::beginTransaction();
+                try {
+                    $fonct->insert_role_user($user_formateur_id, "4",false,true); // formateur
+                    DB::commit();
+                } catch (Exception $e) {
+                    DB::rollback();
+                    echo $e->getMessage();
+                }
+
+                $frm = new formateur();
+                $frm->nom_formateur = $req->nom_format;
+                $frm->prenom_formateur = $req->prenom_format;
+                $frm->mail_formateur = $req->email_format;
+                $frm->user_id = $user_formateur_id;
+                $frm->save();
+            }
+            /**inserer formateur dans demande frmateur */
+            $formateur = $this->fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$req->email_format]);
             if ($formateur != null) {
                 $verify1 = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$cfp_id, $formateur->id]);
                 $verify2 = $this->fonct->verifyGenerique("demmande_formateur_cfp", ["demmandeur_formateur_id", "inviter_cfp_id"], [$formateur->id, $cfp_id]);

@@ -63,9 +63,13 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <div id="icon-container"></div>
         <main class="pt-5 px-3">
-            <h1>Bienvenu</h1>
+            <h1>Bienvenue</h1>
                 <h2 class="lead mt-4 mb-4">{{$formateur[0]->nom_formateur." ".$formateur[0]->prenom_formateur}}</h2>
+                @if($formateur)
                 <a href="{{route('calendrier')}}" class="fw-bold ">Regardez votre programme du jour.</a>
+                @elseif($formateur)
+                <a href="{{route('calendrier')}}" class="fw-bold ">Veuillez compléter vos coordonnées pour pouvoir accéder aux fonctionnalitées nécessaires.</a>
+                @endif
             </p>
         </main>
         {{-- </div> --}}

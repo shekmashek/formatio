@@ -295,6 +295,12 @@
                                 <input type="text" class="form-control mb-2 ms-3" id="inlineFormInput" autocomplete="off" name="nom_format" required />
                             </div>
                         </div>
+                        <div class="mb-3 row " style="font-size: 13px">
+                            <label for="" class="col-sm-2 col-form-label text-end">Prénom <span style="color: red">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control mb-2 ms-3" id="inlineFormInput" autocomplete="off" name="prenom_format" required />
+                            </div>
+                        </div>
                         <div class="mb-3 row text-end" style="font-size: 13px">
                             <label for="" class="col-sm-2 col-form-label">Email <span style="color: red">*</span></label>
                             <div class="col-sm-9">
