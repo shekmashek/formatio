@@ -129,7 +129,7 @@ class CollaborationController extends Controller
     public function create_cfp_formateur(Request $req)
     {
         $user_id = Auth::user()->id;
-        $cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id]);
+        $cfp = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id]);
         $fonct = new FonctionGenerique();
         if (Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
         else {

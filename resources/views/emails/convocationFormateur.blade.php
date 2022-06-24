@@ -10,11 +10,10 @@
     <p>
          Bonjour {{$nom_formateur}}  {{$prenom_formateur}}, <br>
 
-    Nous vous informons que vous êtes invités à participer à la session de formation
-    sur le thème pour l'organisme de formation: {{$nom_cfp}}
+         L'organisme de formation {{$nom_cfp}} vous invite à collaborer sur la plateforme formation.mg.
 
-    Nous vous invitons aussi à compléter vos informations afin de régulariser votre inscription et participation. <br>
-    Voici le lien pour accéder à notre Extranet modifier et compléter votre profil Stagiaire : http://127.0.0.1:8000 <br><br>
+         Veuillez compléter vos inforrmations afin de régulariser votre inscription et participation. <br>
+    Voici le lien pour accéder à notre Extranet  : https://formation.mg/sign-in<br><br>
 
     Nom d’utilisateur : {{$email}} <br>
     Mot de passe : {{$mdp}} <br><br>
