@@ -7,7 +7,7 @@
 
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
 
     <style>
@@ -160,19 +160,19 @@
             margin-right: .3rem;
         }
 
-        .pagination {
+        .paginationOld {
             background-clip: text;
             margin-right: .3rem;
             font-size: 2rem;
             position: relative;
             top: .7rem;
-        }
+        } 
 
-        .pagination:hover {
+        .paginationOld:hover {
             color: #000000;
             background-color: rgb(239, 239, 239);
             border-radius: 1.3rem;
-        }
+        } 
 
         .nombre_pagination {
             color: #626262;
@@ -321,24 +321,24 @@
                     {{ $nb_projet }}</span>
                 @if ($nb_par_page >= $nb_projet)
                     <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left paginationOld'></i></a>
                     <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right paginationOld'></i></a>
                 @elseif ($page == 1)
                     <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left paginationOld'></i></a>
                     <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
-                            class='bx bx-chevron-right pagination'></i></a>
+                            class='bx bx-chevron-right paginationOld'></i></a>
                 @elseif ($page == $fin_page || $page > $fin_page)
                     <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
-                            class='bx bx-chevron-left pagination'></i></a>
+                            class='bx bx-chevron-left paginationOld'></i></a>
                     <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right paginationOld'></i></a>
                 @else
                     <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
-                            class='bx bx-chevron-left pagination'></i></a>
+                            class='bx bx-chevron-left paginationOld'></i></a>
                     <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
-                            class='bx bx-chevron-right pagination'></i></a>
+                            class='bx bx-chevron-right paginationOld'></i></a>
                 @endif
             </span>
             <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i
@@ -352,6 +352,218 @@
                 </ul>
             </div>
         @endif
+
+        {{-- test --}}
+        @canany(['isCFP'])
+            @if (count($projet) <= 0)
+                <div class="row d-flex mt-3 titre_projet p-1 mb-1">
+                    <p class="text-center text_aucun">Vous n'avez pas encore du projet.</p>
+                </div>
+            @endif
+            @if (Session::has('groupe_error'))
+                <div class="alert alert-danger ms-2 me-2">
+                    <ul>
+                        <li>{!! \Session::get('groupe_error') !!}</li>
+                    </ul>
+                </div>
+            @endif
+            <div class="row">
+                <div class="col-8 mb-4">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <select id="select-column" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <option selected value="0">Projets</option>
+                                <option value="1">Session</option>
+                                <option value="2">Module</option>
+                                <option value="3">Entreprise</option>
+                                <option value="4">Type</option>
+                                <option value="5">Modalité</option>
+                                <option value="6">Date du projet</option>
+                                <option value="7">Ville</option>
+                                <option value="8">Statut</option>
+                            </select>
+                        </div>
+                        <div class="col-md-7">
+                            <input class="form-control form-control-sm" type="text" id="search-by-column" placeholder="votre recherche...">
+                        </div>
+                    </div>
+                </div>
+                <table id="myDatatablesa" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Session</th>
+                            <th scope="col">Module</th>
+                            <th scope="col">Entreprise</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Modalité</th>
+                            {{-- <th scope="col">Date du projet</th>
+                            <th scope="col">Ville</th>
+                            <th scope="col">Statut</th>
+                            <th scope="col">Actions</th> --}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($projet as $prj)
+                            <tr data-bs-toggle="collapse" data-bs-target="#demo1" class="accordion-toggle">
+                                <td><button class="btn btn-default btn-xs">
+                                    <span><i class="bi bi-arrow-down-circle"></i></span></button>
+                                    @php
+                                        if ($prj->totale_session == 1) {
+                                            echo $prj->nom_projet;
+                                        } elseif ($prj->totale_session > 1) {
+                                            echo $prj->nom_projet;
+                                        } elseif ($prj->totale_session == 0) {
+                                            echo $prj->nom_projet;
+                                        }
+                                    @endphp
+                                </td>
+                                <td colspan="5">
+                                    @if ($prj->type_formation_id == 1)
+                                        <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                            {{ $prj->type_formation }}
+                                        </span>
+                                    @elseif ($prj->type_formation_id == 2)
+                                        <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                            {{ $prj->type_formation }}
+                                        </span>
+                                    @endif 
+                                </td>
+                                @if ($prj->totale_session <= 0)
+                                    <td colspan="9"> Aucune session</td>
+                                @else
+                                <td style="display: none;">Mathias</td>
+                                <td style="display: none;">Leme</td>
+                                <td style="display: none;">SP</td>
+                                <td style="display: none;">new</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   sa
+                                </td>
+                                <td>Carlos</td>
+                                <td>Mathias</td>
+                                <td>Leme</td>
+                                <td>SP</td>
+                                <td>new</td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" class="hiddenRow">
+                                    <div class="accordian-body collapse" id="demo1">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr class="info">
+                                                    <th>Job</th>
+                                                    <th>Company</th>
+                                                    <th>Salary</th>
+                                                    <th>Date On</th>
+                                                    <th>Date off</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr data-bs-toggle="collapse" class="accordion-toggle" data-bs-target="#demo10">
+                                                    <td> <a href="#" style="color: blue; text-decoration: underline">Enginner Software</a></td>
+                                                    <td>Google</td>
+                                                    <td>U$8.00000 </td>
+                                                    <td> 2016/09/27</td>
+                                                    <td> 2017/09/27</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-default btn-sm">
+                                                            <i class="glyphicon glyphicon-cog"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12" class="hiddenRow">
+                                                        <div class="accordian-body collapse" id="demo10">
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td><a href="#"> XPTO 1</a></td>
+                                                                        <td>XPTO 2</td>
+                                                                        <td>Obs</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>item 1</th>
+                                                                        <th>item 2</th>
+                                                                        <th>item 3 </th>
+                                                                        <th>item 4</th>
+                                                                        <th>item 5</th>
+                                                                        <th>Actions</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>item 1</td>
+                                                                        <td>item 2</td>
+                                                                        <td>item 3</td>
+                                                                        <td>item 4</td>
+                                                                        <td>item 5</td>
+                                                                        <td>
+                                                                            <a href="#" class="btn btn-default btn-sm">
+                                                                                <i class="glyphicon glyphicon-cog"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Scrum Master</td>
+                                                    <td>Google</td>
+                                                    <td>U$8.00000 </td>
+                                                    <td> 2016/09/27</td>
+                                                    <td> 2017/09/27</td>
+                                                    <td> <a href="#" class="btn btn-default btn-sm">
+                                                            <i class="glyphicon glyphicon-cog"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Back-end</td>
+                                                    <td>Google</td>
+                                                    <td>U$8.00000 </td>
+                                                    <td> 2016/09/27</td>
+                                                    <td> 2017/09/27</td>
+                                                    <td> <a href="#" class="btn btn-default btn-sm">
+                                                            <i class="glyphicon glyphicon-cog"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Front-end</td>
+                                                    <td>Google</td>
+                                                    <td>U$8.00000 </td>
+                                                    <td> 2016/09/27</td>
+                                                    <td> 2017/09/27</td>
+                                                    <td> <a href="#" class="btn btn-default btn-sm">
+                                                            <i class="glyphicon glyphicon-cog"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td style="display: none;">Carlos</td>
+                                <td style="display: none;">Mathias</td>
+                                <td style="display: none;">Leme</td>
+                                <td style="display: none;">SP</td>
+                                <td style="display: none;">SP</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endcanany
+
+        {{-- end test --}}
         <div class="row w-100">
 
             <div class="col-12 ps-5">
@@ -370,6 +582,7 @@
                                     </ul>
                                 </div>
                             @endif
+                            
                             <div class="fixedTop">
                                 <table class="table shadow-sm p-3 mb-5 bg-body rounded">
                                     <thead>
@@ -1239,7 +1452,8 @@
                                         </td>
                                         <td class="tbody_projet">
                                             <a
-                                                href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}</a>
+                                                href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">{{ $pj->nom_groupe }}
+                                            </a>
                                         </td>
                                         <td class="text-start">
                                             @php
@@ -1686,7 +1900,44 @@
                         </div>
                 </div>
 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+                integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+                <script>
+                    $(document).ready( function () {
+                        function searchByColumn(table){
+                            var defaultSearch = 0;
+            
+                            $(document).on('change keyup', '#select-column', function(){
+                               defaultSearch = this.value; 
+                            });
+            
+                            $(document).on('change keyup', '#search-by-column', function(){
+                               table.search('').column().search('').draw();
+                               table.column(defaultSearch).search(this.value).draw();
+                            });
+                        }
+            
+                        var table = $('#myDatatablesa').DataTable({
+                            "language": {
+                                "paginate": {
+                                "previous": "précédent",
+                                "next": "suivant"
+                                },
+                                "search": "Recherche :",
+                                "zeroRecords":    "Aucun résultat trouvé",
+                                "infoEmpty":      " 0 trouvés",
+                                "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                                "infoFiltered":   "(filtre sur _MAX_ entrées)",
+                                "lengthMenu":     "Affichage _MENU_ ",
+                            }
+                        });
+
+                        searchByColumn(table);
+                    } );
+                </script>
+
                 <script src="{{ asset('js/index2.js') }}"></script>
                 <script>
                     $("#formation_session_id").on("change", function() {
