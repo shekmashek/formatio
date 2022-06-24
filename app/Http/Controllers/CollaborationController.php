@@ -166,7 +166,7 @@ class CollaborationController extends Controller
                 $verify2 = $this->fonct->verifyGenerique("demmande_formateur_cfp", ["demmandeur_formateur_id", "inviter_cfp_id"], [$formateur->id, $cfp->cfp_id]);
                 $verify = $verify1->id + $verify2->id;
                 if ($verify <= 0) {
-                    Mail::to($user->email)->send(new FormateurMail($frm->nom_formateur,$frm->prenom_formateur,$cfp->nom,$frm->mail_formateur,$cfp->email));
+                    Mail::to($formateur->mail_formateur)->send(new FormateurMail($formateur->nom_formateur,$formateur->prenom_formateur,$cfp->nom_resp_cfp,$formateur->mail_formateur,$cfp->email_resp_cfp));
                     return $this->collaboration->verify_collaboration_cfp_formateur($cfp->cfp_id, $formateur->id, $req->nom_format);
                 } else {
                     return back()->with('error', "une invitation a été déjà envoyer sur formateur!");
