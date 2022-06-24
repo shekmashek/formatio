@@ -232,7 +232,7 @@ class HomeController extends Controller
 
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if( $colonnes[$i]->COLUMN_NAME != "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "nom_departement" and $colonnes[$i]->COLUMN_NAME != "poste_emp" and $colonnes[$i]->COLUMN_NAME != "nom_branche" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "prioriter"  and $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
+                if($colonnes[$i]->COLUMN_NAME != "nom_service" and $colonnes[$i]->COLUMN_NAME != "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "nom_departement" and $colonnes[$i]->COLUMN_NAME != "poste_emp" and $colonnes[$i]->COLUMN_NAME != "nom_branche" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "prioriter"  and $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }
@@ -814,9 +814,10 @@ class HomeController extends Controller
         }
         if (Gate::allows('isManager')) {
             //on récupère l'entreprise id de la personne connecté
-            $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            $data = $fonct->findWhere("v_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
+            $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
+            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
             $cfp = $fonct->findAll("cfps");
+        
             return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
         } elseif (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;

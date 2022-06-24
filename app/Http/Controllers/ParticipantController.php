@@ -25,6 +25,7 @@ use Image;
 
 /* ====================== Exportation Excel ============= */
 use App\Exports\ParticipantExport;
+use Dompdf\Adapter\GD;
 use Excel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -1131,7 +1132,7 @@ class ParticipantController extends Controller
         $user_id = Auth::user()->id;
 
         $fonct = new FonctionGenerique();
-        if (Gate::allows('isReferent')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $liste_dep = $fonct->findWhere("departement_entreprises", ["entreprise_id"], [$entreprise_id]);
             return view("admin.entreprise.employer.export_nouveau_employer", compact('liste_dep'));

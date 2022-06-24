@@ -38,7 +38,7 @@
                         <button class="btn"><i class="bx bxs-file-pdf"></i> PDF </button> </a>
             </li>
             @endcanany
-            @canany(['isReferentPrincipale','isManagerPrincipale','isReferent','isManager'])
+            @canany(['isReferentSimple','isManagerPrincipale','isReferent','isManager'])
             <li class="nav-item ">
                 <a class="nav-link pdf_download  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$montant_totale->num_facture])}}">
                     <button class="btn"><i class="bx bxs-file-pdf"></i> PDF </button></a>
@@ -157,12 +157,12 @@
                                         </td>
                                         <td>
                                             <div align="left">
-                                                {{$devise->reference." ".number_format($montant_facture->pu,0,","," ")}}
+                                                {{$devise->devise." ".number_format($montant_facture->pu,0,","," ")}}
                                             </div>
                                         </td>
                                         <td>
                                             <div align="right">
-                                                {{$devise->reference." ".number_format($montant_facture->hors_taxe,0,","," ")}}
+                                                {{$devise->devise." ".number_format($montant_facture->hors_taxe,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
@@ -228,7 +228,7 @@
                                                     <td>Montant Brut HT</td>
                                                     <td>
                                                         <div align="right">
-                                                            {{$devise->reference." ".number_format($montant_totale->montant_brut_ht,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->montant_brut_ht,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -238,7 +238,7 @@
                                                     <td>Remise</td>
                                                     <td>
                                                         <div align="right">
-                                                            {{$devise->reference." -".number_format($montant_totale->remise,0,","," ")}}
+                                                            {{$devise->devise." -".number_format($montant_totale->remise,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -247,7 +247,7 @@
                                                     <td>Net Commercial HT</td>
                                                     <td>
                                                         <div align="right">
-                                                            {{$devise->reference." ".number_format($montant_totale->net_commercial,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->net_commercial,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -256,7 +256,7 @@
                                                     <td>TVA({{$facture[0]->pourcent}} %)</td>
                                                     <td>
                                                         <div align="right">
-                                                            {{$devise->reference." ".number_format($montant_totale->tva,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->tva,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -282,7 +282,7 @@
                                                     <td>Net à payer TTC</td>
                                                     <td>
                                                         <div align="right">
-                                                            {{$devise->reference." ".number_format($montant_totale->montant_total,0,","," ")}}
+                                                            {{$devise->devise." ".number_format($montant_totale->montant_total,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>

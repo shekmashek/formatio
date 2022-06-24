@@ -504,7 +504,7 @@
                                 @endif
                                 {{$ref}}</strong></p>
                         @endcan
-                    @can('isReferent')
+                    @canany(['isReferent','isReferentSimple'])
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
                             <p class="text-dark mt-3"> CP : <strong>
                                 @if (count($dataMontantSession) >0)
@@ -534,7 +534,7 @@
                                     @endphp
                                 @endif
                             &nbsp;{{$ref}}</strong></p>
-                        @endcan
+                        @endcanany
                         @if(count($lieu_formation)>0)
                             <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
                             <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
@@ -716,7 +716,7 @@
                                 </button>
                             </a>
                         </div>
-                        @canany(['isCFP', 'isReferent', 'isFormateur'])
+                        @canany(['isCFP', 'isReferent', 'isFormateur','isReferentSimple'])
                             <div class="nav-item" role="presentation">
                                 <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
@@ -727,9 +727,9 @@
                                         @endcan
                                     @endif
                                     @if ($type_formation_id == 2)
-                                        @can('isReferent')
+                                        @canany(['isReferent','isReferentSimple'])
                                             {{ 'action_animation' }}
-                                        @endcan
+                                        @endcanany
                                     @endif
                                      "
                                         onclick="openCity(event, 'apprenant')" style="width: 100%">
@@ -760,7 +760,7 @@
                             </a>
                         </div>
 
-                        @can('isReferent')
+                        @canany(['isReferent','isReferentSimple'])
                             <div class="nav-item" role="presentation">
                                 <a href="#frais" class="nav-link p-0" id="frais-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
@@ -774,7 +774,7 @@
                                         @endif
                                     </button>
                             </div>
-                        @endcan
+                        @endcanany
 
                         <div class="nav-item" role="presentation">
                             <a href="#document" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
@@ -854,7 +854,7 @@
                                 </a>
                             </div>
                         @endcan
-                        @canany(['isCFP', 'isReferent'])
+                        @canany(['isCFP', 'isReferent','isReferentSimple'])
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
@@ -884,7 +884,7 @@
                         aria-labelledby="detail-tab" style="display: block">
                         @include('admin.detail.detail')
                     </div>
-                    @canany(['isCFP', 'isReferent', 'isFormateur'])
+                    @canany(['isCFP', 'isReferent','isReferentSimple' ,'isFormateur'])
                         <div class="tab-pane fade show tabcontent" id="apprenant" role="tabpanel"
                             aria-labelledby="apprenant-tab" style="display: none">
                             @include('admin.stagiaire.ajout_stagiaire')

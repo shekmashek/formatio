@@ -153,7 +153,7 @@
                                                 <button type="button" class="btn btn-link position-relative">
                                                 {{$pj->nom_projet}}
                                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                    {{$pj->totale_session}} session+
+                                                    {{-- {{$pj->totale_session}} session+ --}}
                                                     <span class="visually-hidden">unread messages</span>
                                                   </span>
 
@@ -173,7 +173,7 @@
 
 
                                         <td>
-                                            <strong style="color: blue">{{$pj->status}}</strong>
+                                            {{-- <strong style="color: blue">{{$pj->status}}</strong> --}}
 
                                         </td>
                                         @endcanany
@@ -210,7 +210,7 @@
 
                                                 <span>Status du projet</span>
                                                 <div class="inputbox inputboxP mt-3">
-                                                    <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du projet" list="edit_status_projet" value="{{ $pj->status }}"  name="edit_status_projet"/>
+                                                    <input type="text" class="form-control formPayement" id="exampleFormControlInput1" placeholder="status du projet" list="edit_status_projet"   name="edit_status_projet"/>
                                                         <datalist id="edit_status_projet">
                                                                 <option>En Cours</option>
                                                                 <option>Fini</option>

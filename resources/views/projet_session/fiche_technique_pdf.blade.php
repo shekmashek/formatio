@@ -118,7 +118,7 @@
                             @for ($k = 0; $k < count($stagiaires); $k++)
                                 <tr>
                                     @if ($stagiaires[$k]->photos != null)
-                                        <td> <img src="{{ public_path('images/stagiaires/' . $stagiaires[$k]->photos) }}"
+                                        <td> <img src="{{ public_path('images/employes/' . $stagiaires[$k]->photos) }}"
                                                 width="50px" class="photo" alt=""></td>
                                     @else
                                         <td><span class="m-0 p-2" height="50px" width="50px" style="border-radius: 50%; background-color:#b8368f;">{{ $stagiaires[$k]->sans_photos }}</span></td>
