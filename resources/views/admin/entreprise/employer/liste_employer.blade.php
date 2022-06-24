@@ -483,7 +483,7 @@
                                                 <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non
                                                 </button>
 
-                                                <a href="{{ route('employeur.destroy', $employers[$i]->id) }}"> <button
+                                                <a href="{{ route('employeur.destroy', $employers[$i]->user_id) }}"> <button
                                                         type="button" class="btn btn_creer btnP px-3">Oui</button></a>
                                             </div>
                                         </div>

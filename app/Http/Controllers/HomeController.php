@@ -762,7 +762,7 @@ class HomeController extends Controller
             $entreprise = entreprise::all();
             return view('admin.projet.home', compact('data', 'cfp', 'projet', 'totale_invitation', 'entreprise', 'status'));
         }
-        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple') or Gate::allows('isManager')) {
             $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
 
             // pagination
@@ -812,14 +812,15 @@ class HomeController extends Controller
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
-        if (Gate::allows('isManager')) {
-            //on récupère l'entreprise id de la personne connecté
-            $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
-            $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
-            $cfp = $fonct->findAll("cfps");
-        
-            return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
-        } elseif (Gate::allows('isCFP')) {
+        // if (Gate::allows('isManager')) {
+        //     //on récupère l'entreprise id de la personne connecté
+        //     $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
+        //     $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
+        //     $cfp = $fonct->findAll("cfps");
+
+        //     return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
+        // }
+        if (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;

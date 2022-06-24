@@ -186,7 +186,7 @@ class SessionController extends Controller
             $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
-        if(Gate::allows('isReferent') or Gate::allows('isReferentSimple')){
+        if(Gate::allows('isReferent') or Gate::allows('isReferentSimple') or Gate::allows('isManager')){
 
             $etp_id = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
 

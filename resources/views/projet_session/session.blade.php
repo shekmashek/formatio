@@ -504,7 +504,7 @@
                                 @endif
                                 {{$ref}}</strong></p>
                         @endcan
-                    @canany(['isReferent','isReferentSimple'])
+                    @canany(['isReferent','isReferentSimple','isManager'])
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
                             <p class="text-dark mt-3"> CP : <strong>
                                 @if (count($dataMontantSession) >0)
@@ -716,7 +716,7 @@
                                 </button>
                             </a>
                         </div>
-                        @canany(['isCFP', 'isReferent', 'isFormateur','isReferentSimple'])
+                        @canany(['isCFP', 'isReferent', 'isFormateur','isReferentSimple','isManager'])
                             <div class="nav-item" role="presentation">
                                 <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
@@ -727,7 +727,7 @@
                                         @endcan
                                     @endif
                                     @if ($type_formation_id == 2)
-                                        @canany(['isReferent','isReferentSimple'])
+                                        @canany(['isReferent','isReferentSimple','isManager'])
                                             {{ 'action_animation' }}
                                         @endcanany
                                     @endif
@@ -854,7 +854,7 @@
                                 </a>
                             </div>
                         @endcan
-                        @canany(['isCFP', 'isReferent','isReferentSimple'])
+                        @canany(['isCFP', 'isReferent','isReferentSimple','isManager'])
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
@@ -884,7 +884,7 @@
                         aria-labelledby="detail-tab" style="display: block">
                         @include('admin.detail.detail')
                     </div>
-                    @canany(['isCFP', 'isReferent','isReferentSimple' ,'isFormateur'])
+                    @canany(['isCFP', 'isReferent','isReferentSimple' ,'isFormateur','isManager'])
                         <div class="tab-pane fade show tabcontent" id="apprenant" role="tabpanel"
                             aria-labelledby="apprenant-tab" style="display: none">
                             @include('admin.stagiaire.ajout_stagiaire')

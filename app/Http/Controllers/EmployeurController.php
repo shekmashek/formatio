@@ -228,9 +228,11 @@ class EmployeurController extends Controller
      */
     public function destroy($id)
     {
+
+
         DB::delete('delete from users where id = ?', [$id]);
         DB::delete("delete from role_users where user_id=?",[$id]);
-        DB::delete("delete from stagiaires where user_id=?",[$id]);
+        DB::delete("delete from employers where user_id=?",[$id]);
         return back();
     }
 }

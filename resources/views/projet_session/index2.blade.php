@@ -1101,7 +1101,7 @@
                         </table>
                     @endif
                 @endcan
-                @canany(['isReferent','isReferentSimple'])
+                @canany(['isReferent','isReferentSimple','isManager'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
@@ -1279,7 +1279,7 @@
                     <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
                 </div>
                 <hr class="mt-2">
-                @canany(['isReferent', 'isCFP','isReferentSimple'])
+                @canany(['isReferent', 'isCFP','isReferentSimple','isManager'])
                     <div class="col-12 pe-3">
                         <div class="row mb-3 p-2 pt-0">
                             <form action="{{ route('liste_projet') }}" method="GET">
@@ -1333,7 +1333,7 @@
                         </div>
                     @endcanany
                 </div>
-                @canany(['isReferent','isReferentSimple'])
+                @canany(['isReferent','isReferentSimple','isManager'])
                     <div class="row px-3 mt-2">
                         <form action="{{ route('recherche_cfp') }}" method="POST">
                             @csrf
@@ -1361,7 +1361,7 @@
                     </form>
                 </div>
                 @endcan --}}
-                @canany(['isReferent', 'isCFP','isReferentSimple'])
+                @canany(['isReferent', 'isCFP','isReferentSimple','isManager'])
                     <div class="col-12 ps-5">
                     @endcanany
                     @canany(['isFormateur', 'isStagiaire'])
