@@ -209,7 +209,12 @@ class SessionController extends Controller
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
             $frais_annexe = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id]);
 
-            $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);
+           if(Gate::allows('isManager')) {
+                $dep = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->departement_entreprises_id;
+
+                $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? and departement_id  order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id,$dep]);
+           }
+           else $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);
             $documents = DB::select('select * from mes_documents where groupe_id = ?',[$id]);
             $entreprise_id = $etp_id;
         }

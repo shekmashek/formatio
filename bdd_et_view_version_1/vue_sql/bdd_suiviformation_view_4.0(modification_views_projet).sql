@@ -469,27 +469,27 @@ select
         g.status,
         g.activiter as activiter_groupe,
         s.id as stagiaire_id,
-        s.matricule_emp as matricule,
-        s.nom_emp as nom_stagiaire,
-        s.prenom_emp as prenom_stagiaire,
-        s.genre_id as genre_stagiaire,
-        s.fonction_emp as fonction_stagiaire,
-        s.email_emp as mail_stagiaire,
-        s.telephone_emp as telephone_stagiaire,
+        s.matricule,
+        s.nom_stagiaire,
+        s.prenom_stagiaire,
+        s.genre_stagiaire,
+        s.fonction_stagiaire,
+        s.mail_stagiaire,
+        s.telephone_stagiaire,
         s.entreprise_id,
         s.user_id,
         s.photos,
-        concat(SUBSTRING(s.nom_emp, 1, 1),SUBSTRING(s.prenom_emp, 1, 1)) as sans_photos,
-        (s.service_id) departement_id,
-        s.cin_emp as cin,
+        concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photos,
+        (s.departement_entreprises_id) departement_id,
+        s.cin,
         niveau.id as niveau_etude_id,
         niveau.niveau_etude,
-        s.date_naissance_emp as date_naissance,
-        (s.adresse_lot) adresse,
+        s.date_naissance,
+        (s.lot) adresse,
         s.activiter as activiter_stagiaire,
         s.branche_id,
-        ifnull(d.nom_departement,' ') as nom_departement,
-        ifnull(d.nom_service,' ') as nom_service,
+        ifnull(s.nom_departement,' ') as nom_departement,
+        ifnull(s.nom_service,' ') as nom_service,
         mf.reference,
         mf.nom_module,
         mf.nom_formation,
@@ -501,10 +501,8 @@ select
         groupes g
     on g.id = p.groupe_id
     join
-        employers s
+        stagiaires s
         on s.id = p.stagiaire_id
-    left join v_departement_service_entreprise d
-        on s.service_id = d.service_id
     join moduleformation mf
         on mf.module_id = g.module_id
     join niveau_etude niveau
