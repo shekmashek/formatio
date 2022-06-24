@@ -828,11 +828,67 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
         content: "";
         top: 31px;
     }
+    /* evenet repro */
+    .timeline-1 .event_repro {
+        border-bottom: 1px dashed #000;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        position: relative;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event_repro {
+            padding-top: 30px;
+        }
+    }
+
+    .timeline-1 .event_repro:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+
+    .timeline-1 .event_repro:before,
+    .timeline-1 .event_repro:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
+
+    .timeline-1 .event_repro:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+
+    @media (max-width: 767px) {
+        .timeline-1 .event_repro:before {
+            left: 0px;
+            text-align: left;
+        }
+    }
+
+    .timeline-1 .event_repro:after {
+        -webkit-box-shadow: 0 0 0 3px #b565a7;
+        box-shadow: 0 0 0 3px #b565a7;
+        left: -35.8px;
+        background: rgba(0, 0, 0, 0.745);
+        border-radius: 50%;
+        height: 9px;
+        content: "";
+        width: 9px;
+        top: 31px;
+    }
     @media (max-width: 767px) {
         .timeline-1 .event:after {
             left: -31.8px;
         }
         .timeline-1 .event_terminer:after {
+            left: -31.8px;
+        }
+        .timeline-1 .event_repro:after {
             left: -31.8px;
         }
     }
@@ -1842,14 +1898,16 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                 <div class="triangle-right"></div>
                             </div>
                             <div class="col-md-8">
-                                <ul class="timeline-1 text-black">
+                                <ul class="timeline-1 text-black">{{-- here --}}
                                     @php
                                         $statut_eval = $groupe->statut_valuation_chaud($pj->groupe_id,$pj->stagiaire_id);
                                     @endphp
-                                    @if ($statut_eval == 0)
+                                    @if ($pj->item_status_groupe == 'En cours' || $pj->item_status_groupe == 'Prévisionnel')
                                         <li class="event">
-                                    @elseif ($statut_eval == 1)
+                                    @elseif ($pj->item_status_groupe == 'Terminé')
                                         <li class="event_terminer">
+                                    @elseif ($pj->item_status_groupe == 'Reprogrammer' || $pj->item_status_groupe == 'Annulée' || $pj->item_status_groupe == 'Reporté' || $pj->item_status_groupe == 'Cloturé') 
+                                        <li class="event_repro">
                                     @endif
                                         <div class="row mt-2 titre_projet mb-1 pt-2 pb-2 w-100 g-0">
                                             <div class="col-md-1 p-0">
@@ -1958,7 +2016,6 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                             <td>{{ $dt->date_detail }}</td>
                                                                             <td>{{ $dt->h_debut }} h</td>
                                                                             <td>{{ $dt->h_fin }} h</td>
-                                                                            {{-- test commit --}}
                                                                             <td>{{ $dt->nom_formateur . ' ' . $dt->prenom_formateur }}</td>
                                                                         </tr>
                                                                         @endif
