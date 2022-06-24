@@ -111,6 +111,10 @@ Route::get('formateurs', 'ProjetControlleur@formateurs')->name('formateurs');
 Route::get('projets', 'ProjetControlleur@projets')->name('projets');
 Route::get('module_interne', 'ProjetControlleur@module_interne')->name('module_interne');
 Route::get('module_interne_new', 'ProjetControlleur@module_interne_new')->name('module_interne_new');
+Route::get('load_formations', 'ProjetControlleur@load_formations')->name('load_formations');
+Route::post('update_formation_domaine', 'ProjetControlleur@update_formation_domaine')->name('update_formation_domaine');
+Route::post('new_domaine', 'ProjetControlleur@new_domaine')->name('new_domaine');
+Route::post('new_formation', 'ProjetControlleur@new_formation')->name('new_formation');
 
 
 

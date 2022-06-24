@@ -1,0 +1,25 @@
+.liste_domaine{
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.liste_domaine:hover{
+    background: rgba(225, 224, 224, 0.354);
+}
+
+.liste_domaine:hover .domaine{
+    color: #4222c3;
+}
+
+.liste_domaine:hover .modifier_domaine{
+    visibility: visible;
+}
+
+.thematiques{
+    font-style: italic;
+}
+
+.modifier_domaine{
+    visibility: hidden;
+}
+

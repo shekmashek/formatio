@@ -129,9 +129,10 @@ class ProjetControlleur extends Controller
     public function formations(){
         $fonct = new FonctionGenerique();
         $etp_id = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
-        $domaines = DB::select('select dm.*, fm.* from domaines_interne as dm join formations_interne as fm on dm.id = fm.domaine_id where dm.etp_id = ?',[$etp_id]);
-        dd($domaines);
-        return view('referent.projet_Interne.formations.formation');
+        $domaines = DB::select('select * from domaines_interne where etp_id = ?',[$etp_id]);
+        $formations = DB::select('select fm.nom_formation,fm.id,fm.domaine_id from domaines_interne as dm  join formations_interne as fm on dm.id = fm.domaine_id where dm.etp_id = ?',[$etp_id]);
+
+        return view('referent.projet_Interne.formations.formation', compact('domaines','formations'));
     }
 
     public function module_interne(){
@@ -210,6 +211,94 @@ class ProjetControlleur extends Controller
             return view('referent.projet_Interne.formations.formation', compact('devise','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'id', 'competences','niveau'));
         } else return view('referent.projet_Interne.formations.formation');
         // return view('referent.projet_Interne.formations.formation');
+    }
+
+    public function load_formations(Request $request)
+    {
+        $id = $request->Id;
+        $formations = DB::select('select fm.nom_formation,fm.id,fm.domaine_id,dm.nom_domaine from domaines_interne as dm join formations_interne as fm on dm.id = fm.domaine_id where dm.id = ?', [$id]);
+        return response()->json(['formations'=>$formations]);
+    }
+
+    public function update_formation_domaine(Request $request)
+    {
+        $id = $request->id_domaine;
+        $donnees = $request->all();
+        $fonct = new FonctionGenerique();
+        if ($request->domaine != null) {
+            DB::update('update domaines_interne set nom_domaine =? where id = ?', [$request->domaine, $id]);
+            $formation = $fonct->findWhere('formations_interne', ['domaine_id'], [$id]);
+
+            for ($i = 0; $i < count($formation); $i++) {
+                $id_formation = $donnees['id_formation_' . $id . '_' . $formation[$i]->id];
+                $val_formation = $donnees['formation_' . $id . '_' . $formation[$i]->id];
+
+                if ($donnees['formation_' . $id . '_' . $formation[$i]->id] != null) {
+                    DB::update('update formations_interne set nom_formation = ? where domaine_id = ? and id = ?', [$val_formation, $id, $id_formation]);
+                } else {
+                    return back()->with('error', "l'une de ses informations est invalid");
+                }
+            }
+            return back();
+        }
+    }
+
+    public function new_domaine(Request $request){
+        $fonct = new FonctionGenerique();
+
+        $request->validate(
+            [
+                'domaine' => ["required"],
+                'formation' => ["required"]
+            ],
+            [
+                'domaine.required' => 'Veuillez remplir le champ',
+                'formation.required' => 'Veuillez remplir le champ'
+            ]
+        );
+        $id_user = Auth::user()->id;
+        $etp_id = $fonct->findWhereMulitOne("responsables",["user_id"],[$id_user]);
+        DB::beginTransaction();
+        try {
+            DB::insert('insert into domaines_interne(nom_domaine,etp_id) values(?,?)',[$request->domaine,$etp_id->entreprise_id]);
+            $id_domaine = DB::select('select id from domaines_interne where etp_id = ? order by id desc limit 1',[$etp_id->entreprise_id]);
+            for($k = 0; $k < count($request['formation']); $k++){
+                DB::insert('insert into formations_interne(nom_formation,domaine_id) values(?,?)',[$request['formation'][$k], $id_domaine[0]->id]);
+            }
+
+            DB::commit();
+            return back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('message','Le domaine n\est pas enregistrer, réessayer!');
+        }
+    }
+
+    public function new_formation(Request $request){
+        $fonct = new FonctionGenerique();
+
+        $request->validate(
+            [
+                'domaine' => ["required"],
+                'formation' => ["required"]
+            ],
+            [
+                'domaine.required' => 'Veuillez remplir le champ',
+                'formation.required' => 'Veuillez remplir le champ'
+            ]
+        );
+        DB::beginTransaction();
+        try {
+            for($k = 0; $k < count($request['formation']); $k++){
+                DB::insert('insert into formations_interne(nom_formation,domaine_id) values(?,?)',[$request['formation'][$k], $request['domaine']]);
+            }
+
+            DB::commit();
+            return back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('message','Le domaine n\est pas enregistrer, réessayer!');
+        }
     }
 
     public function formateurs(){

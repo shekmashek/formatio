@@ -20,8 +20,7 @@
             </ul>
         </div>
         <div>
-            <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
-            href="{{route('liste_module')}}">
+            <a class="new_list_nouvelle " href="{{url()->previous()}}">
             <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
         </a>
         </div>
