@@ -136,11 +136,14 @@ class CollaborationController extends Controller
         else {
 
             // /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le formateur à ajouter */
+
+            $current_month = Carbon::now()->month;
+            $date_dem = DB::select('SELECT * from demmande_cfp_formateur where YEAR(created_at) = ? ',[$current_month]);
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::id()])->cfp_id;
-            $nb_formateur = $this->fonct->findWhere("demmande_cfp_formateur",["demmandeur_cfp_id"],[$cfp_id]);
+            $nb_formateur = DB::select('SELECT * from demmande_cfp_formateur where demmandeur_cfp_id = ? and MONTH(created_at) = ? ',[$cfp_id,$current_month]);
             $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
             if($abonnement_cfp != null){
-                if($abonnement_cfp[0]->nb_formateur == count($nb_formateur) && $abonnement_cfp[0]->illimite == 0){
+                if($abonnement_cfp[0]->nb_formateur <= count($nb_formateur) && $abonnement_cfp[0]->illimite == 0){
                     return back()->with('error', "Vous avez atteint le nombre maximum de formateur, veuillez upgrader votre compte pour ajouter plus de formateur");
                 }
                 if(User::where('email', $req->email_format)->exists() == false){
