@@ -225,6 +225,7 @@ Route::get('/profile_formateur/{id?}', 'ProfController@profile_formateur')->name
 Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
     Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 });
+Route::get('/accueilFormateur', 'ProfController@accueil')->name('accueilFormateur');
 //Route update par champs prof
 Route::get('/editer_cv/{id?}', 'ProfController@editCVProf')->name('edit_cv');
 Route::get('/editer_nom/{id}', 'ProfController@editer_nom')->name('editer_nom');
@@ -261,6 +262,7 @@ Route::get('/ajout_experience/{id?}', 'ProfController@ajout_experience')->name('
 
 Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 Route::get('/nouveau_formateur','ProfController@nouveau_formateur')->name('nouveau_formateur');
+Route::get('/inscription_formateur','ProfController@inscription_formateur')->name('inscription_formateur');
 // Route::get('/nouveau_formateur', function () {
 //     return view('admin.formateur.nouveauFormateur');
 // })->name('nouveau_formateur');

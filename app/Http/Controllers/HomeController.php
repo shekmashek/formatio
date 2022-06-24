@@ -200,12 +200,7 @@ class HomeController extends Controller
     public function index(Request $request, $id = null)
     {
         if (Gate::allows('isFormateurPrincipale')) {
-            $id = Auth::user()->id;
-            $formateur = formateur::where('user_id', $id)->get();
-            $competence = competenceFormateur::where('formateur_id', $id)->get();
-            $experience = experienceFormateur::where('formateur_id', $id)->get();
-            return view('admin.formateur.accueil', compact('formateur', 'competence', 'experience'));
-            // return redirect()->route('calendrier');
+            return redirect()->route('accueilFormateur');
         }
         if (Gate::allows('isManagerPrincipale')) {
 

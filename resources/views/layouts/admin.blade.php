@@ -1007,11 +1007,11 @@
                                                 <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
                                             </a>
                                         </li>
-                                        <li id="formateurs">
+                                        {{-- <li id="formateurs">
                                             <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
                                                 <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
                                             </a>
-                                        </li>
+                                        </li> --}}
                                         @can('isPremium')
                                         <li id="projet">
                                             <a class="dropdown-item"
@@ -1308,7 +1308,7 @@
                                             de formation</span></a>
                                 </div>
                             </li>
-                            <li class="list-group-item  align-items-start">
+                            {{-- <li class="list-group-item  align-items-start">
                                 <a class="accordion-toggle d-flex justify-content-between listeApprendre"
                                     id="accApprForm" data-bs-toggle="collapse" data-bs-parent="#accordion"
                                     href="#apprFormateur">
@@ -1321,14 +1321,14 @@
                                     <hr>
                                     <a href="{{route('nouveau_formateur')}}"><span>Cliquer ici pour ajouter un formateur</span></a>
                                 </div>
-                            </li>
+                            </li> --}}
 
                             <li class="list-group-item align-items-start listeApprendre">
                                 <a class="accordion-toggle d-flex justify-content-between listeApprendre"
                                     id="accApprInter" data-bs-toggle="collapse" data-bs-parent="#accordion"
                                     href="#apprInter">
                                     <div class="ms-2 me-auto">
-                                        <div class=" text-sm">3. Collaborer avec les entreprises qui ont des projets en
+                                        <div class=" text-sm">2. Collaborer avec les entreprises qui ont des projets en
                                             commun avec vous </div>
                                     </div>
                                     <span class="fas fa-angle-down"></span>
