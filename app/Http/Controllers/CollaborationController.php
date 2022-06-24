@@ -19,6 +19,7 @@ use App\Mail\collaboration\inscription_cfp_etp_mail;
 use App\Mail\collaboration\inscription_etp_cfp_mail;
 use App\Mail\collaboration\invitation_cfp_etp_mail;
 use App\Mail\collaboration\invitation_etp_cfp_mail;
+use App\Mail\FormateurMail;
 
 class CollaborationController extends Controller
 {
@@ -128,7 +129,7 @@ class CollaborationController extends Controller
     public function create_cfp_formateur(Request $req)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
+        $cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id]);
         $fonct = new FonctionGenerique();
         if (Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
         else {
@@ -161,11 +162,12 @@ class CollaborationController extends Controller
             /**inserer formateur dans demande frmateur */
             $formateur = $this->fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$req->email_format]);
             if ($formateur != null) {
-                $verify1 = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$cfp_id, $formateur->id]);
-                $verify2 = $this->fonct->verifyGenerique("demmande_formateur_cfp", ["demmandeur_formateur_id", "inviter_cfp_id"], [$formateur->id, $cfp_id]);
+                $verify1 = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$cfp->cfp_id, $formateur->id]);
+                $verify2 = $this->fonct->verifyGenerique("demmande_formateur_cfp", ["demmandeur_formateur_id", "inviter_cfp_id"], [$formateur->id, $cfp->cfp_id]);
                 $verify = $verify1->id + $verify2->id;
                 if ($verify <= 0) {
-                    return $this->collaboration->verify_collaboration_cfp_formateur($cfp_id, $formateur->id, $req->nom_format);
+                    Mail::to($user->email)->send(new FormateurMail($frm->nom_formateur,$frm->prenom_formateur,$cfp->nom,$frm->mail_formateur,$cfp->email));
+                    return $this->collaboration->verify_collaboration_cfp_formateur($cfp->cfp_id, $formateur->id, $req->nom_format);
                 } else {
                     return back()->with('error', "une invitation a été déjà envoyer sur formateur!");
                 }
@@ -175,6 +177,7 @@ class CollaborationController extends Controller
             }
         }
     }
+
 
     // =========================  annule cfp à etp et etp à cfp
 
