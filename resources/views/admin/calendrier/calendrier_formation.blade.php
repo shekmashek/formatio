@@ -230,17 +230,9 @@
             vertical-align: middle
         }
 
-
-        #planning .fc-daygrid-event{
-            background-color: #74747400!important;
-        }
-
     </style>
 
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> --}}
@@ -249,13 +241,18 @@
     <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
     <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
 
-    {{-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script> --}}
     
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/fr.js"></script> --}}
-
+    
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
+
+
+    {{-- Pour utiliser jquery sur fullCalendar --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/fr.js"></script> --}}
+
+
 
 </head>
 <body>
@@ -268,11 +265,21 @@
                 <div id='calendar'></div>
             </div>
 
-            <div class="col-sm-6 mt-5">
+            <div class="calendar col-sm-6 mt-5">
                 <div id='planning'></div>
             </div>
 
-            
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+              <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                ...
+              </div>
+            </div>
 
             {{-- details on click --}}
             <div class="col-sm-6" id="detail" style="display: none">
@@ -412,7 +419,7 @@
     </div>
 </body>
 
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></scrip> --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
@@ -421,17 +428,16 @@
 
     <script>
 
-
-
-
+        // calendrier planning
             document.addEventListener('DOMContentLoaded', function() {
-                
+
                 var events = {!! json_encode($events, JSON_HEX_TAG) !!};
                 var calendarEl = document.getElementById('planning');
-                
                 var calendar = new FullCalendar.Calendar(calendarEl, 
                 {
                 
+                // views : resourceTimeline,resourceTimelineWeek,listMonth,dayGridMonth,timeGridWeek
+
                     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
                     initialView: 'listMonth',
                     locale: '{{ app()->getLocale() }}',
@@ -441,46 +447,29 @@
                                     right: 'prev,next today',
                                     center: 'title', 
                                     left: 'dayGridMonth,timeGridWeek,listMonth'
+
                                 },
 
+
+                                eventClick:  function (event, jsEvent, view) {
+                                    
+                            },
+
+                        eventDidMount: function(info) {
+                            
+                            var tooltip = new Tooltip(info.el, {
+                                title: info.event.extendedProps.title,
+                                placement: 'top',
+                                trigger: 'hover',
+                                container: 'body'
+                            });
+                    },
+                 
                     events: events,
-                    close: 'fa-times',
-                    prev: 'fa-chevron-left',
-                    next: 'fa-chevron-right',
-                    prevYear: 'fa-angle-double-left',
-                    nextYear: 'fa-angle-double-right'
+
 
                 }
-
-                // {
-                //         headerToolbar: {
-                //             left: "prev,next today",
-                //             center: "title",
-                //             right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
-                //         },
-
-                //         height: 800,
-                //         contentHeight: 780,
-                //         aspectRatio: 3,  // see: https://fullcalendar.io/docs/aspectRatio
-
-                //         nowIndicator: true,
-
-                //         views: {
-                //             dayGridMonth: { buttonText: "month" },
-                //             timeGridWeek: { buttonText: "week" },
-                //             timeGridDay: { buttonText: "day" }
-                //         },
-
-                //         initialView: "dayGridMonth",
-
-                //         editable: true,
-                //         dayMaxEvents: true, // allow "more" link when too many events
-                //         navLinks: true,
-                //         events: events,
-                //     }
                 );
-
-
 
                 calendar.render();
             });

@@ -82,6 +82,7 @@ class DetailController extends Controller
             // getting the groupe_entreprises belonging to $entreprise
             $groupe_etp = GroupeEntreprise::where('entreprise_id', $entreprise_id)->get();
 
+
             // we get many groupe_entreprises so loop foreach element to get the details
             // matching with the groupe_id
 
@@ -93,6 +94,8 @@ class DetailController extends Controller
                
             
             }
+
+
 
             // $details get all data but it is a multidimansionnal array.
             // We need to get each details as raveled_details (ref numpy.ravel() in python)
@@ -116,6 +119,7 @@ class DetailController extends Controller
                 $events[] = array(
                     'detail_id' => $value->id,
                     'title' => $value->groupe->module->formation->nom_formation,
+                    'description' => $value->groupe->projet->cfp->nom,
                     'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
                     'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
                     'nom_projet' => $value->groupe->projet->nom_projet,
@@ -123,10 +127,11 @@ class DetailController extends Controller
                     'formateur' => $value->formateur->nom_formateur,
                     'nom_cfp' => $value->groupe->projet->cfp->nom,
                     'backgroundColor' => $value->color,
-                    'borderColor' => 'red'
+                    'borderColor' => $value->color
                 );
 
             }
+
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             foreach ($groupe_etp as $key => $value) {
