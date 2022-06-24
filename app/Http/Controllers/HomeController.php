@@ -959,24 +959,22 @@ class HomeController extends Controller
             $ressource ='';
             $stagiaire ='';
             $data_detail='';
-            $modules = DB::select('select nom_module,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by nom_module');
-            $formations = DB::select('select nom_formation,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by nom_formation');
-            $status = DB::select('select item_status_groupe as status,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by item_status_groupe');
+            $modules = DB::select('select nom_module from v_stagiaire_notstatut_eval group by nom_module');
+            $formations = DB::select('select nom_formation from v_stagiaire_notstatut_eval group by nom_formation');
             if($data != null){
                 $ressource = DB::select('select * from ressources where groupe_id in (' . implode(',',$var) .')');
                 $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id in (' . implode(',',$var) .') order by stagiaire_id asc');
-                $data_detail = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_participant_groupe_detail where stagiaire_id = ? order by date_debut desc', [$stg_id]);
+                $data_detail = DB::select('select * from v_participant_groupe_detail where stagiaire_id = ? order by date_debut desc', [$stg_id]);
             }
-            $documents = [];
             // $documents = $drive->file_list($cfp_nom,"Mes documents");
-            foreach($data as $d){
+            /* foreach($data as $d){ */
                 /* $data->date_debut = Carbon::parse($pj->date_debut)->format('d-m-Y'); */
-                $test =  $drive->file_list($d->nom_cfp,"Mes documents");
+                /* $test =  $drive->file_list($d->nom_cfp,"Mes documents");
                 if(count($test) > 0){
                     array_push($documents , $drive->file_list($d->nom_cfp,"Mes documents"));
                 } 
-            }
-            return view('projet_session.index2', compact('documents','data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status'));
+            } */
+            return view('projet_session.index2', compact('data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations'));
         }
     }
 

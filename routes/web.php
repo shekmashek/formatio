@@ -68,6 +68,7 @@ Route::get('/homertdbq/{id?}', 'HomeControllerRTDBQ@index')->name('homertdbq');
 Route::get('budget_previsionnel', 'HomeController@budget_previsionnel')->name('budget_previsionnel');
 
 Route::get('/liste_projet/{id?}/{page?}', 'HomeController@liste_projet')->name('liste_projet');
+/* Route::get('/liste_projet_stagiaire', 'HomeController@liste_projet_stagiaire')->name('liste_projet_stagiaire'); */
 Route::get('/liste', 'HomeController@liste')->name('liste');
 Route::get('/compte', 'HomeController@compte')->name('compte');
 Route::get('/detail_projet/{id}', 'HomeController@detail')->name('detail_projet');
