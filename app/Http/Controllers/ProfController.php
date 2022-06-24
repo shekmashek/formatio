@@ -124,20 +124,19 @@ class ProfController extends Controller
     public function accueil()
     {
         $id = Auth::user()->id;
-        $formateur = formateur::where('user_id', $id)->first();
-        dd($formateur);
-        // $frm->nom_formateur = $request->nom;
-        // $frm->prenom_formateur = $request->prenom;
-        // $frm->mail_formateur = $request->mail;
-        // $frm->numero_formateur = $request->phone;
-        // $frm->genre_id = $genre;
-        // $frm->date_naissance = $request->date_naissance;
-        // $frm->adresse = $request->adresse;
-        // $frm->CIN = $request->cin;
-        // $frm->specialite = $request->specialite;
-        // $frm->niveau_etude_id = $request->niveau;
-        if($formateur->date_naissance==null){
-            return redirect()->route('nouveau_formateur');
+        $formateur = formateur::where('user_id', $id)
+        ->whereNotNull('numero_formateur')
+        ->whereNotNull('photos')
+        ->whereNotNull('date_naissance')
+        ->whereNotNull('adresse')
+        ->whereNotNull('cin')
+        ->whereNotNull('specialite')
+        ->whereNotNull('genre_id')
+        ->whereNotNull('niveau_etude_id')
+        ->get();
+        // dd($formateur);
+        if($formateur->isEmpty()){
+            return redirect()->route('inscription_formateur');
         }else{
             $competence = competenceFormateur::where('formateur_id', $id)->get();
             $experience = experienceFormateur::where('formateur_id', $id)->get();
@@ -187,6 +186,12 @@ class ProfController extends Controller
         $fonct = new FonctionGenerique();
         $niveau = $fonct->findAll('niveau_etude');
         return view('admin.formateur.nouveauFormateur',compact('niveau'));
+    }
+    public function  inscription_formateur(){
+        $formateur = formateur::where('user_id', Auth::user()->id)->first();
+        $fonct = new FonctionGenerique();
+        $niveau = $fonct->findAll('niveau_etude');
+        return view('admin.formateur.inscription_formateur',compact('niveau','formateur'));
     }
 
     public function store(Request $request)
@@ -323,10 +328,7 @@ class ProfController extends Controller
                     if($request->sexe == "femme") $genre = 1;
                     if($request->sexe == "null") $genre = null;
 
-                    $frm = new formateur();
-                    $frm->nom_formateur = $request->nom;
-                    $frm->prenom_formateur = $request->prenom;
-                    $frm->mail_formateur = $request->mail;
+                    $frm = formateur::where('user_id',Auth::user()->id)->first();
                     $frm->numero_formateur = $request->phone;
                     $frm->genre_id = $genre;
                     $frm->date_naissance = $request->date_naissance;
@@ -356,10 +358,7 @@ class ProfController extends Controller
                     $frm->photos = $nom_image;
                     // $frm->url_photo = $url_photo;
 
-                    $user = new User();
-                    $user->name = $request->nom . " " . $request->prenom;
-                    $user->email = $request->mail;
-
+                    $user = User::where('id',Auth::user()->id)->first();
                     $user->cin = $request->cin;
                     $user->telephone = $request->phone;
 
@@ -378,8 +377,6 @@ class ProfController extends Controller
                         echo $e->getMessage();
                     }
 
-                    //get user id
-                    $frm->user_id = $user_id;
                     $frm->save();
 
                     // $idmail_formateur = formateur::where('mail_formateur', $request->mail)->value('id');
@@ -410,8 +407,8 @@ class ProfController extends Controller
                     // }
                 //   $request->image->move(public_path('images/formateurs'), $nom_image);  //save image cfp
 
-                    // return redirect()->route('utilisateur_formateur');
-                    return back()->with('success', 'Formateur ajouté avec succès!');
+                    return redirect()->route('home');
+                    // return back()->with('success', 'Formateur ajouté avec succès!');
                 }
             }
         }

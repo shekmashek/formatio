@@ -262,6 +262,7 @@ Route::get('/ajout_experience/{id?}', 'ProfController@ajout_experience')->name('
 
 Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 Route::get('/nouveau_formateur','ProfController@nouveau_formateur')->name('nouveau_formateur');
+Route::get('/inscription_formateur','ProfController@inscription_formateur')->name('inscription_formateur');
 // Route::get('/nouveau_formateur', function () {
 //     return view('admin.formateur.nouveauFormateur');
 // })->name('nouveau_formateur');
