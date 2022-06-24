@@ -90,7 +90,16 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 <div class="container-fluid mt-5">
-
+    @if(Session::has('success'))
+    <div class="alert alert-success">
+        <strong> {{Session::get('success')}}</strong>
+    </div>
+    @endif
+    @if(Session::has('error'))
+    <div class="alert alert-danger">
+        <strong> {{Session::get('error')}}</strong>
+    </div>
+    @endif
     <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
         <li class="nav-item" role="presentation">
           <a
@@ -404,16 +413,6 @@
                             </div>
                         </div>
                     </div>
-                    @if(Session::has('success'))
-                    <div class="alert alert-success">
-                        <strong> {{Session::get('success')}}</strong>
-                    </div>
-                    @endif
-                    @if(Session::has('error'))
-                    <div class="alert alert-danger">
-                        <strong> {{Session::get('error')}}</strong>
-                    </div>
-                    @endif
                 </div>
             </div>
         </div>
