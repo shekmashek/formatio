@@ -11,7 +11,8 @@
     color: #4222c3;
 }
 
-.liste_domaine:hover .modifier_domaine{
+.liste_domaine:hover .modifier_domaine,
+.liste_domaine:hover .supprimer_domaine{
     visibility: visible;
 }
 
@@ -19,7 +20,8 @@
     font-style: italic;
 }
 
-.modifier_domaine{
+/* .modifier_domaine,
+.supprimer_domaine{
     visibility: hidden;
-}
+} */
 

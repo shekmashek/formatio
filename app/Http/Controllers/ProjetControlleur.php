@@ -220,6 +220,48 @@ class ProjetControlleur extends Controller
         return response()->json(['formations'=>$formations]);
     }
 
+    public function load_formations_suppre(Request $request)
+    {
+        $id = $request->Id;
+        $formations = DB::select('select fm.nom_formation,fm.id,fm.domaine_id,dm.nom_domaine from domaines_interne as dm join formations_interne as fm on dm.id = fm.domaine_id where dm.id = ?', [$id]);
+        // $domaines = DB::select('select md.id,nom_domaine from domaines_interne as dm join formations_interne as fm on dm.id = fm.domaine_id where dm.id = ?', [$id]);
+        return response()->json(['formations'=>$formations]);
+    }
+
+    public function supprimer_thematique(Request $request)
+    {
+        $id = $request->id_domaine;
+        DB::delete('delete from domaines_interne where id = ?', [$id]);
+        // $test = DB::select('select * from competence_a_evaluers')
+        return back();
+    }
+
+    public function supprimer_domaine(Request $request)
+    {
+        $id = $request->Id;
+        DB::delete('delete from domaines_interne where id = ?', [$id]);
+        // $test = DB::select('select * from competence_a_evaluers')
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
+
+    public function suppression_formation(Request $request)
+    {
+        $id = $request->Id;
+        DB::delete('delete from formations_interne where id = ?', [$id]);
+        // $test = DB::select('select * from competence_a_evaluers')
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
+    }
+
     public function update_formation_domaine(Request $request)
     {
         $id = $request->id_domaine;

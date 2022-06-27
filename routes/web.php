@@ -112,9 +112,13 @@ Route::get('projets', 'ProjetControlleur@projets')->name('projets');
 Route::get('module_interne', 'ProjetControlleur@module_interne')->name('module_interne');
 Route::get('module_interne_new', 'ProjetControlleur@module_interne_new')->name('module_interne_new');
 Route::get('load_formations', 'ProjetControlleur@load_formations')->name('load_formations');
+Route::get('load_formations_suppre', 'ProjetControlleur@load_formations_suppre')->name('load_formations_suppre');
 Route::post('update_formation_domaine', 'ProjetControlleur@update_formation_domaine')->name('update_formation_domaine');
 Route::post('new_domaine', 'ProjetControlleur@new_domaine')->name('new_domaine');
 Route::post('new_formation', 'ProjetControlleur@new_formation')->name('new_formation');
+Route::post('supprimer_thematique', 'ProjetControlleur@supprimer_thematique')->name('supprimer_thematique');
+Route::get('suppression_formation', 'ProjetControlleur@suppression_formation')->name('suppression_formation');
+Route::get('supprimer_domaine', 'ProjetControlleur@supprimer_domaine')->name('supprimer_domaine');
 
 
 

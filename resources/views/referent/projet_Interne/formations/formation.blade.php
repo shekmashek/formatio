@@ -45,7 +45,7 @@
                                 <div class="col-4 mb-3 liste_domaine">
                                     <div class="row">
                                         <div class="col">
-                                            <p class="mb-1 domaine">{{$domaines[$j]->nom_domaine}}</p>
+                                            <p class="mb-1 domaine_{{$domaines[$j]->id}}">{{$domaines[$j]->nom_domaine}}</p>
                                             @php $nb = 0; @endphp
                                             @for ($i = 0; $i < count($formations); $i++)
                                                 @if($formations[$i]->domaine_id == $domaines[$j]->id)
@@ -56,7 +56,8 @@
                                             @endfor
                                         </div>
                                         <div class="col-2">
-                                            <a role="button" class="modifier_formation" data-bs-toggle="modal" data-bs-target="#Modal_fomation_{{$domaines[$j]->id}}" id="{{$domaines[$j]->id}}" title="modifier domaine et thématiques de formation"><i class="bx bx-edit-alt bx_modifier modifier_domaine"></i></a>
+                                            <a role="button" class="modifier_formation" data-bs-toggle="modal" data-bs-target="#Modal_fomation_{{$domaines[$j]->id}}" id="{{$domaines[$j]->id}}" title="modifier domaine et thématiques de formation"><i class="bx bx-edit-alt bx_modifier modifier_domaine mb-2 mt-1"></i></a>
+                                            <a role="button" class="supprimer_formation" data-bs-toggle="modal" data-bs-target="#Modal_suppression_{{$domaines[$j]->id}}" id="{{$domaines[$j]->id}}" title="supprimer domaine et thématiques de formation"><i class="bx bx-trash bx_supprimer supprimer_domaine"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -81,50 +82,44 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div>
-                                    <div class="modal fade" id="Modal_fomation_{{$domaines[$j]->id}}" tabindex="-1" role="dialog"
-                                        aria-labelledby="Modal_fomation_{{$domaines[$j]->id}}" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <form action="{{route('insertion_cours')}}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="id_prog" id="id" value="{{$domaines[$j]->id}}">
-                                                    <div class="modal-header">
-                                                        <h6>Ajouter des nouvelles Points dans&nbsp;{{$domaines[$j]->nom_domaine}}</h6>
-                                                    </div>
-                                                    <div class="modal-body mt-2 mb-2">
-                                                        <div class="container">
-                                                            <div class="row mb-5">
-                                                                <div class="mt-2 text-center">
-                                                                    <span class="btn_nouveau text-center" onclick="Cours();" >
-                                                                        <i class='bx bx-plus-medical me-1'></i>Ajouter un point
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="col-12">
-                                                                    <div class="form-group">
-                                                                        <div class="form-row">
-                                                                            <input type="text" name="cours[]" id="cours"
-                                                                                class="form-control input" placeholder="Nouveau Point" required>
-                                                                            <label for="cours"
-                                                                                class="form-control-placeholder">Nouveau Point </label>
-                                                                        </div>
+                                <div class="modal fade" id="Modal_suppression_{{$domaines[$j]->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Modal_suppression_{{$domaines[$j]->id}}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{{route('supprimer_thematique')}}" method="POST">
+                                                @csrf
+                                                {{-- <input type="hidden" name="id_domaine" id="id_domaine" value="{{$domaines[$j]->id}}"> --}}
+                                                <div class="modal-header">
+                                                    <h6>Supprimer domaine et thématiques</h6>
+                                                </div>
+                                                <div class="modal-body mt-2 mb-2">
+                                                    <div class="container">
+                                                    <div class="rowSupprimer"></div>
+                                                        {{-- @foreach ($formations as $form)
+                                                        <div class="d-flex count_input" id="countt_{{$form->id}}">
+                                                            <div class="col-9">
+                                                                <div class="form-group">
+                                                                    <div class="form-row">
+                                                                        <input type="text" name="fomation_{{$form->domaine_id}}_{{$form->id}}" id="formation" class="form-control input mb-2 supprimer_{{$form->id}}" value="{{$form->nom_formation}}" placeholder="Thématique" required>
+                                                                        <input type="hidden" name="id_formation_{{$form->domaine_id}}_{{$form->id}}" value="{{$form->domaine_id}}">
+                                                                        <label for="titre_competence" class="form-control-placeholder">Compétences</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="newRowCours"></div>
+                                                            <div class="col-1">
+                                                                <div class="suppre_{{$form->id}} suppression_competence" role="button" title="Supprimer le competence" id="{{$form->id}}" data-id="{{$form->id}}"><i class='bx bx-trash bx_supprimer mt-1 ms-2'></i></div>
+                                                            </div>
                                                         </div>
+                                                        @endforeach --}}
                                                     </div>
-                                                    <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_fermer" id="fermerCours" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    <button type="button" class="btn btn_fermer fermer4" id="fermer4" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                                    <button type="submit" class="btn btn_annuler "><i class='bx bx-x me-1'></i>supprimer</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
                             @endfor
                         </div>
                         @endif
@@ -204,6 +199,7 @@
                                                                                 <option value="{{$dom->id}}">{{$dom->nom_domaine}}</option>
                                                                             @endforeach
                                                                         </select>
+                                                                        <label for="domaine" class="form-control-placeholder">Choisir un domaine de formation</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -239,6 +235,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
                     </div>
@@ -256,7 +253,7 @@
 <script>
     $('.modifier_formation').on('click',function(e){
         let id = $(e.target).closest('.modifier_formation').attr("id");
-        alert(id);
+        // alert(id);
         $.ajax({
             type: "get"
             , url: "{{route('load_formations')}}"
@@ -274,6 +271,7 @@
                         html += '<div class="form-row">';
                         html +=     '<label for="" class="mb-2">Domaine</label>';
                         html +=     '<input type="text" name="domaine" class="w-100  domaine_'+userData['formations'][0]['domaine_id']+' input" value="'+userData['formations'][0]['nom_domaine']+'">';
+                        html +=     '<input type="hidden" name="id_domaine_'+userData['formations'][0]['domaine_id']+'" value="'+userData['formations'][0]['domaine_id']+'">';
                         html +=     '<hr>'
                         html +=     '<label for="" class="mb-2">Liste des thématiques</label>';
 
@@ -284,8 +282,8 @@
                         html +=                 '<input type="hidden" name="id_formation_'+userData['formations'][$k]['domaine_id']+'_'+userData['formations'][$k]['id']+'" value="'+userData['formations'][$k]['id']+'">';
                                             }
                                         }
-                        html +=     '</div>'
-                        html += '</div>'
+                        html +=     '</div>';
+                        html += '</div>';
                     // }
                 }else{
                     alert('error');
@@ -301,6 +299,117 @@
             }
         });
     });
+
+
+
+
+    $('.supprimer_formation').on('click',function(e){
+        let id = $(e.target).closest('.supprimer_formation').attr("id");
+        // alert(id);
+        $.ajax({
+            type: "get"
+            , url: "{{route('load_formations_suppre')}}"
+            ,dataType: "json"
+            , data: {
+                Id: id
+            }
+            , success: function(response) {
+                let userData = response;
+                // console.log(userData['formations']);
+                let count_input = userData['formations'].length;
+                if (count_input != 0) {
+                    let html = '';
+                    if (userData['formations'] != null || undefined) {
+                        // for (let $l = 0; $l < userData['formations'].length; $l++) {
+                            html += '<input type="hidden" value="'+userData['formations'][0]['domaine_id']+'" name="id_domaine">';
+                            html += '<div class="form-row">';
+                            html +=     '<label for="" class="mb-2">Domaine</label>';
+                            html +=     '<input type="text" name="domaine" class="w-100  domaine_'+userData['formations'][0]['domaine_id']+' input" value="'+userData['formations'][0]['nom_domaine']+'">';
+                            // html +=     '<i id="'+userData['formations'][0]['domaine_id']+'" class="bx bx-trash bx_supprimer ms-1 mt-1 remove_domaine" role="button" title="supprimmer un domaine"></i>';
+                            html +=     '<hr>'
+                            html +=     '<label for="" class="mb-2">Liste des thématiques</label>';
+
+                            html +=     '<div class="d-flex flex-column">';
+                                            for (let $k = 0; $k < userData['formations'].length; $k++) {
+                                                if (userData['formations'][0]['domaine_id'] == userData['formations'][$k]['domaine_id']) {
+                            html +=             '<div class="row count_input formation_'+userData['formations'][$k]['id']+'">';
+                            html +=                 '<div class="col">';
+                            html +=                     '<input type="text" name="formation_'+userData['formations'][$k]['domaine_id']+'_'+userData['formations'][$k]['id']+'" class="w-100 input mb-2" value="'+userData['formations'][$k]['nom_formation']+'" required>';
+                            html +=                 '</div>';
+                            html +=                 '<div class="col-1">';
+                            html +=                     '<i id="'+userData['formations'][$k]['id']+'" class="bx bx-trash bx_supprimer ms-1 mt-1 remove_formation" role="button" title="supprimmer un thématique"></i>';
+                            html +=                 '</div>';
+                            html +=             '</div>';
+                                                }
+                                            }
+                            html +=     '</div>';
+                            html += '</div>';
+                        // }
+                    }else{
+                        alert('error');
+                    }
+                    $('.rowSupprimer').empty();
+                    $('.rowSupprimer').append(html);
+                    // if (count_input != 0) {
+                    //     $('#Modal_suppression_'+ id).modal('show');
+                    // }else{
+                    //     $('#Modal_suppression_'+ id).modal('hide');
+                    // }
+
+                    $('.remove_formation').on('click',function(e){
+                        let id = $(e.target).closest('.remove_formation').attr("id");
+                        // alert(id);
+                        $.ajax({
+                            type: "GET",
+                            url: "{{route('suppression_formation')}}",
+                            data: {
+                            Id: id,
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    alert(".formation_" + id);
+                                    $(".formation_" + id).remove();
+                                } else {
+                                    alert("Error");
+                                }
+                            },
+                            error: function(error) {
+                            console.log(error);
+                            }
+                        });
+                    });
+
+                    $('.fermer4').click(function(e){
+                        $('.rowSupprimer').empty();
+                        window.location.reload();
+                    });
+                }else{
+                    $.ajax({
+                        type: "get"
+                        , url: "{{route('supprimer_domaine')}}"
+                        ,dataType: "json"
+                        ,data: {
+                            Id: id
+                        },success: function(response){
+                            if (response.success) {
+                                    window.location.reload();
+                                } else {
+                                    alert("Error");
+                                }
+                        },error: function(error){
+                            console.log(error);
+                        }
+                    });
+                }
+            }, error: function(error) {
+                console.log(JSON.parse(error));
+                // console.log(JSON.stringify(error));
+            }
+        });
+    });
+
+
+
     function formation() {
         var html = "";
         html += '<div class="d-flex mt-3" id="row_newFormation">';
