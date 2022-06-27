@@ -26,7 +26,7 @@ h1 {
   font-size:48px;
 }
 p {
-  
+
   letter-spacing: 1px;
   font-size:14px;
   color: #333333;
@@ -101,7 +101,7 @@ p {
   0% {
    transform: translate3d(-90px,0,0);
   }
-  100% { 
+  100% {
     transform: translate3d(85px,0,0);
   }
 }
@@ -125,21 +125,21 @@ p {
     text-align: center;
     letter-spacing: 2px;
     background-size: cover;
-    
-    
+
+
 }
 
 .contenue:hover{
     background-color: #7367f0;
     box-shadow: 0 0 20px 1px rgb(115 103 240 / 70%);
- 
-    
+
+
 }
 
 .contenue:hover h1{
     transform: scale(1.1);
     transition: 0.3s;
-    
+
 }
 .contenue:hover span{
     color: black;
@@ -157,7 +157,7 @@ p {
         <!--Content before waves-->
         <div class="inner-header flex">
         <!--Just the logo.. Don't mind this-->
-        
+
         {{-- <h1>Entreprise</h1>
         <h1>Organisme de formation</h1> --}}
         <div class="titre">
@@ -172,7 +172,7 @@ p {
             </div>
         </div>
         </div>
-        
+
         <!--Waves Container-->
         <div>
         <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -189,13 +189,13 @@ p {
         </svg>
         </div>
         <!--Waves end-->
-        
+
         </div>
         <!--Header ends-->
-        
+
         <!--Content starts-->
         <div class="content flex">
-          <p style="font-size: 30px">Formation.mg / <a href="/" style="text-decoration: none">revenir à l'acceuille</a> </p>
+          <p style="font-size: 30px">Formation.mg / <a href="/" style="text-decoration: none">revenir à l'acceuil</a> </p>
         </div>
         <!--Content ends-->
 </body>
