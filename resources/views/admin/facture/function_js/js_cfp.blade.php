@@ -270,9 +270,9 @@
                                             }else{
                                                 html_tous +='<td></td>';
                                             }
-                                            html_tous +='<td><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
+                                            html_tous +='<td class="td_encaiss"><div class="button_encaiss"><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
                                             html_tous +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
-                                            html_tous +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
+                                            html_tous +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></div></tr>';
                                         }
                                     }
                                 html_tous +='</tbody></table></div>';
@@ -596,9 +596,9 @@
                                             }else{
                                                 html_actif +='<td></td>';
                                             }
-                                            html_actif +='<td><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
+                                            html_actif +='<td class="td_encaiss"><div class="button_encaiss"><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
                                             html_actif +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
-                                            html_actif +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
+                                            html_actif +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></div></td></tr>';
                                         }
                                     }
                                 html_actif +='</tbody></table></div>';
@@ -831,9 +831,9 @@
                                             }else{
                                                 html_payer +='<td></td>';
                                             }
-                                            html_payer +='<td><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
+                                            html_payer +='<td class="td_encaiss"><div class="button_encaiss"><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
                                             html_payer +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
-                                            html_payer +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></tr>';
+                                            html_payer +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></div></td></tr>';
                                         }
                                     }
                                 html_payer +='</tbody></table></div>';
