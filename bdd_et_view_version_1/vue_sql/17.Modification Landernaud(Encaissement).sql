@@ -1,5 +1,5 @@
 
-/* copier ce scripte */
+
 CREATE OR REPLACE VIEW v_encaissement AS SELECT
     encaissements.*,
     factures.entreprise_id,

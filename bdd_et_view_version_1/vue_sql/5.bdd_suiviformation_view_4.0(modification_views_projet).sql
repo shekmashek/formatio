@@ -719,13 +719,13 @@ create or replace view v_formateur_projet as
         d.groupe_id;
 
 
-create or replace view v_programme_detail_activiter as
-select
-        v_detailmodule.*,cours_id,titre_cours,programme_id,titre_programme
-from
-    v_detailmodule,v_detail_cour
-where
-    v_detailmodule.detail_id = v_detail_cour.detail_id;
+-- create or replace view v_programme_detail_activiter as
+-- select
+--         v_detailmodule.*,cours_id,titre_cours,programme_id,titre_programme
+-- from
+--     v_detailmodule,v_detail_cour
+-- where
+--     v_detailmodule.detail_id = v_detail_cour.detail_id;
 
 
 create or replace view v_session_projet as
@@ -754,13 +754,13 @@ create or replace view v_session_projet as
     join cfps c on mf.cfp_id = c.id;
 
 
-create or replace view v_evaluation_apprenant as
-select
-    (detail_evaluation_apprenants.id) id,v_stagiaire_groupe.*,note_avant,note_apres
-from
-    v_stagiaire_groupe,detail_evaluation_apprenants
-where
-    v_stagiaire_groupe.participant_groupe_id = detail_evaluation_apprenants.participant_groupe_id ;
+-- create or replace view v_evaluation_apprenant as
+-- select
+--     (detail_evaluation_apprenants.id) id,v_stagiaire_groupe.*,note_avant,note_apres
+-- from
+--     v_stagiaire_groupe,detail_evaluation_apprenants
+-- where
+--     v_stagiaire_groupe.participant_groupe_id = detail_evaluation_apprenants.participant_groupe_id ;
 
 
 create or replace view v_montant_session as

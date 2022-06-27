@@ -13,6 +13,9 @@ insert into
 insert into
     points value(4);
 
+alter table reponse_evaluationchaud add column statut int(2) default 0;
+alter table reponse_evaluationchaud add column points int(11) default 0;
+
 create
 or replace view v_question_fille as
 select
@@ -132,7 +135,7 @@ select
 from
     v_question_fille_point qfp
     left join v_evaluation_chaud ec on qfp.id_qst_fille = ec.id_qst_fille and qfp.point = ec.points and qfp.groupe_id = ec.groupe_id
-    group by 
+    group by
         qfp.groupe_id,
         qfp.id_qst_fille,
         qfp.qst_fille,
