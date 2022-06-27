@@ -32,6 +32,7 @@ class Projet extends Model
     public function build_requette($role,$table,$request,$limit,$offset){
         $sql = "select * from ".$table." where 1=1 ";
         if (Gate::allows('isCFP') || Gate::allows('isFormateur')){
+            // $domaine = $fonct->findAll("domaines");
             $sql = $sql." and cfp_id = ".$role;
         }elseif(Gate::allows('isReferent') || Gate::allows('isReferentSimple')  || Gate::allows('isManager') || Gate::allows('isStagiaire')){
             $sql = $sql." and entreprise_id = ".$role;

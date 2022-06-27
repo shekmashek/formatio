@@ -42,7 +42,7 @@ class EntrepriseController extends Controller
         // return view('collaboration.entreprises',compact('cfps','demmande','invitation','entreprise_id'));
     }
 
-   
+
 
     public function create($id = null)
     {

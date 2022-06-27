@@ -436,7 +436,6 @@
         color: #637381;
         font-size: 14px;
     }
-
 </style>
     <link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -464,8 +463,8 @@
                         <span class="text-dark ms-5" style="font-weight: bold;"> {{ $projet[0]->nom_groupe }} </span>
                         <i class='bx bx-time-five ms-3 me-1' style="font-size: 1rem;"></i>
                         <p class="m-0"> Du @php setlocale(LC_TIME, "fr_FR"); echo strftime('%A %e %B %Y', strtotime($projet[0]->date_debut)).' au '.strftime('%A %e %B %Y', strtotime($projet[0]->date_fin)); @endphp</p>&nbsp;&nbsp;
-                        <i class='bx bx-group ms-3' style="font-size: 1rem;"></i>
-                        @if(count($dataMontantSession)>0)
+
+                        {{-- @if(count($dataMontantSession)>0)
                             @if ($dataMontantSession[0]->qte != null)
                                 <span class="m-0 ms-1"> apprenant inscrit : {{$dataMontantSession[0]->qte}}</span> &nbsp;&nbsp;
                             @else
@@ -473,12 +472,23 @@
                             @endif
                         @else
                             <span class="m-0 ms-1"> apprenant inscrit : -</span> &nbsp;&nbsp;
+                        @endif --}}
+
+
+                        @if(count($lieu_formation)>0)
+                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
+                            <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
+                            <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i>
+                            <span class="m-0 ms-1">{{ $lieu_formation[1] }}</span>&nbsp;&nbsp;
                         @endif
 
+                    </div>
+                    <div class="d-flex m-0 p-0 ms-5 height_default">
+                        <i class='bx bx-group' style="font-size: 1rem;"></i>
+                        <span class="m-0 ms-1 me-3"> Apprenant inscrit : {{ count($stagiaire) }}</span>
                         @can('isCFP')
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> CA :<strong>
-                                @if(count($dataMontantSession)>0)
+                                {{-- @if(count($dataMontantSession)>0)
                                     @if( $dataMontantSession[0]->hors_taxe != null)
                                        {{number_format($dataMontantSession[0]->hors_taxe,0,","," ")}}
                                     @else{
@@ -491,17 +501,36 @@
                                 @php
                                     echo "<span>-</span>";
                                 @endphp&nbsp;
-                                @endif
+                                @endif --}}
+                            <span>
+                                @php
+                                    $montant = $groupe->montantSession_of($projet[0]->groupe_id);
+                                    if($montant == null){
+                                        echo "<span>-</span>";
+                                    }else{
+                                        number_format($montant,0,","," ");
+                                    }
+                                @endphp&nbsp;
+                            </span>
                             {{$ref}}</strong> </p>&nbsp;&nbsp;
-                            <p class="m-0"><i class="bx bx-dollar mt-2"></i> </p>
                             <p class="text-dark mt-3"> FA : <strong>
-                                @if ($frais_annex !=null)
+                                <span>
+                                    @php
+                                        $frais = $groupe->frais_annexe_of($projet[0]->groupe_id);
+                                        if($frais == null){
+                                            echo "<span>-</span>";
+                                        }else{
+                                            number_format($frais,0,","," ");
+                                        }
+                                    @endphp&nbsp;
+                                </span>
+                                {{-- @if ($frais_annex !=null)
                                     {{ number_format($frais_annex, 0, ',', ' ')}}
                                 @else
                                 @php
                                 echo "<span>-</span>";
                             @endphp
-                                @endif
+                                @endif --}}
                                 {{$ref}}</strong></p>
                         @endcan
                     @canany(['isReferent','isReferentSimple','isManager'])
@@ -513,14 +542,12 @@
                                     @php
                                         echo "<span>-</span>";
                                     @endphp
-                                @endif
-
-                                          {{$ref}}</strong> </p>&nbsp;&nbsp;
-                            <p class="m-0"><i class="bx bx-dollar-circle mt-2"></i></p>&nbsp;
+                                @endif{{$ref}}</strong> </p>&nbsp;&nbsp;
                             <p class="text-dark mt-3"> FA : <strong id="frais_annex_entreprise">
                                 @php
                                     $Totalfa = 0;
                                 @endphp
+                                <span>
                                 @if (count($all_frais_annexe) > 0)
                                     @foreach ($all_frais_annexe as $fraisAnnexe)
                                         @php $Totalfa += $fraisAnnexe->montant; @endphp
@@ -530,9 +557,10 @@
                                     @endphp
                                 @else
                                     @php
-                                        echo "<span>-</span>";
+                                        echo "-";
                                     @endphp
                                 @endif
+                                </span>
                             &nbsp;{{$ref}}</strong></p>
                         @endcanany
                         @if(count($lieu_formation)>0)
@@ -548,38 +576,13 @@
                             <div class="chiffre_d_affaire m-0 p-0 me-3">
 
                                 <div class="d-flex flex-row">
-                                    <p class="mt-2 text-center">Entreprise client {{ $projet[0]->nom_etp }} </p>&nbsp;&nbsp;
-
-                                    <img data-bs-toggle="offcanvas" data-bs-target="#etpCanvas" aria-controls="offcanvasRight" src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
-                                    class="showSessionEtp mt-2" height="30px" width="30px" style="border-radius: 50%; cursor: pointer;"
-                                    data-id="{{ $projet[0]->entreprise_id }}" id="{{ $projet[0]->entreprise_id }}">
-                                </div>
-                            </div>
-                            <div class="chiffre_d_affaire m-0 p-0 me-3">
-                                @php
-                                    $etp = $groupe->info_resp_etp($projet[0]->entreprise_id);
-                                @endphp
-
-                                <div class="d-flex flex-row">
-                                    <p class="mt-2 text-center">Réferent de l'entreprise {{ $projet[0]->nom_etp }} </p>
+                                    <p class="p-0 mt-3 text-center">Référent de l'entreprise {{ $projet[0]->nom_etp }} </p>
                                     &nbsp;&nbsp;
-                                    <span>
-                                        @if ($etp->photos == NULL or $etp->photos == '' or $etp->photos == 'XXXXXXX')
-                                            <td role="button" >
-                                                <span  class="randomColor m-auto mt-2 text-uppercase resp_etp" style="width:30px;height:30px; border-radius:100%; color:white; display: grid; place-content: center">
-                                                    <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" style="text-transform: uppercase; font-weight: 400; font-size: 15px; cursor: pointer"
-                                                    data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}} class="resp_etp">{{$etp->nomEtresp}}{{$etp->prenomEtpresp}}</span>
-                                                </span>
-                                            </td>
-                                        @else
-                                            <td class="td_hover" role="button" style="display: grid; place-content: center">
-                                                <img data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight" src="{{asset("images/employes/".$etp->photos)}}" style="width:30px;height:30px; border-radius:100% ;cursor: pointer"
-                                                data-id={{$etp->entreprise_id}} id={{$etp->entreprise_id}} class="resp_etp mt-3">
-                                            </td>
-                                        @endif
-                                    </span>
+                                    <img src="{{ asset('images/entreprises/' . $projet[0]->logo) }}" alt=""
+                                        class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                                 </div>
                             </div>
+                        </div>
                         @endif
                         <div class="chiffre_d_affaire me-2">
 
@@ -590,6 +593,8 @@
                                     height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                             </div>
                         </div>
+                    </div>
+
 
                         @canany(['isCFP'])
                             <div class="chiffre_d_affaire">
@@ -933,7 +938,7 @@
 </div>
 
     {{-- ETP --}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="etpCanvas" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="etpCanvas" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -953,105 +958,15 @@
                             <div class="col-md-10">
                                 <p id="nEtp" style="color: #64b5f6; font-size: 14px; text-transform: uppercase; font-weight: 700; padding: 5px;">
 
-                                </p>
-                                <p id="status" class="saSpan">
 
-                                </p>
-                            </div>
-                            <div class="col-md-1"></div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-donate-heart saClass'></i></div>
-                            <div class="col-md-3" style="color: #637381">Type</div>
-                            <div class="col-md">
-                                <span id="juridic" class="saSpan">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-credit-card-front saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">NIF</div>
-                            <div class="col-md">
-                                <span id="nif" class="saSpan">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-credit-card saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">STAT</div>
-                            <div class="col-md">
-                                <span id="stat" class="saSpan">
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-phone saClass'></i></div>
-                            <div class="col-md-3" style="color: #637381">Tel</div>
-                            <div class="col-md">
-                                <span id="tel" class="saSpan">
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-envelope saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">E-mail</div>
-                            <div class="col-md">
-                                <span id="mail" class="saSpan">
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-location-plus saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">Adresse</div>
-                            <div class="col-md">
-                                <span id="adrlot" class="saSpan"></span>
-                                <span id="adrlot2" class="saSpan"></span>
-                                <span id="adrlot3" class="saSpan"></span>
-                                <span id="adrlot4" class="saSpan"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-globe saClass' ></i></div>
-                            <div class="col-md-3" style="color: #637381">Site web</div>
-                            <div class="col-md">
-                                <span id="site" class="saSpan">
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
 
                 @endif
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{--Responsable ETP--}}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight1" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">INFORMATION</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -1140,42 +1055,6 @@
                         </div>
                     </div>
 
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-envelope saClass' ></i></div>
-                            <div class="col-md-3 saSpan">E-mail</div>
-                            <div class="col-md">
-                                <span id="matriculess" class="saSpan">
-                                    @if ($etp->email_resp == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $etp->email_resp }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-1"><i class='bx bx-phone saClass' ></i></div>
-                            <div class="col-md-3 saSpan">Télephone</div>
-                            <div class="col-md">
-                                <span id="mail_stagiaire" class="saSpan">
-                                    @if ($etp->telephone_resp == null)
-                                        @php
-                                            echo ": ---"
-                                        @endphp
-                                    @else
-                                        : {{ $etp->telephone_resp }}
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="mt-1">
                         <div class="row">
@@ -1201,7 +1080,7 @@
                 @endif
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{--OF--}}
     {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" data-bs-backdrop="false">
@@ -1482,7 +1361,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="mt-1">
                         <div class="row">
                             <div class="col-md-1"></div>

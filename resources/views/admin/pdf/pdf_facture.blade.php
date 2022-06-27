@@ -254,7 +254,7 @@
                                 <td></td>
                                 <td>
                                     <div align="right">
-                                        {{$devise->reference." -".number_format($fa->dernier_montant_ouvert,0,","," ")}}
+                                        {{$devise->devise." -".number_format($fa->dernier_montant_ouvert,0,","," ")}}
                                     </div>
                                 </td>
                             </tr>

@@ -158,7 +158,12 @@ ul li {
 }
 
 .btn_login {
-    background-image: linear-gradient(to right, #2811f3 0%, rgb(204, 0, 255)  51%, #2811f3  100%);
+    /* background-image: linear-gradient(to right, #2811f3 0%, rgb(204, 0, 255)  51%, #2811f3  100%); */
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    /* background-image: linear-gradient( 135deg, #3813C2 10%, #FF6FD8 100%); */
+  /* background: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%); */
+
+
    padding: 0.5rem 1rem;
    text-align: center;
    transition: 0.5s all ease;
@@ -175,7 +180,8 @@ ul li {
  }
 
 .btn_creerCompte {
-    background-image: linear-gradient(to right, rgb(204, 0, 255) 0%, #2811f3 51%, rgb(204, 0, 255) 100%);
+    /* background-image: linear-gradient(to right, rgb(204, 0, 255) 0%, #2811f3 51%, rgb(204, 0, 255) 100%); */
+    background-image: linear-gradient(60deg, #f206ee, #0765f3);
     padding: 0.5rem 1rem;
     text-align: center;
     transition: 0.5s all ease;
@@ -613,6 +619,8 @@ font-size: 0.875rem;
   display: none;
   padding: 1rem 1rem;
   border: none;
-  background-color: #7635dc;
+  /* background-color: #7635dc; */
+  background-image: linear-gradient(60deg, #f206ee, #0765f3);
+
 }
 

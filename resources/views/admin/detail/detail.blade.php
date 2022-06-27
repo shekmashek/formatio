@@ -1,8 +1,25 @@
+
+
 <style>
     /* .icon_plus {
         border: 2px solid whitesmoke;
         font-size: 0.5rem;
     } */
+    #detail_panning{
+        color:#637381;
+    }
+    #detail_panning input::placeholder{
+        display:none;
+    }
+    #detail_panning .input:hover{
+        cursor: pointer;
+    }
+    .input{
+        height: 2.5rem !important;
+        border-style: none;
+        margin: 0;
+        padding: 0;
+    }
 
     .nouveau_detail {
         background-color: #822164;
@@ -147,178 +164,129 @@
     <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
     <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
 
-    <div class="row">
-        <div class="col-md-4 p-0">
-            <div class="row">
-                <div class="col-md-5 ps-2">
-                    <p><i class="fa fa-calendar-day entete"></i>&nbsp;Date </p>
-                </div>
-                <div class="col-md-7 p-0 d-flex justify-content-around entete">
-                    <p><i class="fa fa-clock"></i>&nbsp;Heure début </p>
-                    <p><i class="fa fa-clock"></i>&nbsp;Heure fin </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="row entete">
-                <div class="col-md-4">
+    <table class="table table-bordered my-3" id="detail_panning">
+        <thead>
+            <tr>
+                <th><i class="fa fa-calendar-day entete"></i>&nbsp;Date </th>
+                <th><i class="fa fa-clock"></i>&nbsp;Heure début</th>
+                <th><i class="fa fa-clock"></i>&nbsp;Heure fin </th>
+                <th>
                     @if ($type_formation_id == 1)
-                        <p> <i class="fa fa-user"></i>&nbsp;Formateur </p>
+                        <i class="fa fa-user"></i>&nbsp;Formateur 
                     @endif
                     @if ($type_formation_id == 2)
-                        <p> <i class="fa fa-home"></i>&nbsp;Ville </p>
+                        <i class="fa fa-home"></i>&nbsp;Ville 
                     @endif
+                </th>
+                <th><i class="fa fa-map-marker-alt"></i>&nbsp;Salle de formation</th>
+                @can('isCFP')
+                <th>
+                    @if ($type_formation_id == 1)
+                        <button id="addRow" type="button"><i class="bx bx-plus-circle" style="font-size:1.6rem" style="color:#637381;"></i></button>
+                    @endif
+                    @if ($type_formation_id == 2)
+                        <button id="addRow2" type="button"><i class="bx bx-plus-circle" style="font-size:1.6rem" style="color:#637381;"></i></button>
+                    @endif
+                </th>
+                @endcan
+            </tr>
+        </thead>
+        @can('isCFP')
+        <tbody id="body_planning">
+            <tr>
+                <td>
+                    <input type="date" min="{{ $projet[0]->date_debut }}" max="{{ $projet[0]->date_fin }}" style="color:#637381;" name="date[]" placeholder="" class="form-control input text-center" required>
+                </td>
+                <td>
+                    <input type="time" name="debut[]" class="form-control input text-center" style="color:#637381;" required>
+                </td>
+                <td>
+                    <input type="time" name="fin[]" class="form-control input text-center" style="color:#637381;" required>
+                </td>
+                <td>
+                    @if ($type_formation_id == 1)
+                        <select name="formateur[]" id="" class="form-control input" style="color:#637381;" required>
+                        @foreach ($formateur as $format)
+                            <option value="{{ $format->formateur_id }}">{{ $format->nom_formateur . ' ' . $format->prenom_formateur }}</option>
+                        @endforeach
+                        </select>
+                    @elseif ($type_formation_id == 2)
+                        <select name="ville[]" id="ville"  class="form-control input" required onblur="ville_Lieu();" style="color:#637381;">
+                            <option value="Tananarive">Tananarive</option>
+                            <option value="Tamatave">Tamatave</option>
+                            <option value="Antsirabé">Antsirabé</option>
+                            <option value="Fianarantsoa">Fianarantsoa</option>
+                            <option value="Majunga">Majunga</option>
+                            <option value="Tuléar">Tuléar</option>
+                            <option value="Diego-Suarez">Diego-Suarez</option>
+                            <option value="Antanifotsy">Antanifotsy</option>
+                            <option value="Ambovombe">Ambovombe</option>
+                            <option value="Amparafaravola">Amparafaravola</option>
+                            <option value="Tôlanaro">Tôlanaro</option>
+                            <option value="Ambatondrazaka">Ambatondrazaka</option>
+                            <option value="Mananara Nord">Mananara Nord</option>
+                            <option value="Soavinandriana">Soavinandriana</option>
+                            <option value="Mahanoro">Mahanoro</option>
+                            <option value="Soanierana Ivongo">Soanierana Ivongo</option>
+                            <option value="Faratsiho">Faratsiho</option>
+                            <option value="Nosy Varika">Nosy Varika</option>
+                            <option value="Vavatenina">Vavatenina</option>
+                            <option value="Morondava">Morondava</option>
+                            <option value="Amboasary">Amboasary</option>
+                            <option value="Manakara">Manakara</option>
+                            <option value="Antalaha">Antalaha</option>
+                            <option value="Ikongo">Ikongo</option>
+                            <option value="Manjakandriana">Manjakandriana</option>
+                            <option value="Sambava">Sambava</option>
+                            <option value="Fandriana">Fandriana</option>
+                            <option value="Marovoay">Marovoay</option>
+                            <option value="Betioky">Betioky</option>
+                            <option value="Ambanja">Ambanja</option>
+                            <option value="Ambositra">Ambositra</option>
+                        </select>
+                    @endif
+                </td>
+                <td>
+                    <select name="lieu[]" class="form-control salle_de_formation input" style="color:#637381;">
+                        @foreach ($salle_formation as $salle)
+                        <option value="{{ $salle->ville . ',' . $salle->salle_formation }}">{{ $salle->ville . ',' . $salle->salle_formation }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <button id="removeRow" type="button"><i class="bx bx-minus-circle" style="font-size: 1.6rem;"></i></button>
+                    <input type="hidden" name="ville_lieu" id="ville_lieu">
+                </td>
+            </tr>
+            
+        </tbody>
+        @endcan
+        
+    </table>
+    @can('isCFP')
+    <div class="enregistrer">
+        <button type="submit" class="btn btn_enregistrer">Enregistrer</button>
+    </div>
+    <div class="modal" tabindex="-1" id="nouvelle_salle">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nouvelle salle de formation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="col-md-8">
-                    <p><i class="fa fa-map-marker-alt"></i>&nbsp;Salle de formation</p>
+                <div class="modal-body">
+                    {{-- <form action="#" method="POST"> --}}
+                    <label for="salle_formation" class="form-label">Salle</label>
+                    <input type="text" class="form-control" id="salle_formation">
+                    <button type="button" id="enregistrer_salle" class="btn inserer_emargement p-1 mt-1"
+                        data-bs-dismiss="modal">Enregistrer</button>
+                    {{-- </form> --}}
                 </div>
             </div>
         </div>
     </div>
-    @canany(['isCFP'])
-        <div id="conteneur">
-            <div class="fils m-0">
-                @php
-                    $i = 0;
-                @endphp
-                @while ($i < 3)
-                    <div class="row" id="inputFormRow">
-                        <div class="col-md-4 p-0">
-                            <div class="row">
-                                <div class="col-md-5 p-0">
-                                    <input type="date" min="{{ $projet[0]->date_debut }}"
-                                        max="{{ $projet[0]->date_fin }}" name="date[]" placeholder=""
-                                        class="form-control m-1" required>
-                                </div>
-                                <div class="col-md-7 ps-1 d-flex">
-                                    <input type="time" name="debut[]" class="form-control my-1 ms-1" required>
-                                    <input type="time" name="fin[]" class="form-control my-1 ms-1" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="row">
-                                @if ($type_formation_id == 1)
-                                    <div class="col-md-5 px-2">
-                                        <div class="input-group">
-                                            <select name="formateur[]" style="height: 2.361rem" id=""
-                                                class="form-control  my-1" required>
-                                                <option value="" selected hidden> Choisir formateur </option>
-                                                @foreach ($formateur as $format)
-                                                    <option value="{{ $format->formateur_id }}">
-                                                        {{ $format->nom_formateur . ' ' . $format->prenom_formateur }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-
-                                        </div>
-                                    </div>
-                                @endif
-                                @if ($type_formation_id == 2)
-                                    <div class="col-md-5 px-2">
-                                        <div class="input-group">
-                                            <select name="ville[]" id="ville" style="height: 2.361rem"
-                                                class="form-control  my-1" required onblur="ville_Lieu();">
-                                                <option value="null" selected hidden>Choisissez votre Ville...</option>
-                                                <option value="Tananarive">Tananarive</option>
-                                                <option value="Tamatave">Tamatave</option>
-                                                <option value="Antsirabé">Antsirabé</option>
-                                                <option value="Fianarantsoa">Fianarantsoa</option>
-                                                <option value="Majunga">Majunga</option>
-                                                <option value="Tuléar">Tuléar</option>
-                                                <option value="Diego-Suarez">Diego-Suarez</option>
-                                                <option value="Antanifotsy">Antanifotsy</option>
-                                                <option value="Ambovombe">Ambovombe</option>
-                                                <option value="Amparafaravola">Amparafaravola</option>
-                                                <option value="Tôlanaro">Tôlanaro</option>
-                                                <option value="Ambatondrazaka">Ambatondrazaka</option>
-                                                <option value="Mananara Nord">Mananara Nord</option>
-                                                <option value="Soavinandriana">Soavinandriana</option>
-                                                <option value="Mahanoro">Mahanoro</option>
-                                                <option value="Soanierana Ivongo">Soanierana Ivongo</option>
-                                                <option value="Faratsiho">Faratsiho</option>
-                                                <option value="Nosy Varika">Nosy Varika</option>
-                                                <option value="Vavatenina">Vavatenina</option>
-                                                <option value="Morondava">Morondava</option>
-                                                <option value="Amboasary">Amboasary</option>
-                                                <option value="Manakara">Manakara</option>
-                                                <option value="Antalaha">Antalaha</option>
-                                                <option value="Ikongo">Ikongo</option>
-                                                <option value="Manjakandriana">Manjakandriana</option>
-                                                <option value="Sambava">Sambava</option>
-                                                <option value="Fandriana">Fandriana</option>
-                                                <option value="Marovoay">Marovoay</option>
-                                                <option value="Betioky">Betioky</option>
-                                                <option value="Ambanja">Ambanja</option>
-                                                <option value="Ambositra">Ambositra</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                @endif
-                                <div class="col-md-7 px-0 pe-2 salle_select" data-id="{{ $i }}"
-                                    id="{{ $i }}">
-                                    <div class="input-group">
-                                        {{-- <input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" id="lieu" required
-                                            onblur="ville_Lieu();"> --}}
-                                        <select name="lieu[]" style="height: 2.361rem"
-                                            class="form-control  my-1 salle_de_formation">
-                                            <option>Choississez votre salle de formation&hellip;</option>
-                                            @foreach ($salle_formation as $salle)
-                                                <option value="{{ $salle->ville . ',  ' . $salle->salle_formation }}">
-                                                    {{ $salle->ville . ', ' . $salle->salle_formation }}</option>
-                                            @endforeach
-                                            {{-- <option class="ajout_salle" value="ajout">Ajouter une autre salle</option> --}}
-                                        </select>
-                                        <button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"
-                                                style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button>
-                                        <input type="hidden" name="ville_lieu" id="ville_lieu">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @php
-                        $i++;
-                    @endphp
-                @endwhile
-            </div>
-
-            <div class="modal" tabindex="-1" id="nouvelle_salle">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Nouvelle salle de formation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            {{-- <form action="#" method="POST"> --}}
-                            <label for="salle_formation" class="form-label">Salle</label>
-                            <input type="text" class="form-control" id="salle_formation">
-                            <button type="button" id="enregistrer_salle" class="btn inserer_emargement p-1 mt-1"
-                                data-bs-dismiss="modal">Enregistrer</button>
-                            {{-- </form> --}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="newRow"></div>
-            <div class="text-end ms-4">
-                @if ($type_formation_id == 1)
-                    <button id="addRow" type="button"><i class="bx bx-plus-circle" style="font-size: 1.75rem"></i></button>
-                @endif
-                @if ($type_formation_id == 2)
-                    <button id="addRow2" type="button"><i class="bx bx-plus-circle" style="font-size: 1.75rem"></i></button>
-                @endif
-            </div>
-
-
-        </div>
-        <div class="enregistrer">
-            <button type="submit" class="btn btn_enregistrer">Enregistrer</button>
-        </div>
-    @endcanany
+    @endcan
     </form>
 @endif
 
@@ -359,9 +327,7 @@
                 @can('isReferent')
                     <div class="col-md-12 m-1">
                         Confirmer la session "<Strong style="color: #822164">{{ $projet[0]->nom_groupe }}</Strong>" du
-                        {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} et les
-                        details
-                        ci-dessous
+                        {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} et les details ci-dessous
                         <a href="{{ route('acceptation_session', [$projet[0]->groupe_id]) }}"><button type="button"
                                 class="btn btn-success" data-dismiss="modal">Accepter</button></a>
                         {{-- <a href=""><button type="button" class="btn  btn-danger" data-dismiss="modal">Refuser</button></a> --}}
@@ -402,14 +368,13 @@
                                             @endcanany
                                             <td>{{ $d->nom_module }}</td>
                                             @php
-                                                $salle = explode(',  ', $d->lieu);
+                                                $salle = explode(',', $d->lieu);
                                             @endphp
                                             <td>{{ $salle[0] }}</td>
                                             <td>{{ $salle[1] }}</td>
                                             <td>{{ $d->date_detail }}</td>
                                             <td>{{ $d->h_debut }} h</td>
                                             <td>{{ $d->h_fin }} h</td>
-                                            {{-- test commit --}}
                                             <td>
                                                 @if ($d->photos == null)
                                                     <span class="m-0 p-2" height="50px" width="50px"
@@ -675,6 +640,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
+    $(document).ready(function() {
+        $('#body_planning').DataTable( {
+            keys: true
+        });
+    } );
     $('select[name^=ville]').change(function() {
         if ($(this).val() == 'ajout') {
             $('#nouvelle_salle').modal('show');
@@ -816,29 +786,16 @@
                 var userData = response['formateur'];
                 var salles = response['salles'];
                 var html = '';
-                html += '<div class="row" id ="inputFormRow">';
+                html += '<tr>';
 
-                html += '<div class="col-md-4 p-0">';
-                html += '<div class="row">';
-                html += '<div class="col-md-5 p-0">';
-                html +=
-                    '<input type="date" name="date[]" placeholder="" class="form-control m-1" required>';
-                html += '</div>';
-                html += ' <div class="col-md-7 ps-1 d-flex">';
-                html +=
-                    '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
-                html += '<input type="time" name="fin[]" class="form-control my-1" required>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-
-                html += '<div class="col-md-8">';
-                html += '<div class="row">';
-                html += '<div class="col-md-5 px-2">';
-                html += '<div class="input-group">';
-                html +=
-                    '<select name="ville[]" id="" style="height: 2.361rem" class="form-control  my-1" required>';
-                html += '<option value="null" selected disabled>Choisissez votre Ville...</option>';
+                html += '<td>';
+                html += '<input type="date" min="{{ $projet[0]->date_debut }}" style="color:#637381;" max="{{ $projet[0]->date_fin }}" name="date[]" placeholder="" class="form-control input text-center" required>';
+                html += '</td><td>';
+                html +='<input type="time" name="debut[]" class="form-control input text-center" style="color:#637381;" required>';
+                html += '</td><td>';
+                html += '<input type="time" name="fin[]" class="form-control input text-center" style="color:#637381;" required>';
+                html += '</td><td>';
+                html +='<select name="ville[]" id=""  class="form-control input" style="color:#637381;" required>';
                 html += '<option value="Tananarive">Tananarive</option>';
                 html += '<option value="Tamatave">Tamatave</option>';
                 html += '<option value="Antsirabé">Antsirabé</option>';
@@ -871,30 +828,19 @@
                 html += '<option value="Ambanja">Ambanja</option>';
                 html += '<option value="Ambositra">Ambositra</option>';
                 html += '</select>';
-                html += '</div>';
-                html += '</div>';
-                html += '<div class="col-md-7 px-0 pe-2">';
-                html += '<div class="input-group">';
-                html += '<select  name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
-                html += '<option value="" selected disabled> Choisir votre salle de formation </option>';
+                html += '</td><td>';
+                html += '<select  name="lieu[]" class="form-control input" style="color:#637381;" required>';
                 for (var $i = 0; $i < salles.length; $i++) {
                     html += '<option value="' + salles[$i].ville + ','+salles[$i].salle_formation+'">'+ salles[$i].ville + ','+salles[$i].salle_formation+ '</option>';
                 }
                 html += '</select>';
-                // html +=
-                //     '<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
-                html +=
-                    '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3"></i></button> ';
+                html += '</td><td>';
+                html +='<button id="removeRow" type="button"><i class="bx bx-minus-circle"></i></button> ';
                 html += '<input type="hidden" name="ville_lieu" id="ville_lieu">';
-                html += '</div>';
-                html += '</div>';
+                html += '</td>';
+                html += '</tr>';
 
-
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-
-                $('#newRow').append(html);
+                $('#body_planning').append(html);
             },
             error: function(error) {
                 console.log(error);
@@ -905,7 +851,7 @@
 
 
     $(document).on('click', '#removeRow', function() {
-        $(this).closest('#inputFormRow').remove();
+        $(this).closest('tr').remove();
     });
 
     $(document).on('click', '#addRow', function() {
@@ -919,57 +865,33 @@
                 // var formateur = data;
                 // console.log(data);
                 var html = '';
-                html += '<div class="row" id ="inputFormRow">';
-
-                html += '<div class="col-md-4 p-0">';
-                html += '<div class="row">';
-                html += '<div class="col-md-5 p-0">';
+                html += '<tr>';
+                html += '<td>';
+                html += '<input type="date" min="{{ $projet[0]->date_debut }}" style="color:#637381;" max="{{ $projet[0]->date_fin }}" name="date[]" placeholder="" class="form-control input text-center" required>';
+                html += '</td><td>';
+                html +='<input type="time" name="debut[]" class="form-control input text-center" style="color:#637381;" required>';
+                html += '</td><td>';
+                html += '<input type="time" name="fin[]" class="form-control input text-center" style="color:#637381;" required>';
+                html += '</td><td>';
                 html +=
-                    '<input type="date" name="date[]" placeholder="" class="form-control m-1" required>';
-                html += '</div>';
-                html += ' <div class="col-md-7 ps-1 d-flex">';
-                html +=
-                    '<input type="time" name="debut[]" class="form-control my-1 mx-1" required>';
-                html += '<input type="time" name="fin[]" class="form-control my-1" required>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-
-                html += '<div class="col-md-8">';
-                html += '<div class="row">';
-                html += '<div class="col-md-5 px-2">';
-                html += '<div class="input-group">';
-                html +=
-                    '<select name="formateur[]" id="" style="height: 2.361rem" class="form-control  my-1" required>';
-                html += '<option value="" selected disabled> Choisir formateur </option>';
+                    '<select name="formateur[]" id=""  class="form-control input" style="color:#637381;" required>';
                 for (var $i = 0; $i < userData.length; $i++) {
-                    html += '<option value="' + userData[$i].formateur_id + '">' + userData[$i]
+                    html += '<option value="' + userData[$i].formateur_id + '">'+ userData[$i]
+                        .nom_formateur+' '+ userData[$i]
                         .prenom_formateur + '</option>';
                 }
                 html += '</select>';
-                html += '</div>';
-                html += '</div>';
-                html += '<div class="col-md-7 px-0 pe-2">';
-                html += '<div class="input-group">';
-                html += '<select name="lieu[]" id="" style="height: 2.361rem" class="form-control  my-1" required>';
-                html += '<option value="" selected disabled> Choisir votre salle de formation </option>';
+                html += '</td><td>';
+                html += '<select name="lieu[]" id="" class="form-control input" style="color:#637381;" required>';
                 for (var $i = 0; $i < salles.length; $i++) {
                     html += '<option value="' + salles[$i].ville + ','+salles[$i].salle_formation+'">'+ salles[$i].ville + ','+salles[$i].salle_formation+ '</option>';
                 }
                 html += '</select>';
-                // html +='<input type="text" name="lieu[]" class="form-control my-1" style="height: 33.99px !important" required>';
-                html +=
-                    '<button id="removeRow" type="button"><i class="bx bx-minus-circle mx-1 my-3" style="font-size: 1.75rem; position: relative; bottom: .4rem;"></i></button> ';
+                html += '</td><td>';
+                html +='<button id="removeRow" type="button"><i class="bx bx-minus-circle" style="font-size: 1.6rem;"></i></button> ';
                 html += '<input type="hidden" name="ville_lieu" id="ville_lieu">';
-                html += '</div>';
-                html += '</div>';
-
-
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-
-                $('#newRow').append(html);
+                html += '</td></tr>';
+                $('#body_planning').append(html);
             },
             error: function(error) {
                 console.log(error);

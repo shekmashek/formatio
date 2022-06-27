@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
 use App\responsable_cfp;
 use App\demande_devis;
+use App\Niveau;
 
 class FormationController extends Controller
 {
@@ -47,7 +48,7 @@ class FormationController extends Controller
             $domaine_col2 = DB::select('select * from domaines limit ' . $offset . ' offset ' . $offset . '');
             $domaine_col3 = DB::select('select * from domaines limit ' . $offset . ' offset ' . ($offset * 2) . '');
             $domaine_col4 = DB::select('select * from domaines limit ' . $offset . ' offset ' . ($offset * 3) . '');
-            return view('admin.formation.formation', compact('formation', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+            return view('admin.formation.formation', compact('formation', 'domaine', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
         if (Gate::allows('isFormateur')) {
             $categorie = formation::orderBy('nom_formation')->get();
@@ -64,7 +65,7 @@ class FormationController extends Controller
         if (Gate::allows('isReferent') || Gate::allows('isReferentSimple') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             //liste formation
             $categorie = formation::orderBy('nom_formation')->get();
-            // $domaines = Domaine::all();
+            $domaines = Domaine::all();
             $test = 4;
             $domaines_count = DB::select('select count(*)  as nb_domaines from domaines');
             $offset = round($domaines_count[0]->nb_domaines / $test);
@@ -76,7 +77,7 @@ class FormationController extends Controller
             // $infos = DB::select('select * from moduleformation where module_id = ?', [$id])[0];
             // $categorie = DB::select('select * from formations where status = 1 limit 5');
             $module = DB::select('select md.*,vm.nombre as total_avis from v_nombre_avis_par_module as vm RIGHT join moduleformation as md on md.module_id = vm.module_id where  status = 2 and etat_id = 1 order by md.pourcentage desc limit 2 ');
-            return view('referent.catalogue.formation', compact('devise', 'categorie', 'module', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+            return view('referent.catalogue.formation', compact('devise','domaines', 'categorie', 'module', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
     }
 
@@ -201,6 +202,7 @@ class FormationController extends Controller
         $formations = DB::select('select * from formations');
 
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_groupe_projet_module where type_formation_id = 2 group by module_id');
+        
         return view('referent.catalogue.liste_formation', compact('formations', 'competences', 'organismes', 'nom_formation', 'pagination', 'infos', 'datas', 'categorie', 'devise', 'nom_formation', 'domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
 
         /*   if ($nom_formation == null) {
@@ -295,6 +297,7 @@ class FormationController extends Controller
 
         $id = request('id');
         $domaines = Domaine::all();
+        $niveau = DB::select('select * from niveaux');
         $categorie = DB::select('select * from formations where status = 1');
         $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id . ' and status = 2 and etat_id = 1) as moduleExiste');
         $test1 = 4;
@@ -319,9 +322,10 @@ class FormationController extends Controller
             $liste_avis = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis where module_id = ? limit 10', [$id]);
             $liste_avis_count = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis where module_id = ?', [$id]);
             $statistiques = DB::select('select * from v_statistique_avis where module_id = ?',[$id]);
+            $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis, md.cfp_id from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id join cfps as cfp on md.cfp_id = cfp.id where md.cfp_id = cfp.id group by md.cfp_id');
             $competences = DB::select('select titre_competence from competence_a_evaluers where module_id = ?',[$id]);
             $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id,adresse_lot,adresse_ville from v_session_projet where module_id = ? and type_formation_id = 2 group by module_id', [$id]);
-            return view('referent.catalogue.detail_formation', compact('devise','infos','statistiques', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis','liste_avis_count', 'categorie', 'id','competences','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
+            return view('referent.catalogue.detail_formation', compact('devise','infos','niveau','statistiques','avis_etoile', 'datas', 'cours', 'programmes', 'nb_avis', 'liste_avis','liste_avis_count', 'categorie', 'id','competences','domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         } else
             return redirect()->route('liste_formation');
     }
@@ -963,7 +967,14 @@ class FormationController extends Controller
 
     public function plus_avis_module(Request $request){
         $id = $request->Id;
-        $liste_avis_tous = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis where module_id = ? order by lsta.date_avis desc limit 30 offset 10', [$id]);
+        $liste_avis_tous = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis as lsta where module_id = ? order by lsta.date_avis desc limit 30 offset 10', [$id]);
+
+        return response()->json(['liste_avis'=>$liste_avis_tous]);
+    }
+
+    public function plus_avis_mod_cfp(Request $request){
+        $id = $request->Id;
+        $liste_avis_tous = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis as lsta where module_id = ? order by lsta.date_avis desc limit 30 offset 10', [$id]);
 
         return response()->json(['liste_avis'=>$liste_avis_tous]);
     }

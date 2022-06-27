@@ -184,7 +184,7 @@
                                         <td></td>
                                         <td>
                                             <div align="right">
-                                                {{$devise->reference." -".number_format($fa->montant_total,0,","," ")}}
+                                                {{$devise->devise." -".number_format($fa->montant_total,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>
@@ -267,7 +267,7 @@
                                                     <td>Acompte</td>
                                                     <td>
                                                         <div align="right">
-                                                            {{$devise->reference." -".number_format($montant_totale->sum_acompte,0,","," ")}}
+                                                            {{$devise->devise." -".number_format($montant_totale->sum_acompte,0,","," ")}}
                                                         </div>
                                                     </td>
                                                 </tr>

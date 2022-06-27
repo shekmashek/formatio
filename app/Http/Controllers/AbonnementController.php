@@ -340,7 +340,6 @@ class AbonnementController extends Controller
             $cfp_id = $resp[0]->cfp_id;
 
 
-
             $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->where('status','!=','En attente')->exists();
 
             // $abn =type_abonnement::all();
@@ -560,6 +559,8 @@ class AbonnementController extends Controller
             $resp =$this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
             $cfp_id = $resp[0]->cfp_id;
             $cfps = cfp::where('id', $cfp_id)->get();
+            $domaine = $this->fonct->findAll("domaines");
+
 
 
               //on verifie l'abonnemennt de l'of
@@ -593,20 +594,20 @@ class AbonnementController extends Controller
                     else{
                         if($cfp_ab == null) $type_abonnement = "Gratuit";
                         else $type_abonnement = $cfp_ab[0]->nom_type;
-                        return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'tarif', 'typeAbonnement'));
+                        return view('superadmin.index_abonnement', compact('type_abonnement','domaine','cfp_ab','categorie_paiement_id', 'entreprise', 'cfps', 'tarif', 'typeAbonnement'));
                     }
                 }
                 else{
 
                     if($cfp_ab == null) $type_abonnement = "Gratuit";
                     else $type_abonnement = $cfp_ab[0]->nom_type;
-                    return view('superadmin.index_abonnement', compact('type_abonnement','cfp_ab', 'entreprise', 'cfps', 'typeAbonnement'));
+                    return view('superadmin.index_abonnement', compact('type_abonnement','domaine','cfp_ab', 'entreprise', 'cfps', 'typeAbonnement'));
                 }
             }
             else{
                 $type_abonnement = "Invité";
                 $entreprise = null;
-                return view('superadmin.index_abonnement', compact('entreprise','type_abonnement', 'cfps', 'typeAbonnement'));
+                return view('superadmin.index_abonnement', compact('entreprise','domaine','type_abonnement', 'cfps', 'typeAbonnement'));
             }
 
         }
@@ -943,7 +944,6 @@ class AbonnementController extends Controller
             $cfp_id = $resp[0]->cfp_id;
             $cfp =$this->fonct->findWhereMulitOne('cfps',['id'],[$cfp_id]);
             $facture =$this->fonct->findWhere('v_abonnement_facture',['facture_id'],[$id]);
-
             // if($facture!=null){
             //     $test_assujetti =$this->fonct->findWhere('cfps',['id'],[$cfp_id]);
             //         //on vérifie d'abord si l'organisme est assujetti ou non pourqu'on puisse ajouter le TVA
@@ -962,7 +962,7 @@ class AbonnementController extends Controller
             // }
             $dates_abonnement =$this->fonct->findWhere('abonnement_cfps',['cfp_id'],[$cfp_id]);
             $lettre_montant = $this->fact->int2str($facture[0]->montant_facture);
-            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','mode_paiements'));
+            $pdf = PDF::loadView('admin.pdf.pdf_facture_abonnement', compact('dates_abonnement','entreprises','lettre_montant','cfp','facture','mode_paiements','domaine'));
 
         }
         if(Gate::allows('isReferent')){

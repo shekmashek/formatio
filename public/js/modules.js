@@ -13,48 +13,7 @@ function numStr(a, b) {
     }
     return c;
 }
-$(".afficher").on('click', function(e) {
-    let id = $(this).data("id");
-    $.ajax({
-        method: "GET"
-        , url: "/afficher_module"
-        , data: {
-            Id: id
-        }
-        , dataType: "html"
-        , success: function(response) {
 
-            let userData = JSON.parse(response);
-
-            console.log(userData);
-            //parcourir le premier tableau contenant les info sur les programmes
-            for (let $i = 0; $i < userData.length; $i++) {
-                $("#reference").text(userData[$i].reference);
-                $("#nom_module").text(userData[$i].nom_module);
-                $("#prix").text(numStr(userData[$i].prix, ' '));
-                $("#heure").text(userData[$i].duree);
-                $("#heure2").text(userData[$i].duree);
-                $("#jour").text(userData[$i].duree_jour);
-                $("#jour2").text(userData[$i].duree_jour);
-                $("#objectif").text(userData[$i].objectif);
-                $("#prerequis").text(userData[$i].prerequis);
-                $("#modalite").text(userData[$i].modalite_formation);
-                $("#modalite2").text(userData[$i].modalite_formation);
-                $("#description").text(userData[$i].description);
-                $("#materiel").text(userData[$i].materiel_necessaire);
-                $("#bon_a_savoir").text(userData[$i].bon_a_savoir);
-                $("#cible").text(userData[$i].cible);
-                $("#prestation").text(userData[$i].prestation);
-                $("#nom_formation").text(userData[$i].nom_formation);
-                $("#niveau").text(userData[$i].niveau);
-            }
-
-        }
-        , error: function(error) {
-            console.log(error)
-        }
-    });
-});
 $('#fermer', '.close').on('change', function(e) {
     let ul = document.getElementById('programme');
     ul.innerHTML = '';
@@ -62,7 +21,7 @@ $('#fermer', '.close').on('change', function(e) {
 });
 $(".suppression_module").on('click', function(e) {
     let id = e.target.id;
-    alert(id);
+    // alert(id);
     $.ajax({
         type: "get"
         , url: '/destroy_module'
@@ -73,7 +32,6 @@ $(".suppression_module").on('click', function(e) {
         , success: function(response) {
 
             if (response.success) {
-
                 window.location.reload();
             } else {
                 alert("Error");
@@ -155,49 +113,4 @@ function resetForm() {
     document.getElementById("frm_modif_module").reset();
 }
 
-function competence() {
-    var html = '';
-    html += '<div class="d-flex mt-2" id="row_new">';
-    html +=     '<div class="col-7">';
-    html +=         '<div class="form-group">';
-    html +=             '<div class="form-row">';
-    html +=                 '<input type="text" name="titre_competence[]" id="titre_competence" class="form-control input" placeholder="Compétences" required>';
-    html +=                 '<label for="titre_competence" class="form-control-placeholder">Compétences';
-    html +=                 '</label>';
-    html +=             '</div>';
-    html +=         '</div>';
-    html +=     '</div>';
 
-    html +=     '<div class="col-4">';
-    html +=         '<div class="form-group ms-1">';
-    html +=             '<div class="form-row">';
-    html +=                 '<input type="number" name="notes[]" id="notes" min="1" max="10" class="form-control input" placeholder="Notes" required>';
-    html +=                 '<label for="objectif" class="form-control-placeholder">Notes';
-    html +=                 '</label>';
-    html +=             '</div>';
-    html +=         '</div>';
-    html +=     '</div>';
-
-    html +=     '<div class="col-1">';
-    html +=         '<div class="mt-2">';
-    html +=                '<span id="removeRow" class="effacer_cours" role="button">';
-    html +=                     '<i class="bx bx-trash bx_supprimer mt-1 ms-1">';
-    html +=                     '</i>';
-    html +=                 '</span>';
-    html +=         '</div>';
-    html +=     '</div>';
-    html += '</div>';
-
-    $('.newRow').append(html);
-}
-
-// remove row
-$(document).on('click', '#removeRow', function() {
-    $(this).closest('#row_new').remove();
-});
-
-
-
-// $('.changer_prix').click(function(){
-//     $('.new_module_prix').toggle('active_prix');
-// })

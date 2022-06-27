@@ -342,7 +342,7 @@ class DepartementController extends Controller
     {
         $fonct = new FonctionGenerique();
 
-        if (Gate::allows('isReferent')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
             $rqt = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
             $employes = $fonct->findWhere("employers",["entreprise_id","activiter"],[$rqt[0]->entreprise_id,1]);
             $id_etp = $rqt[0]->entreprise_id;

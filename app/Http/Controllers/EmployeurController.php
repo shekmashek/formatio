@@ -109,7 +109,7 @@ class EmployeurController extends Controller
             // if ($request->type_enregistrement == "STAGIAIRE") {
                 if($abonnement_etp !=null){
 
-                    if($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
+                    if($abonnement_etp[0]->max_emp <= count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
                     else{
                         $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
 

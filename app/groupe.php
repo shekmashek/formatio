@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\FonctionGenerique;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,17 +16,12 @@ class Groupe extends Model
         return $this->belongsTo('App\projet');
     }
 
-    public function generateNomSession($projet_id){
-        $num_projet = DB::select("select max(nom_groupe) as nom_groupe from groupes");
-       $num_session = 0;
-        if($num_projet[0]->nom_groupe==NULL){
-            $num_session=1;
-        } else{
-            $str = explode("-",$num_projet[0]->nom_groupe);
-            $num_session=intval($str[1])+1;
+    public function generateNomSession(){
+        $groupe = DB::select("select max(id)+1 as nom_groupe from groupes");
+        if($groupe[0]->nom_groupe==NULL){
+            $groupe[0]->nom_groupe=1;
         }
-            $nom_session ="Sess-".$num_session;
-            return $nom_session;
+        return "Sess-".$groupe[0]->nom_groupe;
     }
 
 
@@ -104,7 +100,8 @@ class Groupe extends Model
     }
 
     public function module_session($module_id){
-        return DB::select('select nom_module from modules where id = ?',[$module_id])[0]->nom_module;
+        $data = DB::select('select nom_module FROM modules WHERE id = ?',[$module_id]);
+        return $data[0]->nom_module;
     }
 
     public function nombre_apprenant_session($groupe_id){
@@ -134,27 +131,146 @@ class Groupe extends Model
     }
 
     //info SESSION
-    public function info_resp_etp($id_etp){
+    // public function info_resp_etp($id_etp){
 
-        $info = DB::table('statut_compte')
-            ->join('entreprises', 'entreprises.statut_compte_id', 'statut_compte.id')
-            ->join('abonnements', 'abonnements.entreprise_id', 'entreprises.id')
-            ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
-            ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
-            ->join('v_abonnement_facture_entreprise', 'v_abonnement_facture_entreprise.entreprise_id', 'entreprises.id')
-            ->select(DB::raw('substr(entreprises.nom_etp, 1, 2) as nomEtpS') ,DB::raw('substr(responsables.nom_resp, 1, 1) as nomEtresp'),
-                    DB::raw('substr(responsables.prenom_resp, 1, 1) as prenomEtpresp'), 'entreprises.logo',
-                    'entreprises.nif', 'entreprises.stat', 'entreprises.email_etp', 'entreprises.site_etp', 'entreprises.telephone_etp' ,
-                    'responsables.photos', 'responsables.matricule', 'responsables.nom_resp', 'responsables.prenom_resp',
-                    'responsables.email_resp', 'responsables.telephone_resp', 'responsables.adresse_quartier', 'responsables.adresse_lot',
-                    'responsables.adresse_ville', 'responsables.adresse_region',
-                    'v_groupe_projet_entreprise.entreprise_id', 'entreprises.statut_compte_id', 'v_abonnement_facture_entreprise.nom_type',
-                    'statut_compte.nom_statut', 'entreprises.nom_etp')
-            ->where('v_groupe_projet_entreprise.entreprise_id', $id_etp)
-            ->get()[0];
+    //     $info = DB::table('statut_compte')
+    //         ->join('entreprises', 'entreprises.statut_compte_id', 'statut_compte.id')
+    //         ->join('abonnements', 'abonnements.entreprise_id', 'entreprises.id')
+    //         ->join('responsables', 'responsables.entreprise_id', 'entreprises.id')
+    //         ->join('v_groupe_projet_entreprise', 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.id')
+    //         ->join('v_abonnement_facture_entreprise', 'v_abonnement_facture_entreprise.entreprise_id', 'entreprises.id')
+    //         ->select(DB::raw('substr(entreprises.nom_etp, 1, 2) as nomEtpS') ,DB::raw('substr(responsables.nom_resp, 1, 1) as nomEtresp'),
+    //                 DB::raw('substr(responsables.prenom_resp, 1, 1) as prenomEtpresp'), 'entreprises.logo',
+    //                 'entreprises.nif', 'entreprises.stat', 'entreprises.email_etp', 'entreprises.site_etp', 'entreprises.telephone_etp' ,
+    //                 'responsables.photos', 'responsables.matricule', 'responsables.nom_resp', 'responsables.prenom_resp',
+    //                 'responsables.email_resp', 'responsables.telephone_resp', 'responsables.adresse_quartier', 'responsables.adresse_lot',
+    //                 'responsables.adresse_ville', 'responsables.adresse_region',
+    //                 'v_groupe_projet_entreprise.entreprise_id', 'entreprises.statut_compte_id', 'v_abonnement_facture_entreprise.nom_type',
+    //                 'statut_compte.nom_statut', 'entreprises.nom_etp')
+    //         ->where('v_groupe_projet_entreprise.entreprise_id', $id_etp)
+    //         ->get()[0];
 
-        return $info;
+    //     return $info;
+    // }
+
+    public function frais_annexe_of($projet_id){
+        $frais_annexe = DB::select("select * from v_montant_frais_annexe where projet_id = ?",[$projet_id]);
+        if(count($frais_annexe) > 0){
+            return $frais_annexe[0]->hors_taxe;
+        }else{
+            return null;
+        }
     }
 
+    public function montantSession_of($groupe_id){
+        $montant = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where groupe_id=?",[$groupe_id]);
+        if(count($montant) > 0){
+            return $montant[0]->qte;
+        }else{
+            return null;
+        }
+    }
+
+    public function dataDetail($cfp_id){
+
+        $req = DB::table('v_detail_session')
+            ->select('*')
+            ->where('cfp_id', $cfp_id)
+            ->get();
+
+        return $req;
+    }
+
+    public function formateurData($groupe_id){
+        $fonct = new FonctionGenerique();
+        $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$groupe_id]);
+
+        return $formateur;
+    }
+
+    public function dataFraisAnnexe($groupe_id, $etp_id){
+        $all_frais_annexe = DB::table('frais_annexe_formation')
+            ->select('entreprise_id', 'groupe_id', 'description', DB::raw("SUM(montant) as montantTotal"))
+            ->where('groupe_id', $groupe_id)
+            ->where('entreprise_id', $etp_id)
+            ->groupBy('entreprise_id', 'groupe_id', 'description')
+            ->get();
+
+            // $all_frais_annexe = DB::select('select SUM(montant) as "montantTotal", entreprise_id, groupe_id, description from frais_annexe_formation where groupe_id = ? and entreprise_id = ? group by entreprise_id, groupe_id, description',[$groupe_id,$etp_id]);
+        return $all_frais_annexe;
+    }
+
+    public function dataApprenant($cfp_id, $groupe_id){
+        $type_formation_id = request()->type_formation;
+
+
+        if ($type_formation_id == 1){
+            $projet = DB::table('v_groupe_projet_entreprise')
+                ->select('*')
+                ->where('cfp_id', $cfp_id)
+                ->where('groupe_id', $groupe_id)
+                ->get();
+
+            $entreprise_id = $projet[0]->entreprise_id;
+
+        }elseif ($type_formation_id == 2){
+            $projet = DB::table('v_projet_session_inter')
+                ->select('*')
+                ->where('cfp_id', $cfp_id)
+                ->where('groupe_id', $groupe_id)
+                ->get();
+
+        }
+
+        $stagiaire = DB::table('v_stagiaire_groupe')
+            ->select('*')
+            ->where('groupe_id', $groupe_id)
+            ->get();
+
+        return $stagiaire;
+    }
+
+    public function dataSession($groupe_id){
+
+        $datas = DB::table('v_detail_session')
+                ->select('*')
+                ->where('groupe_id', $groupe_id)
+                ->get();
+        return $datas;
+    }
 }
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

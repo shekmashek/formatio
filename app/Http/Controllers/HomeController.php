@@ -33,6 +33,8 @@ use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
 use App\EvaluationChaud;
+use App\competenceFormateur;
+use App\experienceFormateur;
 use App\Groupe;
 use App\Models\getImageModel;
 use Carbon\Carbon;
@@ -200,9 +202,8 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
-
-        if (Gate::allows('isFormateur')) {
-            return redirect()->route('calendrier');
+        if (Gate::allows('isFormateurPrincipale')) {
+            return redirect()->route('accueilFormateur');
         }
         if (Gate::allows('isManager')) {
 
@@ -347,7 +348,7 @@ class HomeController extends Controller
 
             $nom_profil_organisation = cfp::where('id', $cfp_id)->value('nom');
 
-
+            $domaine = $fonct->findAll("domaines");
             // $test_abonne = abonnement_cfp::where('cfp_id', $cfp_id)->exists();
             // // $abn =type_abonnement::all();
 
@@ -389,7 +390,7 @@ class HomeController extends Controller
                 $message = "Vous êtes en mode ".$statut_compte->nom_statut;
             }
 
-            return view('cfp.dashboard_cfp.dashboard', compact('vue','test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler'));
+            return view('cfp.dashboard_cfp.dashboard', compact('vue','test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler','domaine'));
         }
         if (Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
@@ -822,6 +823,8 @@ class HomeController extends Controller
         // }
         if (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+            // $facture = $this->fonct->findWhere("v_liste_facture", ["cfp_id"], [ $cfp_id]);
+            // $montant_facture = $this->fonct->findWhereMulitOne("v_facture_existant", ["cfp_id"], [$cfp_id]);
 
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
@@ -842,9 +845,13 @@ class HomeController extends Controller
                 $debut = ($page - 1) * $nb_par_page;
                 $fin =  $page * $nb_par_page;
             }
+            // fin pagination
             $sql = $projet_model->build_requette($cfp_id, "v_projet_session", $request, $nb_par_page, $offset);
             $projet = DB::select($sql);
 
+            $devise = DB::select('select * from devise')[0]->devise;
+
+            // $lieu_formation =DB::table('details')->groupBy("groupe_id")->get();
             $lieu_formation =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$cfp_id]);
             if(count($lieu_formation)>0){
                 $lieuFormation = explode(',',$lieu_formation[0]->lieu);
@@ -853,8 +860,10 @@ class HomeController extends Controller
                 $lieuFormation = null;
             }
             // $projet_formation = DB::select('select * from v_projet_formation where cfp_id = ?', [$cfp_id]);
-
             $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
+            // dd($data);
+
+            // affiche chiffre d'affaire
             for($i=0;$i<count($data);$i+=1){
                 $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where cfp_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
                 [$cfp_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
@@ -882,7 +891,10 @@ class HomeController extends Controller
 
             // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
-            return view('projet_session.index2', compact('projet','ref','data','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+
+            // dd($data);
+            return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page', 'devise'));
+            // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
@@ -1414,6 +1426,7 @@ class HomeController extends Controller
     }
     public function enregistrer_iframe_cfp(Request $request)
     {
+        $domaine = $this->fonct->findAll("domaines");
         $url_iframe = $request->iframe_url;
         $cfp_id = $request->cfp_id;
         $fonct = new FonctionGenerique();
@@ -1421,6 +1434,7 @@ class HomeController extends Controller
         return back();
     }
     public function enregistrer_iframe_inviter(Request $request){
+        $domaine = $this->fonct->findAll("domaines");
         $this->fonct->insert_iframe_invite($request->url_invite);
         // on va recuperer toutes les entreprises qui ont un statut compte = 1 (invité)
         $entreprises = $this->fonct->findWhere("entreprises",["statut_compte_id"],[1]);
@@ -1447,6 +1461,7 @@ class HomeController extends Controller
     public function iframe_cfp()
     {
         $fonct = new FonctionGenerique();
+
         $id_cfp = DB::select('select * from responsables_cfp where user_id = ?', [Auth::user()->id]);
 
         $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$id_cfp[0]->cfp_id]);
@@ -1511,6 +1526,7 @@ class HomeController extends Controller
     //modification
     public function modifier_iframe_cfp(Request $request)
     {
+        $domaine = $this->fonct->findAll("domaines");
         $iframe = $request->n_iframe_cfp;
         $cfp = $request->id_cfp;
         $modification = new FonctionGenerique();
@@ -1520,6 +1536,7 @@ class HomeController extends Controller
     //suppression
     public function supprimer_iframe_cfp(Request $request)
     {
+        $domaine = $this->fonct->findAll("domaines");
         $id_cfp = $request->id_cfp;
         $suppression = new FonctionGenerique();
         $suppression->supprimer_iframe('iframe_cfp', 'cfp_id', $id_cfp);

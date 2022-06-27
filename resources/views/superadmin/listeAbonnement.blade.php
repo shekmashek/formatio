@@ -382,6 +382,8 @@
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 let lien = ($(e.target).attr('href'));
                 localStorage.setItem('abonnement', lien);
+                ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
+                ($('.btn_racourcis a[href="' + Tabactive + '"]').closest('div')).addClass('active');
         });
         let activeTab = localStorage.getItem('abonnement');
         // console.log(activeTab);

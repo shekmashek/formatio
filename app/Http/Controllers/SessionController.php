@@ -129,12 +129,9 @@ class SessionController extends Controller
         $projet = new projet();
         $frais_annex = null;
         $module_session = DB::select('select reference,nom_module, module_id from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
-        $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where groupe_id=?",[$id]);
-
+        $dataMontantSession = [];
         if(Gate::allows('isCFP')){
             $drive = new getImageModel();
-
-            $fonct = new FonctionGenerique();
             $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
             $cfp_id = $resp->cfp_id;
             $cfp_nom = $resp->nom_cfp;
@@ -153,10 +150,29 @@ class SessionController extends Controller
                 $projet = $fonct->findWhere("v_projet_session_inter", ["cfp_id","groupe_id"], [$cfp_id,$id]);
                 $entreprise_id = null;
             }
-            $frais_annex = DB::select("select * from v_montant_frais_annexe where cfp_id=?",[$cfp_id]);
 
+            $frais_annex = DB::select("select * from v_montant_frais_annexe where cfp_id=?",[$cfp_id]);
+            // if(count($frais_annex)>0){
+            //     if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id  && $frais_annex[0]->projet_id == $projet[0]->projet_id){
+            //         $frais_annex[0] = $frais_annex[0]->hors_taxe;
+            //     }
+            //     else{
+            //         $frais_annex[0] =null;
+            //     }
+            // }
+
+            // if(count($dataMontantSession)>0){
+            //     if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id){
+            //         $dataMontantSession[0]->qte = $dataMontantSession[0]->qte;
+            //         $dataMontantSession[0]->hors_taxe = $dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session;
+            //     }
+            //     else{
+            //         $dataMontantSession[0]->qte = null;
+            //         $dataMontantSession[0]->hors_taxe=null;
+            //     }
+            // }
             if(count($frais_annex)>0){
-                if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id  && $frais_annex[0]->projet_id == $projet[0]->projet_id){
+                if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id && $frais_annex[0]->projet_id == $projet[0]->projet_id){
                     $frais_annex[0] = $frais_annex[0]->hors_taxe;
                 }
                 else{
@@ -164,25 +180,15 @@ class SessionController extends Controller
                 }
             }
 
-            if(count($dataMontantSession)>0){
-                if($dataMontantSession[0]->projet_id == $projet[0]->projet_id && $dataMontantSession[0]->groupe_id == $projet[0]->groupe_id && $dataMontantSession[0]->cfp_id == $projet[0]->cfp_id && $dataMontantSession[0]->entreprise_id == $projet[0]->entreprise_id){
-                    $dataMontantSession[0]->qte = $dataMontantSession[0]->qte;
-                    $dataMontantSession[0]->hors_taxe = $dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session;
-                }
-                else{
-                    $dataMontantSession[0]->qte = null;
-                    $dataMontantSession[0]->hors_taxe=null;
-                }
-            }
             // $formateur1 = $fonct->findWhere("v_demmande_formateur_cfp", ['cfp_id'], [$cfp_id]);
             // $formateur2 = $fonct->findWhere("v_demmande_cfp_formateur", ['cfp_id'], [$cfp_id]);
             $formateur_cfp = DB::select('select d.groupe_id,d.formateur_id,f.photos from details d join formateurs f on f.id = d.formateur_id where d.groupe_id = ? group by d.groupe_id,d.formateur_id,f.photos ',[$id]);
 
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
 
-            // $drive = new getImageModel();
-            // $drive->create_folder($cfp_nom);
-            // $drive->create_sub_folder($cfp_nom, "Mes documents");
+            $drive = new getImageModel();
+            $drive->create_folder($cfp_nom);
+            $drive->create_sub_folder($cfp_nom, "Mes documents");
             $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }

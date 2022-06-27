@@ -271,7 +271,6 @@ class AdminController extends Controller
         if (Gate::allows('isCFP')) {
             // $etp = $fonct->findWhereMulitOne("v_responsable_cfp",["substring(user_id,1,1)"],["substring('".$id_user."',1,1)"])->logo_cfp;
             $etp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$id_user])->logo_cfp;
-
             if($etp == null){
                 // $etp = DB::select('SELECT SUBSTRING(prenom_resp_cfp, 1, 1) AS prenom FROM v_responsable_cfp where user_id = ?', [$id_user]);
                 $etp = 'users/users.png';

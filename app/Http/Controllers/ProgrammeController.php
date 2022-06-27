@@ -30,6 +30,7 @@ class ProgrammeController extends Controller
         $programme = new programme();
         $id_user = Auth::user()->id;
         if (Gate::allows('isCFP')) {
+
             $cfp_id = cfp::where('user_id', $id_user)->value('id');
             $programmes = DB::select('select * from cfpcours where cfp_id = ?', [$cfp_id]);
 
@@ -114,6 +115,13 @@ class ProgrammeController extends Controller
         return response()->json($cours_prog);
     }
 
+    public function load_cours_programme(Request $request)
+    {
+        $id = $request->Id;
+        $cours_prog = DB::select('select cours_id,programme_id,titre,titre_cours from v_cours_programme where programme_id = ?', [$id]);
+        return response()->json(['cours'=>$cours_prog]);
+    }
+
     public function info_data(Request $req)
     {
         $data = array();
@@ -166,7 +174,7 @@ class ProgrammeController extends Controller
         if ($test[0]->moduleExiste == 1) {
             // $infos = DB::select('select * from moduleformation where formation_id = ?',[$id]);
             $infos = DB::select('select * from moduleformation where module_id = ?', [$id]);
-            $nb = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.formation_id = ? group by mf.formation_id', [$id]);
+            $nb = DB::select('select ifnull(count(a.module_id),0) as nb_avis from moduleformation mf left join avis a on mf.module_id = a.module_id where mf.module_id = ? group by mf.module_id', [$id]);
             if ($nb == null) {
                 $nb_avis = 0;
             } else {
@@ -174,12 +182,18 @@ class ProgrammeController extends Controller
             }
 
             $cours = DB::select('select * from v_cours_programme where module_id = ?', [$id]);
+            $liste_avis = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis where module_id = ? limit 10', [$id]);
+            $liste_avis_count = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis where module_id = ?', [$id]);
+            $statistiques = DB::select('select * from v_statistique_avis where module_id = ?',[$id]);
+            $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id where md.cfp_id = ?',[$infos[0]->cfp_id]);
             $programmes = DB::select('select * from programmes where module_id = ?', [$id]);
+            // dd($nb);
             $competences = DB::select('select * from competence_a_evaluers where module_id = ?', [$id]);
-            $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 5', [$id]);
+            // $liste_avis = DB::select('select * from v_liste_avis where module_id = ? limit 10', [$id]);
             $niveau = DB::select('select * from niveaux');
+            // dd($infos[0]->niveau,$niveau);
             // $statistiques = DB::select('select * from v_statistique_avis where formation_id = ? order by nombre desc',[$id]);
-            return view('admin.module.modif_programme', compact('devise','infos', 'cours', 'programmes', 'nb_avis', 'liste_avis', 'categorie', 'id', 'competences','niveau'));
+            return view('admin.module.modif_programme', compact('devise','infos','liste_avis','liste_avis_count','statistiques','avis_etoile', 'cours', 'programmes', 'nb', 'liste_avis', 'categorie', 'id', 'competences','niveau'));
         } else return redirect()->route('liste_module');
     }
 

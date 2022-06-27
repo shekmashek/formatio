@@ -145,6 +145,7 @@ class ParticipantController extends Controller
         // $totale_pag =  $totale_pag_stg;
 
         $service = $this->fonct->findWhere("v_departement_service_entreprise", ["entreprise_id"], [$entreprise_id]);
+        
 
         if ($paginations != null) {
 
@@ -154,7 +155,7 @@ class ParticipantController extends Controller
             $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
             $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
             $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-
+            
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
         } else {
             if ($paginations <= 0) {
@@ -172,7 +173,6 @@ class ParticipantController extends Controller
 
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
         }
-
         for ($i = 0; $i < count($piasa); $i += 1) {
             if (count($service) > 0) {
                 for ($j = 0; $j < count($service); $j += 1) {

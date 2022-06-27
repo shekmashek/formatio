@@ -39,6 +39,8 @@ INSERT INTO `niveaux` (`id`,`niveau`, `created_at`, `updated_at`) VALUES
 (2,'intermédiaire',NOW(),NOW()),
 (3,'avancé',NOW(),NOW());
 
+alter table niveaux add progression bigint(20) UNSIGNED NOT NULL;
+
 CREATE TABLE `taxes` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

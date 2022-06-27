@@ -90,7 +90,16 @@
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 <div class="container-fluid mt-5">
-
+    @if(Session::has('success'))
+    <div class="alert alert-success">
+        <strong> {{Session::get('success')}}</strong>
+    </div>
+    @endif
+    @if(Session::has('error'))
+    <div class="alert alert-danger">
+        <strong> {{Session::get('error')}}</strong>
+    </div>
+    @endif
     <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
         <li class="nav-item" role="presentation">
           <a
@@ -265,6 +274,91 @@
                             </table>
                         {{-- </div> --}}
 
+
+                            {{--Affiche info new--}}
+                            <div class="infos mt-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="m-0 text-center">INFORMATION</p>
+                                    </div>
+                                    <div class="col text-end">
+                                        <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
+                                    </div>
+                                    <hr class="mt-2">
+
+                                    <div class="mt-2" style="font-size:14px">
+                                        {{-- <div class="mt-1">
+                                                <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
+                                    </div> --}}
+                                    <div class="mt-1 text-center mb-3">
+                                        <span id="logo"></span>
+                                    </div>
+
+                                    <div class="mt-1 text-center">
+                                        <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
+                                    </div>
+                                    {{-- <div class="mt-1 mb-3 text-center">
+                                        <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
+                                    </div> --}}
+                                    <div class="mt-1">
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-1"><i class='bx bx-user'></i></div>
+                                            <div class="col-md-3">Nom_prénoms</div>
+                                            <div class="col-md">
+                                                <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
+                                                <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-1">
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
+                                            <div class="col-md-3">Sexe</div>
+                                            <div class="col-md">
+                                                <span id="genre"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-1">
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
+                                            <div class="col-md-3">E-mail</div>
+                                            <div class="col-md"><span id="email"></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-1">
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-1"><i class='bx bx-phone' ></i></div>
+                                            <div class="col-md-3">Télephone</div>
+                                            <div class="col-md">
+                                                <span></span><span id="telephone"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-1">
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
+                                            <div class="col-md-3">Adresse</div>
+                                            <div class="col-md"><span id="adresse_formateur"></span></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="mt-1">
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-1"><i class='bx bx-briefcase-alt-2'></i></div>
+                                            <div class="col-md-3">Spécialité</div>
+                                            <div class="col-md"><span id="specialite"></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {{-- </div> --}}
                 </div>
             </div>
@@ -295,6 +389,12 @@
                                 <input type="text" class="form-control mb-2 ms-3" id="inlineFormInput" autocomplete="off" name="nom_format" required />
                             </div>
                         </div>
+                        <div class="mb-3 row " style="font-size: 13px">
+                            <label for="" class="col-sm-2 col-form-label text-end">Prénom <span style="color: red">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control mb-2 ms-3" id="inlineFormInput" autocomplete="off" name="prenom_format" required />
+                            </div>
+                        </div>
                         <div class="mb-3 row text-end" style="font-size: 13px">
                             <label for="" class="col-sm-2 col-form-label">Email <span style="color: red">*</span></label>
                             <div class="col-sm-9">
@@ -314,103 +414,8 @@
                             <button type="submit" class="btn btn_enregistrer"><i class="bx bx-check me-1"></i> Envoyer l'invitation</button>
                         </div>
                     </form>
-
-                    {{--Affiche info new--}}
-                    <div class="infos mt-3">
-                        <div class="row">
-                            <div class="col">
-                                <p class="m-0 text-center">INFORMATION</p>
-                            </div>
-                            <div class="col text-end">
-                                <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
-                            </div>
-                            <hr class="mt-2">
-
-                            <div class="mt-2" style="font-size:14px">
-                                {{-- <div class="mt-1">
-                                        <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
-                            </div> --}}
-                            <div class="mt-1 text-center mb-3">
-                                <span id="logo"></span>
-                            </div>
-
-                            <div class="mt-1 text-center">
-                                <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
-                            </div>
-                            {{-- <div class="mt-1 mb-3 text-center">
-                                <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
-                            </div> --}}
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-user'></i></div>
-                                    <div class="col-md-3">Nom_prénoms</div>
-                                    <div class="col-md">
-                                        <span id="nom" style="font-size: 14px; text-transform: uppercase; font-weight: bold"></span>
-                                        <span id="prenom" style="font-size: 12px; text-transform: Capitalize; font-weight: bold "></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-bookmark'></i></div>
-                                    <div class="col-md-3">Sexe</div>
-                                    <div class="col-md">
-                                        <span id="genre"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-envelope' ></i></div>
-                                    <div class="col-md-3">E-mail</div>
-                                    <div class="col-md"><span id="email"></span></div>
-                                </div>
-                            </div>
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-phone' ></i></div>
-                                    <div class="col-md-3">Télephone</div>
-                                    <div class="col-md">
-                                        <span></span><span id="telephone"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-location-plus' ></i></div>
-                                    <div class="col-md-3">Adresse</div>
-                                    <div class="col-md"><span id="adresse_formateur"></span></div>
-                                </div>
-
-                            </div>
-                            <div class="mt-1">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1"><i class='bx bx-briefcase-alt-2'></i></div>
-                                    <div class="col-md-3">Spécialité</div>
-                                    <div class="col-md"><span id="specialite"></span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @if(Session::has('success'))
-                    <div class="alert alert-success">
-                        <strong> {{Session::get('success')}}</strong>
-                    </div>
-                    @endif
-                    @if(Session::has('error'))
-                    <div class="alert alert-danger">
-                        <strong> {{Session::get('error')}}</strong>
-                    </div>
-                    @endif
                 </div>
             </div>
-        </div>
     </div>
 </div>
 

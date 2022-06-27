@@ -69,8 +69,8 @@ GROUP BY
     reference,
     valeur_ariary,
     updated_at;
-
-    //table chef departement
+/* 
+    //table chef departement */
 
 ALTER TABLE chef_departements
   add column `updated_at` timestamp NULL DEFAULT current_timestamp();

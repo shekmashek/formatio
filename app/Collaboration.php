@@ -282,7 +282,7 @@ class Collaboration extends Model
             echo $e->getMessage();
             return back()->with("error", "une erreur s'est présenter,veuillez réssailler!");
         }
-        return back()->with("success", "une invitation de collaboration a été à " . $nom_forma);
+        return back()->with("success", "une invitation de collaboration a été envoyée à " . $nom_forma);
     }
 
 

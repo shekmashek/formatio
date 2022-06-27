@@ -163,6 +163,9 @@ Route::resource('utilisateur', 'UtilisateurControlleur')->except([
 ]);
 Route::get('/show_stagiaire/{id?}','UtilisateurControlleur@show_stagiaire')->name('show_stagiaire');
 Route::get('/liste_utilisateur/{id?}/{page?}','UtilisateurControlleur@index')->name('liste_utilisateur');
+
+Route::get('/liste_utilisateur/{id?}/{page?}/{order?}/{nom_ordre?}','UtilisateurControlleur@order_etp')->name('liste_utilisateur');
+
 // Route::get('/show_etp/{id?}','UtilisateurControlleur@show_etp')->name('show_etp');
 Route::get('/utilisateur_stagiaire/{id?}','UtilisateurControlleur@create')->name('utilisateur_stagiaire');
 Route::get('/utilisateur_formateur','UtilisateurControlleur@liste_formateur')->name('utilisateur_formateur');
@@ -209,6 +212,13 @@ Route::post('/update_email_formateur/{id}', 'ProfController@update_email_formate
 Route::post('/update_telephone_prof/{id}','ProfController@update_telephone_prof')->name('update_telephone_prof');
 Route::post('/update_niveau_prof/{id}','ProfController@update_niveau_prof')->name('update_niveau_prof');
 Route::post('/update_photos_prof/{id}','ProfController@update_photos_prof')->name('update_photos_prof');
+Route::post('/update_description_formateur/{id}','ProfController@update_description_formateur')->name('update_description_formateur');
+Route::post('/update_specialite_prof/{id}','ProfController@update_specialite_prof')->name('update_specialite_prof');
+Route::post('/update_fin_travail/{id}','ProfController@update_fin_travail')->name('update_fin_travail');
+Route::post('/update_debut_travail/{id}','ProfController@update_debut_travail')->name('update_debut_travail');
+Route::post('/addCompetence/{id}','ProfController@addCompetence')->name('addCompetence');
+Route::post('/addExperience/{id}','ProfController@addExperience')->name('addExperience');
+
 //collabforfateur
 Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur');
 //route formateur profil
@@ -216,7 +226,9 @@ Route::get('/profile_formateur/{id?}', 'ProfController@profile_formateur')->name
 Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
     Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 });
+Route::get('/accueilFormateur', 'ProfController@accueil')->name('accueilFormateur');
 //Route update par champs prof
+Route::get('/editer_cv/{id?}', 'ProfController@editCVProf')->name('edit_cv');
 Route::get('/editer_nom/{id}', 'ProfController@editer_nom')->name('editer_nom');
 Route::get('/editer_naissance/{id}', 'ProfController@editer_naissance')->name('editer_naissance');
 Route::get('/editer_genre/{id}', 'ProfController@editer_genre')->name('editer_genre');
@@ -234,8 +246,12 @@ Route::get('/editer_domaine/{id}', 'ProfController@editer_domaine')->name('edite
 Route::get('/editer_poste/{id}', 'ProfController@editer_poste')->name('editer_poste');
 Route::get('/editer_nom_etp/{id}', 'ProfController@editer_nom_etp')->name('editer_nom_etp');
 Route::get('/editer_fonction/{id}', 'ProfController@editer_fonction')->name('editer_fonction');
-
-
+Route::get('/editer_specialite/{id?}', 'ProfController@editer_specialite')->name('editer_specialite');
+Route::get('/editer_about/{id?}', 'ProfController@editer_about')->name('editer_about');
+Route::get('/editer_debut/{id?}', 'ProfController@editer_debut')->name('editer_debut');
+Route::get('/editer_fin/{id?}', 'ProfController@editer_fin')->name('editer_fin');
+Route::get('/ajout_competence/{id?}', 'ProfController@ajout_competence')->name('ajout_competence');
+Route::get('/ajout_experience/{id?}', 'ProfController@ajout_experience')->name('ajout_experience');
 
 
 
@@ -248,6 +264,7 @@ Route::get('/editer_fonction/{id}', 'ProfController@editer_fonction')->name('edi
 
 Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 Route::get('/nouveau_formateur','ProfController@nouveau_formateur')->name('nouveau_formateur');
+Route::get('/inscription_formateur','ProfController@inscription_formateur')->name('inscription_formateur');
 // Route::get('/nouveau_formateur', function () {
 //     return view('admin.formateur.nouveauFormateur');
 // })->name('nouveau_formateur');
@@ -453,7 +470,11 @@ Route::get('result_formation.modalite.filtre/{nbPag?}/{nom_entiter?}', 'Formatio
 
 Route::get('afficher_module','ModuleController@affichage')->name('afficher_module');
 Route::get('/liste_module/{id?}/{page?}/{index?}','ModuleController@index')->name('liste_module');
+
 Route::get('/nouveau_module','ModuleController@create')->name('nouveau_module');
+Route::post('/nouveau_module_new','ModuleController@create_new')->name('nouveau_module_new');
+Route::get('nouveau_module_update','ModuleController@update_new')->name('nouveau_module_update');
+Route::get('annuler_new_mod/{id}','ModuleController@destroy_new')->name('annuler_new_mod');
 Route::get('/get_formation','ModuleController@get_formation')->name('get_formation');
 Route::get('/edit_module','ModuleController@edit')->name('edit_module');
 Route::get('destroy_module','ModuleController@destroy')->name('destroy_module');
@@ -466,6 +487,7 @@ Route::get('ajout_programme/{id}','ModuleController@affichageParModule')->name('
 Route::post('ajout_competence','ModuleController@ajout_new_competence')->name('ajout_competence');
 Route::post('modifier_competence','ModuleController@modif_competence')->name('modifier_competence');
 Route::get('/suppression_competence','ModuleController@destroy_competence')->name('suppression_competence');
+Route::get('competence_module','ModuleController@afficher_radar')->name('competence_module');
 
 // ==================== modifications modules ========================//
 Route::post('modification_nom_module/{id}','ModuleController@edit_name_module')->name('modification_nom_module');
@@ -570,6 +592,7 @@ Route::get('/create_programme', 'ProgrammeController@create')->name('create_prog
 Route::get('modif_programmes/{id}', 'ProgrammeController@ajout_programme')->name('modif_programmes');
 Route::get('suppression_programme', 'ProgrammeController@suppre_programme')->name('suppression_programme');
 Route::get('editer_programme', 'ProgrammeController@edit')->name('editer_programme');
+Route::get('load_cours_programme', 'ProgrammeController@load_cours_programme')->name('load_cours_programme');
 
 
 // route liste equipe adminb pour O.F
@@ -1442,9 +1465,16 @@ Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
 
 
 Route::get('/raport','SessionController@fiche')->name('fichePDF');
+// <<<<<<< HEAD
 //plus d'avis
 Route::get('plus_avis','FormationController@plus_avis')->name('plus_avis');
 Route::get('plus_avis_module','FormationController@plus_avis_module')->name('plus_avis_module');
+Route::get('plus_avis_mod_cfp','FormationController@plus_avis_mod_cfp')->name('plus_avis_mod_cfp');
+
+//Affiche infos SESSION
+//etp
+Route::get('/info/session/etp/{id?}', 'SessionController@infoSessionEtp');
+// =======
 
 //Affiche infos SESSION
 //etp
@@ -1467,3 +1497,4 @@ Route::get('employes.ajouter.referent_principal/{id}','ParticipantController@rol
 
 /**Supprimer role referent d'un employé */
 Route::get('employes.supprimer.referent','ParticipantController@supprimer_role_referent')->name('employes.supprimer.referent');
+// >>>>>>> origin/debug_version_1

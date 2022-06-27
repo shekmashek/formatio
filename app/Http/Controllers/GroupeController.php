@@ -118,7 +118,7 @@ class GroupeController extends Controller
         $type_formation = $request->type_formation;
         try {
             if($abonnement_cfp!=null){
-                if($abonnement_cfp[0]->nb_projet == count($nb_projet) && $abonnement_cfp[0]->illimite = 0){
+                if($abonnement_cfp[0]->nb_projet <= count($nb_projet) && $abonnement_cfp[0]->illimite = 0){
                     throw new Exception("Vous avez atteint le nombre maximum de projet, veuillez upgrader votre compte pour ajouter plus de projet");
                 }
             }
@@ -156,7 +156,7 @@ class GroupeController extends Controller
 
             $last_insert_projet = DB::table('projets')->latest('id')->first();
             $groupe = new groupe();
-            $nom_groupe = $groupe->generateNomSession($last_insert_projet->id);
+            $nom_groupe = $groupe->generateNomSession();
             DB::insert(
                 'insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,modalite,activiter) values(?,?,?,?,?,?,?,?,1,?,TRUE)',
                 [$request->max_part, $request->min_part, $nom_groupe, $last_insert_projet->id, $request->module_id, $request->payement, $request->date_debut, $request->date_fin,$request->modalite]
@@ -229,14 +229,18 @@ class GroupeController extends Controller
         $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
-        $nb_projet = $fonct->findWhere("projets",["cfp_id"],[$cfp_id]);
-        /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le projet à ajouter */
+        /**annee courante */
+        $current_month = Carbon::now()->month;
+        $nb_projet = DB::select('SELECT * from projets where cfp_id = ? and YEAR(date_projet) = ? ',[$cfp_id,$current_month]);
+
+         // $nb_projet = $fonct->findWhere("v_session_projet",["cfp_id"],[$cfp_id]);
+         /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le projet à ajouter */
         $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
 
         $type_formation = $request->type_formation;
 
         try {
-            if($abonnement_cfp[0]->nb_projet == count($nb_projet) && $abonnement_cfp[0]->illimite = 0 ){
+            if($abonnement_cfp[0]->nb_projet <= count($nb_projet) && $abonnement_cfp[0]->illimite = 0 ){
                 throw new Exception("Vous avez atteint le nombre maximum de projet, veuillez upgrader votre compte pour ajouter plus de projet");
             }
             if ($request->date_debut >= $request->date_fin) {
@@ -258,7 +262,7 @@ class GroupeController extends Controller
 
             $last_insert_projet = DB::table('projets')->latest('id')->first();
             $groupe = new groupe();
-            $nom_groupe = $groupe->generateNomSession($last_insert_projet->id);
+            $nom_groupe = $groupe->generateNomSession();
             DB::insert(
                 'insert into groupes(max_participant,min_participant,nom_groupe,projet_id,module_id,type_payement_id,date_debut,date_fin,status,modalite,activiter) values(?,?,?,?,?,?,?,?,1,?,TRUE)',
                 [$request->max_part, $request->min_part, $nom_groupe, $last_insert_projet->id, $request->module_id, 1, $request->date_debut, $request->date_fin,$request->modalite]

@@ -5,10 +5,14 @@
 @endsection
 
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
-<style>
-     .nav-item .nav-link.active {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+        integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+    <style>
+    .nav-item .nav-link.active {
         border-bottom: 3px solid #7635dc !important;
         border: none;
         transform: none;
@@ -34,14 +38,15 @@
 
     @if(Session::has('error'))
 
-    <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+    <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <a
             class="nav-link active collabore"
-            id="ex1-tab-1"
             data-mdb-toggle="tab"
-            data-bs-toggle="tab"
-            href="#ex1-tabs-1"
+            data-toggle="tab"
+            {{-- data-bs-toggle="tab" --}}
+            id="ex1-tabs-1"
+            href="#collabore"
             role="tab"
             aria-controls="ex1-tabs-1"
             aria-selected="true"
@@ -51,10 +56,11 @@
         <li class="nav-item" role="presentation">
           <a
             class="nav-link"
-            id="ex1-tab-2"
             data-mdb-toggle="tab"
-            data-bs-toggle="tab"
-            href="#ex1-tabs-2"
+            data-toggle="tab"
+            {{-- data-bs-toggle="tab" --}}
+            id="ex1-tabs-2"
+            href="#invitation"
             role="tab"
             aria-controls="ex1-tabs-2"
             aria-selected="false"
@@ -63,14 +69,15 @@
         </li>
     </ul>
     @elseif (Session::has('success'))
-    <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+    <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <a
             class="nav-link "
-            id="ex1-tab-1"
             data-mdb-toggle="tab"
-            data-bs-toggle="tab"
-            href="#ex1-tabs-1"
+            data-toggle="tab"
+            {{-- data-bs-toggle="tab" --}}
+            id="ex1-tabs-1"
+            href="#collabore"
             role="tab"
             aria-controls="ex1-tabs-1"
             aria-selected="false"
@@ -80,10 +87,11 @@
         <li class="nav-item" role="presentation">
           <a
             class="nav-link active"
-            id="ex1-tab-2"
             data-mdb-toggle="tab"
-            data-bs-toggle="tab"
-            href="#ex1-tabs-2"
+            data-toggle="tab"
+            {{-- data-bs-toggle="tab" --}}
+            id="ex1-tabs-2"
+            href="#invitation"
             role="tab"
             aria-controls="ex1-tabs-2"
             aria-selected="true"
@@ -92,14 +100,15 @@
         </li>
     </ul>
     @else
-    <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+    <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <a
             class="nav-link active"
-            id="ex1-tab-1"
             data-mdb-toggle="tab"
-            data-bs-toggle="tab"
-            href="#ex1-tabs-1"
+            data-toggle="tab"
+            {{-- data-bs-toggle="tab" --}}
+            id="ex1-tabs-1"
+            href="#collabore"
             role="tab"
             aria-controls="ex1-tabs-1"
             aria-selected="true"
@@ -109,10 +118,11 @@
         <li class="nav-item" role="presentation">
           <a
             class="nav-link"
-            id="ex1-tab-2"
             data-mdb-toggle="tab"
-            data-bs-toggle="tab"
-            href="#ex1-tabs-2"
+            data-toggle="tab"
+            {{-- data-bs-toggle="tab" --}}
+            id="ex1-tabs-2"
+            href="#invitation"
             role="tab"
             aria-controls="ex1-tabs-2"
             aria-selected="false"
@@ -147,8 +157,8 @@
 
       <div class="tab-content" id="ex1-content">
         <div
-          class="tab-pane fade "
-          id="ex1-tabs-1"
+          class="tab-pane fade show"
+          id="collabore"
           role="tabpanel"
           aria-labelledby="ex1-tab-1"
         >
@@ -177,6 +187,7 @@
                     @else
                         @foreach($entreprise as $etp)
                         <tr  class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}">
+                            <td><a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a></td>
                             <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width: 80px;height: 80px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                             <td role="button"  onclick="afficherInfos();">
                                 <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
@@ -219,7 +230,7 @@
 
           {{-- Tab 1 content --}}
         </div>
-        <div class="tab-pane fade show active" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+        <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="ex1-tab-2">
             <div class="row mt-2">
                 <div class="col-12 col-lg-6">
                     @if(Session::has('success'))
@@ -314,7 +325,7 @@
 
                         </div>
 
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                             <div class="table-responsive text-center">
                                 <table class="table  table-borderless table-sm mt-4">
@@ -347,11 +358,11 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-          Tab 3 content
+        <div class="tab-pane fade show" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+        Tab 3 content
         </div>
-      </div>
-      <div class="infos mt-3">
+    </div>
+    <div class="infos mt-3">
         <div class="row">
             <div class="col">
                 <p class="m-0 text-center">INFORMATION</p>
@@ -435,16 +446,16 @@
         </div>
     </div>
 
-      {{-- tapitra --}}
-      @elseif (Session::has('success'))
-      <div class="tab-content" id="ex1-content">
+    {{-- tapitra --}}
+    @elseif (Session::has('success'))
+    <div class="tab-content" id="ex1-content">
         <div
-          class="tab-pane fade "
-          id="ex1-tabs-1"
-          role="tabpanel"
-          aria-labelledby="ex1-tab-1"
+        class="tab-pane fade show"
+        id="collabore"
+        role="tabpanel"
+        aria-labelledby="ex1-tab-1"
         >
-          {{-- Tab 1 content --}}
+        {{-- Tab 1 content --}}
             <div class="row">
 
             </div>
@@ -468,6 +479,7 @@
                         </tr>
                     @else
                         @foreach($entreprise as $etp)
+
                         <tr>
                             <td>
                                 <img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"
@@ -481,7 +493,7 @@
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                         </td>
 
-                           {{-- modal delete  --}}
+                        {{-- modal delete  --}}
                         <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -513,9 +525,9 @@
             </table>
 
 
-          {{-- Tab 1 content --}}
+        {{-- Tab 1 content --}}
         </div>
-        {{-- <div class="tab-pane fade show active" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+        {{-- <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="ex1-tab-2">
             <div class="row mt-2">
                 <div class="col-12 col-lg-6">
                     @if(Session::has('success'))
@@ -643,11 +655,11 @@
                 </div>
             </div>
         </div> --}}
-        <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-          Tab 3 content
+        <div class="tab-pane fade show" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+        Tab 3 content
         </div>
-      </div>
-      <div class="infos mt-3">
+    </div>
+    <div class="infos mt-3">
         <div class="row">
             <div class="col">
                 <p class="m-0 text-center">INFORMATION</p>
@@ -730,15 +742,15 @@
             </div>
         </div>
     </div>
-      @else
-      <div class="tab-content" id="ex1-content">
+    @else
+    <div class="tab-content" id="ex1-content">
         <div
-          class="tab-pane fade show active"
-          id="ex1-tabs-1"
-          role="tabpanel"
-          aria-labelledby="ex1-tab-1"
+        class="tab-pane show fade active"
+        id="collabore"
+        role="tabpanel"
+        aria-labelledby="ex1-tab-1"
         >
-          {{-- Tab 1 content --}}
+        {{-- Tab 1 content --}}
             <div class="row">
 
             </div>
@@ -773,7 +785,7 @@
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                         </td>
 
-                           {{-- modal delete  --}}
+                        {{-- modal delete  --}}
                         <div class="modal fade" id="exampleModal_{{$etp->entreprise_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -805,9 +817,9 @@
             </table>
 
 
-          {{-- Tab 1 content --}}
+        {{-- Tab 1 content --}}
         </div>
-        <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+        <div class="tab-pane show fade " id="invitation" role="tabpanel" aria-labelledby="ex1-tab-2">
             <div class="row mt-2">
                 <div class="col-12 col-lg-6">
                     @if(Session::has('success'))
@@ -903,7 +915,7 @@
 
                         </div>
 
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                             <div class="table-responsive text-center">
                                 <table class="table  table-borderless table-sm mt-4">
@@ -938,10 +950,10 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-          Tab 3 content
+        <div class="tab-pane show fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+        Tab 3 content
         </div>
-      </div>
+    </div>
 
     <div class="infos mt-3">
         <div class="row">
@@ -1026,14 +1038,14 @@
             </div>
         </div>
     </div>
-      @endif
+    @endif
 
 
 
 
 
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script type="text/javascript">
     $("#totale_invitations").on('click', function(e) {
@@ -1162,7 +1174,7 @@
             , dataType: "html"
             , success: function(response) {
                 let userData = JSON.parse(response);
-                console.log(userData);
+                // console.log(userData);
                 //parcourir le premier tableau contenant les info sur les programmes
                 for (let $i = 0; $i < userData.length; $i++) {
 
@@ -1183,6 +1195,17 @@
             }
         });
     });
+
+    $('a[data-toggle="tab"]').on('click', function (e) {
+        let lien = ($(e.target).attr('href'));
+        localStorage.setItem('indicecfp', lien);
+        ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
+        ($('a[href="' + Tabactive + '"]').closest('div')).addClass('active');
+    });
+    let activeTab = localStorage.getItem('indicecfp');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
 
 </script>
 @endsection

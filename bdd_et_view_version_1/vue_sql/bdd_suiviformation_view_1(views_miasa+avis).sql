@@ -361,6 +361,7 @@ JOIN niveaux n ON
 LEFT JOIN v_moyenne_avis_module a ON
     m.id = a.module_id;
 
+
 CREATE OR REPLACE VIEW cfpcours AS SELECT
     m.id AS module_id,
     m.reference,

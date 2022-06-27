@@ -246,7 +246,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#Domaines" class="nav-link " data-toggle="tab">Domaines</a>
+                <a href="#Domaines" class="nav-link active" data-toggle="tab">Domaines</a>
             </li>
             <li class="nav-item">
                 <a href="#Formations" class="nav-link " data-toggle="tab">Formations</a>
@@ -255,7 +255,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
 
         <div class="tab-content">
-            <div class="tab-pane fade show " id="Domaines">
+            <div class="tab-pane fade show active" id="Domaines">
                 <a href="{{route('nouveau_domaine')}}" class="btn_nouveau">
                     <i class="bx bx-plus-medical me-2"></i>
                     Nouveau Domaine
@@ -469,9 +469,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
-        localStorage.setItem('collaboration', lien);
+        $('a.active').removeClass('active');
+        localStorage.setItem('indiceListeFormation', lien);
     });
-    let Tabactive = localStorage.getItem('collaboration');
+    let Tabactive = localStorage.getItem('indiceListeFormation');
     if(Tabactive){
         $('#myTab a[href="' + Tabactive + '"]').tab('show');
     }
