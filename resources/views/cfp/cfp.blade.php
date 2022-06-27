@@ -207,13 +207,13 @@
                     <div class="col-md-12">
                         <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list text-center">
                             <li class="nav-item" style="width: 300px;">
-                                <a href="#" class="nav-link active "  style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation_attente" type="button" role="tab" aria-controls="invitation_attente" aria-selected="true">
+                                <a href="#" class="nav-link active "  style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation-attente" type="button" role="tab" aria-controls="invitation-attente" aria-selected="true">
                                     Invitations en attentes
                                 </a>
                             </li>
                             <li class="nav-item ms-5" style="width: 300px;">
                                 <a href="#" class="nav-link" id="profile-tab" style="border-bottom: 3px solid black" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                                    Invitations réfuser
+                                    Invitations réfusées
                                 </a>
                             </li>
                         </ul>
@@ -221,7 +221,7 @@
                 </div>
                 <div class="tab-content" id="myTabContent">
 
-                    <div class="tab-pane fade show active" id="invitation_attente" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade show active" id="invitation-attente" role="tabpanel" aria-labelledby="home-tab">
                         <div class="table-responsive text-center">
 
                             <table class="table  table-hover table-sm mt-4" >
@@ -263,7 +263,7 @@
 
                     </div>
 
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane show fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                         <div class="table-responsive text-center">
                             <table class="table  table-borderless table-sm mt-4">
