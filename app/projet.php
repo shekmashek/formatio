@@ -14,7 +14,10 @@ class Projet extends Model
         'id','nom_projet','entreprise_id','cfp_id','type_formation_id','status','activiter'
     ];
 
-
+    public function type_formation()
+    {
+        return $this->belongsTo('App\TypeFormation', 'type_formation_id');
+    }
 
     public function cfp() {
         return $this->belongsTo(cfp::class, 'cfp_id');

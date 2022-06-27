@@ -124,14 +124,19 @@ class DetailController extends Controller
                     'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
                     'nom_projet' => $value->groupe->projet->nom_projet,
                     'lieu' => $value->lieu,
+                    'formation' => $value->groupe->module->formation,
                     'formateur' => $value->formateur->nom_formateur,
+                    'groupe' => $value->groupe,
+                    'projet' => $value->groupe->projet,
+                    'type_formation' => $value->groupe->projet->type_formation,
                     'nom_cfp' => $value->groupe->projet->cfp->nom,
                     'backgroundColor' => $value->color,
-                    'borderColor' => $value->color
+                    'borderColor' => $value->color,
                 );
 
             }
 
+            // return ($events);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             foreach ($groupe_etp as $key => $value) {

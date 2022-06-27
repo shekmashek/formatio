@@ -230,6 +230,30 @@
             vertical-align: middle
         }
 
+        .tooltip[data-popper-placement^="top"]  {
+            background: rgba(255, 250, 240, 0)!important;
+            border: 1px solid #a537fd;
+            margin-bottom: 0.5rem!important;
+        }
+
+        .tooltip[data-popper-placement^="top"] .tooltip-arrow {
+            visibility: hidden;
+            border-color: rgba(255, 250, 240, 0)!important;
+            background: rgba(196, 196, 196, 0)!important;
+        }
+        .tooltip[data-popper-placement^="top"] .tooltip-arrow::before{
+            visibility: visible!important;
+            border-top-color: #000!important;
+            transform: translate(-10px, 10px)!important;
+        }
+
+        .tooltip[data-popper-placement^="top"] .tooltip-inner{
+            background: rgb(245, 245, 245)!important;
+            color: rgb(44, 44, 44)!important;
+        } 
+
+
+
     </style>
 
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
@@ -269,15 +293,41 @@
                 <div id='planning'></div>
             </div>
 
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
+            {{-- <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#detail_offcanvas" role="button"
+            aria-controls="offcanvasWithBothOptions">
+                Link with href
+            </a> --}}
 
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1" 
+             data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
               <div class="offcanvas-header">
-                <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+                <h5 id="event_title"></h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <div class="offcanvas-body">
-                ...
+                <div class="input-group flex-nowrap mb-3">
+                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                    <p type="text" id="projet"
+                    class="form-control border-0" 
+                    placeholder="Username" 
+                    aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text border-0 bg-light" id="addon-wrapping">@</span>
+                    <p type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+                  </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                    <p type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                    <p type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                    <p type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
               </div>
             </div>
 
@@ -426,6 +476,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script> --}}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
 
         // calendrier planning
@@ -451,22 +502,84 @@
                                 },
 
 
-                                eventClick:  function (event, jsEvent, view) {
-                                    
-                            },
+                    // show the description of events when hovering over them
+                    eventMouseEnter : function(info) {
 
-                        eventDidMount: function(info) {
-                            
-                            var tooltip = new Tooltip(info.el, {
-                                title: info.event.extendedProps.title,
-                                placement: 'top',
-                                trigger: 'hover',
-                                container: 'body'
-                            });
+                        var tipStart = info.event.start.toLocaleTimeString();
+                        var tipEnd = info.event.end.toLocaleTimeString();
+                        // var tipStart = info.event.end.toLocaleString();
+                        // console.log(tipStart);
+                        $(info.el).tooltip({
+                            title: info.event.extendedProps.description + ' ' + tipStart + ' - ' + tipEnd,
+                            placement: 'top',
+                            trigger: 'hover',
+                            container: 'body',
+                        });
+
+                        $(info.el).tooltip('show');
                     },
-                 
-                    events: events,
 
+                    // console.log the description of events when clicking on them
+                    eventClick : function(info) {
+
+                        console.log(info.event.title)
+                        
+                        var detail_offcanvas = document.getElementById('detail_offcanvas');
+                        var title_offcanvas = document.getElementById('event_title');
+                        var projet_offcanvas = document.getElementById('projet');
+
+                        var bsOffcanvas = new bootstrap.Offcanvas(detail_offcanvas);
+                        var description = info.event.extendedProps.description;
+                        var title = info.event.title;
+                        
+                        var id = info.event.extendedProps.detail_id;
+                        var projet = info.event.extendedProps.projet.nom_projet;
+                        title_offcanvas.innerHTML = title + ' ' + id;
+                        projet_offcanvas.value = projet;
+                        
+
+
+
+                        bsOffcanvas.show();
+                        
+
+                        // var event = info.event;
+                        // var event_id = event.id;
+                        // var event_title = event.title;
+                        // var event_start = event.start;
+                        // var event_end = event.end;
+                        // var event_description = event.extendedProps.description;
+                        
+                        // var doc = new jsPDF();
+                        // doc.setFontSize(20);
+                        // doc.text(event_title, 10, 10);
+                        // doc.setFontSize(12);
+                        // doc.text(event_description, 10, 20);
+                        // doc.text(event_start, 10, 30);
+                        // doc.text(event_end, 10, 40);
+                        // doc.save('calendrier.pdf');
+
+                    },
+
+                    // $('#download_pdf').click(function () {
+                    // var pdf = new jsPDF('p', 'pt', 'letter');
+                    // // source can be HTML-formatted string, or a reference
+                    // // to an actual DOM element from which the text will be scraped.
+                    // source = $('#test')[0];
+
+                    // // we support special element handlers. Register them with jQuery-style 
+                    // // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+                    // // There is no support for any other type of selectors 
+                    // // (class, of compound) at this time.
+                    // specialElementHandlers = {
+                    //     // element with id of "bypass" - jQuery style selector
+                    //     '#bypassme': function (element, renderer) {
+                    //         // true = "handled elsewhere, bypass text extraction"
+                    //         return true
+                    //     }
+                    // };
+                    
+                    events: events,
 
                 }
                 );
