@@ -1,5 +1,5 @@
 
---abonnement pour entreprise
+
 DROP TABLE IF EXISTS tarif_categories;
 DROP TABLE IF EXISTS type_abonnements;
 DROP TABLE IF EXISTS type_abonnement_roles;
@@ -127,7 +127,8 @@ INSERT INTO `type_abonnements_etp` (`id`, `nom_type`, `description`, `tarif`, `n
 (4, 'EI', 'La seule plateforme tout integrée pour les Entreprise Intermediaire', '300000.00', 3, 4, 50, 249, 0, '2022-05-10 07:18:46', '2022-05-10 07:18:46'),
 (5, 'GE', 'La plateforme pour les Grandes Entreprises à la pointe de la transformation digitale', '400000.00', 0, 0, 0, 0, 1, '2022-05-10 07:27:16', '2022-05-10 07:27:16');
 
---STATUS DES COMPTES DES UTILISATEURS
+
+
 
 CREATE TABLE `statut_compte` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -149,7 +150,7 @@ ALTER TABLE cfps
   add column statut_compte_id bigint(20) unsigned NOT NULL DEFAULT 1,
   ADD CONSTRAINT FOREIGN KEY(statut_compte_id) REFERENCES statut_compte(id);
 
---Add column : entreprises / OF and create table assujetti
+
 
 CREATE TABLE `assujetti` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

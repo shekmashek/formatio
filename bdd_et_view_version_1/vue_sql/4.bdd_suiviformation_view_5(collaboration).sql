@@ -430,7 +430,7 @@ CREATE OR REPLACE VIEW v_demmande_cfp_pour_formateur AS SELECT
         WHERE
             demmandeur_cfp_id = cfps.id and inviter_formateur_id = formateurs.id  and
 
-            and  demmande_cfp_formateur.activiter = 0;
+              demmande_cfp_formateur.activiter = 0;
 
 
 

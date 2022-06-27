@@ -12,7 +12,8 @@ CREATE TABLE `formateurs` (
   `adresse` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `specialite` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `niveau` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text not null default "",
+  `niveau_etude_id` bigint(20) UNSIGNED  DEFAULT 1 REFERENCES niveau_etude(id) ON DELETE CASCADE ,
   `activiter` boolean not null default true,
   `user_id` bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -55,9 +56,4 @@ CREATE TABLE `experience_formateurs` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-alter table formateurs drop column niveau;
-alter table formateurs
-  add column niveau_etude_id bigint(20) UNSIGNED NOT NULL REFERENCES niveau_etude(id) ON DELETE CASCADE;
 
-UPDATE formateurs set niveau_etude_id = 1;
-alter Table formateurs add COLUMN description text not null default "";

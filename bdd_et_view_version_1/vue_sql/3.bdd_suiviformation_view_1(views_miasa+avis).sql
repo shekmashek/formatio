@@ -73,7 +73,7 @@ CREATE OR REPLACE VIEW v_detailmoduleformationprojetformateur AS SELECT
     (f.adresse) adresse_formateur,
     f.cin,
     f.specialite,
-    f.niveau,
+    f.niveau_etude_id,
     (f.activiter) activiter_formateur,
     pj.id,
     pj.nom_projet,
@@ -87,75 +87,6 @@ JOIN formateurs f ON
     dmfp.formateur_id = f.id
 JOIN projets pj ON
     dmfp.projet_id = pj.id;
-
-
--- CREATE OR REPLACE VIEW v_participantsession AS SELECT
---     g.projet_id,
--- 	ps.stagiaire_id,
--- 	ps.groupe_id,
--- 	g.nom_groupe,
--- 	g.date_debut,
--- 	g.date_fin,
--- 	g.status_groupe,
--- 	g.activiter_groupe,
---     s.matricule,
---     s.nom_stagiaire,
---     s.prenom_stagiaire,
---     s.fonction_stagiaire,
---     s.genre_stagiaire,
---     s.mail_stagiaire,
---     s.telephone_stagiaire,
---     s.user_id,
---     s.photos,
---     (s.departement_entreprise_id) departement_id,
---     s.cin,
---     s.date_naissance,
---     (s.lot) adresse,
---     s.niveau_etude,
---     (s.activiter) activiter_stagiaire,
---     pe.nom_projet,
---     g.entreprise_id,
---     pe.cfp_id,
---     (pe.status) status_projet,
---     (pe.activiter) activiter_projet
--- FROM
---     participant_groupe ps,
---  	stagiaires s,
---     projets pe,
---     v_groupe_entreprise g
--- where
---     ps.stagiaire_id = s.id and ps.groupe_id = g.groupe_id and g.projet_id = pe.id and s.entreprise_id = g.entreprise_id;
-
--- ----------------
--- CREATE OR REPLACE VIEW v_coursfroidevaluation AS SELECT
---     c.id AS cours_id,
---     c.titre_cours,
---     c.programme_id,
---     IFNULL(fe.status, 0) AS status,
--- 	fe.cfp_id,
---     fe.projet_id,
---     fe.stagiaire_id,
---      s.matricule,
---     s.nom_stagiaire,
---     s.prenom_stagiaire,
---     s.fonction_stagiaire,
---     s.genre_stagiaire,
---     s.mail_stagiaire,
---     s.telephone_stagiaire,
---     s.user_id,
---     s.photos,
---     (s.departement_entreprise_id) departement_id,
---     s.cin,
---     s.date_naissance,
---     (s.lot) adresse,
---     s.niveau_etude,
---     (s.activiter) activiter_stagiaire
--- FROM
---     cours c
--- LEFT JOIN froid_evaluations fe ON
---     c.id = fe.cours_id
--- JOIN stagiaires s ON
---     fe.stagiaire_id = s.id;
 
 CREATE OR REPLACE VIEW v_cours_programme AS SELECT
     c.id AS cours_id,
@@ -302,15 +233,6 @@ LEFT JOIN v_pourcentage_avis pa ON
 ORDER BY
     mn.id;
 
-CREATE OR REPLACE VIEW v_pourcentage_total_module_cfp AS SELECT
-    SUM(vpa.pourcentage_note * vpa.nombre_note) as nb_pourcent,
-    SUM(vpa.nombre_note) as nombre_note,
-    md.cfp_id
-    from v_pourcentage_avis as vpa
-    join moduleformation as md on vpa.module_id = md.module_id
-    where md.module_id = vpa.module_id;
-
-
 CREATE OR REPLACE VIEW moduleformation AS SELECT
     m.id AS module_id,
     m.reference,
@@ -360,6 +282,15 @@ JOIN niveaux n ON
     n.id = m.niveau_id
 LEFT JOIN v_moyenne_avis_module a ON
     m.id = a.module_id;
+
+CREATE OR REPLACE VIEW v_pourcentage_total_module_cfp AS SELECT
+    SUM(vpa.pourcentage_note * vpa.nombre_note) as nb_pourcent,
+    SUM(vpa.nombre_note) as nombre_note,
+    md.cfp_id
+    from v_pourcentage_avis as vpa
+    join moduleformation as md on vpa.module_id = md.module_id
+    where md.module_id = vpa.module_id;
+
 
 
 CREATE OR REPLACE VIEW cfpcours AS SELECT
@@ -496,41 +427,6 @@ FROM
     on niveau.id = stg.niveau_etude_id
     join genre gr
     on gr.id = stg.genre_id;
-
--- CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT
---     stg.id AS stagiaire_id,
---     stg.matricule,
---     stg.nom_stagiaire,
---     stg.prenom_stagiaire,
---     stg.genre_stagiaire,
---     stg.fonction_stagiaire,
---     stg.mail_stagiaire,
---     stg.telephone_stagiaire,
---     stg.entreprise_id,
---     stg.user_id,
---     stg.photos,
---     (stg.departement_entreprise_id) departement_entreprises_id,
---     stg.cin,
---     stg.date_naissance,
---     (stg.lot) adresse,
---     stg.lieu_travail,
---     stg.niveau_etude,
---     stg.activiter,
---     etp.nom_etp,
---     historique.stagiaire_id AS histo_stagiaire_id,
---     historique.ancien_entreprise_id AS ancien_entreprise_id,
---     historique.nouveau_entreprise_id AS nouveau_entreprise_id,
---     historique.date_depart,
---     historique.date_arrivee
--- FROM
---     stagiaires as stg,
---     entreprises as etp,
---     historique_stagiaires as historique,
---      branches as branche
--- WHERE
---     stg.entreprise_id = etp.id and
---     historique.stagiaire_id = stg.id and    stg.entreprise_id = branche.entreprise_id;
-
 
 
 CREATE OR REPLACE VIEW v_historique_stagiaires AS SELECT

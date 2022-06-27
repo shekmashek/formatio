@@ -16,7 +16,7 @@ CREATE TABLE devise
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ALTER TABLE devise add column description  VARCHAR(200);
 insert into devise values
-(1,"AR","Ariary");
+(1,"Ar","Ariary");
 
 
 

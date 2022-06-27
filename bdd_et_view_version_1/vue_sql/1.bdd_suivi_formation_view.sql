@@ -64,7 +64,8 @@ create or replace view v_groupe_entreprise as
     join type_payement tp on g.type_payement_id = tp.id;
 
 
-    /* view demande de devis*/
+
+
 
    CREATE OR REPLACE VIEW v_liste_demande_devis AS
    SELECT
