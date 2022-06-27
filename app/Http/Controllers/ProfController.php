@@ -775,7 +775,7 @@ class ProfController extends Controller
             if($formateur->genre_id == 1) $genre = "Femme";
             if($formateur->genre_id == 2) $genre = "Homme";
             if($formateur->genre_id == null) $genre = " ";
-            return view('admin.formateur.edit_cv', compact('niveau','formateur','genre','competence','experience'));
+            return view('admin.formateur.CV', compact('niveau','formateur','genre','competence','experience'));
         }
         else{
             $formateur = formateur::findOrFail($id);
