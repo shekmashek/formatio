@@ -164,7 +164,8 @@ CREATE TABLE cfps (
   updated_at timestamp NULL DEFAULT current_timestamp(),
   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
-  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  'XXXXXXX'
+  site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  'XXXXXXX',
+  url_logo varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE horaires (
@@ -209,7 +210,7 @@ CREATE TABLE responsables_cfp(
   adresse_code_postal varchar(3) COLLATE utf8mb4_unicode_ci  default 'XXX',
   adresse_ville varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   adresse_region varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
+  photos_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default NULL,
   cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   activiter boolean not null default true,

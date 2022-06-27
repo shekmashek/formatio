@@ -341,20 +341,10 @@ class DepartementController extends Controller
     public function show_departement(Request $request)
     {
         $fonct = new FonctionGenerique();
+        $id_etp = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
 
-        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
-            $rqt = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-            $employes = $fonct->findWhere("employers",["entreprise_id","activiter"],[$rqt[0]->entreprise_id,1]);
-            $id_etp = $rqt[0]->entreprise_id;
-        }
-        if (Gate::allows('isStagiairePrincipale')) {
-            $rqt = DB::select('select * from stagiaires where user_id = ?', [Auth::user()->id]);
-            $id_etp = $rqt[0]->entreprise_id;
-        }
-        if (Gate::allows('isManagerPrincipale')) {
-            $rqt = DB::select('select * from chef_departements where user_id = ?', [Auth::user()->id]);
-            $id_etp = $rqt[0]->entreprise_id;
-        }
+        $employes = $fonct->findWhere("employers",["entreprise_id","activiter"],[$id_etp,1]);
+
         $rqt = db::select('select * from v_chef_departement_entreprise where entreprise_id = ?', [$id_etp]);
 
         $nb = count($rqt);

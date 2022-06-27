@@ -33,7 +33,8 @@ CREATE TABLE entreprises (
   email_etp varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   site_etp varchar(191) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   activiter boolean not null default true,
-  telephone_etp varchar(191) COLLATE utf8mb4_unicode_ci
+  telephone_etp varchar(191) COLLATE utf8mb4_unicode_ci,
+  url_logo varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
