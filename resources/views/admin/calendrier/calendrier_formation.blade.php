@@ -307,26 +307,37 @@
               <div class="offcanvas-body">
                 <div class="input-group flex-nowrap mb-3">
                     <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
-                    <p type="text" id="projet"
+                    <input type="text" id="event_project"
                     class="form-control border-0" 
                     placeholder="Username" 
                     aria-label="Username" aria-describedby="basic-addon1">
                 </div>
+                <div id="event_type_formation">
+
+                </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text border-0 bg-light" id="addon-wrapping">@</span>
-                    <p type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+                    {{-- <span class="input-group-text border-0 bg-light" id="addon-wrapping">@</span> --}}
+                    <input type="text" class="form-control border-0 border-bottom" 
+                    placeholder="Username" aria-label="Username" 
+                    aria-describedby="addon-wrapping">
                   </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
-                    <p type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    {{-- <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span> --}}
+                    <input type="text" class="form-control border-0 border-bottom" 
+                    placeholder="Username" aria-label="Username" 
+                    aria-describedby="basic-addon1">
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
-                    <p type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    {{-- <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span> --}}
+                    <input type="text" class="form-control border-0 border-bottom" 
+                    placeholder="Username" aria-label="Username" 
+                    aria-describedby="basic-addon1">
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
-                    <p type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    {{-- <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span> --}}
+                    <input type="text" class="form-control border-0 border-bottom" 
+                    placeholder="Username" aria-label="Username" 
+                    aria-describedby="basic-addon1">
                 </div>
               </div>
             </div>
@@ -526,7 +537,7 @@
                         
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
                         var title_offcanvas = document.getElementById('event_title');
-                        var projet_offcanvas = document.getElementById('projet');
+                        var projet_offcanvas = document.getElementById('event_project');
 
                         var bsOffcanvas = new bootstrap.Offcanvas(detail_offcanvas);
                         var description = info.event.extendedProps.description;
@@ -534,6 +545,10 @@
                         
                         var id = info.event.extendedProps.detail_id;
                         var projet = info.event.extendedProps.projet.nom_projet;
+                        var groupe = info.event.extendedProps.groupe;
+
+                        console.log(groupe);
+                        
                         title_offcanvas.innerHTML = title + ' ' + id;
                         projet_offcanvas.value = projet;
                         

@@ -120,6 +120,7 @@ class DetailController extends Controller
                     'detail_id' => $value->id,
                     'title' => $value->groupe->module->formation->nom_formation,
                     'description' => $value->groupe->projet->cfp->nom,
+
                     'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
                     'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
                     'nom_projet' => $value->groupe->projet->nom_projet,
@@ -136,7 +137,7 @@ class DetailController extends Controller
 
             }
 
-            // return ($events);
+            return ($events);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             foreach ($groupe_etp as $key => $value) {
