@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/formatio/public_html/
+    - export DEPLOYPATH=/home/formatio/public_html/app.formation.mg/
     - /bin/cp -R * $DEPLOYPATH
