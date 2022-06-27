@@ -85,7 +85,7 @@
     renderer: 'svg', // required
     loop: true, // optional
     autoplay: true, // optional
-    name: "Demo Animation", // optional
+    name: "bienvenue", // optional
 });
 
 </script>
