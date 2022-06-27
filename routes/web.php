@@ -1457,3 +1457,4 @@ Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
 //evaluation A froid
 Route::get('/evaluation_froid/{groupe?}','EvaluationFroidController@index')->name('evaluation_froid');
 Route::post('evaluation_froid/ajouter','EvaluationFroidController@store')->name('evaluation_froid/ajouter');
+Route::get('evaluation_froid/resultat/{groupe?}','EvaluationFroidController@show')->name('evaluation_froid/resultat');

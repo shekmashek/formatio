@@ -88,6 +88,26 @@ select
 from question_evaluation_froid q
 join type_champs tc on q.type_champ_id = tc.id;
 
-create or replace view v_resultat_froid_evaluation as
+create or replace view v_resultat_froid_evaluation_stagiaire as
     select
-        
+        r.question_id,
+        r.groupe_id,
+        count(r.stagiaire_id) as nombre_reponse,
+        ns.total_stagiaire,
+        r.reponse_id,
+        rep.reponse,
+        q.desc_champ,
+        ROUND((count(r.stagiaire_id)*100)/ns.total_stagiaire,1) as pourcentage_reponse
+    from resultat_eval_froid_stagiaire r
+    join v_nombre_stagiaire_groupe ns on r.groupe_id = ns.groupe_id
+    join v_question_champ_froid q on r.question_id = q.question_id
+    join reponse_question_eval_froid rep on rep.id = r.reponse_id
+    where q.desc_champ != 'TEXT'
+    group by
+        r.question_id,
+        r.groupe_id,
+        r.reponse_id,
+        ns.total_stagiaire,
+        rep.reponse,
+        q.desc_champ;
+
