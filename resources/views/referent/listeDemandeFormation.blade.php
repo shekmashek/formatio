@@ -5,7 +5,8 @@
 @section('content')
 <style>
     h4,label,p{
-        font-weight: lighter;
+        font-weight: 400;
+        color: gray;
     }
     .disabled > a {
     color: currentColor;
@@ -50,7 +51,7 @@
                         <tbody>
                             <tr> 
                             <td>
-                                <div class="collapse" id="collapseExample_{{$p->AnneePlan}}">
+                                <div  id="collapseExample_{{$p->AnneePlan}}">
                                     <div class="row">
                                         <div class="col-md-6 p-4">
                                             <h5>Plan Previsionnel</h5>
@@ -74,11 +75,11 @@
                                             </form>  
                                             <div style="display: flex"> 
                                             <button class="btn btn-info mt-3 text-light">Email de collecte</button>&nbsp;
-                                            <p class="mt-4" style="font-weight: lighter;font-size:12px;"> Envoie à tout les salarié une email pour reccueillir leur formation</p>
+                                            <p class="mt-4" style="font-weight: 400;font-size:12px;"> Envoie à tout les salarié une email pour reccueillir leur formation</p>
                                             </div>
                                             <div style="display: flex"> 
                                             <button class="btn btn-warning mt-2 text-light">Email de rappele</button>&nbsp;
-                                            <p class="mt-3" style="font-weight: lighter;font-size:12px;"> rappele par email pour reccueillir leur formation</p>
+                                            <p class="mt-3" style="font-weight: 400;font-size:12px;"> rappele par email pour reccueillir leur formation</p>
                                             </div>
                                         </div>
                                     </div>
@@ -100,7 +101,7 @@
                                                 <div class="progress-bar bg-info" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
                                                 </div>
                                                 <div>
-                                                    <span  class="te "><a href="{{route('liste.demande')}}" class="btn btn-info mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
+                                                    <span  class="te "><a href="{{route('liste.demande',$p->id)}}" class="btn btn-info mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
                                                     <span class="te "> <a href="" class="btn btn-primary mt-2 text-light"> <i class="fa-solid fa-file-pdf" ></i>&nbsp; Export liste</a> </span>
 
                                             </div>
@@ -141,14 +142,14 @@
 <script>
     var a = document.getElementById('teste').value;
     var b = document.getElementById('test').innerHTML = a;
-    var c = document.querySelector('.te');
-    if (a == 0){
+    // var c = document.querySelector('.te');
+    // if (a == 0){
        
-        c.classList.add ('disabled');
-    }
-    else{
-        c.classList.remove("disabled");
-    }
+    //     c.classList.add ('disabled');
+    // }
+    // else{
+    //     c.classList.remove("disabled");
+    // }
     //  function msokatra(){
     //     document.getElementById("inp").disabled = false;
     //     document.getElementById("inp2").disabled = false;

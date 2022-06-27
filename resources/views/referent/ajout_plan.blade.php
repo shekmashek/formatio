@@ -5,7 +5,7 @@
 @section('content')
 <style>
     h4{
-        font-weight: lighter;
+        font-weight: 400;
     }
 </style>
 <div id="page-wrapper">
@@ -17,7 +17,7 @@
                     <h4>Ajout plan de formation</h4>
                 </div>
                 <div class="float-end">
-                    <a href="/liste_demande_stagiaire" class="btn btn-dark text-light">Retour</a>
+                    <a href="/liste_demande_stagiaire" class="btn btn-dark text-light"><i class="fa-solid fa-caret-left"></i> &nbsp; Retour</a>
                 </div>
             </div>
             @if ($message = Session::get('success'))

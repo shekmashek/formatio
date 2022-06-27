@@ -759,17 +759,18 @@ Route::get('/searchDemandeAnnee', 'PlanFormationController@getAnnee')->name('sea
 
 ////////////////// modification mahafaly /////////////////////////////////
 Route::get('/demandeFormation/{id}','PlanFormationController@demande')->name('plan.demande');
-Route::get('/ListedemandeFormation','PlanFormationController@liste')->name('liste.demande');
+Route::get('/ListedemandeFormation/{id}','PlanFormationController@liste')->name('liste.demande');
 Route::get('/ListedemandeFormationValidé','PlanFormationController@listeV')->name('liste.demandeV');
 Route::get('/ajoutPlan/{id}','PlanFormationController@ajout')->name('ajout.plan');
 Route::post('/creationPla','PlanFormationController@cree')->name('plan.cree');
 Route::post('/edtitPlan/{id}','PlanFormationController@modifier')->name('plan.modifier');
+Route::post('/creationDemande','PlanFormationController@creation')->name('plan.creation');
 /////////////////fin modification Mahafaly //////////////////////////////
 
 //ajouter nouveau plan
-// Route::get('ajout_plan', function () {
-//     return view('referent.ajout_plan');
-// })->name('ajout_plan');
+Route::get('ajout_plan', function () {
+    return view('referent.ajout_plan');
+})->name('ajout_plan');
 //Route::get('enregistrer','PlanFormationController@enregistrer_plan')->name('enregistrer');
 Route::get('listePlanFormation', 'PlanFormationController@liste_plan')->name('listePlanFormation');
 
@@ -1467,3 +1468,7 @@ Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
 
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
+
+Route::get('/teste', 'PlanFormationController@teste');
+
+
