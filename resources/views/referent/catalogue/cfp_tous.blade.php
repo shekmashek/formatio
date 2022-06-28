@@ -126,7 +126,7 @@
         </div>
     </div>
 </div>
-<section class="annuaire mb-5">
+<section class="annuairebg mb-5">
     <div class="container my-2">
             <div class="row mb-5 justify-content-center">
                 <div class="col-12 alphabet mb-2">
