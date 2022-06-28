@@ -3,7 +3,6 @@
 namespace App;
 
 use App\groupe;
-use App\GroupeEntreprise;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +22,7 @@ class entreprise extends Model
      */
     public function groupe_entreprise()
     {
-        return $this->hasMany(GroupeEntreprise::class, 'entreprise_id');
+        return $this->hasMany('App\GroupeEntreprise', 'entreprise_id');
     }
 
     /**

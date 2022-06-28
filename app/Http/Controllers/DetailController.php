@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use PDF;
+// use Barryvdh\DomPDF\PDF;
 use App\cfp;
 use Exception;
 use App\detail;
@@ -82,7 +83,6 @@ class DetailController extends Controller
             // getting the groupe_entreprises belonging to $entreprise
             $groupe_etp = GroupeEntreprise::where('entreprise_id', $entreprise_id)->get();
 
-
             // we get many groupe_entreprises so loop foreach element to get the details
             // matching with the groupe_id
 
@@ -94,7 +94,6 @@ class DetailController extends Controller
                
             
             }
-
 
 
             // $details get all data but it is a multidimansionnal array.
@@ -113,31 +112,48 @@ class DetailController extends Controller
                 
             }
 
+            // the collapse() method give the same result as the foreach to get the details (ravel() method in numpy)   
+            // $d = collect($details);
+            // $s = $d->collapse();
+
+            
 
             // getting the elements for ech events from the groupe class relationships 
             foreach ($raveled_details as $key => $value) {
+                
+                foreach ($value->groupe->groupe_entreprise as $key => $group) {
+                    
+                }
+
                 $events[] = array(
                     'detail_id' => $value->id,
-                    'title' => $value->groupe->module->formation->nom_formation,
-                    'description' => $value->groupe->projet->cfp->nom,
-
+                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->groupe->module->nom_module.' - '.$value->lieu,
                     'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
                     'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
+                    'description' => $value->lieu.' - '.$value->groupe->projet->cfp->nom,
                     'nom_projet' => $value->groupe->projet->nom_projet,
                     'lieu' => $value->lieu,
                     'formation' => $value->groupe->module->formation,
                     'formateur' => $value->formateur->nom_formateur,
                     'groupe' => $value->groupe,
+                    'groupe_entreprise' => $value->groupe->groupe_entreprise,
+                    // get all the groupe_entreprise->entreprise as an array of objects
+                    // the pluck() method return an array of the specified attribute of each objects
+                    'entreprises' => $value->groupe->groupe_entreprise->pluck('entreprise')->toArray(),
+
+                    'sessions' => $value->groupe->detail,
                     'projet' => $value->groupe->projet,
                     'type_formation' => $value->groupe->projet->type_formation,
                     'nom_cfp' => $value->groupe->projet->cfp->nom,
                     'backgroundColor' => $value->color,
                     'borderColor' => $value->color,
                 );
-
             }
+            
+            // dd('end');
 
-            return ($events);
+            
+            // return $events;
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             foreach ($groupe_etp as $key => $value) {
@@ -158,7 +174,7 @@ class DetailController extends Controller
 
 
         // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
-        return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations','events'));
+        return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations','events', 'groupe_entreprises'));
     }
 
     

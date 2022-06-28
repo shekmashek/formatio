@@ -253,6 +253,10 @@
         } 
 
 
+        /* effcanvas content */
+        .marge_left-30 {
+            margin-left: 30px!important;
+        }
 
     </style>
 
@@ -309,36 +313,55 @@
                     <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
                     <input type="text" id="event_project"
                     class="form-control border-0" 
-                    placeholder="Username" 
+                    placeholder="Projet" 
                     aria-label="Username" aria-describedby="basic-addon1">
                 </div>
                 <div id="event_type_formation">
 
                 </div>
                 <div class="input-group mb-3">
-                    {{-- <span class="input-group-text border-0 bg-light" id="addon-wrapping">@</span> --}}
-                    <input type="text" class="form-control border-0 border-bottom" 
-                    placeholder="Username" aria-label="Username" 
+                    <span class="input-group-text border-0 bg-light" id="addon-wrapping">@</span>
+                    <input type="text" id="event_entreprise" class="form-control border-0 border-bottom" 
+                    placeholder="Entreprise" aria-label="Entreprise" 
                     aria-describedby="addon-wrapping">
                   </div>
+                <div class="input-group mb-3" id="event_sessions">
+                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                    <input type="text" id="event_nbr_session" 
+                    class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
+                    placeholder="Nombre session" aria-label="nbr_session" 
+                    aria-describedby="basic-addon1">
+
+                </div>
                 <div class="input-group mb-3">
                     {{-- <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span> --}}
                     <input type="text" class="form-control border-0 border-bottom" 
-                    placeholder="Username" aria-label="Username" 
+                    placeholder="Place" aria-label="Place" 
                     aria-describedby="basic-addon1">
                 </div>
                 <div class="input-group mb-3">
                     {{-- <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span> --}}
                     <input type="text" class="form-control border-0 border-bottom" 
-                    placeholder="Username" aria-label="Username" 
+                    placeholder="OF" aria-label="OF" 
                     aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group mb-3">
-                    {{-- <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span> --}}
                     <input type="text" class="form-control border-0 border-bottom" 
-                    placeholder="Username" aria-label="Username" 
+                    placeholder="Formateur" aria-label="Formateur" 
                     aria-describedby="basic-addon1">
                 </div>
+
+                <div class="input-group mb-3" id="event_materiel">
+                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                    <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
+                    placeholder="Matériel" aria-label="materiel" 
+                    aria-describedby="basic-addon1">
+                        <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
+                    placeholder="materiel i" aria-label="materiel" 
+                    aria-describedby="basic-addon1">
+                        <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
+                    placeholder="materiel i" aria-label="materiel" 
+                    aria-describedby="basic-addon1">
+                </div>
+
               </div>
             </div>
 
@@ -532,27 +555,55 @@
 
                     // console.log the description of events when clicking on them
                     eventClick : function(info) {
+                        // options for date formating
+                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-                        console.log(info.event.title)
-                        
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
                         var title_offcanvas = document.getElementById('event_title');
                         var projet_offcanvas = document.getElementById('event_project');
+                        var session_offcanvas = document.getElementById('event_sessions');
+                        var nbr_session_offcanvas = document.getElementById('event_nbr_session');
+                        var entreprise_offcanvas = document.getElementById('event_entreprise');
+
 
                         var bsOffcanvas = new bootstrap.Offcanvas(detail_offcanvas);
                         var description = info.event.extendedProps.description;
                         var title = info.event.title;
-                        
                         var id = info.event.extendedProps.detail_id;
                         var projet = info.event.extendedProps.projet.nom_projet;
                         var groupe = info.event.extendedProps.groupe;
+                        var sessions = info.event.extendedProps.groupe.detail;
+                        var entreprises = info.event.extendedProps.entreprises;
 
-                        console.log(groupe);
-                        
-                        title_offcanvas.innerHTML = title + ' ' + id;
+                        console.log(entreprises);
+
+                        title_offcanvas.innerHTML = title + ' ' + '#'+id;
                         projet_offcanvas.value = projet;
-                        
 
+                        var nbr_session = sessions.length;
+                        var session_offcanvas_html = '';
+                        var nbr_session_offcanvas = ''
+
+                        // add <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" placeholder="session i" aria-label="Username" aria-describedby="basic-addon1"> into the html foreach session
+
+                        // for (let i = 0; i < sessions.length; i++) {
+                            //     session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" value="Séance '+ parseInt(i+1) +' : ' + (sessions[i].date_detail).toDateString() + '" aria-label="Username" aria-describedby="basic-addon1">';
+                            
+                            // }
+                            
+                        sessions.forEach((session, i) => {
+                            var date = new Date(session.date_detail);
+                            // console.log(date.toLocaleDateString('fr-FR',options));                            
+                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon1">';
+
+                        });
+
+                        
+                        // add the number of session before the session list 
+                        nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>';
+                        nbr_session_offcanvas += '<input value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control border-0 border-bottom d-block w-auto" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">';
+
+                        session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
 
 
                         bsOffcanvas.show();
