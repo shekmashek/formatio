@@ -249,3 +249,7 @@ Ajouter par defaut dans progression :   Débutant = 1
                                         Expert = 5
 
 
+-----------28 juin ----------------
+copier les requettes bdd_evaluation_froid.sql
+
+alter table modules add column date_eval_froid int(2) default 3;
