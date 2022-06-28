@@ -4,6 +4,7 @@
 @endsection
 
 @inject('groupe', 'App\groupe')
+@inject('froidEval', 'App\FroidEvaluation')
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
@@ -489,7 +490,12 @@
                                                                 @endcan
                                                                 <li class="action_projet"><a class="dropdown-item" href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
                                                                 <li class="action_projet"><a class="dropdown-item" href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
-                                                                <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}">Evaluation à froid</a></li>
+                                                                @php
+                                                                    $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
+                                                                @endphp
+                                                                @if($reponse == 1)
+                                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}">Evaluation à froid</a></li>
+                                                                @endif
                                                                 @if ($prj->type_formation_id == 1)
                                                                     <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank">Rapport</a></li>
                                                                 @endif
@@ -1191,6 +1197,12 @@
                                             <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
                                                 <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
                                                 <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
+                                                @php
+                                                    $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
+                                                @endphp
+                                                @if($reponse == 1)
+                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}">Evaluation à froid</a></li>
+                                                @endif
                                               </ul>
                                         </td>
                                     </tr>
@@ -1217,11 +1229,13 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th></th>
-                                <th></th>
+                                <th rowspan="2"></th>
                             </thead>
                             <tbody class="">
                                 @foreach ($data as $pj)
+                                @php
+                                    $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
+                                @endphp
                                     <tr>
                                         {{-- <td>{{ $pj->nom_projet }}</td> --}}
                                         <td> {{ $pj->nom_groupe }}</td>
@@ -1258,10 +1272,11 @@
 
                                             </a>
                                         </td>
-                                        <td>
-                                            <a class="btn_eval_stg" href="{{ route('evaluation_froid',[$pj->groupe_id]) }}" style="color: #ffffff !important">A froid</a>
-                                        </td>
-
+                                        @if($reponse == 1)
+                                            <td>
+                                                <a class="btn_eval_stg" href="{{ route('evaluation_froid',[$pj->groupe_id]) }}" style="color: #ffffff !important">A froid</a>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

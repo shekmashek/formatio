@@ -240,3 +240,8 @@ CREATE OR REPLACE VIEW v_pourcentage_total_module_cfp AS SELECT
 
 ---------- 10 juin ----------------
 recréer vue moduleformation dans bdd_suiviformation_view_1(views_miasa+avis)
+
+-----------28 juin ----------------
+copier les requettes bdd_evaluation_froid.sql
+
+alter table modules add column date_eval_froid int(2) default 3;

@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Evaluation à chaud</h3>
+    <h3 class="text_header m-0 mt-1">Evaluation à froid</h3>
 @endsection
 @inject('groupe', 'App\groupe')
 @section('content')
@@ -121,12 +121,12 @@
         <div class="container_code col-lg-12">
             {{-- <div class="form-control"> --}}
             <div class="text_center">
-                <span style="text-transform: uppercase">RESULTATS EVALUATIONS A FROID, FORMATION
+                <span style="text-transform: uppercase">RESULTATS EVALUATIONS À FROID, FORMATION
                     {{ $session->nom_formation }}&nbsp;
-                    @php
+                    {{-- @php
                         setlocale(LC_TIME, 'fr_FR');
                         echo strftime('%e %B %Y', strtotime($session->date_debut));
-                    @endphp
+                    @endphp --}}
                 </span>
             </div><br>
             <div class="">
@@ -156,7 +156,7 @@
                                                             <div class="bar-5" style="--progress_bar: {{ $res->pourcentage_reponse }}%;"></div>
                                                         </div>
                                                     </td>
-                                                    <td class="text-right col-lg-2"><span class="ms-2" style="color: rgb(100, 100, 100)">{{ $res->total_stagiaire }}</span>&nbsp;<span
+                                                    <td class="text-right col-lg-2"><span class="ms-2" style="color: rgb(100, 100, 100)">{{ $res->nombre_reponse }}</span>&nbsp;<span
                                                             class="text-muted ms-1">{{ $res->pourcentage_reponse }}%</span>
                                                     </td>
                                                 </tr>
