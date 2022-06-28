@@ -231,7 +231,7 @@
         }
 
         .tooltip[data-popper-placement^="top"]  {
-            background: rgba(255, 250, 240, 0)!important;
+            background: rgb(245, 245, 245)!important;
             border: 1px solid #a537fd;
             margin-bottom: 0.5rem!important;
         }
@@ -248,9 +248,14 @@
         }
 
         .tooltip[data-popper-placement^="top"] .tooltip-inner{
-            background: rgb(245, 245, 245)!important;
-            color: rgb(44, 44, 44)!important;
-        } 
+            background: rgba(253, 253, 253, 0)!important;
+            color: rgb(20, 20, 20)!important;
+            font-size: 1rem;
+        }
+
+        .tooltip.show {
+            opacity: 1!important;
+        }
 
 
         /* effcanvas content */
@@ -259,6 +264,7 @@
         }
 
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
 
@@ -321,9 +327,10 @@
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text border-0 bg-light" id="addon-wrapping">@</span>
-                    <input type="text" id="event_entreprise" class="form-control border-0 border-bottom" 
+                    {{-- <input type="text" id="event_entreprise" class="form-control border-0 border-bottom" 
                     placeholder="Entreprise" aria-label="Entreprise" 
-                    aria-describedby="addon-wrapping">
+                    aria-describedby="addon-wrapping"> --}}
+                    <span id="event_entreprise" class="form-control border-0 border-bottom" ></span>
                   </div>
                 <div class="input-group mb-3" id="event_sessions">
                     <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
@@ -334,24 +341,24 @@
 
                 </div>
                 <div class="input-group mb-3">
-                    {{-- <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span> --}}
-                    <input type="text" class="form-control border-0 border-bottom" 
-                    placeholder="Place" aria-label="Place" 
+                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                    <input type="text" id="event_lieu" class="form-control border-0 border-bottom" 
+                    placeholder="lieu" aria-label="Place" 
                     aria-describedby="basic-addon1">
                 </div>
                 <div class="input-group mb-3">
-                    {{-- <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span> --}}
-                    <input type="text" class="form-control border-0 border-bottom" 
+                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                    <input type="text" id="event_OF" class="form-control border-0 border-bottom" 
                     placeholder="OF" aria-label="OF" 
                     aria-describedby="basic-addon1">
-                    <input type="text" class="form-control border-0 border-bottom" 
+                    <input type="text" id="event_formateur" class="form-control border-0 border-bottom" 
                     placeholder="Formateur" aria-label="Formateur" 
                     aria-describedby="basic-addon1">
                 </div>
 
                 <div class="input-group mb-3" id="event_materiel">
                     <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
-                    <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
+                        <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
                     placeholder="Matériel" aria-label="materiel" 
                     aria-describedby="basic-addon1">
                         <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
@@ -360,6 +367,27 @@
                         <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
                     placeholder="materiel i" aria-label="materiel" 
                     aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3" id="event_participants">
+                    
+                    <label for="participant_collaps"class="input-group-text border-0 bg-light" id="basic-addon1">@</label>
+                    <a class="form-control btn" id="participant_collaps"
+                    data-mdb-toggle="collapse"
+                    data-bs-toggle="collapse"
+                    href="#event_participants_list"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"><i class="bi bi-caret-down-fill"></i>Participants</a>
+
+                    <div class="collapse mt-3 scroll-section border p-2" id="event_participants_list"  style="max-width: 500px">
+                        <div>
+                            Anim pariatur cliche reprehenderit, enim eiusmod high lif
+                        </div>
+                        <div>
+                            Anim pariatur cliche reprehenderit
+                        </div>
+                    </div>
                 </div>
 
               </div>
@@ -564,8 +592,12 @@
                         var session_offcanvas = document.getElementById('event_sessions');
                         var nbr_session_offcanvas = document.getElementById('event_nbr_session');
                         var entreprise_offcanvas = document.getElementById('event_entreprise');
+                        var lieu_offcanvas = document.getElementById('event_lieu');
+                        var OF_offcanvas = document.getElementById('event_OF');
+                        var formateur_offcanvas = document.getElementById('event_formateur');
 
 
+                        // Filling the values of the offcanvas with the attributes of the event
                         var bsOffcanvas = new bootstrap.Offcanvas(detail_offcanvas);
                         var description = info.event.extendedProps.description;
                         var title = info.event.title;
@@ -574,8 +606,14 @@
                         var groupe = info.event.extendedProps.groupe;
                         var sessions = info.event.extendedProps.groupe.detail;
                         var entreprises = info.event.extendedProps.entreprises;
+                        
+                        console.log(entreprises.length);
+                        entreprise_offcanvas.value = '';
+                        entreprise_offcanvas.innerHTML = '';
 
-                        console.log(entreprises);
+                        for (var i = 0; i < entreprises.length; i++) {
+                            entreprise_offcanvas.innerHTML += entreprises[i].nom_etp + '<br>';
+                        }
 
                         title_offcanvas.innerHTML = title + ' ' + '#'+id;
                         projet_offcanvas.value = projet;
@@ -604,7 +642,9 @@
                         nbr_session_offcanvas += '<input value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control border-0 border-bottom d-block w-auto" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">';
 
                         session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
-
+                        lieu_offcanvas.value = info.event.extendedProps.lieu;
+                        OF_offcanvas.value = info.event.extendedProps.nom_cfp;
+                        formateur_offcanvas.value = info.event.extendedProps.formateur;
 
                         bsOffcanvas.show();
                         

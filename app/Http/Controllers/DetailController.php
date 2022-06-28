@@ -127,14 +127,14 @@ class DetailController extends Controller
 
                 $events[] = array(
                     'detail_id' => $value->id,
-                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->groupe->module->nom_module.' - '.$value->lieu,
+                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->lieu,
                     'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
                     'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
-                    'description' => $value->lieu.' - '.$value->groupe->projet->cfp->nom,
+                    'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
                     'nom_projet' => $value->groupe->projet->nom_projet,
                     'lieu' => $value->lieu,
                     'formation' => $value->groupe->module->formation,
-                    'formateur' => $value->formateur->nom_formateur,
+                    'formateur' => ucfirst($value->formateur->nom_formateur).' '.ucfirst($value->formateur->prenom_formateur),
                     'groupe' => $value->groupe,
                     'groupe_entreprise' => $value->groupe->groupe_entreprise,
                     // get all the groupe_entreprise->entreprise as an array of objects
