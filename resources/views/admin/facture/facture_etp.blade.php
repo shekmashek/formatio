@@ -340,7 +340,7 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
 
                                                     @if ($actif->reference_type_facture == "Facture")
                                                     <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
@@ -364,39 +364,39 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     {{$actif->num_facture}}
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     {{$actif->nom_etp}}
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     {{$actif->invoice_date}}
                                                 </a>
                                             </td>
-                                            <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
 
                                                     {{$actif->due_date}}
                                                 </a>
                                             </td>
-                                            <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            <td><a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     <div align="right">
                                                         {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
                                                     </div>
                                                 </a>
                                             </td>
-                                            <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            <td><a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     <div align="right">
                                                         {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
                                                     </div>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
 
                                                     @if($actif->dernier_montant_ouvert<=0) <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
                                                         payé
