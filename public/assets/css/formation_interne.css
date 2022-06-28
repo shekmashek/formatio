@@ -3,6 +3,10 @@
     border-radius: 5px;
 }
 
+.liste_domaine span{
+    font-style: italic;
+}
+
 .liste_domaine:hover{
     background: rgba(225, 224, 224, 0.354);
 }
@@ -16,12 +20,8 @@
     visibility: visible;
 }
 
-.thematiques{
-    font-style: italic;
-}
-
-/* .modifier_domaine,
+.modifier_domaine,
 .supprimer_domaine{
     visibility: hidden;
-} */
+}
 

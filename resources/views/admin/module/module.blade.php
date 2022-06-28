@@ -51,7 +51,7 @@
                                 @if($mod_hors_ligne == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module_new')}}" role="button"><i
+                                    <a class="text-center mt-5" data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button"><i
                                             class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
@@ -1474,30 +1474,30 @@ localStorage.removeItem('popState');
     "hideMethod": "fadeOut"
     }
 
-    document.getElementById('prix_pers').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangePrimary.value = valeur;
-    });
-    document.getElementById('prix_groupe').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangePrimary1.value = valeur;
-    });
-    document.getElementById('prix_pers1').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeSecondary.value = valeur;
-    });
-    document.getElementById('prix_groupe1').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeSecondary1.value = valeur;
-    });
-    document.getElementById('prix_pers2').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeThird.value = valeur;
-    });
-    document.getElementById('prix_groupe2').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeThird1.value = valeur;
-    });
+    // document.getElementById('prix_pers').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangePrimary.value = valeur;
+    // });
+    // document.getElementById('prix_groupe').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangePrimary1.value = valeur;
+    // });
+    // document.getElementById('prix_pers1').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangeSecondary.value = valeur;
+    // });
+    // document.getElementById('prix_groupe1').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangeSecondary1.value = valeur;
+    // });
+    // document.getElementById('prix_pers2').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangeThird.value = valeur;
+    // });
+    // document.getElementById('prix_groupe2').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangeThird1.value = valeur;
+    // });
 
     $(".mettre_en_ligne").on('click', function(e) {
         let id = e.target.id;

@@ -129,10 +129,9 @@ class ProjetControlleur extends Controller
     public function formations(){
         $fonct = new FonctionGenerique();
         $etp_id = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
-        $domaines = DB::select('select * from domaines_interne where etp_id = ?',[$etp_id]);
-        $formations = DB::select('select fm.nom_formation,fm.id,fm.domaine_id from domaines_interne as dm  join formations_interne as fm on dm.id = fm.domaine_id where dm.etp_id = ?',[$etp_id]);
-
-        return view('referent.projet_Interne.formations.formation', compact('domaines','formations'));
+        $domaines = DB::select('select * from domaines',[$etp_id]);
+        // $formations = DB::select('select fm.nom_formation,fm.id,fm.domaine_id from domaines_interne as dm  join formations_interne as fm on dm.id = fm.domaine_id where dm.etp_id = ?',[$etp_id]);
+        return view('referent.projet_Interne.formations.formation', compact('domaines'));
     }
 
     public function module_interne(){
@@ -213,20 +212,25 @@ class ProjetControlleur extends Controller
         // return view('referent.projet_Interne.formations.formation');
     }
 
-    public function load_formations(Request $request)
-    {
-        $id = $request->Id;
-        $formations = DB::select('select fm.nom_formation,fm.id,fm.domaine_id,dm.nom_domaine from domaines_interne as dm join formations_interne as fm on dm.id = fm.domaine_id where dm.id = ?', [$id]);
-        return response()->json(['formations'=>$formations]);
-    }
+    // public function load_formations(Request $request)
+    // {
+    //     $id = $request->Id;
+    //     $formations = DB::select('select fm.nom_formation,fm.id,fm.domaine_id,dm.nom_domaine from domaines as dm join formations as fm on dm.id = fm.domaine_id where dm.id = ?', [$id]);
+    //     if ($formations == null) {
+    //         $domaines = DB::select('select * from domaines_interne where id = ?',[$id]);
+    //         return response()->json(['domaines'=>$domaines]);
+    //     }else{
+    //         return response()->json(['formations'=>$formations]);
+    //     }
+    // }
 
-    public function load_formations_suppre(Request $request)
-    {
-        $id = $request->Id;
-        $formations = DB::select('select fm.nom_formation,fm.id,fm.domaine_id,dm.nom_domaine from domaines_interne as dm join formations_interne as fm on dm.id = fm.domaine_id where dm.id = ?', [$id]);
-        // $domaines = DB::select('select md.id,nom_domaine from domaines_interne as dm join formations_interne as fm on dm.id = fm.domaine_id where dm.id = ?', [$id]);
-        return response()->json(['formations'=>$formations]);
-    }
+    // public function load_formations_suppre(Request $request)
+    // {
+    //     $id = $request->Id;
+    //     $formations = DB::select('select fm.nom_formation,fm.id,fm.domaine_id,dm.nom_domaine from domaines_interne as dm join formations_interne as fm on dm.id = fm.domaine_id where dm.id = ?', [$id]);
+    //     // $domaines = DB::select('select md.id,nom_domaine from domaines_interne as dm join formations_interne as fm on dm.id = fm.domaine_id where dm.id = ?', [$id]);
+    //     return response()->json(['formations'=>$formations]);
+    // }
 
     public function supprimer_thematique(Request $request)
     {
@@ -267,18 +271,19 @@ class ProjetControlleur extends Controller
         $id = $request->id_domaine;
         $donnees = $request->all();
         $fonct = new FonctionGenerique();
-        if ($request->domaine != null) {
-            DB::update('update domaines_interne set nom_domaine =? where id = ?', [$request->domaine, $id]);
+        if ($donnees['domaine'] != null) {
+            DB::update('update domaines_interne set nom_domaine = ? where id = ?', [$donnees['domaine'], $id]);
             $formation = $fonct->findWhere('formations_interne', ['domaine_id'], [$id]);
+            if ($formation != null) {
+                for ($i = 0; $i < count($formation); $i++) {
+                    $id_formation = $donnees['id_formation_' . $id . '_' . $formation[$i]->id];
+                    $val_formation = $donnees['formation_' . $id . '_' . $formation[$i]->id];
 
-            for ($i = 0; $i < count($formation); $i++) {
-                $id_formation = $donnees['id_formation_' . $id . '_' . $formation[$i]->id];
-                $val_formation = $donnees['formation_' . $id . '_' . $formation[$i]->id];
-
-                if ($donnees['formation_' . $id . '_' . $formation[$i]->id] != null) {
-                    DB::update('update formations_interne set nom_formation = ? where domaine_id = ? and id = ?', [$val_formation, $id, $id_formation]);
-                } else {
-                    return back()->with('error', "l'une de ses informations est invalid");
+                    if ($donnees['formation_' . $id . '_' . $formation[$i]->id] != null) {
+                        DB::update('update formations_interne set nom_formation = ? where domaine_id = ? and id = ?', [$val_formation, $id, $id_formation]);
+                    } else {
+                        return back()->with('error', "l'une de ses informations est invalid");
+                    }
                 }
             }
             return back();

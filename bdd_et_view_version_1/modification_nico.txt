@@ -251,3 +251,7 @@ Ajouter par defaut dans progression :   Débutant = 1
 creation des tables dans bdd_suiviformation_mise_a_jour_12(formation interne entreprise).sql
 creation des view dans bdd_suiviformation_view_30(formation_interne).sql
 
+---------- 28 juin ----------------
+alter table modules add date_eval_froid int(2) NULL;
+
+
