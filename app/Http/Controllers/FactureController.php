@@ -39,10 +39,8 @@ class FactureController extends Controller
     {
         $user_id = Auth::user()->id;
 
-
-
+        $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
         if (Gate::allows('isCFP')) {
-            $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $etp1 = $this->fonct->findWhere("v_demmande_etp_cfp", ["cfp_id"], [$cfp_id]);
@@ -53,7 +51,6 @@ class FactureController extends Controller
             $project = $this->fonct->findWhere("v_groupe_projet_entreprise", ["cfp_id"], [$cfp_id]);
             $taxe = $this->fonct->findAll("taxes");
             $type_facture = $this->fonct->findAll("type_facture");
-
             $mode_payement = $this->fonct->findAll("mode_financements");
             $type_remise = $this->fonct->findAll("type_remise");
             return view('admin.facture.nouveau_facture', compact('devise', 'type_remise', 'cfp', 'project', 'entreprise', 'taxe', 'mode_payement', 'type_facture'));
@@ -157,7 +154,7 @@ class FactureController extends Controller
         if (Gate::allows('isCFP')) {
             return $this->listeFacture($nb_pag_full, $nb_pag_inactif, $nb_pag_actif, $nbPagination_payer, $pour_list);
         }
-        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
+        if (Gate::allows('isReferent')) {
             return $this->listeFacture_referent($nb_pag_full, $nb_pag_actif, $nbPagination_payer, $pour_list);
         }
     }
@@ -674,9 +671,12 @@ class FactureController extends Controller
 
     public function detail_facture($numero_fact)
     {
+
         $devise = $this->fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
+
         if (Gate::allows('isCFP')) {
             $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::user()->id])->cfp_id;
+
             $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $montant_totale = $this->fonct->findWhereMulitOne("v_facture_existant", ["num_facture", "cfp_id"], [$numero_fact, $cfp_id]);
 
