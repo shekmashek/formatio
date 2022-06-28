@@ -224,6 +224,17 @@ class Groupe extends Model
                 ->get();
         return $datas;
     }
+
+    public function dataVille($groupe_id, $projet_id){
+        // $villes = DB::select('select lieu from v_detail_session where groupe_id = ? and projet_id = ?', [$groupe_id, $projet_id]);
+        $villes = DB::table("v_detail_session")
+            ->select("lieu")
+            ->where("groupe_id", "=", $groupe_id)
+            ->where("projet_id", "=", $projet_id)
+            ->get();
+            
+        return $villes;
+    }
 }
 ?>
 
