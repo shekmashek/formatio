@@ -17,9 +17,9 @@
                 </div>
                 <div class="float-end">
 
-                    <button class="btn btn-primary">
+                    <a href="{{route('besoin.PDF',$ids)}}" class="btn btn-primary text-light">
                         Export PDF
-                    </button>
+                    </a>
                     <a href="/liste_demande_stagiaire" class="btn btn-dark text-light"> Retour</a>
                 </div>
             </div>

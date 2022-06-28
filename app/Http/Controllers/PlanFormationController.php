@@ -17,6 +17,7 @@ use App\annee_plan;
 use App\entreprise;
 use App\User;
 use App\besoins;
+use PDF;
 use App\Models\FonctionGenerique;
 use Google\Service\Adsense\Alert;
 
@@ -29,6 +30,14 @@ class PlanFormationController extends Controller
             if(Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+    }
+    public function besoin_PDF($id){
+        $users_id = Auth::user()->id;
+        $entreprise_id = stagiaire::where('user_id', $users_id)->value('entreprise_id');
+        $besoin = besoins::where('anneePlan_id',$id)->get();
+        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire');
+        
+        return view('referent.projet_interne.');
     }
     public function index()
     {
@@ -96,14 +105,14 @@ class PlanFormationController extends Controller
     {
         $besoin = besoins::where('anneePlan_id',$id)->get();
         $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire');
-
+        $ids = $id;
 
         // dd('end');
             // $besoin = besoins::all()->groupBy('stagiaire_id');
 
             // dd($besoin);
 
-        return view('referent.projet_interne.listedemandestagiaire',compact('besoin','stagiaire'));
+        return view('referent.projet_interne.listedemandestagiaire',compact('besoin','stagiaire','ids'));
     }
 
     public function teste(){

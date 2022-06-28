@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
+use App\PlanFormation;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -768,6 +769,7 @@ Route::post('/edtitPlan/{id}','PlanFormationController@modifier')->name('plan.mo
 Route::post('/creationDemande','PlanFormationController@creation')->name('plan.creation');
 Route::get('/getanneP','PlanFormationController@getplan')->name('getanneP');
 Route::get('/countPlan','PlanFormationController@countplan')->name('countPlan');
+Route::get('/exportPDF/{id}','PlanFormationController@besoin_PDF')->name('besoin.PDF');
 /////////////////fin modification Mahafaly //////////////////////////////
 
 //ajouter nouveau plan
