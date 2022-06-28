@@ -658,7 +658,7 @@
                         let userData = JSON.parse(response);
                         console.log(userData);
                         for (let $i = 0; $i < userData.length; $i++) {
-                            let url_photo = '<img src="{{asset("images/stagiaires/:url_img")}}" style="height80px; width:80px;">';
+                            let url_photo = '<img src="{{asset("images/employes/:url_img")}}" style="height80px; width:80px;">';
                             url_photo = url_photo.replace(":url_img", userData[$i].photos);
                             var nom = (userData[$i].nom_stagiaire).substr(0, 1);
                             var prenom = (userData[$i].prenom_stagiaire).substr(0, 1);
@@ -676,7 +676,7 @@
                             $("#prenom").text(userData[$i].prenom_stagiaire);
                             $("#mail_stagiaire").text(': '+userData[$i].mail_stagiaire);
                             $("#telephone_stagiaire").text(': '+userData[$i].telephone_stagiaire);
-                            $("#adresse").text(': '+userData[$i].adresse);
+                            $("#adresse").text(': '+userData[$i].lot+' '+userData[$i].quartier+ ' '+userData[$i].ville+ ' '+ userData[$i].region);
                             $("#code_postal").text(': '+userData[$i].code_postal);
                         }
                     }
