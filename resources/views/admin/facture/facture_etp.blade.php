@@ -333,11 +333,11 @@
                                         <tr>
                                             <td>
                                                 @if($actif->facture_encour =="en_cour"  || $actif->facture_encour =="terminer")
-                                                    
+
                                                     <h6><a href="#collapseprojet_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
 
                                                 @endif
-                        
+
                                             </td>
                                             <td>
                                                 <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -428,7 +428,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                        
+
                                         <tr>
                                             <td colspan="9" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
                                                 @if(count($encaissement)>0)
@@ -474,7 +474,7 @@
                                             <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                         </tr>
                                         @endif
-                                        
+
                                     </tbody>
                                 </table>
 
@@ -652,7 +652,7 @@
                                                 <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                             </tr>
                                             @endif
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -705,7 +705,7 @@
                                                     @foreach ($facture_payer as $actif)
                                                     <tr>
                                                         <td>
-                                                            <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>   
+                                                            <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
                                                         </td>
                                                         <td>
                                                             <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">

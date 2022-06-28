@@ -30,7 +30,7 @@
                 <div class="logo_name"><a href="{{ route('home') }}">Formation.mg</a></div>
             </div>
 
-        </div> --}}
+        </div>
         <ul class="nav_list mb-5" id="menu">
 
             <li>
@@ -501,20 +501,12 @@
                 </a>
             </li> --}}
             @can('isCFP')
-            {{-- <li>
+            <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-book-add'></i>
                     <span class="links_name">Librairies</span>
                 </a>
-            </li> --}}
-            {{-- <li>
-                <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
-                    {{-- <i class='bx bx-book-add'></i> --}
-
-
-                    <span class="links_name">Librairies</span>
-                </a>
-            </li> --}}
+            </li>
             @endcan
         </ul>
 
