@@ -7,6 +7,9 @@
     h4{
         font-weight: 400;
     }
+    .ui-datepicker-calendar {
+   display: none;
+    }
 </style>
 <div id="page-wrapper">
     <div class="container mt-5 shadow-sm p-4">
@@ -39,14 +42,16 @@
                         @csrf
                         
                             <tr>
-                                <td><input type="text" name="AnneePlan"  class="form-control" placeholder="Années plan" required></td>
-                                <td><input type="date" name="debut_rec" class="form-control" required></td>
-                                <td><input type="date" name="fin_rec" class="form-control" required></td>
+                                <td><input id="anne" type="number"   name="AnneePlan"  class="form-control"  required></td>
+                                
+                                <td><input type="date" name="debut_rec" id="date1" class="form-control teste1" required></td>
+                                <td><input type="date" name="fin_rec" class="form-control teste2" required></td>
                                 <input type="hidden" name="entreprise_id" value="{{$entreprise_id}}">
                             </tr>
                         
                     </tbody>
                 </table>
+                <div id="err" style="margin-left:15px;color:rgb(186, 87, 87);display:flex"></div>
                 <button type="submit" class="btn btn-info text-light" style="float: right">Enregistré</button>
                 </form>  
             </div>
@@ -54,5 +59,30 @@
     </div>
 </div>
     
-
+<script>
+    $('#anne').on("input",function (e) { 
+        e.preventDefault();
+        var a = $(this).val();
+        console.log(a);
+        $.ajax({
+            url: "/getanneP",
+            type: "get",
+            data: {
+                id: a,
+            },
+            success: function(response) {
+                var b = response;
+                $('#err').html('<i class="fa-solid fa-triangle-exclamation mt-1"></i>&nbsp;'+'<p>'+b+' </p>');
+            },
+        });
+    });
+    $( ".teste1" ).change(function() {
+        var a = $(this).val();   
+    });
+    $( ".teste2" ).change(function() {
+        alert(a)
+        var b = $(this).val();   
+    });
+    console.log(a);
+</script>
 @endsection

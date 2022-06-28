@@ -18,14 +18,13 @@ class CreateTableBesoinStagiaire extends Migration
             $table->integer('stagiaire_id');
             $table->integer('entreprise_id');
             $table->integer('domaines_id');
-            $table->string('nom_domaine');
             $table->integer('thematique_id');
-            $table->string('nom_formation');
             $table->integer('anneePlan_id');
             $table->string('objectif');
             $table->string('date_previsionnelle');
             $table->string('organisme');
-            $table->string('statut');
+            $table->string('statut')->default(0);
+            $table->string('type');
             $table->timestamps();
         });
     }

@@ -131,3 +131,5 @@ WHERE
     d.activiter = 1;
 
 select count(id) as nb_detail,sum(TIME_TO_SEC(h_fin) - TIME_TO_SEC(h_debut)) as difference from details where groupe_id = 27;
+
+SELECT stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire

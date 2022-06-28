@@ -33,27 +33,37 @@
                             <th>thematique</th>
                             <th>date prévisionnelle</th>
                             <th>Organisme</th>
+                            <th>Priorité</th>
                             
                         </tr>
                     </thead>
                     <tbody>
+                        
                         @foreach ($stagiaire as $st)
                         <tr>
                             <td>
                                 @foreach ($besoin as $be)
-                                    @if ($be->stagiaire_id == $st->id)            
-                                        <?php $nom = $st->nom_stagiaire ?>
-                                    @endif 
-                                @endforeach
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                        <?php $nom = $be->stagiaire->nom_stagiaire;
+                                        break;?>
+                                        
+                                    @else
+                                    <?php $nom = '';
+                                        
+                                    ?>
+                                    @endif
+                               @endforeach
                                 @if(isset($nom)) 
-                                {{ $nom }}
+                                    {{ $nom }}
                                 @endif
                             </td>
                             <td>
                                 @foreach ($besoin as $be)
-                                @if ($be->stagiaire_id == $st->id)            
+                                @if ($be->stagiaire_id == $st->stagiaire_id)            
                                     <?php $email = $st->mail_stagiaire ?>
-                                @endif 
+                                   
+                                    
+                                    @endif 
                                 @endforeach
                                 @if(isset($email)) 
                                 {{ $email}}
@@ -61,34 +71,42 @@
                             </td>
                             <td>    
                                 @foreach($besoin as $be)   
-                                    @if ($be->stagiaire_id == $st->id)            
-                                    -&nbsp; {{$be->domaine->nom_domaine }} <br>
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                    &nbsp; {{$be->domaine->nom_domaine }} <br>
                                     @endif    
                                 @endforeach
                             </td>
                             <td>    
                                 @foreach($besoin as $be)   
-                                    @if ($be->stagiaire_id == $st->id)            
-                                    -&nbsp; {{$be->formation->nom_formation }} <br>
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                    &nbsp; {{$be->formation->nom_formation }} <br>
                                     @endif    
                                 @endforeach
                             </td>
                             <td>    
                                 @foreach($besoin as $be)   
-                                    @if ($be->stagiaire_id == $st->id)            
-                                    -&nbsp; @php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp <br>
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                    &nbsp; @php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp <br>
                                     @endif    
                                 @endforeach
                             </td>
                             <td>    
                                 @foreach($besoin as $be)   
-                                    @if ($be->stagiaire_id == $st->id)            
-                                    - &nbsp; {{$be->organisme}} <br>
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                     &nbsp; {{$be->organisme}} <br>
                                     @endif    
                             @endforeach
                             </td>
+                            <td>    
+                                @foreach($besoin as $be)   
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                     &nbsp; {{$be->type}} <br>
+                                    @endif    
+                            @endforeach
+                            </td>
+                            @endforeach
                         </tr>
-                       @endforeach
+                       
                     </tbody>
                 </table>
             </div>

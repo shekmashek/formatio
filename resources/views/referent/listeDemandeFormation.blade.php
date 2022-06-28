@@ -1,8 +1,14 @@
+
 @extends('./layouts/admin')
 @section('title')
     <p class="text_header m-0 mt-1">Plan de formation </p>
 @endsection
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <style>
     h4,label,p{
         font-weight: 400;
@@ -39,11 +45,11 @@
                 @foreach ($plan as $p)
                     <table class="table " >
                         <thead>
-                            <tr style="background: rgb(245, 242, 242);" >
+                            <tr  style="background: rgb(245, 242, 242);" >
                                 <th style="border: none">{{$p->AnneePlan}}</th>
                                 <th style="float: right;border:none">
-                                    <a data-bs-toggle="collapse" href="#collapseExample_{{$p->AnneePlan}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        <i class="fa-solid fa-angle-down"></i>
+                                    <a data-bs-toggle="collapse" data-toggle="collapse" href="#collapseExample_{{$p->AnneePlan}}"   role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <i class="fa-solid fa-angle-down" id="one" onclick="midina()"  data-id="{{$p->id}}"  ></i>
                                     </a>
                                 </th>
                             </tr>
@@ -51,7 +57,7 @@
                         <tbody>
                             <tr> 
                             <td>
-                                <div  id="collapseExample_{{$p->AnneePlan}}">
+                                <div class="collapse" id="collapseExample_{{$p->AnneePlan}}">
                                     <div class="row">
                                         <div class="col-md-6 p-4">
                                             <h5>Plan Previsionnel</h5>
@@ -88,18 +94,17 @@
                                         <div class="row ">
                                             <div class="col">
                                                 <div class="float-start">
-                                                    <p>Nombre de Salarie ayant exprimer</p>
+                                                    <p>Nombre des besooin  exprimer par les salarier</p>
                                                 </div>
                                                 <div class="float-end">
-                                                    <p><input type="hidden" value="0" id="teste"> <span id="test">0</span>/{{$nombr}}</p>
+                                                    
+                                                    <p><span id="count"> </span></p>
                                                 </div>
                                             </div>
                                             
                                         </div>
                                         <div class="row p-2" style="margin-top: -20px">
-                                            <div class="progress ">
-                                                <div class="progress-bar bg-info" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
-                                                </div>
+                                            
                                                 <div>
                                                     <span  class="te "><a href="{{route('liste.demande',$p->id)}}" class="btn btn-info mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
                                                     <span class="te "> <a href="" class="btn btn-primary mt-2 text-light"> <i class="fa-solid fa-file-pdf" ></i>&nbsp; Export liste</a> </span>
@@ -112,14 +117,11 @@
                                                     <p>Nombre valide par le N+</p>
                                                 </div>
                                                 <div class="float-end">
-                                                    <p>0/{{$nombr}}</p>
+                                                    <p>0</p>
                                                 </div>
                                             </div>
                                         </div>   
                                         <div class="row p-2" style="margin-top: -20px">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
-                                            </div>
                                             <div>
                                                 <a href="{{route('liste.demandeV')}}" class="btn btn-warning mt-2 text-light"><i class="fa-solid fa-eye"></i>&nbsp;Voir liste</a>
                                                 <a href="" class="btn btn-primary mt-2 text-light"><i class="fa-solid fa-file-pdf"></i>&nbsp; Export liste</a>
@@ -140,19 +142,22 @@
       
 </div>
 <script>
-    var a = document.getElementById('teste').value;
-    var b = document.getElementById('test').innerHTML = a;
-    // var c = document.querySelector('.te');
-    // if (a == 0){
-       
-    //     c.classList.add ('disabled');
-    // }
-    // else{
-    //     c.classList.remove("disabled");
-    // }
-    //  function msokatra(){
-    //     document.getElementById("inp").disabled = false;
-    //     document.getElementById("inp2").disabled = false;
-    //  }
+
+    function midina(){
+       var id = $('#one').data('id');
+       console.log(id);
+       $.ajax({
+            url: "/countPlan",
+            type: "get",
+            data: {
+                Id: id,
+            },
+            success: function(response) {
+                var b = response;
+                $('#count').html('<p>'+b+' </p>');
+            },
+        }); 
+    };
+
 </script>
 @endsection

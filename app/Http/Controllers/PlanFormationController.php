@@ -17,6 +17,7 @@ use App\annee_plan;
 use App\entreprise;
 use App\User;
 use App\besoins;
+use App\Models\FonctionGenerique;
 use Google\Service\Adsense\Alert;
 
 class PlanFormationController extends Controller
@@ -54,9 +55,26 @@ class PlanFormationController extends Controller
         // $liste_formation = formation::orderBy('nom_formation')->get();
         return view('stagiaire.formulairePlanDeFormation', compact('plan','collaborateur_id','besoin'));
     }
+    
     public function ajout($id){
         $entreprise_id = $id;
         return view('referent.ajout_plan',compact('entreprise_id'));
+    }
+    public function getplan(Request $req)
+    {
+        $anne = DB::select('select * from plan_formation_valide where AnneePlan = ?',[$req->id]);
+        $v='Cette année existe déja';
+        if($anne != null){
+            return response()->json($v);
+        }
+       
+    }
+    public function countplan(Request $req){
+        $id = $req->Id;
+        $besoin = DB::select('select * from besoin_stagiaire where anneePlan_id = ?',[$id]);
+       
+        $count = count($besoin);
+        return response()->json($count);
     }
 
     public function create()
@@ -77,11 +95,9 @@ class PlanFormationController extends Controller
     public function liste($id)
     {
         $besoin = besoins::where('anneePlan_id',$id)->get();
-       
-        foreach ($besoin as $b){
-           $id = $b->stagiaire_id;
-        }
-        $stagiaire = DB::select('select * from stagiaires where id = ?',[$id]);
+        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire');
+
+
         // dd('end');
             // $besoin = besoins::all()->groupBy('stagiaire_id');
 
@@ -114,18 +130,32 @@ class PlanFormationController extends Controller
         return back();
 
     }
+    public function modification_besoin($id,Request $request){
+
+
+        // $domaine   = $request->input('domaine');
+        // $formation = $request->input('formation');
+        $ids       = $id;
+        $date      = $request->input('date');
+        $organisme = $request->input('organisme');
+        $type      = $request->input('type');
+        DB::update('update besoin_stagiaire set date_previsionnelle = ?, organisme = ? ,type = ? where id = ?',[$date,$organisme,$type,$ids] );
+        return redirect()->back()->with('success','modification éffectuer avec succes');
+        
+        
+    }
     public function creation(Request $request)
     {
         $request->validate([
             'stagiaire_id' => 'required',
             'entreprise_id'=>'required',
-            'domaines_id'=>'required',
-            
+            'domaines_id'=>'required',      
             'thematique_id'=>'required',
             'anneePlan_id'=>'required',
             'objectif'=>'required',
             'date_previsionnelle'=>'required',
             'organisme'=>'required',
+            'type'=>'required'
         ]);
         besoins::create($request->all());
         return back()->with('success','Votre demande envoyer.');
@@ -189,9 +219,16 @@ class PlanFormationController extends Controller
     //liste des demandes des stagiaires
     public function liste_demande_stagiaire()
     {
+        $fonct = new FonctionGenerique();
         $users = Auth::user()->id;
         $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
         $plan = DB::select('select * from plan_formation_valide where entreprise_id = ?', [$entreprise_id]);
+        foreach($plan as $p){
+            $id = $p->id;
+        }
+        
+        $besoin_count = $fonct->findWhere("besoin_stagiaire",["anneePlan_id"],[$id]);
+        
         $employ = DB::select('select * from stagiaires where entreprise_id = ?', [$entreprise_id]);
         $nombr = count($employ);
         $yearNow = Carbon::now()->format('Y');
@@ -199,7 +236,7 @@ class PlanFormationController extends Controller
         $test = annee_plan::where('Annee', $yearNow)->exists();
         $domaine = Domaine::all();
         $stagiaire = stagiaire::all();
-        // $besoin = besoins::where('entreprise_id',$entreprise_id)
+        
         // $role_id = User::where('email', Auth::user()->email)->value('role_id');
         
         if (Gate::allows('isReferent')) {
@@ -218,7 +255,7 @@ class PlanFormationController extends Controller
             $liste = recueil_information::with('formation')->get();
         }
         // echo ($entreprise_id);
-        return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr'));
+        return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoin_count'));
         // return view('referent.listeDemandeFormation',compact('entreprise_id','plan','employ','nombr'));
         
     }

@@ -10,6 +10,9 @@
     label{
         color: gray;
     }
+    input{
+        font-size: 12px;
+    }
 </style>
 <div class="container shadow-sm mt-5 p-5">
     <div class="row">
@@ -79,19 +82,65 @@
                         <label for="">Organisme sugére:</label>
                         <input type="text" name="organisme" class="form-control" >
                     </div>
-                    {{-- <div class="input-groupe mt-3">
+                    <div class="input-groupe mt-3">
                         <label for="">Type:</label>
-                    </div> --}}
-                    {{-- <div class="div mt-2" style="display: flex">
-                        <input type="radio" class="mt-1" style="" name="type" id="type">&nbsp;&nbsp;<p>Urgent</p>
-                        <input type="radio" class="mt-1" style="margin-left:200px" name="type" id="type">&nbsp;&nbsp;<p>Non urgent</p>
-                    </div> --}}
-                <button type="submit" style="float: right" class="btn btn-info mt-2 text-light">Envoyer la demande</button>
+                    </div> 
+                    <div class="div mt-2" style="display: flex">
+                        <input type="radio" class="mt-1" style="" name="type" value="urgeent" id="type">&nbsp;&nbsp;<p class="m-2">Urgent</p>
+                        <input type="radio" class="mt-1" style="margin-left:200px" value="non-urgent" name="type" id="type">&nbsp;&nbsp;<p class="m-2">Non urgent</p>
+                    </div>
+                <button type="submit" style="float: right" class="btn btn-info mt-4 text-light">Envoyer la demande</button>
                 </div>
             
         </div>
     </form>
     @endforeach
 </div>
+<script>
+    $("#acf-domaine").change(function() {
+        var id = $(this).val();
+        $(".categ").empty();
+        // $(".categ").append(
+        //     '<option value="null" disable selected hidden>Choisissez la catégorie de formation ...</option>'
+        // );
 
+        $.ajax({
+            url: "/get_formation",
+            type: "get",
+            data: {
+                id: id,
+            },
+            success: function(response) {
+                var userData = response;
+
+                if (userData.length > 0) {
+                    document.getElementById("domaine_id_err").innerHTML = "";
+                    for (var $i = 0; $i < userData.length; $i++) {
+                        $(".categ").append(
+                            '<option value="' +
+                                userData[$i].id +
+                                '" data-value="' +
+                                userData[$i].nom_formation +
+                                '" >' +
+                                userData[$i].nom_formation +
+                                "</option>"
+                            'input name="nom_formation" type="hidden" value="'+userData[$i].nom_formation +
+                                '" data-value="' +
+                                userData[$i].nom_formation +
+                                '" >' +
+                                userData[$i].nom_formation +
+                            "</input>"
+                        );
+                    }
+                } else {
+                    document.getElementById("domaine_id_err").innerHTML =
+                        "choisir le type de domaine valide pour avoir ses formations";
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            },
+        });
+    });
+</script>
 @endsection

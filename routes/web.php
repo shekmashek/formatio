@@ -752,6 +752,7 @@ Route::get('formationParDomaine', 'PlanFormationController@domaineParFormation')
 Route::post('enregistrerPlan', 'PlanFormationController@enregistrer_planFormation')->name('enregistrerPlan');
 Route::get('recherchePlanAnnee/{annee?}', 'PlanFormationController@rechercheDemandeAnnee')->name('recherchePlanAnnee');
 Route::get('/searchDemandeAnnee', 'PlanFormationController@getAnnee')->name('searchDemandeAnnee');
+Route::post('/modifBesoin/{id}','PlanFormationController@modification_besoin')->name('besoin.modif');
 
 
 
@@ -765,6 +766,8 @@ Route::get('/ajoutPlan/{id}','PlanFormationController@ajout')->name('ajout.plan'
 Route::post('/creationPla','PlanFormationController@cree')->name('plan.cree');
 Route::post('/edtitPlan/{id}','PlanFormationController@modifier')->name('plan.modifier');
 Route::post('/creationDemande','PlanFormationController@creation')->name('plan.creation');
+Route::get('/getanneP','PlanFormationController@getplan')->name('getanneP');
+Route::get('/countPlan','PlanFormationController@countplan')->name('countPlan');
 /////////////////fin modification Mahafaly //////////////////////////////
 
 //ajouter nouveau plan

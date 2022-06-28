@@ -11,7 +11,7 @@ class besoins extends Model
 {
     protected $table = "besoin_stagiaire";
     protected $fillable = [
-        'stagiaire_id','entreprise_id','domaines_id','nom_domaine','thematique_id','nom_formation','anneePlan_id','objectif','date_previsionnelle','organisme','statut',   
+        'stagiaire_id','entreprise_id','domaines_id','thematique_id','anneePlan_id','objectif','date_previsionnelle','organisme','statut','type',   
     ];
 
     /**
@@ -31,6 +31,9 @@ class besoins extends Model
     {
         return $this->belongsTo(stagiaire::class, 'stagiaire_id');
     }
+    public function anne()
+    {
+        return $this->belongsTo(PlanFormation::class, 'anneePlan_id');
+    }
     
-
 }
