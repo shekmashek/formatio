@@ -675,8 +675,31 @@
                             $("#nom").text(': '+userData[$i].nom_stagiaire);
                             $("#prenom").text(userData[$i].prenom_stagiaire);
                             $("#mail_stagiaire").text(': '+userData[$i].mail_stagiaire);
-                            $("#telephone_stagiaire").text(': '+userData[$i].telephone_stagiaire);
-                            $("#adresse").text(': '+userData[$i].lot+' '+userData[$i].quartier+ ' '+userData[$i].ville+ ' '+ userData[$i].region);
+
+                            if(userData[$i].telephone_stagiaire == null) var phone = "-------";
+                            else var phone = userData[$i].telephone_stagiaire;
+
+                            $("#telephone_stagiaire").text(': '+phone);
+
+                            if(userData[$i].lot == null){
+                                var lot = "-------"
+                            }
+                            else  var lot = userData[$i].lot;
+                             if(userData[$i].quartier == null){
+                                var quartier = "-------"
+                            }
+                            else  var quartier = userData[$i].quartier;
+
+                            if(userData[$i].ville == null){
+                                var ville = "-------"
+                            }
+                            else  var ville = userData[$i].ville;
+
+                            if(userData[$i].region == null){
+                                var region = "-------"
+                            }
+                            else  var region = userData[$i].region;
+                            $("#adresse").text(': '+lot+' '+quartier+ ' '+ville+ ' '+region);
                             $("#code_postal").text(': '+userData[$i].code_postal);
                         }
                     }
