@@ -450,6 +450,7 @@ FROM
     v_facture_existant
 WHERE
     v_liste_facture_tmp.projet_id = v_facture_existant.projet_id AND v_liste_facture_tmp.num_facture = v_facture_existant.num_facture;
+
 CREATE OR REPLACE VIEW v_facture_actif AS SELECT
     v_facture_existant.cfp_id,
     v_facture_existant.activiter,

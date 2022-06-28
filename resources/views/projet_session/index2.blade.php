@@ -4,12 +4,51 @@
 @endsection
 
 @inject('groupe', 'App\groupe')
+@inject('carbon', 'Carbon\Carbon')
+@inject('froidEval', 'App\FroidEvaluation')
 
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
+    <style>
+        .corps_planning .nav-link {
+            color: #637381;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 0.900rem;
+            transition: all 200ms;
+            text-transform: uppercase;
+            padding-top: 10px;
+        }
 
+
+        .nav-item .nav-link button.active {
+            /* border-bottom: 3px solid #7635dc !important; */
+            color: #7635dc;
+            border-right:.2rem solid  #7635dc;
+        }
+
+        /* .nav-item .nav-link.active {
+            border-bottom: none !important;
+        } */
+
+        .nav-tabs .nav-link:hover {
+            background-color: rgb(245, 243, 243);
+            transform: scale(1.1);
+            border: none;
+        }
+
+        .nav-tabs .nav-item a {
+            text-decoration: none;
+            text-decoration-line: none;
+        }
+
+        .corps_planning .nav-item .planning{
+            border-right:.2rem solid  #c5c4c49b;
+        }
+
+    </style>
     <style>
         /* .myEtpStyle:hover{
             text-decoration: underline;
@@ -316,38 +355,662 @@
         .head{
             font-size: 14px;
         }
+        .wrapper_stg{
+            height:26px;
+            border-radius: 30px;
+            background-color: #014f70;
+        }
+        .shadow {
+        height: auto;
+    }
 
+    * {
+        font-size: .9rem;
+    }
+
+    .body_nav p {
+        font-size: 0.9rem;
+    }
+
+    .chiffre_d_affaire p {
+        font-size: 0.9rem;
+    }
+/*
+    .corps_planning {
+        font-size: 1.5rem;
+    } */
+
+    .body_nav {
+        /* background-color: #e8e8e9;
+    color: rgb(3, 0, 0); */
+        padding: 6px 8px;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .numero_session {
+        background-color: rgb(255, 255, 255);
+        padding: 0 6px;
+        border-radius: 4px;
+    }
+
+    strong {
+        font-size: 10px;
+    }
+
+    .img_commentaire {
+        border-radius: 5rem;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+
+    .img_commentaire:hover {
+        cursor: pointer;
+    }
+
+    .height_default {
+        height: 27px;
+        align-items: center
+    }
+
+    a {
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    #myDIV {
+        position: absolute;
+        display: none;
+        margin-left: 57%;
+        margin-top: 20px;
+    }
+
+    u {
+        font-size: 12px;
+    }
+
+    .pad_img {
+        padding-left: 10px;
+    }
+
+    a:hover {
+        color: blueviolet;
+    }
+
+    p {
+        font-size: 10px;
+    }
+
+    .img_superpose {
+        margin-left: -10px;
+        border: 2px solid white;
+    }
+
+    .chiffre_d_affaire {
+        padding: 0 10px;
+    }
+
+    .status_grise {
+        border-radius: 1rem;
+        background-color: #637381;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+
+    .status_reprogrammer {
+        border-radius: 1rem;
+        background-color: #00CDAC;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+
+    .status_cloturer {
+        border-radius: 1rem;
+        background-color: #314755;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+
+    .status_reporter {
+        border-radius: 1rem;
+        background-color: #26a0da;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+
+    .status_annulee {
+        border-radius: 1rem;
+        background-color: #b31217;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+
+    .status_termine {
+        border-radius: 1rem;
+        background-color: #2ebf91;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+
+    .status_confirme {
+        border-radius: 1rem;
+        background-color: #2B32B2;
+        color: white;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+
+    .statut_active {
+        border-radius: 1rem;
+        background-color: rgb(15, 126, 145);
+        color: whitesmoke;
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+        padding: .1rem .5rem;
+    }
+
+    .modalite {
+        border-radius: 1rem;
+        background-color: #26a0da;
+        color: rgb(255, 255, 255);
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+
+        padding: 0.1rem 0.5rem !important;
+    }
+
+
+    .dernier_planning {
+        text-align: left;
+        padding-left: 6px;
+        height: 100%;
+        font-size: 12px;
+        background-color: rgba(230, 228, 228, 0.39);
+    }
+
+    .dernier_planning:focus {
+        color: rgb(130, 33, 100);
+        background-color: white;
+        font-weight: bold;
+    }
+
+
+
+    button {
+        background-color: white;
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .titre_card {
+        background-color: rgb(223, 219, 219);
+        height: 30px;
+        border-radius: 4px 4px 0 0;
+        margin: 2px 0;
+        color: white;
+    }
+
+    .card {
+        position: absolute;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+    }
+
+    .btn_modifier_statut {
+        /* background-color: white; */
+        /* border: 1px; */
+        border-radius: 30px;
+        /* border-color: #7635dc; */
+        padding: 1rem 1rem;
+        color: black;
+        /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+    }
+
+    .btn_modifier_statut a {
+        font-size: .8rem;
+        position: relative;
+        bottom: .2rem;
+    }
+
+    .btn_modifier_statut:hover {
+        background-color: white;
+        color: black;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .planning {
+        text-align: left;
+        padding-left: 6px;
+        height: 100%;
+        font-size: 12px;
+        margin:0;
+    }
+
+    .planning:hover {
+        background-color: #eeeeee;
+    }
+
+    .planning p{
+        font-size: .85rem;
+    }
+
+    @keyframes action{
+        0%{
+            filter: brightness(0.99);
+        }
+        25%{
+            filter: brightness(0.94);
+        }
+        50%{
+            filter: brightness(0.96);
+        }
+        75%{
+            filter: brightness(0.98);
+        }
+        100%{
+            filter: brightness(1);
+        }
+    }
+
+
+    .action_animation{
+        animation-name: action;
+        animation-duration: 3s;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
+    }
+
+    /* .btn_modifier_statut:focus{
+    color: blue;
+    text-decoration: none;
+} */
+
+    .icon_creer {
+        background-image: linear-gradient(60deg, #f206ee, #0765f3);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        font-size: 1.5rem;
+        position: relative;
+        top: .4rem;
+        margin-right: .3rem;
+    }
+
+    .liste_projet{
+        background-color: #637381;
+        margin: 0;
+        padding: 1;
+        color: #ffffff;
+    }
+
+    .liste_projet:hover{
+        background-color: #cfccccc5;
+        color: #191818;
+    }
+
+    .pdf_download{
+            background-color: #e73827 !important;
+            border-radius: 5px;
+    }
+    .pdf_download:hover{
+        background-color: #af3906 !important;
+    }
+    .pdf_download button{
+        color: #ffffff !important;
+    }
+
+    .type_formation{
+        border-radius: 1rem;
+        background-color: #826bf3;
+        color: rgb(255, 255, 255);
+        /* width: 60%; */
+        align-items: center margin: 0 auto;
+
+        padding: 0.1rem 0.5rem !important;
+    }
+    .type_intra{
+        padding: 0.1rem 0.5rem !important;
+        font-size: 0.85rem;
+        background-color: #2193b0;
+        border-radius: 1rem;
+        transition: all 200ms;
+        color: white;
+        border: none;
+        box-shadow: none;
+        outline: none;
+        position: relative;
+        align-items: center margin: 0 auto;
+    }
+
+    .type_intra:hover,
+    .type_inter:hover{
+        cursor: default;
+        color: white;
+    }
+
+    .type_inter{
+        padding: 0.1rem 0.5rem !important;
+        font-size: 0.85rem;
+        background-color: #2ebf91;
+        border-radius: 1rem;
+        transition: all 200ms;
+        color: rgb(255, 255, 255);
+        border: none;
+        box-shadow: none;
+        outline: none;
+        position: relative;
+        align-items: center; margin: 0 auto;
+    }
+
+    /*info SESSION*/
+    .green{
+        color: #5e35b1;
+        border: 2px solid #43a047;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+
+    .red{
+        color: #5e35b1;
+        border: 2px solid #f4511e;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+
+    .yellow{
+        color: #5e35b1;
+        border: 2px solid #fdd835;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 4px;
+    }
+
+    .saClass{
+        font-size: 22px;
+        color: #637381;
+    }
+    .saSpan{
+        color: #637381;
+        font-size: 14px;
+    }
+            /****************
+VERTICAL TIMELINE ( BOOTSTRAP 5)
+****************/
+    .timeline-1 {
+        border-left: 3px solid #b565a7;
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+        background: rgba(177, 99, 163, 0.09);
+        margin: 0 auto;
+        position: relative;
+        padding: 30px;
+        list-style: none;
+        text-align: left;
+        max-width: 99%;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 {
+            max-width: 98%;
+            padding: 25px;
+        }
+    }
+
+    .timeline-1 .event {
+        border-bottom: 1px dashed #000;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    @media (max-width: 767px) {
+        .timeline-1 .event {
+            padding-top: 30px;
+        }
+    }
+
+    .timeline-1 .event:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+
+    .timeline-1 .event:before,
+    .timeline-1 .event:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
+
+    .timeline-1 .event:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+
+    @media (max-width: 767px) {
+        .timeline-1 .event:before {
+            left: 0px;
+            text-align: left;
+        }
+    }
+
+    .timeline-1 .event:after {
+        -webkit-box-shadow: 0 0 0 3px #b565a7;
+        box-shadow: 0 0 0 3px #b565a7;
+        left: -35.8px;
+        background: #fff;
+        border-radius: 50%;
+        height: 9px;
+        width: 9px;
+        content: "";
+        top: 31px;
+    }
+    /* event terminer */
+    .timeline-1 .event_terminer {
+        border-bottom: 1px dashed #000;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    @media (max-width: 767px) {
+        .timeline-1 .event_terminer {
+            padding-top: 30px;
+        }
+    }
+
+    .timeline-1 .event_terminer:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+
+    .timeline-1 .event_terminer:before,
+    .timeline-1 .event_terminer:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
+
+    .timeline-1 .event_terminer:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+
+    @media (max-width: 767px) {
+        .timeline-1 .event_terminer:before {
+            left: 0px;
+            text-align: left;
+        }
+    }
+
+    .timeline-1 .event_terminer:after {
+        -webkit-box-shadow: 0 0 0 3px #b565a7;
+        box-shadow: 0 0 0 3px #b565a7;
+        left: -35.8px;
+        background: rgb(168, 246, 108);
+        border-radius: 50%;
+        height: 9px;
+        width: 9px;
+        content: "";
+        top: 31px;
+    }
+    /* evenet repro */
+    .timeline-1 .event_repro {
+        border-bottom: 1px dashed #000;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        position: relative;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event_repro {
+            padding-top: 30px;
+        }
+    }
+
+    .timeline-1 .event_repro:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+
+    .timeline-1 .event_repro:before,
+    .timeline-1 .event_repro:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
+
+    .timeline-1 .event_repro:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+
+    @media (max-width: 767px) {
+        .timeline-1 .event_repro:before {
+            left: 0px;
+            text-align: left;
+        }
+    }
+
+    .timeline-1 .event_repro:after {
+        -webkit-box-shadow: 0 0 0 3px #b565a7;
+        box-shadow: 0 0 0 3px #b565a7;
+        left: -35.8px;
+        background: rgba(0, 0, 0, 0.745);
+        border-radius: 50%;
+        height: 9px;
+        content: "";
+        width: 9px;
+        top: 31px;
+    }
+    @media (max-width: 767px) {
+        .timeline-1 .event:after {
+            left: -31.8px;
+        }
+        .timeline-1 .event_terminer:after {
+            left: -31.8px;
+        }
+        .timeline-1 .event_repro:after {
+            left: -31.8px;
+        }
+    }
+    .p_date{
+        margin-left:40%;
+    }
+    .triangle-right {
+        width: 0;
+        height: 0;
+        border-top: 7px solid transparent;
+        border-left: 7px solid rgba(191, 26, 160, 0.593);
+        border-bottom: 7px solid transparent;
+        position: absolute;
+        margin-left: 279px;
+        margin-top: -32px;
+    }
+    .text_retourner {
+        position: relative;
+    }
+    .text_retourner span {
+        position: relative;
+        display: inline-block;
+        font-size: 25px;
+        color: rgba(0,0,0,.5);
+        text-transform: uppercase;
+        animation: flip 3s infinite;
+        animation-delay: calc(.2s * var(--i))
+    }
+    @keyframes flip {
+        0%,80% {
+            transform: rotateY(360deg)
+        }
+    }
+/* timeline */
     </style>
 
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
-            <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
-                    {{ $nb_projet }}</span>
-                @if ($nb_par_page >= $nb_projet)
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($page == 1)
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
-                            class='bx bx-chevron-right pagination'></i></a>
-                @elseif ($page == $fin_page || $page > $fin_page)
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
-                            class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
-                        style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
-                @else
-                    <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
-                            class='bx bx-chevron-left pagination'></i></a>
-                    <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
-                            class='bx bx-chevron-right pagination'></i></a>
-                @endif
-            </span>
-            <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i
-                    class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
-
+            @canany(['isReferent', 'isCFP', 'isFormateur'])
+                <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
+                        {{ $nb_projet }}</span>
+                    @if ($nb_par_page >= $nb_projet)
+                        <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
+                            style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
+                            style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                    @elseif ($page == 1)
+                        <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"
+                            style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
+                                class='bx bx-chevron-right pagination'></i></a>
+                    @elseif ($page == $fin_page || $page > $fin_page)
+                        <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
+                                class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"
+                            style=" pointer-events: none;cursor: default;"><i class='bx bx-chevron-right pagination'></i></a>
+                    @else
+                        <a href="{{ route('liste_projet', [1, $page - 1]) }}" role="button"><i
+                                class='bx bx-chevron-left pagination'></i></a>
+                        <a href="{{ route('liste_projet', [1, $page + 1]) }}" role="button"><i
+                                class='bx bx-chevron-right pagination'></i></a>
+                    @endif
+                </span>
+            @endcanany
+            <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
         </div>
         @if (Session::has('pdf_error'))
             <div class="alert alert-danger ms-4 me-4">
@@ -493,6 +1156,12 @@
                                                                 @endcan
                                                                 <li class="action_projet"><a class="dropdown-item" href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
                                                                 <li class="action_projet"><a class="dropdown-item" href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
+                                                                @php
+                                                                    $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
+                                                                @endphp
+                                                                @if($reponse == 1)
+                                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}">Evaluation à froid</a></li>
+                                                                @endif
                                                                 @if ($prj->type_formation_id == 1)
                                                                     <li class="action_projet"><a class="dropdown-item" href="{{ route('nouveauRapportFinale', [$pj->groupe_id]) }}" target="_blank">Rapport</a></li>
                                                                 @endif
@@ -1288,9 +1957,9 @@
                                         </td>
                                         <td class="text-center">
                                             <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
-                                                <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
-                                              </ul>
+                                                <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                    <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
+                                                </ul>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -1339,10 +2008,9 @@
                                             @endif
                                         </td>
                                         <td class="text-start">
-                                            @php
-                                            // echo $pj->module_id;
-                                                // echo $groupe->module_session($pj->module_id);
-                                            @endphp
+                                            {{-- @php
+                                                echo $groupe->module_session($pj->module_id);
+                                            @endphp --}}
                                         </td>
                                         <td class="text-end">
                                            @if($pj->hors_taxe_net!=null)
@@ -1390,6 +2058,12 @@
                                             <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
                                                 <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
                                                 <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
+                                                @php
+                                                    $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
+                                                @endphp
+                                                @if($reponse == 1)
+                                                    <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}">Evaluation à froid</a></li>
+                                                @endif
                                               </ul>
                                         </td>
                                     </tr>
@@ -1404,67 +2078,291 @@
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
                         </div>
                     @else
-                        <table class="table table-hover table-borderless m-0 p-0">
-                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
-                                {{-- <th>Projet</th> --}}
-                                <th> Session </th>
-                                <th> Module </th>
-                                <th> Date du session</th>
-                                <th> Centre de formation </th>
-                                <th> Formation </th>
-                                <th> Module</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </thead>
-                            <tbody class="">
-                                @foreach ($data as $pj)
-                                    <tr>
-                                        {{-- <td>{{ $pj->nom_projet }}</td> --}}
-                                        <td> {{ $pj->nom_groupe }}</td>
-                                        <td>
-                                            @php
-                                                echo $groupe->module_session($pj->module_id);
-                                            @endphp
-                                        </td>
-                                        <td class="tbody_projet">
-                                            @php
-                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
-                                            @endphp
-                                        </td>
-                                        <td> {{ $pj->nom_cfp }} </td>
-                                        <td> {{ $pj->nom_formation }} </td>
-                                        <td> {{ $pj->nom_module }} </td>
-                                        @php
-                                            $statut_eval = $groupe->statut_valuation_chaud($pj->groupe_id,$pj->stagiaire_id);
-                                        @endphp
-                                        <td class="p-0"><a
-                                                href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}"
-                                                class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i
-                                                        class="bx bxs-file-pdf"></i>PDF</button></a></td>
-                                        <td>
+                        <div class="row mb-5 justify-content-md-start">
+                            <div class="col-md-3 border-bottom">
+                                <div class="text_retourner">
+                                    <span style="--i:1">P</span>
+                                    <span style="--i:2">r</span>
+                                    <span style="--i:3">o</span>
+                                    <span style="--i:4">j</span>
+                                    <span style="--i:5">e</span>
+                                    <span style="--i:6">c</span>
+                                    <span style="--i:7">t</span>
+                                    <span style="--i:8">s</span>
+                                    <span style="--i:9"> </span>
+                                    <span style="--i:10">T</span>
+                                    <span style="--i:11">i</span>
+                                    <span style="--i:12">m</span>
+                                    <span style="--i:13">e</span>
+                                    <span style="--i:14">l</span>
+                                    <span style="--i:15">i</span>
+                                    <span style="--i:16">n</span>
+                                    <span style="--i:17">e</span>
+                                </div>
+                            </div>
+                        </div>
+                        @foreach ($data as $pj)
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-2" style="background-color:rgba(177, 99, 163, 0.09);;">
+                                <h5 class="p_date mt-5"> {{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
+                                <h6 class="p_date text-black-50">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</h6>
+                                <div class="triangle-right"></div>
+                            </div>
+                            <div class="col-md-8">
+                                <ul class="timeline-1 text-black">{{-- here --}}
+                                    @php
+                                        $statut_eval = $groupe->statut_valuation_chaud($pj->groupe_id,$pj->stagiaire_id);
+                                    @endphp
+                                    @if ($pj->item_status_groupe == 'En cours' || $pj->item_status_groupe == 'Prévisionnel')
+                                        <li class="event">
+                                    @elseif ($pj->item_status_groupe == 'Terminé')
+                                        <li class="event_terminer">
+                                    @elseif ($pj->item_status_groupe == 'Reprogrammer' || $pj->item_status_groupe == 'Annulée' || $pj->item_status_groupe == 'Reporté' || $pj->item_status_groupe == 'Cloturé')
+                                        <li class="event_repro">
+                                    @endif
+                                        <div class="row mt-2 titre_projet mb-1 pt-2 pb-2 w-100 g-0">
+                                            <div class="col-md-1 p-0">
+                                            <h6 class="m-0"><a href="#collapseprojet_{{ $pj->module_id }}" class="mb-0 changer_carret d-flex" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
+                                            </div>
+                                            <div class="col-md-2 text-start">
+                                                <h6>{{ $pj->nom_module }}</h6>
+                                                <span class="text-black-50">{{ $pj->nom_formation }}</span>
+                                            </div>
+                                            <div class="col-md-2 p-0 d-flex justify-content-start">
+                                                <img src="{{ asset('images/CFP/' . $pj->logo) }}" alt="{{ $pj->logo }}" style="width:64px;height:64px"/>
+                                            </div>
+                                            <div class="col-md-1 p-0 d-flex justify-content-start">
+                                                <a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn" style="width:57x;height:20px;font-size: 11px;padding-top: initial;"><i class="bx bxs-file-pdf"></i>PDF</button></a>
+                                            </div>
+                                            <div class="col-md-2 p-0 d-flex justify-content-start">
                                             @if ($statut_eval == 0)
-                                                <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn pb-2" style="color: #ffffff !important">Evaluation</button></a>
+                                                <a class="btn_eval_stg" href="{{ route('faireEvaluationChaud', [$pj->groupe_id]) }}"><button class="btn" style="width:116px;height:20px;font-size: 11px;padding-top: initial;color: #ffffff !important">Evaluation à faire</button></a>
                                             @elseif ($statut_eval == 1)
                                                 <p class="mt-3" style="color: green">Evaluation terminé</p>
                                             @endif
+                                            </div>
+                                            <div class="col-md-1 p-0 d-flex justify-content-start">
+                                                <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn" style="width:63px;height:20px;font-size: 11px;padding-top: initial;">Résultat</button></a>
+                                            </div>
+                                            <div class="col-md-2 p-0 d-flex justify-content-start">
+                                                <p class="{{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="collapse" id="collapseprojet_{{ $pj->module_id }}">
+                                            {{-- section --}}
+                                            <section>
+                                                <div class="row bg-light p-0 d-flex flex-row" role="tabpanel">
+                                                    <div class="col-md-2 nav_session">
+                                                        <div class="corps_planning m-0 bg-light" id="myTab" data-id="refresh" role="tablist">
+                                                            <div class="nav-item active" role="presentation">
+                                                                <a href="#detail_{{ $pj->module_id }}" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
+                                                                    role="tab" aria-controls="home" aria-selected="true">
+                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between active detail-tab_{{ $pj->module_id }}" onclick="openCity(event, 'detail_{{ $pj->module_id }}')" style="width: 100%">
+                                                                        <p class="m-0 pt-2 pb-2">PLANNING</p>
+                                                                        {{-- @if ($test == 0)
+                                                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                                                        @endif
+                                                                        @if ($test != 0)
+                                                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                                                        @endif --}}
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                            <div class="nav-item" role="presentation">
+                                                                <a href="#apprenant_{{ $pj->module_id }}" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
+                                                                    role="tab" aria-controls="home" aria-selected="true">
+                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between apprenant-tab_{{ $pj->module_id }}" onclick="openCity(event, 'apprenant_{{ $pj->module_id }}')" style="width: 100%">
+                                                                        <p class="m-0 pt-2 pb-2">APPRENANTS</p>
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                            <div class="nav-item" role="presentation">
+                                                                <a href="#ressource_{{ $pj->module_id }}" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
+                                                                    role="tab" aria-controls="home" aria-selected="true">
+                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between action_animation ressource-tab_{{ $pj->module_id }}" onclick="openCity(event, 'ressource_{{ $pj->module_id }}')" style="width: 100%">
+                                                                        <p class="m-0 pt-2 pb-2">RESSOURCES</p>
+                                                                        {{-- @if (count($ressource) == 0)
+                                                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                                                        @else
+                                                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                                                        @endif --}}
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                            <div class="nav-item" role="presentation">
+                                                                <a href="#document_{{ $pj->module_id }}" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
+                                                                    role="tab" aria-controls="home" aria-selected="true">
+                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between document-tab_{{ $pj->module_id }}" onclick="openCity(event, 'document_{{ $pj->module_id }}')" style="width: 100%">
+                                                                        <p class="m-0 pt-2 pb-2">DOCUMENTS</p>
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-content col-md-10">
+                                                        <div class="tab-pane fade show active tabcontent_{{ $pj->module_id }}" id="detail_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="detail-tab" style="display: block">
+                                                            <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
+                                                                <thead style="border-bottom: 1px solid black; line-height: 20px">
+                                                                    <td>Séance</td>
+                                                                    <td>Module</td>
+                                                                    <td>Ville</td>
+                                                                    <td>Date</td>
+                                                                    <td>Début</td>
+                                                                    <td>Fin</td>
+                                                                    <td>Formateur</td>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @php
+                                                                        $i = 1;
+                                                                    @endphp
+                                                                    @foreach ($data_detail as $dt)
+                                                                    @if($pj->module_id == $dt->module_id)
+                                                                        <tr>
+                                                                            <td>{{ $i }}</td>
+                                                                            <td>{{ $dt->nom_module }}</td>
+                                                                            @php
+                                                                                $salle = explode(',  ', $dt->lieu);
+                                                                            @endphp
+                                                                            <td>{{ $dt->lieu }}</td>
+                                                                            <td>{{ $dt->date_detail }}</td>
+                                                                            <td>{{ $dt->h_debut }} h</td>
+                                                                            <td>{{ $dt->h_fin }} h</td>
+                                                                            <td>{{ $dt->nom_formateur . ' ' . $dt->prenom_formateur }}</td>
+                                                                        </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div id="document_{{ $pj->module_id }}" class="tab-pane fade show tabcontent_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="document-tab" style="display: none">
+                                                            {{-- @php
+                                                                $documents = getImageModel::file_list($pj->groupe_id,"Mes documents");
+                                                            @endphp --}}
+                                                            <nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
+                                                                <span class="titre_detail_session"><strong style="font-size: 14px">Les documents pour la session</strong></span>
+                                                            </nav>
+                                                            <div class="col-12 d-flex flex-wrap">
+                                                                <div class="d-flex flex-row">
+                                                                    @foreach ($documents as $docs)
+                                                                        <div class="form-check me-5">
+                                                                            <span><i class="fa fa-file-download"></i>&nbsp; <a href="{{route('telecharger_fichier',['cfp'=>$pj->nom_cfp,'filename'=>$docs['filename'],'extension'=>$docs['extension']])}}"> {{$docs['filename'].'.'.$docs['extension']}} </a> </span>
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="apprenant_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
+                                                            <div style="display: inline-block">
+                                                                @foreach($stagiaire as $stg)
+                                                                    @if($pj->module_id == $stg->module_id)
+                                                                    <div class="float-start wrapper_stg mt-3 p-1 pe-2 ps-2 me-2">
+                                                                        <span style="color:#ececec;">{{$stg->nom_stagiaire}}&nbsp;{{$stg->prenom_stagiaire}}</span>
+                                                                    </div>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="ressource_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
+                                                           {{--  @if (count($ressource)>0) --}}
+                                                                <div class="mb-3 pe-5 ps-1 col-12 pb-5">
+                                                                    <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
+                                                                        <div class="col-md-3">
+                                                                            <span>
+                                                                                <h6>Matériel nécessaire</h6>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="col-md-3 p-0">
+                                                                            <span>
+                                                                                <h6>Demandé(e) par </h6>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="col-md-3 p-0">
+                                                                            <span>
+                                                                                <h6>Pris en charge par </h6>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="col-md-3 p-0">
+                                                                            <span>
+                                                                                <h6>Note </h6>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mt-0 align-content-center">
+                                                                        <div id="affiche_ressource">
+                                                                            @foreach ($ressource as $r)
+                                                                                @if ($r->groupe_id == $pj->groupe_id)
 
-                                        </td>
-                                        <td>
-                                            <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn pb-2">Résultat</button>
+                                                                                <div class="d-flex mt-1" id="ressource_{{ $r->id }}">
+                                                                                    <div class="col-md-3">
+                                                                                        <section>
+                                                                                            <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <section>
+                                                                                            {{ $r->demandeur }}
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <section>
+                                                                                            {{ $r->pris_en_charge }}
+                                                                                        </section>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <section>
+                                                                                            {{ $r->note }}
+                                                                                        </section>
+                                                                                    </div>
+                                                                                </div>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </div>
+                                                                    </div>
+                                                            {{-- @else
+                                                                <div class="mb-3 pe-5 ps-1 col-12 pb-5">Vous n'avez pas besoin de ressources!</div>
+                                                            @endif --}}
+                                                            </div>
+                                                        </div>
 
-                                            </a>
-                                        </td>
+                                                    </div>
+                                                <div>
+                                            </section>
+                                            {{-- /section --}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <script>
+                            $('.document-tab_'.$pj->module_id).on('click',function(e){
+                                localStorage.setItem('activeTab', 'document_'.$pj->module_id);
+                            });
+                            $('.ressource-tab_'.$pj->module_id).on('click',function(e){
+                                localStorage.setItem('activeTab', 'ressource_'.$pj->module_id);
+                            });
+                            $('.apprenant-tab_'.$pj->module_id).on('click',function(e){
+                                console.log("here");
+                                localStorage.setItem('activeTab', 'apprenant_'.$pj->module_id);
+                            });
+                            $('.detail-tab_'.$pj->module_id).on('click',function(e){
+                                localStorage.setItem('activeTab', 'detail_'.$pj->module_id);
+                            });
 
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                            let activeTab = localStorage.getItem('activeTab');
+
+                            if(activeTab){
+                                $('.tabcontent_'.$pj->module_id).css('display','none');
+                                $('#' + activeTab).show();
+                                tablinks = document.getElementsByClassName("planning_".$pj->module_id);
+                                for (i = 0; i < tablinks.length; i++) {
+                                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                                }
+                                $('.'+activeTab+'-tab').addClass("active");
+                            }
+                        </script>
+                        @endforeach
                     @endif
                 @endcan
-
-                <div>
                     {{-- {!! $projet->links() !!} --}}
                 </div>
             </div>
@@ -1510,7 +2408,6 @@
                                     </select>
 
                                 </div>
-
                                 <div class="row px-3 mt-2">
                                     <select name="semestre" id="semestre" class="filtre_projet">
                                         <option value="null" selected>Semestres</option>
@@ -1519,18 +2416,53 @@
                                     </select>
 
                                 </div>
-
                                 <div class="row px-3 mt-2">
                                     <select name="annee" id="annee" class="filtre_projet">
                                         <option value="null" selected>Années</option>
                                     </select>
                                     <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
-
                                 </div>
-
                             </form>
                         </div>
-                    @endcanany
+                    </div>
+                @endcanany
+                @can('isStagiaire')
+                <div class="col-12 pe-3">
+                    <div class="row mb-3 p-2 pt-0">
+                        <form action="{{ route('liste_projet') }}" method="GET">
+                            <div class="row px-3 mt-2">
+                                <select name="module" id="module" class="filtre_projet">
+                                    <option value="null" selected>Nom de module</option>
+                                    @foreach ($modules as $mod)
+                                        <option value="{{$mod->nom_module}}">{{$mod->nom_module}}</option>
+                                    @endforeach
+                                </select>
+                                <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
+                            </div>
+                        </form>
+                        <form action="{{ route('liste_projet') }}" method="GET">
+                            <div class="row px-3 mt-2">
+                            <select name="formation" id="formation" class="filtre_projet">
+                                <option value="null" selected>Nom de formation</option>
+                                @foreach ($formations as $form)
+                                    <option value="{{$form->nom_formation}}">{{$form->nom_formation}}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
+                            </div>
+                        </form>
+                        <form action="{{ route('liste_projet') }}" method="GET">
+                            <div class="row px-3 mt-2">
+                            <select name="status" id="status" class="filtre_projet">
+                                <option value="null" selected>Status</option>
+                                @foreach ($status as $stt)
+                                    <option value="{{$stt->status}}">{{$stt->status}}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 @canany(['isReferent','isReferentSimple','isManager'])
                     <div class="row px-3 mt-2">
@@ -1733,9 +2665,41 @@
 
                     localStorage.setItem('activeTab', 'detail');
                 </script>
+                <script type="text/javascript">
+                    function openCity(evt, cityName) {
+                        // Declare all variables
+                        var i, tabcontent, tablinks;
+                        var module_id = cityName.split('_')[1];
+                        // Get all elements with class="tabcontent" and hide them
+                        tabcontent = document.getElementsByClassName("tabcontent_"+module_id);
+                        for (i = 0; i < tabcontent.length; i++) {
+                            tabcontent[i].style.display = "none";
+                        }
+
+                        // Get all elements with class="tablinks" and remove the class "active"
+                        tablinks = document.getElementsByClassName("planning_"+module_id);
+                        for (i = 0; i < tablinks.length; i++) {
+                            tablinks[i].className = tablinks[i].className.replace(" active", "");
+                        }
+
+                        // Show the current tab, and add an "active" class to the button that opened the tab
+                        document.getElementById(cityName).style.display = "block";
+                        evt.currentTarget.className += " active";
+                    }
+
+                    function myFunction_commentaire() {
+                        var x = document.getElementById("myDIV");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                </script>
 
                 {{--info etp --}}
                 <script>
+
                     $('.information').on('click', function(){
                         var etpId = $(this).data("id");
                         // console.log(etpId);

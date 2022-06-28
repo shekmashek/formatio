@@ -263,13 +263,13 @@
                         <div class="col-md-12">
                             <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list text-center">
                                 <li class="nav-item" style="width: 300px;">
-                                    <a href="#" class="nav-link active " style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
+                                    <a href="#" class="nav-link  " style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation-bas" type="button" role="tab" aria-controls="invitation-bas" aria-selected="true">
                                         Invitations en attentes
                                     </a>
                                 </li>
                                 <li class="nav-item ms-5" style="width: 300px;">
-                                    <a href="#" class="nav-link" id="profile-tab" style="border-bottom: 3px solid black" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                                        Invitations réfuser
+                                    <a href="#" class="nav-link active" id="profile-tab" style="border-bottom: 3px solid black" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                        Invitations refusées
                                     </a>
                                 </li>
                             </ul>
@@ -277,7 +277,7 @@
                     </div>
                     <div class="tab-content" id="myTabContent">
 
-                        <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane fade show " id="invitation-bas" role="tabpanel" aria-labelledby="home-tab">
                             <div class="table-responsive text-center">
 
                                 <table class="table  table-borderless table-sm mt-4" >
@@ -325,7 +325,7 @@
 
                         </div>
 
-                        <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                             <div class="table-responsive text-center">
                                 <table class="table  table-borderless table-sm mt-4">
@@ -852,13 +852,13 @@
                         <div class="col-md-12">
                             <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list text-center">
                                 <li class="nav-item te" style="width: 300px;">
-                                    <a href="#" class="nav-link active " style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation" type="button" role="tab" aria-controls="invitation" aria-selected="true">
+                                    <a href="#" class="nav-link active " style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation-bas" type="button" role="tab" aria-controls="invitation-bas" aria-selected="true">
                                         Invitations en attentes
                                     </a>
                                 </li>
                                 <li class="nav-item ms-5 te" style="width: 300px;">
                                     <a href="#" class="nav-link" id="profile-tab" style="border-bottom: 3px solid black" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                                        Invitations réfuser
+                                        Invitations réfusées
                                     </a>
                                 </li>
                             </ul>
@@ -866,7 +866,7 @@
                     </div>
                     <div class="tab-content" id="myTabContent">
 
-                        <div class="tab-pane fade show active" id="invitation" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane fade show active" id="invitation-bas" role="tabpanel" aria-labelledby="home-tab">
                             <div class="table-responsive text-center">
 
                                 <table class="table  table-borderless table-sm mt-4" >

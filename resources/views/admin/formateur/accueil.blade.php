@@ -63,27 +63,30 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <div id="icon-container"></div>
         <main class="pt-5 px-3">
-            <h1>Bienvenue</h1>
-                <h2 class="lead mt-4 mb-4">{{$formateur[0]->nom_formateur." ".$formateur[0]->prenom_formateur}}</h2>
-                @if($formateur)
-                <a href="{{route('calendrier')}}" class="fw-bold ">Regardez votre programme du jour.</a>
-                @elseif($formateur)
-                <a href="{{route('calendrier')}}" class="fw-bold ">Veuillez compléter vos coordonnées pour pouvoir accéder aux fonctionnalitées nécessaires.</a>
-                @endif
+            <lottie-player src="{{asset('assets/lottie/bienvenue.json')}}" background="transparent"  speed="1"  style="width: 300px; height: 300px; margin:0 auto" loop autoplay></lottie-player>
+            <h1 onclick="console.log(window.location.origin);">Bienvenue</h1>
+            <h2 class="lead mt-4 mb-4">{{$formateur[0]->nom_formateur." ".$formateur[0]->prenom_formateur}}</h2>
+            @if($formateur)
+            <a href="{{route('calendrier')}}" class="fw-bold ">Regardez votre programme du jour.</a>
+            @elseif($formateur)
+            <a href="{{route('calendrier')}}" class="fw-bold ">Veuillez compléter vos coordonnées pour pouvoir accéder aux fonctionnalitées nécessaires.</a>
+            @endif
             </p>
         </main>
         {{-- </div> --}}
     </div>
 </div>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js">
 <script>
     var animation = bodymovin.loadAnimation({
     container: document.getElementById('icon-container'), // required
-    path: 'https://assets6.lottiefiles.com/packages/lf20_xnbikipz.json', // required
+    path: window.location.origin+'/assets/lottie/bienvenue.json', // required
     renderer: 'svg', // required
     loop: true, // optional
     autoplay: true, // optional
-    name: "Demo Animation", // optional
+    name: "bienvenue", // optional
 });
+
 </script>
 @endsection

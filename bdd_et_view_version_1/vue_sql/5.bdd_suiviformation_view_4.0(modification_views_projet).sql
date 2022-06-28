@@ -485,7 +485,8 @@ select
         mf.nom_module,
         mf.nom_formation,
         mf.nom as nom_cfp,
-        mf.cfp_id
+        mf.cfp_id,
+        mf.logo
     from
         participant_groupe p
     join
@@ -606,11 +607,17 @@ create or replace view v_participant_groupe_detail as
         sg.*,
         d.id as detail_id,
         d.lieu,
+        d.date_detail,
         d.h_debut,
         d.h_fin,
-        d.formateur_id
+        d.formateur_id,
+        formateurs.mail_formateur,
+        formateurs.numero_formateur,
+        formateurs.nom_formateur,
+        formateurs.prenom_formateur
     from v_stagiaire_groupe sg
-    join details d on sg.groupe_id = d.groupe_id;
+    join details d on sg.groupe_id = d.groupe_id
+    join formateurs on formateurs.id = d.formateur_id;
 
 create or replace view v_emargement as
     select

@@ -1498,3 +1498,8 @@ Route::get('employes.ajouter.referent_principal/{id}','ParticipantController@rol
 /**Supprimer role referent d'un employé */
 Route::get('employes.supprimer.referent','ParticipantController@supprimer_role_referent')->name('employes.supprimer.referent');
 // >>>>>>> origin/debug_version_1
+
+//evaluation A froid
+Route::get('/evaluation_froid/{groupe?}','EvaluationFroidController@index')->name('evaluation_froid');
+Route::post('evaluation_froid/ajouter','EvaluationFroidController@store')->name('evaluation_froid/ajouter');
+Route::get('evaluation_froid/resultat/{groupe?}','EvaluationFroidController@show')->name('evaluation_froid/resultat');
