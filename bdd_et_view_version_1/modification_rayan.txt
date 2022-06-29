@@ -24,3 +24,6 @@ WHERE projet_id in (
     from v_stagiaire_groupe
     where departement_id = 2
 );
+
+
+WHERE projet_id in ( select projet_id from v_stagiaire_groupe where departement_id = 2)

@@ -30,7 +30,9 @@ class Projet extends Model
 
     //recherche projet
     public function build_requette($role,$table,$request,$limit,$offset){
-        $sql = "select * from ".$table." where 1=1 ";
+
+        if(count(explode(' ',$table))>1)$sql = "select * from ".$table." ";
+        else if(count(explode(' ',$table))==1)$sql = "select * from ".$table." where 1 ";
         if (Gate::allows('isCFP') || Gate::allows('isFormateur')){
             // $domaine = $fonct->findAll("domaines");
             $sql = $sql." and cfp_id = ".$role;
