@@ -249,7 +249,7 @@
                 <td>
                     <select name="lieu[]" class="form-control salle_de_formation input" style="color:#637381;">
                         @foreach ($salle_formation as $salle)
-                        <option value="{{ $salle->ville . ',' . $salle->salle_formation }}">{{ $salle->ville . ',' . $salle->salle_formation }}</option>
+                        <option value="{{ $salle->ville .',  '. $salle->salle_formation }}">{{ $salle->ville . ',' . $salle->salle_formation }}</option>
                         @endforeach
                     </select>
                 </td>

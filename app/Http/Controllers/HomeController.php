@@ -427,7 +427,6 @@ class HomeController extends Controller
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
                 if ($colonnes[$i]->COLUMN_NAME!="nom_departement" and $colonnes[$i]->COLUMN_NAME!= "nom_branche" and $colonnes[$i]->COLUMN_NAME!= "nom_service" and $colonnes[$i]->COLUMN_NAME!= "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "genre_id"  and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "sexe_resp" and $colonnes[$i]->COLUMN_NAME != "fonction_resp" and  $colonnes[$i]->COLUMN_NAME != "user_id" and $colonnes[$i]->COLUMN_NAME != "entreprise_id" and   $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "activiter" and $colonnes[$i]->COLUMN_NAME != "prioriter" and   $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
                     if ($testNull[0]->$tempo == null) {
-                        dd($colonnes[$i]->COLUMN_NAME);
                         $nb += 1;
                     }
                 }
@@ -975,22 +974,22 @@ class HomeController extends Controller
                 $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id in (' . implode(',',$var) .') order by stagiaire_id asc');
                 $data_detail = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_participant_groupe_detail where stagiaire_id = ? order by date_debut desc', [$stg_id]);
             }
-            $documents = [];
+            // $documents = [];
 
-            $test = 0;
-            // $documents = $drive->file_list($cfp_nom,"Mes documents");
-            foreach($data as $d){
-                /* $data->date_debut = Carbon::parse($pj->date_debut)->format('d-m-Y'); */
-                $test =  $drive->file_list($d->nom_cfp,"Mes documents");
+            // $test = 0;
+            // // $documents = $drive->file_list($cfp_nom,"Mes documents");
+            // foreach($data as $d){
+            //     /* $data->date_debut = Carbon::parse($pj->date_debut)->format('d-m-Y'); */
+            //     $test =  $drive->file_list($d->nom_cfp,"Mes documents");
 
-            }
-            if(count($test) > 0){
-                $documents = $drive->file_list($d->nom_cfp,"Mes documents");
-            }
+            // }
+            // if(count($test) > 0){
+            //     $documents = $drive->file_list($d->nom_cfp,"Mes documents");
+            // }
 
 
 
-            return view('projet_session.index2', compact('documents','data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status'));
+            return view('projet_session.index2', compact('data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status'));
         }
     }
 

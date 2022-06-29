@@ -2189,14 +2189,6 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                     </button>
                                                                 </a>
                                                             </div>
-                                                            <div class="nav-item" role="presentation">
-                                                                <a href="#document_{{ $pj->module_id }}" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
-                                                                    role="tab" aria-controls="home" aria-selected="true">
-                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between document-tab_{{ $pj->module_id }}" onclick="openCity(event, 'document_{{ $pj->module_id }}')" style="width: 100%">
-                                                                        <p class="m-0 pt-2 pb-2">DOCUMENTS</p>
-                                                                    </button>
-                                                                </a>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="tab-content col-md-10">
@@ -2234,23 +2226,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <div id="document_{{ $pj->module_id }}" class="tab-pane fade show tabcontent_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="document-tab" style="display: none">
-                                                            {{-- @php
-                                                                $documents = getImageModel::file_list($pj->groupe_id,"Mes documents");
-                                                            @endphp --}}
-                                                            <nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
-                                                                <span class="titre_detail_session"><strong style="font-size: 14px">Les documents pour la session</strong></span>
-                                                            </nav>
-                                                            <div class="col-12 d-flex flex-wrap">
-                                                                <div class="d-flex flex-row">
-                                                                    @foreach ($documents as $docs)
-                                                                        <div class="form-check me-5">
-                                                                            <span><i class="fa fa-file-download"></i>&nbsp; <a href="{{route('telecharger_fichier',['cfp'=>$pj->nom_cfp,'filename'=>$docs['filename'],'extension'=>$docs['extension']])}}"> {{$docs['filename'].'.'.$docs['extension']}} </a> </span>
-                                                                        </div>
-                                                                    @endforeach
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                
                                                         <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="apprenant_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
                                                             <div style="display: inline-block">
                                                                 @foreach($stagiaire as $stg)
@@ -2334,9 +2310,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             </div>
                         </div>
                         <script>
-                            $('.document-tab_'.$pj->module_id).on('click',function(e){
-                                localStorage.setItem('activeTab', 'document_'.$pj->module_id);
-                            });
+                           
                             $('.ressource-tab_'.$pj->module_id).on('click',function(e){
                                 localStorage.setItem('activeTab', 'ressource_'.$pj->module_id);
                             });
