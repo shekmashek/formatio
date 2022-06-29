@@ -53,7 +53,7 @@ class HomeController extends Controller
         $this->middleware('auth');
         $this->fonct = new FonctionGenerique();
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->exists == false) return view('auth.connexion');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
