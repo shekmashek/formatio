@@ -128,7 +128,7 @@ FROM
 JOIN formations_interne f ON
     m.formation_id = f.id
 JOIN entreprises etp ON m.etp_id = etp.id
-JOIN niveaux_interne n ON
+JOIN niveaux n ON
     n.id = m.niveau_id
 LEFT JOIN v_moyenne_avis_module_interne a ON
     m.id = a.module_id;

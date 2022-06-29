@@ -33,6 +33,11 @@ a:focus {
     text-transform: capitalize;
 }
 
+.navigation_details_etp h3 {
+    font-size: 1.3rem;
+    text-transform: capitalize;
+}
+
 .content_search input {
     border: 1px solid #7635dc;
     border-radius: 5px;
@@ -422,6 +427,17 @@ a:focus {
     /* padding-top: 10px; */
 }
 
+.navigation_details_etp{
+    position: sticky;
+    top: 4rem;
+    background-color: white;
+    z-index: 1;
+    padding: 1rem 1rem 1rem 1rem;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    text-transform: uppercase;
+    /* padding-top: 10px; */
+}
+
 .navigation_detail ul li a{
     color: #637381;
 }
@@ -435,6 +451,14 @@ a:focus {
 }
 
 .navigation_details ul li a:hover{
+    color: black;
+}
+
+.navigation_details_etp ul li a{
+    color: #637381;
+}
+
+.navigation_details_etp ul li a:hover{
     color: black;
 }
 

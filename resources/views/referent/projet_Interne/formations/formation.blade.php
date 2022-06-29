@@ -5,6 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/formation_interne.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
     integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -296,7 +297,121 @@
     </div> --}}
     <div class="tab-pane show fade active" id="catalogue">
         <div class="container-fluid p-0 mt-3 me-3">
-            catalogue
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+
+                    @if (count($infos)>0)
+
+                    @foreach ($infos as $info)
+                    <div class="row liste__formation justify-content-space-between mb-4">
+                        <div class="col-1 d-flex flex-column">
+                            <a href="{{route('aff_parametre_referent')}}" class="justify-content-center text-center">
+                                <img src="{{asset('images/entreprises/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
+                            </a>
+                        </div>
+                        <div class="col-4 liste__formation__content">
+                            <a href="{{route('select_par_module_etp',$info->module_id)}}">
+                                <div class="liste__formation__item">
+                                    <h5>{{$info->nom_module}}</h5>
+                                    <p><span>{{$info->nom_formation}}</span></p>
+
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-5">
+                            <div class="liste__formation__avis mb-3 d-flex flex-row justify-content-between">
+                                <div>
+                                    <div class="Stars" style="--note: {{ $info->pourcentage }};">
+                                    </div>
+                                    <span class="me-3">{{ $info->pourcentage }}/5
+                                        @if($info->total_avis != null)
+                                        ({{$info->total_avis}} avis)
+                                        @else
+                                        (0 avis)
+                                        @endif
+                                    </span>
+                                </div>
+
+
+                            </div>
+                            <div class="liste__formation__item3 description d-flex flex-row">
+                                <div class="me-2"><i class="bx bx-alarm bx_icon"></i>
+                                    <span>
+                                        @isset($info->duree_jour)
+                                        {{$info->duree_jour}} jours
+                                        @endisset
+                                    </span>
+                                    <span>
+                                        @isset($info->duree)
+                                        /{{$info->duree}} h
+                                        @endisset
+                                    </span> </p>
+                                </div>
+                                <div class="me-2"><i class="bx bx-certification bx_icon"></i><span>&nbsp;Certifiante</span>
+                                </div>
+                                <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
+                                </div>
+                                <div class="me-2"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                                </div>
+                                <div>
+                                    <span>Réf : {{$info->reference}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1 actions_button_mod">
+                            <div class="row w-100 mb-2">
+                                <div class="col-12 d-flex flex-column">
+                                    <div class="col-6 text-center" id="preview_niveau">
+                                        <button class="btn modifier pt-0"><a
+                                                href="{{route('modif_programmes_etp',$info->module_id)}}"><i
+                                                    class='bx bx-edit bx_modifier'
+                                                    title="modifier les informations"></i></a></button>
+                                    </div>
+                                    <div class="col-6 text-center" id="preview_niveau">
+                                        <button class="btn supprimer pt-0" data-bs-toggle="modal"
+                                            data-bs-target="#listModal_{{$info->module_id}}"><i
+                                                class="bx bx-trash bx_supprimer"
+                                                title="supprimer le module"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="listModal_{{$info->module_id}}" tabindex="-1"
+                            role="dialog" aria-labelledby="listModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header .avertissement  d-flex justify-content-center"
+                                        style="background-color:#ee0707; color: white">
+                                        <h6 class="modal-title">Avertissement !</h6>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="text-center my-2">
+                                            <i class="fa-solid fa-circle-exclamation warning"></i>
+                                        </div>
+                                        <small>Vous êtes sur le point d'effacer une donnée,
+                                            cette
+                                            action
+                                            est irréversible. Continuer ?</small>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn_annuler" data-bs-dismiss="modal"><i class='bx bx-x me-1'></i>Non</button>
+                                        <button type="button" class="btn btn_enregistrer suppression_module" id="{{$info->module_id}}"><i class='bx bx-check me-1'></i>Oui</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    @else
+                    <h2 class="text-center">Aucun module pour cette formation 😅 !</h2>
+                    <div class="col text-center">
+                        <a class="mb-2 new_list_nouvelle " href="{{route('formations')}}">
+                            <span class="btn_enregistrer text-center"><i class="bx bxs-chevron-left me-1"></i>Retour</span>
+                        </a>
+                    </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
     <div>
@@ -304,7 +419,7 @@
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <form action="{{route('nouveau_module_new')}}" method="POST" id="frm_new_module">
+                    <form action="{{route('module_interne')}}" method="POST" id="frm_new_module">
                         @csrf
                         <div class="modal-header .avertissement  d-flex justify-content-center" style="color: white">
                             <h6 class="modal-title">Domaine de Formation</h6>
