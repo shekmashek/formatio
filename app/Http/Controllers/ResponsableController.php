@@ -326,7 +326,8 @@ class ResponsableController extends Controller
             // } else {
                 $id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
                 $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
-                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where entreprise_id  = ?',[$id])[0];
+
                 $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
                 $secteur = DB::select('select nom_secteur from secteurs where id = ?',[$entreprise->secteur_id]);
                 $projets_counts = $fonct->findWhere("groupe_entreprises",["entreprise_id"],[$refs->entreprise_id]);
@@ -736,11 +737,11 @@ class ResponsableController extends Controller
                 return back()->with('error_cin','Entrez votre CIN avant  de cliquer sur enregistrer');
             }
             elseif($lot == null || $ville == null || $region == null || $quartier == null || $code_postal == null){
-               
+
                 return back()->with('error_adresse','Entrez votre adresse complète avant  de cliquer sur enregistrer');
             }
             elseif($fonction == null){
-                
+
                 return back()->with('error_fonction','Entrez votre fonction avant de cliquer sur enregistrer');
             }
             else{
