@@ -407,29 +407,29 @@
                             </div>
                         </div>
                         <div class="fixedTop" >
-                            <table id="myDatatablesa" class="display nowrap table shadow-sm" width="100%">
+                            <table id="myDatatablesa" class="display nowrap table shadow-sm">
                                 <thead style="position: sticky; top: 0; z-index:1">
                                     <tr style="background: #eff1f3;">
-                                        <th scope="col"><i class='bx bx-library'></i> Projet</th>
-                                        <th scope="col"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
-                                        <th scope="col"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
-                                        <th scope="col"><i class='bx bx-building-house'></i> Entreprise</th>
-                                        <th scope="col"><i class='bx bx-calendar-check' ></i> Modalité</th>
-                                        <th scope="col"><i class='bx bx-time-five' ></i> Date du projet</th>
-                                        <th scope="col"><i class='bx bx-home' ></i> Ville</th>
-                                        <th scope="col"><i class="bi bi-check2-square"></i> Status</th>
-                                        <th scope="col"><i class="bi bi-list-ul"></i> Actions</th>
+                                        <th style="font-size: 14px;" scope="col"><i class='bx bx-library'></i> Projet</th>
+                                        <th style="font-size: 14px;" scope="col"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
+                                        <th style="font-size: 14px;" scope="col"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
+                                        <th style="font-size: 14px;" scope="col"><i class='bx bx-building-house'></i> Entreprise</th>
+                                        <th style="font-size: 14px;" scope="col"><i class='bx bx-calendar-check' ></i> Modalité</th>
+                                        <th style="font-size: 14px;" scope="col"><i class='bx bx-time-five' ></i> Date du projet</th>
+                                        <th style="font-size: 14px;" scope="col"><i class='bx bx-home' ></i> Ville</th>
+                                        <th style="font-size: 14px;" scope="col"><i class="bi bi-check2-square"></i> Status</th>
+                                        <th style="font-size: 14px;" scope="col"><i class="bi bi-list-ul"></i> Actions</th>
                                     </tr>
                                     <tr style="background: #eff1f3;">
-                                        <th scope="col"> Projet</th>
-                                        <th scope="col">Session</th>
-                                        <th scope="col">Module</th>
-                                        <th scope="col">Entreprise</th>
-                                        <th scope="col">Modalité</th>
-                                        <th scope="col">Date du projet</th>
-                                        <th scope="col">Ville</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col" id="hide">Actions</th>
+                                        <th style="font-size: 14px;" scope="col"> Projet</th>
+                                        <th style="font-size: 14px;" scope="col">Session</th>
+                                        <th style="font-size: 14px;" scope="col">Module</th>
+                                        <th style="font-size: 14px;" scope="col">Entreprise</th>
+                                        <th style="font-size: 14px;" scope="col">Modalité</th>
+                                        <th style="font-size: 14px;" scope="col">Date du projet</th>
+                                        <th style="font-size: 14px;" scope="col">Ville</th>
+                                        <th style="font-size: 14px;" scope="col">Status</th>
+                                        <th style="font-size: 14px;" scope="col" id="hide">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -514,11 +514,11 @@
                                                         @endif
                                                     @endforeach
                                                 </td>
-                                                <td colspan="8">
+                                                <td colspan="8" style="padding: 0; margin: 0">
                                                     <table class="table" id="myTable">
                                                         <thead>
                                                             <tr>
-                                                                <th style="vertical-align: top; padding: 0; width: 180px;">
+                                                                <th style="vertical-align: top; width: 13.2%">
                                                                     @if ($prj->type_formation_id == 1)
                                                                         <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 2px 10px; font-weight: 400; letter-spacing: 1px;">
                                                                             {{ $prj->type_formation }}
@@ -529,7 +529,7 @@
                                                                         </span>
                                                                     @endif 
                                                                 </th>
-                                                                <th style="display: none; padding: 0; width: 100px;">
+                                                                <th style="display: none; width: 12.8%">
                                                                     @foreach ($data as $pj)
                                                                         @if ($prj->projet_id == $pj->projet_id)
                                                                         <span>
@@ -540,14 +540,14 @@
                                                                     @endforeach
                                                                 </th>
                                                                 
-                                                                <th style="padding: 0; width: 190px;">
+                                                                <th style="width: 13.9%">
                                                                     
                                                                 </th>
-                                                                <th style="padding: 0; width: 200px;"></th>
-                                                                <th style="padding: 0; width: 160px;"></th>
-                                                                <th style="padding: 0; width: 200px;"></th>
-                                                                <th style="padding: 0; width: 190px;"></th>
-                                                                <th style="padding: 0; width: 190px; padding-left: 8px;">
+                                                                <th style="width: 12%"></th>
+                                                                <th style="width: 13.2%"></th>
+                                                                <th style="width: 13.2%"></th>
+                                                                <th style="width: 13.2%"></th>
+                                                                <th style="width: 13.2%;">
                                                                     @can('isCFP')
                                                                         @if ($prj->type_formation_id == 1)
                                                                             <span role="button" data-bs-toggle="modal"
@@ -558,7 +558,7 @@
                                                                         @endif 
                                                                     @endcan
                                                                 </th>
-                                                                <th style="padding: 0; width: 180px; ">
+                                                                <th style="width: 13.2%">
                                                                     
                                                                 </th>
                                                             </tr>
@@ -567,7 +567,7 @@
                                                             @foreach ($data as $pj)
                                                                 @if ($prj->projet_id == $pj->projet_id)
                                                                 <tr>
-                                                                    <td style="width: 50px;">
+                                                                    <td style="">
                                                                         <span>
                                                                             <a data-bs-toggle="collapse" href="#collapseExample_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a>
                                                                         </span>
@@ -592,7 +592,7 @@
                                                                     </td>
                                                                     <td>
                                                                         @php
-                                                                            echo "<span style='padding-left: 18px; font-size: 14px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";    
+                                                                            echo "<span style='padding-left: 18px; font-size: 10px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";    
                                                                         @endphp
                                                                     </td>
                                                                     <td>
@@ -1831,9 +1831,9 @@
                     $(document).ready( function () {
                         $('#myDatatablesa thead tr:eq(1) th').each( function () {
                             var title = $(this).text();
-                            $(this).html( '<input type="text" style="width: 178px" placeholder="Filtre par '+title+'" class="column_search form-control form-control-sm" />' );
+                            $(this).html( '<input type="text" placeholder="Filtre par '+title+'" class="column_search form-control form-control-sm" />' );
                             $( "th#hide > input" ).prop( "disabled", true ).attr( "placeholder", "" );
-                                                                                                                                                                                                        } );
+                        } );
 
                         function searchByColumn(table){
                             var defaultSearch = 0;
@@ -1856,10 +1856,26 @@
                                 .draw();
                         } );
 
-                        var table = $('#myDatatablesa').DataTable({
+                        var table = $('#myDatatablesa').removeAttr('width').DataTable({
                             initComplete : function() {
                                 $("#myDatatablesa_filter").detach().appendTo('#new-search-area');
                             },
+                            scrollY:        "400px",
+                            scrollX:        true,
+                            scrollCollapse: true,
+                            columnDefs: [
+                                    { 
+                                        width: "10%", targets: 0,
+                                        width: "15%", targets: 1,
+                                        width: "12%", targets: 2,
+                                        width: "12%", targets: 3,
+                                        width: "10%", targets: 4,
+                                        width: "15%", targets: 5,
+                                        width: "10%", targets: 6,
+                                        width: "8%", targets: 7,
+                                        width: "8%", targets: 8,
+                                    }
+                                ],
                             orderCellsTop: true,
                             fixedHeader: true,
                             "lengthMenu": [ [2, 4, 8, -1], [2, 4, 8, "All"] ],
@@ -1877,6 +1893,19 @@
                                 "lengthMenu":     "Affichage _MENU_ ",
                             }
                         });
+
+                        // $(document).ready(function() {
+                        //     var table = $('#example').removeAttr('width').DataTable( {
+                        //         scrollY:        "300px",
+                        //         scrollX:        true,
+                        //         scrollCollapse: true,
+                        //         paging:         false,
+                        //         columnDefs: [
+                        //             { width: 200, targets: 0 }
+                        //         ]
+                        //     } );
+                        //     new $.fn.dataTable.FixedColumns( table );
+                        // } );
 
                         searchByColumn(table);
                     } );
