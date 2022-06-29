@@ -427,7 +427,6 @@ class HomeController extends Controller
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
                 if ($colonnes[$i]->COLUMN_NAME!="nom_departement" and $colonnes[$i]->COLUMN_NAME!= "nom_branche" and $colonnes[$i]->COLUMN_NAME!= "nom_service" and $colonnes[$i]->COLUMN_NAME!= "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "genre_id"  and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "sexe_resp" and $colonnes[$i]->COLUMN_NAME != "fonction_resp" and  $colonnes[$i]->COLUMN_NAME != "user_id" and $colonnes[$i]->COLUMN_NAME != "entreprise_id" and   $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "activiter" and $colonnes[$i]->COLUMN_NAME != "prioriter" and   $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
                     if ($testNull[0]->$tempo == null) {
-                        dd($colonnes[$i]->COLUMN_NAME);
                         $nb += 1;
                     }
                 }
