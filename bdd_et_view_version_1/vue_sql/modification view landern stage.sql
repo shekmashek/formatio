@@ -25,7 +25,7 @@
     recopier v_stagiaire_groupe dans suiviformation view 4.0 ou ce script
 */
 
-create or replace view v_stagiaire_groupe as
+create or replace view v_stagiaire_groupe_avant as
 select
         p.id as participant_groupe_id,
         g.id as groupe_id,
@@ -65,35 +65,11 @@ select
         mf.nom_formation,
         mf.nom as nom_cfp,
         mf.cfp_id,
-        mf.logo,
-        case
-            when g.status = 8 then 'Reprogrammer'
-            when g.status = 7 then 'Annulée'
-            when g.status = 6 then 'Reporté'
-            when g.status = 5 then 'Cloturé'
-            when g.status = 2 then
-                case
-                    when (g.date_fin - curdate()) < 0 then 'Terminé'
-                    when (g.date_debut - curdate()) <= 0 then 'En cours'
-                    else 'A venir' end
-            when g.status = 1 then 'Prévisionnel'
-            when g.status = 0 then 'Créer'end item_status_groupe,
-        case
-            when g.status = 8 then 'status_reprogrammer'
-            when g.status = 7 then 'status_annulee'
-            when g.status = 6 then 'status_reporter'
-            when g.status = 5 then 'status_cloturer'
-            when g.status = 2 then
-                case
-                    when (g.date_fin - curdate()) < 0 then 'status_termine'
-                    when (g.date_debut - curdate()) < 0 then 'statut_active'
-                    else 'status_confirme' end
-            when g.status = 1 then 'status_grise'
-            when g.status = 0 then 'Créer'end class_status_groupe
+        mf.logo
     from
-        participant_groupe p
-    join
         groupes g
+    join
+        participant_groupe p
     on g.id = p.groupe_id
     join
         stagiaires s
@@ -104,3 +80,33 @@ select
         on mf.module_id = g.module_id
     join niveau_etude niveau
         on niveau.id = s.niveau_etude_id order by groupe_id desc;
+
+
+create or replace view v_stagiaire_groupe as 
+select
+    *,
+    case
+        when g.status = 8 then 'Reprogrammer'
+        when g.status = 7 then 'Annulée'
+        when g.status = 6 then 'Reporté'
+        when g.status = 5 then 'Cloturé'
+        when g.status = 2 then
+            case
+                when (g.date_fin - curdate()) < 0 then 'Terminé'
+                when (g.date_debut - curdate()) <= 0 then 'En cours'
+                else 'A venir' end
+        when g.status = 1 then 'Prévisionnel'
+        when g.status = 0 then 'Créer'end item_status_groupe,
+    case
+        when g.status = 8 then 'status_reprogrammer'
+        when g.status = 7 then 'status_annulee'
+        when g.status = 6 then 'status_reporter'
+        when g.status = 5 then 'status_cloturer'
+        when g.status = 2 then
+            case
+                when (g.date_fin - curdate()) < 0 then 'status_termine'
+                when (g.date_debut - curdate()) < 0 then 'statut_active'
+                else 'status_confirme' end
+        when g.status = 1 then 'status_grise'
+        when g.status = 0 then 'Créer'end class_status_groupe
+    from v_stagiaire_groupe_avant g;

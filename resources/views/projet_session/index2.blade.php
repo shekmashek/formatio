@@ -2102,13 +2102,16 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             </div>
                         </div>
                         @foreach ($data as $pj)
+                        @php
+                            $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
+                        @endphp
                         <div class="row justify-content-md-center">
-                            <div class="col-md-2" style="background-color:rgba(177, 99, 163, 0.09);;">
+                            <div class="col-md-3" style="background-color:rgba(177, 99, 163, 0.09);;">
                                 <h5 class="p_date mt-5"> {{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
                                 <h6 class="p_date text-black-50">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</h6>
                                 <div class="triangle-right"></div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-9">
                                 <ul class="timeline-1 text-black">{{-- here --}}
                                     @php
                                         $statut_eval = $groupe->statut_valuation_chaud($pj->groupe_id,$pj->stagiaire_id);
@@ -2122,14 +2125,14 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                     @endif
                                         <div class="row mt-2 titre_projet mb-1 pt-2 pb-2 w-100 g-0">
                                             <div class="col-md-1 p-0">
-                                            <h6 class="m-0"><a href="#collapseprojet_{{ $pj->module_id }}" class="mb-0 changer_carret d-flex" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
+                                                <h6 class="m-0"><a href="#collapseprojet_{{ $pj->groupe_id }}" class="mb-0 changer_carret d-flex" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
                                             </div>
                                             <div class="col-md-2 text-start">
                                                 <h6>{{ $pj->nom_module }}</h6>
                                                 <span class="text-black-50">{{ $pj->nom_formation }}</span>
                                             </div>
-                                            <div class="col-md-2 p-0 d-flex justify-content-start">
-                                                <img src="{{ asset('images/CFP/' . $pj->logo) }}" alt="{{ $pj->logo }}" style="width:64px;height:64px"/>
+                                            <div class="col-md-1 p-0 d-flex justify-content-start">
+                                                <img src="{{ asset('images/CFP/' . $pj->logo) }}" alt="{{ $pj->logo }}" style="width:64px;height:32px"/>
                                             </div>
                                             <div class="col-md-1 p-0 d-flex justify-content-start">
                                                 <a href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" class="m-0 ps-1 pe-1 pdf_download"><button class="btn" style="width:57x;height:20px;font-size: 11px;padding-top: initial;"><i class="bx bxs-file-pdf"></i>PDF</button></a>
@@ -2147,17 +2150,22 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                             <div class="col-md-2 p-0 d-flex justify-content-start">
                                                 <p class="{{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
                                             </div>
+                                            @if($reponse == 1)
+                                                <div class="col-md-2 p-0 d-flex justify-content-start">
+                                                    <a class="btn_eval_stg" href="{{ route('evaluation_froid',[$pj->groupe_id]) }}" style="color: #ffffff !important">Evaluation à froid</a>
+                                                </div>
+                                            @endif
                                         </div>
-                                        <div class="collapse" id="collapseprojet_{{ $pj->module_id }}">
+                                        <div class="collapse" id="collapseprojet_{{ $pj->groupe_id }}">
                                             {{-- section --}}
                                             <section>
                                                 <div class="row bg-light p-0 d-flex flex-row" role="tabpanel">
                                                     <div class="col-md-2 nav_session">
                                                         <div class="corps_planning m-0 bg-light" id="myTab" data-id="refresh" role="tablist">
                                                             <div class="nav-item active" role="presentation">
-                                                                <a href="#detail_{{ $pj->module_id }}" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
+                                                                <a href="#detail" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
                                                                     role="tab" aria-controls="home" aria-selected="true">
-                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between active detail-tab_{{ $pj->module_id }}" onclick="openCity(event, 'detail_{{ $pj->module_id }}')" style="width: 100%">
+                                                                    <button class="planning d-flex justify-content-between active detail-tab" onclick="openCity(event, 'detail')" style="width: 100%">
                                                                         <p class="m-0 pt-2 pb-2">PLANNING</p>
                                                                         {{-- @if ($test == 0)
                                                                             <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
@@ -2169,17 +2177,17 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                 </a>
                                                             </div>
                                                             <div class="nav-item" role="presentation">
-                                                                <a href="#apprenant_{{ $pj->module_id }}" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
+                                                                <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                                                     role="tab" aria-controls="home" aria-selected="true">
-                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between apprenant-tab_{{ $pj->module_id }}" onclick="openCity(event, 'apprenant_{{ $pj->module_id }}')" style="width: 100%">
+                                                                    <button class="planning d-flex justify-content-between apprenant-tab" onclick="openCity(event, 'apprenant')" style="width: 100%">
                                                                         <p class="m-0 pt-2 pb-2">APPRENANTS</p>
                                                                     </button>
                                                                 </a>
                                                             </div>
                                                             <div class="nav-item" role="presentation">
-                                                                <a href="#ressource_{{ $pj->module_id }}" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
+                                                                <a href="#ressource" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
                                                                     role="tab" aria-controls="home" aria-selected="true">
-                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between action_animation ressource-tab_{{ $pj->module_id }}" onclick="openCity(event, 'ressource_{{ $pj->module_id }}')" style="width: 100%">
+                                                                    <button class="planning d-flex justify-content-between action_animation ressource-tab" onclick="openCity(event, 'ressource')" style="width: 100%">
                                                                         <p class="m-0 pt-2 pb-2">RESSOURCES</p>
                                                                         {{-- @if (count($ressource) == 0)
                                                                             <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
@@ -2189,18 +2197,18 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                     </button>
                                                                 </a>
                                                             </div>
-                                                            <div class="nav-item" role="presentation">
-                                                                <a href="#document_{{ $pj->module_id }}" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
+                                                            {{-- <div class="nav-item" role="presentation">
+                                                                <a href="#document_{{ $pj->groupe_id }}" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
                                                                     role="tab" aria-controls="home" aria-selected="true">
-                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between document-tab_{{ $pj->module_id }}" onclick="openCity(event, 'document_{{ $pj->module_id }}')" style="width: 100%">
+                                                                    <button class="planning_{{ $pj->groupe_id }} d-flex justify-content-between document-tab_{{ $pj->module_id }}" onclick="openCity(event, 'document_{{ $pj->module_id }}')" style="width: 100%">
                                                                         <p class="m-0 pt-2 pb-2">DOCUMENTS</p>
                                                                     </button>
                                                                 </a>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                     <div class="tab-content col-md-10">
-                                                        <div class="tab-pane fade show active tabcontent_{{ $pj->module_id }}" id="detail_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="detail-tab" style="display: block">
+                                                        <div class="tab-pane fade show active tabcontent" id="detail" role="tabpanel" aria-labelledby="detail-tab" style="display: block">
                                                             <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
                                                                 <thead style="border-bottom: 1px solid black; line-height: 20px">
                                                                     <td>Séance</td>
@@ -2216,7 +2224,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                         $i = 1;
                                                                     @endphp
                                                                     @foreach ($data_detail as $dt)
-                                                                    @if($pj->module_id == $dt->module_id)
+                                                                    @if($pj->groupe_id == $dt->groupe_id)
                                                                         <tr>
                                                                             <td>{{ $i }}</td>
                                                                             <td>{{ $dt->nom_module }}</td>
@@ -2234,10 +2242,8 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <div id="document_{{ $pj->module_id }}" class="tab-pane fade show tabcontent_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="document-tab" style="display: none">
-                                                            {{-- @php
-                                                                $documents = getImageModel::file_list($pj->groupe_id,"Mes documents");
-                                                            @endphp --}}
+                                                        {{-- <div id="document_{{ $pj->groupe_id }}" class="tab-pane fade show tabcontent_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="document-tab" style="display: none">
+                    
                                                             <nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
                                                                 <span class="titre_detail_session"><strong style="font-size: 14px">Les documents pour la session</strong></span>
                                                             </nav>
@@ -2250,8 +2256,8 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                     @endforeach
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="apprenant_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
+                                                        </div> --}}
+                                                        <div class="tab-pane fade show tabcontent" id="apprenant" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
                                                             <div style="display: inline-block">
                                                                 @foreach($stagiaire as $stg)
                                                                     @if($pj->module_id == $stg->module_id)
@@ -2262,7 +2268,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                 @endforeach
                                                             </div>
                                                         </div>
-                                                        <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="ressource_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
+                                                        <div class="tab-pane fade show tabcontent" id="ressource" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
                                                            {{--  @if (count($ressource)>0) --}}
                                                                 <div class="mb-3 pe-5 ps-1 col-12 pb-5">
                                                                     <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
@@ -2334,26 +2340,24 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             </div>
                         </div>
                         <script>
-                            $('.document-tab_'.$pj->module_id).on('click',function(e){
-                                localStorage.setItem('activeTab', 'document_'.$pj->module_id);
+                            alert('eto');
+                            $('.ressource-tab').on('click',function(e){
+                                localStorage.setItem('activeTabStg', 'ressource');
                             });
-                            $('.ressource-tab_'.$pj->module_id).on('click',function(e){
-                                localStorage.setItem('activeTab', 'ressource_'.$pj->module_id);
+                            $('.apprenant-tab').on('click',function(e){
+                                localStorage.setItem('activeTabStg', 'apprenant');
                             });
-                            $('.apprenant-tab_'.$pj->module_id).on('click',function(e){
-                                console.log("here");
-                                localStorage.setItem('activeTab', 'apprenant_'.$pj->module_id);
-                            });
-                            $('.detail-tab_'.$pj->module_id).on('click',function(e){
-                                localStorage.setItem('activeTab', 'detail_'.$pj->module_id);
+                            $('.detail-tab').on('click',function(e){
+                                
+                                localStorage.setItem('activeTabStg', 'detail');
                             });
 
-                            let activeTab = localStorage.getItem('activeTab');
+                            let activeTab = localStorage.getItem('activeTabStg');
 
                             if(activeTab){
-                                $('.tabcontent_'.$pj->module_id).css('display','none');
+                                $('.tabcontent').css('display','none');
                                 $('#' + activeTab).show();
-                                tablinks = document.getElementsByClassName("planning_".$pj->module_id);
+                                tablinks = document.getElementsByClassName("planning_".$pj->groupe_id);
                                 for (i = 0; i < tablinks.length; i++) {
                                     tablinks[i].className = tablinks[i].className.replace(" active", "");
                                 }
