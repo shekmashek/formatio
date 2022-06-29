@@ -119,7 +119,7 @@
                             <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
                         </div>
                     </a>
-                    @if($avis_etoile[0]->pourcentage != null)
+                    @if($avis_etoile != null)
                     <div class="d-flex flex-row justify-content-center mt-2">
                         @if($avis_etoile[0]->pourcentage != null)
                             <div class="Stars" style="--note: {{ $avis_etoile[0]->pourcentage }};"></div>
