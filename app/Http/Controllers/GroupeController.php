@@ -231,7 +231,7 @@ class GroupeController extends Controller
         $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
         /**annee courante */
         $current_month = Carbon::now()->month;
-        $nb_projet = DB::select('SELECT * from projets where cfp_id = ? and YEAR(date_projet) = ? ',[$cfp_id,$current_month]);
+        $nb_projet = DB::select('SELECT * from projets where cfp_id = ? and YEAR(created_at) = ? ',[$cfp_id,$current_month]);
 
          // $nb_projet = $fonct->findWhere("v_session_projet",["cfp_id"],[$cfp_id]);
          /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le projet à ajouter */

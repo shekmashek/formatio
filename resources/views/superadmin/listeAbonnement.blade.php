@@ -161,8 +161,8 @@
                                     <td><a href="{{route('detail_facture_abonnement',$fact->facture_id)}}" style="text-decoration: underline">{{$fact->num_facture}}</a></td>
                                     <td>{{$fact->nom_type}}&nbsp,&nbspMensuel</td>
                                     <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
-                                    <td>{{$fact->invoice_date}}</td>
-                                    <td>{{$fact->due_date}}</td>
+                                    <td> @php echo date("d-m-Y",strtotime($fact->invoice_date)) @endphp</td>
+                                    <td> @php echo date("d-m-Y",strtotime($fact->due_date)) @endphp</td>
                                     @if($fact->status_facture == "Non payé")
                                         <td><span style="background-color: red;padding:5px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
                                     @else
@@ -206,10 +206,10 @@
                             @php $i = 0; @endphp
                             @foreach ($facture as $fact )
                                 <tr>
-                                    <td>{{$fact->invoice_date}}</td>
 
+                                    <td> @php echo date("d-m-Y",strtotime($fact->invoice_date)) @endphp</td>
                                     <td>{{$fact->nom_type}}&nbsp;, Mensuel, &nbsp; {{number_format($fact->montant_facture, 0, ',', '.')}}Ar</td>
-                                    <td>{{$facture_suivant[$i]}}</td>
+                                    <td> @php echo date("d-m-Y",strtotime($facture_suivant[$i])) @endphp</td>
                                     @if($fact->activite == 1)
                                         <td><span style="background-color: green;padding:5px;color:white;border-radius:10px"> En cours </span></td>
                                     @elseif ($fact->status == "En attente")
