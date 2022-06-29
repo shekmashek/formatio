@@ -984,7 +984,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
 
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
-            @canany(['isReferent', 'isCFP', 'isFormateur'])
+            @canany(['isReferent','isReferentSimple','isManager', 'isCFP', 'isFormateur'])
                 <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
                         {{ $nb_projet }}</span>
                     @if ($nb_par_page >= $nb_projet)
@@ -1967,7 +1967,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                         </table>
                     @endif
                 @endcan
-                @can('isReferent')
+                @canany(['isReferent','isReferentSimple','isManager'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
@@ -2071,7 +2071,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             </tbody>
                         </table>
                     @endif
-                @endcan
+                @endcanany
                 @can('isStagiaire')
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
@@ -2376,7 +2376,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
                 </div>
                 <hr class="mt-2">
-                @canany(['isReferent', 'isCFP','isStagiaire'])
+                @canany(['isReferent', 'isCFP','isStagiaire','isReferentSimple','isManager'])
                     <div class="col-12 pe-3">
                         <div class="row mb-3 p-2 pt-0">
                             <form action="{{ route('liste_projet') }}" method="GET">
@@ -2465,7 +2465,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     </div>
                 </div>
                 @endcan
-                @can('isReferent')
+                @canany(['isReferent','isReferentSimple','isManager'])
                     <div class="row px-3 mt-2">
                         <form action="{{ route('recherche_cfp') }}" method="POST">
                             @csrf
@@ -2478,7 +2478,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             </div>
                         </form>
                     </div>
-                @endcan
+                @endcanany
                 {{-- @can('isCFP')
                 <div class="row px-3 mt-2">
                     <form  action="{{ route('recherche_entreprise') }}" method="POST">
@@ -2493,14 +2493,14 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     </form>
                 </div>
                 @endcan --}}
-                @canany(['isReferent', 'isCFP'])
+                @canany(['isReferent','isReferentSimple','isManager', 'isCFP'])
+                    <div class="col-12 ps-5">
+                @endcanany
+                @canany(['isFormateur', 'isStagiaire'])
                     <div class="col-12 ps-5">
                     @endcanany
-                    @canany(['isFormateur', 'isStagiaire'])
-                        <div class="col-12 ps-5">
-                        @endcanany
                     </div>
-                </div>
+                    </div>
 
                 {{--info Entreprise --}}
                 <div class="infos mt-3">

@@ -15,3 +15,12 @@ Modify column  `cin` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
 Modify column  `specialite` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
 Modify column  `niveau_etude_id` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
 Modify column `activiter` boolean  null default true;
+
+SELECT *
+FROM
+`v_groupe_projet_entreprise`
+WHERE projet_id in (
+    select projet_id
+    from v_stagiaire_groupe
+    where departement_id = 2
+);
