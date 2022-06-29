@@ -403,8 +403,14 @@
                                             </td>
                                             <td class="align-middle text-center text-secondary">
                                                 <p class="text-muted mb-0">
-                                                    {{ $employers[$i]->nom_departement != null ? $employers[$i]->nom_departement : '----' }} <br>
-                                                    {{ $employers[$i]->nom_service != null ? $employers[$i]->nom_service : '----' }} <br>
+                                                    @if($employers[$i]->nom_departement == null OR  $employers[$i]->nom_service == null)
+                                                    Non catégorisé
+                                                    @else
+                                                       {{$employers[$i]->nom_departement}} <br>
+                                                        {{$employers[$i]->nom_service}}
+                                                    @endif
+                                                    {{-- {{ $employers[$i]->nom_departement != null ? $employers[$i]->nom_departement : 'Non catégorisé' }} <br>
+                                                    {{ $employers[$i]->nom_service != null ? $employers[$i]->nom_service : 'Non catégorisé' }} <br> --}}
                                                 </p>
                                             </td>
                                             @can('isReferent')
