@@ -1473,7 +1473,9 @@ Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
 
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
-
 Route::get('/teste', 'PlanFormationController@teste');
+
+Route::get('/valideStatut/{id}','PlanFormationController@valideStatut')->name('valideStatut');
+Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('refuseSatut');
 
 

@@ -62,9 +62,8 @@
                                                     <p>Modification effectué avec succes &nbsp; 👏🏻</p>
                                                 </div>
                                             @endif
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    
+                                            <table class="table table-hover text-secondary" style="font-size: .8rem;">
+                                                <thead class="" >
                                                     <th>Domaine de formation</th>
                                                     <th>Thematique</th>
                                                     <th>Date</th>
@@ -82,23 +81,43 @@
                                                         <form action="{{route('besoin.modif',$be->id)}}" method="POST">
                                                             @csrf
                                                             <tr>
-                                                                <td><input  class="form-control inp{{$be->id}}" type="hidden" name="domaine" id="domaine{{$be->id}}" value="" ><span class="spa{{$be->id}}"> {{$be->domaine->nom_domaine}}</span></td>
-                                                                <td><input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span></td>
-                                                                <td><input type="hidden"  class="form-control inp{{$be->id}}" name="date" id="date{{$be->id}}" value="" ><span class="spa{{$be->id}}">@php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp </span></td>
-                                                                <td><input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->organisme}}</span></td>
-                                                                <td><span class="badge bg-warning">En attente</span></td>
+                                                                <td>
+                                                                    <input  class="form-control inp{{$be->id}}" type="hidden" name="domaine" id="domaine{{$be->id}}" value="" >
+                                                                    <span class="spa{{$be->id}}"> {{$be->domaine->nom_domaine}}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" >
+                                                                    <span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden"  class="form-control inp{{$be->id}}" name="date" id="date{{$be->id}}" value="" >
+                                                                    <span class="spa{{$be->id}}">@php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp </span>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" >
+                                                                    <span class="spa{{$be->id}}">{{$be->organisme}}</span>
+                                                                </td>
+                                                                <td>
+                                                                    @if ($be->statut == 0)
+                                                                        <span class="bg-warning p-1 rounded text-white">En attente</span>
+                                                                    @elseif ($be->statut == 1)
+                                                                        <span class="p-1 rounded text-white" style="background:#41D053;">Validé</span>
+                                                                    @elseif ($be->statut == 2)
+                                                                        <span class="p-1 rounded text-white" style="background:#f54c49;">Refusé</span>
+                                                                    @endif
+                                                                </td>
                                                                 <td><select style="border:#0dcaf0 1px solid" hidden class="form-control inp{{$be->id}}" name="type" id="type{{$be->id}}" aria-placeholder="tetret" >
-                                                                        <option value="{{$be->type}}" disable selected hidden>{{$be->type}}</option>
+                                                                        <option value="{{$be->type}}" disabled selected hidden>{{$be->type}}</option>
                                                                         <option value="urgent">urgent</option>
-                                                                        <option value="non-urget">non-urgent</option>
+                                                                        <option value="non-urgent">non-urgent</option>
                                                                     </select>
                                                                     <span class="spa{{$be->id}}">{{$be->type}}</span></td>
                                                                 @if(strtotime($p->fin_rec) > strtotime('now') )
                                                                 <td>
-                                                                    <a id="but{{$be->id}}" onclick='modifier({{$be->id}},"{{$be->domaine->nom_domaine}}","{{$be->formation->nom_formation}}","{{$be->date_previsionnelle}}","{{$be->organisme}}","{{$be->type}}");'  class="btn btn-info text-light">
+                                                                    <a id="but{{$be->id}}" onclick='modifier({{$be->id}},"{{$be->domaine->nom_domaine}}","{{$be->formation->nom_formation}}","{{$be->date_previsionnelle}}","{{$be->organisme}}","{{$be->type}}");' class="btn btn-info btn-sm text-light">
                                                                         <i  class="fa-solid fa-pen-to-square"></i></a>
-                                                                    <a id="supp{{$be->id}}" href="" class="btn btn-danger text-light" onclick="return confirm('La suppression sera irréversible !')"><i class="fa-solid fa-trash-can"></i></a>
-                                                                    <button type="submit" id="mod{{$be->id}}" style="display: none;margin-left:12px" href="" style="background-color: " class="btn btn text-light saf">Modifier</button>
+                                                                    <a id="supp{{$be->id}}" href="" class="btn btn-danger btn-sm text-light" onclick="return confirm('La suppression sera irréversible !')"><i class="fa-solid fa-trash-can"></i></a>
+                                                                    <button type="submit" id="mod{{$be->id}}" style="display: none;margin-left:12px" href="" style="background-color: " class="btn btn-sm text-light saf">Modifier</button>
                                                                 </td>
                                                                 @endif
                                                             </tr>
@@ -145,23 +164,30 @@
         var n ='mod'+id;
         var o = 'type'+id;
         var x = 'opt'+id;
+
+        ///cacher span td
        var element = document.getElementsByClassName(a);
        for(var i=0;i<element.length;i++)
         {
         element[i].style.display='none';
         }
+
+        ///affiche input
        var input = document.getElementsByClassName(b);
        for(var i=0;i<input.length;i++)
         {
         input[i].type='text';
         input[2].type='month';
         }
+
+        ///manome valeur input
         document.getElementById(d).value = domaine;
         document.getElementById(e).value = formation;
         document.getElementById(f).value = date;
         document.getElementById(j).value = organisme;
         document.getElementById(o).value = type;
-       
+
+       ////input type select
         var g =document.getElementById(h);
         g.style.display = "none";
         var k =document.getElementById(m);

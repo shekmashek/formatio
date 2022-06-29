@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\PlanFormation;
 use App\recueil_information;
 use App\stagiaire;
+use App\ChefDepartement;
 use App\responsable;
 use App\Domaine;
 use App\formation;
@@ -48,8 +49,6 @@ class PlanFormationController extends Controller
         $collaborateur_id = stagiaire::where('user_id', $users_id)->value('user_id');
         // $besoin = DB::select('select * from besoin_stagiaire where stagiaire_id = ?',[$stagiaire_id]);
         $besoin = besoins::where('stagiaire_id',$stagiaire_id)->get();
-
-        // dd($besoin->domaine);
 
         // foreach ($besoin as $b){
         //     $domaines_id = $b->domaines_id;
@@ -230,14 +229,27 @@ class PlanFormationController extends Controller
     {
         $fonct = new FonctionGenerique();
         $users = Auth::user()->id;
-        $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
-        $plan = DB::select('select * from plan_formation_valide where entreprise_id = ?', [$entreprise_id]);
-        foreach($plan as $p){
-            $id = $p->id;
+        $besoins ="";
+        
+        // $role_id = User::where('email', Auth::user()->email)->value('role_id');
+        
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
+            $liste = recueil_information::with('formation', 'annee_plan')->where('entreprise_id', $entreprise_id)->get();
         }
-        
-        $besoin_count = $fonct->findWhere("besoin_stagiaire",["anneePlan_id"],[$id]);
-        
+
+        if (Gate::allows('isManager')) {
+            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+            $besoins = besoins::where('entreprise_id',$entreprise_id)->get();
+            // $liste = recueil_information::with('formation', 'annee_plan')->where('entreprise_id', $entreprise_id)->get();
+
+        }
+        $plan = DB::select('select * from plan_formation_valide where entreprise_id = ?', [$entreprise_id]);
+        // foreach($plan as $p){
+        //     $id = $p->id;
+        // }
+       
+       
         $employ = DB::select('select * from stagiaires where entreprise_id = ?', [$entreprise_id]);
         $nombr = count($employ);
         $yearNow = Carbon::now()->format('Y');
@@ -245,30 +257,48 @@ class PlanFormationController extends Controller
         $test = annee_plan::where('Annee', $yearNow)->exists();
         $domaine = Domaine::all();
         $stagiaire = stagiaire::all();
-        
-        // $role_id = User::where('email', Auth::user()->email)->value('role_id');
-        
-        if (Gate::allows('isReferent')) {
-            $liste = recueil_information::with('formation', 'annee_plan')->where('entreprise_id', $entreprise_id)->get();
-        }
-
-        if (Gate::allows('isManager')) {
-
-            // $liste = recueil_information::with('formation', 'annee_plan')->where('entreprise_id', $entreprise_id)->get();
-
-        }
-
-
-        if (Gate::allows('isSuperAdmin')) {
-
-            $liste = recueil_information::with('formation')->get();
-        }
         // echo ($entreprise_id);
-        return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoin_count'));
+        return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoins'));
         // return view('referent.listeDemandeFormation',compact('entreprise_id','plan','employ','nombr'));
         
     }
 
+    public function valideStatut($id){
+        $users = Auth::user()->id;
+        $status = 1;
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
+        }
+
+        if (Gate::allows('isManager')) {
+            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+        }
+        $data =DB::table('besoin_stagiaire')
+        ->where('id',$id)
+        ->where('entreprise_id',$entreprise_id)
+        ->update(['statut'=>$status]);
+        if($data){
+            return back();
+        }
+    }
+    public function refuseSatut($id){
+        $users = Auth::user()->id;
+        $status = 2;
+        if (Gate::allows('isReferent')) {
+            $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
+        }
+
+        if (Gate::allows('isManager')) {
+            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+        }
+        $data =DB::table('besoin_stagiaire')
+        ->where('id',$id)
+        ->where('entreprise_id',$entreprise_id)
+        ->update(['statut'=>$status]);
+        if($data){
+            return back();
+        }
+    }
 
     public function show()
     {

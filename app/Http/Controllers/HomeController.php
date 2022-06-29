@@ -197,7 +197,7 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
-        // dd(Auth::user()->id);
+      
         if (Gate::allows('isFormateurPrincipale')) {
             return redirect()->route('calendrier');
         }
