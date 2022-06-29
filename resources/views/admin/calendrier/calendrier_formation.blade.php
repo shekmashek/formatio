@@ -276,7 +276,7 @@
                         <div>
                             <i class='bx bx-building-house ms-3' style="font-size: 1rem;"></i> </label> &nbsp;<label id="etp" class="contenu"> </label> <label for="logo" id="logo_etp"></label>
                             <i class='bx bx-buildings ms-3' style="font-size: 1rem;"></i><label id="cfp" class="contenu"> </label><label for="logo" id="logo_cfp"></label><br>
-                            <label class="ps-3 pt-2"">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
+                            <label class="ps-3 pt-2">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
 
                         </div>
 
@@ -406,6 +406,7 @@
                 , success: function(data) {
                     var event = Array();
                     var userDataDetail = JSON.parse(data);
+                    console.log("allEventEntreprise",userDataDetail);
                     var details = userDataDetail['details'];
 
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
@@ -538,6 +539,7 @@
                                         // alert(JSON.stringify(response));
 
                                         var userDataDetail = JSON.parse(response);
+                                        console.log("information_module",userDataDetail);
                                         // alert(userData.length);
                                         var userData = userDataDetail['detail'];
 
