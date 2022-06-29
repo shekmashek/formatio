@@ -94,7 +94,7 @@
                                         <div class="row ">
                                             <div class="col">
                                                 <div class="float-start">
-                                                    <p>Nombre des besooin  exprimer par les salarier</p>
+                                                    <p>Nombre des besoins  exprimer par les salarier</p>
                                                 </div>
                                                 <div class="float-end">
                                                     
@@ -107,7 +107,7 @@
                                             
                                                 <div>
                                                     <span  class="te "><a href="{{route('liste.demande',$p->id)}}" class="btn btn-info mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
-                                                    <span class="te "> <a href="" class="btn btn-primary mt-2 text-light"> <i class="fa-solid fa-file-pdf" ></i>&nbsp; Export liste</a> </span>
+                                                    <span class="te "> <a href="{{route('besoin.PDF',$p->id)}}" class="btn btn-primary mt-2 text-light"> <i class="fa-solid fa-file-pdf" ></i>&nbsp; Export liste</a> </span>
 
                                             </div>
                                         </div>

@@ -20,15 +20,17 @@
                     <a href="{{route('besoin.PDF',$ids)}}" class="btn btn-primary text-light">
                         Export PDF
                     </a>
-                    <a href="/liste_demande_stagiaire" class="btn btn-dark text-light"> Retour</a>
+                    <a href="/liste_demande_stagiaire" class="btn btn-dark text-light"><i class="fa-solid fa-caret-left"></i>&nbsp; Retour</a>
                 </div>
             </div>
             <div class="col-md-12 mt-4">
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th>IM</th>
                             <th>Nom stagiaire</th>
                             <th>Email</th>
+                            <th>Fonction</th>
                             <th>domaine de formation</th>
                             <th>thematique</th>
                             <th>date prévisionnelle</th>
@@ -41,6 +43,22 @@
                         
                         @foreach ($stagiaire as $st)
                         <tr>
+                            <td>
+                                @foreach ($besoin as $be)
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                        <?php $mat = $be->stagiaire->matricule;
+                                        break;?>
+                                        
+                                    @else
+                                    <?php $mat = '';
+                                        
+                                    ?>
+                                    @endif
+                               @endforeach
+                                @if(isset($mat)) 
+                                    {{ $mat }}
+                                @endif
+                            </td>
                             <td>
                                 @foreach ($besoin as $be)
                                     @if ($be->stagiaire_id == $st->stagiaire_id)            
@@ -67,6 +85,18 @@
                                 @endforeach
                                 @if(isset($email)) 
                                 {{ $email}}
+                                @endif
+                            </td>
+                            <td>
+                                @foreach ($besoin as $be)
+                                @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                    <?php $fonc = $st->fonction_stagiaire ?>
+                                   
+                                    
+                                    @endif 
+                                @endforeach
+                                @if(isset($fonc)) 
+                                {{ $fonc}}
                                 @endif
                             </td>
                             <td>    

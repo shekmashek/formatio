@@ -72,7 +72,7 @@
             },
             success: function(response) {
                 var b = response;
-                $('#err').html('<i class="fa-solid fa-triangle-exclamation mt-1"></i>&nbsp;'+'<p>'+b+' </p>');
+                $('#err').html('<i class="fa-solid fa--exclamation mt-1"></i>&nbsp;'+'<p>'+b+' </p>');
             },
         });
     });

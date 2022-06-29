@@ -31,13 +31,27 @@ class PlanFormationController extends Controller
             return $next($request);
         });
     }
-    public function besoin_PDF($id){
+    public function besoin_PD($id){
         $users_id = Auth::user()->id;
-        $entreprise_id = stagiaire::where('user_id', $users_id)->value('entreprise_id');
+        $plan = PlanFormation::where('id',$id)->get();
+        $entreprise_id = responsable::where('user_id',$users_id)->value('entreprise_id');
+
+        $entreprise = entreprise::where('id',$entreprise_id)->get();
+        foreach($entreprise as $ent)
+        {
+           $nom_etp = $ent->nom_etp;
+        }
+        // $entreprise = entreprise::where('id',$entreprise_id)->get();
         $besoin = besoins::where('anneePlan_id',$id)->get();
-        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire');
+        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire');
+
         
-        return view('referent.projet_interne.');
+        $pdf = PDF::loadView('referent.projet_interne.besoin_PDF', compact('plan','entreprise','stagiaire','besoin'))->setPaper('a4', 'landscape');;
+        
+        return $pdf->download('plan_previesionele_.pdf');
+    
+        // return view('referent.projet_interne.besoin_PDF',compact('plan','entreprise','stagiaire','besoin'));
+        
     }
     public function index()
     {
@@ -64,7 +78,10 @@ class PlanFormationController extends Controller
         // $liste_formation = formation::orderBy('nom_formation')->get();
         return view('stagiaire.formulairePlanDeFormation', compact('plan','collaborateur_id','besoin'));
     }
-    
+    public function delete($id){
+        $besoin = DB::table('besoin_stagiaire')->where('id',$id)->delete();
+        return redirect()->back()->with('delete','supression éffectuer avec succes');
+    }
     public function ajout($id){
         $entreprise_id = $id;
         return view('referent.ajout_plan',compact('entreprise_id'));
@@ -104,7 +121,7 @@ class PlanFormationController extends Controller
     public function liste($id)
     {
         $besoin = besoins::where('anneePlan_id',$id)->get();
-        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire');
+        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire');
         $ids = $id;
 
         // dd('end');
@@ -163,7 +180,7 @@ class PlanFormationController extends Controller
             'anneePlan_id'=>'required',
             'objectif'=>'required',
             'date_previsionnelle'=>'required',
-            'organisme'=>'required',
+           
             'type'=>'required'
         ]);
         besoins::create($request->all());
@@ -264,7 +281,7 @@ class PlanFormationController extends Controller
             $liste = recueil_information::with('formation')->get();
         }
         // echo ($entreprise_id);
-        return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoin_count'));
+        return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr'));
         // return view('referent.listeDemandeFormation',compact('entreprise_id','plan','employ','nombr'));
         
     }

@@ -62,6 +62,11 @@
                                                     <p>Modification effectué avec succes &nbsp; 👏🏻</p>
                                                 </div>
                                             @endif
+                                            @if(session()->has('delete'))
+                                                <div class="alert alert-danger" style="height: 60px">
+                                                    <p>Demande supprimer &nbsp; <span>🥺</span> </p>
+                                                </div>
+                                            @endif
                                             <table class="table table-hover">
                                                 <thead>
                                                     
@@ -90,14 +95,14 @@
                                                                 <td><select style="border:#0dcaf0 1px solid" hidden class="form-control inp{{$be->id}}" name="type" id="type{{$be->id}}" aria-placeholder="tetret" >
                                                                         <option value="{{$be->type}}" disable selected hidden>{{$be->type}}</option>
                                                                         <option value="urgent">urgent</option>
-                                                                        <option value="non-urget">non-urgent</option>
+                                                                        <option value="non-urgent">non-urgent</option>
                                                                     </select>
                                                                     <span class="spa{{$be->id}}">{{$be->type}}</span></td>
                                                                 @if(strtotime($p->fin_rec) > strtotime('now') )
                                                                 <td>
                                                                     <a id="but{{$be->id}}" onclick='modifier({{$be->id}},"{{$be->domaine->nom_domaine}}","{{$be->formation->nom_formation}}","{{$be->date_previsionnelle}}","{{$be->organisme}}","{{$be->type}}");'  class="btn btn-info text-light">
                                                                         <i  class="fa-solid fa-pen-to-square"></i></a>
-                                                                    <a id="supp{{$be->id}}" href="" class="btn btn-danger text-light" onclick="return confirm('La suppression sera irréversible !')"><i class="fa-solid fa-trash-can"></i></a>
+                                                                    <a id="supp{{$be->id}}" href="{{route('besoin.delete',$be->id)}}" class="btn btn-danger text-light" onclick="return confirm('La suppression sera irréversible !')"><i class="fa-solid fa-trash-can"></i></a>
                                                                     <button type="submit" id="mod{{$be->id}}" style="display: none;margin-left:12px" href="" style="background-color: " class="btn btn text-light saf">Modifier</button>
                                                                 </td>
                                                                 @endif
