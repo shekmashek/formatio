@@ -15,13 +15,13 @@
         margin-left: 19%;
         margin-top: 15%;
         height: 100%;
-        
+
     }
     .form{
         margin-top: 35%;
-        
+
         padding: 50px;
-       
+
 
     }
     .form h2{
@@ -48,13 +48,13 @@
     }
     .form-group label{
         font-family: Helvetica,Arial,serif;
-        
+
         font-size: 12px;
         font-weight: 400;
         line-height: 1.45;
         color: #6e6b7b;
-        
-       
+
+
     }
     .form-control{
         height: 35px;
@@ -62,9 +62,9 @@
     .form-control:focus{
        border: #7367f0 1px solid;
        box-shadow: 0 5px 30px rgba(0, 0, 0, .1);
-       
+
     }
-    
+
     #tes:focus{
         box-shadow: none;
         outline: none;
@@ -72,7 +72,7 @@
     a{
         color: #7367f0;
         text-decoration: none;
-        
+
     }
     span:hover{
         transform: scale(1);
@@ -82,9 +82,9 @@
         .img{
             /* width: 500px; */
             display: none;
-            
+
         }
-        
+
         .form{
             position: relative;
             padding: 100px;
@@ -96,7 +96,7 @@
             left: 50%;
             transform: translate(-50%,-50%); */
         }
-        body{ 
+        body{
             margin: 0;
             padding: 0;
         }
@@ -105,22 +105,22 @@
         .img{
             width: 400px;
             margin-top: 20%;
-            
+
             /* display: none; */
         }
         .form{
             margin-top: 50%;
-            
-        } 
+
+        }
     }
-    
+
 </style>
 <body>
     <div class="col-3 d-flex flex-row padding_logo" style="margin-left: 50px;">
-        
+
     </div>
     <div class="container-fluid">
-        
+
         <div class="row">
             <div class="col-lg-8 tt">
                 <div class="img">
@@ -144,13 +144,13 @@
                         </div>
                         <div class="form-group">
                             <label for="">Mot de passe</label>
-                            
+
                         </div>
                         <div class="input-group">
                             <input type="password" name="password" id="password"  class="form-control" aria-label="Amount (to the nearest dollar)">
                             <div class="input-group-append">
                             <span class="input-group-text" style="height: 35px;"><i class="fa-solid fa-eye align-middle" onclick="affiche()" ></i></span>
-                            
+
                             </div>
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -161,23 +161,23 @@
                         <a href="{{ route('password.request') }}" >Mot de passe oublie?</a>
                         <button type="submit" id="tes"    class=" btn btn-info btn-block mt-2" style="width:100%;background-color: #7367f0;color: white;"> Se connecter</button>
                     </form>
-                    <p class="text-center mt-2"> Nouveaux dans le plateforme? <a href="{{route('create+compte+client')}}">Crée une compte</a> </p>
+                    <p class="text-center mt-2"> Nouveaux dans le plateforme? <a href="{{route('create+compte+client')}}">Créer un compte</a> </p>
                 </div>
                 {{-- <hr style="padding: 100px"> --}}
             </div>
         </div>
     </div>
-    
+
 </body>
 <script>
     function affiche(){
-        
+
         var input = document.getElementById("password");
         if (input.type === "password") {
             input.type = 'text'
         } else {
             input.type = 'password'
         }
-    }    
+    }
 </script>
 </html>

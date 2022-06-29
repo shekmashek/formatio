@@ -165,7 +165,7 @@ CREATE TABLE cfps (
   logo varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
   site_web varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT  'XXXXXXX',
-  url_logo varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  url_logo varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE horaires (

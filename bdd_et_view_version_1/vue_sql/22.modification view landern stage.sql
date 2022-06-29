@@ -1,8 +1,4 @@
 
-/* Modification v_participant_groupe_detail(suiviformation view 4.0) 
-
-    recopier v_participant_groupe_detail dans suiviformation view 4.0 ou ce script
- */
 
  create or replace view v_participant_groupe_detail as
     select
@@ -20,10 +16,6 @@
     from v_stagiaire_groupe sg
     join details d on sg.groupe_id = d.groupe_id
     join formateurs on formateurs.id = d.formateur_id;
-
-/* Modification v_stagiaire_groupe(suiviformation view 4.0)  
-    recopier v_stagiaire_groupe dans suiviformation view 4.0 ou ce script
-*/
 
 create or replace view v_stagiaire_groupe as
 select
