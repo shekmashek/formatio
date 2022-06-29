@@ -143,9 +143,14 @@ class PlanFormationController extends Controller
 
     }
     
-    public function listeV()
+    public function listeV($id)
     {
-        return view('referent.projet_Interne.listeValide');
+        $besoin = besoins::where('anneePlan_id',$id)
+                            ->where('statut',1)
+                            ->get();
+        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire');
+        $ids = $id;
+        return view('referent.projet_Interne.listeValide',compact('besoin','stagiaire'));
     }
     public function modifier($id, Request $request)
     {
@@ -253,8 +258,13 @@ class PlanFormationController extends Controller
             $id = $p->id;
         }
         
-        $besoin_count = $fonct->findWhere("besoin_stagiaire",["anneePlan_id"],[$id]);
-        
+        //$besoin_count = $fonct->findWhere("besoin_stagiaire",["anneePlan_id"],[$id]);
+        $besoin_count  = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'])->get();
+        $besoinV_count = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'=>function($query){
+            $query->where('statut','=','1');
+        }])->get();
+        // dd($besoinV_count);
+        // $besoin dd($besoin_count);
         $employ = DB::select('select * from stagiaires where entreprise_id = ?', [$entreprise_id]);
         $nombr = count($employ);
         $yearNow = Carbon::now()->format('Y');
@@ -281,7 +291,7 @@ class PlanFormationController extends Controller
             $liste = recueil_information::with('formation')->get();
         }
         // echo ($entreprise_id);
-        return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr'));
+        return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoin_count','besoinV_count'));
         // return view('referent.listeDemandeFormation',compact('entreprise_id','plan','employ','nombr'));
         
     }

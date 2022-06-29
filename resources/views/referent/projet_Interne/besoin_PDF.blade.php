@@ -24,9 +24,6 @@
         <h1 style="margin-left:-17px; ">Plan Previsionnel {{$pl->AnneePlan}}</h1>
         @foreach($entreprise as $ent)
         <h1 style="margin-left:83%;margin-top:10px">{{ $ent->nom_etp}}</h1><br>
-        
-
-        
         <h1></h1>
     </div>
     <div style="margin-top:-160px;" >
@@ -45,17 +42,17 @@
     </div>
    
     <div>
-        <p style="margin-left:-17px;margin-top:40px; ">Tableau recapitulatif des desoins en formation &nbsp;{{$pl->AnneePlan}} :</p>
+        <p style="margin-left:-17px;margin-top:40px; ">Tableau recapitulatif des desoins global (validé ou non-validé par les N+) en formation &nbsp;{{$pl->AnneePlan}} :</p>
         @endforeach
         @endforeach
-        <table style="margin-left: -20px;">
+        <table style="margin-left: -20px;width:100%">
             <thead>
                 <tr>
                     <th>IM</th>
                     <th>Nom stagiaire</th>
                     <th>Email</th>
                     <th>Fonction</th>
-                    <th style="width: 150px">domaine de formation</th>
+                    
                     <th>Thematique</th>
                     <th>Date prévisionnelle</th>
                     <th>Organisme</th>
@@ -115,20 +112,11 @@
                         @foreach ($besoin as $be)
                         @if ($be->stagiaire_id == $st->stagiaire_id)            
                             <?php $fonc = $st->fonction_stagiaire ?>
-                           
-                            
-                            @endif 
+                        @endif 
                         @endforeach
                         @if(isset($fonc)) 
                         {{ $fonc}}
                         @endif
-                    </td>
-                    <td>    
-                        @foreach($besoin as $be)   
-                            @if ($be->stagiaire_id == $st->stagiaire_id)            
-                            -&nbsp; {{$be->domaine->nom_domaine }} <br>
-                            @endif    
-                        @endforeach
                     </td>
                     <td>    
                         @foreach($besoin as $be)   

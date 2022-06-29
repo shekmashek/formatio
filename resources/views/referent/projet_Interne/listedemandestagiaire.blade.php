@@ -31,7 +31,7 @@
                             <th>Nom stagiaire</th>
                             <th>Email</th>
                             <th>Fonction</th>
-                            <th>domaine de formation</th>
+                           
                             <th>thematique</th>
                             <th>date prévisionnelle</th>
                             <th>Organisme</th>
@@ -99,13 +99,7 @@
                                 {{ $fonc}}
                                 @endif
                             </td>
-                            <td>    
-                                @foreach($besoin as $be)   
-                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
-                                    &nbsp; {{$be->domaine->nom_domaine }} <br>
-                                    @endif    
-                                @endforeach
-                            </td>
+                            
                             <td>    
                                 @foreach($besoin as $be)   
                                     @if ($be->stagiaire_id == $st->stagiaire_id)            

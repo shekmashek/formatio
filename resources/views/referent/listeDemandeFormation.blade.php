@@ -49,7 +49,7 @@
                                 <th style="border: none">{{$p->AnneePlan}}</th>
                                 <th style="float: right;border:none">
                                     <a data-bs-toggle="collapse" data-toggle="collapse" href="#collapseExample_{{$p->AnneePlan}}"   role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        <i class="fa-solid fa-angle-down" id="one" onclick="midina()"  data-id="{{$p->id}}"  ></i>
+                                        <i class="fa-solid fa-angle-down"  ></i>
                                     </a>
                                 </th>
                             </tr>
@@ -57,7 +57,7 @@
                         <tbody>
                             <tr> 
                             <td>
-                                <div class="collapse" id="collapseExample_{{$p->AnneePlan}}">
+                                <div  id="collapseExample_{{$p->AnneePlan}}">
                                     <div class="row">
                                         <div class="col-md-6 p-4">
                                             <h5>Plan Previsionnel</h5>
@@ -97,8 +97,11 @@
                                                     <p>Nombre des besoins  exprimer par les salarier</p>
                                                 </div>
                                                 <div class="float-end">
-                                                    
-                                                    <p><span id="count"> </span></p>
+                                                    @foreach ($besoin_count as $co)
+                                                    @if($co->id == $p->id)
+                                                        <p><span > {{ $co->besoins_count }}</span></p>
+                                                    @endif
+                                                    @endforeach
                                                 </div>
                                             </div>
                                             
@@ -117,13 +120,17 @@
                                                     <p>Nombre valide par le N+</p>
                                                 </div>
                                                 <div class="float-end">
-                                                    <p>0</p>
+                                                    @foreach ($besoinV_count as $coV)
+                                                    @if($coV->id == $p->id)
+                                                        <p><span > {{ $coV->besoins_count }}</span></p>
+                                                    @endif
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>   
                                         <div class="row p-2" style="margin-top: -20px">
                                             <div>
-                                                <a href="{{route('liste.demandeV')}}" class="btn btn-warning mt-2 text-light"><i class="fa-solid fa-eye"></i>&nbsp;Voir liste</a>
+                                                <a href="{{route('liste.demandeV',$p->id)}}" class="btn btn-warning mt-2 text-light"><i class="fa-solid fa-eye"></i>&nbsp;Voir liste</a>
                                                 <a href="" class="btn btn-primary mt-2 text-light"><i class="fa-solid fa-file-pdf"></i>&nbsp; Export liste</a>
                                             </div>
                                         </div> 
@@ -138,26 +145,5 @@
                 @endforeach 
            </div>
        </div>
-       
-      
 </div>
-<script>
-
-    function midina(){
-       var id = $('#one').data('id');
-       console.log(id);
-       $.ajax({
-            url: "/countPlan",
-            type: "get",
-            data: {
-                Id: id,
-            },
-            success: function(response) {
-                var b = response;
-                $('#count').html('<p>'+b+' </p>');
-            },
-        }); 
-    };
-
-</script>
 @endsection

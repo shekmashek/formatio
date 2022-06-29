@@ -21,7 +21,7 @@ class PlanFormation extends Model
     {
         return $this->belongsTo('App\annee_plan');
     }
-    public function besoin(){
-        return $this->hasMany(besoins::class);
+    public function besoins(){
+        return $this->hasMany('App\besoins','anneePlan_id');
     }
 }

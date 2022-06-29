@@ -5,53 +5,135 @@
 @section('content')
 <style>
     h2{
-        font-weight: lighter;
+        font-weight: 400;
+        font-size: 25px;
     }
 </style>
-<div class="container shadow-sm mt-5 p-4">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="float-start">
-                <h2>Liste des demande de formation déja validé</h2>
-            </div>
-            <div class="float-end">
+    <div class="container shadow-sm mt-5 p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="float-start">
+                    <h2>Liste des demande de formation validé par les N+</h2>
+                </div>
+                <div class="float-end">
 
-                <button class="btn btn-primary">
-                    Export PDF
-                </button>
-                <a href="/liste_demande_stagiaire" class="btn btn-dark text-light"> Retour</a>
+                    <a class="btn btn-primary text-light">
+                        Export PDF
+                    </a>
+                    <a href="/liste_demande_stagiaire" class="btn btn-dark text-light"><i class="fa-solid fa-caret-left"></i>&nbsp; Retour</a>
+                </div>
             </div>
-        </div>
-        <div class="col-md-12 mt-4">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nom_stagiaire</th>
-                        <th>Email</th>
-                        <th>Nom formation</th>
-                        <th>Date</th>
-                        <th>Cout</th>
-                        <th>Organisme</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Safidy Mahafaly</td>
-                        <td>safidy@gmail.com</td>
-                        <td>Anglais</td>
-                        <td>Juin 2022</td>
-                        <td>110.000 Ar</td>
-                        <td>Numerika</td>
-                        <td>
-                            <a href="" class="btn btn-info text-light">Modifier</a>
-                        </td>
-
-                    </tr>
-                </tbody>
-            </table>
+            <div class="col-md-12 mt-4">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>IM</th>
+                            <th>Nom stagiaire</th>
+                            <th>Email</th>
+                            <th>Fonction</th>
+                            <th>thematique</th>
+                            <th>date prévisionnelle</th>
+                            <th>Organisme</th>
+                            <th>Priorité</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        @foreach ($stagiaire as $st)
+                        <tr>
+                            <td>
+                                @foreach ($besoin as $be)
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                        <?php $mat = $be->stagiaire->matricule;
+                                        break;?>
+                                        
+                                    @else
+                                    <?php $mat = '';
+                                        
+                                    ?>
+                                    @endif
+                               @endforeach
+                                @if(isset($mat)) 
+                                    {{ $mat }}
+                                @endif
+                            </td>
+                            <td>
+                                @foreach ($besoin as $be)
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                        <?php $nom = $be->stagiaire->nom_stagiaire;
+                                        break;?>
+                                        
+                                    @else
+                                    <?php $nom = '';
+                                        
+                                    ?>
+                                    @endif
+                               @endforeach
+                                @if(isset($nom)) 
+                                    {{ $nom }}
+                                @endif
+                            </td>
+                            <td>
+                                @foreach ($besoin as $be)
+                                @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                    <?php $email = $st->mail_stagiaire ?>
+                                   
+                                    
+                                    @endif 
+                                @endforeach
+                                @if(isset($email)) 
+                                {{ $email}}
+                                @endif
+                            </td>
+                            <td>
+                                @foreach ($besoin as $be)
+                                @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                    <?php $fonc = $st->fonction_stagiaire ?>
+                                   
+                                    
+                                    @endif 
+                                @endforeach
+                                @if(isset($fonc)) 
+                                {{ $fonc}}
+                                @endif
+                            </td>
+                            
+                            <td>    
+                                @foreach($besoin as $be)   
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                    &nbsp; {{$be->formation->nom_formation }} <br>
+                                    @endif    
+                                @endforeach
+                            </td>
+                            <td>    
+                                @foreach($besoin as $be)   
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                    &nbsp; @php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp <br>
+                                    @endif    
+                                @endforeach
+                            </td>
+                            <td>    
+                                @foreach($besoin as $be)   
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                     &nbsp; {{$be->organisme}} <br>
+                                    @endif    
+                            @endforeach
+                            </td>
+                            <td>    
+                                @foreach($besoin as $be)   
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                     &nbsp; {{$be->type}} <br>
+                                    @endif    
+                            @endforeach
+                            </td>
+                            @endforeach
+                        </tr>
+                       
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
 @endsection

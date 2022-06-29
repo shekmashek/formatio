@@ -762,7 +762,7 @@ Route::post('/modifBesoin/{id}','PlanFormationController@modification_besoin')->
 ////////////////// modification mahafaly /////////////////////////////////
 Route::get('/demandeFormation/{id}','PlanFormationController@demande')->name('plan.demande');
 Route::get('/ListedemandeFormation/{id}','PlanFormationController@liste')->name('liste.demande');
-Route::get('/ListedemandeFormationValidé','PlanFormationController@listeV')->name('liste.demandeV');
+Route::get('/ListedemandeFormationValidé/{id}','PlanFormationController@listeV')->name('liste.demandeV');
 Route::get('/ajoutPlan/{id}','PlanFormationController@ajout')->name('ajout.plan');
 Route::post('/creationPla','PlanFormationController@cree')->name('plan.cree');
 Route::post('/edtitPlan/{id}','PlanFormationController@modifier')->name('plan.modifier');

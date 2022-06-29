@@ -3,10 +3,10 @@
     <p class="text_header m-0 mt-1">Demande</p>
 @endsection
 @section('content')
-<link rel="stylesheet" href="dragtable.css">
+{{-- <link rel="stylesheet" href="dragtable.css">
 <script src="jquery-ui.js"></script>
 <script src="jquery.dragtable.js"></script>
-<script src="extensions/reorder-columns/bootstrap-table-reorder-columns.js"></script>
+<script src="extensions/reorder-columns/bootstrap-table-reorder-columns.js"></script> --}}
 <style>
     h1{
         font-weight: 400;
@@ -54,7 +54,7 @@
                         <tr>
                             <td>
                                
-                                    <div  id="collapseExample_{{$p->AnneePlan}}">
+                                    <div class="collapse"  id="collapseExample_{{$p->AnneePlan}}">
                                         <div class="card card-body" style="width: 100%">
                                             <p>Vos demandes:</p>
                                             @if(session()->has('success'))
@@ -87,8 +87,8 @@
                                                         <form action="{{route('besoin.modif',$be->id)}}" method="POST">
                                                             @csrf
                                                             <tr>
-                                                                <td><input  class="form-control inp{{$be->id}}" type="hidden" name="domaine" id="domaine{{$be->id}}" value="" ><span class="spa{{$be->id}}"> {{$be->domaine->nom_domaine}}</span></td>
-                                                                <td><input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span></td>
+                                                                <td><input  class="form-control inp{{$be->id}}" type="hidden" name="domaine" id="domaine{{$be->id}}" value="" disabled><span class="spa{{$be->id}}"> {{$be->domaine->nom_domaine}}</span></td>
+                                                                <td><input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" disabled><span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span></td>
                                                                 <td><input type="hidden"  class="form-control inp{{$be->id}}" name="date" id="date{{$be->id}}" value="" ><span class="spa{{$be->id}}">@php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp </span></td>
                                                                 <td><input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->organisme}}</span></td>
                                                                 <td><span class="badge bg-warning">En attente</span></td>
