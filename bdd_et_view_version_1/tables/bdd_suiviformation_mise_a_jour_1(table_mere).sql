@@ -215,6 +215,7 @@ CREATE TABLE responsables_cfp(
   user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   activiter boolean not null default true,
   prioriter boolean not null default false,
+  url_photo varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

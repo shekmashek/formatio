@@ -201,7 +201,7 @@ class ResponsableCfpController extends Controller
 
                                 DB::beginTransaction();
                                 try {
-                                    $fonct->insert_role_user($use_id_inserer,"7",true); // cfp
+                                    $fonct->insert_role_user($use_id_inserer,"7",false,true); // cfp
                                     DB::commit();
                                 } catch (\Exception $e) {
                                     DB::rollback();
@@ -420,6 +420,7 @@ class ResponsableCfpController extends Controller
 					$user_id =  $users = Auth::user()->id;
 					$responsable = $this->fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
 					$image_ancien = $responsable->photos_resp_cfp;
+
 					//supprimer l'ancienne image
 					File::delete(public_path("images/responsables/".$image_ancien));
 					//enregiistrer la nouvelle photo

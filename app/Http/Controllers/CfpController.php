@@ -132,8 +132,18 @@ class CfpController extends Controller
     }
     public function edit_phone($id, Request $request)
     {
-        $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$id]);
-        return view('cfp.modification_profil.edit_phone', compact('cfp', 'id'));
+        $url_previous = str_replace(url('/'), '', url()->previous());
+        if($url_previous == "/affichage_parametre_cfp") {
+            $test = "cfp";
+         $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$id]);
+        }
+        if($url_previous == "/profil_du_responsable") {
+            $test = "referent";
+            $ref = $this->fonct->findWhereMulitOne("responsables_cfp",["id"],[$id])->cfp_id;
+            $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$ref]);
+        }
+
+        return view('cfp.modification_profil.edit_phone', compact('cfp', 'id','test'));
     }
 
     public function edit_horaire($id)
@@ -240,11 +250,18 @@ class CfpController extends Controller
     }
     public function modifier_phone($id, Request $request)
     {
+
         if ($request->phone == null) {
             return redirect()->back()->with('error_phone', 'Entrez téléphone de votre organisme avant de cliquer sur enregistrer');
         } else {
+            $resp_id = $this->fonct->findWhere("responsables_cfp",["cfp_id"],[$id]);
+            for ($i=0; $i < count($resp_id); $i++) {
+                DB::update('update responsables_cfp set telephone_resp_cfp = ? where id = ?', [$request->phone, $resp_id[$i]->id]);
+            }
             DB::update('update cfps set telephone= ? where id = ?', [$request->phone, $id]);
-            return redirect()->route('profil_of', [$id]);
+            if($request->modification == "cfp")     return redirect()->route('profil_of', [$id]);
+            else return redirect()->route('profil_du_responsable');
+
         }
     }
     public function modifier_adresse($id, Request $request)

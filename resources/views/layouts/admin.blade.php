@@ -525,22 +525,22 @@
                 <span class="links_name">Reporting</span>
                 </a>
             </li> --}}
-            @can('isCFP')
+            {{-- @can('isCFP')
             <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-book-add'></i>
                     <span class="links_name">Librairies</span>
                 </a>
-            </li> 
+            </li>
             <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
-                    <i class='bx bx-book-add'></i> 
+                    <i class='bx bx-book-add'></i>
 
 
                     <span class="links_name">Librairies</span>
                 </a>
             </li>
-            @endcan
+            @endcan --}}
         </ul>
 
         {{-- <div class="profile_content">

@@ -1318,7 +1318,7 @@ Route::post('enregistrer_assujetti_cfp/{id}','CfpController@enregistrer_assujett
 Route::get('/modification_slogan/{id}', 'CfpController@edit_slogan')->name('modification_slogan');
 Route::get('/modification_site_web/{id}', 'CfpController@edit_site')->name('modification_site_web');
 Route::get('/modification_email/{id}', 'CfpController@edit_mail')->name('modification_email');
-Route::get('/modification_telephone{id}', 'CfpController@edit_phone')->name('modification_telephone');
+Route::get('/modification_telephone/{id}', 'CfpController@edit_phone')->name('modification_telephone');
 
 
 Route::get('/modification_horaire/{id}', 'CfpController@edit_horaire')->name('modification_horaire');

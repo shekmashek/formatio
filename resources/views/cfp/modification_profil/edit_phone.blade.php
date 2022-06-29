@@ -23,6 +23,7 @@
 
             <form   class="btn-submit" action="{{route('enregistrer_modification_phone_cfp',$cfp->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" value="{{$test}}" name="modification">
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
                     <input type="text" value="   {{ $cfp->telephone}}" class="form-control test input"  name="phone">

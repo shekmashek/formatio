@@ -1828,7 +1828,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                                                 <div class="col-md-4">
                                                                                                     @foreach ($dataSessions as $dataSession)
                                                                                                     @php
-                                                                                                        $salle = explode(',  ', $dataSession->lieu);
+                                                                                                        $salle = explode(',', $dataSession->lieu);
                                                                                                     @endphp
                                                                                                         <p style="font-size: 13px">{{ $salle[0]." ".$salle[1] }}</p>
                                                                                                     @endforeach
