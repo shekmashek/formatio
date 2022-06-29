@@ -119,32 +119,35 @@
                             <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
                         </div>
                     </a>
-                    @if($avis_etoile[0]->pourcentage != null)
-                    <div class="d-flex flex-row justify-content-center mt-2">
+                    @if($avis_etoile!=null)
                         @if($avis_etoile[0]->pourcentage != null)
-                            <div class="Stars" style="--note: {{ $avis_etoile[0]->pourcentage }};"></div>
-                            <div class="stars">
-                                <i class='bx bxs-star'></i>
-                                <i class='bx bxs-star'></i>
-                                <i class='bx bxs-star-half' ></i>
-                                <i class='bx bx-star'></i>
-                                <i class='bx bx-star'></i>
-                            </div>
-                        @else
-                            <div class="Stars" style="--note: 0;"></div>
-                        @endif
-                        <div class="rating-box ms-2">
+                        <div class="d-flex flex-row justify-content-center mt-2">
                             @if($avis_etoile[0]->pourcentage != null)
-                                <span class="avis_verif"><span class="">{{ $avis_etoile[0]->pourcentage }}</span> ({{$avis_etoile[0]->nb_avis}} avis)</span><br>
+                                <div class="Stars" style="--note: {{ $avis_etoile[0]->pourcentage }};"></div>
+                                <div class="stars">
+                                    <i class='bx bxs-star'></i>
+                                    <i class='bx bxs-star'></i>
+                                    <i class='bx bxs-star-half' ></i>
+                                    <i class='bx bx-star'></i>
+                                    <i class='bx bx-star'></i>
+                                </div>
                             @else
-                                <span class="">0 sur 5 (0 avis)</span>
+                                <div class="Stars" style="--note: 0;"></div>
                             @endif
+                            <div class="rating-box ms-2">
+                                @if($avis_etoile[0]->pourcentage != null)
+                                    <span class="avis_verif"><span class="">{{ $avis_etoile[0]->pourcentage }}</span> ({{$avis_etoile[0]->nb_avis}} avis)</span><br>
+                                @else
+                                    <span class="">0 sur 5 (0 avis)</span>
+                                @endif
+                            </div>
+                            <br>
                         </div>
-                        <br>
-                    </div>
-                    <div class="text-center">
-                        <span>Avis sur le centre de formation</span>
-                    </div>
+                        @else
+                        <div class="text-center">
+                            <span>Avis sur le centre de formation</span>
+                        </div>
+                        @endif
                     @endif
                 </div>
             </div>
