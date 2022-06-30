@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use PDF;
 // use Barryvdh\DomPDF\PDF;
 use App\cfp;
+use App\User;
 use Exception;
 use App\detail;
 use App\groupe;
@@ -137,6 +138,11 @@ class DetailController extends Controller
                     'formateur' => ucfirst($value->formateur->nom_formateur).' '.ucfirst($value->formateur->prenom_formateur),
                     'groupe' => $value->groupe,
                     'groupe_entreprise' => $value->groupe->groupe_entreprise,
+                    'participants' => $value->groupe->participants->pluck('stagiaire'),
+
+                    // Etabli la relation entre un participant(stagiaire) et son entreprise(entreprise)
+                    // La relation 'entreprises' devient en attribut du 'participants' et contient le tableau d'entreprises
+                    'participants_entreprises' => $value->groupe->participants->pluck('stagiaire')->pluck('entreprise'),
                     // get all the groupe_entreprise->entreprise as an array of objects
                     // the pluck() method return an array of the specified attribute of each objects
                     'entreprises' => $value->groupe->groupe_entreprise->pluck('entreprise')->toArray(),
@@ -149,11 +155,8 @@ class DetailController extends Controller
                     'borderColor' => $value->color,
                 );
             }
-            
-            // dd('end');
 
-            
-            // return $events;
+            // return( $events[0]);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             foreach ($groupe_etp as $key => $value) {

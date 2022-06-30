@@ -263,6 +263,22 @@
             margin-left: 30px!important;
         }
 
+        .width_90 {
+            width: 90%!important;
+        }
+
+        .btn_purple {
+            background-color: #7367F0!important;
+            border-color: #7367F0!important;
+            color: #fff!important;
+        }
+
+        .popover {
+            z-index: 1070!important;
+        }
+
+
+
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
@@ -367,27 +383,59 @@
                         <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
                     placeholder="materiel i" aria-label="materiel" 
                     aria-describedby="basic-addon1">
+
+                
                 </div>
 
-                <div class="input-group mb-3" id="event_participants">
-                    
-                    <label for="participant_collaps"class="input-group-text border-0 bg-light" id="basic-addon1">@</label>
-                    <a class="form-control btn" id="participant_collaps"
-                    data-mdb-toggle="collapse"
-                    data-bs-toggle="collapse"
-                    href="#event_participants_list"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"><i class="bi bi-caret-down-fill"></i>Participants</a>
+                <div id="test_offcanvas" class="input-group mb-3">
 
-                    <div class="collapse mt-3 scroll-section border p-2" id="event_participants_list"  style="max-width: 500px">
-                        <div>
-                            Anim pariatur cliche reprehenderit, enim eiusmod high lif
-                        </div>
-                        <div>
-                            Anim pariatur cliche reprehenderit
+                                        
+                    <a href="#" class="btn btn-primary" tabindex="0" data-bs-toggle="popover" data-trigger="focus" data-popover-content="#atest">Popover Example</a>
+                
+                    <div id="atest" class="visually-hidden">
+                        <div class="popover-heading" id="profile_test_name"></div>
+                            Lorem ipsum dolor sit amet.
+                        <div class="popover-body" id="profile_test_id">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, autem.
                         </div>
                     </div>
+
+                    <a href="#" class="btn btn-primary" tabindex="0" data-bs-toggle="popover" data-trigger="focus" data-popover-content="#btest">Popover Example</a>
+                
+                    <div id="btest" class="visually-hidden">
+                        <div class="popover-heading" id="profile_test_name"></div>
+                            Lorem ipsum dolor sit amet 2.
+                        <div class="popover-body" id="profile_test_id">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, autem 2 .
+                        </div>
+                    </div>
+
+                   
+
+                </div>
+
+                <div class="input-group mb-3">
+                    
+                    <label for="participant_collaps" class="input-group-text border-0 bg-light" id="basic-addon1">@</label>
+                    <div id=""class="dropdown width_90">
+                        <a class="btn btn-secondary dropdown-toggle w-100 btn_purple" data-bs-auto-close="outside" data-html="true"
+                            href="#" role="button" id="dropdownMenuClickableInside"
+                            data-bs-toggle="dropdown" data-mdb-toggle="dropdown" aria-expanded="false">
+                          Participants
+                        </a>
+                      
+                        <ul id="event_participants" class="dropdown-menu w-100"
+                         aria-labelledby="dropdownMenuClickableInside">
+                                                    
+                        </ul>
+
+ 
+
+                    </div>
+                </div>
+
+                <div class="accordion" id="accordionExample">
+
                 </div>
 
               </div>
@@ -532,6 +580,9 @@
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
@@ -541,8 +592,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
 
+        // var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        // var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        // return new bootstrap.Popover(popoverTriggerEl)
+        // })
+
+
+
         // calendrier planning
             document.addEventListener('DOMContentLoaded', function() {
+
 
                 var events = {!! json_encode($events, JSON_HEX_TAG) !!};
                 var calendarEl = document.getElementById('planning');
@@ -569,7 +628,6 @@
 
                         var tipStart = info.event.start.toLocaleTimeString();
                         var tipEnd = info.event.end.toLocaleTimeString();
-                        // var tipStart = info.event.end.toLocaleString();
                         // console.log(tipStart);
                         $(info.el).tooltip({
                             title: info.event.extendedProps.description + ' ' + tipStart + ' - ' + tipEnd,
@@ -583,6 +641,23 @@
 
                     // console.log the description of events when clicking on them
                     eventClick : function(info) {
+
+
+                        // To make 
+                        $(function(){
+                            $("[data-bs-toggle=popover]").popover({
+                                html : true,
+                                content: function() {
+                                var content = $(this).attr("data-popover-content");
+                                    return $(content).children(".popover-body").html();
+                                },
+                                title: function() {
+                                var title = $(this).attr("data-popover-content");
+                                    return $(title).children(".popover-heading").html();
+                                }
+                            });
+                        });
+
                         // options for date formating
                         var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -595,6 +670,11 @@
                         var lieu_offcanvas = document.getElementById('event_lieu');
                         var OF_offcanvas = document.getElementById('event_OF');
                         var formateur_offcanvas = document.getElementById('event_formateur');
+                        var participants_offcanvas = document.getElementById('event_participants');
+                        
+                        var test_offcanvas = document.getElementById('test_offcanvas');
+
+                        var accordion_Participants = document.getElementById('accordionExample');
 
 
                         // Filling the values of the offcanvas with the attributes of the event
@@ -607,7 +687,7 @@
                         var sessions = info.event.extendedProps.groupe.detail;
                         var entreprises = info.event.extendedProps.entreprises;
                         
-                        console.log(entreprises.length);
+                        // console.log(entreprises.length);
                         entreprise_offcanvas.value = '';
                         entreprise_offcanvas.innerHTML = '';
 
@@ -645,6 +725,69 @@
                         lieu_offcanvas.value = info.event.extendedProps.lieu;
                         OF_offcanvas.value = info.event.extendedProps.nom_cfp;
                         formateur_offcanvas.value = info.event.extendedProps.formateur;
+                        
+                        var participants = info.event.extendedProps.participants;
+
+                        // var participants_offcanvas_html = '';
+                        test_offcanvas.innerHTML = '';
+                        var html_pop = '';
+                        var html_accordion = '';
+                        participants_offcanvas.innerHTML = '';
+                        if (participants.length > 0) {
+                            participants.forEach((participant,i) => {      
+
+
+                                // LE POPOVER NE MARCHE PAS / THE POPOVER DOESN'T WORK
+
+                                // html_pop += '<li>';
+                                // html_pop += '<a href="#" class="dropdown-item" tabindex="0" data-bs-toggle="popover" data-trigger="focus" data-popover-content="#atest'+i+'" date-bs-original-title title>'+participant.nom_stagiaire+' '+participant.prenom_stagiaire+'</a>';
+                                // html_pop += '<div id="atest'+i+'" class="visually-hidden">';
+                                // html_pop += '<div class="popover-heading" id="profile_test_name'+i+'">Title'+i+'</div>Lorem ipsum dolor sit amet.<div class="popover-body" id="profile_test_id'+i+'">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, autem.</div>';
+                                // html_pop += '</div>';
+                                // html_pop += '</li>';
+
+                                // participants_offcanvas.innerHTML = html_pop;
+
+                                //////////////////
+                            
+                                html_accordion += '<div class="accordion-item">';
+
+                                html_accordion += '<h2 class="accordion-header" id="headingOne'+i+'">';
+                                html_accordion += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-expanded="false" aria-controls="collapseOne">';
+                                html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire;
+                                html_accordion += '</button>';
+                                html_accordion += '</h2>';
+                                
+                                html_accordion += '<div id="collapseOne'+i+'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">';
+                                html_accordion += '<div class="accordion-body">';
+                                html_accordion += '<ul class="list-group list-group">';
+                                html_accordion += '<li class="list-group-item d-flex justify-content-between align-items-start">';
+                                html_accordion += '<div class="ms-2 me-auto">';
+                                html_accordion += '<div class="fw-bold">Email</div>';
+                                html_accordion += '<a href="mailto:'+participant.mail_stagiaire+'">'+participant.mail_stagiaire+'</a>';
+                                html_accordion += '</div>';
+
+
+                                html_accordion += '<span class="badge bg-primary rounded-pill">'+participant.entreprise.nom_etp+'</span>';
+                                html_accordion += '</li>';
+                                html_accordion += '</ul>';
+            
+                                html_accordion += '</div>';
+                                html_accordion += '</div>';
+                                html_accordion += '</div>';
+
+
+                                accordion_Participants.innerHTML = html_accordion;
+                                
+
+                            });
+
+                        } else {
+                            
+                            participants_offcanvas.innerHTML += '<li><a class="dropdown-item" href="#">Aucun participant</a></li>';
+
+                        }
+
 
                         bsOffcanvas.show();
                         

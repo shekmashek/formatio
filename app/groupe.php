@@ -13,6 +13,10 @@ class Groupe extends Model
     ];
 
 
+    public function participants(){
+        return $this->hasMany('App\participant_groupe', 'groupe_id');
+    }
+
     public function groupe_entreprise (){
         return $this->hasMany('App\GroupeEntreprise', 'groupe_id');
     }
