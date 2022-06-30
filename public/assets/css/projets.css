@@ -184,7 +184,7 @@
 }
 
 .titre_projet {
-    background: rgba(235, 233, 233, 0.658);
+    /* background: rgba(235, 233, 233, 0.658); */
     border-radius: 5px;
     align-items: center;
 }
