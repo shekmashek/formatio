@@ -85,7 +85,7 @@
                         <input type="radio" class="mt-1" style="margin-left:200px" value="non-urgent" name="type" id="type"
                         >&nbsp;&nbsp;<p class="m-2">Non urgent</p>
                     </div>
-                <button type="submit" style="float: right" class="btn btn-info mt-4 text-light">Modifier la demande</button>
+                <button type="submit" style="float: right" class="btn btn-info mt-4 text-light">Envoyer la demande</button>
                 </div>
             
         </div>

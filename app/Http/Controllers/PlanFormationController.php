@@ -312,8 +312,15 @@ class PlanFormationController extends Controller
         }
     }
 
-    public function envoye_demande_stg(){
-        return view('manager.autreDemandeFormation');
+    public function envoye_demande_stg(Request $req,$anneePlan_id){
+        $users =Auth::user()->id;
+        $planAn_id = PlanFormation::where('id',$anneePlan_id)->value('id');
+        if(Gate::allows('isManager')){
+            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+            $stagiaire = stagiaire::where('entreprise_id',$entreprise_id)->get();
+            
+            return view('manager.autreDemandeFormation');
+        }
     }
 
     public function update_demande_stg(Request $request,$id){
