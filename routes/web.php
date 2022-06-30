@@ -1531,3 +1531,4 @@ Route::get('/valideStatut/{id}','PlanFormationController@valideStatut')->name('v
 Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('refuseSatut');
 
 
+

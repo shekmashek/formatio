@@ -36,11 +36,11 @@ class ParticipantController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (Auth::user()->exists == false) return redirect()->route('sign-in');
-            return $next($request);
-        });
+        // $this->middleware('auth');
+        // $this->middleware(function ($request, $next) {
+        //     if (Auth::user()->exists == false) return redirect()->route('sign-in');
+        //     return $next($request);
+        // });
 
         $this->fonct = new FonctionGenerique();
     }
@@ -127,114 +127,123 @@ class ParticipantController extends Controller
 
     public function liste_employer($paginations = null)
     {
-        $entreprise_id = 0;
-        $nb_limit = 10;
+        $current_route = request()->path();
+        if($current_route == "employes.liste"){
 
-        $user_id = Auth::user()->id;
-        $piasa = null;
-        $employers = [];
-        $responsables = [];
-        $chefs = [];
-        $entreprise_id = $this->fonct->findWhereMulitOne("employers", ["user_id"], [$user_id])->entreprise_id;
+            $entreprise_id = 0;
+            $nb_limit = 10;
 
-        $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
-        // $totale_pag_resp = $this->fonct->getNbrePagination("responsables", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
-        // $totale_pag_chef = $this->fonct->getNbrePagination("chef_departements", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+            $user_id = Auth::user()->id;
+            $piasa = null;
+            $employers = [];
+            $responsables = [];
+            $chefs = [];
+            $entreprise_id = $this->fonct->findWhereMulitOne("employers", ["user_id"], [$user_id])->entreprise_id;
 
-        // $totale_pag = ($totale_pag_stg );
+            $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+            // $totale_pag_resp = $this->fonct->getNbrePagination("responsables", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+            // $totale_pag_chef = $this->fonct->getNbrePagination("chef_departements", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
 
-        // $totale_pag =  $totale_pag_stg;
+            // $totale_pag = ($totale_pag_stg );
 
-        $service = $this->fonct->findWhere("v_departement_service_entreprise", ["entreprise_id"], [$entreprise_id]);
+            // $totale_pag =  $totale_pag_stg;
 
-
-        if ($paginations != null) {
-
-            if ($paginations <= 0) {
-                $paginations = 1;
-            }
-            $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-            $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-            $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-
-            $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
-        } else {
-            if ($paginations <= 0) {
-                $paginations = 1;
-            }
-            if(Gate::allows('isManager')) {
-                $dep =  $this->fonct->findWhereMulitOne("employers", ["user_id"], [$user_id])->departement_entreprises_id;
-                $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id","departement_entreprises_id"], ["=","="], [$entreprise_id,$dep], "AND");
-                $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? and departement_entreprises_id = ?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id,$dep]);
-            }
-            else  $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            $service = $this->fonct->findWhere("v_departement_service_entreprise", ["entreprise_id"], [$entreprise_id]);
 
 
-            $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
-            $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+            if ($paginations != null) {
 
-            $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
-        }
-        for ($i = 0; $i < count($piasa); $i += 1) {
-            if (count($service) > 0) {
-                for ($j = 0; $j < count($service); $j += 1) {
-                    if ($piasa[$i]->service_id != null && $piasa[$i]->service_id == $service[$j]->service_id) {
-                        $piasa[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
-                        $piasa[$i]->nom_service = $service[$j]->nom_service;
-                        $piasa[$i]->nom_departement = $service[$j]->nom_departement;
-                    }
+                if ($paginations <= 0) {
+                    $paginations = 1;
                 }
-            } else {
-                $piasa[$i]->departement_entreprise_id = null;
-                $piasa[$i]->nom_service = null;
-                $piasa[$i]->nom_departement = null;
-            }
-            $employers[] = $piasa[$i];
-        }
+                $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+                $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
+                $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
 
-        for ($i = 0; $i < count($resp); $i += 1) {
-            if (count($service) > 0) {
-                for ($j = 0; $j < count($service); $j += 1) {
-                    if ($resp[$i]->service_id != null && $resp[$i]->service_id == $service[$j]->service_id) {
-                        $resp[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
-                        $resp[$i]->nom_service = $service[$j]->nom_service;
-                        $resp[$i]->nom_departement = $service[$j]->nom_departement;
-                    }
+                $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
+            } else {
+                if ($paginations <= 0) {
+                    $paginations = 1;
                 }
-            } else {
-                $resp[$i]->departement_entreprise_id = null;
-                $resp[$i]->nom_service = null;
-                $resp[$i]->nom_departement = null;
+                if(Gate::allows('isManager')) {
+                    $dep =  $this->fonct->findWhereMulitOne("employers", ["user_id"], [$user_id])->departement_entreprises_id;
+                    $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id","departement_entreprises_id"], ["=","="], [$entreprise_id,$dep], "AND");
+                    $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? and departement_entreprises_id = ?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id,$dep]);
+                }
+                else  $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+
+
+                $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+                $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
+
+                $pagination = $this->fonct->nb_liste_pagination($totale_pag, 0, $nb_limit);
             }
-            $responsables[] = $resp[$i];
-        }
+            for ($i = 0; $i < count($piasa); $i += 1) {
+                if (count($service) > 0) {
+                    for ($j = 0; $j < count($service); $j += 1) {
+                        if ($piasa[$i]->service_id != null && $piasa[$i]->service_id == $service[$j]->service_id) {
+                            $piasa[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
+                            $piasa[$i]->nom_service = $service[$j]->nom_service;
+                            $piasa[$i]->nom_departement = $service[$j]->nom_departement;
+                        }
+                    }
+                } else {
+                    $piasa[$i]->departement_entreprise_id = null;
+                    $piasa[$i]->nom_service = null;
+                    $piasa[$i]->nom_departement = null;
+                }
+                $employers[] = $piasa[$i];
+            }
 
-        // for ($i = 0; $i < count($sefo); $i += 1) {
-        //     if (count($service) > 0) {
-        //         for ($j = 0; $j < count($service); $j += 1) {
-        //             if ($sefo[$i]->service_id != null && $sefo[$i]->service_id == $service[$j]->service_id) {
-        //                 $sefo[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
-        //                 $sefo[$i]->nom_service = $service[$j]->nom_service;
-        //                 $sefo[$i]->nom_departement = $service[$j]->nom_departement;
-        //             }
-        //         }
-        //     } else {
-        //         $sefo[$i]->departement_entreprise_id = null;
-        //         $sefo[$i]->nom_service = null;
-        //         $sefo[$i]->nom_departement = null;
-        //     }
-        //     $chefs[] = $sefo[$i];
-        // }
-        $ref = [];
-        foreach($employers as $emp){
-            $test = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$emp->user_id]);
-            if($test!=null) array_push($ref,1);
-            if($test==null) array_push($ref,0);
-        }
+            for ($i = 0; $i < count($resp); $i += 1) {
+                if (count($service) > 0) {
+                    for ($j = 0; $j < count($service); $j += 1) {
+                        if ($resp[$i]->service_id != null && $resp[$i]->service_id == $service[$j]->service_id) {
+                            $resp[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
+                            $resp[$i]->nom_service = $service[$j]->nom_service;
+                            $resp[$i]->nom_departement = $service[$j]->nom_departement;
+                        }
+                    }
+                } else {
+                    $resp[$i]->departement_entreprise_id = null;
+                    $resp[$i]->nom_service = null;
+                    $resp[$i]->nom_departement = null;
+                }
+                $responsables[] = $resp[$i];
+            }
 
+            // for ($i = 0; $i < count($sefo); $i += 1) {
+            //     if (count($service) > 0) {
+            //         for ($j = 0; $j < count($service); $j += 1) {
+            //             if ($sefo[$i]->service_id != null && $sefo[$i]->service_id == $service[$j]->service_id) {
+            //                 $sefo[$i]->departement_entreprise_id = $service[$j]->departement_entreprise_id;
+            //                 $sefo[$i]->nom_service = $service[$j]->nom_service;
+            //                 $sefo[$i]->nom_departement = $service[$j]->nom_departement;
+            //             }
+            //         }
+            //     } else {
+            //         $sefo[$i]->departement_entreprise_id = null;
+            //         $sefo[$i]->nom_service = null;
+            //         $sefo[$i]->nom_departement = null;
+            //     }
+            //     $chefs[] = $sefo[$i];
+            // }
+            $ref = [];
+            foreach($employers as $emp){
+                $test = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$emp->user_id]);
+                if($test!=null) array_push($ref,1);
+                if($test==null) array_push($ref,0);
+            }
+
+            return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'pagination'));
+        }
+        else {
+            $emp = $this->fonct->findAll("employers");
+            return response()->json($emp);
+        }
 
 // dd($pagination);
-        return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'pagination'));
+
     }
 
     public function index()
