@@ -770,7 +770,7 @@ let labels = '[';
 let competences = '[';
 $.ajax({
     type: "get"
-    ,url: "{{route('competence_module')}}"
+    ,url: "{{route('competence_interne')}}"
     ,data: {
         mod_id: id_mod
     }

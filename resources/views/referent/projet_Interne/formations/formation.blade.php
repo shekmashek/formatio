@@ -14,9 +14,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 <div class="m-4" role="tabpanel">
     <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-        {{-- <li class="nav-item">
-            <a href="#domaine" class="nav-link" data-toggle="tab">Domaines interne</a>
-        </li> --}}
         <li class="nav-item active">
             <a href="#catalogue" class="nav-link active" data-toggle="tab">Catalogue Interne</a>
         </li>
@@ -304,6 +301,7 @@
 
                     @foreach ($infos as $info)
                     <div class="row liste__formation justify-content-space-between mb-4">
+
                         <div class="col-1 d-flex flex-column">
                             <a href="{{route('aff_parametre_referent')}}" class="justify-content-center text-center">
                                 <img src="{{asset('images/entreprises/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
@@ -376,6 +374,11 @@
                                 </div>
                             </div>
                         </div>
+                        @if($info->jours_restant > 0)
+                        <div class="col-1">
+                            <span class="ribbon2"><span>Nouveau<br>J - {{$info->jours_restant}}</span></span>
+                        </div>
+                        @endif
                         <div class="modal fade" id="listModal_{{$info->module_id}}" tabindex="-1"
                             role="dialog" aria-labelledby="listModal" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -517,6 +520,31 @@
         $(".sous-formation-content").on("mouseleave", function(e) {
             $(".dropdown>.dropdown-menu").css("display", "none");
         });
+});
+
+$(".suppression_module").on('click', function(e) {
+    let id = e.target.id;
+    // alert(id);
+    $.ajax({
+        type: "get"
+        , url: "{{route('destroy_module_etp')}}"
+        ,dataType: "json"
+        , data: {
+            Id: id
+        }
+        , success: function(response) {
+
+            if (response.success) {
+                window.location.reload();
+            } else {
+                alert("Error");
+            }
+        }
+        , error: function(error) {
+            console.log(error);
+
+        }
+    });
 });
     // $('.modifier_formation').on('click',function(e){
     //     let id = $(e.target).closest('.modifier_formation').attr("id");

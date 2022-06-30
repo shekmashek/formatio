@@ -260,7 +260,7 @@ CREATE TABLE modules_interne (
   prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-alter table modules_interne add status int(11) default 0;
+alter table modules_interne add status int(11) default 2;
 alter table modules_interne add etat_id bigint(20) NOT NULL DEFAULT 1 REFERENCES etats(id) ON DELETE CASCADE;
 
 CREATE TABLE programmes_interne (

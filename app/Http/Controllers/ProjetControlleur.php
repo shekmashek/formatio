@@ -127,8 +127,8 @@ class ProjetControlleur extends Controller
         $etp = $fonct->findWhereMulitOne("entreprises", ["id"], [$etp_id]);
         $domaines = DB::select('select * from domaines');
         // $infos = DB::select('select * from v_moduleformation_interne where etp_id = ?', [$etp_id]);
-        $infos = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module_interne as vm RIGHT JOIN v_moduleformation_interne as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.etp_id = ? group by md.formation_id,vm.nombre order by md.nom_formation asc',[$etp_id]);
-
+        $infos = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module_interne as vm RIGHT JOIN v_moduleformation_interne as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.etp_id = ? order by md.nom_formation asc',[$etp_id]);
+        // dd($infos);
         return view('referent.projet_Interne.formations.formation', compact('domaines','infos','devise'));
     }
 
@@ -152,7 +152,7 @@ class ProjetControlleur extends Controller
         $min_pers = 5;
         $max_pers = 10;
         $level = 1;
-        DB::insert('insert into modules_interne(reference,nom_module,formation_id,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,etp_id,created_at)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,NOW())', [$reference, $nom_module, $formation, $heure, $jour, $prerequis, $objectif, $description, $modalite, $materiel, $level, $cible, $bon_a_savoir, $prestation, $min_pers, $max_pers, $etp_id]);
+        DB::insert('insert into modules_interne(reference,nom_module,formation_id,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,min,max,etp_id,created_at)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())', [$reference, $nom_module, $formation, $heure, $jour, $prerequis, $objectif, $description, $modalite, $materiel, $level, $cible, $bon_a_savoir, $prestation, $min_pers, $max_pers, $etp_id]);
         $id = DB::select('select id from modules_interne order by id desc limit 1');
         $np = 3;
         $npc = 4;
@@ -502,6 +502,15 @@ class ProjetControlleur extends Controller
         $nom_formation = DB::select('select nom_formation from formations where id = ?',[$id_formation]);
         $infos = DB::select('select *,vm.nombre as total_avis from v_nombre_avis_par_module_interne as vm RIGHT join v_moduleformation_interne as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.formation_id = ? order by md.nom_formation asc', [$id_formation]);
         return view('referent.projet_Interne.formations.formation', compact('infos','domaines', 'categorie', 'devise', 'nom_formation'));
+    }
+
+    public function destroy_module_etp(Request $req){
+        DB::delete('delete from modules_interne where id = ? ',[$req->Id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]);
     }
 
     public function formateurs(){
