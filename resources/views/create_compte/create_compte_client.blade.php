@@ -1,123 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Formation.mg</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {{--
+    <link rel="preconnect" href="https://fonts.googleapis.com"> --}}
+    {{--
+    <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-    </head>
-<style>
-    body {
-    background: whitesmoke;
-    direction: ltr;
-    font-size: 14px;
-    line-height: 1.4286;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto',sans-serif;
-}
-.contenue{
-    width: 1000px;
-    height: 770px;
-    background: #fff;
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    border-radius: 5px;
-    border: 1px rgb(190, 177, 177) solid;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 48px 40px 36px;
-    
+    <link rel="stylesheet" href="{{asset('assets/css/create_compte_client.css')}}">
+</head>
 
-}
-.contenue h3{
-    font-size: 2rem;
-    font-weight:lighter;
-}
-.form{
-    width: 250px;
-    height: 40px;
-    position: relative;
-    
-}
-.form input{
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: 1px solid rgb(190, 177, 177);
-    border-radius:2px;
-    outline: none;
-    padding: 0 10px;
-    font-size: 16px;
-    color: black;
-    
-}
-.form label{
-    position: absolute;
-    top: 8px;
-    left: 10px;
-    text-transform: title;
-    font-size: 16px;
-    transition: .3s;
-    padding: 0 20px;
-    background: #fff;
-    color: gray;
-
-}
-.form input:focus  ~ label,.form input:valid  ~ label{
-    margin-top:-18px;
-    background: #fff;
-    font-size: 12px;
-    color: #7367f0;
-    
-}
-
-.form input:focus,input:valid {
-    border: #7367f0 1px solid;
-}
-
-.form.diso input{
-    border: #ff0000 1px solid;
-    
-}
-.form.diso input:focus  ~ label,.form.diso input:valid  ~ label{
-    color: #ff0000;
-}
-.form.marna input{
-    border: #31ae4c 1px solid;
-    
-}
-.form.marna input:focus  ~ label,.form.marna input:valid  ~ label{
-    color: #00ff6a;
-}
-
-
-.img{
-    position: absolute;
-    left: 59%;
-    top: 15%;
-}
-h5{
-    font-weight: lighter;
-    color: #0f0e15;
-}
-i{
-    color: grey;
-}
-
-</style>
 <body>
 
     <div class="container">
         <div class="row">
-            <form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST" enctype="multipart/form-data">
+            <form action="{{route('create_compte_employeur')}}" id="msform_facture" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="contenue">
                     {{-- @if(Session::has('success'))
@@ -131,20 +36,22 @@ i{
                     </div>
                     @endif --}}
                     <h3 class="">Crée votre compte</h3>
-                    <h5 class="mt-3"><i class="fa-solid fa-user-tie"></i>&nbsp;&nbsp;A propos de vous,responsable de ressource humaine:</h5>
+                    <h5 class="mt-3"><i class="fa-solid fa-user-tie"></i>&nbsp;&nbsp;A propos de vous,responsable de
+                        ressource humaine:</h5>
                     <div class="formulaire mt-3" style="display: flex">
-                        <div class="form " >
-                            <input name="matricule_resp_etp"  id="matricule_resp_etp"  type="text" autocomplete="off" required>
+                        <div class="form ">
+                            <input name="matricule_resp_etp" id="matricule_resp_etp" type="text" autocomplete="off"
+                                required>
                             <label for="">Matricule</label>
                             @error('matricule_resp_etp')
                             <div class="col-sm-6">
                                 <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
                             </div>
                             @enderror
-                            
+
                         </div>
                         <div class="form " style="margin-left: 20px;">
-                            <input name="nom_resp_etp" autocomplete="off"  type="text" id="nom_resp_etp"  required>
+                            <input name="nom_resp_etp" autocomplete="off" type="text" id="nom_resp_etp" required>
                             <label for="">Noms</label>
                             @error('nom_resp_etp')
                             <div class="col-sm-6">
@@ -152,11 +59,11 @@ i{
                             </div>
                             @enderror
                             <span style="color:#ff0000; font-size: 0.8rem" id="nom_resp_etp_err"></span>
-                        </div>    
-                    </div> 
+                        </div>
+                    </div>
                     <div class="formulaire mt-3" style="display: flex">
-                        <div class="form " >
-                            <input name="prenom_resp_etp" id="prenom_resp_etp"  type="text" autocomplete="off" required>
+                        <div class="form ">
+                            <input name="prenom_resp_etp" id="prenom_resp_etp" type="text" autocomplete="off" required>
                             <label for="">Prenoms</label>
                             @error('prenom_resp_etp')
                             <div class="col-sm-6">
@@ -165,7 +72,7 @@ i{
                             @enderror
                         </div>
                         <div class="form " style="margin-left: 20px;">
-                            <input name="cin_resp_etp" autocomplete="off"  type="text" id="cin_resp_etp"  required>
+                            <input name="cin_resp_etp" autocomplete="off" type="text" id="cin_resp_etp" required>
                             <label for="">CIN</label>
                             @error('cin_resp_etp')
                             <div class="col-sm-6">
@@ -173,9 +80,9 @@ i{
                             </div>
                             @enderror
                             <span style="color:#ff0000; font-size: 0.8rem" id="cin_resp_etp_err"></span>
-                        </div>    
-                    </div> 
-                    
+                        </div>
+                    </div>
+
                     <div class="formulaire">
                         <div class="form mt-4" style="width:520px;">
                             <input name="email_resp_etp" autocomplete="off" id="email_resp_etp" type="text" required>
@@ -187,98 +94,116 @@ i{
                             @enderror
                             <span style="color:#ff0000; font-size: 0.8rem" id="email_resp_etp_err"> </span>
                         </div>
-                    </div>  
+                    </div>
                     <div class="img">
                         <img src="{{asset('images/create.png')}} " style="width:400px;height:400px; alt="">
                     </div>
-                    <h5 class="mt-4"><i class="fa-solid fa-sitemap"></i>&nbsp;&nbsp;A propos de votre entreprise :</h5>  
-                    <div class="formulaire mt-3" style="display: flex">
-                        <div class="form " >
-                            <input type="text" name="name_etp" id="name_etp" autocomplete="off"  required>
-                            <label for="">Raison sociale</label>
-                            @error('name_etp')
-                            <div class="col-sm-6">
-                                <span style="color:#ff0000;"> {{$message}} </span>
+                    <h5 class=" mt-4"><i class="fa-solid fa-sitemap"></i>&nbsp;&nbsp;A propos de votre entreprise :
+                        </h5>
+                        <div class="formulaire mt-3" style="display: flex">
+                            <div class="form ">
+                                <input type="text" name="name_etp" id="name_etp" autocomplete="off" required>
+                                <label for="">Raison sociale</label>
+                                @error('name_etp')
+                                <div class="col-sm-6">
+                                    <span style="color:#ff0000;"> {{$message}} </span>
+                                </div>
+                                @enderror
+                                <span style="color:#ff0000;" id="name_etp_err"></span>
                             </div>
-                            @enderror
-                            <span style="color:#ff0000;" id="name_etp_err"></span>
+                            <div class="form " style="margin-left: 20px;">
+                                <input name="nif" id="nif_etp" type="text" autocomplete="off" required>
+                                <label for="">Nif</label>
+                                @error('nif')
+                                <div class="col-sm-6">
+                                    <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
+                                </div>
+                                @enderror
+                                <span style="color:#ff0000; font-size: 0.8rem" id="nif_etp_err"> </span>
+                            </div>
+
                         </div>
-                        <div class="form " style="margin-left: 20px;">
-                            <input name="nif" id="nif_etp" type="text" autocomplete="off"  required>
-                            <label for="">Nif</label>
-                            @error('nif')
+                        <div class="formulaire">
+                            <div class="form mt-4" style="width:520px;">
+                                <select class="form-select" aria-label="Default select example" name="secteur_id"
+                                    required id="secteur_id">
+                                    @foreach ($secteur as $sect)
+                                    <option value="{{$sect->id}}">{{$sect->nom_secteur}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="formulaire">
+                            <label for="" class="mt-2"
+                                style="font-size:18px;color:gray;font-weight: lighter;">Logo</label>
+                            <div class="form " style="width:520px;">
+                                <input type="file" name="logo_etp" id="logo_etp" class="form-control" autocomplete="off"
+                                    style="height: 30px" required>
+                            </div>
+                            @error('logo_etp')
                             <div class="col-sm-6">
                                 <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
                             </div>
                             @enderror
-                            <span style="color:#ff0000; font-size: 0.8rem" id="nif_etp_err"> </span>
-                        </div>   
-                         
-                    </div> 
-                    <div class="formulaire">
-                        <div class="form mt-4" style="width:520px;">
-                            <select class="form-select" aria-label="Default select example"
-                                name="secteur_id" required id="secteur_id">
-                                @foreach ($secteur as $sect)
-                                <option value="{{$sect->id}}">{{$sect->nom_secteur}}</option>
-                                @endforeach
-                            </select>
+                            <p id="error_logo_etp" style="color:#ff0000; font-size: 0.8rem"></p>
                         </div>
-                    </div>  
-                    <div class="formulaire">
-                        <label for="" class="mt-2" style="font-size:18px;color:gray;font-weight: lighter;">Logo</label>
-                        <div class="form " style="width:520px;">    
-                            <input type="file" name="logo_etp" id="logo_etp" class="form-control" autocomplete="off"  style="height: 30px" required>
+
+                        <div class="formulaire text-center mt-3" style="display: flex;">
+                            <input name="value_confident" required class="form-check-input align-middle" type="checkbox"
+                                value="1" id=""> &nbsp;<p class="align-middle"><a
+                                    href="{{route('condition_generale_de_vente')}}" target="_blank"
+                                    class="nav-item lien_confidentiel" style="font-size: 14px">J'ai lu et accepter les
+                                    termes de confidentiels du plateforme</a></p>
                         </div>
-                        @error('logo_etp')
-                        <div class="col-sm-6">
-                            <span style="color:#ff0000; font-size: 0.8rem"> {{$message}} </span>
+                        <div class="formulaire">
+                            <div class="formulaire text-center" style="display: flex;">
+                                <h5 style="font-size: 18px;margin-left:15%">Je ne suis pas un robot🙈</h5>
+                            </div>
+                            <div class="test">
+                                <p style="font-size: 16px;margin-left:20%">16 + <input type="text" name="val_robot"
+                                        placeholder="?" style="width: 40px;text-align:center" required> = 27</p>
+                                <a href="/create+compte+client" class="btn btn"
+                                    style="text-decoration: none;color:white;background: #0a0a08;margin-left:0%;"><i
+                                        class="fa-solid fa-circle-chevron-left align-middle"></i> &nbsp;Retour</a>
+                                </button>
+                                <button type="submit" id="suivant_of_confirmer" class="btn text-light mt-3"
+                                    style="background: #7367f0;margin-left:35%;">Confirmer</button>
+                            </div>
                         </div>
-                        @enderror
-                        <p id="error_logo_etp" style="color:#ff0000; font-size: 0.8rem"></p>
-                    </div>
-                    
-                    <div class="formulaire text-center mt-3" style="display: flex;">
-                        <input name="value_confident" required class="form-check-input align-middle" type="checkbox" value="1" id=""> &nbsp;<p class="align-middle"><a href="{{route('condition_generale_de_vente')}}" target="_blank" class="nav-item lien_confidentiel" style="font-size: 14px">J'ai lu et accepter les termes de confidentiels du plateforme</a></p>
-                    </div>
-                    
-                   
-                    <div class="formulaire">
-                        <div class="formulaire text-center" style="display: flex;">
-                            <h5 style="font-size: 18px;margin-left:15%">Je ne suis pas un robot🙈</h5>
-                        </div>
-                        <div class="test">
-                            <p style="font-size: 16px;margin-left:20%">16 + <input type="text" name="val_robot" placeholder="?" style="width: 40px;text-align:center" required> = 27</p>
-                         <a href="/create+compte+client" class="btn btn" style="text-decoration: none;color:white;background: #0a0a08;margin-left:0%;"><i class="fa-solid fa-circle-chevron-left align-middle"></i> &nbsp;Retour</a> </button>
-                        <button type="submit" id="suivant_of_confirmer" class="btn text-light mt-3" style="background: #7367f0;margin-left:35%;">Confirmer</button>
-                    </div>
-                </div> 
-            </form>     
+            </form>
         </div>
     </div>
-</body>
-<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> --}}
 
-<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"
+        integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
 
-{{-- JQuery --}}
-<script src="{{asset('bootstrapCss/js/bootstrap.bundle.js')}}"></script>
-<script src="{{asset('assets/js/boxicons.js')}}"></script>
-<script src="{{asset('assets/js/jquery.min.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.js')}}"></script>
-<script src="{{asset('assets/js/startmin.js')}}"></script>
-<script src="{{asset('assets/fullcalendar/lib/main.js')}}"></script>
-<script src="{{ asset('assets/js/jquery.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    {{-- JQuery --}}
+    {{-- <script src="{{asset('bootstrapCss/js/bootstrap.bundle.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/boxicons.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/jquery.min.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/bootstrap.min.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/bootstrap.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/startmin.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/fullcalendar/lib/main.js')}}"></script> --}}
+    {{-- <script src="{{asset('assets/js/jquery.js') }}"></script> --}}
+    {{-- <script src="{{asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
 
-<script src="{{asset('assets/js/jquery-3.3.1.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/jqueryui/jquery-ui.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('js/create_compte.js')}}"></script>
+    {{-- <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}" type="text/javascript"></script> --}}
+    {{-- <script src="{{asset('assets/jqueryui/jquery-ui.min.js')}}" type="text/javascript"></script> --}}
+    {{-- <script src="{{asset('js/create_compte.js')}}"></script> --}}
 
-<script type="text/javascript">
-    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    <script type="text/javascript">
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
     $(document).on('change', '#name_entreprise', function() {
         var id = $(this).val();
@@ -302,7 +227,7 @@ i{
 
     $(document).ready(function() {
 
-        
+
         document.getElementById("nif_etp_err").innerHTML = "";
         document.getElementById("matricule_resp_etp_err").innerHTML = "Matricule ne doit pas être null!";
         $('#suivant_etp_confirmer').prop('disabled', true);
@@ -898,7 +823,7 @@ i{
         }
     });
 
-</script>
+    </script>
+</body>
+
 </html>
-
-

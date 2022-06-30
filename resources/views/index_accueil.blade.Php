@@ -6,32 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-    </script>
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     {{-- Lien font awesome icons --}}
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <script src="{{ asset('maquette/javascript.js') }}"></script>
-    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="shortcut icon" href="{{asset('maquette/logo_fmg7635dc.webp') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/index_accueil.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
     <title> Formation.mg </title>
 </head>
 
 <body>
     <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
-        <i class="far fa-arrow-up"></i>
+        <i class="fa fa-arrow-up"></i>
     </button>
     <header class="header">
         <nav class="navbar navbar-expand-lg navbar-light fixed-top pb-0">
             <div class="container-fluid">
                 <div class="left_menu ms-2">
-                    <a href="{{route('accueil_perso')}}"><p class="titre_text m-0 p-0"><img class="img-fluid"
-                            src="{{ asset('maquette/logo_fmg7635dc.png') }}"> Formation.mg</p></a>
+                    <a href="{{route('accueil_perso')}}"><p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg7635dc.webp') }}" alt="logo"> Formation.mg</p></a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -115,12 +109,12 @@
                 <div class="row">
                     <div class="container">
                         <div class="col-12 section2_img">
-                            <img src="{{asset('maquette/logo_fmg7635dctrans.png')}}" alt="logo" class="img-fluid">
+                            <img src="{{asset('maquette/logo_fmg7635dctrans.webp')}}" alt="logo" class="img-fluid">
                         </div>
                         <h1 class="text-center mb-3">Bienvenue chez Formation.mg</h1>
                         {{-- <h1 class="text-center mb-5">Formation.mg, l'innovation digital au sein des organismes de formations</h1> --}}
                         <div class="text_about">
-                            <p class="text-center">Formation.mg offre la meilleur del'innovation numérique aux
+                            <p >Formation.mg offre la meilleur del'innovation numérique aux
                                 spécialistes de la formation. Nos solutions sont le fruit d'une collaboration entre des
                                 responsables d'organismes de
                                 formation chevronnés et les dirigeants des entreprises.Grâce a cette collaboration, nous
@@ -135,7 +129,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-6 image">
-                            <img src="{{asset('images/background_images/18section3.webp')}}" alt="image1" class="img-fluid">
+                            <img src="{{asset('images/background_images/18section3 - copie.webp')}}" alt="image1" class="img-fluid">
                         </div>
                         <div class="col-6 text">
                             <h1 class="mb-5">Vous êtes un organisme de formation ?</h1>
@@ -165,7 +159,7 @@
                             </p>
                         </div>
                         <div class="col-6 image">
-                            <img src="{{asset('images/background_images/15section4.webp')}}" alt="image1" class="img-fluid">
+                            <img src="{{asset('images/background_images/15section4 - copie.webp')}}" alt="image1" class="img-fluid">
                         </div>
                     </div>
                 </div>
@@ -188,7 +182,7 @@
                         <h1 class="text-center mb-3">Pourquoi Formation.mg est le logiciel qu'il vous faut ?</h1>
                         {{-- <h1 class="text-center mb-5">Formation.mg, l'innovation digital au sein des organismes de formations</h1> --}}
                         <div class="text_about mb-5">
-                            <p class="text-center">
+                            <p >
                                 Formation.mg est un logiciel de gestion de type SaaS qui s'adresse exclusivement aux centres de formation et les entreprises.
                                 Grâce à ses fonctionnalités développées spécialement pour le secteur de la formation, formation.mg optimise grandement vos processus d'administration et facilite la planification de vos actions de formation.
                             </p>
@@ -198,24 +192,24 @@
                                 <div class="row">
                                     <div class="col-4 card_content">
                                         <div class="icon text-center">
-                                            <i class='bx bxs-cog'></i>
+                                            <i class='fa fa-cog'></i>
                                         </div>
                                         <h4 class="mt-4 text-center">Ergonomie et performance</h4>
-                                        <p class="text-center px-3">Un gain de temps et d'efficacité garanti pour le traitement de vos tâches quotidiennes</p>
+                                        <p class="">Un gain de temps et d'efficacité garanti pour le traitement de vos tâches quotidiennes</p>
                                     </div>
                                     <div class="col-4 card_content">
                                         <div class="icon text-center">
-                                            <i class='bx bxs-extension'></i>
+                                            <i class='fa fa-puzzle-piece'></i>
                                         </div>
                                         <h4 class="mt-4 text-center">Fonctionnalités abouties</h4>
-                                        <p class="text-center px-3">Tout est pensé pour vous faire gagner du temps à chaque étape de la gestion quotidienne de votre centre de formation</p>
+                                        <p class="">Tout est pensé pour vous faire gagner du temps à chaque étape de la gestion quotidienne de votre centre de formation</p>
                                     </div>
                                     <div class="col-4 card_content">
                                         <div class="icon text-center">
-                                            <i class='bx bx-euro'></i>
+                                            <i class='fas fa-euro-sign'></i>
                                         </div>
                                         <h4 class="mt-4 text-center">Coût maîtrisé</h4>
-                                        <p class="text-center px-3">Un abonnement mensuel pour une solution cloud tout-en-un, fiable et qui évolue régulièrement</p>
+                                        <p class="">Un abonnement mensuel pour une solution cloud tout-en-un, fiable et qui évolue régulièrement</p>
                                     </div>
                                 </div>
                             </div>
@@ -227,7 +221,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-4 image ps-5">
-                            <img src="{{asset('images/background_images/16section7.webp')}}" alt="image1" class="img-fluid">
+                            <img src="{{asset('images/background_images/16section7 - copie.webp')}}" alt="image1" class="img-fluid">
                         </div>
                         <div class="col-8 text">
                             <h1 class="mb-5">Simplifiez votre quotidien avec Formation.mg</h1>
@@ -243,7 +237,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 text d-flex flex-column">
-                            <a href="{{url('contact')}}" class="text-uppercase text-center mb-3" rel="noopener noreferrer" target="_blank">contact@formationmg.com</a>
+                            <a href="{{url('contact')}}" class="text-uppercase text-center mb-3" rel="noopener noreferrer" target="_blank">contact@formation.mg</a>
                             <a href="{{url('contact')}}" target="_blank" rel="noopener noreferrer" class="text-uppercase text-center">034&nbsp;03&nbsp;876&nbsp;09</a>
                         </div>
                     </div>
@@ -286,9 +280,6 @@
             <div class="ps-3 version">V 1.0.9</div>
         </div>
     </footer> --}}
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
