@@ -218,7 +218,7 @@ class SessionController extends Controller
            if(Gate::allows('isManager')) {
                 $dep = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->departement_entreprises_id;
 
-                $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? and departement_id  order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id,$dep]);
+                $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? and departement_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id,$dep]);
            }
            else $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);
             $documents = DB::select('select * from mes_documents where groupe_id = ?',[$id]);

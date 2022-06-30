@@ -6,7 +6,7 @@
         color: #637381;
         padding: 5px;
         cursor: pointer;
-        font-size: 0.900rem;
+        font-size: 1rem;
         transition: all 200ms;
         text-transform: uppercase;
         padding-top: 10px;
@@ -45,7 +45,7 @@
     }
 
     * {
-        font-size: .9rem;
+        font-size: 1rem;
     }
 
     .body_nav p {
