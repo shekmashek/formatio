@@ -65,7 +65,7 @@
                         <label for="">thematique du domaine :</label>
                         <select class="form-control select_formulaire categ categ input" id="acf-categorie" name="thematique_id" style="height: 40px;" required>
                         </select>
-                        <p id="domaine_id_err" style="font-size: 14px;color:blue" >Choisissez un domaine de formation puis seléctioné le thematique corespendant</p>
+                        <p id="domaine_id_err" style="font-size: 14px;color:blue" >Choisissez une zone de formation, puis sélectionnez le thème du coparrainant.</p>
                     </div>
                     <div class="input-groupe mt-2">
                         <label for="">Objectif attendue :</label>

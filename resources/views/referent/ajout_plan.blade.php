@@ -46,7 +46,7 @@
                                 
                                 <td><input type="date" name="debut_rec" id="date1" class="form-control teste1" required></td>
                                 <td><input type="date" name="fin_rec" class="form-control teste2" required></td>
-                                <input type="hidden" name="entreprise_id" value="{{$entreprise_id}}">
+                                <input type="hidden" name="entreprise_id" value="{{$entreprise_id}}" required>
                             </tr>
                         
                     </tbody>

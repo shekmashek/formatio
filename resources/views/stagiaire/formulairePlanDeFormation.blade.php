@@ -10,6 +10,7 @@
 <style>
     h1{
         font-weight: 400;
+        color: gray;
     }
     .form-control{
         text-align: center;
@@ -30,7 +31,7 @@
 <div id="page-wrapper">
     <div class="container  mt-5 p-4">
         <div class="row">
-            <h1>Reccueil besoin en formation</h1>
+            <h1>Recueil besoin en formation</h1>
         </div>
         <div class="row mt-3 p-3">
             <table class="table text-center">
@@ -54,7 +55,7 @@
                         <tr>
                             <td>
                                
-                                    <div class="collapse"  id="collapseExample_{{$p->AnneePlan}}">
+                                    <div  id="collapseExample_{{$p->AnneePlan}}">
                                         <div class="card card-body" style="width: 100%">
                                             <p>Vos demandes:</p>
                                             @if(session()->has('success'))
@@ -77,12 +78,13 @@
                                                     <th>Statut</th>
                                                     <th>Priorité</th>
                                                     @if(strtotime($p->fin_rec) > strtotime('now') )
-                                                        <th>Action</th>
+                                                        <th>Action</th>    
+                                                   
                                                     @endif
                                                 </thead>
                                                 <tbody>
-
                                                     @foreach ($besoin as $be)
+                                                       
                                                         @if ($be->anneePlan_id === $p->id)
                                                         <form action="{{route('besoin.modif',$be->id)}}" method="POST">
                                                             @csrf
@@ -91,7 +93,15 @@
                                                                 <td><input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" disabled><span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span></td>
                                                                 <td><input type="hidden"  class="form-control inp{{$be->id}}" name="date" id="date{{$be->id}}" value="" ><span class="spa{{$be->id}}">@php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp </span></td>
                                                                 <td><input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->organisme}}</span></td>
-                                                                <td><span class="badge bg-warning">En attente</span></td>
+                                                                <td>
+                                                                @if ($be->statut == 0)
+                                                                    <span class="bg-warning p-1 text-sm rounded text-white"><small>En attente</small> </span>
+                                                                @elseif ($be->statut == 1)
+                                                                    <span class="p-1 rounded text-white" style="background:#41D053;"><small>Validé</small></span>
+                                                                @elseif ($be->statut == 2)
+                                                                    <span class="p-1 rounded text-white" style="background:#f54c49;"><small>Refusé</small></span>
+                                                                @endif
+                                                                </td>
                                                                 <td><select style="border:#0dcaf0 1px solid" hidden class="form-control inp{{$be->id}}" name="type" id="type{{$be->id}}" aria-placeholder="tetret" >
                                                                         <option value="{{$be->type}}" disable selected hidden>{{$be->type}}</option>
                                                                         <option value="urgent">urgent</option>
@@ -99,6 +109,7 @@
                                                                     </select>
                                                                     <span class="spa{{$be->id}}">{{$be->type}}</span></td>
                                                                 @if(strtotime($p->fin_rec) > strtotime('now') )
+                                                                @if($be->statut == '0')
                                                                 <td>
                                                                     <a id="but{{$be->id}}" onclick='modifier({{$be->id}},"{{$be->domaine->nom_domaine}}","{{$be->formation->nom_formation}}","{{$be->date_previsionnelle}}","{{$be->organisme}}","{{$be->type}}");'  class="btn btn-info text-light">
                                                                         <i  class="fa-solid fa-pen-to-square"></i></a>
@@ -106,6 +117,8 @@
                                                                     <button type="submit" id="mod{{$be->id}}" style="display: none;margin-left:12px" href="" style="background-color: " class="btn btn text-light saf">Modifier</button>
                                                                 </td>
                                                                 @endif
+                                                                @endif
+
                                                             </tr>
                                                         </form>
                                                         @endif 

@@ -7,13 +7,14 @@
     h2{
         font-weight: 400;
         font-size: 25px;
+        color: gray;
     }
 </style>
     <div class="container shadow-sm mt-5 p-4">
         <div class="row">
             <div class="col-md-12">
                 <div class="float-start">
-                    <h2>Liste global des demande de formation </h2>
+                    <h2>Liste globale des demandes de formation </h2>
                 </div>
                 <div class="float-end">
 
@@ -38,10 +39,15 @@
                             <th>Priorité</th>
                             
                         </tr>
+                        {{-- <tr>
+                            <th>Departement: </th>
+                            <th>Sérvice:</th>
+                        </tr> --}}
                     </thead>
                     <tbody>
                         
                         @foreach ($stagiaire as $st)
+                       
                         <tr>
                             <td>
                                 @foreach ($besoin as $be)

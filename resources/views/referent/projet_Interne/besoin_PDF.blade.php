@@ -27,9 +27,9 @@
         <h1></h1>
     </div>
     <div style="margin-top:-160px;" >
-        <h3><u>Adresse</u> : Analamahitsy </h3>
-        <h3><u>Region</u>   &nbsp;:&nbsp;Analamanga </h3>
-        <h3><u>Email</u>&nbsp; &nbsp; : daniel@gmail.com </h3>
+        <h3><u>Adresse</u> :{{$ent->Adresse_quartier}}  </h3>
+        <h3><u>Region</u>   &nbsp;:&nbsp;{{$ent->Adresse_region}} </h3>
+        <h3><u>Email</u>&nbsp; &nbsp; : {{$ent->email_etp}} </h3>
        
     </div>
     <div style="height: 100px;width:150px;background-color:white;margin-left:81%;margin-top:-200px">
