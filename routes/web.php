@@ -1450,16 +1450,6 @@ Route::get('/detail_formateur_new', 'SessionController@formateurInfo');
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
 
-
-
-
-
-
-
-
-
-
-
 Route::get('/raport','SessionController@fiche')->name('fichePDF');
 //plus d'avis
 Route::get('plus_avis','FormationController@plus_avis')->name('plus_avis');
@@ -1477,5 +1467,6 @@ Route::get('/teste', 'PlanFormationController@teste');
 
 Route::get('/valideStatut/{id}','PlanFormationController@valideStatut')->name('valideStatut');
 Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('refuseSatut');
-
-
+Route::get('/modifie_demande_stagiaire/{id}','PlanFormationController@modif_demande_stagiaire')->name('modifDemandeStagiaire');
+Route::post('/update_demande_stagiaire/{id}','PlanFormationController@update_demande_stg')->name('update_demande_stg');
+Route::get('/envoye_autre_demande/{anneePlan_id}','PlanFormationController@envoye_demande_stg')->name('envoye_autre_demande');

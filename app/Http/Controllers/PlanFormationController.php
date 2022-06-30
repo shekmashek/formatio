@@ -300,6 +300,43 @@ class PlanFormationController extends Controller
         }
     }
 
+    public function modif_demande_stagiaire($id){
+        $users = Auth::user()->id;
+        if (Gate::allows('isManager')) {
+            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+            $besoin = besoins::find($id);
+            $domaines = Domaine::all();
+            $themes =formation::all();
+
+            return view('manager.demande_stagiaire.modifDemandeStagiaire',compact('besoin','domaines','themes'));
+        }
+    }
+
+    public function envoye_demande_stg(){
+        return view('manager.autreDemandeFormation');
+    }
+
+    public function update_demande_stg(Request $request,$id){
+        $users = Auth::user()->id;
+        $stagiaire_id = $request->stagiaire_id;
+
+        if (Gate::allows('isManager')) {
+            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+            $data = DB::table('besoin_stagiaire')->where('id',$id)
+            ->where('entreprise_id',$entreprise_id)->where('stagiaire_id',$stagiaire_id)
+            ->update([
+                'domaines_id'=>$request->domaines_id,
+                'thematique_id'=>$request->thematique_id,
+                'objectif'=>$request->objectif,
+                'date_previsionnelle'=>$request->date_previsionnelle,
+                'organisme'=>$request->organisme,
+                'type'=>$request->type
+            ]);
+            return redirect()->route('liste_demande_stagiaire');
+        }
+        
+    }
+
     public function show()
     {
     }

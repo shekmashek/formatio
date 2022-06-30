@@ -4,11 +4,6 @@
     <p class="text_header m-0 mt-1">Plan de formation </p>
 @endsection
 @section('content')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
-    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <style>
     h4,label,p{
         font-weight: 400;
@@ -37,15 +32,12 @@
     tr:hover .actions{
         visibility: visible;
         display: block;
-        cursor: pointer;
         height: 2%;
     }
-    
-
-    
 </style>
-<div id="page-wrapper">
-    <div class="container my-4">
+
+<div id="container-fluid">
+    <div class="col-11 my-4 m-auto">
         @can('isReferent')
             <div class="row">
                 <div class="col-md-12 ">
@@ -183,7 +175,15 @@
                             </div>
                             <div class="row">
                                 <div class="collapse p-3" id="collapse{{$plan_recueil->id}}">
-                                    <h6 class="text-secondary lead">Tous les demandes de votre équipe</h6>
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <h6 class="text-secondary lead">Tous les demandes de votre équipe</h6>
+                                        </div>
+                                        <div class="flex-grow-1 text-end">
+                                            <a href="{{route('envoye_autre_demande',$plan_recueil->id)}}" class="btn btn-info text-white">Demander une proposition</a>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
                                         <table class="table table-hover text-secondary my-3" style="font-size: .8rem;">
                                             <thead>
                                                 <tr>
@@ -202,70 +202,47 @@
                                             <tbody>
                                                 @foreach ($besoins as $besoin)
                                                     @if ($plan_recueil->id == $besoin->anneePlan_id)
-                                                        <form action="" method="POST">
-                                                            @csrf
-                                                            <tr>
-                                                                <td class="text-secondary">{{$besoin->stagiaire->matricule}}</td>
-                                                                <td class="text-secondary">
-                                                                    <span class="span{{$besoin->id}}">{{$besoin->stagiaire->nom_stagiaire}} {{ $besoin->stagiaire->prenom_stagiaire }}</span>
-                                                                </td>
-                                                                <td></td>
-                                                                <td class="text-secondary">{{$besoin->stagiaire->fonction_stagiaire}}</td>
-                                                                <td class="text-secondary">
-                                                                    <input type="hidden" class="form-control input{{$besoin->id}}" name="nom_formation" id="nomFormation{{$besoin->id}}">
-                                                                    <span class="span{{$besoin->id}}">{{ $besoin->formation->nom_formation}}</span>
-                                                                </td>
-                                                                <td class="text-secondary">
-                                                                    <input type="hidden" class="form-control input{{$besoin->id}}" name="objectif" id="objectif{{$besoin->id}}">
-                                                                    <span class="span{{$besoin->id}}">{{ $besoin->objectif}}</span>
-                                                                </td>
-                                                                <td class="text-center text-secondary">
-                                                                    <input type="hidden" class="form-control input{{$besoin->id}}" name="date_prev" id="date_prev{{$besoin->id}}">
-                                                                    <span class="span{{$besoin->id}}">{{ $besoin->date_previsionnelle}}</span>
-                                                                </td>
-                                                                <td class="text-secondary">
-                                                                    <input type="hidden" class="form-control input{{$besoin->id}}" name="stagiaire" id="stagiaire{{$besoin->id}}">
-                                                                    <span class="span{{$besoin->id}}">{{ $besoin->organisme}}</span>
-                                                                </td>
-                                                                <td class="text-secondary">
-                                                                    <select name="type" id="type{{$besoin->id}}" class="form-control input{{$besoin->id}}" hidden>
-                                                                        <option value="{{ $besoin->type}}" selected hidden>{{ $besoin->type}}</option>
-                                                                        <option value="urgent">urgent</option>
-                                                                        <option value="non-urgent">non-urgent</option>
-                                                                    </select>
-                                                                    <span class="span{{$besoin->id}}">{{ $besoin->type}}</span>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    @if ($besoin->statut == 0)
-                                                                        <span class="bg-warning p-1 rounded text-white">En attente</span>
-                                                                    @elseif ($besoin->statut == 1)
-                                                                        <span class="p-1 rounded text-white" style="background:#41D053;">Validé</span>
-                                                                    @elseif ($besoin->statut == 2)
-                                                                        <span class="p-1 rounded text-white" style="background:#f54c49;">Refusé</span>
-                                                                    @endif
-                                                                </td>
+                                                        <tr>
+                                                            <td class="text-secondary">{{$besoin->stagiaire->matricule}}</td>
+                                                            <td class="text-secondary">{{$besoin->stagiaire->nom_stagiaire}} {{ $besoin->stagiaire->prenom_stagiaire }}</td>
+                                                            <td></td>
+                                                            <td class="text-secondary">{{$besoin->stagiaire->fonction_stagiaire}}</td>
+                                                            <td class="text-secondary">{{ $besoin->formation->nom_formation}}</td>
+                                                            <td class="text-secondary">{{ $besoin->objectif}}</td>
+                                                            <td class="text-center text-secondary">{{ $besoin->date_previsionnelle}}</td>
+                                                            <td class="text-secondary">{{ $besoin->organisme}}</td>
+                                                            <td class="text-secondary">{{ $besoin->type}}</td>
+                                                            <td class="text-center">
                                                                 @if ($besoin->statut == 0)
-                                                                    <td class="action text-center">
-                                                                        @if (strtotime($plan_recueil->fin_rec) < strtotime('now'))
-                                                                        <a href="#" class="modifie btn btn-sm"id="{{$besoin->id}}"><i class="fas fa-edit text-primary"></i></a>
-                                                                        @endif
-                                                                        <a href="{{route('valideStatut',$besoin->id)}}" class="valide btn btn-sm" id="{{$besoin->id}}"><i class="fas fa-check ml-1" style="color: #41D053;"></i></a>
-                                                                        <a href="{{route('refuseSatut',$besoin->id)}}" class="refuse btn btn-sm" id="{{$besoin->id}}"><i class="fas fa-times ml-1" style="color: #F00E0B;"></i></a>
-                                                                    </td>
+                                                                    <span class="bg-warning p-1 rounded text-white">En attente</span>
+                                                                @elseif ($besoin->statut == 1)
+                                                                    <span class="p-1 rounded text-white" style="background:#41D053;">Validé</span>
                                                                 @elseif ($besoin->statut == 2)
-                                                                    <td class="action text-center">
-                                                                        @if (strtotime($plan_recueil->fin_rec) < strtotime('now'))
-                                                                        <a href="#" class="modifie btn btn-sm"id="{{$besoin->id}}"><i class="fas fa-edit text-primary"></i></a>
-                                                                        @endif
-                                                                        <a href="{{route('valideStatut',$besoin->id) }}" class=" refuse btn btn-sm" id="{{$besoin->id}}"><i class="fas fa-check ml-1" style="color: #41D053;"></i></a>
-                                                                    </td>
+                                                                    <span class="p-1 rounded text-white" style="background:#f54c49;">Refusé</span>
                                                                 @endif
-                                                            </tr> 
-                                                        </form> 
+                                                            </td>
+                                                            @if ($besoin->statut == 0)
+                                                                <td class="action text-center">
+                                                                    @if (strtotime($plan_recueil->fin_rec) >= strtotime('now'))
+                                                                        <a href="{{route('modifDemandeStagiaire',$besoin->id)}}" class="editBtn{{$besoin->id}} text-info btn"  id="{{$besoin->id}}"><i class="bx bxs-edit-alt bx-sm"></i></a>
+                                                                    @endif
+                                                                    <a href="{{route('valideStatut',$besoin->id)}}" class="btn" id="{{$besoin->id}}"><i class="bx bx-check bx-sm ml-1" style="color: #41D053;"></i></a>
+                                                                    <a href="{{route('refuseSatut',$besoin->id)}}" class="btn" id="{{$besoin->id}}"><i class="bx bx-x bx-sm ml-1" style="color: #F00E0B;"></i></a>
+                                                                </td>
+                                                            @elseif ($besoin->statut == 2)
+                                                                <td class="action text-center">
+                                                                    @if (strtotime($plan_recueil->fin_rec) >= strtotime(now()))
+                                                                        <a href="{{route('modifDemandeStagiaire',$besoin->id)}}" class="editBtn{{$besoin->id}} text-info" class="btn"  id="{{$besoin->id}}"><i class="bx bxs-edit-alt bx-sm"></i></a>
+                                                                    @endif
+                                                                    <a href="{{route('valideStatut',$besoin->id)}}" class="btn" id="{{$besoin->id}}"><i class="bx bx-check bx-sm ml-1" style="color: #41D053;"></i></a>
+                                                                </td>
+                                                            @endif
+                                                        </tr> 
                                                     @endif
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -277,22 +254,9 @@
 </div> 
       
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
+@push('scripts')
 <script>
-    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    // $(document).ready(function(){
-    //     $('tr .actions').hide();
-    //     $("tr").mouseenter(function(){
-    //         $(".actions").show();
-    //     });
-    //     $("tr").mouseleave(function(){
-    //         $(".actions").hide();
-    //     });
-    // });
-    
-</script>
-<script>
+
     function midina(){
        var id = $('#one').data('id');
        console.log(id);
@@ -308,6 +272,7 @@
             },
         }); 
     };
-
 </script>
+@endpush
+
 @endsection
