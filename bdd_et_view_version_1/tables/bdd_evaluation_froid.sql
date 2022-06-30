@@ -1,4 +1,4 @@
--- Active: 1656400043423@@127.0.0.1@3306@bdd_nicole
+
 create table question_evaluation_froid(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     type_champ_id bigint(20) NOT NULL REFERENCES type_champs(id) ON DELETE CASCADE,
