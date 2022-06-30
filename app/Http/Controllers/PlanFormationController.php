@@ -276,17 +276,26 @@ class PlanFormationController extends Controller
         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
             $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
             $plan = DB::select('select * from plan_formation_valide where entreprise_id = ?', [$entreprise_id]);
-            // $liste = recueil_information::with('formation', 'annee_plan')->where('entreprise_id', $entreprise_id)->get();
-            $besoin_count  = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'])->get();
-            $besoinV_count = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'=>function($query){
-                $query->where('statut','=','1');
-            }])->get();
-            $besoinN_count = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'=>function($query){
-                $query->where('statut','=','1');
-            }])->get();
-            $employ = DB::select('select * from stagiaires where entreprise_id = ?', [$entreprise_id]);
-            $nombr = count($employ);
-            return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoin_count','besoinV_count','besoinN_count'));
+            $count = count($plan);
+
+            if ($count == 0)
+            {
+                return view('referent.ajout_plan',compact('entreprise_id'));
+            }
+            else{
+
+                $besoin_count  = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'])->get();
+                $besoinV_count = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'=>function($query){
+                    $query->where('statut','=','1');
+                }])->get();
+                $besoinN_count = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'=>function($query){
+                    $query->where('statut','=','1');
+                }])->get();
+                $employ = DB::select('select * from stagiaires where entreprise_id = ?', [$entreprise_id]);
+                $nombr = count($employ);
+                return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoin_count','besoinV_count','besoinN_count'));
+            }
+
         }
 
         //$besoin_count = $fonct->findWhere("besoin_stagiaire",["anneePlan_id"],[$id]);
