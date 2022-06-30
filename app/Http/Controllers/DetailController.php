@@ -416,7 +416,7 @@ class DetailController extends Controller
         $ressource = DB::select('select * from ressources where groupe_id =?',[$id_groupe]);
         // dd($ressource);
         if(count($lieu_formation)>0){
-            $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
+            $lieu_formation = explode(',',$lieu_formation[0]->lieu);
         }else{
             $lieu_formation[0]='';
             $lieu_formation[1]='';
