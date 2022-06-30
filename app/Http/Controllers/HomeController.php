@@ -964,6 +964,79 @@ class HomeController extends Controller
         }
     }
 
+    // date filter project
+    public function filterProjectDate(Request $request, $id = null){
+        $projet_model = new projet();
+
+        $fonct = new FonctionGenerique();
+
+        $user_id = Auth::user()->id;
+        $totale_invitation = 0;
+        $entp = new entreprise();
+        $status = DB::select('select * from status');
+        $type_formation_id = $request->type_formation;
+        $data = [];
+
+        if (Gate::allows('isCFP')) {
+            $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
+
+            $projet = DB::select('select * from v_projet_session where cfp_id = ?',[$cfp_id]);
+            $devise = DB::select('select * from devise')[0]->devise;
+        
+            $lieu_formation =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$cfp_id]);
+            if(count($lieu_formation)>0){
+                $lieuFormation = explode(',',$lieu_formation[1]->lieu);
+            }
+            $ref = DB::select('select * from devise')[0]->description;
+
+            // $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
+
+            $type_formation = DB::select('select * from type_formations');
+
+
+            $formation = $fonct->findWhere("v_formation", ['cfp_id'], [$cfp_id]);
+
+            $module = $fonct->findWhere("v_module", ['cfp_id', 'status'], [$cfp_id, 2]);
+
+            $payement = $fonct->findAll("type_payement");
+
+            $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
+            
+
+            $dataGroupe = DB::table('v_projet_session')
+                ->join('v_groupe_projet_module', 'v_groupe_projet_module.projet_id', 'v_projet_session.projet_id')
+                ->select('v_projet_session.nom_projet', 'v_projet_session.type_formation', 'v_groupe_projet_module.date_debut',
+                 'v_groupe_projet_module.date_fin', 'v_groupe_projet_module.groupe_id',
+                'v_groupe_projet_module.type_formation_id')
+                 ->where('v_groupe_projet_module.cfp_id', '=', $cfp_id)
+                 ->where('v_groupe_projet_module.date_debut', '>=', $request->from)
+                 ->where('v_groupe_projet_module.date_debut', '<=', $request->to)
+                 ->groupBy('v_projet_session.nom_projet')
+                ->get();
+                // dd($dataGroupe);
+
+            $data = DB::table('v_projet_session')
+                ->join('v_groupe_projet_module', 'v_groupe_projet_module.projet_id', 'v_projet_session.projet_id')
+                ->select('v_projet_session.nom_projet', 'v_projet_session.projet_id', 'v_projet_session.type_formation', 'v_projet_session.totale_session', 
+                'v_groupe_projet_module.cfp_id', 'v_groupe_projet_module.date_projet', 'v_groupe_projet_module.groupe_id',
+                 'v_groupe_projet_module.nom_groupe', 'v_groupe_projet_module.date_debut', 'v_groupe_projet_module.date_fin', 'v_groupe_projet_module.modalite',
+                 'v_groupe_projet_module.item_status_groupe', 'v_groupe_projet_module.nom_module', 'v_groupe_projet_module.modalite_formation', 
+                 'v_groupe_projet_module.entreprise_id', 'v_groupe_projet_module.prix', 'v_groupe_projet_module.min_participant', 'v_groupe_projet_module.max_participant', 
+                 'v_groupe_projet_module.formation_id', 'v_groupe_projet_module.nom_formation', 'v_groupe_projet_module.module_id', 'v_groupe_projet_module.type_payement_id', 
+                 'v_groupe_projet_module.type', 'v_groupe_projet_module.type_formation_id')
+                 ->where('v_groupe_projet_module.cfp_id', '=', $cfp_id)
+                 ->where('v_groupe_projet_module.date_debut', '>=', $request->from)
+                 ->where('v_groupe_projet_module.date_debut', '<=', $request->to)
+                 ->groupBy('v_projet_session.nom_projet')
+                ->get();
+
+                // dd($data);
+            // $data = DB::select('select * from v_groupe_projet_module where cfp_id = ? and date_debut >= ? and date_debut <= ?', [$cfp_id, $request->from, $request->to]);
+
+            return view('projet_session.index2Filter', compact('dataGroupe', 'projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise'));
+        }
+    }
+
     public function statut_presence_emargement(Request $req){
         $groupe_id = $req->groupe;
         $groupe = new Groupe();
