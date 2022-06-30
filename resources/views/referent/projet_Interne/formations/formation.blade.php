@@ -356,6 +356,7 @@
                                 </div>
                             </div>
                         </div>
+                        @canany('isReferent')
                         <div class="col-1 actions_button_mod">
                             <div class="row w-100 mb-2">
                                 <div class="col-12 d-flex flex-column">
@@ -374,6 +375,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endcanany
                         @if($info->jours_restant > 0)
                         <div class="col-1">
                             <span class="ribbon2"><span>Nouveau<br>J - {{$info->jours_restant}}</span></span>

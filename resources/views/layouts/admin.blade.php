@@ -205,7 +205,7 @@
                 </a>
             </li>
             @endcanany --}}
-            @canany(['isReferent'])
+            @canany(['isReferent','isManager','isStagiaire'])
             <li>
                 <a href="{{route('formations')}}" class="d-flex nav_linke">
                     <i class='bx bxl-netlify'></i>
