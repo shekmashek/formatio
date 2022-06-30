@@ -129,6 +129,7 @@ class ParticipantController extends Controller
     {
         $entreprise_id = 0;
         $nb_limit = 10;
+
         $user_id = Auth::user()->id;
         $piasa = null;
         $employers = [];
@@ -136,16 +137,16 @@ class ParticipantController extends Controller
         $chefs = [];
         $entreprise_id = $this->fonct->findWhereMulitOne("employers", ["user_id"], [$user_id])->entreprise_id;
 
-        $totale_pag_stg = $this->fonct->getNbrePagination("stagiaires", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
-        $totale_pag_resp = $this->fonct->getNbrePagination("responsables", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
-        $totale_pag_chef = $this->fonct->getNbrePagination("chef_departements", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+        $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+        // $totale_pag_resp = $this->fonct->getNbrePagination("responsables", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
+        // $totale_pag_chef = $this->fonct->getNbrePagination("chef_departements", "id", ["entreprise_id"], ["="], [$entreprise_id], "AND");
 
-        $totale_pag = ($totale_pag_stg + $totale_pag_resp);
+        // $totale_pag = ($totale_pag_stg );
 
         // $totale_pag =  $totale_pag_stg;
 
         $service = $this->fonct->findWhere("v_departement_service_entreprise", ["entreprise_id"], [$entreprise_id]);
-        
+
 
         if ($paginations != null) {
 
@@ -155,7 +156,7 @@ class ParticipantController extends Controller
             $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
             $resp = DB::select("SELECT *, SUBSTRING(nom_resp,1,1) AS nom_rsp,SUBSTRING(prenom_resp,1,1) AS prenom_rsp,role_users.prioriter FROM responsables,role_users WHERE responsables.user_id = role_users.user_id AND entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
             $sefo = DB::select("SELECT *, SUBSTRING(nom_chef,1,1) AS nom_cf,SUBSTRING(prenom_chef,1,1) AS prenom_cf FROM chef_departements WHERE entreprise_id=? LIMIT " . $nb_limit . " OFFSET " . ($paginations - 1), [$entreprise_id]);
-            
+
             $pagination = $this->fonct->nb_liste_pagination($totale_pag, $paginations, $nb_limit);
         } else {
             if ($paginations <= 0) {
@@ -163,6 +164,7 @@ class ParticipantController extends Controller
             }
             if(Gate::allows('isManager')) {
                 $dep =  $this->fonct->findWhereMulitOne("employers", ["user_id"], [$user_id])->departement_entreprises_id;
+                $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id","departement_entreprises_id"], ["=","="], [$entreprise_id,$dep], "AND");
                 $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? and departement_entreprises_id = ?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id,$dep]);
             }
             else  $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id]);
@@ -231,7 +233,7 @@ class ParticipantController extends Controller
         }
 
 
-
+// dd($pagination);
         return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'pagination'));
     }
 
