@@ -2335,7 +2335,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                             <div style="display: inline-block">
                                                                 @foreach($stagiaire as $stg)
                                                                     @if($pj->groupe_id == $stg->groupe_id)
-                                                                    <div class="float-start wrapper_stg mt-3 p-1 pe-2 ps-2 me-2">
+                                                                    <div class="float-start wrapper_stg mt-3 pe-2 ps-2 me-2">
                                                                         <span style="color:#ececec;">{{$stg->nom_stagiaire}}&nbsp;{{$stg->prenom_stagiaire}}</span>
                                                                     </div>
                                                                     @endif
