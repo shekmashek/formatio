@@ -202,7 +202,7 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
-      
+
         if (Gate::allows('isFormateurPrincipale')) {
             return redirect()->route('accueilFormateur');
         }
@@ -299,7 +299,7 @@ class HomeController extends Controller
             $user_id = User::where('id', Auth::user()->id)->value('id');
             $centre_fp = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
             // $centre_fp = cfp::where('user_id', $user_id)->value('id');
-            
+
             $GChart = DB::select('SELECT ROUND(IFNULL(SUM(net_ht),0),2) as net_ht ,ROUND(IFNULL(SUM(net_ttc),0),2) as net_ttc , MONTH(invoice_date) as mois,
                 year(invoice_date) as annee from v_facture_existant where year(invoice_date)=year(now()) or year(invoice_date)=YEAR(DATE_SUB(now(),
                 INTERVAL 1 YEAR)) and cfp_id = ' . $centre_fp . ' group by MONTH(invoice_date),
@@ -1014,30 +1014,22 @@ class HomeController extends Controller
             $ressource ='';
             $stagiaire ='';
             $data_detail='';
-            $modules = DB::select('select nom_module,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by nom_module');
-            $formations = DB::select('select nom_formation,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by nom_formation');
-            $status = DB::select('select item_status_groupe as status,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by item_status_groupe');
+            $modules = DB::select('select nom_module from v_stagiaire_notstatut_eval group by nom_module');
+            $formations = DB::select('select nom_formation from v_stagiaire_notstatut_eval group by nom_formation');
             if($data != null){
                 $ressource = DB::select('select * from ressources where groupe_id in (' . implode(',',$var) .')');
                 $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id in (' . implode(',',$var) .') order by stagiaire_id asc');
-                $data_detail = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_participant_groupe_detail where stagiaire_id = ? order by date_debut desc', [$stg_id]);
+                $data_detail = DB::select('select * from v_participant_groupe_detail where stagiaire_id = ? order by date_debut desc', [$stg_id]);
             }
-            $documents = [];
-
-            $test = 0;
             // $documents = $drive->file_list($cfp_nom,"Mes documents");
-            foreach($data as $d){
+            /* foreach($data as $d){ */
                 /* $data->date_debut = Carbon::parse($pj->date_debut)->format('d-m-Y'); */
-                $test =  $drive->file_list($d->nom_cfp,"Mes documents");
-
-            }
-            if(count($test) > 0){
-                $documents = $drive->file_list($d->nom_cfp,"Mes documents");
-            }
-
-
-
-            return view('projet_session.index2', compact('documents','data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status'));
+                /* $test =  $drive->file_list($d->nom_cfp,"Mes documents");
+                if(count($test) > 0){
+                    array_push($documents , $drive->file_list($d->nom_cfp,"Mes documents"));
+                }
+            } */
+            return view('projet_session.index2', compact('data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations'));
         }
     }
 

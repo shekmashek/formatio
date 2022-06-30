@@ -79,48 +79,20 @@ class Projet extends Model
         return $sql;
     }
     public function requette_normal_stagiaire($table){
-        $sql = "select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from ".$table." where 1=1 order by date_debut desc";
+        $sql = "select * from v_stagiaire_notstatut_eval";
         return $sql;
     }
     public function build_requette_stagiare($id_stagiaire,$table,$request){
-        $sql = "select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from ".$table." where 1=1";
+        $sql = "select * from v_stagiaire_notstatut_eval where 1=1";
         if (Gate::allows('isStagiaire')){
             // $domaine = $fonct->findAll("domaines");
             $sql = $sql." and stagiaire_id = ".$id_stagiaire;
         }
-        if(empty($request->status) && empty($request->module) && empty($request->formation) && empty($request->annee) && empty($request->mois) && empty($request->trimestre) && empty($request->semestre)){
+        if(empty($request->status) && empty($request->module) && empty($request->formation) && empty($request->mois) && empty($request->trimestre) && empty($request->semestre)){
             return $sql." order by date_debut desc";
         }
-        if (!empty($request->annee)) {
-            if($request->annee == 'null'){
-                $request->annee = date("Y");
-                $sql = $sql." and year(date_debut) = ".$request->annee;
-            }else{
-                $sql = $sql." and year(date_debut) = ".$request->annee;
-            }
-            if($request->mois != 'null'){
-                $sql = $sql." and month(date_debut) = ".$request->mois;
-            }else{
-                if($request->trimestre != 'null'){
-                    if($request->trimestre == 1){
-                        $sql = $sql." and 1 <= month(date_debut) and month(date_debut) <= 3";
-                    }if($request->trimestre == 2){
-                        $sql = $sql." and 4 <= month(date_debut) and month(date_debut) <= 6";
-                    }if($request->trimestre == 3){
-                        $sql = $sql." and 7 <= month(date_debut) and month(date_debut) <= 9";
-                    }if($request->trimestre == 4){
-                        $sql = $sql." and 10 <= month(date_debut) and month(date_debut) <= 12";
-                    }
-                }else{
-                    if($request->semestre != 'null'){
-                        if($request->semestre == 1){
-                            $sql = $sql." and 1 <= month(date_debut) and month(date_debut) <= 6";
-                        }if($request->semestre == 2){
-                            $sql = $sql." and 7 <= month(date_debut) and month(date_debut) <= 12";
-                        }
-                    }
-                }
-            }
+        if($request->mois != 'null'){
+            $sql = $sql." and month(date_debut) = ".$request->mois;
         }
         if(!empty($request->module)){
             if($request->module!='null'){
