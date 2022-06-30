@@ -895,15 +895,19 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
     .p_date{
         margin-left:40%;
     }
+    .div_class>div{
+        display:inline-block;
+    }
     .triangle-right {
         width: 0;
         height: 0;
         border-top: 7px solid transparent;
         border-left: 7px solid rgba(191, 26, 160, 0.593);
         border-bottom: 7px solid transparent;
+        display: inline-block;
+        margin-left: 10px;
+        margin-top: 67px;
         position: absolute;
-        margin-left: 279px;
-        margin-top: -32px;
     }
     .text_retourner {
         position: relative;
@@ -1970,9 +1974,13 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                         @foreach ($data as $pj)
                         <div class="row listes justify-content-md-center">
                             <div class="col-md-2" style="background-color:rgba(177, 99, 163, 0.09);;">
-                                <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
-                                <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
-                                <div class="triangle-right"></div>
+                                <div class="date_class">
+                                    <div style="float: left; display: inline-block; width: 100%;">
+                                    <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
+                                    <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
+                                    </div>
+                                    <div class="triangle-right"></div>
+                                </div>
                             </div>
                             <div class="col-md-8">
                                 <ul class="timeline-1 text-black">{{-- here --}}
