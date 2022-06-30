@@ -131,7 +131,7 @@ class SessionController extends Controller
         $module_session = DB::select('select reference,nom_module, module_id from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
         $dataMontantSession = [];
         if(Gate::allows('isCFP')){
-            $drive = new getImageModel();
+            // $drive = new getImageModel();
             $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
             $cfp_id = $resp->cfp_id;
             $cfp_nom = $resp->nom_cfp;
@@ -172,6 +172,7 @@ class SessionController extends Controller
             //     }
             // }
             if(count($frais_annex)>0){
+
                 if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id && $frais_annex[0]->projet_id == $projet[0]->projet_id){
                     $frais_annex[0] = $frais_annex[0]->hors_taxe;
                 }
@@ -186,10 +187,10 @@ class SessionController extends Controller
 
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
 
-            $drive = new getImageModel();
-            $drive->create_folder($cfp_nom);
-            $drive->create_sub_folder($cfp_nom, "Mes documents");
-            $documents = $drive->file_list($cfp_nom,"Mes documents");
+            // $drive = new getImageModel();
+            // $drive->create_folder($cfp_nom);
+            // $drive->create_sub_folder($cfp_nom, "Mes documents");
+            // $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
         if(Gate::allows('isReferent') or Gate::allows('isReferentSimple') or Gate::allows('isManager')){
