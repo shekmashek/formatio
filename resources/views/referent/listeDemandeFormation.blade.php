@@ -174,15 +174,12 @@
                                                 <div class="float-start">
                                                     <p>Nombre des demande traité par les N+</p>
                                                 </div>
-                                                <div class="float-end">
-                                                    
+                                                <div class="float-end">                                                  
                                                     @foreach ($besoinV_count as $coV)
-                                                    @if($coV->id == $p->id)
-
-                                                        <p><span > {{ $coV->besoins_count }}</span></p>
-                                                    @endif
-                                                    @endforeach
-                                                    
+                                                        @if($coV->id == $p->id)
+                                                            <p><span > {{ $coV->besoins_count }}</span></p>
+                                                        @endif
+                                                    @endforeach   
                                                 </div>
                                             </div>
                                         </div>   
