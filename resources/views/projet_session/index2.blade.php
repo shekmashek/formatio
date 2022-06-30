@@ -1009,8 +1009,8 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                 class='bx bx-chevron-right pagination'></i></a>
                     @endif
                 </span>
+                <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
             @endcanany
-            <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
         </div>
         @if (Session::has('pdf_error'))
             <div class="alert alert-danger ms-4 me-4">
@@ -2101,11 +2101,88 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                 </div>
                             </div>
                         </div>
+                        @can('isStagiaire')
+                            <div class="row justify-content-md-center mb-5">
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <label for="inputEmail3" class="col-sm-1 col-form-label">De:</label>
+                                            <div class="col">
+                                                <input type="date" id="start_date" class="form-control"/>
+                                            </div>
+                                                <label for="inputEmail3" class="col-sm-1 col-form-label">à:</label>
+                                            <div class="col">
+                                                <input type="date" id="end_date" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="col-sm-7 btn-group">
+                                            <button type="button" class="form-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Tous les module
+                                            </button>
+                                            <ul id="module" class="dropdown-menu">
+                                                <li class="border-bottom border-2">
+                                                    <div class="col-sm-11 ms-2 mt-2 mb-2">
+                                                        <input type="text" id="recherche_module" placeholder="Rechercher par module" class="form-control input"/>
+                                                    </div>
+                                                </li>
+                                                <li class="dropdown-item"><input name="module_all" type="checkbox" value="null"> Tous les modules</li>
+                                            @foreach ($modules as $mod)
+                                                <li class="dropdown-item"><input name="module" type="checkbox" value="{{$mod->nom_module}}"> {{$mod->nom_module}}</li>
+                                            @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="btn-group col-sm-10">
+                                            <button type="button" class="form-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Tous les formations
+                                            </button>
+                                            <ul id="formation" class="dropdown-menu">
+                                                <li class="border-bottom border-2">
+                                                    <div class="col-sm-11 ms-2 mt-2 mb-2">
+                                                        <input type="text" id="recherche_formation" placeholder="Rechercher par formation" class="form-control input"/>
+                                                    </div>
+                                                </li>
+                                                <li class="dropdown-item"><input name="formation_all" type="checkbox" value="null"> Tous les formations</li>
+                                            @foreach ($formations as $form)
+                                                <li class="dropdown-item"><input name="formation" type="checkbox" value="{{$form->nom_formation}}"> {{$form->nom_formation}}</li>
+                                            @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="btn-group col-sm-7">
+                                            <button type="button" class="form-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Tous les Status
+                                            </button>
+                                            <ul id="status" class="dropdown-menu">
+                                                <li class="border-bottom border-2">
+                                                    <div class="col-sm-11 ms-2 mt-2 mb-2">
+                                                        <input type="text" id="recherche_status" placeholder="Rechercher par status" class="form-control input"/>
+                                                    </div>
+                                                </li>
+                                                <li class="dropdown-item"><input name="status_all" type="checkbox" value="null"> Tous les Status</li>
+                                                <li class="dropdown-item"><input name="status" type="checkbox" value="En cours"> En cours</li>
+                                                <li class="dropdown-item"><input name="status" type="checkbox" value="Reprogrammer"> Reprogrammer</li>
+                                                <li class="dropdown-item"><input name="status" type="checkbox" value="Annulée"> Annulée</li>
+                                                <li class="dropdown-item"><input name="status" type="checkbox" value="Reporté"> Reporté</li>
+                                                <li class="dropdown-item"><input name="status" type="checkbox" value="Cloturé"> Cloturé</li>
+                                                <li class="dropdown-item"><input name="status" type="checkbox" value="Terminé"> Terminé</li>
+                                                <li class="dropdown-item"><input name="status" type="checkbox" value="A venir"> A venir</li>
+                                                <li class="dropdown-item"><input name="status" type="checkbox" value="Prévisionnel"> Prévisionnel</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endcan
+                        <div id="stg_projet">
                         @foreach ($data as $pj)
-                        <div class="row justify-content-md-center">
+                        <div class="row listes justify-content-md-center">
                             <div class="col-md-2" style="background-color:rgba(177, 99, 163, 0.09);;">
-                                <h5 class="p_date mt-5"> {{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
-                                <h6 class="p_date text-black-50">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</h6>
+                                <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
+                                <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
                                 <div class="triangle-right"></div>
                             </div>
                             <div class="col-md-8">
@@ -2122,11 +2199,11 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                     @endif
                                         <div class="row mt-2 titre_projet mb-1 pt-2 pb-2 w-100 g-0">
                                             <div class="col-md-1 p-0">
-                                            <h6 class="m-0"><a href="#collapseprojet_{{ $pj->module_id }}" class="mb-0 changer_carret d-flex" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
+                                            <h6 class="m-0"><a href="#collapseprojet_{{ $pj->groupe_id }}" class="mb-0 changer_carret d-flex" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
                                             </div>
                                             <div class="col-md-2 text-start">
-                                                <h6>{{ $pj->nom_module }}</h6>
-                                                <span class="text-black-50">{{ $pj->nom_formation }}</span>
+                                                <h6 class="nom_module">{{ $pj->nom_module }}</h6>
+                                                <span class="nom_formation text-black-50">{{ $pj->nom_formation }}</span>
                                             </div>
                                             <div class="col-md-2 p-0 d-flex justify-content-start">
                                                 <img src="{{ asset('images/CFP/' . $pj->logo) }}" alt="{{ $pj->logo }}" style="width:64px;height:64px"/>
@@ -2145,19 +2222,19 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                 <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn" style="width:63px;height:20px;font-size: 11px;padding-top: initial;">Résultat</button></a>
                                             </div>
                                             <div class="col-md-2 p-0 d-flex justify-content-start">
-                                                <p class="{{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
+                                                <p class="nom_status {{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
                                             </div>
                                         </div>
-                                        <div class="collapse" id="collapseprojet_{{ $pj->module_id }}">
+                                        <div class="collapse" id="collapseprojet_{{ $pj->groupe_id }}">
                                             {{-- section --}}
                                             <section>
                                                 <div class="row bg-light p-0 d-flex flex-row" role="tabpanel">
                                                     <div class="col-md-2 nav_session">
                                                         <div class="corps_planning m-0 bg-light" id="myTab" data-id="refresh" role="tablist">
                                                             <div class="nav-item active" role="presentation">
-                                                                <a href="#detail_{{ $pj->module_id }}" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
+                                                                <a href="#detail_{{ $pj->groupe_id }}" class="nav-link active p-0" id="detail-tab" data-toggle="tab" type="button"
                                                                     role="tab" aria-controls="home" aria-selected="true">
-                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between active detail-tab_{{ $pj->module_id }}" onclick="openCity(event, 'detail_{{ $pj->module_id }}')" style="width: 100%">
+                                                                    <button class="planning_{{ $pj->groupe_id }} d-flex justify-content-between active detail-tab_{{ $pj->groupe_id }}" onclick="openCity(event, 'detail_{{ $pj->groupe_id }}')" style="width: 100%">
                                                                         <p class="m-0 pt-2 pb-2">PLANNING</p>
                                                                         {{-- @if ($test == 0)
                                                                             <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
@@ -2169,17 +2246,17 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                 </a>
                                                             </div>
                                                             <div class="nav-item" role="presentation">
-                                                                <a href="#apprenant_{{ $pj->module_id }}" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
+                                                                <a href="#apprenant_{{ $pj->groupe_id }}" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                                                     role="tab" aria-controls="home" aria-selected="true">
-                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between apprenant-tab_{{ $pj->module_id }}" onclick="openCity(event, 'apprenant_{{ $pj->module_id }}')" style="width: 100%">
+                                                                    <button class="planning_{{ $pj->groupe_id }} d-flex justify-content-between apprenant-tab_{{ $pj->groupe_id }}" onclick="openCity(event, 'apprenant_{{ $pj->groupe_id }}')" style="width: 100%">
                                                                         <p class="m-0 pt-2 pb-2">APPRENANTS</p>
                                                                     </button>
                                                                 </a>
                                                             </div>
                                                             <div class="nav-item" role="presentation">
-                                                                <a href="#ressource_{{ $pj->module_id }}" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
+                                                                <a href="#ressource_{{ $pj->groupe_id }}" class="nav-link p-0" id="ressource-tab" data-toggle="tab" type="button"
                                                                     role="tab" aria-controls="home" aria-selected="true">
-                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between action_animation ressource-tab_{{ $pj->module_id }}" onclick="openCity(event, 'ressource_{{ $pj->module_id }}')" style="width: 100%">
+                                                                    <button class="planning_{{ $pj->groupe_id }} d-flex justify-content-between action_animation ressource-tab_{{ $pj->groupe_id }}" onclick="openCity(event, 'ressource_{{ $pj->groupe_id }}')" style="width: 100%">
                                                                         <p class="m-0 pt-2 pb-2">RESSOURCES</p>
                                                                         {{-- @if (count($ressource) == 0)
                                                                             <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
@@ -2189,18 +2266,18 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                     </button>
                                                                 </a>
                                                             </div>
-                                                            <div class="nav-item" role="presentation">
-                                                                <a href="#document_{{ $pj->module_id }}" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
+                                                            {{-- <div class="nav-item" role="presentation">
+                                                                <a href="#document_{{ $pj->groupe_id }}" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
                                                                     role="tab" aria-controls="home" aria-selected="true">
-                                                                    <button class="planning_{{ $pj->module_id }} d-flex justify-content-between document-tab_{{ $pj->module_id }}" onclick="openCity(event, 'document_{{ $pj->module_id }}')" style="width: 100%">
+                                                                    <button class="planning_{{ $pj->groupe_id }} d-flex justify-content-between document-tab_{{ $pj->groupe_id }}" onclick="openCity(event, 'document_{{ $pj->groupe_id }}')" style="width: 100%">
                                                                         <p class="m-0 pt-2 pb-2">DOCUMENTS</p>
                                                                     </button>
                                                                 </a>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                     <div class="tab-content col-md-10">
-                                                        <div class="tab-pane fade show active tabcontent_{{ $pj->module_id }}" id="detail_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="detail-tab" style="display: block">
+                                                        <div class="tab-pane fade show active tabcontent_{{ $pj->groupe_id }}" id="detail_{{ $pj->groupe_id }}" role="tabpanel" aria-labelledby="detail-tab" style="display: block">
                                                             <table class="table table-hover table-borderless" style="border: none" id="dataTables-example">
                                                                 <thead style="border-bottom: 1px solid black; line-height: 20px">
                                                                     <td>Séance</td>
@@ -2216,7 +2293,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                         $i = 1;
                                                                     @endphp
                                                                     @foreach ($data_detail as $dt)
-                                                                    @if($pj->module_id == $dt->module_id)
+                                                                    @if($pj->groupe_id == $dt->groupe_id)
                                                                         <tr>
                                                                             <td>{{ $i }}</td>
                                                                             <td>{{ $dt->nom_module }}</td>
@@ -2234,10 +2311,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <div id="document_{{ $pj->module_id }}" class="tab-pane fade show tabcontent_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="document-tab" style="display: none">
-                                                            {{-- @php
-                                                                $documents = getImageModel::file_list($pj->groupe_id,"Mes documents");
-                                                            @endphp --}}
+                                                        {{-- <div id="document_{{ $pj->groupe_id }}" class="tab-pane fade show tabcontent_{{ $pj->groupe_id }}" role="tabpanel" aria-labelledby="document-tab" style="display: none">
                                                             <nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
                                                                 <span class="titre_detail_session"><strong style="font-size: 14px">Les documents pour la session</strong></span>
                                                             </nav>
@@ -2250,11 +2324,11 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                     @endforeach
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="apprenant_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
+                                                        </div> --}}
+                                                        <div class="tab-pane fade show tabcontent_{{ $pj->groupe_id }}" id="apprenant_{{ $pj->groupe_id }}" role="tabpanel" aria-labelledby="apprenant-tab" style="display: none">
                                                             <div style="display: inline-block">
                                                                 @foreach($stagiaire as $stg)
-                                                                    @if($pj->module_id == $stg->module_id)
+                                                                    @if($pj->groupe_id == $stg->groupe_id)
                                                                     <div class="float-start wrapper_stg mt-3 p-1 pe-2 ps-2 me-2">
                                                                         <span style="color:#ececec;">{{$stg->nom_stagiaire}}&nbsp;{{$stg->prenom_stagiaire}}</span>
                                                                     </div>
@@ -2262,7 +2336,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                 @endforeach
                                                             </div>
                                                         </div>
-                                                        <div class="tab-pane fade show tabcontent_{{ $pj->module_id }}" id="ressource_{{ $pj->module_id }}" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
+                                                        <div class="tab-pane fade show tabcontent_{{ $pj->groupe_id }}" id="ressource_{{ $pj->groupe_id }}" role="tabpanel" aria-labelledby="ressource-tab" style="display: none">
                                                            {{--  @if (count($ressource)>0) --}}
                                                                 <div class="mb-3 pe-5 ps-1 col-12 pb-5">
                                                                     <div class="row mt-0" style="border-bottom: 1px solid black; line-height: 20px">
@@ -2334,26 +2408,26 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             </div>
                         </div>
                         <script>
-                            $('.document-tab_'.$pj->module_id).on('click',function(e){
-                                localStorage.setItem('activeTab', 'document_'.$pj->module_id);
+                            $('.document-tab_'.$pj->groupe_id).on('click',function(e){
+                                localStorage.setItem('activeTab', 'document_'.$pj->groupe_id);
                             });
-                            $('.ressource-tab_'.$pj->module_id).on('click',function(e){
-                                localStorage.setItem('activeTab', 'ressource_'.$pj->module_id);
+                            $('.ressource-tab_'.$pj->groupe_id).on('click',function(e){
+                                localStorage.setItem('activeTab', 'ressource_'.$pj->groupe_id);
                             });
-                            $('.apprenant-tab_'.$pj->module_id).on('click',function(e){
+                            $('.apprenant-tab_'.$pj->groupe_id).on('click',function(e){
                                 console.log("here");
-                                localStorage.setItem('activeTab', 'apprenant_'.$pj->module_id);
+                                localStorage.setItem('activeTab', 'apprenant_'.$pj->groupe_id);
                             });
-                            $('.detail-tab_'.$pj->module_id).on('click',function(e){
-                                localStorage.setItem('activeTab', 'detail_'.$pj->module_id);
+                            $('.detail-tab_'.$pj->groupe_id).on('click',function(e){
+                                localStorage.setItem('activeTab', 'detail_'.$pj->groupe_id);
                             });
 
                             let activeTab = localStorage.getItem('activeTab');
 
                             if(activeTab){
-                                $('.tabcontent_'.$pj->module_id).css('display','none');
+                                $('.tabcontent_'.$pj->groupe_id).css('display','none');
                                 $('#' + activeTab).show();
-                                tablinks = document.getElementsByClassName("planning_".$pj->module_id);
+                                tablinks = document.getElementsByClassName("planning_".$pj->groupe_id);
                                 for (i = 0; i < tablinks.length; i++) {
                                     tablinks[i].className = tablinks[i].className.replace(" active", "");
                                 }
@@ -2361,6 +2435,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             }
                         </script>
                         @endforeach
+                        </div>
                     @endif
                 @endcan
                     {{-- {!! $projet->links() !!} --}}
@@ -2376,7 +2451,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
                 </div>
                 <hr class="mt-2">
-                @canany(['isReferent', 'isCFP','isStagiaire'])
+                @canany(['isReferent', 'isCFP'])
                     <div class="col-12 pe-3">
                         <div class="row mb-3 p-2 pt-0">
                             <form action="{{ route('liste_projet') }}" method="GET">
@@ -2426,45 +2501,6 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                         </div>
                     </div>
                 @endcanany
-                @can('isStagiaire')
-                <div class="col-12 pe-3">
-                    <div class="row mb-3 p-2 pt-0">
-                        <form action="{{ route('liste_projet') }}" method="GET">
-                            <div class="row px-3 mt-2">
-                                <select name="module" id="module" class="filtre_projet">
-                                    <option value="null" selected>Nom de module</option>
-                                    @foreach ($modules as $mod)
-                                        <option value="{{$mod->nom_module}}">{{$mod->nom_module}}</option>
-                                    @endforeach
-                                </select>
-                                <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
-                            </div>
-                        </form>
-                        <form action="{{ route('liste_projet') }}" method="GET">
-                            <div class="row px-3 mt-2">
-                            <select name="formation" id="formation" class="filtre_projet">
-                                <option value="null" selected>Nom de formation</option>
-                                @foreach ($formations as $form)
-                                    <option value="{{$form->nom_formation}}">{{$form->nom_formation}}</option>
-                                @endforeach
-                            </select>
-                            <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
-                            </div>
-                        </form>
-                        <form action="{{ route('liste_projet') }}" method="GET">
-                            <div class="row px-3 mt-2">
-                            <select name="status" id="status" class="filtre_projet">
-                                <option value="null" selected>Status</option>
-                                @foreach ($status as $stt)
-                                    <option value="{{$stt->status}}">{{$stt->status}}</option>
-                                @endforeach
-                            </select>
-                            <button class="btn btn_next mt-3 mb-3" type="submit">Appliquer</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                @endcan
                 @can('isReferent')
                     <div class="row px-3 mt-2">
                         <form action="{{ route('recherche_cfp') }}" method="POST">
@@ -2620,9 +2656,9 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                 </div>
                         </div>
                 </div>
-
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
                 <script src="{{ asset('js/index2.js') }}"></script>
+                @include("projet_session.functions.projet_stg")
                 <script>
                     $("#formation_session_id").on("change", function() {
                         var id = $("#formation_session_id").val();

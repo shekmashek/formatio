@@ -104,3 +104,10 @@ select
         on mf.module_id = g.module_id
     join niveau_etude niveau
         on niveau.id = s.niveau_etude_id order by groupe_id desc;
+
+
+create or replace view v_stagiaire_notstatut_eval as
+    select *,
+    case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval 
+    from v_stagiaire_groupe order by date_debut desc
+    
