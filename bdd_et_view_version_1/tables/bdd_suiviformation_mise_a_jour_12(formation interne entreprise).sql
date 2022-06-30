@@ -233,32 +233,7 @@ INSERT INTO `formations_interne` ( `nom_formation`, `domaine_id`, `created_at`, 
 ( 'VTC', 34, '2021-11-17 04:06:54', '2021-11-17 04:06:54', 1);
 
 
-CREATE TABLE modules_interne (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  reference varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  nom_module varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  formation_id bigint(20) UNSIGNED NOT NULL REFERENCES formations(id) ON DELETE CASCADE,
-  cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  created_at timestamp NULL DEFAULT current_timestamp(),
-  updated_at timestamp NULL DEFAULT current_timestamp(),
-  prix int(11) NOT NULL,
-  duree int(11) NOT NULL,
-  duree_jour int(11) NOT NULL,
-  prerequis TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  objectif TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  modalite_formation varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  description TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  niveau_id bigint(20) NOT NULL REFERENCES niveaux(id) ON DELETE CASCADE,
-  materiel_necessaire varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  cible varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  min int(11) NOT NULL,
-  max int(11) NOT NULL,
-  bon_a_savoir TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
-  prestation TEXT COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-alter table modules_interne add status int(11) default 0;
-alter table modules_interne add etp_id bigint(20);
 
 CREATE TABLE programmes_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

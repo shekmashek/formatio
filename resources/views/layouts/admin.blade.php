@@ -24,6 +24,10 @@
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
+
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         .modal-backdrop{
             z-index: 1 !important;
@@ -457,14 +461,15 @@
             @endcanany
 
             {{-- plan de formation --}}
-            {{-- @canany(['isStagiaire','isManager','isReferent'])
+            @canany(['isStagiaire','isManager','isReferent','isReferentSimple'])
             <li>
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
-                    <i class='bx bx-scatter-chart'></i>
+                    <i class="fa-solid fa-earth-asia"></i>
                     <span class="links_name">Plan</span>
                 </a>
             </li>
+            @endcanany
             {{-- integrer dans la page
             <li>
                 <a href="{{route('listePlanFormation')}}" class="d-flex nav_linke">
@@ -472,7 +477,7 @@
                     <span class="links_name">Liste Plan</span>
                 </a>
             </li> --}}
-            {{-- @endcanany --}}
+            {{-- @endcanany
             {{-- abonemment --}}
             @canany(['isSuperAdmin','isAdmin'])
             <li>

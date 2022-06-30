@@ -95,7 +95,6 @@ $(document).ready(function() {
         }
         , success: function(response) {
             var userData = response;
-            console.log("ty",userData);
             for (var $i = 0; $i < userData.length; $i++) {
                 if(userData[$i].role_id == 3 || userData[$i].role_id == 2 || userData[$i].role_id == 5  || userData[$i].role_id == 4){
                     if(userData[$i].activiter == true){

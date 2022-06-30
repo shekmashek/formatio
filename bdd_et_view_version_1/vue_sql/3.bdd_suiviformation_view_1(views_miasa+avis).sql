@@ -181,15 +181,15 @@ FROM
     avis
 GROUP BY
     module_id;
-CREATE OR REPLACE VIEW v_nombre_note AS SELECT
-    module_id,
-    ROUND(note / 2, 1) AS note,
-    COUNT(note) AS nombre_note
-FROM
-    avis
-GROUP BY
-    module_id,
-    note;
+    CREATE OR REPLACE VIEW v_nombre_note AS SELECT
+        module_id,
+        ROUND(note / 2, 1) AS note,
+        COUNT(note) AS nombre_note
+    FROM
+        avis
+    GROUP BY
+        module_id,
+        note;
 CREATE OR REPLACE VIEW v_moyenne_avis_module AS SELECT
     module_id,
     SUM(note) / COUNT(module_id) AS moyenne_avis
