@@ -465,7 +465,7 @@
             <li>
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
-                    <i class="fa-solid fa-earth-asia"></i>
+                    <i class='bx bx-bar-chart-square'></i>
                     <span class="links_name">Plan</span>
                 </a>
             </li>
