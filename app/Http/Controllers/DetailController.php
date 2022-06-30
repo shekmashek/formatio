@@ -299,6 +299,8 @@ class DetailController extends Controller
     public function informationModule(Request $request)
     {
         $id = $request->Id;
+        $user_id = Auth::user()->id;
+        $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
         // $detail = DB::select(' select statut,date_detail,h_debut,h_fin, detail_id,nom_projet,type_formation,lieu,nom_groupe,groupe_id,type_formation_id,nom_cfp,cfp_id,nom_etp,entreprise_id,photos,logo_entreprise,logo_cfp,nom_formateur,prenom_formateur,mail_formateur,numero_formateur,formateur_id,formation_id,nom_formation,module_id,nom_module  from v_detailmodule where detail_id = ' . $id);
         $detail = DB::select('
             SELECT *,details.id as detail_id FROM details
@@ -343,15 +345,15 @@ class DetailController extends Controller
             where g.id =?
         ",[$detail[0]->groupe_id]);
 
-        $stg = DB::select('select * from  v_participant_groupe_detail where detail_id = ' . $id);
+        $stg = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from  v_participant_groupe_detail where detail_id = ? and departement_id = ?',[$id, $id_departement]);
 
-        $nombre_stg = DB::select('select count(stagiaire_id) as nombre from v_participant_groupe_detail where detail_id = ?',[$id])[0]->nombre;
+        // $nombre_stg = DB::select('select count(stagiaire_id) as nombre from v_participant_groupe_detail where detail_id = ? and departement_id = ?',[$id, $id_departement])[0]->nombre;
 
-        $initial_stg = array();
+        // $initial_stg = array();
         //on récupère l'initial
-        for ($i=0; $i < count($stg); $i++) {
-            array_push($initial_stg,DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from v_participant_groupe_detail where stagiaire_id =  ?', [$stg[$i]->stagiaire_id ]));
-        }
+        // for ($i=0; $i < count($stg); $i++) {
+            // array_push($initial_stg,DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from v_participant_groupe_detail where stagiaire_id =  ?', [$stg[$i]->stagiaire_id ]));
+        // }
         $id_groupe = $detail[0]->groupe_id;
 
         $date_groupe =  DB::select('select status_groupe,date_detail,h_debut,h_fin,detail_id,nom_projet,type_formation,lieu,nom_groupe,groupe_id,type_formation_id,nom_cfp,cfp_id,nom_etp,entreprise_id,photos,logo_entreprise,logo_cfp,nom_formateur,prenom_formateur,mail_formateur,numero_formateur,formateur_id,formation_id,nom_formation,module_id,nom_module  from v_detailmodule where groupe_id = ' . $id_groupe);
@@ -382,7 +384,7 @@ class DetailController extends Controller
             $test_photo_formateur = 'images/formateurs/' . $test_photo_formateur;
             $photo_form = 'oui';
         }
-        return response()->json(['ressource'=>$ressource,'nombre_stg'=>$nombre_stg,'nb_seance'=>$nb_seance,'id_detail'=>$id,'formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form,'initial_stg'=>$initial_stg]);
+        return response()->json(['ressource'=>$ressource,'nombre_stg'=>count($stg),'nb_seance'=>$nb_seance,'id_detail'=>$id,'formations'=>$formations,'entreprises'=>$entreprises,'status'=>$status[0]->item_status_groupe,'detail' => $detail, 'stagiaire' => $stg, 'date_groupe' => $date_groupe,'initial'=>$test_photo_formateur,'photo_form'=>$photo_form]);
     }
     //impression
     public function detail_printpdf($id)
@@ -414,23 +416,23 @@ class DetailController extends Controller
         $ressource = DB::select('select * from ressources where groupe_id =?',[$id_groupe]);
         // dd($ressource);
         if(count($lieu_formation)>0){
-            $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
+            $lieu_formation = explode(',',$lieu_formation[0]->lieu);
         }else{
             $lieu_formation[0]='';
             $lieu_formation[1]='';
         }
          /** Recuperer duree total de la session */
-         $nb_seance = '';
-         $info = $this->groupes->infos_session($id_groupe);
-         if ($info->difference == null && $info->nb_detail == 0) {
-             $nb_seance = $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
-         }elseif ($info->difference != null && $info->nb_detail == 1) {
-             $nb_seance = $info->nb_detail. ' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
-         }elseif ($info->difference != null && $info->nb_detail > 1) {
-             $nb_seance = $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
-         }
-         $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('nb_seance','lieu_formation','nb_stg','status','detail', 'stg', 'date_groupe','ressource'));
-        //return view('admin.calendrier.detail_pdf' ,compact('nb_seance','status','detail', 'stg','date_groupe','nb_stg','lieu_formation','ressource'));
+        $nb_seance = '';
+        $info = $this->groupes->infos_session($id_groupe);
+        if ($info->difference == null && $info->nb_detail == 0) {
+            $nb_seance = $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }elseif ($info->difference != null && $info->nb_detail == 1) {
+            $nb_seance = $info->nb_detail. ' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }elseif ($info->difference != null && $info->nb_detail > 1) {
+            $nb_seance = $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+        }
+        $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('nb_seance','lieu_formation','nb_stg','status','detail', 'stg', 'date_groupe','ressource'));
+       // return view('admin.calendrier.detail_pdf' ,compact('nb_seance','status','detail', 'stg','date_groupe','nb_stg','lieu_formation','ressource'));
        return $pdf->download('Detail du projet.pdf');
     }
     //filtre calendrier

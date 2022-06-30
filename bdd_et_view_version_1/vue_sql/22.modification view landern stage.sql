@@ -42,7 +42,7 @@ select
         s.user_id,
         s.photos,
         concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photos,
-        (s.service_id) departement_id,
+        (s.departement_entreprises_id) departement_id,
         s.cin,
         niveau.id as niveau_etude_id,
         niveau.niveau_etude,
@@ -100,6 +100,5 @@ select
 
 create or replace view v_stagiaire_notstatut_eval as
     select *,
-    case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval 
+    case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval
     from v_stagiaire_groupe order by date_debut desc
-    
