@@ -763,7 +763,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
         border-left: 3px solid #b565a7;
         border-bottom-right-radius: 4px;
         border-top-right-radius: 4px;
-        background: rgba(177, 99, 163, 0.09);
+        /* background: rgba(177, 99, 163, 0.09); */
         margin: 0 auto;
         position: relative;
         padding: 30px;
@@ -2184,11 +2184,12 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                         <div id="stg_projet">
                         @foreach ($data as $pj)
                         <div class="row listes justify-content-md-center">
-                            <div class="col-md-2" style="background-color:rgba(177, 99, 163, 0.09);;">
+                            <div class="col-md-2" style="">
                                 <div class="date_class">
                                     <div style="float: left; display: inline-block; width: 100%;">
-                                    <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
-                                    <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
+                                        <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
+                                        <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
+                                        <p class="col-md-2 p-0 ps-1 ps-1 nom_status {{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
                                     </div>
                                     <div class="triangle-right"></div>
                                 </div>
@@ -2228,9 +2229,6 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                             </div>
                                             <div class="col-md-1 p-0 d-flex justify-content-start">
                                                 <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn" style="width:63px;height:20px;font-size: 11px;padding-top: initial;">Résultat</button></a>
-                                            </div>
-                                            <div class="col-md-2 p-0 d-flex justify-content-start">
-                                                <p class="nom_status {{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
                                             </div>
                                         </div>
                                         <div class="collapse" id="collapseprojet_{{ $pj->groupe_id }}">
