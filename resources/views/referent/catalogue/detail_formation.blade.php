@@ -81,7 +81,9 @@
                 <li class="me-5"><a href="#programme"><i class='bx bx-list-minus encre_icon me-2'></i>programme</a></li>
                 <li class="me-5"><a href="#avis"><i class='bx bxs-edit-alt encre_icon me-2'></i>Avis</a></li>
                 <li class="me-5"><a href="#dates"><i class='bx bxs-calendar-check encre_icon me-2'></i>dates</a></li>
+                @can('isReferent')
                 <li class="me-5"><a href="{{route('demande_devis_client',$infos[0]->module_id)}}"><i class='bx bxs-cart-download encre_icon me-2'></i>Demander un devis</a></li>
+                @endcan
                 <li class="me-5"><a class="print_to_pdf"><i class='bx bxs-download encre_icon me-2'></i>telecharger en pdf</a></li>
 
             </ul>
