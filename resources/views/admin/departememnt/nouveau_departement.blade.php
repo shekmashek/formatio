@@ -92,6 +92,34 @@
     }
     /*modal*/
 
+    .navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -110,14 +138,14 @@
         @endif
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            <li class="nav-item active">
-                <a href="#departements" class="nav-link active" data-toggle="tab">Départements</a>
+            <li class="nav-item ">
+                <a href="#departements" class="nav-link active" data-bs-toggle="tab">Départements</a>
             </li>
             <li class="nav-item">
-                <a href="#services" class="nav-link" data-toggle="tab">Services</a>
+                <a href="#services" class="nav-link" data-bs-toggle="tab">Services</a>
             </li>
             <li class="nav-item">
-                <a href="#branches" class="nav-link" data-toggle="tab">Branches</a>
+                <a href="#branches" class="nav-link" data-bs-toggle="tab">Branches</a>
             </li>
         </ul>
 
