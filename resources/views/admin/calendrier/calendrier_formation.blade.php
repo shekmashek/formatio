@@ -414,28 +414,24 @@
 
                 </div>
 
-                <div class="input-group mb-3">
-                    
-                    <label for="participant_collaps" class="input-group-text border-0 bg-light" id="basic-addon1">@</label>
-                    <div id=""class="dropdown width_90">
-                        <a class="btn btn-secondary dropdown-toggle w-100 btn_purple" data-bs-auto-close="outside" data-html="true"
-                            href="#" role="button" id="dropdownMenuClickableInside"
-                            data-bs-toggle="dropdown" data-mdb-toggle="dropdown" aria-expanded="false">
-                          Participants
-                        </a>
-                      
-                        <ul id="event_participants" class="dropdown-menu w-100"
-                         aria-labelledby="dropdownMenuClickableInside">
-                                                    
-                        </ul>
 
- 
+                <div class="accordion" id="accordion_container">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                              Accordion Item #1
+                            </button>
+                        </h2>
+
+                          <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwp" data-bs-parent="#accordion_container">
+                            <div class="accordion-body">
+                                <div class="accordion" id="accordionExample">
+                        
+                                </div>
+                            </div>
+                          </div>
 
                     </div>
-                </div>
-
-                <div class="accordion" id="accordionExample">
-
                 </div>
 
               </div>
@@ -749,7 +745,7 @@
                                 // participants_offcanvas.innerHTML = html_pop;
 
                                 //////////////////
-                            
+                                
                                 html_accordion += '<div class="accordion-item">';
 
                                 html_accordion += '<h2 class="accordion-header" id="headingOne'+i+'">';
