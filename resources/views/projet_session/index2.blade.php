@@ -1976,12 +1976,9 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             <div class="col-md-2" style="">
                                 <div class="date_class">
                                     <div style="float: left; display: inline-block; width: 100%;">
-                                    <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
-                                    <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
-                                        
-                                    
+                                        <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
+                                        <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
                                         <p class="col-md-2 p-0 ps-1 ps-1 nom_status {{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
-                                    
                                     </div>
                                     <div class="triangle-right"></div>
                                 </div>
