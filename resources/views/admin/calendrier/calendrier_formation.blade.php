@@ -549,7 +549,7 @@
                                         var nb_seance = userDataDetail['nb_seance'];
                                         var test_photo = userDataDetail['photo_form'];
                                         var photo_formateur = userDataDetail['initial'];
-                                        var initial_stg = userDataDetail['initial_stg'];
+                                        // var initial_stg = userDataDetail['initial_stg'];
                                         var entreprises = userDataDetail['entreprises'];
                                         var formations = userDataDetail['formations'];
                                         var nombre_stg = userDataDetail['nombre_stg'];
@@ -677,7 +677,7 @@
                                             t4 = stg[$a].telephone_stagiaire.substr(6,2);
 
                                             if(stg[$a].photos == null) {
-                                                html = '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+initial_stg[$a][0].nm + initial_stg[$a][0].pr+'</a></span>';
+                                                html = '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+stg[$a].nm + stg[$a].pr+'</a></span>';
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html += '</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + "&nbsp" + t2 + "&nbsp"+ t3 + "&nbsp" + t4 + '</td><td>'+stg[$a].nom_departement +'<br>'+stg[$a].nom_service+'</td></tr>'
                                             }
