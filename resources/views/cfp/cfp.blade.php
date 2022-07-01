@@ -24,7 +24,7 @@
     border: none;
 }
 
-.nav-item.active .nav-link {
+.nav-item .nav-link.active {
     border-bottom: 3px solid #7635dc !important;
     border: none;
     color: #7635dc;
@@ -48,12 +48,12 @@
 <!-- Tabs navs -->
 <div class="container-fluid mt-4 p-5 ">
     <ul class="nav nav-tabs mb-3 navigation_module" id="myTab" role="tablist">
-        <li class="nav-item active" id="collabore-tab" role="presentation">
+        <li class="nav-item" id="collabore-tab" role="presentation">
           <a
             class="nav-link active collabore"
             id="ex1-tab-1"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             href="#collabore"
             role="tab"
             aria-controls="ex1-tabs-1"
@@ -66,7 +66,7 @@
             class="nav-link invitation"
             id="ex1-tab-2"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             href="#invitation   "
             role="tab"
             aria-controls="ex1-tabs-2"
@@ -118,7 +118,7 @@
                             </span>
                           @else
 
-                            <img src="{{asset("images/employes/".$centre->photos_resp_cfp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
+                            <img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
                             </td>
                         @endif
 
