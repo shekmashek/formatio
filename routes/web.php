@@ -111,7 +111,41 @@ Route::get('projet_interne', 'ProjetControlleur@projetInterne')->name('projet_in
 Route::get('formations', 'ProjetControlleur@formations')->name('formations');
 Route::get('formateurs', 'ProjetControlleur@formateurs')->name('formateurs');
 Route::get('projets', 'ProjetControlleur@projets')->name('projets');
-
+Route::post('module_interne', 'ProjetControlleur@module_interne')->name('module_interne');
+Route::get('module_interne_new', 'ProjetControlleur@module_interne_new')->name('module_interne_new');
+Route::get('load_formations', 'ProjetControlleur@load_formations')->name('load_formations');
+Route::get('load_formations_suppre', 'ProjetControlleur@load_formations_suppre')->name('load_formations_suppre');
+Route::post('update_formation_domaine', 'ProjetControlleur@update_formation_domaine')->name('update_formation_domaine');
+Route::post('new_domaine', 'ProjetControlleur@new_domaine')->name('new_domaine');
+Route::post('new_formation', 'ProjetControlleur@new_formation')->name('new_formation');
+Route::post('supprimer_thematique', 'ProjetControlleur@supprimer_thematique')->name('supprimer_thematique');
+Route::get('suppression_formation', 'ProjetControlleur@suppression_formation')->name('suppression_formation');
+Route::get('supprimer_domaine', 'ProjetControlleur@supprimer_domaine')->name('supprimer_domaine');
+Route::get('annuler_new_mod_etp/{id}','ProjetControlleur@destroy_new')->name('annuler_new_mod_etp');
+Route::get('competence_interne','ProjetControlleur@afficher_radar')->name('competence_interne');
+Route::post('modification_nom_module_etp/{id}','ProjetControlleur@edit_name_module')->name('modification_nom_module_etp');
+Route::post('modification_description_etp/{id}','ProjetControlleur@edit_description')->name('modification_description_etp');
+Route::post('modification_detail_etp/{id}','ProjetControlleur@edit_detail')->name('modification_detail_etp');
+Route::post('modification_objectif_etp/{id}','ProjetControlleur@edit_objectif')->name('modification_objectif_etp');
+Route::post('modification_pour_qui_etp/{id}','ProjetControlleur@edit_public_cible')->name('modification_pour_qui_etp');
+Route::post('modification_prerequis_etp/{id}','ProjetControlleur@edit_prerequis')->name('modification_prerequis_etp');
+Route::post('modification_equipement_etp/{id}','ProjetControlleur@edit_equipement')->name('modification_equipement_etp');
+Route::post('modification_bon_a_savoir_etp/{id}','ProjetControlleur@edit_bon_a_savoir')->name('modification_bon_a_savoir_etp');
+Route::post('modification_prestation_etp/{id}','ProjetControlleur@edit_prestation')->name('modification_prestation_etp');
+Route::post('insert_prog_cours_etp', 'ProjetControlleur@insert_prog_cours_etp')->name('insert_prog_cours_etp');
+Route::post('update_prog_cours_etp', 'ProjetControlleur@update_prog_cours_etp')->name('update_prog_cours_etp');
+Route::post('insertion_cours_etp', 'ProjetControlleur@insertion_cours_etp')->name('insertion_cours_etp');
+Route::get('load_cours_programme_etp', 'ProjetControlleur@load_cours_programme_etp')->name('load_cours_programme_etp');
+Route::post('ajout_competence_etp','ProjetControlleur@ajout_new_competence')->name('ajout_competence_etp');
+Route::post('modifier_competence_etp','ProjetControlleur@modif_competence')->name('modifier_competence_etp');
+Route::get('suppression_competence_etp','ProjetControlleur@destroy_competence')->name('suppression_competence_etp');
+Route::get('suppression_programme_etp', 'ProjetControlleur@suppre_programme')->name('suppression_programme_etp');
+Route::get('suppression_cours_etp', 'ProjetControlleur@suppre_cours')->name('suppression_cours_etp');
+Route::get('modif_programmes_etp/{id}', 'ProjetControlleur@ajout_programme')->name('modif_programmes_etp');
+Route::get('plus_avis_mod_etp','ProjetControlleur@plus_avis_mod_etp')->name('plus_avis_mod_etp');
+Route::get('select_par_module_etp/{id}', 'ProjetControlleur@affichageParModule')->name('select_par_module_etp');
+Route::get('affichage_formation_etp/{id}', 'ProjetControlleur@affichage_formation_etp')->name('affichage_formation_etp');
+Route::get('destroy_module_etp','ProjetControlleur@destroy_module_etp')->name('destroy_module_etp');
 
 
 //route groupe

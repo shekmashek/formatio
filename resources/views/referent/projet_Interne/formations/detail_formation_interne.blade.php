@@ -3,6 +3,7 @@
 @section('content')
 <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('assets/css/formation.css')}}">
+<link rel="stylesheet" href="{{asset('assets/css/formation_interne.css')}}">
 @if (Session::has('error'))
     <div class="alert alert-danger">
         <ul>
@@ -10,70 +11,8 @@
         </ul>
     </div>
 @endif
-<div class="row navigation_detail">
-    <div class="ps-5">
-        <ul class="">
-            <div class="row align-items-center">
-                <div class="col-3">
-                    <li>
-                        <h3 class="text-center">Que voulez-vous apprendre?</h3>
-                    </li>
-                </div>
-                <div class="col-6">
-                    <li class="me-5">
-                        <div class="row content_search text-center">
-                            <form method="GET" action="{{route('result_formation')}}">
-                                @csrf
-                                <div class="form-row">
-                                    <div class="d-flex flex-row">
-                                        @foreach ($categorie as $categ)
-                                            <input type="hidden" name="id_formation" value="{{$categ->id}}">
-                                        @endforeach
-                                        <input class="form-control me-2" type="text" name="nom_formation" placeholder="Rechercher par formations ex. Excel">
-                                        <button type="submit" class="btn"><i class="bx bx-search"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-                </div>
-                <div class="col-3">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle dropbtn text-center mt-3" href="#" id="domaine_dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class='bx bx-menu icon_dom fs-4 me-2'></i>Domaines de Formations
-                        </a>
-                        <div class="dropdown-menu mega_menu pt-0 mt-3" aria-labelledby="domaine_dropdown">
-                            <div class="d-flex align-items-start flex-column flex-sm-row px-3 py-5">
-                                <div>
-                                    @foreach ($domaine_col1 as $dom)
-                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
-                                    @endforeach
-                                </div>
-                                <div>
-                                    @foreach ($domaine_col2 as $dom)
-                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
-                                    @endforeach
-                                </div>
-                                <div>
-                                    @foreach ($domaine_col3 as $dom)
-                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
-                                    @endforeach
-                                </div>
-                                <div>
-                                    @foreach ($domaine_col4 as $dom)
-                                        <a class="dropdown-item" href="{{route('domaine_vers_formation',$dom->id)}}">{{$dom->nom_domaine}}</a>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </div>
-            </div>
-        </ul>
-    </div>
-</div>
 <section class="detail__formation mb-5" >
-    <nav class="navigation_details d-flex flex-row justify-content-between">
+    <nav class="navigation_details_etp d-flex flex-row justify-content-between">
         <div>
             <ul class="d-flex flex-row">
                 <li class="me-5"><a href="#objectif"><i class='bx bx-target-lock encre_icon me-2'></i>objectif</a></li>
@@ -81,9 +20,6 @@
                 <li class="me-5"><a href="#programme"><i class='bx bx-list-minus encre_icon me-2'></i>programme</a></li>
                 <li class="me-5"><a href="#avis"><i class='bx bxs-edit-alt encre_icon me-2'></i>Avis</a></li>
                 <li class="me-5"><a href="#dates"><i class='bx bxs-calendar-check encre_icon me-2'></i>dates</a></li>
-                @can('isReferent')
-                <li class="me-5"><a href="{{route('demande_devis_client',$infos[0]->module_id)}}"><i class='bx bxs-cart-download encre_icon me-2'></i>Demander un devis</a></li>
-                @endcan
                 <li class="me-5"><a class="print_to_pdf"><i class='bx bxs-download encre_icon me-2'></i>telecharger en pdf</a></li>
 
             </ul>
@@ -98,7 +34,7 @@
                 <div class="detail__formation__result__item">
                     @foreach ($infos as $res)
                     <h4 class="py-4">{{$res->nom_module}}</h4>
-                    <p class="lien_formation"><a href="{{route('affichage_formation',$res->formation_id)}}">{{$res->nom_formation}}</a></p>
+                    <p class="lien_formation"><a href="{{route('affichage_formation_etp',$res->formation_id)}}">{{$res->nom_formation}}</a></p>
                     <p>{{$res->description}}</p>
                     <div class="detail__formation__result__avis d-flex flex-row">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
@@ -115,13 +51,13 @@
             </div>
             <div class="col-lg-4 col-md-4 ">
                 <div class="">
-                    <a href="{{route('detail_cfp',$res->cfp_id)}}">
-                        <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom}}</span></h6>
+                    <a href="{{route('aff_parametre_referent')}}">
+                        <h6 class="py-4 text-center">Formation Proposée par&nbsp;<span>{{$res->nom_etp}}</span></h6>
                         <div class="text-center">
-                            <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
+                            <img src="{{asset('images/entreprises/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
                         </div>
                     </a>
-                    @if($avis_etoile!=null)
+                    @if($avis_etoile != null)
                         @if($avis_etoile[0]->pourcentage != null)
                         <div class="d-flex flex-row justify-content-center mt-2">
                             @if($avis_etoile[0]->pourcentage != null)
@@ -145,7 +81,6 @@
                             </div>
                             <br>
                         </div>
-                        @else
                         <div class="text-center">
                             <span>Avis sur le centre de formation</span>
                         </div>
@@ -177,12 +112,6 @@
                     @endforeach
                 </div>
                 <div class="col background_contrast"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
-                @if($res->prix_groupe != null)
-                    <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ {{$res->max_pers}} pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
-                @endif
-                {{-- <div class="col pt-1" ><a href="#" role="button" class="btn_demander">Demander un dévis</a></div>
-                <div class="text-center mt-5"><a href="#" role="button" class="btn_demander">Demander un dévis</a></div> --}}
             </div>
         </div>
         {{-- <div class="html2pdf__page-break"></div> --}}
@@ -517,59 +446,6 @@
                 </div>
             </div>
             <input type="hidden" class="form-control" name="recuperer_module_id" id="mod_id_rec" value="{{$infos[0]->module_id}}">
-        </div>
-        <div class="html2pdf__page-break"></div>
-        <div class="container">
-            @if($datas == null)
-
-            @else
-            <div class="row ">
-                <h3 class="pt-3 pb-3"><i class='bx bxs-calendar-check encre__icon me-2'></i><i class='bx bxs-calendar-check encre__icon_cacher me-2'></i>Dates et Villes Session Inter</h3>
-                <div class="col-lg-12">
-                    <div class="row">
-                        <div id="dates"></div>
-                        <ul>
-                            @foreach ($datas as $data)
-                            <li class="date_ville px-2 mb-2">
-                                <div class="row">
-                                    <div class="col-3 text-center">
-                                        <span>Du @php setlocale(LC_TIME, "fr_FR"); echo strftime("%d %B, %Y",
-                                            strtotime($data->date_debut)); @endphp au @php setlocale(LC_TIME, "fr_FR");
-                                            echo strftime("%d %B, %Y", strtotime($data->date_fin)); @endphp</span>
-                                    </div>
-                                    <div class="col-3 text-center">
-                                        <span>
-                                            {{ $data->adresse_ville.' '.$data->adresse_lot }}
-                                        </span>
-                                    </div>
-                                    <div class="col-3 text-center">
-                                        <span>{{ number_format($infos[0]->prix, 0, ' ', ' ') }} AR HT</span>
-                                    </div>
-                                    {{-- @canany(['isManager','isReferent','isStagiaire']) --}}
-                                    @canany(['isReferent','isReferentSimple'])
-                                        <div class="col-3 text-center">
-                                            <a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="btn_enregistrer" role="button">
-                                                @php
-                                                    $inscrit = $groupe->inscrit_session_inter($data->groupe_id);
-                                                    if ($inscrit == 0) {
-                                                        echo "S'inscrire";
-                                                    }
-                                                    if ($inscrit == 1) {
-                                                        echo "Déjà inscrit";
-                                                    }
-                                                @endphp
-                                            </a>
-                                        </div>
-                                    @endcanany
-                                </div>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            @endif
-        </div>
     </div>
     <div id="elementH"></div>
 </section>
@@ -894,7 +770,7 @@ let labels = '[';
 let competences = '[';
 $.ajax({
     type: "get"
-    ,url: "{{route('competence_module')}}"
+    ,url: "{{route('competence_interne')}}"
     ,data: {
         mod_id: id_mod
     }

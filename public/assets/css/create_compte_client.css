@@ -1,0 +1,98 @@
+body {
+    background: whitesmoke;
+    direction: ltr;
+    font-size: 14px;
+    line-height: 1.4286;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto',sans-serif;
+}
+.contenue{
+    width: 1000px;
+    height: 770px;
+    background: #fff;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 5px;
+    border: 1px rgb(190, 177, 177) solid;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 48px 40px 36px;
+
+
+}
+.contenue h3{
+    font-size: 2rem;
+    font-weight:lighter;
+}
+.form{
+    width: 250px;
+    height: 40px;
+    position: relative;
+
+}
+.form input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 1px solid rgb(190, 177, 177);
+    border-radius:2px;
+    outline: none;
+    padding: 0 10px;
+    font-size: 16px;
+    color: black;
+
+}
+.form label{
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    text-transform: title;
+    font-size: 16px;
+    transition: .3s;
+    padding: 0 20px;
+    background: #fff;
+    color: gray;
+
+}
+.form input:focus  ~ label,.form input:valid  ~ label{
+    margin-top:-18px;
+    background: #fff;
+    font-size: 12px;
+    color: #7367f0;
+
+}
+
+.form input:focus,input:valid {
+    border: #7367f0 1px solid;
+}
+
+.form.diso input{
+    border: #ff0000 1px solid;
+
+}
+.form.diso input:focus  ~ label,.form.diso input:valid  ~ label{
+    color: #ff0000;
+}
+.form.marna input{
+    border: #31ae4c 1px solid;
+
+}
+.form.marna input:focus  ~ label,.form.marna input:valid  ~ label{
+    color: #00ff6a;
+}
+
+
+.img{
+    position: absolute;
+    left: 59%;
+    top: 15%;
+}
+h5{
+    font-weight: lighter;
+    color: #0f0e15;
+}
+i{
+    color: grey;
+}

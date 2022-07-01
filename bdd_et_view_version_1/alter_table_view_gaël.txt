@@ -8,6 +8,6 @@ ALTER TABLE formateurs ADD url_photo VARCHAR(155) ;
 ALTER TABLE formateurs_interne ADD url_photo VARCHAR(155) ;
 
 
-ajout colonne adresse_quartier dans view v_demande_cfp_etp
+ajout colonne adresse_quartier dans view v_demmande_cfp_etp
 
-modification vieaw v_responsable_cfp 
+modification vieaw v_responsable_cfp

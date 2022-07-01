@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,900;1,100;1,300&display=swap");
 :root {
   --header-height: 4rem;
   --first-color: white;
@@ -417,13 +416,17 @@ font-size: 0.875rem;
   color: grey;
 }
 
-.card_fonctions .icon .bx{
+.card_fonctions .icon .fa,
+.card_fonctions .icon .fas{
   padding: 1rem 1rem;
   border: none;
   border-radius: 100%;
-  color: white;
+  /* color: white; */
   font-size: 3.5rem;
   background: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .card_content h4{

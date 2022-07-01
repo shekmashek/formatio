@@ -51,7 +51,7 @@
                                 @if($mod_hors_ligne == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module_new')}}" role="button"><i
+                                    <a class="text-center mt-5" data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button"><i
                                             class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
@@ -83,7 +83,7 @@
                                             <div class="d-flex ">
                                                 <div class="col-6 detail__formation__result__avis">
                                                     <div class="Stars" style="--note: {{ $mod->pourcentage }};"></div>
-                                                    <div class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
+                                                    <div class="me-3">{{ $mod->pourcentage }}/5
                                                         @if($mod->total_avis != null)
                                                         ({{$mod->total_avis}} avis)
                                                         @else
@@ -92,19 +92,19 @@
                                                     </div>
                                                     @if($mod->min_pers != 0 && $mod->max_pers != 0)
                                                     <span
-                                                        class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                        class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-6 w-100">
                                                     <p class="m-0">
                                                         <span class="new_module_prix">
-                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                         </span>
                                                     </p>
                                                     <p class="m-0 ">
                                                         <span class="new_module_prix">
                                                         @if($mod->prix_groupe != null)
-                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pers @else / grp @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                         @endif
                                                         </span>
                                                     </p>
@@ -267,7 +267,7 @@
                                             <div class="d-flex ">
                                                 <div class="col-6 detail__formation__result__avis">
                                                     <div class="Stars" style="--note: {{ $mod->pourcentage }};"></div>
-                                                    <div class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
+                                                    <div class="me-3">{{ $mod->pourcentage }}/5
                                                         @if($mod->total_avis != null)
                                                         ({{$mod->total_avis}} avis)
                                                         @else
@@ -276,19 +276,19 @@
                                                     </div>
                                                     @if($mod->min_pers != 0 && $mod->max_pers != 0)
                                                     <span
-                                                        class="">pour&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;personne</span>
+                                                        class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</span>
                                                     @endif
                                                 </div>
                                                 <div class="col-6 w-100">
                                                     <p class="m-0">
                                                         <span class="new_module_prix">
-                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                         </span>
                                                     </p>
                                                     <p class="m-0 ">
                                                         <span class="new_module_prix">
                                                         @if($mod->prix_groupe != null)
-                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pers @else @if($mod->max_pers != 0)/ {{$mod->max_pers}} pers @else / grp @endif @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                                            <div class="mb-2">{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                                         @endif
                                                         </span>
                                                     </p>
@@ -745,7 +745,7 @@
 
 
 
-                                            <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5
+                                            <span class="me-3">{{ $info->pourcentage }}/5
                                                 @if($info->total_avis != null)
                                                 ({{$info->total_avis}} avis)
                                                 @else
@@ -780,9 +780,9 @@
                                     </div>
                                 </div>
                                 <div class="col-2 text-end">
-                                    <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                     @if($info->prix_groupe != null)
-                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pers @else / grp @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                     @endif
                                 </div>
                                 <div class="col-2 actions_button_mod">
@@ -942,7 +942,7 @@
                                         <div>
                                             <div class="Stars" style="--note: {{ $info->pourcentage }};">
                                             </div>
-                                            <span class="me-3"><strong>{{ $info->pourcentage }}</strong>/5
+                                            <span class="me-3">{{ $info->pourcentage }}/5
                                                 @if($info->total_avis != null)
                                                 ({{$info->total_avis}} avis)
                                                 @else
@@ -977,9 +977,9 @@
                                     </div>
                                 </div>
                                 <div class="col-2 text-end">
-                                    <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    <div class="description mb-3">{{$devise->devise}}&nbsp;{{number_format($info->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                     @if($info->prix_groupe != null)
-                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pers @else / grp @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($info->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
                                     @endif
                                 </div>
                                 <div class="col-2 actions_button_mod">
@@ -1068,8 +1068,8 @@
                                         @endif
                                 </div> --}}
 
-                                {{-- @if (count($datas)<=0) --}}
-{{--
+                                {{-- @if (count($datas)<=0)
+
                                 @else
                                     <hr class="mb-1 mt-2">
                                     <div class="row w-100 justify-content-end">
@@ -1474,30 +1474,30 @@ localStorage.removeItem('popState');
     "hideMethod": "fadeOut"
     }
 
-    document.getElementById('prix_pers').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangePrimary.value = valeur;
-    });
-    document.getElementById('prix_groupe').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangePrimary1.value = valeur;
-    });
-    document.getElementById('prix_pers1').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeSecondary.value = valeur;
-    });
-    document.getElementById('prix_groupe1').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeSecondary1.value = valeur;
-    });
-    document.getElementById('prix_pers2').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeThird.value = valeur;
-    });
-    document.getElementById('prix_groupe2').addEventListener('input', function (e) {
-        let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
-        rangeThird1.value = valeur;
-    });
+    // document.getElementById('prix_pers').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangePrimary.value = valeur;
+    // });
+    // document.getElementById('prix_groupe').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangePrimary1.value = valeur;
+    // });
+    // document.getElementById('prix_pers1').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangeSecondary.value = valeur;
+    // });
+    // document.getElementById('prix_groupe1').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangeSecondary1.value = valeur;
+    // });
+    // document.getElementById('prix_pers2').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangeThird.value = valeur;
+    // });
+    // document.getElementById('prix_groupe2').addEventListener('input', function (e) {
+    //     let valeur = e.target.value.replace(/[^\dA-Z]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",").trim();
+    //     rangeThird1.value = valeur;
+    // });
 
     $(".mettre_en_ligne").on('click', function(e) {
         let id = e.target.id;
