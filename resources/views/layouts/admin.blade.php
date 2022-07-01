@@ -935,6 +935,11 @@
                                                 <i class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés
                                             </a>
                                         </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('projet_interne/creation') }}">
+                                                <i class="bx bx-library icon_plus"></i>&nbsp; Projet Interne
+                                            </a>
+                                        </li>
                                         {{-- <li><a class="dropdown-item" href="{{route('nouveau+appel+offre')}}"> <i
                                                     class="fas fa-envelope-open-text icon_plus"></i>&nbsp; Appel
                                                 d'offre</a>

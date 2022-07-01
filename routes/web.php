@@ -1503,3 +1503,13 @@ Route::get('employes.supprimer.referent','ParticipantController@supprimer_role_r
 Route::get('/evaluation_froid/{groupe?}','EvaluationFroidController@index')->name('evaluation_froid');
 Route::post('evaluation_froid/ajouter','EvaluationFroidController@store')->name('evaluation_froid/ajouter');
 Route::get('evaluation_froid/resultat/{groupe?}','EvaluationFroidController@show')->name('evaluation_froid/resultat');
+
+//projet interne
+Route::get('projet_interne/creation','ProjetInterneController@index')->name('projet_interne/creation');
+Route::post('projet_interne/enregistrement','ProjetInterneController@enregistrement')->name('projet_interne/enregistrement');
+Route::get('projet_interne/detail_session/{groupe?}','ProjetInterneController@detail_session')->name('projet_interne/detail_session');
+Route::get('detail_session_interne/{groupe?}', 'ProjetInterneController@detail_session')->name('detail_session_interne');
+Route::get('all_formateurs_interne', 'ProjetInterneController@getFormateur')->name('all_formateurs_interne');
+Route::get('add_participant_groupe_interne', 'ProjetInterneController@addParticipantGroupe')->name('add_participant_groupe_interne');
+Route::get('one_stagiaire_interne', 'ProjetInterneController@getOneStagiaire')->name('one_stagiaire_interne');
+Route::post('inserer_detail', 'ProjetInterneController@inserer_detail')->name('inserer_detail');

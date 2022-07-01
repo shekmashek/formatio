@@ -1,7 +1,10 @@
+insert into type_formations(type_formation) values ('Interne');
+
 insert into roles(id,role_name,role_description) values(8,'formateur_interne','Formateur interne');
 
 alter table employers add column formateur_interne int(2) default 0;
 
+drop table if exists projets_interne;
 CREATE TABLE projets_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_projet varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -10,17 +13,23 @@ CREATE TABLE projets_interne (
   date_creation timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+alter table projets_interne add column type_formation_id bigint(20) UNSIGNED NOT NULL REFERENCES type_formations(id) ON DELETE CASCADE;
+alter table projets_interne add column status varchar(100);
+
+drop table if exists groupes_interne;
 CREATE TABLE groupes_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_groupe varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   projet_interne_id  bigint(20) UNSIGNED  NOT NULL REFERENCES projets_interne(id) ON DELETE CASCADE,
-  modules_interne_id bigint(20) UNSIGNED not null references modules_interne(id) ON DELETE CASCADE,
+  module_interne_id bigint(20) UNSIGNED not null references modules_interne(id) ON DELETE CASCADE,
   date_debut date NOT NULL,
   date_fin date NOT NULL,
   status varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   salle_formation text,
   activiter boolean not null default true
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+alter table groupes_interne add column modalite varchar(100);
 
 CREATE TABLE participant_groupe_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -29,16 +38,24 @@ CREATE TABLE participant_groupe_interne (
   status int(10) default 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+drop table if exists details_interne;
 CREATE TABLE details_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   lieu varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   h_debut varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   h_fin varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   date_detail date NOT NULL,
-  formateur_interne_id bigint(20) UNSIGNED NOT NULL REFERENCES formateurs_interne(id) ON DELETE CASCADE,
+  formateur_interne_id bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
   groupe_interne_id bigint(20) UNSIGNED NOT NULL REFERENCES groupes_interne(id) ON DELETE CASCADE,
   projet_interne_id bigint(20) UNSIGNED NOT NULL REFERENCES projets_interne(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+create table ressources_interne (
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  description TEXT NOT NULL,
+  pris_en_charge VARCHAR(255) NOT NULL,
+  note text
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE presences_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -76,7 +93,6 @@ CREATE TABLE modules_interne (
   reference varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   nom_module varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   formation_id bigint(20) UNSIGNED NOT NULL REFERENCES formations(id) ON DELETE CASCADE,
-  cfp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp(),
   prix int(11) NOT NULL,
@@ -124,3 +140,13 @@ CREATE TABLE `competence_a_evaluers_interne` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+create table salle_formation_etp(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  etp_id bigint(20) UNSIGNED NOT NULL REFERENCES etp(id) ON DELETE CASCADE,
+  salle_formation text NOT NULL,
+  ville text
+);
+
+insert into salle_formation_etp(etp_id, salle_formation,ville) values(1, 'Salle 4','Tana');

@@ -560,13 +560,6 @@
                                     </span>
                                     &nbsp;{{ $ref }}</strong></p>
                         @endcanany
-                        @if (count($lieu_formation) > 0)
-                            <i class='bx bx-home ms-3' style="font-size: 1rem;"></i>
-                            <span class="m-0 ms-1">{{ $lieu_formation[0] }}</span>
-                            <i class='bx bx-door-open ms-3' style="font-size: 1rem;"></i>
-                            <span class="m-0 ms-1">{{ $lieu_formation[1] }}</span>&nbsp;&nbsp;
-                        @endif
-
                     </div>
                     <div class="d-flex height_default m-0 mt-2 p-0">
                         @if ($type_formation_id == 1)
@@ -651,10 +644,11 @@
                 </div>
 
             </div>
+        </nav>
     </div>
 
-    </div>
-    </nav>
+    {{-- </div> --}}
+    
     {{-- <section class="bg-light py-1">
             <div class="m-0 p-0">
                 <div class="d-flex justify-content-between">
