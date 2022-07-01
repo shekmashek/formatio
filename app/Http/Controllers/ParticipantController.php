@@ -1306,7 +1306,7 @@ class ParticipantController extends Controller
         $user_id = $this->fonct->findWhereMulitOne("employers",["id"],[$emp_id]);
         $test = $this->fonct->findWhere("role_users",["user_id","role_id"],[$user_id->user_id,8]);
         if($test== null){
-            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?, ?, ?, ?)', [$user_id->user_id, 8,0,1]);
+            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?, ?, ?, ?)', [$user_id->user_id, 8,0,0]);
             DB::update('update role_users set activiter = 0 where user_id = ? and role_id = 3', [$user_id->user_id]);
         }
     }
