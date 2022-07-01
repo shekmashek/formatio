@@ -151,9 +151,9 @@
                                     <th></th>
                                     <th>Téléphone</th>
                                     <th>E-mail</th>
-                                    @can('isCFP')
+                                    @canany(['isCFP'])
                                         <th>Action</th>
-                                    @endcan
+                                    @endcanany
                                 </thead>
                                 <tbody id="data_collaboration" style="font-size: 11.5px">
 
@@ -204,7 +204,7 @@
                                                     </div>
                                                 </div>
                                             </td> --}}
-                                            @can('isCFP')
+                                            @canany(['isCFP'])
                                                 <td style="vertical-align: middle">
                                                     <div style="vertical-align: middle" class="form-check form-switch mt-3">
                                                         <input class="form-check-input {{$frm->formateur_id}} main" data-bs-toggle="modal"  name="switch"
@@ -223,7 +223,7 @@
                                                         </div>
                                                     </td>
                                                 </td>
-                                            @endcan
+                                            @endcanany
                                         </tr>
 
                                         {{-- debut --}}

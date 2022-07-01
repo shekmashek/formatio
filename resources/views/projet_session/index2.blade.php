@@ -756,6 +756,9 @@
         color: #637381;
         font-size: 14px;
     }
+    .nom_status{
+        text-align: center;
+    }
             /****************
 VERTICAL TIMELINE ( BOOTSTRAP 5)
 ****************/
@@ -988,7 +991,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
 
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
-            @canany(['isReferent','isReferentSimple','isManager', 'isCFP', 'isFormateur'])
+            @canany(['isReferent','isReferentSimple','isManager', 'isCFP', 'isFormateur','isFormateurInterne'])
                 <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
                         {{ $nb_projet }}</span>
                     @if ($nb_par_page >= $nb_projet)
@@ -1878,7 +1881,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     </div>
                 @endcanany
 
-                @can('isFormateur')
+                @canany(['isFormateur','isFormateurInterne'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
@@ -1970,7 +1973,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             </tbody>
                         </table>
                     @endif
-                @endcan
+                @endcanany
                 @canany(['isReferent','isReferentSimple','isManager'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
@@ -2115,7 +2118,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                             </div>
                                                 <label for="inputEmail3" class="col-sm-1 col-form-label">à:</label>
                                             <div class="col-sm-5">
-                                                <input type="date" id="end_date" class="form-control input" style="width:200px"/>
+                                                <input type="date" id="end_date" class="form-control input"/>
                                             </div>
                                         </div>
                                     </div>
@@ -2189,7 +2192,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                     <div style="float: left; display: inline-block; width: 100%;">
                                         <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
                                         <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
-                                        <p class="col-md-3 p-0 ps-1 nom_status {{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
+                                        <p class="col-md-3 nom_status {{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
                                     </div>
                                     <div class="triangle-right"></div>
                                 </div>
@@ -2538,7 +2541,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                 @canany(['isReferent','isReferentSimple','isManager', 'isCFP'])
                     <div class="col-12 ps-5">
                 @endcanany
-                @canany(['isFormateur', 'isStagiaire'])
+                @canany(['isFormateur', 'isStagiaire','isFormateurInterne'])
                     <div class="col-12 ps-5">
                     @endcanany
                     </div>

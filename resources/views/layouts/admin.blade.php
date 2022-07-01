@@ -515,7 +515,7 @@
             </li>
 
             @endcan
-            @can('isFormateur')
+            @canany(['isFormateur','isFormateurInterne'])
             <li>
                 <a href="{{route('profilProf',Auth::user()->id)}}" class="d-flex moncv nav_linke">
                     <i class='bx bxs-notepad'></i>
@@ -523,7 +523,7 @@
                 </a>
             </li>
 
-            @endcan
+            @endcanany
 
             {{-- <li>
                 <i class='bx bxs-notepad'></i>
@@ -694,7 +694,7 @@
                         </div>
                     </div>
                     @endcanany --}}
-                    @canany('isFormateur')
+                    @canany(['isFormateur','isFormateurInterne'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
                             <div class="d-flex flex-row">
@@ -1384,9 +1384,9 @@
                     <div class="tutorielApprendreManager">Manager</div>
                     @endcan
 
-                    @can('isFormateur')
+                    @canany(['isFormateur','isFormateurInterne'])
                     <div class="tutorielApprendreFormateur">Formateur</div>
-                    @endcan
+                    @endcanany
                     <!-- <h6 class="title_apprendre"><u>Annuaire</u></h6>
                         <h6 class="title_apprendre"><u>Agenda</u></h6> -->
 

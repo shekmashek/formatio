@@ -904,7 +904,7 @@ Route::get('enregistter', 'PlanFormationController@enregistrer_plan')->name('enr
 //Route::get('enregistrer','PlanFormationController@enregistrer_plan')->name('enregistrer');
 Route::get('listePlanFormation', 'PlanFormationController@liste_plan')->name('listePlanFormation');
 //profil
-Route::get('profilFormateur/{id_formateur}', 'ProfController@cvFormateur')->middleware('can:isFormateur')->name('profilFormateur');
+Route::get('profilFormateur/{id_formateur}', 'ProfController@cvFormateur')->name('profilFormateur');
 Route::get('liste_demande', 'PlanFormationController@formation_demandee')->name('liste_demande');
 //modification profil formateur
 Route::get('/profile_formateur_set', 'ProfController@set_profile_formateur')->name('profile_formateur_set');
@@ -1516,6 +1516,10 @@ Route::post('modifier_manager','DepartementController@modifier_manager')->name('
 Route::get('employes.ajouter.referent','ParticipantController@role_referent')->name('employes.ajouter.referent');
 /** Ajouter un employé comme référent principal*/
 Route::get('employes.ajouter.referent_principal/{id}','ParticipantController@role_referent_principal')->name('employes.ajouter.referent_principal');
+/** Ajouter un employé comme formateur interne*/
+Route::get('employes.ajouter.formateur.interne','ParticipantController@role_formateur_interne')->name('employes.ajouter.formateur.interne');
+/** Supprimer un employé comme formateur interne*/
+Route::get('employes.supprimer.formateur.interne','ParticipantController@supprimer_role_formateur_interne')->name('employes.supprimer.formateur.interne');
 
 /**Supprimer role referent d'un employé */
 Route::get('employes.supprimer.referent','ParticipantController@supprimer_role_referent')->name('employes.supprimer.referent');
