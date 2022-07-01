@@ -1513,3 +1513,4 @@ Route::get('all_formateurs_interne', 'ProjetInterneController@getFormateur')->na
 Route::get('add_participant_groupe_interne', 'ProjetInterneController@addParticipantGroupe')->name('add_participant_groupe_interne');
 Route::get('one_stagiaire_interne', 'ProjetInterneController@getOneStagiaire')->name('one_stagiaire_interne');
 Route::post('inserer_detail', 'ProjetInterneController@inserer_detail')->name('inserer_detail');
+Route::get('add_ressource_interne', 'ProjetInterneController@ajout_ressource')->name('add_ressource_interne');

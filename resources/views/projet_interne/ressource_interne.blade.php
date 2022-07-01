@@ -8,12 +8,7 @@
                 <h6>Matériel nécessaire</h6>
             </span>
         </div>
-        <div class="col-md-2 p-0">
-            <span>
-                <h6>Demandé(e) par </h6>
-            </span>
-        </div>
-        <div class="col-md-2 p-0">
+        <div class="col-md-3 p-0">
             <span>
                 <h6>Pris en charge par </h6>
             </span>
@@ -34,12 +29,7 @@
                             <i class="far fa-check-circle"></i>&nbsp; {{ $r->description }}
                         </section>
                     </div>
-                    <div class="col-md-2">
-                        <section>
-                            {{ $r->demandeur }}
-                        </section>
-                    </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <section>
                             {{ $r->pris_en_charge }}
                         </section>
@@ -49,7 +39,7 @@
                             {{ $r->note }}
                         </section>
                     </div>
-                    <div class="col-md-2 text-center">
+                    <div class="col-md-3 text-center">
                         <section>
                             <button type="button" class="supprimer_ressource" data-id="{{ $r->id }}"><i
                                     class="bx bx-trash bx_supprimer" style="font-size: 1.1rem !important;"></i></button>
@@ -134,7 +124,7 @@
         }
         $.ajax({
             type: "GET",
-            url: "{{ route('add_ressource') }}",
+            url: "{{ route('add_ressource_interne') }}",
             data: {
                 ressource: ressource,
                 groupe: groupe_id,

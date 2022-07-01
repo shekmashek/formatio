@@ -57,6 +57,8 @@ create table ressources_interne (
   note text
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+alter table ressources_interne add column groupe_id bigint(20) UNSIGNED NOT NULL REFERENCES ressources_interne(id) ON DELETE CASCADE;
+
 CREATE TABLE presences_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   status varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

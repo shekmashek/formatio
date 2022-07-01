@@ -156,5 +156,15 @@ class ProjetInterneController extends Controller
             return back()->with('detail_error',$e->getMessage());
         }
     }
+
+    public function ajout_ressource(Request $request){
+        $ressource = $request->ressource;
+        $groupe_id = $request->groupe;
+        $pris_en_charge = $request->pris_en_charge;
+        $note = $request->note;
+        DB::insert('insert into ressources(description,groupe_id,pris_en_charge,note) values(?,?,?,?)',[$ressource,$groupe_id,$pris_en_charge,$note]);
+        $all_ressources = DB::select('select * from ressources where groupe_id = ?',[$groupe_id]);
+        return response()->json($all_ressources);
+    }
 }
 
