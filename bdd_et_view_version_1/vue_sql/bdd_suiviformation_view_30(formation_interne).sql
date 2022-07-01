@@ -125,7 +125,7 @@ CREATE OR REPLACE VIEW v_moduleformation_interne AS SELECT
     1) AS pourcentage
 FROM
     modules_interne m
-JOIN formations_interne f ON
+JOIN formations f ON
     m.formation_id = f.id
 JOIN entreprises etp ON m.etp_id = etp.id
 JOIN niveaux n ON

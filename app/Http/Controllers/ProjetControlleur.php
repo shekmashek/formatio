@@ -428,7 +428,7 @@ class ProjetControlleur extends Controller
         $id = request('id');
         $devise = $fonct->findWhereTrieOrderBy("devise", [], [], [], ["id"], "DESC", 0, 1)[0];
 
-        $categorie = DB::select('select * from formations_interne');
+        $categorie = DB::select('select * from formations');
         $test =  DB::select('select exists(select * from v_moduleformation_interne where module_id = ' . $id . ') as moduleExiste');
         if ($test[0]->moduleExiste == 1) {
 
