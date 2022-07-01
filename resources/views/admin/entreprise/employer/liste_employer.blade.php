@@ -838,7 +838,7 @@
                             emp_id: emp
                         }
                         , success: function(response) {
-                            /* window.location.reload(); */
+                            window.location.reload();
                         }
                         , error: function(error) {
                             console.log(error)
@@ -852,7 +852,7 @@
                             emp_id: emp
                         }
                         , success: function(response) {
-                            /* window.location.reload(); */
+                            window.location.reload();
                         }
                         , error: function(error) {
                             console.log(error)
