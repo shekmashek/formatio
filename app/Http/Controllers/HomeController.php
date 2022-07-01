@@ -384,7 +384,8 @@ class HomeController extends Controller
                 $message = "Vous êtes en mode ".$statut_compte->nom_statut;
             }
 
-            return view('cfp.dashboard_cfp.dashboard', compact('vue','test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler','domaine'));
+            // return view('cfp.dashboard_cfp.dashboard', compact('vue','test', 'message', 'nom_profil_organisation', 'ref', 'formateur', 'dmd_cfp_etp', 'resp_cfp', 'module_publié', 'module_encours_publié', 'facture_paye', 'facture_non_echu', 'facture_brouillon', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'session_inter_terminer', 'session_inter_encours', 'session_inter_previsionnel', 'session_inter_avenir', 'session_inter_annuler','domaine'));
+            return redirect()->route('liste_module');
         }
         if (Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
@@ -523,7 +524,8 @@ class HomeController extends Controller
                     $referent = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
                 }
 
-                return view('referent.dashboard_referent.dashboard_referent', compact('test','message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
+                // return view('referent.dashboard_referent.dashboard_referent', compact('test','message','etp', 'referent', 'refs', 'formateur_referent', 'cfps', 'facture_paye', 'facture_non_echu', 'session_intra_terminer', 'session_intra_previ', 'session_intra_en_cours', 'session_intra_avenir', 'nb_stagiaire', 'total','session_inter_terminer','session_inter_encours','session_inter_previsionnel','session_inter_avenir','session_inter_annuler'));
+                return redirect()->route('liste_projet');
             }
         }
 
