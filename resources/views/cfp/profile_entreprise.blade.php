@@ -12,22 +12,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
     <style>
-    .nav-item .nav-link.active {
-        border-bottom: 3px solid #7635dc !important;
-        border: none;
-        transform: none;
-        color: #7635dc;
-    }
-    .nav-tabs .nav-link:hover {
-        background-color: rgb(245, 243, 243);
-        transform: none;
-        border: none;
-    }
-    .nav-tabs .nav-link.active:hover {
-        background-color: rgb(245, 243, 243);
-        transform: none;
-        border: none;
-    }
+    .navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
     label{
         color: rgb(20, 20, 20);
         font-size: 15px;
@@ -43,7 +54,7 @@
           <a
             class="nav-link active collabore"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             {{-- data-bs-toggle="tab" --}}
             id="ex1-tabs-1"
             href="#collabore"
@@ -57,7 +68,7 @@
           <a
             class="nav-link"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             {{-- data-bs-toggle="tab" --}}
             id="ex1-tabs-2"
             href="#invitation"
@@ -72,9 +83,9 @@
     <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <a
-            class="nav-link "
+            class="nav-link active"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             {{-- data-bs-toggle="tab" --}}
             id="ex1-tabs-1"
             href="#collabore"
@@ -86,9 +97,9 @@
         </li>
         <li class="nav-item" role="presentation">
           <a
-            class="nav-link active"
+            class="nav-link"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             {{-- data-bs-toggle="tab" --}}
             id="ex1-tabs-2"
             href="#invitation"
@@ -105,7 +116,7 @@
           <a
             class="nav-link active"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             {{-- data-bs-toggle="tab" --}}
             id="ex1-tabs-1"
             href="#collabore"
@@ -119,7 +130,7 @@
           <a
             class="nav-link"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             {{-- data-bs-toggle="tab" --}}
             id="ex1-tabs-2"
             href="#invitation"
@@ -190,7 +201,17 @@
                             <td><a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a></td>
                             <td role="button"  onclick="afficherInfos();"><img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width: 80px;height: 80px;text-align:center;"><span class="ms-3">{{$etp->nom_etp}}</span></td>
                             <td role="button"  onclick="afficherInfos();">
-                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                @if($etp->photos_resp == null)
+                                <span class="d-flex flex-row">
+                                    <div class='randomColor' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">{{$etp->initial}}</div>
+                                    <span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                </span>
+                                @else
+
+                                    <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+
+                                @endif
+
                             </td>
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
@@ -485,9 +506,19 @@
                                 <img src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:120px;height:60px;text-align:center;"
                                 data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" class="information"  onclick="afficherInfos();"><span class="ms-3">{{$etp->nom_etp}}</span>
                             </td>
-                            <td >
-                                <img  src="{{asset("images/responsables/".$etp->photos_resp)}}"
-                                style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                            <td>
+                                @if($etp->photos_resp == null)
+                                <span class="d-flex flex-row">
+                                    <div class='randomColor' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">{{$etp->initial}}</div>
+                                    <span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                </span>
+                                @else
+
+                                    <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+
+                                @endif
+
+
                             </td>
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>
@@ -779,7 +810,17 @@
                                 <img class="information" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();" src="{{asset("images/entreprises/".$etp->logo_etp)}}" style="width:80px;height:80px;text-align:center; cursor: pointer">
                                 <span class="ms-3 information" style="cursor: pointer;" data-id="{{$etp->entreprise_id}}" id="{{$etp->entreprise_id}}" onclick="afficherInfos();">{{$etp->nom_etp}}</span></td>
                             <td>
-                                <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                @if($etp->photos_resp == null)
+                                <span class="d-flex flex-row">
+                                    <div class='randomColor' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">{{$etp->initial}}</div>
+                                    <span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+                                </span>
+                                @else
+
+                                    <img src="{{asset("images/responsables/".$etp->photos_resp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$etp->nom_resp}} {{$etp->prenom_resp}}</span>
+
+                                @endif
+
                             </td>
                         <td>
                             <a  href="" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$etp->entreprise_id}}"><i class='bx bx-trash bx_supprimer'></i></a>

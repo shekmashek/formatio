@@ -57,6 +57,7 @@ class Logging extends \Google\Service
   public $billingAccounts_locations;
   public $billingAccounts_locations_buckets;
   public $billingAccounts_locations_buckets_views;
+  public $billingAccounts_locations_buckets_views_logs;
   public $billingAccounts_locations_operations;
   public $billingAccounts_logs;
   public $billingAccounts_operations;
@@ -68,6 +69,7 @@ class Logging extends \Google\Service
   public $folders_locations;
   public $folders_locations_buckets;
   public $folders_locations_buckets_views;
+  public $folders_locations_buckets_views_logs;
   public $folders_locations_operations;
   public $folders_logs;
   public $folders_sinks;
@@ -82,6 +84,7 @@ class Logging extends \Google\Service
   public $organizations_locations;
   public $organizations_locations_buckets;
   public $organizations_locations_buckets_views;
+  public $organizations_locations_buckets_views_logs;
   public $organizations_locations_operations;
   public $organizations_logs;
   public $organizations_sinks;
@@ -90,6 +93,7 @@ class Logging extends \Google\Service
   public $projects_locations;
   public $projects_locations_buckets;
   public $projects_locations_buckets_views;
+  public $projects_locations_buckets_views_logs;
   public $projects_locations_operations;
   public $projects_logs;
   public $projects_metrics;
@@ -121,6 +125,16 @@ class Logging extends \Google\Service
           'methods' => [
             'getCmekSettings' => [
               'path' => 'v2/{+name}/cmekSettings',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getSettings' => [
+              'path' => 'v2/{+name}/settings',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -423,6 +437,39 @@ class Logging extends \Google\Service
                 'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->billingAccounts_locations_buckets_views_logs = new Logging\Resource\BillingAccountsLocationsBucketsViewsLogs(
+        $this,
+        $this->serviceName,
+        'logs',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v2/{+parent}/logs',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'resourceNames' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
                 ],
               ],
             ],
@@ -746,6 +793,30 @@ class Logging extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'getSettings' => [
+              'path' => 'v2/{+name}/settings',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'updateSettings' => [
+              'path' => 'v2/{+name}/settings',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
             ],
           ]
         ]
@@ -1020,6 +1091,39 @@ class Logging extends \Google\Service
                 'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->folders_locations_buckets_views_logs = new Logging\Resource\FoldersLocationsBucketsViewsLogs(
+        $this,
+        $this->serviceName,
+        'logs',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v2/{+parent}/logs',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'resourceNames' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
                 ],
               ],
             ],
@@ -1557,8 +1661,32 @@ class Logging extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'getSettings' => [
+              'path' => 'v2/{+name}/settings',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'updateCmekSettings' => [
               'path' => 'v2/{+name}/cmekSettings',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'updateSettings' => [
+              'path' => 'v2/{+name}/settings',
               'httpMethod' => 'PATCH',
               'parameters' => [
                 'name' => [
@@ -1851,6 +1979,39 @@ class Logging extends \Google\Service
           ]
         ]
     );
+    $this->organizations_locations_buckets_views_logs = new Logging\Resource\OrganizationsLocationsBucketsViewsLogs(
+        $this,
+        $this->serviceName,
+        'logs',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v2/{+parent}/logs',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'resourceNames' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->organizations_locations_operations = new Logging\Resource\OrganizationsLocationsOperations(
         $this,
         $this->serviceName,
@@ -2052,6 +2213,16 @@ class Logging extends \Google\Service
           'methods' => [
             'getCmekSettings' => [
               'path' => 'v2/{+name}/cmekSettings',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getSettings' => [
+              'path' => 'v2/{+name}/settings',
               'httpMethod' => 'GET',
               'parameters' => [
                 'name' => [
@@ -2334,6 +2505,39 @@ class Logging extends \Google\Service
                 'updateMask' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->projects_locations_buckets_views_logs = new Logging\Resource\ProjectsLocationsBucketsViewsLogs(
+        $this,
+        $this->serviceName,
+        'logs',
+        [
+          'methods' => [
+            'list' => [
+              'path' => 'v2/{+parent}/logs',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'resourceNames' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
                 ],
               ],
             ],
@@ -2697,8 +2901,32 @@ class Logging extends \Google\Service
                   'required' => true,
                 ],
               ],
+            ],'getSettings' => [
+              'path' => 'v2/{+name}/settings',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
             ],'updateCmekSettings' => [
               'path' => 'v2/{+name}/cmekSettings',
+              'httpMethod' => 'PATCH',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'updateMask' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'updateSettings' => [
+              'path' => 'v2/{+name}/settings',
               'httpMethod' => 'PATCH',
               'parameters' => [
                 'name' => [

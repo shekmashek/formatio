@@ -24,13 +24,13 @@
         <div class="m-4" role="tabpanel">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item active">
-                    <a href="#service" class="nav-link active" data-toggle="tab"><i class="bi bi-list-task"></i>&nbsp;&nbsp;Historique des services</a>
+                    <a href="#service" class="nav-link active" data-bs-toggle="tab"><i class="bi bi-list-task"></i>&nbsp;&nbsp;Historique des services</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#abonnement" class="nav-link " data-toggle="tab"><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;Abonnements</a>
+                    <a href="#abonnement" class="nav-link " data-bs-toggle="tab"><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;Abonnements</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#fact" class="nav-link" data-toggle="tab"><i class="bi bi-receipt"></i>&nbsp;&nbsp;Factures</a>
+                    <a href="#fact" class="nav-link" data-bs-toggle="tab"><i class="bi bi-receipt"></i>&nbsp;&nbsp;Factures</a>
                 </li>
             </ul>
 
@@ -265,7 +265,7 @@
 
 
 
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
                 let lien = ($(e.target).attr('href'));
                 localStorage.setItem('abonnement', lien);
                 ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');

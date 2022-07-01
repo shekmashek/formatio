@@ -14,15 +14,19 @@
         "consoletvs/charts": "^7.2",
         "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.2",
+        "firebase/php-jwt": "^5.0",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.7",
         "laravel/framework": "^7.0",
+        "laravel/passport": "~9.3.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
         "maatwebsite/excel": "^3.1",
         "nao-pon/flysystem-google-drive": "~1.1",
-        "nesbot/carbon": "^2.58"
+        "nesbot/carbon": "^2.58",
+        "paragonie/random_compat": "^9.99",
+        "phpseclib/phpseclib": "^2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -70,5 +74,5 @@
             "@php artisan key:generate --ansi"
         ]
     }
-    
+
 }

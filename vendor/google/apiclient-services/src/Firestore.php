@@ -71,7 +71,25 @@ class Firestore extends \Google\Service
         'databases',
         [
           'methods' => [
-            'exportDocuments' => [
+            'create' => [
+              'path' => 'v1/{+parent}/databases',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'databaseId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'validateOnly' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+              ],
+            ],'exportDocuments' => [
               'path' => 'v1/{+name}:exportDocuments',
               'httpMethod' => 'POST',
               'parameters' => [
@@ -410,6 +428,50 @@ class Firestore extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],'listDocuments' => [
+              'path' => 'v1/{+parent}/{collectionId}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'collectionId' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'mask.fieldPaths' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ],
+                'orderBy' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'readTime' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'showMissing' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
+                'transaction' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],'listen' => [

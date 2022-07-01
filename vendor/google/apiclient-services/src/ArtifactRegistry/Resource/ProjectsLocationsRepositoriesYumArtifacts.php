@@ -17,24 +17,44 @@
 
 namespace Google\Service\ArtifactRegistry\Resource;
 
+use Google\Service\ArtifactRegistry\ImportYumArtifactsRequest;
+use Google\Service\ArtifactRegistry\Operation;
 use Google\Service\ArtifactRegistry\UploadYumArtifactMediaResponse;
 use Google\Service\ArtifactRegistry\UploadYumArtifactRequest;
 
 /**
- * The "yumartifacts" collection of methods.
+ * The "yumArtifacts" collection of methods.
  * Typical usage is:
  *  <code>
  *   $artifactregistryService = new Google\Service\ArtifactRegistry(...);
- *   $yumartifacts = $artifactregistryService->yumartifacts;
+ *   $yumArtifacts = $artifactregistryService->yumArtifacts;
  *  </code>
  */
-class ProjectsLocationsRepositoriesYumartifacts extends \Google\Service\Resource
+class ProjectsLocationsRepositoriesYumArtifacts extends \Google\Service\Resource
 {
+  /**
+   * Imports Yum (RPM) artifacts. The returned Operation will complete once the
+   * resources are imported. Package, Version, and File resources are created
+   * based on the imported artifacts. Imported artifacts that conflict with
+   * existing resources are ignored. (yumArtifacts.import)
+   *
+   * @param string $parent The name of the parent resource where the artifacts
+   * will be imported.
+   * @param ImportYumArtifactsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   */
+  public function import($parent, ImportYumArtifactsRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('import', [$params], Operation::class);
+  }
   /**
    * Directly uploads a Yum artifact. The returned Operation will complete once
    * the resources are uploaded. Package, Version, and File resources are created
    * based on the imported artifact. Imported artifacts that conflict with
-   * existing resources are ignored. (yumartifacts.upload)
+   * existing resources are ignored. (yumArtifacts.upload)
    *
    * @param string $parent The name of the parent resource where the artifacts
    * will be uploaded.
@@ -51,4 +71,4 @@ class ProjectsLocationsRepositoriesYumartifacts extends \Google\Service\Resource
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(ProjectsLocationsRepositoriesYumartifacts::class, 'Google_Service_ArtifactRegistry_Resource_ProjectsLocationsRepositoriesYumartifacts');
+class_alias(ProjectsLocationsRepositoriesYumArtifacts::class, 'Google_Service_ArtifactRegistry_Resource_ProjectsLocationsRepositoriesYumArtifacts');

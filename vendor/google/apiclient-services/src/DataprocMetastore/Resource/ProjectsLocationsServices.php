@@ -21,6 +21,8 @@ use Google\Service\DataprocMetastore\ExportMetadataRequest;
 use Google\Service\DataprocMetastore\ListServicesResponse;
 use Google\Service\DataprocMetastore\Operation;
 use Google\Service\DataprocMetastore\Policy;
+use Google\Service\DataprocMetastore\RemoveIamPolicyRequest;
+use Google\Service\DataprocMetastore\RemoveIamPolicyResponse;
 use Google\Service\DataprocMetastore\RestoreServiceRequest;
 use Google\Service\DataprocMetastore\Service;
 use Google\Service\DataprocMetastore\SetIamPolicyRequest;
@@ -129,8 +131,9 @@ class ProjectsLocationsServices extends \Google\Service\Resource
    * resource exists and does not have a policy set. (services.getIamPolicy)
    *
    * @param string $resource REQUIRED: The resource for which the policy is being
-   * requested. See the operation documentation for the appropriate value for this
-   * field.
+   * requested. See Resource names
+   * (https://cloud.google.com/apis/design/resource_names) for the appropriate
+   * value for this field.
    * @param array $optParams Optional parameters.
    *
    * @opt_param int options.requestedPolicyVersion Optional. The maximum policy
@@ -214,6 +217,24 @@ class ProjectsLocationsServices extends \Google\Service\Resource
     return $this->call('patch', [$params], Operation::class);
   }
   /**
+   * Removes the attached IAM policies for a resource (services.removeIamPolicy)
+   *
+   * @param string $resource Required. The relative resource name of the dataplane
+   * resource to remove IAM policy, in the following form:projects/{project_id}/lo
+   * cations/{location_id}/services/{service_id}/databases/{database_id} or projec
+   * ts/{project_id}/locations/{location_id}/services/{service_id}/databases/{data
+   * base_id}/tables/{table_id}.
+   * @param RemoveIamPolicyRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return RemoveIamPolicyResponse
+   */
+  public function removeIamPolicy($resource, RemoveIamPolicyRequest $postBody, $optParams = [])
+  {
+    $params = ['resource' => $resource, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('removeIamPolicy', [$params], RemoveIamPolicyResponse::class);
+  }
+  /**
    * Restores a service from a backup. (services.restore)
    *
    * @param string $service Required. The relative resource name of the metastore
@@ -235,8 +256,9 @@ class ProjectsLocationsServices extends \Google\Service\Resource
    * errors. (services.setIamPolicy)
    *
    * @param string $resource REQUIRED: The resource for which the policy is being
-   * specified. See the operation documentation for the appropriate value for this
-   * field.
+   * specified. See Resource names
+   * (https://cloud.google.com/apis/design/resource_names) for the appropriate
+   * value for this field.
    * @param SetIamPolicyRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Policy
@@ -255,8 +277,9 @@ class ProjectsLocationsServices extends \Google\Service\Resource
    * This operation may "fail open" without warning. (services.testIamPermissions)
    *
    * @param string $resource REQUIRED: The resource for which the policy detail is
-   * being requested. See the operation documentation for the appropriate value
-   * for this field.
+   * being requested. See Resource names
+   * (https://cloud.google.com/apis/design/resource_names) for the appropriate
+   * value for this field.
    * @param TestIamPermissionsRequest $postBody
    * @param array $optParams Optional parameters.
    * @return TestIamPermissionsResponse

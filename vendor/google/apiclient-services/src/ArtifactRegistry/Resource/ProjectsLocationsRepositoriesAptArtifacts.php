@@ -17,24 +17,44 @@
 
 namespace Google\Service\ArtifactRegistry\Resource;
 
+use Google\Service\ArtifactRegistry\ImportAptArtifactsRequest;
+use Google\Service\ArtifactRegistry\Operation;
 use Google\Service\ArtifactRegistry\UploadAptArtifactMediaResponse;
 use Google\Service\ArtifactRegistry\UploadAptArtifactRequest;
 
 /**
- * The "aptartifacts" collection of methods.
+ * The "aptArtifacts" collection of methods.
  * Typical usage is:
  *  <code>
  *   $artifactregistryService = new Google\Service\ArtifactRegistry(...);
- *   $aptartifacts = $artifactregistryService->aptartifacts;
+ *   $aptArtifacts = $artifactregistryService->aptArtifacts;
  *  </code>
  */
-class ProjectsLocationsRepositoriesAptartifacts extends \Google\Service\Resource
+class ProjectsLocationsRepositoriesAptArtifacts extends \Google\Service\Resource
 {
+  /**
+   * Imports Apt artifacts. The returned Operation will complete once the
+   * resources are imported. Package, Version, and File resources are created
+   * based on the imported artifacts. Imported artifacts that conflict with
+   * existing resources are ignored. (aptArtifacts.import)
+   *
+   * @param string $parent The name of the parent resource where the artifacts
+   * will be imported.
+   * @param ImportAptArtifactsRequest $postBody
+   * @param array $optParams Optional parameters.
+   * @return Operation
+   */
+  public function import($parent, ImportAptArtifactsRequest $postBody, $optParams = [])
+  {
+    $params = ['parent' => $parent, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('import', [$params], Operation::class);
+  }
   /**
    * Directly uploads an Apt artifact. The returned Operation will complete once
    * the resources are uploaded. Package, Version, and File resources are created
    * based on the imported artifact. Imported artifacts that conflict with
-   * existing resources are ignored. (aptartifacts.upload)
+   * existing resources are ignored. (aptArtifacts.upload)
    *
    * @param string $parent The name of the parent resource where the artifacts
    * will be uploaded.
@@ -51,4 +71,4 @@ class ProjectsLocationsRepositoriesAptartifacts extends \Google\Service\Resource
 }
 
 // Adding a class alias for backwards compatibility with the previous class name.
-class_alias(ProjectsLocationsRepositoriesAptartifacts::class, 'Google_Service_ArtifactRegistry_Resource_ProjectsLocationsRepositoriesAptartifacts');
+class_alias(ProjectsLocationsRepositoriesAptArtifacts::class, 'Google_Service_ArtifactRegistry_Resource_ProjectsLocationsRepositoriesAptArtifacts');

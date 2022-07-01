@@ -546,7 +546,7 @@
                                         <span>{{ number_format($infos[0]->prix, 0, ' ', ' ') }} AR HT</span>
                                     </div>
                                     {{-- @canany(['isManager','isReferent','isStagiaire']) --}}
-                                    @canany(['isReferent'])
+                                    @canany(['isReferent','isReferentSimple'])
                                         <div class="col-3 text-center">
                                             <a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="btn_enregistrer" role="button">
                                                 @php

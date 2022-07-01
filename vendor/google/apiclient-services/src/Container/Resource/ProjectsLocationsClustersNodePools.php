@@ -40,7 +40,7 @@ class ProjectsLocationsClustersNodePools extends \Google\Service\Resource
   /**
    * Creates a node pool for a cluster. (nodePools.create)
    *
-   * @param string $parent The parent (project, location, cluster id) where the
+   * @param string $parent The parent (project, location, cluster name) where the
    * node pool will be created. Specified in the format
    * `projects/locations/clusters`.
    * @param CreateNodePoolRequest $postBody
@@ -66,9 +66,9 @@ class ProjectsLocationsClustersNodePools extends \Google\Service\Resource
    * @opt_param string nodePoolId Deprecated. The name of the node pool to delete.
    * This field has been deprecated and replaced by the name field.
    * @opt_param string projectId Deprecated. The Google Developers Console
-   * [project ID or project
-   * number](https://developers.google.com/console/help/new/#projectnumber). This
-   * field has been deprecated and replaced by the name field.
+   * [project ID or project number](https://cloud.google.com/resource-manager/docs
+   * /creating-managing-projects). This field has been deprecated and replaced by
+   * the name field.
    * @opt_param string zone Deprecated. The name of the Google Compute Engine
    * [zone](https://cloud.google.com/compute/docs/zones#available) in which the
    * cluster resides. This field has been deprecated and replaced by the name
@@ -94,9 +94,9 @@ class ProjectsLocationsClustersNodePools extends \Google\Service\Resource
    * @opt_param string nodePoolId Deprecated. The name of the node pool. This
    * field has been deprecated and replaced by the name field.
    * @opt_param string projectId Deprecated. The Google Developers Console
-   * [project ID or project
-   * number](https://developers.google.com/console/help/new/#projectnumber). This
-   * field has been deprecated and replaced by the name field.
+   * [project ID or project number](https://cloud.google.com/resource-manager/docs
+   * /creating-managing-projects). This field has been deprecated and replaced by
+   * the name field.
    * @opt_param string zone Deprecated. The name of the Google Compute Engine
    * [zone](https://cloud.google.com/compute/docs/zones#available) in which the
    * cluster resides. This field has been deprecated and replaced by the name
@@ -113,7 +113,7 @@ class ProjectsLocationsClustersNodePools extends \Google\Service\Resource
    * Lists the node pools for a cluster.
    * (nodePools.listProjectsLocationsClustersNodePools)
    *
-   * @param string $parent The parent (project, location, cluster id) where the
+   * @param string $parent The parent (project, location, cluster name) where the
    * node pools will be listed. Specified in the format
    * `projects/locations/clusters`.
    * @param array $optParams Optional parameters.
@@ -121,9 +121,9 @@ class ProjectsLocationsClustersNodePools extends \Google\Service\Resource
    * @opt_param string clusterId Deprecated. The name of the cluster. This field
    * has been deprecated and replaced by the parent field.
    * @opt_param string projectId Deprecated. The Google Developers Console
-   * [project ID or project
-   * number](https://developers.google.com/console/help/new/#projectnumber). This
-   * field has been deprecated and replaced by the parent field.
+   * [project ID or project number](https://cloud.google.com/resource-manager/docs
+   * /creating-managing-projects). This field has been deprecated and replaced by
+   * the parent field.
    * @opt_param string zone Deprecated. The name of the Google Compute Engine
    * [zone](https://cloud.google.com/compute/docs/zones#available) in which the
    * cluster resides. This field has been deprecated and replaced by the parent

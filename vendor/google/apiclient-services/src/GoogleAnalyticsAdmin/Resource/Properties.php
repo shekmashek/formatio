@@ -19,6 +19,7 @@ namespace Google\Service\GoogleAnalyticsAdmin\Resource;
 
 use Google\Service\GoogleAnalyticsAdmin\GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest;
 use Google\Service\GoogleAnalyticsAdmin\GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse;
+use Google\Service\GoogleAnalyticsAdmin\GoogleAnalyticsAdminV1alphaAttributionSettings;
 use Google\Service\GoogleAnalyticsAdmin\GoogleAnalyticsAdminV1alphaDataRetentionSettings;
 use Google\Service\GoogleAnalyticsAdmin\GoogleAnalyticsAdminV1alphaGoogleSignalsSettings;
 use Google\Service\GoogleAnalyticsAdmin\GoogleAnalyticsAdminV1alphaListPropertiesResponse;
@@ -101,6 +102,21 @@ class Properties extends \Google\Service\Resource
     return $this->call('get', [$params], GoogleAnalyticsAdminV1alphaProperty::class);
   }
   /**
+   * Lookup for a AttributionSettings singleton.
+   * (properties.getAttributionSettings)
+   *
+   * @param string $name Required. The name of the attribution settings to
+   * retrieve. Format: properties/{property}/attributionSettings
+   * @param array $optParams Optional parameters.
+   * @return GoogleAnalyticsAdminV1alphaAttributionSettings
+   */
+  public function getAttributionSettings($name, $optParams = [])
+  {
+    $params = ['name' => $name];
+    $params = array_merge($params, $optParams);
+    return $this->call('getAttributionSettings', [$params], GoogleAnalyticsAdminV1alphaAttributionSettings::class);
+  }
+  /**
    * Returns the singleton data retention settings for this property.
    * (properties.getDataRetentionSettings)
    *
@@ -142,11 +158,12 @@ class Properties extends \Google\Service\Resource
    *
    * @opt_param string filter Required. An expression for filtering the results of
    * the request. Fields eligible for filtering are: `parent:`(The resource name
-   * of the parent account) or `ancestor:`(The resource name of the parent
-   * account) or `firebase_project:`(The id or number of the linked firebase
-   * project). Some examples of filters: ``` | Filter | Description |
+   * of the parent account/property) or `ancestor:`(The resource name of the
+   * parent account) or `firebase_project:`(The id or number of the linked
+   * firebase project). Some examples of filters: ``` | Filter | Description |
    * |-----------------------------|-------------------------------------------| |
    * parent:accounts/123 | The account with account id: 123. | |
+   * parent:properties/123 | The property with property id: 123. | |
    * ancestor:accounts/123 | The account with account id: 123. | |
    * firebase_project:project-id | The firebase project with id: project-id. | |
    * firebase_project:123 | The firebase project with number: 123. | ```
@@ -188,6 +205,28 @@ class Properties extends \Google\Service\Resource
     $params = ['name' => $name, 'postBody' => $postBody];
     $params = array_merge($params, $optParams);
     return $this->call('patch', [$params], GoogleAnalyticsAdminV1alphaProperty::class);
+  }
+  /**
+   * Updates attribution settings on a property.
+   * (properties.updateAttributionSettings)
+   *
+   * @param string $name Output only. Resource name of this attribution settings
+   * resource. Format: properties/{property_id}/attributionSettings Example:
+   * "properties/1000/attributionSettings"
+   * @param GoogleAnalyticsAdminV1alphaAttributionSettings $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string updateMask Required. The list of fields to be updated.
+   * Field names must be in snake case (e.g., "field_to_update"). Omitted fields
+   * will not be updated. To replace the entire entity, use one path with the
+   * string "*" to match all fields.
+   * @return GoogleAnalyticsAdminV1alphaAttributionSettings
+   */
+  public function updateAttributionSettings($name, GoogleAnalyticsAdminV1alphaAttributionSettings $postBody, $optParams = [])
+  {
+    $params = ['name' => $name, 'postBody' => $postBody];
+    $params = array_merge($params, $optParams);
+    return $this->call('updateAttributionSettings', [$params], GoogleAnalyticsAdminV1alphaAttributionSettings::class);
   }
   /**
    * Updates the singleton data retention settings for this property.

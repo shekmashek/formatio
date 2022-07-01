@@ -756,6 +756,9 @@
         color: #637381;
         font-size: 14px;
     }
+    .nom_status{
+        text-align: center;
+    }
             /****************
 VERTICAL TIMELINE ( BOOTSTRAP 5)
 ****************/
@@ -763,7 +766,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
         border-left: 3px solid #b565a7;
         border-bottom-right-radius: 4px;
         border-top-right-radius: 4px;
-        background: rgba(177, 99, 163, 0.09);
+        /* background: rgba(177, 99, 163, 0.09); */
         margin: 0 auto;
         position: relative;
         padding: 30px;
@@ -2107,20 +2110,20 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                         </div>
                         @can('isStagiaire')
                             <div class="row justify-content-md-center mb-5">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="row">
                                             <label for="inputEmail3" class="col-sm-1 col-form-label">De:</label>
-                                            <div class="col">
-                                                <input type="date" id="start_date" class="form-control"/>
+                                            <div class="col-sm-5">
+                                                <input type="date" id="start_date" class="form-control input"/>
                                             </div>
                                                 <label for="inputEmail3" class="col-sm-1 col-form-label">à:</label>
-                                            <div class="col">
-                                                <input type="date" id="end_date" class="form-control"/>
+                                            <div class="col-sm-5">
+                                                <input type="date" id="end_date" class="form-control input"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <div class="col-sm-7 btn-group">
+                                        <div class="col-sm-11 btn-group">
                                             <button type="button" class="form-select" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Tous les module
                                             </button>
@@ -2156,7 +2159,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                         </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <div class="btn-group col-sm-7">
+                                        <div class="btn-group col-sm-11">
                                             <button type="button" class="form-select" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Tous les Status
                                             </button>
@@ -2184,11 +2187,12 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                         <div id="stg_projet">
                         @foreach ($data as $pj)
                         <div class="row listes justify-content-md-center">
-                            <div class="col-md-2" style="background-color:rgba(177, 99, 163, 0.09);;">
+                            <div class="col-md-2" style="">
                                 <div class="date_class">
                                     <div style="float: left; display: inline-block; width: 100%;">
-                                    <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
-                                    <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
+                                        <h5 class="p_date nom_mois mt-5">{{ $carbon::parse($pj->date_debut)->translatedFormat('M') }}</h5>
+                                        <h6 class="p_date text-black-50"><span class="date_debut">@php echo strftime('%d-%m-%y', strtotime($pj->date_debut))@endphp</span> au <span class="date_fin">@php echo strftime('%d-%m-%y', strtotime($pj->date_fin)); @endphp</span></h6>
+                                        <p class="col-md-3 nom_status {{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
                                     </div>
                                     <div class="triangle-right"></div>
                                 </div>
@@ -2228,9 +2232,6 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                             </div>
                                             <div class="col-md-1 p-0 d-flex justify-content-start">
                                                 <a class="resultat_stg" href="{{ route('resultat_stagiaire',[$pj->groupe_id]) }}"><button class="btn" style="width:63px;height:20px;font-size: 11px;padding-top: initial;">Résultat</button></a>
-                                            </div>
-                                            <div class="col-md-2 p-0 d-flex justify-content-start">
-                                                <p class="nom_status {{$pj->class_status_groupe}}">{{$pj->item_status_groupe}}</p>
                                             </div>
                                         </div>
                                         <div class="collapse" id="collapseprojet_{{ $pj->groupe_id }}">
@@ -2337,7 +2338,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                             <div style="display: inline-block">
                                                                 @foreach($stagiaire as $stg)
                                                                     @if($pj->groupe_id == $stg->groupe_id)
-                                                                    <div class="float-start wrapper_stg mt-3 p-1 pe-2 ps-2 me-2">
+                                                                    <div class="float-start wrapper_stg mt-3 pe-2 ps-2 me-2">
                                                                         <span style="color:#ececec;">{{$stg->nom_stagiaire}}&nbsp;{{$stg->prenom_stagiaire}}</span>
                                                                     </div>
                                                                     @endif

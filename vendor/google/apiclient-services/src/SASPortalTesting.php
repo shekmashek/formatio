@@ -34,6 +34,9 @@ use Google\Client;
  */
 class SASPortalTesting extends \Google\Service
 {
+  /** Read, create, update, and delete your SAS Portal data.. */
+  const SASPORTAL =
+      "https://www.googleapis.com/auth/sasportal";
   /** See your primary Google Account email address. */
   const USERINFO_EMAIL =
       "https://www.googleapis.com/auth/userinfo.email";
@@ -81,21 +84,7 @@ class SASPortalTesting extends \Google\Service
         'customers',
         [
           'methods' => [
-            'create' => [
-              'path' => 'v1alpha1/customers',
-              'httpMethod' => 'POST',
-              'parameters' => [],
-            ],'delete' => [
-              'path' => 'v1alpha1/{+name}',
-              'httpMethod' => 'DELETE',
-              'parameters' => [
-                'name' => [
-                  'location' => 'path',
-                  'type' => 'string',
-                  'required' => true,
-                ],
-              ],
-            ],'get' => [
+            'get' => [
               'path' => 'v1alpha1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [

@@ -39,6 +39,10 @@ class GoogleCloudRetailV2SearchRequest extends \Google\Collection
    */
   public $filter;
   /**
+   * @var string[]
+   */
+  public $labels;
+  /**
    * @var int
    */
   public $offset;
@@ -58,6 +62,8 @@ class GoogleCloudRetailV2SearchRequest extends \Google\Collection
    * @var string
    */
   public $pageToken;
+  protected $personalizationSpecType = GoogleCloudRetailV2SearchRequestPersonalizationSpec::class;
+  protected $personalizationSpecDataType = '';
   /**
    * @var string
    */
@@ -68,6 +74,8 @@ class GoogleCloudRetailV2SearchRequest extends \Google\Collection
    * @var string
    */
   public $searchMode;
+  protected $spellCorrectionSpecType = GoogleCloudRetailV2SearchRequestSpellCorrectionSpec::class;
+  protected $spellCorrectionSpecDataType = '';
   protected $userInfoType = GoogleCloudRetailV2UserInfo::class;
   protected $userInfoDataType = '';
   /**
@@ -164,6 +172,20 @@ class GoogleCloudRetailV2SearchRequest extends \Google\Collection
     return $this->filter;
   }
   /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
+  }
+  /**
    * @param int
    */
   public function setOffset($offset)
@@ -234,6 +256,20 @@ class GoogleCloudRetailV2SearchRequest extends \Google\Collection
     return $this->pageToken;
   }
   /**
+   * @param GoogleCloudRetailV2SearchRequestPersonalizationSpec
+   */
+  public function setPersonalizationSpec(GoogleCloudRetailV2SearchRequestPersonalizationSpec $personalizationSpec)
+  {
+    $this->personalizationSpec = $personalizationSpec;
+  }
+  /**
+   * @return GoogleCloudRetailV2SearchRequestPersonalizationSpec
+   */
+  public function getPersonalizationSpec()
+  {
+    return $this->personalizationSpec;
+  }
+  /**
    * @param string
    */
   public function setQuery($query)
@@ -274,6 +310,20 @@ class GoogleCloudRetailV2SearchRequest extends \Google\Collection
   public function getSearchMode()
   {
     return $this->searchMode;
+  }
+  /**
+   * @param GoogleCloudRetailV2SearchRequestSpellCorrectionSpec
+   */
+  public function setSpellCorrectionSpec(GoogleCloudRetailV2SearchRequestSpellCorrectionSpec $spellCorrectionSpec)
+  {
+    $this->spellCorrectionSpec = $spellCorrectionSpec;
+  }
+  /**
+   * @return GoogleCloudRetailV2SearchRequestSpellCorrectionSpec
+   */
+  public function getSpellCorrectionSpec()
+  {
+    return $this->spellCorrectionSpec;
   }
   /**
    * @param GoogleCloudRetailV2UserInfo

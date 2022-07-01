@@ -24,9 +24,19 @@ class ApproveDecision extends \Google\Model
    */
   public $approveTime;
   /**
+   * @var bool
+   */
+  public $autoApproved;
+  /**
    * @var string
    */
   public $expireTime;
+  /**
+   * @var string
+   */
+  public $invalidateTime;
+  protected $signatureInfoType = SignatureInfo::class;
+  protected $signatureInfoDataType = '';
 
   /**
    * @param string
@@ -43,6 +53,20 @@ class ApproveDecision extends \Google\Model
     return $this->approveTime;
   }
   /**
+   * @param bool
+   */
+  public function setAutoApproved($autoApproved)
+  {
+    $this->autoApproved = $autoApproved;
+  }
+  /**
+   * @return bool
+   */
+  public function getAutoApproved()
+  {
+    return $this->autoApproved;
+  }
+  /**
    * @param string
    */
   public function setExpireTime($expireTime)
@@ -55,6 +79,34 @@ class ApproveDecision extends \Google\Model
   public function getExpireTime()
   {
     return $this->expireTime;
+  }
+  /**
+   * @param string
+   */
+  public function setInvalidateTime($invalidateTime)
+  {
+    $this->invalidateTime = $invalidateTime;
+  }
+  /**
+   * @return string
+   */
+  public function getInvalidateTime()
+  {
+    return $this->invalidateTime;
+  }
+  /**
+   * @param SignatureInfo
+   */
+  public function setSignatureInfo(SignatureInfo $signatureInfo)
+  {
+    $this->signatureInfo = $signatureInfo;
+  }
+  /**
+   * @return SignatureInfo
+   */
+  public function getSignatureInfo()
+  {
+    return $this->signatureInfo;
   }
 }
 

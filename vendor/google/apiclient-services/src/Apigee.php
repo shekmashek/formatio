@@ -51,6 +51,7 @@ class Apigee extends \Google\Service
   public $organizations_apis;
   public $organizations_apis_deployments;
   public $organizations_apis_keyvaluemaps;
+  public $organizations_apis_keyvaluemaps_entries;
   public $organizations_apis_revisions;
   public $organizations_apis_revisions_deployments;
   public $organizations_apps;
@@ -65,6 +66,7 @@ class Apigee extends \Google\Service
   public $organizations_developers_attributes;
   public $organizations_developers_balance;
   public $organizations_developers_subscriptions;
+  public $organizations_endpointAttachments;
   public $organizations_envgroups;
   public $organizations_envgroups_attachments;
   public $organizations_environments;
@@ -82,6 +84,7 @@ class Apigee extends \Google\Service
   public $organizations_environments_keystores;
   public $organizations_environments_keystores_aliases;
   public $organizations_environments_keyvaluemaps;
+  public $organizations_environments_keyvaluemaps_entries;
   public $organizations_environments_optimizedStats;
   public $organizations_environments_queries;
   public $organizations_environments_references;
@@ -98,6 +101,7 @@ class Apigee extends \Google\Service
   public $organizations_instances_canaryevaluations;
   public $organizations_instances_natAddresses;
   public $organizations_keyvaluemaps;
+  public $organizations_keyvaluemaps_entries;
   public $organizations_operations;
   public $organizations_optimizedHostStats;
   public $organizations_reports;
@@ -168,6 +172,10 @@ class Apigee extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'retention' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
               ],
             ],'get' => [
               'path' => 'v1/{+name}',
@@ -191,6 +199,16 @@ class Apigee extends \Google\Service
                 'view' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+              ],
+            ],'getProjectMapping' => [
+              'path' => 'v1/{+name}:getProjectMapping',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
                 ],
               ],
             ],'getRuntimeConfig' => [
@@ -679,6 +697,64 @@ class Apigee extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->organizations_apis_keyvaluemaps_entries = new Apigee\Resource\OrganizationsApisKeyvaluemapsEntries(
+        $this,
+        $this->serviceName,
+        'entries',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/entries',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/entries',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],
@@ -1467,6 +1543,68 @@ class Apigee extends \Google\Service
                   'type' => 'integer',
                 ],
                 'startKey' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->organizations_endpointAttachments = new Apigee\Resource\OrganizationsEndpointAttachments(
+        $this,
+        $this->serviceName,
+        'endpointAttachments',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/endpointAttachments',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'endpointAttachmentId' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/endpointAttachments',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
                   'location' => 'query',
                   'type' => 'string',
                 ],
@@ -2401,6 +2539,64 @@ class Apigee extends \Google\Service
           ]
         ]
     );
+    $this->organizations_environments_keyvaluemaps_entries = new Apigee\Resource\OrganizationsEnvironmentsKeyvaluemapsEntries(
+        $this,
+        $this->serviceName,
+        'entries',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/entries',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/entries',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
     $this->organizations_environments_optimizedStats = new Apigee\Resource\OrganizationsEnvironmentsOptimizedStats(
         $this,
         $this->serviceName,
@@ -2508,6 +2704,16 @@ class Apigee extends \Google\Service
                 ],
               ],
             ],'getResult' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'getResulturl' => [
               'path' => 'v1/{+name}',
               'httpMethod' => 'GET',
               'parameters' => [
@@ -3422,6 +3628,64 @@ class Apigee extends \Google\Service
                   'location' => 'path',
                   'type' => 'string',
                   'required' => true,
+                ],
+              ],
+            ],
+          ]
+        ]
+    );
+    $this->organizations_keyvaluemaps_entries = new Apigee\Resource\OrganizationsKeyvaluemapsEntries(
+        $this,
+        $this->serviceName,
+        'entries',
+        [
+          'methods' => [
+            'create' => [
+              'path' => 'v1/{+parent}/entries',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'delete' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'DELETE',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'get' => [
+              'path' => 'v1/{+name}',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'name' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'list' => [
+              'path' => 'v1/{+parent}/entries',
+              'httpMethod' => 'GET',
+              'parameters' => [
+                'parent' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'pageSize' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'pageToken' => [
+                  'location' => 'query',
+                  'type' => 'string',
                 ],
               ],
             ],

@@ -28,6 +28,8 @@ class NodeConfig extends \Google\Collection
    * @var string
    */
   public $bootDiskKmsKey;
+  protected $confidentialNodesType = ConfidentialNodes::class;
+  protected $confidentialNodesDataType = '';
   /**
    * @var int
    */
@@ -91,6 +93,10 @@ class NodeConfig extends \Google\Collection
   protected $shieldedInstanceConfigType = ShieldedInstanceConfig::class;
   protected $shieldedInstanceConfigDataType = '';
   /**
+   * @var bool
+   */
+  public $spot;
+  /**
    * @var string[]
    */
   public $tags;
@@ -140,6 +146,20 @@ class NodeConfig extends \Google\Collection
   public function getBootDiskKmsKey()
   {
     return $this->bootDiskKmsKey;
+  }
+  /**
+   * @param ConfidentialNodes
+   */
+  public function setConfidentialNodes(ConfidentialNodes $confidentialNodes)
+  {
+    $this->confidentialNodes = $confidentialNodes;
+  }
+  /**
+   * @return ConfidentialNodes
+   */
+  public function getConfidentialNodes()
+  {
+    return $this->confidentialNodes;
   }
   /**
    * @param int
@@ -406,6 +426,20 @@ class NodeConfig extends \Google\Collection
   public function getShieldedInstanceConfig()
   {
     return $this->shieldedInstanceConfig;
+  }
+  /**
+   * @param bool
+   */
+  public function setSpot($spot)
+  {
+    $this->spot = $spot;
+  }
+  /**
+   * @return bool
+   */
+  public function getSpot()
+  {
+    return $this->spot;
   }
   /**
    * @param string[]
