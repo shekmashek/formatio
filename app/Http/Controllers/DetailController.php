@@ -121,12 +121,15 @@ class DetailController extends Controller
 
             // getting the elements for ech events from the groupe class relationships 
             foreach ($raveled_details as $key => $value) {
+
                 
                 foreach ($value->groupe->groupe_entreprise as $key => $group) {
                     
                 }
 
                 $events[] = array(
+                    
+
                     'detail_id' => $value->id,
                     'title' => $value->groupe->module->formation->nom_formation.' - '.$value->lieu,
                     'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
@@ -135,10 +138,12 @@ class DetailController extends Controller
                     'nom_projet' => $value->groupe->projet->nom_projet,
                     'lieu' => $value->lieu,
                     'formation' => $value->groupe->module->formation,
+                    'formateur_obj' => $value->formateur,
                     'formateur' => ucfirst($value->formateur->nom_formateur).' '.ucfirst($value->formateur->prenom_formateur),
                     'groupe' => $value->groupe,
                     'groupe_entreprise' => $value->groupe->groupe_entreprise,
                     'participants' => $value->groupe->participants->pluck('stagiaire'),
+                    'materiel' => $value->groupe->ressources,
 
                     // Etabli la relation entre un participant(stagiaire) et son entreprise(entreprise)
                     // La relation 'entreprises' devient en attribut du 'participants' et contient le tableau d'entreprises
@@ -148,6 +153,7 @@ class DetailController extends Controller
                     'entreprises' => $value->groupe->groupe_entreprise->pluck('entreprise')->toArray(),
 
                     'sessions' => $value->groupe->detail,
+                    // 'duree' => date_diff(strtotime("$value->date_detail $value->h_debut"),strtotime("$value->date_detail $value->h_fin")),
                     'projet' => $value->groupe->projet,
                     'type_formation' => $value->groupe->projet->type_formation,
                     'nom_cfp' => $value->groupe->projet->cfp->nom,
@@ -156,7 +162,7 @@ class DetailController extends Controller
                 );
             }
 
-            // return( $events[0]);
+            // return( $events);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             foreach ($groupe_etp as $key => $value) {
@@ -486,6 +492,9 @@ class DetailController extends Controller
          /** Recuperer duree total de la session */
          $nb_seance = '';
          $info = $this->groupes->infos_session($id_groupe);
+
+         
+
          if ($info->difference == null && $info->nb_detail == 0) {
              $nb_seance = $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
          }elseif ($info->difference != null && $info->nb_detail == 1) {

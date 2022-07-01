@@ -13,6 +13,11 @@ class Groupe extends Model
     ];
 
 
+    public function ressources()
+    {
+        return $this->hasMany('App\Ressource', 'groupe_id');
+    }
+
     public function participants(){
         return $this->hasMany('App\participant_groupe', 'groupe_id');
     }

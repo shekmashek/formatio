@@ -267,14 +267,36 @@
             width: 90%!important;
         }
 
+        .width_80 {
+            width: 80%!important;
+        }
+
         .btn_purple {
             background-color: #7367F0!important;
             border-color: #7367F0!important;
             color: #fff!important;
         }
 
+        .background_purple {
+            background-color: #9958cf5e!important;
+            color: #6c1deb!important;
+            padding: 0.5rem 1rem!important;
+        }
+
         .popover {
             z-index: 1070!important;
+        }
+
+        .padding_0 {
+            padding: 0!important;
+        }
+
+        .font_size_init {
+            font-size:initial!important;
+        }
+
+        .right_-10 {
+            right: -10%!important;
         }
 
 
@@ -283,9 +305,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> --}}
 
     
     <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
@@ -331,63 +353,78 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <div class="offcanvas-body">
-                <div class="input-group flex-nowrap mb-3">
-                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                <div class="input-group flex-nowrap mb-4">
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-briefcase text-secondary'></i></span>
                     <input type="text" id="event_project"
-                    class="form-control border-0" 
+                    class="form-control border-0 bg-light" 
                     placeholder="Projet" 
-                    aria-label="Username" aria-describedby="basic-addon1">
+                    aria-label="projet" aria-describedby="basic-addon1" readonly>
+                    <input type="text" id="event_type_formation"
+                    class="form-control border-0 background_purple fw-bolder rounded" 
+                    placeholder="Type  de formation" 
+                    aria-label="type_formation" aria-describedby="basic-addon1" readonly>
                 </div>
-                <div id="event_type_formation">
 
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text border-0 bg-light" id="addon-wrapping">@</span>
+                <div class="input-group mb-4">
+                    <span class="input-group-text border-0 bg-light fs-2" id="addon-wrapping"><i class='bx bxs-buildings text-secondary'></i></span>
                     {{-- <input type="text" id="event_entreprise" class="form-control border-0 border-bottom" 
                     placeholder="Entreprise" aria-label="Entreprise" 
                     aria-describedby="addon-wrapping"> --}}
                     <span id="event_entreprise" class="form-control border-0 border-bottom" ></span>
                   </div>
-                <div class="input-group mb-3" id="event_sessions">
-                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                <div class="input-group mb-4" id="event_sessions">
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-calendar-event text-secondary' ></i></span>
                     <input type="text" id="event_nbr_session" 
                     class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
                     placeholder="Nombre session" aria-label="nbr_session" 
                     aria-describedby="basic-addon1">
 
                 </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                <div class="input-group mb-4">
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-map text-secondary' ></i></span>
                     <input type="text" id="event_lieu" class="form-control border-0 border-bottom" 
                     placeholder="lieu" aria-label="Place" 
                     aria-describedby="basic-addon1">
                 </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
+                <div class="input-group mb-4">
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-chalkboard text-secondary' ></i></span>
                     <input type="text" id="event_OF" class="form-control border-0 border-bottom" 
                     placeholder="OF" aria-label="OF" 
                     aria-describedby="basic-addon1">
-                    <input type="text" id="event_formateur" class="form-control border-0 border-bottom" 
-                    placeholder="Formateur" aria-label="Formateur" 
-                    aria-describedby="basic-addon1">
+
+                    <span type="text" id="event_formateur" class="form-control border-0 border-bottom" 
+                        aria-label="Formateur" 
+                        aria-describedby="basic-addon1">
+                    </span>
                 </div>
 
-                <div class="input-group mb-3" id="event_materiel">
-                    <span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>
-                        <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
-                    placeholder="Matériel" aria-label="materiel" 
-                    aria-describedby="basic-addon1">
-                        <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
-                    placeholder="materiel i" aria-label="materiel" 
-                    aria-describedby="basic-addon1">
-                        <input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
-                    placeholder="materiel i" aria-label="materiel" 
-                    aria-describedby="basic-addon1">
 
-                
+                <div class="accordion mt-5 input-group" id="materiel_accordion_container">
+                    <label for="materiel_button">
+                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-wrench text-secondary'></i></span>
+                    </label>
+                    <div class="accordion-item width_80 border-0">
+                        
+                        <h2 class="form-control accordion-header border-0 border-bottom" id="materiel_heading">
+                            <button class="accordion-button p-2 collapsed" id="materiel_button" type="button" data-bs-toggle="collapse" 
+                                data-bs-target="#materiel_collapse" aria-expanded="false" aria-controls="materiel_collapse">
+                              Materiel nécessaire
+                            </button>
+                        </h2>
+
+                          <div id="materiel_collapse" class="accordion-collapse collapse border-bottom mb-2" aria-labelledby="headingThree" 
+                                data-bs-parent="#materiel_accordion_container">
+                            <div class="accordion-body padding_0">
+                                <div class="accordion accordion-flush px-2" id="materiel_accordion">
+                        
+                                </div>
+                            </div>
+                          </div>
+
+                    </div>
                 </div>
 
-                <div id="test_offcanvas" class="input-group mb-3">
+                <div id="test_offcanvas" class="input-group mb-3 d-none">
 
                                         
                     <a href="#" class="btn btn-primary" tabindex="0" data-bs-toggle="popover" data-trigger="focus" data-popover-content="#atest">Popover Example</a>
@@ -415,17 +452,21 @@
                 </div>
 
 
-                <div class="accordion" id="accordion_container">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                              Accordion Item #1
+                <div class="accordion mt-5 input-group" id="accordion_container">
+                    <label for="container_button">
+                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-group text-secondary' ></i></span>
+                    </label>
+                    <div class="accordion-item border-0 width_80">
+                        <h2 class="accordion-header border-0 border-bottom" id="headingTwo">
+                            <button class="accordion-button p-2 collapsed" id="container_button" type="button" data-bs-toggle="collapse" 
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              Participants
                             </button>
                         </h2>
 
-                          <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwp" data-bs-parent="#accordion_container">
-                            <div class="accordion-body">
-                                <div class="accordion" id="accordionExample">
+                          <div id="collapseTwo" class="accordion-collapse collapse border-bottom" aria-labelledby="headingTwp" data-bs-parent="#accordion_container">
+                            <div class="accordion-body padding_0">
+                                <div class="accordion accordion-flush px-2" id="accordionExample">
                         
                                 </div>
                             </div>
@@ -588,22 +629,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
 
-        // var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        // var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        // return new bootstrap.Popover(popoverTriggerEl)
-        // })
-
-
 
         // calendrier planning
             document.addEventListener('DOMContentLoaded', function() {
-
 
                 var events = {!! json_encode($events, JSON_HEX_TAG) !!};
                 var calendarEl = document.getElementById('planning');
                 var calendar = new FullCalendar.Calendar(calendarEl, 
                 {
                 
+
                 // views : resourceTimeline,resourceTimelineWeek,listMonth,dayGridMonth,timeGridWeek
 
                     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -617,6 +652,12 @@
                                     left: 'dayGridMonth,timeGridWeek,listMonth'
 
                                 },
+
+                    views: {
+                        dayGridMonth: {
+
+                        },
+                    },
 
 
                     // show the description of events when hovering over them
@@ -638,8 +679,40 @@
                     // console.log the description of events when clicking on them
                     eventClick : function(info) {
 
+                        var duree_formation = 0;
+                        var diff = '';
+                        events.forEach(all_event => {
 
-                        // To make 
+                            if (all_event.groupe.id == info.event.extendedProps.groupe.id) {
+                                    var end = new Date(all_event.end);
+                                    var start = new Date(all_event.start);
+                                    // console.log(end.toLocaleTimeString(), start.toLocaleTimeString());
+                                    var diff = end.getTime() - start.getTime();
+                                    duree_formation = duree_formation + diff;
+                                }
+                                
+                            });
+
+
+                            // formater le time obtenu en h:m:s
+                            houreFormat = (time) => {
+                                var msec = time;
+                                var hh = Math.floor(msec / 1000 / 60 / 60);
+                                msec -= hh * 1000 * 60 * 60;
+                                var mm = Math.floor(msec / 1000 / 60);
+                                msec -= mm * 1000 * 60;
+                                var ss = Math.floor(msec / 1000);
+                                msec -= ss * 1000;
+
+                                var duration = hh + "h " + mm + "m " + ss +"s ";
+                                return (duration);
+                            }
+
+                            console.log(houreFormat(duree_formation));
+
+                            console.log(diff, Math.floor(duree_formation / 3600000));
+
+                        // To make popover accept html as content
                         $(function(){
                             $("[data-bs-toggle=popover]").popover({
                                 html : true,
@@ -660,17 +733,21 @@
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
                         var title_offcanvas = document.getElementById('event_title');
                         var projet_offcanvas = document.getElementById('event_project');
+                        var type_formation_offcanvas = document.getElementById('event_type_formation');
                         var session_offcanvas = document.getElementById('event_sessions');
                         var nbr_session_offcanvas = document.getElementById('event_nbr_session');
                         var entreprise_offcanvas = document.getElementById('event_entreprise');
                         var lieu_offcanvas = document.getElementById('event_lieu');
                         var OF_offcanvas = document.getElementById('event_OF');
                         var formateur_offcanvas = document.getElementById('event_formateur');
-                        var participants_offcanvas = document.getElementById('event_participants');
                         
                         var test_offcanvas = document.getElementById('test_offcanvas');
 
                         var accordion_Participants = document.getElementById('accordionExample');
+                        var container_button = document.getElementById('container_button');
+                        var materiel_button = document.getElementById('materiel_button');
+                        var materiel_collapse = document.getElementById('materiel_collapse');
+                    
 
 
                         // Filling the values of the offcanvas with the attributes of the event
@@ -679,6 +756,10 @@
                         var title = info.event.title;
                         var id = info.event.extendedProps.detail_id;
                         var projet = info.event.extendedProps.projet.nom_projet;
+                        var type_formation = info.event.extendedProps.type_formation.type_formation;
+
+                        console.log(info.event.extendedProps.type_formation.type_formation);
+
                         var groupe = info.event.extendedProps.groupe;
                         var sessions = info.event.extendedProps.groupe.detail;
                         var entreprises = info.event.extendedProps.entreprises;
@@ -693,6 +774,7 @@
 
                         title_offcanvas.innerHTML = title + ' ' + '#'+id;
                         projet_offcanvas.value = projet;
+                        type_formation_offcanvas.value = type_formation;
 
                         var nbr_session = sessions.length;
                         var session_offcanvas_html = '';
@@ -708,48 +790,48 @@
                         sessions.forEach((session, i) => {
                             var date = new Date(session.date_detail);
                             // console.log(date.toLocaleDateString('fr-FR',options));                            
-                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon1">';
+                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30 right_-10" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon1">';
 
                         });
-
+                        
                         
                         // add the number of session before the session list 
-                        nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light" id="basic-addon1">@</span>';
-                        nbr_session_offcanvas += '<input value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control border-0 border-bottom d-block w-auto" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">';
+                        nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
+                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 mb-3 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
 
                         session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
                         lieu_offcanvas.value = info.event.extendedProps.lieu;
                         OF_offcanvas.value = info.event.extendedProps.nom_cfp;
-                        formateur_offcanvas.value = info.event.extendedProps.formateur;
-                        
-                        var participants = info.event.extendedProps.participants;
 
-                        // var participants_offcanvas_html = '';
-                        test_offcanvas.innerHTML = '';
+
+                        // Lien du formateur
+                        var formateur_id = info.event.extendedProps.formateur_obj.id;
+                        var formateur_link = '<a href="{{url("profile_formateur/:?")}}" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
+                        formateur_link = formateur_link.replace(":?", formateur_id);
+                        formateur_offcanvas.innerHTML = formateur_link;
+
+                        // Récupération des participants et du materile dans des tableaux
+                        var participants = info.event.extendedProps.participants;
+                        var materiel = info.event.extendedProps.materiel;
+                        
+                        accordion_Participants.innerHTML = '';
+                        
+                        container_button.innerHTML = '';
                         var html_pop = '';
                         var html_accordion = '';
-                        participants_offcanvas.innerHTML = '';
                         if (participants.length > 0) {
+                            // add the class d-block to the button
+                            // container_button.classList.add('d-block');
+                            container_button.removeAttribute('disabled', 'true');
+                            container_button.innerHTML += '<span class="my-0 mx-auto">Participants</span>';
+                            container_button.innerHTML += '<span class="badge background_purple rounded-pill float-end">'+participants.length+'</span>';
+                            
                             participants.forEach((participant,i) => {      
-
-
-                                // LE POPOVER NE MARCHE PAS / THE POPOVER DOESN'T WORK
-
-                                // html_pop += '<li>';
-                                // html_pop += '<a href="#" class="dropdown-item" tabindex="0" data-bs-toggle="popover" data-trigger="focus" data-popover-content="#atest'+i+'" date-bs-original-title title>'+participant.nom_stagiaire+' '+participant.prenom_stagiaire+'</a>';
-                                // html_pop += '<div id="atest'+i+'" class="visually-hidden">';
-                                // html_pop += '<div class="popover-heading" id="profile_test_name'+i+'">Title'+i+'</div>Lorem ipsum dolor sit amet.<div class="popover-body" id="profile_test_id'+i+'">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, autem.</div>';
-                                // html_pop += '</div>';
-                                // html_pop += '</li>';
-
-                                // participants_offcanvas.innerHTML = html_pop;
-
-                                //////////////////
                                 
                                 html_accordion += '<div class="accordion-item">';
 
                                 html_accordion += '<h2 class="accordion-header" id="headingOne'+i+'">';
-                                html_accordion += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-expanded="false" aria-controls="collapseOne">';
+                                html_accordion += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-controls="collapseOne">';
                                 html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire;
                                 html_accordion += '</button>';
                                 html_accordion += '</h2>';
@@ -779,10 +861,77 @@
                             });
 
                         } else {
-                            
-                            participants_offcanvas.innerHTML += '<li><a class="dropdown-item" href="#">Aucun participant</a></li>';
-
+                            container_button.innerHTML = 'Aucun participant';
+                            container_button.setAttribute('disabled', 'true');
+                                                                                    
                         }
+
+
+                        materiel_collapse.innerHTML = '';
+                        
+                        materiel_button.innerHTML = '';
+                        var materiel_accordion_html = '';
+                        if (materiel.length > 0) {
+                            // add the class d-block to the button
+                            // container_button.classList.add('d-block');
+                            materiel_button.removeAttribute('disabled', 'true');
+                            materiel_button.innerHTML += '<span class="my-0 mx-auto">Matériel</span>';
+                            materiel_button.innerHTML += '<span class="badge background_purple rounded-pill float-end">'+materiel.length+'</span>';
+                            
+                            materiel.forEach((materiel,i) => {      
+                                
+                                materiel_accordion_html += '<div class="accordion-item border-0">';
+
+                                materiel_accordion_html += '<h2 class="accordion-header" id="headingOne'+i+'">';
+
+                                    // bouton d'ouverture avec le nom du materiel
+                                materiel_accordion_html += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-controls="collapseOne">';
+                                materiel_accordion_html += materiel.description;
+                                materiel_accordion_html += '</button>';
+                                materiel_accordion_html += '</h2>';
+                                
+
+                                materiel_accordion_html += '<div id="collapseOne'+i+'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">';
+                                materiel_accordion_html += '<div class="accordion-body">';
+                                materiel_accordion_html += '<ul class="list-group list-group">';
+
+                                    // demandeur du materiel
+                                materiel_accordion_html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
+                                materiel_accordion_html += '<div class="ms-2 me-auto">';
+                                materiel_accordion_html += '<div class="fw-bold">Demandeur</div>';
+                                materiel_accordion_html += '<span >'+materiel.demandeur+'</span>';
+                                materiel_accordion_html += '</div>';
+
+                                    // preneur en charge du materiel
+
+                                materiel_accordion_html += '</li>';
+
+                                materiel_accordion_html += '<li class="list-group-item d-flex justify-content-between align-items-start">';
+                                materiel_accordion_html += '<div class="ms-2 me-auto">';
+                                materiel_accordion_html += '<div class="fw-bold">A la chage de : </div>';
+                                materiel_accordion_html += '<span >'+materiel.pris_en_charge+'</span>';
+                                materiel_accordion_html += '</div>';
+
+
+                                materiel_accordion_html += '</li>';
+
+                                materiel_accordion_html += '</ul>';
+            
+                                materiel_accordion_html += '</div>';
+                                materiel_accordion_html += '</div>';
+                                materiel_accordion_html += '</div>';
+
+
+                                materiel_collapse.innerHTML = materiel_accordion_html;
+                                
+
+                            });
+
+                        } else {
+                            materiel_button.innerHTML = 'Aucun matériel nécessaire';
+                            materiel_button.setAttribute('disabled', 'true');
+                        }
+
 
 
                         bsOffcanvas.show();
@@ -829,8 +978,13 @@
                 }
                 );
 
+                
                 calendar.render();
+
             });
+
+   
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         function getRandomColor() {
