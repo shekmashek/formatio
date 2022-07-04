@@ -13,6 +13,12 @@ class Formation extends Model
     protected $fillable = [
         'id','nom_formation','domaine_id','formation_id'
     ];
+
+    public function status()
+    {
+        return $this->hasOne(User::class, 'status');
+    }
+
     public function domaine(){
         return $this->belongsTo('App\Domaine');
     }

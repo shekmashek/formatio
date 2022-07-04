@@ -23,13 +23,12 @@
             background-color: #faf9f900!important;
             border-color: #8c14fc!important;
             color: #8c14fc!important;
-            transition: 0.3s;
         }
         .fc-button:hover {
             background-color: rgba(132, 53, 196, 0.137)!important;
             border-color: #8c14fc!important;
             color: #8c14fc!important;
-            font-weight: bolder!important;
+            font-weight: bold!important;
         }
 
         .fc-button-active {
@@ -49,7 +48,6 @@
 
         .fc-prev-button, .fc-next-button {
             border: none!important;
-            border-radius: 25px!important;
         }
         
         .tooltip {
@@ -587,7 +585,7 @@
                                 html_accordion += '</div>';
 
 
-                                html_accordion += '<span class="badge end-0 position-absolute bg-primary rounded-pill">'+participant.entreprise.nom_etp+'</span>';
+                                html_accordion += '<span class="badge bg-primary rounded-pill">'+participant.entreprise.nom_etp+'</span>';
                                 html_accordion += '</li>';
                                 html_accordion += '</ul>';
             
@@ -626,13 +624,13 @@
                                 materiel_accordion_html += '<h2 class="accordion-header" id="headingOne'+i+'">';
 
                                     // bouton d'ouverture avec le nom du materiel
-                                materiel_accordion_html += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo'+i+'" aria-controls="collapseOne">';
+                                materiel_accordion_html += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-controls="collapseOne">';
                                 materiel_accordion_html += materiel.description;
                                 materiel_accordion_html += '</button>';
                                 materiel_accordion_html += '</h2>';
                                 
 
-                                materiel_accordion_html += '<div id="collapseTwo'+i+'" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">';
+                                materiel_accordion_html += '<div id="collapseOne'+i+'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">';
                                 materiel_accordion_html += '<div class="accordion-body">';
                                 materiel_accordion_html += '<ul class="list-group list-group">';
 
@@ -676,43 +674,9 @@
 
 
                         bsOffcanvas.show();
-                        
 
-                        // var event = info.event;
-                        // var event_id = event.id;
-                        // var event_title = event.title;
-                        // var event_start = event.start;
-                        // var event_end = event.end;
-                        // var event_description = event.extendedProps.description;
-                        
-                        // var doc = new jsPDF();
-                        // doc.setFontSize(20);
-                        // doc.text(event_title, 10, 10);
-                        // doc.setFontSize(12);
-                        // doc.text(event_description, 10, 20);
-                        // doc.text(event_start, 10, 30);
-                        // doc.text(event_end, 10, 40);
-                        // doc.save('calendrier.pdf');
 
                     },
-
-                    // $('#download_pdf').click(function () {
-                    // var pdf = new jsPDF('p', 'pt', 'letter');
-                    // // source can be HTML-formatted string, or a reference
-                    // // to an actual DOM element from which the text will be scraped.
-                    // source = $('#test')[0];
-
-                    // // we support special element handlers. Register them with jQuery-style 
-                    // // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-                    // // There is no support for any other type of selectors 
-                    // // (class, of compound) at this time.
-                    // specialElementHandlers = {
-                    //     // element with id of "bypass" - jQuery style selector
-                    //     '#bypassme': function (element, renderer) {
-                    //         // true = "handled elsewhere, bypass text extraction"
-                    //         return true
-                    //     }
-                    // };
                     
                     events: events,
 

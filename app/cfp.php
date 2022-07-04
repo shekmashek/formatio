@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\detail;
 use App\projet;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,17 @@ class Cfp extends Model
         'id', 'Nom', 'Adresse', 'Email', 'Telephone', 'Domaine_de_formation', 'NIF', 'STAT', 'RCS', 'CIF', 'logo', 'user_id',
         'adresse_rue', 'adresse_quartier', 'adresse_code_postal'
     ];
+
+
+    /**
+     * Get all of the details for the cfp
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function details()
+    {
+        return $this->hasMany(detail::class, 'cfp_id');
+    }
 
     // ----------------------------------------
     public function getCfpIdCollaborer($list)
