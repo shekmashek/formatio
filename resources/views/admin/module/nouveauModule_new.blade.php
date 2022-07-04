@@ -89,9 +89,9 @@
                     @endforeach
                 </div>
                 <div class="col background_contrast"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix, 0, ' ', ' ')}}</strong><sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @if($res->prix_groupe != null)
-                    <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                    <div class="col background_contrast" ><span >{{$devise->devise}} &nbsp;<strong>{{number_format($res->prix_groupe, 0, ' ', ' ')}}</strong><sup>&nbsp;/ {{$res->max_pers}} pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
                 <div class="col">
                     <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
@@ -648,6 +648,18 @@
                                             <input type="text" class="form-control module module input" name="prix_groupe" required value="{{$res->prix_groupe}}" onfocus="(this.type='number')" placeholder="Prix en groupe module" >
                                             <label for="prix_groupe" class="form-control-placeholder">Prix groupe en {{$devise->devise}}</label>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <input type="text" class="form-control module module input" id="pax_min" name="pax_min" required value="{{$res->min_pers}}" onfocus="(this.type='number')" max="20" min="3" placeholder=">Pax minimal" >
+                                                    <label for="prix_groupe" class="form-control-placeholder">Pax minimal</label>
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" class="form-control module module input" id="pax_max" name="pax_max" required value="{{$res->max_pers}}" onfocus="(this.type='number')" max="40"  placeholder=">Pax maximal" >
+                                                    <label for="prix_groupe" class="form-control-placeholder">Pax maximal</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
                                             <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
@@ -1045,6 +1057,32 @@
         $("#prestation_textarea").val($("#prestation_id").html());
     });
 
+    $('#pax_min').on('change keyup', function(e){
+    let value_min = $(this).val();
+    let value_max = $('#pax_max').on('change keyup').val();
+    if(parseInt(value_min) >= parseInt(value_max)){
+        toastr.warning('la valeur est supérieur au valeur maximal requis');
+        $(this).val('');
+        $(this).val(parseInt(value_max) - 1);
+    }
+    if(value_min <= 0){
+        toastr.warning('la valeur est ne doit pas être inferieur à 0');
+        $(this).val(5);
+    }
+});
+
+
+$('#pax_max').on('change keyup', function(e){
+    let value_max = $(this).val();
+    let value_min = $('#pax_min').val();
+    $("input[type='number']").prop('min',value_min);
+    if(parseInt(value_max) <= parseInt(value_min)){
+        toastr.warning('la valeur est inferieure au valeur minimale requis');
+        // alert(parseInt(value_min)+1);
+        $(this).val('');
+        $(this).val(parseInt(value_min)+1);
+    }
+});
 // function changer_niveau() {
 //     var x = document.getElementById("myDIV");
 //         $('.dismis_buton').show();

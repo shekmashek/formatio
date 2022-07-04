@@ -342,7 +342,7 @@
     color: #7635dc;
 } */
 
-.nav-item.active .nav-link {
+.nav-item .nav-link.active {
     border-bottom: 3px solid #7635dc !important;
     border: none;
     color: #7635dc;

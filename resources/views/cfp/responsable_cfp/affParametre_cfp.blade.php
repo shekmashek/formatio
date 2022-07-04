@@ -31,7 +31,7 @@
                         @if($cfps->slogan == NULL )
                             <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name">Ajouter Slogan</a>
                         @else
-                            <p>{{$cfps->slogan}}</p>
+                            <p class="slogan_text">{{$cfps->slogan}}</p>
                         @endif
                         <a href="{{route('modification_nom_organisme',$cfps->id)}}" class="action_name text-white">Modifier</a>
                     </div>
@@ -45,7 +45,7 @@
                     <i class='bx bxs-customize icon_infos p-0'></i>
                 </div>
                 <div class="row ps-2 ">
-                    <p class="nb_modules m-0 p-0">{{count($modules_counts)}}</p>
+                    <p class="nb_modules m-0 p-0 mb-2">{{count($modules_counts)}}</p>
                     <p class="text-muted borderBotom_color p-0 pb-2 text-uppercase">Modules</p>
                 </div>
             </a>
@@ -56,7 +56,7 @@
                     <i class='bx bxs-component icon_infos2 p-0'></i>
                 </div>
                 <div class="row ps-2 ">
-                    <p class="nb_modules m-0 p-0">{{count($projets_counts)}}</p>
+                    <p class="nb_modules m-0 p-0 mb-2">{{count($projets_counts)}}</p>
                     <p class="text-muted borderBotom_color2 p-0 pb-2 text-uppercase">Projets</p>
                 </div>
             </a>
@@ -67,7 +67,7 @@
                     <i class='bx bxs-receipt icon_infos3 p-0'></i>
                 </div>
                 <div class="row ps-2 ">
-                    <p class="nb_modules m-0 p-0">{{count($factures_counts)}}</p>
+                    <p class="nb_modules m-0 p-0 mb-2">{{count($factures_counts)}}</p>
                     <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Factures</p>
                 </div>
             </a>
@@ -121,9 +121,9 @@
             <div class="row border_bas mt-3">
                 <div class="col">
                     @if($cfps->telephone == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calculator icon_sociaux1'></i>&nbsp;Téléphone</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-phone icon_sociaux1'></i>&nbsp;Téléphone</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-calculator icon_sociaux1'></i>&nbsp;{{$cfps->telephone}}</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" ><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-phone icon_sociaux1'></i>&nbsp;{{$cfps->telephone}}</p><p class="text-end"><a href="{{route('modification_telephone',$cfps->id)}}" ><i class='bx bx-edit bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>
