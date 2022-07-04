@@ -26,7 +26,8 @@ INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES
 (6,'SuperAdmin',"Super Admin", '2021-11-10 02:59:59', '2021-11-10 02:59:59'),
 (7,'CFP',"Organisme de Formation", '2021-11-22 09:27:38', '2021-11-22 09:27:38');
 
-INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES (8,'formateur_interne','Formateur interne', '2021-10-26 05:45:24', '2021-10-26 05:45:24'),
+INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES (8,'formateur_interne','Formateur interne', '2021-10-26 05:45:24', '2021-10-26 05:45:24');
+
 
 CREATE TABLE `niveaux` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
