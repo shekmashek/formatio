@@ -13,6 +13,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
 <div class="container-fluid pb-1" id="Page1">
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();">
@@ -22,10 +23,10 @@
     <div class="m-4" role="tabpanel" >
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#hors_ligne" class="nav-link" data-bs-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
+                <a href="#hors_ligne" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
             </li>
             <li class="nav-item">
-                <a href="#publies" class="nav-link active" data-bs-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
+                <a href="#publies" class="nav-link active" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
@@ -151,7 +152,7 @@
                                             <div class="col-8">
                                                 <div class="new_btn_programme text-center">
                                                     <div class="text-uppercase">
-                                                        @if ($mod->status == 1)
+                                                        @if ($mod->etat_id == 2)
                                                         <div class="form-check form-switch d-flex flex-row">
                                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix_hors_ligne">Hors&nbsp;Ligne</span></label>
                                                             <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch_{{$mod->module_id}}" data-bs-target="#en_ligne_{{$mod->module_id}}" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne">
@@ -234,8 +235,8 @@
                                 @if($mod_publies == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button"><i
-                                        class='bx bx-layer-plus icon_vide'></i></a>
+                                    <a class="text-center mt-5" href="{{route('nouveau_module_new')}}" role="button"><i
+                                            class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
                                 @foreach($mod_publies as $mod)
@@ -337,7 +338,7 @@
                                             <div class="col-8">
                                                 <div class="new_btn_programme text-center">
                                                     <div class="text-uppercase">
-                                                        @if ($mod->status == 2)
+                                                        @if ($mod->etat_id == 1)
                                                         <div class="form-check form-switch d-flex flex-row">
                                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;Ligne</span></label>
                                                             <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch2_{{$mod->module_id}}" data-bs-target="#hors_ligne_{{$mod->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked >
@@ -805,7 +806,7 @@
                                         <div class="col-12">
                                             <div class="new_btn_programme text-center">
                                                 <div class="text-uppercase">
-                                                    @if ($info->status == 1)
+                                                    @if ($info->etat_id == 2)
                                                     <div class="form-check form-switch d-flex flex-row">
                                                         <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix_hors_ligne">Hors&nbsp;Ligne</span></label>
                                                         <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch_{{$info->module_id}}" data-bs-target="#liste_en_ligne_{{$info->module_id}}" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne">
@@ -1002,7 +1003,7 @@
                                         <div class="col-12">
                                             <div class="new_btn_programme text-center">
                                                 <div class="text-uppercase">
-                                                    @if ($info->status == 2)
+                                                    @if ($info->etat_id == 1)
                                                     <div class="form-check form-switch d-flex flex-row">
                                                         <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;Ligne</span></label>
                                                         <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch2_{{$info->module_id}}" data-bs-target="#liste_hors_ligne_{{$info->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked >
@@ -1414,6 +1415,7 @@
 </div>
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="{{asset('js/modules.js')}}"></script>
 <script >
 
@@ -1424,7 +1426,6 @@ localStorage.removeItem('popState');
     });
     let ActiveTabMod = localStorage.getItem('ActiveTabMod');
     if(ActiveTabMod){
-        alert(ActiveTabMod);
         $('#myTab a[href="' + ActiveTabMod + '"]').tab('show');
     }
 
