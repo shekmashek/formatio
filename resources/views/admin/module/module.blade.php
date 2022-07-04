@@ -235,8 +235,8 @@
                                 @if($mod_publies == null)
                                 <div class="si_vide row mt-4">
                                     <h5 class="text-center text-uppercase">Vous n'avez pas encore créer de module</h5>
-                                    <a class="text-center mt-5" href="{{route('nouveau_module_new')}}" role="button"><i
-                                            class='bx bx-layer-plus icon_vide'></i></a>
+                                    <a class="text-center mt-5" data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button"><i
+                                        class='bx bx-layer-plus icon_vide'></i></a>
                                 </div>
                                 @else
                                 @foreach($mod_publies as $mod)
