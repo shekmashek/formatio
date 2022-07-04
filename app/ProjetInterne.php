@@ -35,4 +35,14 @@ class ProjetInterne extends Model
         }
         return $format;
     }
+
+    public function statut_evaluation_apres($groupe_id,$stg_id){
+        $somme_eval = DB::select('select ifnull(sum(note_apres),0) as somme_note from evaluation_stagiaire_interne where groupe_interne_id = ? and stagiaire_id = ? ',[$groupe_id,$stg_id])[0]->somme_note;
+        if($somme_eval == 0){
+            return '#bdbebd';
+        }
+        elseif($somme_eval > 0){
+            return '#00CDAC';
+        }
+    }
 }

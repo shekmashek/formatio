@@ -629,10 +629,6 @@ create or replace view v_emargement as
     on pgd.detail_id = dps.detail_id
     and pgd.stagiaire_id = dps.stagiaire_id;
 
-
-
-
-
 create or replace view v_projet_session_inter as
     select
         p.nom_projet,

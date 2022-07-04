@@ -1514,3 +1514,9 @@ Route::get('add_participant_groupe_interne', 'ProjetInterneController@addPartici
 Route::get('one_stagiaire_interne', 'ProjetInterneController@getOneStagiaire')->name('one_stagiaire_interne');
 Route::post('inserer_detail', 'ProjetInterneController@inserer_detail')->name('inserer_detail');
 Route::get('add_ressource_interne', 'ProjetInterneController@ajout_ressource')->name('add_ressource_interne');
+Route::get('get_presence_stg_interne', 'ProjetInterneController@get_presence_stg')->name('get_presence_stg_interne');
+Route::post('insert_presence_detail_interne', 'ProjetInterneController@insert_presence')->name('insert_presence_detail_interne');
+Route::post('insert_evaluation_stagiaire_interne', 'ProjetInterneController@insert_evaluation_stagiaire')->name('insert_evaluation_stagiaire_interne');
+Route::post('modifier_evaluation_stagiaire_interne', 'ProjetInterneController@modifier_evaluation_stagiaire')->name('modifier_evaluation_stagiaire_interne');
+Route::get('competence_stagiaire_interne', 'ProjetInterneController@get_competence_stagiaire')->name('competence_stagiaire_interne');
+Route::post('insert_evaluation_stagiaire_apres_interne', 'ProjetInterneController@insert_evaluation_stagiaire_apres')->name('insert_evaluation_stagiaire_apres_interne');

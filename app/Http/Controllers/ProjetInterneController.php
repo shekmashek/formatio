@@ -79,8 +79,10 @@ class ProjetInterneController extends Controller
         $lieu_formation = DB::select('select projet_id,groupe_id,lieu from details where groupe_id = ? AND projet_id=? group by projet_id,groupe_id,lieu', [$projet[0]->groupe_id,$projet[0]->projet_id]);
         $salle_formation = DB::select('select * from salle_formation_etp where etp_id = ?',[$etp_id]);
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
-        // dd($formateur);
-        return view('projet_interne.detail_session_interne',compact('module_session','etp_id','formateur','datas','projet','stagiaire','competences','presence_detail','modalite','lieu_formation','salle_formation','ressource'));
+        $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaire_interne where groupe_interne_id = ?',[$projet[0]->groupe_id])[0]->somme;
+        $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaire_interne where groupe_interne_id = ?',[$projet[0]->groupe_id])[0]->somme;
+        $evaluation_stg = DB::select('select * from evaluation_stagiaire_interne where groupe_interne_id = ?', [$id]);
+        return view('projet_interne.detail_session_interne',compact('module_session','etp_id','formateur','datas','projet','stagiaire','competences','presence_detail','modalite','lieu_formation','salle_formation','ressource','evaluation_avant','evaluation_apres','evaluation_stg'));
     }
 
     public function getFormateur(){
@@ -165,6 +167,116 @@ class ProjetInterneController extends Controller
         DB::insert('insert into ressources(description,groupe_id,pris_en_charge,note) values(?,?,?,?)',[$ressource,$groupe_id,$pris_en_charge,$note]);
         $all_ressources = DB::select('select * from ressources where groupe_id = ?',[$groupe_id]);
         return response()->json($all_ressources);
+    }
+
+    public function get_presence_stg(Request $request){
+        $stg = $request->stagiaire;
+        $detail = $request->detail;
+        $fonct = new FonctionGenerique();
+        $data = $fonct->findWhereMulitOne('v_detail_presence_stagiaire_interne',['stagiaire_id','detail_id'],[$stg,$detail]);
+        return response()->json($data);
+    }
+
+    public function insert_presence(Request $request){
+        if(!isset($request->insert_form)){
+            $presence = $request->edit_attendance;
+            $h_entree = $request->edit_h_entree;
+            $h_sortie = $request->edit_h_sortie;
+            $note = $request->edit_note_desc;
+            $detail_id = $request->edit_detail_id;
+            $stg_id = $request->edit_stg_id;
+            DB::update('update presences_interne set status = ? , h_entree = ? , h_sortie = ? , note = ? where detail_interne_id = ? and stagiaire_id = ?', [$presence[$detail_id][$stg_id],$h_entree,$h_sortie,$note,$detail_id,$stg_id]);
+        }
+        if(isset($request->insert_form)){
+            $groupe_id = $request->groupe;
+            $detail_id = $request->detail_id;
+            $presence = $request->attendance;
+            $h_entree = $request->entree;
+            $h_sortie = $request->sortie;
+            $note = $request->note_desc;
+            $stagiaire = DB::select('select stagiaire_id from v_stagiaire_groupe_interne where groupe_id = ? order by stagiaire_id asc',[$groupe_id]);
+            $detail = DB::select('select h_debut,h_fin from details_interne where id = ?',[$detail_id]);
+            foreach($stagiaire as $stg){
+                if(empty($h_entree[$detail_id][$stg->stagiaire_id])){
+                    $h_entree[$detail_id][$stg->stagiaire_id] = $detail[0]->h_debut;
+                }
+                if(empty($h_sortie[$detail_id][$stg->stagiaire_id])){
+                    $h_sortie[$detail_id][$stg->stagiaire_id] = $detail[0]->h_fin;
+                }
+                if(empty($note[$detail_id][$stg->stagiaire_id])){
+                    $note[$detail_id][$stg->stagiaire_id] = "";
+                }
+                DB::insert('insert into presences_interne(stagiaire_id,detail_interne_id,status,h_entree,h_sortie,note) values(?,?,?,?,?,?)',[$stg->stagiaire_id,$detail_id,$presence[$detail_id][$stg->stagiaire_id],$h_entree[$detail_id][$stg->stagiaire_id],$h_sortie[$detail_id][$stg->stagiaire_id],$note[$detail_id][$stg->stagiaire_id]]);
+            }
+        }
+        return back();
+    }
+
+    public function insert_evaluation_stagiaire(Request $request){
+        $stagiaire = DB::select('select * from v_stagiaire_groupe_interne where groupe_id = ? order by stagiaire_id asc',[$request->groupe]);
+        $competences = DB::select('select * from competence_a_evaluers_interne where module_id = ?',[$request->module]);
+        foreach($stagiaire as $stg){
+            foreach($competences as $comp){
+                $stag = $request['stagiaire'][$stg->stagiaire_id];
+                $note = $request['note'][$stg->stagiaire_id][$comp->id];
+                DB::insert('insert into evaluation_stagiaire_interne(groupe_interne_id,competence_a_evaluers_interne_id,stagiaire_id,note_avant) values (?, ?, ?, ?)', [$request->groupe,$comp->id,$stag,$note]);
+            }
+        }
+        return back();
+    }
+    public function modifier_evaluation_stagiaire(Request $request){
+        $stagiaire = DB::select('select * from v_stagiaire_groupe_interne where groupe_id = ? order by stagiaire_id asc',[$request->groupe]);
+        $competences = DB::select('select * from competence_a_evaluers_interne where module_id = ?',[$request->module]);
+        foreach($stagiaire as $stg){
+            foreach($competences as $comp){
+                $stag = $request['stagiaire'][$stg->stagiaire_id];
+                $note = $request['note'][$stg->stagiaire_id][$comp->id];
+                DB::update('update evaluation_stagiaire_interne set note_avant = ? where groupe_interne_id = ? and competence_a_evaluers_interne_id = ? and stagiaire_id = ?',[$note,$request->groupe,$comp->id,$stag]);
+            }
+        }
+        return back();
+    }
+
+    public function get_competence_stagiaire(Request $request){
+        $detail = DB::select('select * from v_evaluation_stagiaire_competence_interne where stagiaire_id = ? and groupe_id = ?',[$request->stg,$request->groupe]);
+        $globale = DB::select('select * from v_evaluation_globale_interne where stagiaire_id = ? and groupe_interne_id = ?',[$request->stg,$request->groupe]);
+        $note_avant = DB::select('select * from evaluation_stagiaire_interne where stagiaire_id = ? and groupe_interne_id = ?',[$request->stg,$request->groupe]);
+        $module = DB::select('select * from v_groupe_projet_module_interne where groupe_id = ?',[$request->groupe])[0];
+        if(count($note_avant)>0){
+            $note_avant = 1;
+        }else{
+            $note_avant = 0;
+        }
+        return response()->json(['detail'=>$detail,'globale'=>$globale,'note_avant'=>$note_avant,'module'=>$module]);
+    }
+
+    public function insert_evaluation_stagiaire_apres(Request $request){
+        try{
+            DB::beginTransaction();
+            $stagiaire = $request->stagiaire;
+            // dd($request['status']);
+            $competences = DB::select('select * from competence_a_evaluers_interne where module_id = ?',[$request->module]);
+            foreach($competences as $comp){
+                $note = $request['note'][$comp->id];
+                $status = $request['status'][$comp->id];
+                if($note == null || $note>10 || $note < 0){
+                    throw new Exception("La note doit être entre 0 et 10.");
+                }
+                if($request->note_globale == null){
+                    throw new Exception("La validation globale pour le module est indéfinie.");
+                }
+                if($status == null){
+                    throw new Exception("La validation par compétence est incomplete.");
+                }
+                DB::update('update evaluation_stagiaire_interne set note_apres = ? ,status = ? where stagiaire_id = ? and groupe_interne_id = ? and competence_a_evaluers_interne_id = ?',[$note,$status,$stagiaire,$request->groupe,$comp->id]);
+            }
+            DB::update('update participant_groupe_interne set status = ? where groupe_interne_id = ? and stagiaire_id = ?',[$request->note_globale,$request->groupe,$stagiaire]);
+            DB::commit();
+            return back();
+        }catch(Exception $e){
+            DB::rollBack();
+            return back()->with('eval_error',$e->getMessage());
+        }
     }
 }
 

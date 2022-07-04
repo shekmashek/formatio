@@ -533,6 +533,10 @@ class HomeController extends Controller
             }
         }
 
+        if(Gate::allows('isFormateurInterne')){
+            return redirect()->route('liste_projet');
+        }
+
         if (Gate::allows('isSuperAdminPrincipale')) {
             return redirect()->route('liste_utilisateur');
         }
@@ -812,6 +816,34 @@ class HomeController extends Controller
             }
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+        }
+
+        if(Gate::allows('isFormateurInterne')){
+            $formateur_id = $fonct->findWhereMulitOne("formateurs_interne",["user_id"],[$user_id])->formateur_id;
+            // pagination
+            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_formateur_interne where formateur_id = ?', [$formateur_id])[0]->nb_projet;
+            $fin_page = ceil($nb_projet / $nb_par_page);
+            if ($page == 1) {
+                $offset = 0;
+                $debut = 1;
+                if ($nb_par_page > $nb_projet) {
+                    $fin = $nb_projet;
+                } else {
+                    $fin = $nb_par_page;
+                }
+            } elseif ($page == $fin_page) {
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $nb_projet;
+            } else {
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $page * $nb_par_page;
+            }
+            // fin pagination
+
+            $data = DB::select('select * from v_projet_formateur_interne where formateur_id = ?', [$formateur_id]);
+            return view('projet_session.index2', compact('data', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         // if (Gate::allows('isManager')) {
         //     //on récupère l'entreprise id de la personne connecté

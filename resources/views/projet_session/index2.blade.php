@@ -1967,6 +1967,79 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                         </table>
                     @endif
                 @endcan
+
+
+                @can('isFormateurInterne')
+                    @if (count($data) <= 0)
+                        <div class="d-flex mt-3 titre_projet p-1 mb-1">
+                            <span class="text-center">Vous n'avez pas encore du projet.</span>
+                        </div>
+                    @else
+                        <table class="table table-hover m-0 p-0 mt-2 table-borderless">
+                            <thead class="thead_projet" style="border-bottom: 1px solid black; line-height: 20px">
+                                <th>Projet</th>
+                                <th>Type</th>
+                                <th>Session</th>
+                                <th> Module </th>
+                                <th>Date session</th>
+                                <th> Modalité</th>
+                                <th> Statut </th>
+                                {{-- <th></th> --}}
+                                <th>Actions</th>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $pj)
+                                    <tr class="m-0">
+                                        <td>{{ $pj->nom_projet }}</td>
+                                        <td class="pb-2 text-center">
+                                            <h6><button class="type_inter">Interne</button></h6>
+                                        </td>
+                                        <td class="detail_session text-center">
+                                            <a
+                                                href="{{ route('detail_session_interne', [$pj->groupe_id]) }}">{{ $pj->nom_groupe }}</a>
+                                        </td>
+                                        <td class="text-start">{{ $pj->nom_module }}</td>
+                                        <td class="text-center">
+                                            @php
+                                                echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
+                                            @endphp
+                                        </td>
+                                        <td class="tbody_projet"><span class="modalite">{{ $pj->modalite }}</span></td>
+                                        <td class="tbody_projet">
+                                            <p class="{{ $pj->class_status_groupe }} pe-1 ps-1 m-0">
+                                                {{ $pj->item_status_groupe }}</p>
+                                        </td>
+                                        {{-- <td align="left">
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle' style="color:
+                                                @php
+                                                    echo $groupe->statut_presences($pj->groupe_id);
+                                                @endphp
+                                                "></i>&nbsp;Emargement</p>
+                                            <p class="m-0 p-0 ms-0"><i class='bx bx-check-circle'
+                                                @php
+                                                    $statut_eval = $groupe->statut_evaluation($pj->groupe_id);
+                                                    if($statut_eval == 0){
+                                                        echo 'style="color:#bdbebd;"';
+                                                    }
+                                                    elseif ($statut_eval == 1) {
+                                                        echo 'style="color:#00ff00;"';
+                                                    }
+                                                @endphp
+                                                ></i>&nbsp;Evaluation</p>
+                                        </td> --}}
+                                        <td class="text-center">
+                                            <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                                <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
+                                                    <li class="action_projet"><a class="dropdown-item " href="#">Expoter en PDF</a></li>
+                                                </ul>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                @endcan
+
                 @canany(['isReferent','isReferentSimple','isManager'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">

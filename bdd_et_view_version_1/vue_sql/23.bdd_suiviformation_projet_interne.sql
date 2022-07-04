@@ -264,3 +264,145 @@ create or replace view v_emargement_interne as
     left join v_detail_presence_stagiaire_interne dps
     on pgd.detail_id = dps.detail_id
     and pgd.stagiaire_id = dps.stagiaire_id;
+
+    create or replace view v_formateur_projet_interne as
+    select
+        f.formateur_id,
+        f.nom_formateur,
+        f.prenom_formateur,
+        f.mail_formateur,
+        f.telephone_formateur,
+        f.photos,
+        f.genre_id,
+        f.genre_formateur,
+        f.date_naissance,
+        f.cin,
+        d.groupe_id
+    from
+        formateurs_interne f join details d on f.formateur_id = d.formateur_id
+    group by
+        f.formateur_id,
+        f.nom_formateur,
+        f.prenom_formateur,
+        f.mail_formateur,
+        f.telephone_formateur,
+        f.photos,
+        f.genre_id,
+        f.genre_formateur,
+        f.date_naissance,
+        f.cin,
+        d.groupe_id;
+
+create or replace view v_projet_formateur_interne as
+    select
+        gpm.*,
+        fp.formateur_id,
+        m.reference,
+        m.nom_module,
+        p.nom_projet
+    from
+        v_formateur_projet fp
+    join v_groupe_entreprise_interne gpm on gpm.groupe_id = fp.groupe_id
+    join modules_interne m on m.id = gpm.module_id
+    join projets_interne p on p.id = gpm.projet_id;
+
+create or replace view v_evaluation_stagiaire_competence_interne as
+    select
+        c.titre_competence,
+        c.module_id,
+        c.objectif,
+        es.id as evaluation_stg_id,
+        es.groupe_interne_id as groupe_id,
+        es.competence_a_evaluers_interne_id as competence_id,
+        es.stagiaire_id,
+        es.note_avant,
+        es.note_apres,
+        es.status,
+        case 
+            when es.status = 1 then 'checked'
+            when es.status = 2 then ''
+            when es.status = 3 then ''
+        end non_acquis,
+        case 
+            when es.status = 1 then ''
+            when es.status = 2 then 'checked'
+            when es.status = 3 then ''
+        end en_cours,
+        case 
+            when es.status = 1 then ''
+            when es.status = 2 then ''
+            when es.status = 3 then 'checked'
+        end acquis
+    from competence_a_evaluers_interne c
+    join evaluation_stagiaire_interne es on c.id = es.competence_a_evaluers_interne_id;
+
+create or replace view v_evaluation_globale_interne as 
+    select 
+        *,
+        case 
+            when status = 1 then 'checked'
+            when status = 2 then ''
+        end non_valide,
+        case 
+            when status = 1 then ''
+            when status = 2 then 'checked'
+        end valide
+    from participant_groupe_interne;
+
+create or replace view v_groupe_projet_module_interne as
+    select
+        p.nom_projet,
+        p.type_formation_id,
+        p.entreprise_id,
+        p.date_creation as date_projet,
+        p.status as status_projet,
+        p.activiter as activiter_projet,
+        tf.type_formation,
+        g.id as groupe_id,
+        g.nom_groupe,
+        g.projet_interne_id as projet_id,
+        g.module_interne_id as module_id,
+        g.date_debut,
+        g.date_fin,
+        g.status as status_groupe,
+        g.modalite,
+        case
+            when g.status = 8 then 'Reprogrammer'
+            when g.status = 7 then 'Annulée'
+            when g.status = 6 then 'Reporté'
+            when g.status = 5 then 'Cloturé'
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'Terminé'
+                    when (g.date_debut - curdate()) <= 0 then 'En cours'
+                    else 'A venir' end
+            when g.status = 1 then 'Prévisionnel'
+            when g.status = 0 then 'Créer'end item_status_groupe,
+        case
+            when g.status = 8 then 'status_reprogrammer'
+            when g.status = 7 then 'status_annulee'
+            when g.status = 6 then 'status_reporter'
+            when g.status = 5 then 'status_cloturer'
+            when g.status = 2 then
+                case
+                    when (g.date_fin - curdate()) < 0 then 'status_termine'
+                    when (g.date_debut - curdate()) < 0 then 'statut_active'
+                    else 'status_confirme' end
+            when g.status = 1 then 'status_grise'
+            when g.status = 0 then 'Créer'end class_status_groupe,
+        g.activiter as activiter_groupe,
+        mf.reference,
+        mf.nom_module,
+        mf.prix,
+        mf.duree,
+        mf.modalite_formation,
+        mf.duree_jour,
+        mf.objectif,
+        mf.prerequis,
+        mf.description,
+        mf.materiel_necessaire,
+        mf.cible
+    from groupes_interne g
+    join modules_interne mf on mf.id = g.module_interne_id
+    join projets_interne p on p.id = g.projet_interne_id
+    join type_formations tf on p.type_formation_id = tf.id;

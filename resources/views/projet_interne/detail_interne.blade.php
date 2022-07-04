@@ -135,8 +135,11 @@
             }
         @endphp
     </span>
+    @can('isReferent')
         <a aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_nouveau_detail">
-            <button class="btn btn_nouveau"><i class='bx bx-plus-medical'></i>Ajouter une séance</button></a>
+        <button class="btn btn_nouveau"><i class='bx bx-plus-medical'></i>Ajouter une séance</button></a>
+    @endcan
+        
 </nav>
 @if (count($datas) <= 0)
     <form onsubmit="change_active()" id="non_existante" action="{{ route('inserer_detail') }}" method="post">
@@ -249,7 +252,9 @@
                                     <td>Début</td>
                                     <td>Fin</td>
                                     <td>Formateur</td>
-                                    <td>Action</td>
+                                    @can('isReferent')
+                                        <td>Action</td>
+                                    @endcan
                                 </thead>
                                 <tbody>
                                     @php
@@ -277,14 +282,17 @@
                                                     {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif
                                             </td>
-                                            <td>
-                                                <a href="" aria-current="page" data-bs-toggle="modal"
-                                                    data-bs-target="#modal_modifier_detail_{{ $d->detail_id }}"><i
-                                                        class="bx bx-edit bx_modifier ms-2"></i></a>
-                                                <button type="button" style="background: none" data-bs-toggle="modal"
-                                                    data-bs-target="#delete_detail_{{ $d->detail_id }}"><i
-                                                        class="bx bx-trash bx_supprimer ms-4"></i></button>
-                                            </td>
+                                            @can('isReferent')
+                                                <td>
+                                                    <a href="" aria-current="page" data-bs-toggle="modal"
+                                                        data-bs-target="#modal_modifier_detail_{{ $d->detail_id }}"><i
+                                                            class="bx bx-edit bx_modifier ms-2"></i></a>
+                                                    <button type="button" style="background: none" data-bs-toggle="modal"
+                                                        data-bs-target="#delete_detail_{{ $d->detail_id }}"><i
+                                                            class="bx bx-trash bx_supprimer ms-4"></i></button>
+                                                </td>
+                                            @endcan
+                                            
                                         </tr>
 
                                         <div class="modal fade" id="delete_detail_{{ $d->detail_id }}"
@@ -399,7 +407,7 @@
                                         <div class="modal-title pt-3" style="height: 50px; align-items: center;">
                                             <h5 class="text-center my-auto">Nouvelle séance</h5>
                                         </div>
-                                        <form class="btn-submit" action="{{ route('detail.store') }}" method="post">
+                                        <form class="btn-submit" action="{{ route('inserer_detail') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
                                             <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">

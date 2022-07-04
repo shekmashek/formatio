@@ -231,6 +231,16 @@ class AuthServiceProvider extends ServiceProvider
             // return $users_roles->role_id == 3;
         });
 
+        Gate::define('isFormateurInterne',function($users_roles){
+            $rqt =  DB::select('select * from role_users where  user_id = ? and activiter=true', [Auth::id()]);
+            if($rqt!=null){
+                for ($i=0; $i < count($rqt); $i++) {
+                    if( $rqt[$i]->role_id == 8)
+                        return "formateurInterne";
+                }
+            }
+        });
+
         Gate::define('isFormateur',function($users_roles){
             // return $users_roles->role_id == 4;
             $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true', [Auth::id()]);

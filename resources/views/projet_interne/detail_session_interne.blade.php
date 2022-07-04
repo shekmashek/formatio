@@ -541,7 +541,7 @@
                             role="tab" aria-controls="home" aria-selected="true">
                             <button
                                 class="planning d-flex justify-content-between active detail-tab
-                                @can('isCFP') {{ 'action_animation' }} @endcan"
+                                @can('isReferent') {{ 'action_animation' }} @endcan"
                                 onclick="openCity(event, 'detail')" style="width: 100%">
                                 <p class="m-0 pt-2 pb-2">PLANNING</p>
                                 {{-- @if ($test == 0)
@@ -557,7 +557,7 @@
                         <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                             role="tab" aria-controls="home" aria-selected="true">
                             <button
-                                class="planning d-flex justify-content-between apprenant-tab action_animation"
+                                class="planning d-flex justify-content-between apprenant-tab @can('isReferent') {{ 'action_animation' }} @endcan"
                                 onclick="openCity(event, 'apprenant')" style="width: 100%">
                                 <p class="m-0 pt-2 pb-2">APPRENANTS</p>
                                 {{-- @if (count($stagiaire) == 0)
@@ -583,11 +583,11 @@
                             </button>
                         </a>
                     </div>
-                    @can('isFormateur') 
+                    @can('isFormateurInterne') 
                         <div class="nav-item" role="presentation">
                             <a href="#emargement" class="nav-link p-0" id="emargement-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between action_animation emargement-tab"
+                                <button class="planning d-flex justify-content-between emargement-tab @can('isFormateurInterne') {{ 'action_animation' }} @endcan"
                                     onclick="openCity(event, 'emargement')" style="width: 100%">
                                     <p class="m-0 pt-2 pb-2">EMARGEMENT</p>
                                     {{-- @php
@@ -604,7 +604,7 @@
                         <div class="nav-item" role="presentation">
                             <a href="#evaluation" class="nav-link p-0" id="evaluation-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between  action_animation evaluation-tab"
+                                <button class="planning d-flex justify-content-between evaluation-tab @can('isFormateurInterne') {{ 'action_animation' }} @endcan"
                                     onclick="openCity(event, 'evaluation')" style="width: 100%">
                                     <p class="m-0 pt-2 pb-2">PRE EVALUATION</p>
                                     {{-- @if ($evaluation_avant <= 0)
@@ -620,7 +620,7 @@
                                 id="evaluation_pre_formation-tab" data-toggle="tab" type="button" role="tab"
                                 aria-controls="home" aria-selected="true">
                                 <button
-                                    class="planning d-flex justify-content-between action_animation evaluation_pre_formation-tab"
+                                    class="planning d-flex justify-content-between evaluation_pre_formation-tab @can('isFormateurInterne') {{ 'action_animation' }} @endcan"
                                     onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                     <p class="m-0 pt-2 pb-2">EVALUATION</p>
                                     {{-- @php
@@ -635,25 +635,25 @@
                             </a>
                         </div>
                     @endcan
-                    {{-- @canany(['isCFP', 'isReferent', 'isReferentSimple', 'isManager'])
+                    @canany(['isReferent', 'isReferentSimple', 'isManager'])
                         <div class="nav-item" role="presentation">
                             <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                 data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
                                 <button class="planning d-flex justify-content-between evaluation_pre_formation-tab"
                                     onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                     <p class="m-0 pt-2 pb-2">EVALUATION</p>
-                                    @php
+                                    {{-- @php
                                         $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
                                         if ($statut_eval == 0) {
                                             echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
                                         } elseif ($statut_eval == 1) {
                                             echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
                                         }
-                                    @endphp
+                                    @endphp --}}
                                 </button>
                             </a>
                         </div>
-                    @endcanany --}}
+                    @endcanany
                 </div>
             </div>
 
@@ -676,18 +676,18 @@
                         @include('admin.evaluation.evaluationChaud.evaluationChaud')
                     </div>
                 @endcanany --}}
-                {{-- <div id="emargement" class=" tab-pane fade show tabcontent" role="tabpanel"
+                <div id="emargement" class=" tab-pane fade show tabcontent" role="tabpanel"
                     aria-labelledby="emargement-tab" style="display: none">
-                    @include('projet_session.emargement')
-                </div> --}}
-                {{-- <div id="evaluation" class=" tab-pane fade show tabcontent" role="tabpanel"
+                    @include('projet_interne.presence_interne')
+                </div>
+                <div id="evaluation" class=" tab-pane fade show tabcontent" role="tabpanel"
                     aria-labelledby="evaluation-tab" style="display: none">
-                    @include('projet_session.evaluation_stagiaires')
-                </div> --}}
-                {{-- <div id="evaluation_pre_formation" class="tab-pane fade show tabcontent" role="tabpanel"
+                    @include('projet_interne.pre_evaluation_interne')
+                </div>
+                <div id="evaluation_pre_formation" class="tab-pane fade show tabcontent" role="tabpanel"
                     aria-labelledby="evaluation_pre_formation-tab" style="display: none">
-                    @include('projet_session.evaluation_chaud')
-                </div> --}}
+                    @include('projet_interne.evaluation_apres_interne')
+                </div>
             </div>
         </div>
     </section>
