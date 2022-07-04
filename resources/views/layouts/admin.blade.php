@@ -187,7 +187,7 @@
 
             </li>
             @endcan
-            @can('isReferent','isReferentSimple')
+            @canany(['isReferent','isReferentSimple'])
             <li>
                 <a href="{{route('list_cfp')}}" class="d-flex organisme nav_linke">
                     <i class='bx bxs-business'></i>
@@ -195,7 +195,7 @@
                 </a>
 
             </li>
-            @endcan
+            @endcanany
             {{-- projet de formation --}}
 
             {{-- @canany(['isCFP','isFormateur'])
@@ -227,8 +227,8 @@
                     <span class="links_name">Projets</span>
                 </a>
             </li>
-            @endcanany --}}
-            @canany(['isReferent','isManager','isStagiaire'])
+            @endcanany
+            @canany(['isReferent','isReferentSimple','isManager','isStagiaire'])
             <li>
                 <a href="{{route('formations')}}" class="d-flex nav_linke">
                     <i class='bx bxl-netlify'></i>
@@ -237,7 +237,7 @@
 
             </li>
             @endcanany
-            @canany(['isReferent'])
+            @canany(['isReferent','isReferentSimple'])
             <li>
                 <a href="{{route('formateurs')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-pin'></i>
@@ -728,7 +728,7 @@
                     @endcanany
                 </div>
                 <div class="col-5 header-right align-items-center d-flex flex-row">
-                    <div class="col-10 d-flex flex-row justify-content-center apprendCreer pb-3">
+                    <div class="col-4 d-flex flex-row justify-content-center apprendCreer pb-3">
                         {{-- @can('isStagiaire')
                         <div class="col-5 header-right">
                             <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
@@ -921,7 +921,7 @@
 
                                     </ul>
                                 @endcan
-                                @can('isReferent')
+                                @canany(['isReferent','isReferentSimple'])
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
                                         <li id="employe">
@@ -954,7 +954,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                @endcan
+                                @endcanany
                                 @can('isCFP')
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
@@ -997,9 +997,9 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    @can('isCFPPrincipale','isPremium')
+                                    @canany(['isCFPPrincipale','isPremium'])
                                         <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog icon_creer_admin'></i></a>
-                                        <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
+                                        <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuParametre">
                                             <li id="parametre">
                                                 <a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}">
                                                     <i class="bx bx-info-circle icon_plus  "></i>&nbsp; Information légales
@@ -1016,7 +1016,7 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                    @endcan
+                                    @endcanany
                                 @endcan
                                 <a class="dropdown-toggle p-1" id="dropdownMenuSuite" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-grid-alt icon_creer_admin'></i></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuSuite">
