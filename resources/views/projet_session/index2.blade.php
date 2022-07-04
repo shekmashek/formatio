@@ -991,7 +991,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
 
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
-            @canany(['isReferent','isReferentSimple','isManager', 'isCFP', 'isFormateur'])
+            @canany(['isReferent','isReferentSimple','isManager', 'isCFP', 'isFormateur','isFormateurInterne'])
                 <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
                         {{ $nb_projet }}</span>
                     @if ($nb_par_page >= $nb_projet)
@@ -1881,7 +1881,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     </div>
                 @endcanany
 
-                @can('isFormateur')
+                @canany(['isFormateur','isFormateurInterne'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
@@ -1973,7 +1973,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                             </tbody>
                         </table>
                     @endif
-                @endcan
+                @endcanany
                 @canany(['isReferent','isReferentSimple','isManager'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
@@ -2541,7 +2541,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                 @canany(['isReferent','isReferentSimple','isManager', 'isCFP'])
                     <div class="col-12 ps-5">
                 @endcanany
-                @canany(['isFormateur', 'isStagiaire'])
+                @canany(['isFormateur', 'isStagiaire','isFormateurInterne'])
                     <div class="col-12 ps-5">
                     @endcanany
                     </div>

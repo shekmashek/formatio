@@ -313,6 +313,7 @@
                                 <span>Service</span>
                             </th>
                             @can('isReferent')
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Formateur interne</th>
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th>
                             @endcan
 
@@ -414,6 +415,18 @@
                                                 </p>
                                             </td>
                                             @can('isReferent')
+                                                <td class="align-middle text-center text-secondary">
+                                                    @if($employers[$i]->activiter == 1)
+                                                        @if($form_int[$i] == 1)
+                                                            <input class="form-check-input formateur_interne" type="checkbox" value="{{$employers[$i]->id}}" name = "referent"  id="flexCheckDefault" checked>
+                                                        @else
+                                                        <input class="form-check-input formateur_interne" type="checkbox" value="{{$employers[$i]->id}}" name = "formateurinterne"  id="flexCheckDefault">
+                                                        @endif
+                                                    @endif
+                                                    @if($employers[$i]->activiter == 0)
+                                                    <input disabled class="form-check-input formateur_interne" type="checkbox" value="{{$employers[$i]->id}}" name = "formateurinterne"  id="flexCheckDefault">
+                                                    @endif
+                                                </td>
                                                 <td class="align-middle text-center text-secondary">
                                                     @if($employers[$i]->activiter == 1)
                                                         @if($ref[$i] == 1)
@@ -814,7 +827,39 @@
                     });
                 }
             });
-
+            
+            $('.formateur_interne').click(function(){
+                var emp = $(this).val();
+                if ($(this).is(':checked')) {
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.ajouter.formateur.interne')}}"
+                        , data: {
+                            emp_id: emp
+                        }
+                        , success: function(response) {
+                            window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }else{
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.supprimer.formateur.interne')}}"
+                        , data: {
+                            emp_id: emp
+                        }
+                        , success: function(response) {
+                            window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }
+            });
 
 
         </script>

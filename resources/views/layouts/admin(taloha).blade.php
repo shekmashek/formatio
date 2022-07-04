@@ -64,7 +64,7 @@
                                 <li class="my-2 sousMenu">
                                     <a href="{{route('liste_formation')}}">Formations</a>
                                 </li>
-                                @canany(['isCFP','isSuperAdmin','isAdmin','isFormateur'])
+                                @canany(['isCFP','isSuperAdmin','isAdmin','isFormateur','isFormateurInterne'])
                                 <li class="my-2 sousMenu">
                                     <a href="{{route('liste_module')}}">Modules</a>
                                 </li>
@@ -149,7 +149,7 @@
                     </ul>
                     </li>
                     @endcanany
-                    @canany(['isCFP','isFormateur'])
+                    @canany(['isCFP','isFormateur','isFormateurInterne'])
                     <li class="my-2">
                         <a href="#prjfSubMenu" data-toggle="collapse" aria-expanded="false" class="nav_linke dropdown-toggle liste"><i class='bx bxl-product-hunt nav_icon'></i><span class="nav_name">Projets</span></a>&nbsp;&nbsp;<a class='nouveau_icon_lien' href="{{route('nouveau_projet')}}"><i class='bx bxs-plus-circle nouveau_icon' title="nouveau projet"></i></a>
                         <ul class="collapse lisst-unstyled submenuColor" id="prjfSubMenu">
@@ -608,7 +608,7 @@
                                         @can('isManager')
                                         <a href="{{route('affProfilChefDepartement')}}"><button class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan
-                                        @can('isFormateur')
+                                        @can('isFormateur','isFormateurInterne')
                                         <a href="{{route('profile_formateur')}}"><button
                                                 class="btn btn-primary btn-sm profil_btn mt-5 mb-3">Profil</button></a><br>
                                         @endcan

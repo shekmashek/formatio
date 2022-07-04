@@ -735,14 +735,16 @@ class ProfController extends Controller
 
     public function cvFormateur(Request $request)
     {
-        $id = $request->id_formateur;
-        $formateur = formateur::where('id', $id)->get();
-        if ($formateur[0]->genre_id == 1) $genre = "Femme";
-        if ($formateur[0]->genre_id == 2) $genre = "Homme";
-        if ($formateur[0]->genre_id == null) $genre = " ";
-        $competence = competenceFormateur::where('formateur_id', $id)->get();
-        $experience = experienceFormateur::where('formateur_id', $id)->get();
-        return view('admin.formateur.profil', compact('formateur', 'competence', 'experience','genre'));
+        if (Gate::allows('isFormateur')){
+            $id = $request->id_formateur;
+            $formateur = formateur::where('id', $id)->get();
+            if ($formateur[0]->genre_id == 1) $genre = "Femme";
+            if ($formateur[0]->genre_id == 2) $genre = "Homme";
+            if ($formateur[0]->genre_id == null) $genre = " ";
+            $competence = competenceFormateur::where('formateur_id', $id)->get();
+            $experience = experienceFormateur::where('formateur_id', $id)->get();
+            return view('admin.formateur.profil', compact('formateur', 'competence', 'experience','genre'));
+        }
     }
 
     public function cvProf(Request $request,$id)

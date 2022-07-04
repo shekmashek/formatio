@@ -59,10 +59,10 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isManager'])
+                                        @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isFormateurInterne','isManager'])
                                         <th>Projet</th>
                                         <th>Groupe</th>
-                                        @canany(['isFormateur', 'isCFP'])
+                                        @canany(['isFormateur', 'isCFP','isFormateurInterne'])
                                             <th>Convoquer les stagiaires</th>
                                         @endcanany
 
@@ -80,12 +80,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isManager'])
+                                    @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isFormateurInterne','isManager'])
                                     @foreach ($datas as $d)
                                     <tr>
                                         <td>{{$d->nom_projet}}</td>
                                         <td>{{$d->nom_groupe}}</td>
-                                        @canany(['isFormateur', 'isCFP'])
+                                        @canany(['isFormateur','isFormateurInterne', 'isCFP'])
                                             <td><a href="{{route('convocationMail',[$d->detail_id,$d->groupe_id])}}">Convoquer</a></td>
                                         @endcanany
                                         <td><a href="{{route('ajout_participant',['id_detail' => $d->detail_id])}}"><i class="fa fa-plus"></i></a></td>
