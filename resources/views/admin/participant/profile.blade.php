@@ -116,7 +116,7 @@
                                 </div>
                             </span>
                             @else
-                                <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" class="image-ronde">
+                                <img src="{{asset('images/employes/'.$stagiaire->photos)}}" class="image-ronde">
                             @endif
                         </a>
                     </div>
@@ -254,16 +254,24 @@
 
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
 
-                        <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-building' ></i>&nbsp; DEPARTEMENT<span style="float: right;">
                                 @if ($stagiaire->nom_departement == null)
-                                    <strong style="color: red">---</strong>&nbsp;
+                                    <a href="{{ route('edit_departement', $stagiaire->stagiaire_id) }} ">
+                                        <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-list-ul'></i>&nbsp; DEPARTEMENT<span
+                                                style="float: right"> <strong style="color: red">---</strong>&nbsp;<i
+                                                    class="fas fa-angle-right"></i></span>
+                                        </p>
+                                    </a>
                                 @else
-                                    {{ $stagiaire->nom_departement }}&nbsp;
+                                <a href="{{ route('edit_departement', $stagiaire->stagiaire_id) }} ">
+                                    <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-id-card' undefined ></i>&nbsp; DEPARTEMENT<span
+                                        style="float: right;">   {{$stagiaire->nom_departement}}&nbsp;<i
+                                            class="fas fa-angle-right"></i></span>
+                                    </p>
+                                </a>
                                 @endif
-                                <i class="fas fa-angle-right"></i>
                             </span>
-                        </p>
-                        </a>
+
+
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         @can('isStagiaire')
@@ -294,21 +302,11 @@
                     </div>
                     <div style="border-bottom: solid 1px  #e8dfe5;" class="hover">
                         @can('isStagiaire')
-                            <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-list-ul' ></i>&nbsp; BRANCHE<span style="float: right;">
-                                    @if ($stagiaire->nom_branche == null)
-                                        <strong style="color: red">---</strong>&nbsp;
-                                    @else
-                                        {{$stagiaire->nom_branche }}&nbsp;
-                                    @endif
-                                    <i class="fas fa-angle-right"></i>
-                                </span>
-                            </p>
-                        @endcan
-                        @canany(['isReferent'])
+
                             <a href="{{ route('edit_branche', $stagiaire->stagiaire_id) }} ">
                                 <p class="p-1 m-0" style="font-size: 12px"><i class='bx bx-list-ul' ></i>&nbsp; BRANCHE<span style="float: right;">
-                                        @if ($branche == null)
-                                            <strong style="color: red">incomplète</strong>&nbsp;
+                                        @if ($stagiaire->branche_id == null)
+                                            <strong style="color: red">---</strong>&nbsp;
                                         @else
                                             {{ $branche->nom_branche }}&nbsp;
                                         @endif
@@ -325,4 +323,6 @@
             </div>
 
         </div>
+
+
     @endsection

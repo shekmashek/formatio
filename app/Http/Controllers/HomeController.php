@@ -33,11 +33,14 @@ use App\chefDepartement;
 use App\formateur;
 use App\Collaboration;
 use App\EvaluationChaud;
+use App\competenceFormateur;
+use App\experienceFormateur;
 use App\Groupe;
 use App\Models\getImageModel;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
+use Exception;
 
 use function Ramsey\Uuid\v1;
 
@@ -50,7 +53,7 @@ class HomeController extends Controller
         $this->middleware('auth');
         $this->fonct = new FonctionGenerique();
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->exists == false) return view('auth.connexion');
+            if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
     }
@@ -76,49 +79,51 @@ class HomeController extends Controller
     {
         $id_stg = $request->input('id_stg');
 
-        if ($request->input('nom_stg') != null) {
-            DB::update('update stagiaires set nom_stagiaire = ? where id = ?', [$request->input('nom_stg'), $id_stg]);
-        }
-        if ($request->input('titre_stg') != null) {
-            DB::update('update stagiaires set titre = ? where id = ?', [$request->input('titre_stg'), $id_stg]);
-        }
-        if ($request->input('date_naissance_stg') != null) {
-            DB::update('update stagiaires set date_naissance = ? where id = ?', [$request->input('date_naissance_stg'), $id_stg]);
-        }
-        if ($request->input('genre_stg') != null) {
-            if ($request->input('genre_stg') == 'Femme') $genre = 1;
-            if ($request->input('genre_stg') == 'Homme') $genre = 2;
-            DB::update('update stagiaires set genre_stagiaire = ? where id = ?', [$genre, $id_stg]);
-        }
-        if ($request->input('tel_stg') != null) {
-            DB::update('update stagiaires set telephone_stagiaire = ? where id = ?', [$request->input('tel_stg'), $id_stg]);
-        }
-        if ($request->input('cin_stg') != null) {
-            DB::update('update stagiaires set cin = ? where id = ?', [$request->input('cin'), $id_stg]);
-        }
-        if ($request->input('lot') != null) {
-            DB::update('update stagiaires set lot = ? where id = ?', [$request->input('lot'), $id_stg]);
-        }
-        if ($request->input('quartier') != null) {
-            DB::update('update stagiaires set quartier = ? where id = ?', [$request->input('quartier'), $id_stg]);
-        }
-        if ($request->input('ville') != null) {
-            DB::update('update stagiaires set ville = ? where id = ?', [$request->input('ville'), $id_stg]);
-        }
-        if ($request->input('code_postal') != null) {
-            DB::update('update stagiaires set code_postal = ? where id = ?', [$request->input('code_postal'), $id_stg]);
-        }
-        if ($request->input('region') != null) {
-            DB::update('update stagiaires set region = ? where id = ?', [$request->input('region'), $id_stg]);
-        }
-        if ($request->input('niveau_stg') != null) {
-            DB::update('update stagiaires set niveau_etude = ? where id = ?', [$request->input('niveau_stg'), $id_stg]);
-        }
-        if (count($request->input()) > 2) {
-            return redirect()->back()->with('error', 'Remplissez les champs vides');
-        } else {
+        //teste si les inputs contiennent une valeur vide
+        $test_null =  array_filter(request()->all(), function ($val) {
+            return is_null($val);
+        });
+
+        try {
+            if (count($test_null) > 0)
+            {
+                throw new Exception("Remplissez les champs vides");
+            }
+            else{
+
+                DB::beginTransaction();
+
+                DB::update('update employers set nom_emp= ? where id = ?', [$request->input('nom_stg'), $id_stg]);
+                DB::update('update employers set prenom_emp = ? where id = ?', [$request->input('prenom_stg'), $id_stg]);
+
+                DB::update('update employers set date_naissance_emp = ? where id = ?', [$request->input('date_naissance_stg'), $id_stg]);
+
+                if ($request->input('genre_stg') == 'Femme') $genre = 1;
+                if ($request->input('genre_stg') == 'Homme') $genre = 2;
+                DB::update('update employers set genre_id = ? where id = ?', [$genre, $id_stg]);
+
+                DB::update('update employers set telephone_emp = ? where id = ?', [$request->input('tel_stg'), $id_stg]);
+
+                DB::update('update employers set cin_emp = ? where id = ?', [$request->input('cin_stg'), $id_stg]);
+
+                DB::update('update employers set adresse_lot = ? where id = ?', [$request->input('lot'), $id_stg]);
+
+                DB::update('update employers set adresse_quartier = ? where id = ?', [$request->input('quartier'), $id_stg]);
+
+                DB::update('update employers set adresse_ville = ? where id = ?', [$request->input('ville'), $id_stg]);
+
+                DB::update('update employers set adresse_code_postal = ? where id = ?', [$request->input('code_postal'), $id_stg]);
+
+                DB::update('update employers set adresse_region = ? where id = ?', [$request->input('region'), $id_stg]);
+
+                DB::update('update employers set fonction_emp = ? where id = ?', [$request->input('fonction_stagiaire'), $id_stg]);
+                DB::commit();
+            }
             $totale_invitation = $this->collaboration->count_invitation();
-            return view('layouts.accueil_admin', compact('totale_invitation'));
+            $phone_tmp = $this->fonct->findWhere("stagiaires",["id"],[$id_stg]);
+            return view('layouts.accueil_admin', compact('totale_invitation','phone_tmp'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
     public function remplir_info_manager(Request $request)
@@ -197,14 +202,15 @@ class HomeController extends Controller
     }
     public function index(Request $request, $id = null)
     {
-        if (Gate::allows('isFormateurPrincipale')) {
-            return redirect()->route('calendrier');
-        }
-        if (Gate::allows('isManagerPrincipale')) {
 
-            return redirect()->route('calendrier');
+        if (Gate::allows('isFormateurPrincipale')) {
+            return redirect()->route('accueilFormateur');
         }
-        if (Gate::allows('isStagiairePrincipale')) {
+        if (Gate::allows('isManager')) {
+
+            return redirect()->route('profil_manager');
+        }
+        if (Gate::allows('isStagiaire')) {
 
             //get the column with null value
             $databaseName = DB::connection()->getDatabaseName();
@@ -225,14 +231,16 @@ class HomeController extends Controller
 
             $colonnes = DB::select(' select COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS  WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?', [$databaseName, 'stagiaires']);
             $nb = 0;
+
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "branche_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
+                if($colonnes[$i]->COLUMN_NAME != "nom_service" and $colonnes[$i]->COLUMN_NAME != "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "nom_departement" and $colonnes[$i]->COLUMN_NAME != "poste_emp" and $colonnes[$i]->COLUMN_NAME != "nom_branche" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "prioriter"  and $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "url_photo" and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at") {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }
                 }
             }
+
             //lorsque les informations différents que branche  id, service id , matricule sont vides alors on incite l'utilisateur à remplir les infos
             if ($nb > 0) {
                 return view('formulaire_stagiaire', compact('testNull', 'entreprise'));
@@ -245,8 +253,7 @@ class HomeController extends Controller
             if ($activiter == 1) {
                 if (Auth::user()->exists) {
                     $totale_invitation = $this->collaboration->count_invitation();
-                    $phone_tmp =  DB::select('select * from v_stagiaire_entreprise where user_id = ?', [Auth::user()->id]);
-
+                    $phone_tmp =  $this->fonct->findWhere("v_stagiaire_entreprise",["user_id"],[Auth::user()->id]);
                     return view('layouts.accueil_admin', compact('totale_invitation', 'phone_tmp'));
                 }
             }
@@ -407,7 +414,7 @@ class HomeController extends Controller
         //     return view('layouts.accueil_admin', compact('totale_invitation'));
         // }
 
-        if (Gate::allows('isReferentPrincipale')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
 
             $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
 
@@ -420,7 +427,7 @@ class HomeController extends Controller
             $nb = 0;
             for ($i = 0; $i < count($colonnes); $i++) {
                 $tempo =  $colonnes[$i]->COLUMN_NAME;
-                if ($colonnes[$i]->COLUMN_NAME != "genre_id"  and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "sexe_resp" and $colonnes[$i]->COLUMN_NAME != "fonction_resp" and  $colonnes[$i]->COLUMN_NAME != "user_id" and $colonnes[$i]->COLUMN_NAME != "entreprise_id" and   $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "activiter" and $colonnes[$i]->COLUMN_NAME != "prioriter" and   $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
+                if ($colonnes[$i]->COLUMN_NAME!="nom_departement" and $colonnes[$i]->COLUMN_NAME!= "nom_branche" and $colonnes[$i]->COLUMN_NAME!= "nom_service" and $colonnes[$i]->COLUMN_NAME!= "prioriter_emp" and $colonnes[$i]->COLUMN_NAME != "genre_id"  and $colonnes[$i]->COLUMN_NAME != "matricule" and $colonnes[$i]->COLUMN_NAME != "branche_id" and $colonnes[$i]->COLUMN_NAME != "sexe_resp" and $colonnes[$i]->COLUMN_NAME != "fonction_resp" and  $colonnes[$i]->COLUMN_NAME != "user_id" and $colonnes[$i]->COLUMN_NAME != "entreprise_id" and   $colonnes[$i]->COLUMN_NAME != "service_id" and  $colonnes[$i]->COLUMN_NAME != "departement_entreprises_id" and  $colonnes[$i]->COLUMN_NAME != "poste_resp" and $colonnes[$i]->COLUMN_NAME != "activiter" and $colonnes[$i]->COLUMN_NAME != "prioriter" and   $colonnes[$i]->COLUMN_NAME != "photos" and $colonnes[$i]->COLUMN_NAME != "updated_at" and $colonnes[$i]->COLUMN_NAME != "created_at" and $colonnes[$i]->COLUMN_NAME != "matricule" and  $colonnes[$i]->COLUMN_NAME != "url_photo") {
                     if ($testNull[0]->$tempo == null) {
                         $nb += 1;
                     }
@@ -740,6 +747,7 @@ class HomeController extends Controller
     public function liste_projet(Request $request, $id = null, $page = null)
     {
         $projet_model = new projet();
+        $drive = new getImageModel();
         $fonct = new FonctionGenerique();
         $user_id = Auth::user()->id;
         $totale_invitation = 0;
@@ -759,17 +767,8 @@ class HomeController extends Controller
             $entreprise = entreprise::all();
             return view('admin.projet.home', compact('data', 'cfp', 'projet', 'totale_invitation', 'entreprise', 'status'));
         }
-        if (Gate::allows('isReferent')) {
-
-            if (Gate::allows('isReferentPrincipale')) {
-                $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isStagiairePrincipale')) {
-                $entreprise_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isManagerPrincipale')) {
-                $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            }
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
+            $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?', [$entreprise_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
@@ -793,7 +792,6 @@ class HomeController extends Controller
             // fin pagination
             $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
             $data = DB::select($sql);
-
             for($i=0;$i<count($data);$i+=1){
                 $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
                 [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
@@ -818,12 +816,63 @@ class HomeController extends Controller
             return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isManager')) {
-            //on récupère l'entreprise id de la personne connecté
-            $entreprise_id = chefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            $data = $fonct->findWhere("v_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
-            $cfp = $fonct->findAll("cfps");
-            return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
-        } elseif (Gate::allows('isCFP')) {
+            $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
+            $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
+            // pagination
+            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where departement_id = ?) and entreprise_id = ?', [$id_departement,$entreprise_id])[0]->nb_projet;
+            $fin_page = ceil($nb_projet / $nb_par_page);
+            if ($page == 1) {
+                $offset = 0;
+                $debut = 1;
+                if ($nb_par_page > $nb_projet) {
+                    $fin = $nb_projet;
+                } else {
+                    $fin = $nb_par_page;
+                }
+            } elseif ($page == $fin_page) {
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $nb_projet;
+            } else {
+                $offset = ($page - 1) * $nb_par_page;
+                $debut = ($page - 1) * $nb_par_page;
+                $fin =  $page * $nb_par_page;
+            }
+            // fin pagination
+            $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where departement_id = ".$id_departement." )", $request, $nb_par_page, $offset);
+            $data = DB::select($sql);
+            for($i=0;$i<count($data);$i+=1){
+                $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
+                [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
+                if(count($dataMontantSession)>0){
+                        $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
+                        $data[$i]->qte = $dataMontantSession[0]->qte;
+                        $data[$i]->num_facture = $dataMontantSession[0]->num_facture;
+                } else {
+                    $data[$i]->hors_taxe_net = null;
+                    $data[$i]->qte =null;
+                    $data[$i]->num_facture = null;
+                }
+            }
+
+            $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$entreprise_id]);
+            if(count($lieu_formations)>0){
+                $lieuFormation = explode(',',$lieu_formations[0]->lieu);
+            }else{
+                $lieuFormation = null;
+            }
+            $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
+            return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+        }
+        // if (Gate::allows('isManager')) {
+        //     //on récupère l'entreprise id de la personne connecté
+        //     $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
+        //     $data = $fonct->findWhere("v_groupe_projet_entreprise", ["entreprise_id"], [$entreprise_id]);
+        //     $cfp = $fonct->findAll("cfps");
+
+        //     return view('admin.projet.home', compact('data', 'cfp', 'totale_invitation', 'status'));
+        // }
+        if (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             // $facture = $this->fonct->findWhere("v_liste_facture", ["cfp_id"], [ $cfp_id]);
             // $montant_facture = $this->fonct->findWhereMulitOne("v_facture_existant", ["cfp_id"], [$cfp_id]);
@@ -893,7 +942,6 @@ class HomeController extends Controller
 
             // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
-
             // dd($data);
             return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page', 'devise'));
             // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
@@ -940,7 +988,7 @@ class HomeController extends Controller
             $stg_id = stagiaire::where('user_id', $user_id)->value('id');
             // $data = $fonct->findWhere('v_stagiaire_groupe',['stagiaire_id'],[$stg_id]);
 
-            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_stagiaire_groupe where stagiaire_id = ?', [$stg_id])[0]->nb_projet;
+            /* $nb_projet = DB::select('select count(projet_id) as nb_projet from v_stagiaire_groupe where stagiaire_id = ?', [$stg_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
                 $offset = 0;
@@ -958,10 +1006,32 @@ class HomeController extends Controller
                 $offset = ($page - 1) * $nb_par_page;
                 $debut = (($page - 1) * $nb_par_page) + 1;
                 $fin =  $page * $nb_par_page;
+            } */
+            $sql = $projet_model->build_requette_stagiare($stg_id,"v_stagiaire_groupe",$request);
+            $data = DB::select($sql);
+            $var = [];
+            for($i=0; $i<count($data) ;$i++){
+                $var[$i] = $data[$i]->groupe_id;
             }
-
-            $data = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe where stagiaire_id = ? order by date_debut desc limit ? offset ?', [$stg_id, $nb_par_page, $offset]);
-            return view('projet_session.index2', compact('data', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
+            $ressource ='';
+            $stagiaire ='';
+            $data_detail='';
+            $modules = DB::select('select nom_module from v_stagiaire_notstatut_eval group by nom_module');
+            $formations = DB::select('select nom_formation from v_stagiaire_notstatut_eval group by nom_formation');
+            if($data != null){
+                $ressource = DB::select('select * from ressources where groupe_id in (' . implode(',',$var) .')');
+                $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id in (' . implode(',',$var) .') order by stagiaire_id asc');
+                $data_detail = DB::select('select * from v_participant_groupe_detail where stagiaire_id = ? order by date_debut desc', [$stg_id]);
+            }
+            // $documents = $drive->file_list($cfp_nom,"Mes documents");
+            /* foreach($data as $d){ */
+                /* $data->date_debut = Carbon::parse($pj->date_debut)->format('d-m-Y'); */
+                /* $test =  $drive->file_list($d->nom_cfp,"Mes documents");
+                if(count($test) > 0){
+                    array_push($documents , $drive->file_list($d->nom_cfp,"Mes documents"));
+                }
+            } */
+            return view('projet_session.index2', compact('data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations'));
         }
     }
 

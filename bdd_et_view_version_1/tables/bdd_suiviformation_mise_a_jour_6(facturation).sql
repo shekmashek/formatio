@@ -31,12 +31,6 @@ CREATE TABLE `frais_annexes` (
 
 alter table frais_annexes add column entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE;
 
--- insert into frais_annexes(description) values
--- ('frais de deplacement'),
--- ("frais d'hebergement"),
--- ('frais de restauration'),
--- ('frais de logistique'),
--- ('frais de location de salle');
 
 CREATE TABLE `factures` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

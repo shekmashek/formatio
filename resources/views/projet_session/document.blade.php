@@ -15,7 +15,7 @@
                                 id="flexCheckDefault">
                             <input type="hidden" name="nom_doc[]" value="{{ $docs['filename'] }}">
                             <input type="hidden" name="extension[]" value="{{ $docs['extension'] }}">
-                            
+
                             <label class="form-check-label" for="flexCheckDefault">
                                 <span>
                                     {{ $docs['filename'] . '.' . $docs['extension'] }} </a> </span>
@@ -26,11 +26,11 @@
                 @if (count($documents) > 0)
                 <button type="submit" class="btn btn_enregistrer py-1"><i class="bx bx-check me-1"></i> Enregistrer</button>
                 @endif
-                
+
             </form>
         </div>
     @endcanany
-    @can('isReferent')
+    @canany(['isReferent','isManager'])
         <nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
             <span class="titre_detail_session"><strong style="font-size: 14px">Les documents pour la session</strong></span>
         </nav>
@@ -43,6 +43,6 @@
                 @endforeach
             </div>
         </div>
-    @endcan
-    
+    @endcanany
+
 </div>

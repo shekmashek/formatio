@@ -3,13 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\besoins;
 class PlanFormation extends Model
 {
-    protected $table = "plan_formations";
+    protected $table = "plan_formation_valide";
     protected $fillable = [
-        'entreprise_id','cout_previsionnel',
-        'mode_financement','recueil_information_id','annee_plan_id','status','annee_previsionnelle'
+        'AnneePlan','debut_rec','fin_rec','entreprise_id',
+        
     ];
     public  function entreprise(){
         return $this->belongsTo('App\entreprise');
@@ -20,5 +20,8 @@ class PlanFormation extends Model
     public function annee_plan()
     {
         return $this->belongsTo('App\annee_plan');
+    }
+    public function besoins(){
+        return $this->hasMany('App\besoins','anneePlan_id');
     }
 }

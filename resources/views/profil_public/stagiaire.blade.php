@@ -31,7 +31,7 @@
                                     </div>
                                 </span>
                             @else
-                            <img src="{{asset('images/stagiaires/'.$stagiaire->photos)}}" alt="Avatar" class="img-fluid my-5 image-ronde form_photo" width="150px" />
+                            <img src="{{asset('images/employes/'.$stagiaire->photos)}}" alt="Avatar" class="img-fluid my-5 image-ronde form_photo" width="150px" />
                             @endif
 
                             <h5 class="my-1 fw-bold">{{$stagiaire->nom_stagiaire}} {{$stagiaire->prenom_stagiaire}}</h5>

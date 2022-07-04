@@ -141,7 +141,7 @@ class AdminController extends Controller
         $fonct = new FonctionGenerique();
         $entp = new entreprise();
 
-        if (Gate::allows('isReferent')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple') ) {
             // $user = responsable::where('user_id', $id_user)->value('photos');
             $user = $fonct->findWhereMulitOne(("responsables"),["user_id"],[$id_user])->photos;
             $photo ='';
@@ -150,7 +150,7 @@ class AdminController extends Controller
                 $photo = 'non';
                 // $user = 'users/users.png';
             } else{
-                 $user = 'images/responsables/' . $user;
+                 $user = 'images/employes/' . $user;
                 $photo = 'oui';
             }
             // $user = 'responsables/' . $user;
@@ -180,7 +180,7 @@ class AdminController extends Controller
                 $photo = 'non';
                 //  $user = 'users/users.png';
             } else{
-                $user = 'images/chefDepartement/' . $user;
+                $user = 'images/employes/' . $user;
                 $photo = 'oui';
             }
 
@@ -216,14 +216,18 @@ class AdminController extends Controller
             return response()->json(['user'=>$user,'photo'=>$photo,'invitation'=>$invitation_etp,'refuse_invitation'=>$refuse_demmande_etp]);
         }
         if (Gate::allows('isStagiaire')) {
+
             $user = $fonct->findWhereMulitOne(("stagiaires"),["user_id"],[$id_user])->photos;
+
             $photo ='';
             if($user == null){
                 $user = DB::select('select SUBSTRING(nom_stagiaire, 1, 1) AS nm,  SUBSTRING(prenom_stagiaire, 1, 1) AS pr from stagiaires where user_id = ?', [$id_user]);
+
                 $photo = 'non';
+
                 // $user = 'users/users.png';
             } else{
-                $user = 'images/stagiaires/' . $user;
+                $user = 'images/employes/' . $user;
                 $photo = 'oui';
             }
             // $user = 'stagiaires/' . $user;

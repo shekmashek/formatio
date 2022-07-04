@@ -12,7 +12,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
 
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
+        <form   class="btn-submit" action="{{route('update_responsable',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
             @csrf
 
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -35,27 +35,18 @@
                   </div>
             </center> --}}
 
-                        <select hidden value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre"  >
-                          <option value="{{$stagiaire->genre_stagiaire}}"  >Homme</option>
-                          <option value="Femme">Femme</option>
+                        <select hidden value="{{$stagiaire->genre_id}}" name="genre" class="form-select test" id="genre"  >
+                          <option value="{{$stagiaire->genre_id}}"  >Homme</option>
 
                         </select>
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Genre</label> --}}
 
-                        <select hidden value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
-                            <option value="Mr">Mr</option>
-                            <option value="Mme">Mme</option>
-                            <option value="Mlle">Mlle</option>
-                            <option value="Dr">Dr</option>
-                            <option value="Prof">Prof</option>
-                            <option value="Dir">Dir</option>
-                            <option value="PDG">PDG</option>
-                        </select>
+
                         {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Titre</label> --}}
 
                         <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
-                        <input type="date" class="form-control test input" name="date" value="{{ $stagiaire->date_naissance }}">
+                        <input type="date" class="form-control test input" name="date_naissance" value="{{$stagiaire->date_naissance}}">
                         <label class="ml-3 form-control-placeholder">Date de naissance</label>
                             </div>
                         </div>
@@ -87,7 +78,6 @@
 
                     <input type="hidden" class="form-control"  name="entreprise"  value="{{ optional(optional($stagiaire)->entreprise)->nom_etp}}" readonly>
 
-                    <input type="hidden" value="{{ $branche->id }}"  class="form-control"  name="lieu_travail" placeholder="Matricule" readonly>
 
 
                     <input type="hidden" class="form-control"  name="departement" value="{{ optional(optional($stagiaire)->departement)->nom_departement }}" readonly>

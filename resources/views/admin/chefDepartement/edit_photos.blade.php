@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
 
 <div class="col" style="margin-left: 25px">
-  <a href="{{route('affProfilChefDepartement')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
+  <a href="{{route('profil_manager')}}"> <button class="btn btn_precedent my-2 edit_pdp_cfp" ><i class="bx bxs-chevron-left me-1"></i> Retour</button></a>
 </div>
 <center>
    {{-- si l'utiliisateur a cliqué sur enregistrer sans choisir un fichier--}}
@@ -27,18 +27,13 @@
    @endif
 <div class="col-lg-4">
     <div class="p-3 form-control">
-        <p style="text-align: left">Photo de profil 
-            <strong>Taille du fichier:(1.7 MB max)</strong> 
+        <p style="text-align: left">Photo de profil
+            <strong>Taille du fichier:(1.7 MB max)</strong>
         </p>
-        <form   class="btn-submit" action="{{route('update_photos_chef')}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_photos_resp')}}" method="post" enctype="multipart/form-data">
             @csrf
 
-                    <input type="hidden" value="   {{ $chef->nom_chef }}" class="form-control test input"  name="nom">
-                    {{-- <label class="ml-3 form-control-placeholder" style="font-size:13px;color:#801D68">Nom</label> --}}
-
-
-                        <input type="hidden" class="form-control test input" value="   {{ $chef->prenom_chef }}"  name="prenom">
-                        <div class="row px-3 mt-4">
+                    <div class="row px-3 mt-4">
                             <div class="form-group mt-1 mb-1">
                             <center>
 
@@ -54,22 +49,9 @@
                                           </div>
                                       </span>
                                   @else
-                                      <img src="{{asset('images/chefDepartement/'.$chef->photos)}}" id = "photo_stg"  class="image-ronde">
+                                      <img src="{{asset('images/employes/'.$chef->photos)}}" id = "photo_stg"  class="image-ronde">
                                   @endif
-                                      {{-- @if($chef->photos==null)
-                                      <span>
-                                          <div style="display: grid; place-content: center">
-                                              <div class='randomColor photo_users' style="color:white; font-size: 50px; border: none; border-radius: 100%; height:150px; width:150px ; display: grid; place-content: center">
-                                                <img src="" alt="" id = "photo_stg" class="image-ronde" style="display: none">
-                                              </div>
-                                          </div>
-                                      </span>
-                                  @else
-                                  <img src="{{asset('images/chefDepartement/'.$chef->photos)}}" id = "photo_stg"  class="image-ronde">
 
-
-                                  @endif --}}
-                                      {{-- <input type="text" id = 'vartemp'> --}}
                               </div>
                                   </label>
                                   </div>
@@ -78,29 +60,7 @@
                     </div>
 
 
-                        {{-- <select hidden  value="{{$chef->sexe_resp}}" name="genre" class="form-select test input" id="genre"  >
-                          <option value="{{$chef->sexe_resp}}"  >Homme</option>
-                          <option value="Femme">Femme</option>
-
-                        </select> --}}
-
-
-                        <input type="hidden" class="form-control test" name="genre" value="{{ $genre}}">
-
-                          <input type="hidden" value="{{ $chef->cin_chef}}" class="form-control test"  name="cin" >
-
-                        <input type="hidden" class="form-control test"  name="mail" value="{{ $chef->mail_chef}}" >
-
-                        <input type="hidden" class="form-control test"  name="phone" value="{{ $chef->telephone_chef }}">
-                        <input type="hidden" value="{{ $chef->fonction_chef}}" class="form-control test"  name="fonction" >
-
-                        <input type="hidden" class="form-control test"  name="matricule" value="{{ $chef->matricule}}" >
-                        <input type="hidden" class="form-control test"  name="etp" value="{{ optional(optional($chef)->entreprise)->nom_etp}}" >
-
-
-
-
-                        <input id="file-input" type="file" name="image" value="{{$chef->photos}}"/><br>
+<input id="file-input" type="file" name="image" value="{{$chef->photos}}"/><br>
 
 <button  class="btn_enregistrer  mt-1 btn modification "><I class="bx bx-check me-1"></I> Enregistrer</button>
 </form>

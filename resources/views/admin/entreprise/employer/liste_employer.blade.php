@@ -280,16 +280,24 @@
                     employés
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{route('employes.new')}}" class="nav-link">
-                    nouveau employé
-                </a>
-            </li>
+            @canany(['isReferent','isReferentSimple'])
+                <li class="nav-item">
+                    <a href="{{route('employes.new')}}" class="nav-link">
+                        nouveau employé
+                    </a>
+                </li>
+
             <li class="nav-item">
                 <a href="{{route('employes.export.nouveau')}}" class="nav-link">
                     import EXCEL employé
                 </a>
             </li>
+            @endcanany
+                <li class="nav-item">
+                    <a href="{{route('employes.liste_referent')}}" class="nav-link">
+                    Référents
+                    </a>
+                </li>
         </ul>
 
         <div class="row">
@@ -304,31 +312,41 @@
                                 <span class="d-block">Département</span>
                                 <span>Service</span>
                             </th>
-                            {{-- <th scope="col" class="table-head font-weight-light align-middle text-center ">Age</th> --}}
-
+                            @can('isReferent')
+                            <th scope="col" class="table-head font-weight-light align-middle text-center ">Référent</th>
+                            @endcan
 
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Status</th>
+                            @can('isReferent')
                             <th scope="col" class="table-head font-weight-light align-middle text-center ">Actions</th>
+                            @endcan
 
                         </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($employers as $employe)
-                            <tr >
-                                <td class="align-middle id empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
 
-                                    @if ($employe->activiter == 1)
+
+                    </thead>
+
+                    <tbody>
+                        @for ($i = 0;$i < count($employers);$i++ )
+
+
+
+
+                            <tr >
+                                <td class="align-middle id empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">
+
+                                    @if ($employers[$i]->activiter == 1)
                                         <span style="color:#00b900; "> <i class="bx bxs-circle"></i> </span>
                                     @else
                                         <span style="color:red; "> <i class="bx bxs-circle"></i> </span>
                                     @endif
-                                    {{ $employe->matricule }}
+                                    {{ $employers[$i]->matricule }}
                                 </td>
 
 
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        @if ($employe->photos == null)
+                                        @if ($employers[$i]->photos == null)
                                             {{-- image placeholder --}}
                                             {{-- <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="Image non chargée"
                                                 style="width: 45px; height: 45px" class="rounded-circle" /> --}}
@@ -339,7 +357,7 @@
 
                                             {{-- actif/inactif color --}}
                                                     {{-- <i class='bx bx-user-circle  h1' style='
-                                                        @if ($employe->activiter == 1) color:#25b900c9;'
+                                                        @if ($employers[$i]->activiter == 1) color:#25b900c9;'
                                                             @else
                                                             color:#e21717;'
                                                             @endif
@@ -348,30 +366,35 @@
                                             {{-- initials --}}
                                                             <div class="randomColor rounded-circle p-3 mb-2 profile-circle" >
                                                                 <span class="align-middle text-center profile-initial" style="position:relative;">
-                                                                    <b data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" class="empNew" style="cursor: pointer">{{substr($employe->nom_stagiaire, 0, 1)}} {{substr($employe->prenom_stagiaire, 0, 1)}}</b>
+                                                                    <b data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" class="empNew" style="cursor: pointer">{{substr($employers[$i]->nom_stagiaire, 0, 1)}} {{substr($employers[$i]->prenom_stagiaire, 0, 1)}}</b>
                                                                 </span>
                                                             </div>
                                                         @else
-                                                                <img data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" src="{{ asset('images/stagiaires/' . $employe->photos) }}"
+
+
+                                                                <img data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" src="{{ asset('images/employes/' . $employers[$i]->photos) }}"
                                                                 alt="Image non chargée" style="width: 45px; height: 45px; cursor: pointer"
                                                                 class="rounded-circle empNew" />
+
+
+
                                                         @endif
                                                     <div class="ms-3">
-                                                        <p class="fw-normal mb-1 text-purple empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
+                                                        <p class="fw-normal mb-1 text-purple empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">
                                                         {{-- <p class="fw-bold mb-1 text-purple "> --}}
-                                                            {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }}</p>
-                                                        <p class="text-muted mb-0 empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">{{ $employe->fonction_stagiaire }}</p>
+                                                            {{ $employers[$i]->nom_stagiaire }} {{ $employers[$i]->prenom_stagiaire }}</p>
+                                                        <p class="text-muted mb-0 empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">{{ $employers[$i]->fonction_stagiaire }}</p>
                                                     </div>
                                                 </div>
                                             </td>
 
-                                            <td class="align-middle text-start empNew" data-id={{$employe->user_id}} id={{$employe->user_id}} onclick="afficherInfos();" style="cursor: pointer">
+                                            <td class="align-middle text-start empNew" data-id={{$employers[$i]->user_id}} id={{$employers[$i]->user_id}} onclick="afficherInfos();" style="cursor: pointer">
 
                                                 <div class="ms-3">
-                                                    <p class="mb-1 text-purple">{{ $employe->mail_stagiaire }}</p>
-                                                    {{-- <p class="fw-bold mb-1 text-purple">{{ $employe->mail_stagiaire }}</p> --}}
+                                                    <p class="mb-1 text-purple">{{ $employers[$i]->mail_stagiaire }}</p>
+                                                    {{-- <p class="fw-bold mb-1 text-purple">{{ $employers[$i]->mail_stagiaire }}</p> --}}
                                                     <p class="text-muted mb-0">
-                                                        {{ $employe->telephone_stagiaire != null ? $employe->telephone_stagiaire : '----' }}
+                                                        {{ $employers[$i]->telephone_stagiaire != null ? $employers[$i]->telephone_stagiaire : '----' }}
                                                     </p>
 
 
@@ -379,19 +402,43 @@
 
                                             </td>
                                             <td class="align-middle text-center text-secondary">
-                                                <span>----</span>
+                                                <p class="text-muted mb-0">
+                                                    @if($employers[$i]->nom_departement == null OR  $employers[$i]->nom_service == null)
+                                                    Non catégorisé
+                                                    @else
+                                                       {{$employers[$i]->nom_departement}} <br>
+                                                        {{$employers[$i]->nom_service}}
+                                                    @endif
+                                                    {{-- {{ $employers[$i]->nom_departement != null ? $employers[$i]->nom_departement : 'Non catégorisé' }} <br>
+                                                    {{ $employers[$i]->nom_service != null ? $employers[$i]->nom_service : 'Non catégorisé' }} <br> --}}
+                                                </p>
                                             </td>
-                                            {{-- <td class="align-middle text-center text-secondary">61</td> --}}
+                                            @can('isReferent')
+                                                <td class="align-middle text-center text-secondary">
+                                                    @if($employers[$i]->activiter == 1)
+                                                        @if($ref[$i] == 1)
+                                                            <input class="form-check-input referent" type="checkbox" value="{{$employers[$i]->id}}" name = "referent"  id="flexCheckDefault" checked>
+                                                        @else
+                                                        <input class="form-check-input referent" type="checkbox" value="{{$employers[$i]->id}}" name = "referent"  id="flexCheckDefault">
+                                                        @endif
+                                                    @endif
+                                                    @if($employers[$i]->activiter == 0)
+                                                    <input disabled class="form-check-input referent" type="checkbox" value="{{$employers[$i]->id}}" name = "referent"  id="flexCheckDefault">
+                                                    @endif
+                                                </td>
+                                            @endcan
 
                                             <td class="align-middle text-center text-secondary">
 
-                                            @if ($employe->activiter == 1)
+                                            @if ($employers[$i]->activiter == 1)
                                                 <div class="form-check form-switch">
                                                     <label class="form-check-label" for="flexSwitchCheckChecked"><span
                                                             class="badge bg-success">actif</span></label>
-                                                    <input class="form-check-input desactiver_stg" type="checkbox"
-                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}"
-                                                        checked>
+                                                    @can('isReferent')
+                                                        <input class="form-check-input desactiver_stg" type="checkbox"
+                                                            data-user-id="{{ $employers[$i]->user_id }}" value="{{ $employers[$i]->id }}"
+                                                            checked>
+                                                    @endcan
                                                 </div>
                                             @else
                                                 <div class="form-check form-switch">
@@ -401,21 +448,26 @@
                                                             inactif
                                                         </span>
                                                     </label>
+                                                    @can('isReferent')
                                                     <input class="form-check-input activer_stg" type="checkbox"
-                                                        data-user-id="{{ $employe->user_id }}" value="{{ $employe->id }}">
+                                                        data-user-id="{{ $employers[$i]->user_id }}" value="{{ $employers[$i]->id }}">
+                                                    @endcan
                                                 </div>
                                             @endif
+
                                     </td>
-                                    <td class="align-middle text-center text-secondary">
-                                        <button type="button" class="btn " data-bs-toggle="modal"
-                                            data-bs-target="#delete_emp_{{ $employe->id }}">
-                                            <i class=' bx bxs-trash' style='color:#e21717'></i>
-                                    </button>
+                                    @can('isReferent')
+                                        <td class="align-middle text-center text-secondary">
+                                            <button type="button" class="btn " data-bs-toggle="modal"
+                                                data-bs-target="#delete_emp_{{ $employers[$i]->id }}">
+                                                <i class=' bx bxs-trash' style='color:#e21717'></i>
+                                        </button>
+                                    @endcan
                                 </td>
 
                             </tr>
 
-                            <div class="modal fade" id="delete_emp_{{ $employe->id }}" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="delete_emp_{{ $employers[$i]->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <form action="{{ route('mettre_fin_cfp_etp') }}" method="POST">
                                     @csrf
@@ -429,8 +481,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <small>Vous êtes sur le point d'enlever l'employé
-                                                    {{ $employe->nom_stagiaire }} {{ $employe->prenom_stagiaire }} -
-                                                    id : {{ $employe->id }}, utilisateur {{ $employe->user_id }},
+                                                    {{ $employers[$i]->nom_stagiaire }} {{ $employers[$i]->prenom_stagiaire }},
                                                     cette action est irréversible. Continuer ?</small>
                                             </div>
 
@@ -438,7 +489,7 @@
                                                 <button type="button" class="btn btn_creer" data-bs-dismiss="modal"> Non
                                                 </button>
 
-                                                <a href="{{ route('employeur.destroy', $employe->id) }}"> <button
+                                                <a href="{{ route('employeur.destroy', $employers[$i]->user_id) }}"> <button
                                                         type="button" class="btn btn_creer btnP px-3">Oui</button></a>
                                             </div>
                                         </div>
@@ -446,9 +497,14 @@
                                 </form>
 
                             </div>
-                        @empty
 
-                        @endforelse
+
+                        {{-- @empty --}}
+                       @endfor
+
+
+
+
 
                     </tbody>
                 </table>
@@ -608,7 +664,7 @@
                         let userData = JSON.parse(response);
                         console.log(userData);
                         for (let $i = 0; $i < userData.length; $i++) {
-                            let url_photo = '<img src="{{asset("images/stagiaires/:url_img")}}" style="height80px; width:80px;">';
+                            let url_photo = '<img src="{{asset("images/employes/:url_img")}}" style="height80px; width:80px;">';
                             url_photo = url_photo.replace(":url_img", userData[$i].photos);
                             var nom = (userData[$i].nom_stagiaire).substr(0, 1);
                             var prenom = (userData[$i].prenom_stagiaire).substr(0, 1);
@@ -625,8 +681,31 @@
                             $("#nom").text(': '+userData[$i].nom_stagiaire);
                             $("#prenom").text(userData[$i].prenom_stagiaire);
                             $("#mail_stagiaire").text(': '+userData[$i].mail_stagiaire);
-                            $("#telephone_stagiaire").text(': '+userData[$i].telephone_stagiaire);
-                            $("#adresse").text(': '+userData[$i].adresse);
+
+                            if(userData[$i].telephone_stagiaire == null) var phone = "-------";
+                            else var phone = userData[$i].telephone_stagiaire;
+
+                            $("#telephone_stagiaire").text(': '+phone);
+
+                            if(userData[$i].lot == null){
+                                var lot = "-------"
+                            }
+                            else  var lot = userData[$i].lot;
+                             if(userData[$i].quartier == null){
+                                var quartier = "-------"
+                            }
+                            else  var quartier = userData[$i].quartier;
+
+                            if(userData[$i].ville == null){
+                                var ville = "-------"
+                            }
+                            else  var ville = userData[$i].ville;
+
+                            if(userData[$i].region == null){
+                                var region = "-------"
+                            }
+                            else  var region = userData[$i].region;
+                            $("#adresse").text(': '+lot+' '+quartier+ ' '+ville+ ' '+region);
                             $("#code_postal").text(': '+userData[$i].code_postal);
                         }
                     }
@@ -702,7 +781,42 @@
                     })
             })()
 
-        </script>
+            $('.referent').click(function() {
+                var emp = $(this).val();
+                if ($(this).is(':checked')) {
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.ajouter.referent')}}"
+                        , data: {
+                            emp_id: emp
+                        }
+                        , success: function(response) {
+                            window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }
+                else{
+                    $.ajax({
+                        type: "GET"
+                        , url: "{{route('employes.supprimer.referent')}}"
+                        , data: {
+                            emp_id: emp
+                        }
+                        , success: function(response) {
+                            window.location.reload();
+                        }
+                        , error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }
+            });
 
+
+
+        </script>
 
         @endsection

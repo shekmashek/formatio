@@ -48,14 +48,22 @@
                     employés
                 </a>
             </li>
+            @canany(['isReferent','isReferentSimple'])
             <li class="nav-item">
                 <a href="{{route('employes.new')}}" class="nav-link active">
                     nouveau employé
                 </a>
             </li>
+
             <li class="nav-item">
                 <a href="{{route('employes.export.nouveau')}}" class="nav-link">
                     import EXCEL employé
+                </a>
+            </li>
+            @endcanany
+            <li class="nav-item">
+                <a href="{{route('employes.liste_referent')}}" class="nav-link">
+                Référents
                 </a>
             </li>
         </ul>

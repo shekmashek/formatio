@@ -109,15 +109,15 @@ class EmployeurController extends Controller
             // if ($request->type_enregistrement == "STAGIAIRE") {
                 if($abonnement_etp !=null){
 
-                    if($abonnement_etp[0]->max_emp == count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
+                    if($abonnement_etp[0]->max_emp <= count($nb_stagiaire) && $abonnement_etp[0]->illimite = 0) return back()->with('error', "Vous avez atteint le nombre maximum d'employé, veuillez upgrader votre compte pour ajouter plus d'employé");
                     else{
                         $fonction_employer = $this->fonct->findWhereMulitOne("roles",["id"],["3"])->role_description;
 
                         DB::beginTransaction();
                         try {
-                            $this->fonct->insert_role_user($user_id, "3",false,true); // EMPLOYEUR
+                            $this->fonct->insert_role_user($user_id, "3",false,true); // role stagiaire
                             $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
-                            DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
+                            DB::insert("insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp,telephone_emp,fonction_emp,
                             entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
                             DB::commit();
                         } catch (Exception $e) {
@@ -132,9 +132,9 @@ class EmployeurController extends Controller
 
                     DB::beginTransaction();
                     try {
-                        $this->fonct->insert_role_user($user_id, "3",false,true); // EMPLOYEUR
+                        $this->fonct->insert_role_user($user_id, "3",false,true); //  role stagiaire
                         $data = [$matricule, $nom, $prenom, $cin, $mail, $phone, $fonction, $resp->entreprise_id, $user_id];
-                        DB::insert("insert into stagiaires(matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,telephone_stagiaire,fonction_stagiaire,
+                        DB::insert("insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp,telephone_emp,fonction_emp,
                         entreprise_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,?,1,NOW())", $data);
                         DB::commit();
                     } catch (Exception $e) {
@@ -228,9 +228,11 @@ class EmployeurController extends Controller
      */
     public function destroy($id)
     {
+
+
         DB::delete('delete from users where id = ?', [$id]);
         DB::delete("delete from role_users where user_id=?",[$id]);
-        DB::delete("delete from stagiaires where user_id=?",[$id]);
+        DB::delete("delete from employers where user_id=?",[$id]);
         return back();
     }
 }

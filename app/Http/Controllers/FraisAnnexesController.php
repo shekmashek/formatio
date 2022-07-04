@@ -22,6 +22,7 @@ class FraisAnnexesController extends Controller
             if (Auth::user()->exists == false) return redirect()->route('sign-in');
             return $next($request);
         });
+        $this->fonct = new FonctionGenerique();
     }
 
     public function index()
@@ -29,16 +30,10 @@ class FraisAnnexesController extends Controller
         $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
         $salle = [];
-        if(Gate::allows('isReferent')){
-            if (Gate::allows('isReferentPrincipale')) {
-                $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isManagerPrincipale')) {
-                $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            }
-            $frais = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id]);
-            return view('admin.frais_annexe.frais_annexe', compact('frais'));
-        }
+        $etp_id = $this->fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
+        $frais = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id->entreprise_id]);
+        return view('admin.frais_annexe.frais_annexe', compact('frais'));
+
     }
 
 
@@ -52,16 +47,11 @@ class FraisAnnexesController extends Controller
     {
         $user_id = Auth::user()->id;
         try{
-            if (Gate::allows('isReferentPrincipale')) {
-                $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isManagerPrincipale')) {
-                $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            }
+            $etp_id = $this->fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
             if($request->description == null){
                 throw new Exception('Vous devez completer le champ description.');
             }
-            DB::insert('insert into frais_annexes(description,entreprise_id) values(?,?)',[$request->description,$etp_id]);
+            DB::insert('insert into frais_annexes(description,entreprise_id) values(?,?)',[$request->description,$etp_id->entreprise_id]);
             return back();
                 // return redirect()->back()->withInput(['tabName'=>'insertion_salle']);
         }catch(Exception $e){

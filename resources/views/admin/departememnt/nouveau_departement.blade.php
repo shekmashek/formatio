@@ -92,6 +92,34 @@
     }
     /*modal*/
 
+    .navigation_module .nav-link {
+    color: #637381;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.900rem;
+    transition: all 200ms;
+    margin-right: 1rem;
+    text-transform: uppercase;
+    padding-top: 10px;
+    border: none;
+}
+
+.nav-item .nav-link.active {
+    border-bottom: 3px solid #7635dc !important;
+    border: none;
+    color: #7635dc;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgb(245, 243, 243);
+
+    border: none;
+}
+.nav-tabs .nav-item a{
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
@@ -103,16 +131,21 @@
 
     <a href="#" class="btn_creer text-center filter" role="button" onclick="afficherFiltre();"><i
             class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
+            @if(session()->has('erreur'))
+            <div class="alert alert-danger">
+                {{ session()->get('erreur') }}
+            </div>
+        @endif
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            <li class="nav-item active">
-                <a href="#departements" class="nav-link active" data-toggle="tab">Départements</a>
+            <li class="nav-item ">
+                <a href="#departements" class="nav-link active" data-bs-toggle="tab">Départements</a>
             </li>
             <li class="nav-item">
-                <a href="#services" class="nav-link" data-toggle="tab">Services</a>
+                <a href="#services" class="nav-link" data-bs-toggle="tab">Services</a>
             </li>
             <li class="nav-item">
-                <a href="#branches" class="nav-link" data-toggle="tab">Branches</a>
+                <a href="#branches" class="nav-link" data-bs-toggle="tab">Branches</a>
             </li>
         </ul>
 
@@ -122,30 +155,46 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="p-3 mb-5 bg-body rounded ">
-                                <h6>Départements</h6>
-                                <hr>
-                                <div class="table-responsive text-center mt-0">
-                                    <table class="table  table-borderless table-sm ">
-                                        <tbody id="data_collaboration " >
+
+                                @if(session()->has('erreur_manager'))
+                                    <div class="alert alert-danger">
+                                        {{ session()->get('erreur_manager') }}
+                                    </div>
+                                @endif
+                                <div class="table-responsive mt-0">
+                                    <table class="table  table-border table-sm ">
+                                        <thead>
+                                            <th>Départements</th>
+                                            <th>Manager</th>
+                                            <th>Actions</th>
+                                        </thead>
+                                        <tbody id="data_collaboration">
                                             @if (count($rqt)>0)
                                             @if(isset($rqt))
                                                 @for($i = 0; $i < count($rqt); $i++) <p>
                                             <tr >
                                                 <td >
                                                     <div align="left">
-
                                                             <span>{{$rqt[$i]->nom_departement}}</span></p>
-
                                                     </div>
                                                 </td>
                                                 <td>
+                                                    <p>
+                                                        @if($rqt[$i]->user_id_chef_departement != null)
+                                                                    {{$rqt[$i]->nom_chef}} {{$rqt[$i]->prenom_chef}}
+                                                        @else
+                                                                <button class="btn btn_nouveau" data-bs-toggle="modal" data-bs-target="#manager_{{$rqt[$i]->id}}"> <i class="bx bx-plus-medical me-1"></i>Nouveau manager</button>
+                                                        @endif
+
+                                                    </p>
                                                 </td>
                                                 <td>
-
-                                                 <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$rqt[$i]->id}}"  >
-                                                            {{-- <i class='bx  bx-edit bx_modifier'></i> --}}
-
-                                                    <i class='bx  bx-edit bx_modifier'></i></a>
+                                                    @if($rqt[$i]->user_id_chef_departement != null)
+                                                         <a type="button" title="Modification manager"  data-bs-toggle="modal" data-bs-target="#edit_manager_{{$rqt[$i]->id}}"><i class='bx bx-user-pin bx_modifier'></i></a>
+                                                    @endif
+                                                <a href="" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal_{{$rqt[$i]->id}}">
+                                                    <i class='bx  bx-edit bx_modifier'></i>
+                                                </a>
                                                     <a href=""  data-bs-toggle="modal" data-bs-target="#deletedep_{{$rqt[$i]->id}}" role="button" ><i class='bx bx-trash bx_supprimer' ></i></a>
                                                 </td>
                                             </tr>
@@ -163,6 +212,74 @@
                                                                 <input type="text" class="form-control" required name="departement" value="{{$rqt[$i]->nom_departement}}">
                                                                 <input type="hidden" class="form-control" required name="id" value="{{$rqt[$i]->id}}"> <br><br>
 
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
+                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             {{-- modal manager --}}
+                                             <div class="modal fade" id="manager_{{$rqt[$i]->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1>Manager</h1>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="{{route('ajouter_manager')}}"  method="post">
+                                                                @csrf
+                                                                <label for="" class="label"> Département</label>
+                                                                <input type="text" class="form-control" required name="departement" value="{{$rqt[$i]->nom_departement}}" readonly>
+                                                                <label for="" class="label"> Manager</label>
+                                                                <input type="hidden" class="form-control" required name="dep_id" value="{{$rqt[$i]->id}}"> <br>
+                                                                <select name="manager" id="manager" class="form-control">
+                                                                    <option value="null">Choisissez un employé...</option>
+                                                                    @foreach ($employes as $emp)
+                                                                        @if($emp->departement_entreprises_id == $rqt[$i]->id)
+                                                                            <option value="{{$emp->id}}">{{$emp->nom_emp}} {{$emp->prenom_emp}}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
+                                                                <button type="submit" class="btn btn_enregistrer "><i class="bx bx-check me-1"></i>Enregistrer</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- modal edit manager --}}
+                                            <div class="modal fade" id="edit_manager_{{$rqt[$i]->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1>Manager</h1>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="{{route('modifier_manager')}}"  method="post">
+                                                                @csrf
+                                                                <label for="" class="label"> Département</label>
+                                                                <input type="text" class="form-control" required name="departement" value="{{$rqt[$i]->nom_departement}}" readonly>
+                                                                <label for="" class="label"> Manager</label>
+                                                                <input type="hidden" class="form-control" required name="dep_id" value="{{$rqt[$i]->id}}">
+                                                                <input type="hidden" class="form-control" required name="ancien_user_chef" value="{{$rqt[$i]->user_id_chef_departement}}">
+                                                                <input type="hidden" class="form-control" required name="ancien_chef" value="{{$rqt[$i]->chef_departements_id}}"> <br>
+                                                                <select name="manager" id="manager" class="form-control">
+                                                                    <option value="null">Choisissez un employé...</option>
+                                                                    @foreach ($employes as $emp)
+                                                                        @if($emp->departement_entreprises_id == $rqt[$i]->id)
+                                                                            @if( $rqt[$i]->chef_departements_id == $emp->id)
+                                                                            <option value="{{$emp->id}}" selected>{{$emp->nom_emp}} {{$emp->prenom_emp}}</option>
+                                                                            @else
+                                                                            <option value="{{$emp->id}}">{{$emp->nom_emp}} {{$emp->prenom_emp}}</option>
+                                                                            @endif
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                 <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"><i class="bx bx-block me-1" ></i>Fermer</button>
@@ -315,7 +432,7 @@
                                                                             <form action="{{route('delete_service')}}"  method="POST">
                                                                                 @csrf
                                                                                 <input type="hidden" name="departement" value="{{$service_departement[$i]->departement_entreprise_id}}">
-                                                                                <label > Selectionner les elements à supprimer</label><br>
+                                                                                <label> Selectionner les elements à supprimer</label><br>
                                                                                 @foreach ($service_departement_tous as $sd)
                                                                                     @if ($sd->departement_entreprise_id == $service_departement[$i]->departement_entreprise_id)
 
@@ -419,6 +536,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class=" p-3 mb-5 bg-body rounded ">
+
                                 <h6>Branche</h6>
                                 <hr>
                                 <div class="table-responsive mt-0">
@@ -535,6 +653,7 @@
     </div>
 </div>
 <script>
+
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         let lien = ($(e.target).attr('href'));
         localStorage.setItem('activeTab', lien);

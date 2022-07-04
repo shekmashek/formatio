@@ -1,260 +1,321 @@
+
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Plan de formation et budgetisation</p>
+    <p class="text_header m-0 mt-1">Plan de formation </p>
 @endsection
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+<style>
+    h4,label,p{
+        font-weight: 400;
+        color: gray;
+    }
+    .disabled > a {
+    color: currentColor;
+    display: inline-block;  /* For IE11/ MS Edge bug */
+    pointer-events: none;
+    text-decoration: none;
+    }
+    .disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    }
+    input[type="text"]:disabled {
+    background: rgb(245, 242, 242);
+    }
+
+    tr .action{
+        visibility: hidden;
+        display:none;
+    }
+
+    tr:hover .action,
+    tr:hover .actions{
+        visibility: visible;
+        display: block;
+        cursor: pointer;
+        height: 2%;
+    }
+
+
+
+</style>
 <div id="page-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-            	<br>
-                <div class="shadow-sm p-3 bg-body rounded">
-                    <div class="container-fluid">
-                    <div class="shadow p-3 mb-5 bg-body rounded">
-                        <div class="row">
-                            <div class="col-lg-10">
-                                {{-- <br>
-                                <h3>Plan de formation et budgetisation</h3>
-                                <br> --}}
-                                <div class="panel-heading">
-                                        <ul class="nav nav-pills">
-                                            <button type = "button" class ="btn_next {{ Route::currentRouteNamed('planFormation') ? 'active' : '' }}"><a href="{{route('planFormation.index')}}" ><span class="fa fa-th-list"></span>  Nouvelle demande</a></button>&nbsp;&nbsp;
-                                            @can('isReferent')
-                                                <button type = "button" class ="btn_next {{ Route::currentRouteNamed('liste_demande_stagiaire') ? 'active' : '' }}"><a href="{{route('liste_demande_stagiaire')}}" ><span class="fa fa-th-list"></span>  Liste des demandes</a></button>&nbsp;&nbsp;
-                                            @endcan
-                                            <button type = "button" class ="btn_next {{ Route::currentRouteNamed('listePlanFormation') ? 'active' : '' }}"><a href="{{route('listePlanFormation')}}" ><span class="fa fa-th-list"></span>  Liste des Plan de formation</a></button>&nbsp;&nbsp;
-                                            <button  type = "button" class ="btn_next {{ Route::currentRouteNamed('ajout_plan') ? 'active' : '' }}" ><a href="{{route('ajout_plan')}}"><span class="fa fa-plus-sign"></span> Nouveau Plan de formation</a></button>&nbsp;&nbsp;
-                                            <button  type = "button" class ="btn_next {{ Route::currentRouteNamed('budget') ? 'active' : '' }}" ><a href="{{route('budget')}}"><span class="fas fa-sack-dollar"></span> Budgetisation</a></button>&nbsp;&nbsp;
-                                            <button type = "button" class ="btn_next"><form class="d-flex mx-1" method="GET" action="{{ route('recherchePlanAnnee') }}">
+    <div class="container mt-5 p-4" >
+        @canany(['isReferent','isReferentSimple'])
+       <div class="row">
+           <div class="col-md-12 ">
+               <div class="float-start">
+                    <h4>Plan de formation </h4>
+               </div>
+               <div class="float-end">
+                    <button style="background: #6610f2;" class="btn cree text-light text-sm" class="btn btn-primary" > <a href="{{route('ajout.plan',$entreprise_id)}}">Cree un nouveau plan</a> </button>
+               </div>
+           </div>
+       </div>
+       <div class="row mt-4">
+           <div class="col-md-12">
+                @foreach ($plan as $p)
+                    <table class="table " >
+                        <thead>
+                            <tr  style="background: rgb(245, 242, 242);" >
+                                <th style="border: none">{{$p->AnneePlan}}</th>
+                                <th style="float: right;border:none">
+                                    <a data-bs-toggle="collapse" data-toggle="collapse" href="#collapseExample_{{$p->AnneePlan}}"   role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <i class="fa-solid fa-angle-down"  ></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>
+                                <div  id="collapseExample_{{$p->AnneePlan}}">
+                                    <div class="row">
+                                        <div class="col-md-6 p-4">
+                                            <h5>Plan Previsionnel</h5>
+                                            <form action="{{route('plan.modifier',$p->id)}}" method="post">
+                                                @csrf
+
                                                 <div class="form-group">
-                                                    <input style="margin-top:-5px;" type="text" id="annee_search" name="annee" class="form-control" placeholder="Rechercher par année"/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <button style="margin-top:-5px;" type="submit" class="btn btn-primary"> <i class="fa fa-search"></i></button>
-                                                </div>
-                                            </form></button>
-
-                                        </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg">
-                                <div class="">
-                                    <a href="#" class="btn_creer text-center filter mt-3" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                {{-- <h3>Liste des demandes du plan de formation: {{$liste[0]->annee_plan->Annee}}</h3> --}}
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Photo</th>
-                            <th>Collaborateurs</th>
-                            <th>Formation</th>
-                            <th>Durée</th>
-                            <th>Date prev.</th>
-                            <th>Statut</th>
-                            <th>Date dde</th>
-                            <th colspan = "2">Actions</th>
-
-                        </tr>
-                    </thead>
-                    <tbody id = "liste_projet">
-                            @foreach($liste as $rec)
-
-
-                                    <tr>
-
-                                        @foreach ($stagiaire as $stg )
-                                            @if($stg->id == $rec->stagiaire_id)
-                                                <td> <img src="{{asset('images/stagiaires/'.$stg->photos)}} " style="width: 60px;border-radius:50%""></td>
-                                            @endif
-                                        @endforeach
-                                        @foreach ($stagiaire as $stg )
-                                            @if($stg->id == $rec->stagiaire_id)
-                                                <td>{{$stg->nom_stagiaire}} {{$stg->prenom_stagiaire}} <br>{{$stg->fonction_stagiaire}}</td>
-                                            @endif
-                                        @endforeach
-                                        @foreach ($domaine as $d)
-                                            @if($d->id == $rec->formation->domaine_id)
-                                                <td>{{$d->nom_domaine}} <br> {{$rec->formation->nom_formation}} </td>
-                                            @endif
-                                        @endforeach
-                                        <td>{{$rec->duree_formation}} j</td>
-                                        {{-- <td><?php setlocale(LC_ALL, 'fr_FR'); ?>{{date('F', mktime(0, 0, 0, $rec->mois_previsionnelle, 10)).' '.$rec->annee_previsionnelle}} </td> --}}
-                                        <td>{{$rec->mois_previsionnelle}}/{{$rec->annee_previsionnelle}}</td>
-                                        @if($rec->statut == "En attente")
-                                            <td id = "statut_demande"><span id = "span_statut_{{$rec->id}}" style="background-color:orange;color:white" class="py-1 px-1">{{$rec->statut}}</span></td>
-                                        @elseif($rec->statut == "Acceptée")
-                                            <td id = "statut_demande"><span id = "span_statut_{{$rec->id}}" style="background-color:green;color:white" class="py-1 px-1">{{$rec->statut}}</span></td>
-                                        @else
-                                            <td id = "statut_demande"><span id = "span_statut_{{$rec->id}}" style="background-color:red;color:white" class="py-1 px-2">{{$rec->statut}}</span></td>
-                                        @endif
-                                        <td>{{$rec->date_demande}}</td>
-                                        @if ($rec->statut == "Acceptée"  )
-                                            <td>
-                                                <!-- Default switch -->
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input accepter" data-id="{{$rec->id}}" type="checkbox" role="switch"/>
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$rec->id}}">Refusée</label>
-                                                </div>
-                                            </td>
-                                        @elseif($rec->statut == "Refusée"  or $rec->statut == "En attente")
-                                            <td>
-                                                <!-- Default switch -->
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input accepter"  data-id="{{$rec->id}}" type="checkbox" role="switch"/>
-                                                    <label class="form-check-label" for="flexSwitchCheckDefault" id="statut_{{$rec->id}}">Acceptée</label>
-                                                </div>
-                                            </td>
-                                        @endif
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                {{-- @foreach ($plan as $plans)
-                                                    <label for="">Collaborateur : {{ $plans->stagiaire->nom_stagiaire }} {{ $plans->stagiaire->prenom_stagiaire }} - {{$plans->stagiaire->fonction_stagiaire }}</label><br>
-                                                    <label for="">Formation: {{ $plans->formation->nom_formation }}</label>
-                                                @endforeach --}}
-                                            </div>
-                                        </div>
-                                        <td><button type = "button" class = "btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Budget</button></a></td>
-                                    </tr>
-
-
-                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="staticBackdropLabel">Ajout Plan</h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action = "{{route('enregistrerPlan')}}" method = "POST" >
-                                                    @csrf
-
-                                                    <input type = "hidden"   name = "idRecueil" value="{{$liste[0]->id}}">
-                                                    <input type = "hidden"    name = "idAnnee" value="{{$liste[0]->annee_plan_id}}">
-
-                                                   <br>
-
-
-                                                    <div class="row">
-                                                        <div class="col">
-
-                                                            <label for="coutPrevisionnel">Coût prév en Ar</label><br><br>
-                                                            <input type="text" autocomplete="off" class="form-control" id="coutPrevisionnel" name="cout" placeholder="Coût prévisionnel">
-                                                            @error('cout')
-                                                              <div class ="col-sm-6">
-                                                                  <span style = "color:#ff0000;"> {{$message}} </span>
-                                                              </div>
-                                                              @enderror
-
-                                                        </div>
-                                                        <div class="col">
-
-                                                        <label for="modeFinancement">Mode de financement</label><br><br>
-                                                            <select class="form-select" aria-label="Default select example" id="typologieFormation" name="mode_financement">
-                                                                <option value="Choisissez un mode de financement...">Choisissez un mode de financement...</option>
-                                                                <option value="Fonds propre">Fonds propre</option>
-                                                                <option value="FMFP">FMFP</option>
-                                                            </select>
-
-                                                        </div>
+                                                    <div class="input-groupe">
+                                                        <label for="">Demande de recueil:</label>
+                                                        <input type="date" value="{{$p->debut_rec}}" name="debut" class="form-control" id="inp" >
                                                     </div>
-
-
-                                                    <button type = "submit" class="btn btn-outline-success "><span class="fa fa-save"></span>&nbsp; Ajouter
-
-                                                </form>
+                                                    <div class="input-groupe">
+                                                        <label for="">Fin de recueil:</label>
+                                                        <input type="date" placeholder="test" value="{{ $p->fin_rec}}" name="fin" id="inp2" class="form-control" >
+                                                    </div>
+                                                    <div class="input-groupe">
+                                                    <label for="">Salarie:</label>
+                                                    <input type="text" class="form-control" value="{{$nombr}}" disabled>
+                                                    <button type="submit" class="btn btn-info text-light mt-1" style="margin-left: 503px" >Editer</button>
+                                                </div>
+                                            </form>
+                                            <div style="display: flex">
+                                            <button class="btn btn-info mt-3 text-light">Email de collecte</button>&nbsp;
+                                            <p class="mt-4" style="font-weight: 400;font-size:12px;"> Envoie à tous les salariés un email pour recueillir leur formation</p>
                                             </div>
+                                            <div style="display: flex">
+                                            <button class="btn btn-warning mt-2 text-light">Email de rappele</button>&nbsp;
+                                            <p class="mt-3" style="font-weight: 400;font-size:12px;"> Rappelle par email pour recueillir leur formation</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 p-4 ">
+                                        <h5>Reccueil de besoins</h5>
+                                        <div class="row ">
+                                            <div class="col">
+                                                <div class="float-start">
+                                                    <p>Nombre des besoins exprimés par les salarier</p>
+                                                </div>
+                                                <div class="float-end">
+                                                    @foreach ($besoin_count as $co)
+                                                    @if($co->id == $p->id)
+                                                        <p><span > {{ $co->besoins_count }}</span></p>
+                                                    @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row p-2" style="margin-top: -20px">
+
+                                            <div>
+                                                <span  class="te "><a href="{{route('liste.demande',$p->id)}}" class="btn btn-info  mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
+                                                <span class="te "> <a href="{{route('besoin.PDF',$p->id)}}" class="btn btn-primary  mt-2 text-light"> <i class="fa-solid fa-file-pdf" ></i>&nbsp; Export liste</a> </span>
 
                                         </div>
-                                      </div>
+                                    </div>
+                                        {{-- <div class="col-md-6 p-4 ">
+                                            <h5>Reccueil de besoins</h5>
+                                            <div class="row ">
+                                                <div class="col">
+                                                    <div class="float-start">
+                                                        <p>Nombre des besoins  exprimer par les salarier</p>
+                                                    </div>
+                                                    <div class="float-end">
 
+                                                        <p><span id="count"> </span></p>
+                                                    </div>
+                                                </div>
 
-                         @endforeach
+                                            </div>
+                                            <div class="row p-2" style="margin-top: -20px">
 
-                    </tbody>
-                </table>
+                                                    <div>
+                                                        <span  class="te "><a href="{{route('liste.demande',$p->id)}}" class="btn btn-info btn-sm mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
+                                                        <span class="te "> <a href="" class="btn btn-primary btn-sm mt-2 text-light"> <i class="fa-solid fa-file-pdf" ></i>&nbsp; Export liste</a> </span>
+
+                                                </div>
+                                            </div>
+                                            <div class="row " >
+                                                <div class="col mt-3">
+                                                    <div class="float-start">
+                                                        <p>Nombre valide par le N+</p>
+                                                    </div>
+                                                    <div class="float-end">
+                                                        <p>0</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row p-2" style="margin-top: -20px">
+                                                <div>
+                                                    <span  class="te "><a href="{{route('liste.demande',$p->id)}}" class="btn btn-info mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
+                                                    <span class="te "> <a href="{{route('besoin.PDF',$p->id)}}" class="btn btn-primary mt-2 text-light"> <i class="fa-solid fa-file-pdf" ></i>&nbsp; Export liste</a> </span>
+
+                                            </div>
+                                        </div> --}}
+                                        <div class="row " >
+                                            <div class="col mt-3">
+                                                <div class="float-start">
+                                                    <p>Nombre des demande traité par les N+</p>
+                                                </div>
+                                                <div class="float-end">                                                  
+                                                    @foreach ($besoinV_count as $coV)
+                                                        @if($coV->id == $p->id)
+                                                            <p><span > {{ $coV->besoins_count }}</span></p>
+                                                        @endif
+                                                    @endforeach   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row p-2" style="margin-top: -20px">
+                                            <div>
+                                                <a href="{{route('liste.demandeV',$p->id)}}" class="btn btn-warning mt-2 text-light"><i class="fa-solid fa-eye"></i>&nbsp;Voir liste</a>
+                                                <a href="" class="btn btn-primary mt-2 text-light"><i class="fa-solid fa-file-pdf"></i>&nbsp; Export liste</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @endforeach
+                </div>
+            </div>
+        @endcanany
+
+        @can('isManager')
+        <div class="row">
+            <div class="col">
+                <h3 class="lead">Liste de demande de Formation</h3>
+            </div>
         </div>
+        <div class="row my-2">
 
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-<script>
-     $( ".accepter" ).on( "change", function() {
-        $idAcueil = $('#id_recueil').val();
-        if($( this ).prop('checked')){
-            $statut = "Acceptée";
-            $idAcueil = $(this).data('id');
-        }
-        else{
-            $statut = "Refusée";
-            $idAcueil = $(this).data('id');
-        }
-
-        $.ajax({
-            type: "GET",
-            url: "{{route('accepter_demande')}}",
-            data:{Id:$idAcueil,Statut:$statut},
-            dataType: "html",
-            success:function(response){
-            //    alert(response[0]);
-                var userData=JSON.parse(response);
-                for (var $i = 0; $i < userData.length; $i++){
-                    $('#span_statut').text(userData[$i].statut);
-                    if (userData[$i].statut == "Acceptée") {
-                        $('#span_statut_'+userData[$i].id).css('background-color','green');
-                        $('#span_statut_'+userData[$i].id).css('color','white');
-                        $('#span_statut_'+userData[$i].id).css('padding','10px');
-                        $('#span_statut_'+userData[$i].id).text(userData[$i].statut);
-                        $('#statut_'+userData[$i].id).text('Refusée');
-                    }
-                    else{
-                        $('#span_statut_'+userData[$i].id).css('background-color','red');
-                        $('#span_statut_'+userData[$i].id).css('color','white');
-                        $('#span_statut_'+userData[$i].id).css('padding','10px');
-                        $('#span_statut_'+userData[$i].id).text(userData[$i].statut);
-
-                        $('#statut_'+userData[$i].id).text('Acceptée');
-                    }
-                }
-            },
-            error:function(error){
-                console.log(error)
-            }
-        });
-    });
-      // CSRF Token
-      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $(document).ready(function(){
-
-      $( "#annee_search" ).autocomplete({
-        source: function( request, response ) {
-          // Fetch data
-          $.ajax({
-            url:"{{route('searchDemandeAnnee')}}",
-            type: 'get',
-            dataType: "json",
-            data: {
-            //    _token: CSRF_TOKEN,
-               search: request.term
-            },
-            success: function( data ) {
-                // alert("eto");
-               response( data );
-            },error:function(data){
-                alert("error");
-                //alert(JSON.stringify(data));
-            }
-          });
-        },
-        select: function (event, ui) {
-           // Set selection
-           $('#annee_search').val(ui.item.label); // display the selected text
-           $('#annee_searchid').val(ui.item.value); // save selected id to input
-           return false;
-        }
-      });
-    });
-</script>
+              <div class="tab-content my-2" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="liste_dmd_formation" role="tabpanel" aria-labelledby="pills-home-tab">
+                    @foreach ($plan as $plan_recueil)
+                        <div class="row p-1 my-2 rounded justify-content-between text-secondary" style="background: rgb(245,242,242);">
+                            <div class="col-3 pt-1">
+                                {{$plan_recueil->AnneePlan}}
+                            </div>
+                            <div class="col-8 pt-1">{{ \Carbon\Carbon::parse($plan_recueil->debut_rec)->translatedFormat("j F Y")}} au {{ \Carbon\Carbon::parse($plan_recueil->fin_rec)->translatedFormat("j F Y")}}</div>
+                            <div class="col-1 text-end">
+                                @if (count($besoins) > 0)
+                                    <button class="btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$plan_recueil->id}}" aria-expanded="false" aria-controls="collapse">
+                                        <i class="fas fa-caret-down"></i>
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="collapse p-3" id="collapse{{$plan_recueil->id}}">
+                                <h6 class="text-secondary lead">Tous les demandes de votre équipe</h6>
+                                    <table class="table table-hover text-secondary my-3" style="font-size: .8rem;">
+                                        <thead>
+                                            <tr>
+                                                <th>Matricule</th>
+                                                <th>Nom stagiaire</th>
+                                                <th>Service</th>
+                                                <th>Fonction</th>
+                                                <th>Nom de formation</th>
+                                                <th>Objectif de besoin</th>
+                                                <th class="text-center">Date prév.</th>
+                                                <th>CFP souhaitée</th>
+                                                <th>Priorité</th>
+                                                <th class="text-center">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($besoins as $besoin)
+                                                @if ($plan_recueil->id == $besoin->anneePlan_id)
+                                                    <form action="" method="POST">
+                                                        @csrf
+                                                        <tr>
+                                                            <td class="text-secondary">{{$besoin->stagiaire->matricule}}</td>
+                                                            <td class="text-secondary">
+                                                                <span class="span{{$besoin->id}}">{{$besoin->stagiaire->nom_stagiaire}} {{ $besoin->stagiaire->prenom_stagiaire }}</span>
+                                                            </td>
+                                                            <td></td>
+                                                            <td class="text-secondary">{{$besoin->stagiaire->fonction_stagiaire}}</td>
+                                                            <td class="text-secondary">
+                                                                <input type="hidden" class="form-control input{{$besoin->id}}" name="nom_formation" id="nomFormation{{$besoin->id}}">
+                                                                <span class="span{{$besoin->id}}">{{ $besoin->formation->nom_formation}}</span>
+                                                            </td>
+                                                            <td class="text-secondary">
+                                                                <input type="hidden" class="form-control input{{$besoin->id}}" name="objectif" id="objectif{{$besoin->id}}">
+                                                                <span class="span{{$besoin->id}}">{{ $besoin->objectif}}</span>
+                                                            </td>
+                                                            <td class="text-center text-secondary">
+                                                                <input type="hidden" class="form-control input{{$besoin->id}}" name="date_prev" id="date_prev{{$besoin->id}}">
+                                                                <span class="span{{$besoin->id}}">{{ $besoin->date_previsionnelle}}</span>
+                                                            </td>
+                                                            <td class="text-secondary">
+                                                                <input type="hidden" class="form-control input{{$besoin->id}}" name="stagiaire" id="stagiaire{{$besoin->id}}">
+                                                                <span class="span{{$besoin->id}}">{{ $besoin->organisme}}</span>
+                                                            </td>
+                                                            <td class="text-secondary">
+                                                                <select name="type" id="type{{$besoin->id}}" class="form-control input{{$besoin->id}}" hidden>
+                                                                    <option value="{{ $besoin->type}}" selected hidden>{{ $besoin->type}}</option>
+                                                                    <option value="urgent">urgent</option>
+                                                                    <option value="non-urgent">non-urgent</option>
+                                                                </select>
+                                                                <span class="span{{$besoin->id}}">{{ $besoin->type}}</span>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if ($besoin->statut == 0)
+                                                                    <span class="bg-warning p-1 rounded text-white">En attente</span>
+                                                                @elseif ($besoin->statut == 1)
+                                                                    <span class="p-1 rounded text-white" style="background:#41D053;">Validé</span>
+                                                                @elseif ($besoin->statut == 2)
+                                                                    <span class="p-1 rounded text-white" style="background:#f54c49;">Refusé</span>
+                                                                @endif
+                                                            </td>
+                                                            @if ($besoin->statut == 0)
+                                                                <td class="action text-center">
+                                                                    @if (strtotime($plan_recueil->fin_rec) < strtotime('now'))
+                                                                    <a href="#" class="modifie btn btn-sm"id="{{$besoin->id}}"><i class="fas fa-edit text-primary"></i></a>
+                                                                    @endif
+                                                                    <a href="{{route('valideStatut',$besoin->id)}}" class="valide btn btn-sm" id="{{$besoin->id}}"><i class="fas fa-check ml-1" style="color: #41D053;"></i></a>
+                                                                    <a href="{{route('refuseSatut',$besoin->id)}}" class="refuse btn btn-sm" id="{{$besoin->id}}"><i class="fas fa-times ml-1" style="color: #F00E0B;"></i></a>
+                                                                </td>
+                                                            @elseif ($besoin->statut == 2)
+                                                                <td class="action text-center">
+                                                                    @if (strtotime($plan_recueil->fin_rec) < strtotime('now'))
+                                                                    <a href="#" class="modifie btn btn-sm"id="{{$besoin->id}}"><i class="fas fa-edit text-primary"></i></a>
+                                                                    @endif
+                                                                    <a href="{{route('valideStatut',$besoin->id) }}" class=" refuse btn btn-sm" id="{{$besoin->id}}"><i class="fas fa-check ml-1" style="color: #41D053;"></i></a>
+                                                                </td>
+                                                            @endif
+                                                        </tr>
+                                                    </form>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endcan
+</div>
 @endsection

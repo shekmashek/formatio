@@ -30,11 +30,13 @@ class Projet extends Model
 
     //recherche projet
     public function build_requette($role,$table,$request,$limit,$offset){
-        $sql = "select * from ".$table." where 1=1 ";
+
+        if(count(explode(' ',$table))>1)$sql = "select * from ".$table." ";
+        else if(count(explode(' ',$table))==1)$sql = "select * from ".$table." where 1 ";
         if (Gate::allows('isCFP') || Gate::allows('isFormateur')){
             // $domaine = $fonct->findAll("domaines");
             $sql = $sql." and cfp_id = ".$role;
-        }elseif(Gate::allows('isReferent') || Gate::allows('isManager') || Gate::allows('isStagiaire')){
+        }elseif(Gate::allows('isReferent') || Gate::allows('isReferentSimple')  || Gate::allows('isManager') || Gate::allows('isStagiaire')){
             $sql = $sql." and entreprise_id = ".$role;
         }
 
@@ -74,6 +76,40 @@ class Projet extends Model
             }
         }
         $sql = $sql." order by date_projet desc limit ".$limit." offset ".$offset;
+        return $sql;
+    }
+    public function requette_normal_stagiaire($table){
+        $sql = "select * from v_stagiaire_notstatut_eval";
+        return $sql;
+    }
+    public function build_requette_stagiare($id_stagiaire,$table,$request){
+        $sql = "select * from v_stagiaire_notstatut_eval where 1=1";
+        if (Gate::allows('isStagiaire')){
+            // $domaine = $fonct->findAll("domaines");
+            $sql = $sql." and stagiaire_id = ".$id_stagiaire;
+        }
+        if(empty($request->status) && empty($request->module) && empty($request->formation) && empty($request->mois) && empty($request->trimestre) && empty($request->semestre)){
+            return $sql." order by date_debut desc";
+        }
+        if($request->mois != 'null'){
+            $sql = $sql." and month(date_debut) = ".$request->mois;
+        }
+        if(!empty($request->module)){
+            if($request->module!='null'){
+                $sql = $sql." and nom_module = '".$request->module."'";
+            }
+        }
+        if(!empty($request->formation)){
+            if($request->formation!='null'){
+                $sql = $sql." and nom_formation = '".$request->formation."'";
+            }
+        }
+        if(!empty($request->status)){
+            if($request->status!='null'){
+                $sql = $sql." and item_status_groupe = '".$request->status."'";
+            }
+        }
+        $sql = $sql." order by date_debut desc";
         return $sql;
     }
 

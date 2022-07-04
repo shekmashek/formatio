@@ -18,6 +18,10 @@ copier le script create table coupon dans abonnement
 --31mai
 copier le script alter table add coupon_id dans abonnement
 recopier les view abonnement
+--15juin
+copier le script create table employers dans bdd_suiviformation_mis_a_jour_3 : entreprises
+copier le script dans bdd_suiviformation_view_employes
+recopier view v_stagiaire_entreprise dans bdd_suiviformation_view_1(view miasa + avis)
 
 
 

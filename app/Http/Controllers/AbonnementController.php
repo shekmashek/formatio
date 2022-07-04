@@ -490,7 +490,7 @@ class AbonnementController extends Controller
         // $nb = abonnement::where('entreprise_id', $entreprise_id)->count();
 
         $user_id = Auth::user()->id;
-        if (Gate::allows('isReferent')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
             $typeAbonnement =$this->fonct->findWhereMulitOne('type_abonnements_etp',['id'],[$id]);
 
             $resp =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);

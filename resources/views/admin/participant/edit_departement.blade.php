@@ -12,7 +12,7 @@
 <div class="col-lg-4">
     <div class="p-3 form-control">
 
-        <form   class="btn-submit" action="{{route('update_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
+        <form   class="btn-submit" action="{{route('update_departemennt_service',$stagiaire->id)}}" method="post" enctype="multipart/form-data" >
             @csrf
 
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -35,24 +35,16 @@
                   </div>
             </center> --}}
 
-                        <select hidden  value="{{$stagiaire->genre_stagiaire}}" name="genre" class="form-select test" id="genre"  >
-                          <option value="{{$stagiaire->genre_stagiaire}}"  >Homme</option>
+                        <select hidden  value="{{$stagiaire->genre_id}}" name="genre" class="form-select test" id="genre"  >
+                          <option value="{{$stagiaire->genre_id}}"  >Homme</option>
                           <option value="Femme">Femme</option>
 
                         </select>
 
-                        <select hidden value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
-                            <option value="Mr">Mr</option>
-                            <option value="Mme">Mme</option>
-                            <option value="Mlle">Mlle</option>
-                            <option value="Dr">Dr</option>
-                            <option value="Prof">Prof</option>
-                            <option value="Dir">Dir</option>
-                            <option value="PDG">PDG</option>
-                        </select>
 
 
-                        <input type="hidden" class="form-control test" name="date" value="{{ $stagiaire->date_naissance }}">
+
+                        <input type="hidden" class="form-control test" name="date_naissance" value="{{ $stagiaire->date_naissance }}">
 
                           <input type="hidden" value="{{ $stagiaire->cin}}" class="form-control test"  name="cin" >
 
@@ -86,22 +78,26 @@
 
                     <input type="hidden" class="form-control test"  name="entreprise"  value="   {{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
 
-                    <input type="hidden" value="{{ $branche->nom_branche }}"  class="form-control"  name="lieu" placeholder="Matricule" readonly>
                     <div class="row px-3 mt-4">
                         <div class="form-group mt-1 mb-1">
 
-                    {{-- <input type="text" class="form-control test"  name="departement" value="   {{ optional(optional($stagiaire)->departement)->nom_departement }}" > --}}
-                    <select name="" id="" class="form-select test input">
-                      @for ($i = 0;$i<count($liste_dep);$i++)
-                        <option value="">{{$liste_dep[$i]->nom_departement}}</option>
-                      @endfor
-                    </select>
-                    {{-- <select name="" id="" class="form-select test">
-                      @for ($i = 0;$i<count($liste_service);$i++)
-                        <option value="">{{$liste_service[$i]->nom_service}}</option>
-                      @endfor
-                    </select> --}}
-                    <label class="ml-3 form-control-placeholder" >Departement</label>
+                    @if ($departement!=null)
+                        <label for="">Département</label>
+                        <select name="dep" class="form-select test input" id="dep">
+                          @foreach ($departement as $dep)
+                            <option value="{{$dep->departement_entreprise_id}}">{{$dep->nom_departement}}</option>
+                          @endforeach
+                        </select><br>
+                        <label for="">Service</label>
+                        <select  name="serv" class="form-select test input serv">
+                          @foreach ($departement as $dep)
+                            <option value="{{$dep->service_id}}">{{$dep->nom_service}}</option>
+                          @endforeach
+                        </select>
+                    @else
+                        <p>Votre entreprise n'a pas de département/service</p>
+                    @endif
+
 
                 </div>
             </div>
@@ -112,5 +108,38 @@
 </div>
 </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+$("#dep").change(function() {
+  $(".serv").empty();
+  var id = $(this).val();
 
+  $.ajax({
+        url: "/get_service",
+        type: "get",
+        data: {
+            id: id,
+        },
+        success: function(response) {
+            var userData = response;
+            if (userData.length > 0) {
+                for (var $i = 0; $i < userData.length; $i++) {
+                    $(".serv").append(
+                        '<option value="' +
+                            userData[$i].id +
+                            '" data-value="' +
+                            userData[$i].nom_service +
+                            '" >' +
+                            userData[$i].nom_service +
+                            "</option>"
+                    );
+                }
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        },
+    });
+});
+</script>
 @endsection

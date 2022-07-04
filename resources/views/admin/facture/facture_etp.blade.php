@@ -333,14 +333,14 @@
                                         <tr>
                                             <td>
                                                 @if($actif->facture_encour =="en_cour"  || $actif->facture_encour =="terminer")
-                                                    
+
                                                     <h6><a href="#collapseprojet_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
 
                                                 @endif
-                        
+
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
 
                                                     @if ($actif->reference_type_facture == "Facture")
                                                     <div style="background-color: green; border-radius: 10px; text-align: center;color: white">
@@ -364,39 +364,39 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     {{$actif->num_facture}}
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     {{$actif->nom_etp}}
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     {{$actif->invoice_date}}
                                                 </a>
                                             </td>
-                                            <td> <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            <td> <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
 
                                                     {{$actif->due_date}}
                                                 </a>
                                             </td>
-                                            <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            <td><a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     <div align="right">
                                                         {{$devise->devise." ".number_format($actif->montant_total,0,","," ")}}
                                                     </div>
                                                 </a>
                                             </td>
-                                            <td><a href="{{route('detail_facture',$actif->num_facture)}}">
+                                            <td><a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
                                                     <div align="right">
                                                         {{$devise->devise." ".number_format($actif->dernier_montant_ouvert,0,","," ")}}
                                                     </div>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{route('detail_facture',$actif->num_facture)}}">
+                                                <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">
 
                                                     @if($actif->dernier_montant_ouvert<=0) <div style="background-color: rgb(109, 127, 220); border-radius: 10px; text-align: center;color:white">
                                                         payé
@@ -428,7 +428,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                        
+
                                         <tr>
                                             <td colspan="9" class="table inner table-hover m-0 p-0 collapse table-borderless" id="collapseprojet_{{$actif->num_facture}}" aria-labelledby="collapseprojet_{{$actif->num_facture}}">
                                                 @if(count($encaissement)>0)
@@ -474,7 +474,7 @@
                                             <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                         </tr>
                                         @endif
-                                        
+
                                     </tbody>
                                 </table>
 
@@ -652,7 +652,7 @@
                                                 <td colspan="11" class="text-center" style="color:red;">Aucun Résultat</td>
                                             </tr>
                                             @endif
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -705,7 +705,7 @@
                                                     @foreach ($facture_payer as $actif)
                                                     <tr>
                                                         <td>
-                                                            <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>   
+                                                            <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
                                                         </td>
                                                         <td>
                                                             <a href="{{route('detail_facture_etp',[$actif->cfp_id,$actif->num_facture])}}">

@@ -12,12 +12,15 @@ use App\cfp;
 use App\formateur;
 use App\responsable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\collaboration\inscription_cfp_etp_mail;
 use App\Mail\collaboration\inscription_etp_cfp_mail;
 use App\Mail\collaboration\invitation_cfp_etp_mail;
 use App\Mail\collaboration\invitation_etp_cfp_mail;
+use App\Mail\FormateurMail;
+use Carbon\Carbon;
 
 class CollaborationController extends Controller
 {
@@ -56,7 +59,7 @@ class CollaborationController extends Controller
 
                     return $msg;
                 } else {
-                    return back()->with('error', "une invitation a été déjà envoyer sur ce responsable!");
+                    return back()->with('error', "une invitation a été déjà envoyé à ce responsable!");
                 }
             } else { // demande de creer un compte
                 //     Mail::to($req->email_resp)->send(new inscription_cfp_etp_mail($cfp->nom, $responsable_cfp->nom_resp_cfp, $responsable_cfp->prenom_resp_cfp, $responsable_cfp->email_resp_cfp, $req->email_resp));
@@ -74,6 +77,7 @@ class CollaborationController extends Controller
             $entreprise_id = responsable::where('user_id', $user_id)->value('entreprise_id');
             $entreprise = $this->fonct->findWhereMulitOne("entreprises", ["id"], [$entreprise_id]);
             $responsable_etp = $this->fonct->findWhereMulitOne("responsables", ["entreprise_id", "user_id"], [$entreprise_id, $user_id]);
+
             $responsable_cfp = $this->fonct->findWhereMulitOne("responsables_cfp", ["email_resp_cfp"], [$req->email_cfp]);
 
             if ($responsable_cfp != null) {
@@ -89,7 +93,7 @@ class CollaborationController extends Controller
 
                     return $msg;
                 } else {
-                    return back()->with('error', "une invitation a été déjà envoyer sur ce Organisme de Formation Professionel!");
+                    return back()->with('error', "une invitation a été déjà envoyé à ce Organisme de Formation Professionel!");
                 }
             } else { // send mail inscription
 
@@ -127,26 +131,68 @@ class CollaborationController extends Controller
     public function create_cfp_formateur(Request $req)
     {
         $user_id = Auth::user()->id;
-        $cfp_id = $this->fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
-
-        $formateur = $this->fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$req->email_format]);
+        $cfp = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id]);
+        $fonct = new FonctionGenerique();
         if (Gate::allows('isInvite') || Gate::allows('isPending')) return back()->with('error', "Vous devez faire un abonnement avant de faire une collaboration");
         else {
-            if ($formateur != null) {
-                $verify1 = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$cfp_id, $formateur->id]);
-                $verify2 = $this->fonct->verifyGenerique("demmande_formateur_cfp", ["demmandeur_formateur_id", "inviter_cfp_id"], [$formateur->id, $cfp_id]);
-                $verify = $verify1->id + $verify2->id;
-                if ($verify <= 0) {
-                    return $this->collaboration->verify_collaboration_cfp_formateur($cfp_id, $formateur->id, $req->nom_format);
-                } else {
-                    return back()->with('error', "une invitation a été déjà envoyer sur formateur!");
+
+            // /**On doit verifier le dernier abonnement de l'of pour pouvoir limité le formateur à ajouter */
+
+            $current_month = Carbon::now()->month;
+            $date_dem = DB::select('SELECT * from demmande_cfp_formateur where YEAR(created_at) = ? ',[$current_month]);
+            $cfp_id = $this->fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [Auth::id()])->cfp_id;
+            $nb_formateur = DB::select('SELECT * from demmande_cfp_formateur where demmandeur_cfp_id = ? and MONTH(created_at) = ? ',[$cfp_id,$current_month]);
+            $abonnement_cfp =  DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1',[$cfp_id]);
+            if($abonnement_cfp != null){
+                if($abonnement_cfp[0]->nb_formateur <= count($nb_formateur) && $abonnement_cfp[0]->illimite == 0){
+                    return back()->with('error', "Vous avez atteint le nombre maximum de formateur, veuillez upgrader votre compte pour ajouter plus de formateur");
                 }
-            } else {
-                // envoyer email avec creer un nouveau compte ou utiliser compte existant
-                return back()->with('success', "une invitation est envoye sur l'adresse mail en démandant!");
+                if(User::where('email', $req->email_format)->exists() == false){
+                /**creer formateur(nom, email) */
+                    $user = new User();
+                    $user->name = $req->nom_format . " " . $req->prenom_format;
+                    $user->email = $req->email_format;
+                    $ch1 = '0000';
+                    $user->password = Hash::make($ch1);
+                    $user->save();
+
+                    $user_formateur_id = $fonct->findWhereMulitOne("users", ["email"], [$req->email_format])->id;
+                    DB::beginTransaction();
+                    try {
+                        $fonct->insert_role_user($user_formateur_id, "4",false,true); // formateur
+                        DB::commit();
+                    } catch (Exception $e) {
+                        DB::rollback();
+                        echo $e->getMessage();
+                    }
+
+                    $frm = new formateur();
+                    $frm->nom_formateur = $req->nom_format;
+                    $frm->prenom_formateur = $req->prenom_format;
+                    $frm->mail_formateur = $req->email_format;
+                    $frm->user_id = $user_formateur_id;
+                    $frm->save();
+                }
+                /**inserer formateur dans demande frmateur */
+                $formateur = $this->fonct->findWhereMulitOne("formateurs", ["mail_formateur"], [$req->email_format]);
+                if ($formateur != null) {
+                    $verify1 = $this->fonct->verifyGenerique("demmande_cfp_formateur", ["demmandeur_cfp_id", "inviter_formateur_id"], [$cfp->cfp_id, $formateur->id]);
+                    $verify2 = $this->fonct->verifyGenerique("demmande_formateur_cfp", ["demmandeur_formateur_id", "inviter_cfp_id"], [$formateur->id, $cfp->cfp_id]);
+                    $verify = $verify1->id + $verify2->id;
+                    if ($verify <= 0) {
+                        Mail::to($formateur->mail_formateur)->send(new FormateurMail($formateur->nom_formateur,$formateur->prenom_formateur,$cfp->nom_resp_cfp,$formateur->mail_formateur,$cfp->email_resp_cfp));
+                        return $this->collaboration->verify_collaboration_cfp_formateur($cfp->cfp_id, $formateur->id, $req->nom_format);
+                    } else {
+                        return back()->with('error', "une invitation a été déjà envoyé à ce formateur!");
+                    }
+                } else {
+                    // envoyer email avec creer un nouveau compte ou utiliser compte existant
+                    return back()->with('success', "une invitation est envoyé à l'adresse mail en démandant!");
+                }
             }
         }
     }
+
 
     // =========================  annule cfp à etp et etp à cfp
 

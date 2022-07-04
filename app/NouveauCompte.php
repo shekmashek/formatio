@@ -53,10 +53,10 @@ class NouveauCompte extends Model
     public function insert_resp_ETP($doner, $entreprise_id, $user_id)
     {
         $data = [
-            $doner["matricule"], $doner["nom_resp"], $doner["prenom_resp"], $doner["cin_resp"], $doner["email_resp"],
+            $doner["matricule_emp"], $doner["nom_emp"], $doner["prenom_emp"], $doner["cin_emp"], $doner["email_emp"],
             $entreprise_id, $user_id
         ];
-        DB::insert('insert into responsables(matricule,nom_resp,prenom_resp,cin_resp,email_resp
+        DB::insert('insert into employers(matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp
         ,entreprise_id,user_id,activiter,created_at,prioriter) values(?,?,?,?,?,?,?,1,NOW(),true)', $data);
         DB::commit();
     }

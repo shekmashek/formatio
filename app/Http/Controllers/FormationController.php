@@ -62,7 +62,7 @@ class FormationController extends Controller
             $domaine_col4 = DB::select('select * from domaines limit ' . $offset . ' offset ' . ($offset * 3) . '');
             return view('referent.catalogue.formation', compact('domaines', 'categorie', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
         }
-        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
+        if (Gate::allows('isReferent') || Gate::allows('isReferentSimple') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             //liste formation
             $categorie = formation::orderBy('nom_formation')->get();
             $domaines = Domaine::all();
@@ -344,7 +344,7 @@ class FormationController extends Controller
 
         $module = module::all();
         // $modules=module::where(['status', 2])->where(['etat_id', 1])->get();
-        return view('superadmin.catalogue.formation_publier', compact('module', 'modules'));
+        return view('superadmin.catalogue.formation_publier', compact('module'));
     }
     public function ajout_categorie(Request $request)
     {
@@ -406,7 +406,8 @@ class FormationController extends Controller
         } else {
             $nbPagination = 1;
         }
-        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
+        $entreprise_id = $this->fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id]);
+        if (Gate::allows('isReferent') || Gate::allows('isReferentSimple') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
             $cfps = $this->fonct->findWhereTrieOrderBy("cfps", [1], ["="], [1], ["nom"], "ASC", ($nbPagination), $nb_limit);
             $totaleData = $this->fonct->getNbrePagination("cfps", "id", [], [], [], "");
@@ -414,8 +415,10 @@ class FormationController extends Controller
             $secteurs = $this->fonct->findAll("secteurs");
             $user_id = Auth::id();
             $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
-            $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
-            $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1, $resp_etp_connecter->entreprise_id]);
+
+           if(Gate::allows('isReferent')) $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$entreprise_id->entreprise_id, $resp_etp_connecter->id]);
+
+            $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1,$entreprise_id->entreprise_id]);
             $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis, md.cfp_id from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id join cfps as cfp on md.cfp_id = cfp.id where md.cfp_id = cfp.id group by md.cfp_id');
             $type_abonnement = DB::select('select abc.type_abonnement_id, tpof.nom_type, abc.cfp_id from abonnement_cfps as abc join type_abonnements_of as tpof on abc.type_abonnement_id = tpof.id join cfps as cfp on abc.cfp_id = cfp.id where abc.cfp_id = cfp.id and abc.activite = 1');
             // dd($type_abonnement);
@@ -570,8 +573,10 @@ class FormationController extends Controller
         $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id where md.cfp_id = ?',[$id]);
         $user_id = Auth::id();
         $resp_etp_connecter = $fonct->findWhereMulitOne('responsables', ["user_id"], [$user_id]);
-        $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
-        $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1, $resp_etp_connecter->entreprise_id]);
+        if(Gate::allows('isReferent')) $responsable = DB::select("select * from responsables where entreprise_id=? and id!=?", [$resp_etp_connecter->entreprise_id, $resp_etp_connecter->id]);
+        $entreprise_id = $this->fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id]);
+
+        $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1, $entreprise_id->entreprise_id]);
         $type_abonnement = DB::select('select abc.type_abonnement_id, tpof.nom_type, abc.cfp_id from abonnement_cfps as abc join type_abonnements_of as tpof on abc.type_abonnement_id = tpof.id join cfps as cfp on abc.cfp_id = cfp.id where abc.cfp_id = cfp.id and abc.activite = 1');
     //    dd($cfp);
         return view('referent.catalogue.detail_cfp', compact('cfp', 'liste_avis','liste_avis_count', 'avis_cfp', 'avis_etoile', 'formation', 'reseau_sociaux', 'horaire', 'modules_counts', 'modules', 'devise', 'domaine_cfp','collaboration','type_abonnement'));

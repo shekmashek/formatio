@@ -1,0 +1,39 @@
+modification table formateurs pour ajout de colonne"description" dans son CV:
+alter Table formateurs add COLUMN description text not null default "";
+
+alter table formateurs
+Modify column  `prenom_formateur` varchar(191) COLLATE utf8mb4_unicode_ci not null,
+Modify column  `mail_formateur` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+Modify column  `numero_formateur` varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+Modify column  `photos` varchar(191) COLLATE utf8mb4_unicode_ci NULL,
+Modify column `created_at` timestamp NULL DEFAULT current_timestamp(),
+Modify column  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+Modify column  genre_id bigint(20) unsigned,
+Modify column  `date_naissance` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
+Modify column  `adresse` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
+Modify column  `cin` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
+Modify column  `specialite` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
+Modify column  `niveau_etude_id` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
+Modify column `activiter` boolean  null default true;
+
+SELECT *
+FROM
+`v_groupe_projet_entreprise`
+WHERE projet_id in (
+    select projet_id
+    from v_stagiaire_groupe
+    where departement_id = 2
+);
+
+SELECT  *,details.id as details_id  from details
+                inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
+                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+                INNER JOIN modules ON groupes.module_id = modules.id
+                INNER JOIN formations ON modules.formation_id = formations.id
+                inner join formateurs on details.formateur_id = formateurs.id
+                inner join projets on details.projet_id = projets.id
+                inner join type_formations on projets.type_formation_id = type_formations.id
+                inner join cfps on details.cfp_id = cfps.id
+                where groupe_entreprises.entreprise_id = 2
+and projets.id in (SELECT `projet_id` FROM `v_participant_groupe_detail`  where detail_id = details.id  and departement_id = 2)

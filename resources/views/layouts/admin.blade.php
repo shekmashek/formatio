@@ -24,6 +24,10 @@
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
+
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         .modal-backdrop{
             z-index: 1 !important;
@@ -31,6 +35,25 @@
     </style>
 </head>
 <body>
+    @if ($message = Session::get('creation_inter_error'))
+        <div class="modal" tabindex="-1">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger ms-2 me-2">
+                        <ul>
+                            <li>{{ $message }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    @endif
+
     <div class="sidebar active">
         {{-- <div class="logo_content">
             <div class="logo">
@@ -50,7 +73,7 @@
 
 
 
-            @canany(['isReferent'])
+            @canany(['isReferent','isReferentSimple'])
             <li>
                 <a href="{{ route('afficher_iframe_entreprise') }}" class="d-flex BI nav_linke">
                     <i class='bx bxs-pie-chart-alt-2'></i>
@@ -164,7 +187,7 @@
 
             </li>
             @endcan
-            @can('isReferent')
+            @canany(['isReferent','isReferentSimple'])
             <li>
                 <a href="{{route('list_cfp')}}" class="d-flex organisme nav_linke">
                     <i class='bx bxs-business'></i>
@@ -172,7 +195,7 @@
                 </a>
 
             </li>
-            @endcan
+            @endcanany
             {{-- projet de formation --}}
 
             {{-- @canany(['isCFP','isFormateur'])
@@ -197,15 +220,15 @@
             </li>
             </li>
             @endcanany --}}
-            {{-- @canany(['isReferent'])
+            @canany(['isReferent','isReferentSimple','isManager'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex projet nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
             </li>
-            @endcanany --}}
-            @canany(['isReferent','isManager','isStagiaire'])
+            @endcanany
+            @canany(['isReferent','isReferentSimple','isManager','isStagiaire'])
             <li>
                 <a href="{{route('formations')}}" class="d-flex nav_linke">
                     <i class='bx bxl-netlify'></i>
@@ -214,7 +237,7 @@
 
             </li>
             @endcanany
-            @canany(['isReferent'])
+            @canany(['isReferent','isReferentSimple'])
             <li>
                 <a href="{{route('formateurs')}}" class="d-flex nav_linke">
                     <i class='bx bxs-user-pin'></i>
@@ -404,7 +427,7 @@
 
             </li>
             @endcanany --}}
-            @canany(['isCFP','isReferent'])
+            @canany(['isCFP','isReferent','isReferentSimple'])
             <li>
                 <a href="{{route('liste_facture')}}" class="d-flex facture nav_linke">
                     <i class='bx bxs-bank'></i>
@@ -447,14 +470,15 @@
             @endcanany
 
             {{-- plan de formation --}}
-            {{-- @canany(['isStagiaire','isManager','isReferent'])
+            @canany(['isStagiaire','isManager','isReferent','isReferentSimple'])
             <li>
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
-                    <i class='bx bx-scatter-chart'></i>
+                    <i class="fa-solid fa-earth-asia"></i>
                     <span class="links_name">Plan</span>
                 </a>
             </li>
+            @endcanany
             {{-- integrer dans la page
             <li>
                 <a href="{{route('listePlanFormation')}}" class="d-flex nav_linke">
@@ -462,7 +486,7 @@
                     <span class="links_name">Liste Plan</span>
                 </a>
             </li> --}}
-            {{-- @endcanany --}}
+            {{-- @endcanany
             {{-- abonemment --}}
             @canany(['isSuperAdmin','isAdmin'])
             <li>
@@ -514,22 +538,22 @@
                 <span class="links_name">Reporting</span>
                 </a>
             </li> --}}
-            @can('isCFP')
-            {{-- <li>
+            {{-- @can('isCFP')
+            <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
                     <i class='bx bx-book-add'></i>
                     <span class="links_name">Librairies</span>
                 </a>
-            </li> --}}
-            {{-- <li>
+            </li>
+            <li>
                 <a href="{{route('gestion_documentaire')}}" class="d-flex nav_linke">
-                    {{-- <i class='bx bx-book-add'></i> --}
+                    <i class='bx bx-book-add'></i>
 
 
                     <span class="links_name">Librairies</span>
                 </a>
-            </li> --}}
-            @endcan
+            </li>
+            @endcan --}}
         </ul>
 
         {{-- <div class="profile_content">
@@ -571,7 +595,7 @@
                             <div style="margin-left:90px;margin-top:-10px;font-size:30px;">@yield('title')</div>--}}
                 </div>
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
-                    @canany(['isReferent','isStagiaire','isManager'])
+                    @canany(['isReferent','isStagiaire','isManager','isReferentSimple'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
 
@@ -597,28 +621,33 @@
                         </div>
                     </div>
                     @endcanany
-                    @canany(['isReferent','isManager'])
+
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
+                            @canany(['isReferent','isManager','isReferentSimple','isStagiaire'])
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('calendrier_formation')}}" class="text-center agenda" role="button"><span
                                         class="d-flex flex-column text-center"><i
                                             class='bx bxs-calendar-edit mb-2 mt-1'></i><span
                                             class="text_racourcis">Agenda</span></span></a>
                             </div>
-                            <div class="btn_racourcis me-4">
-                                <a href="{{route('employes.liste')}}" class="employe text-center" role="button"><span
-                                        class="d-flex flex-column"><i class='bx bxs-user-detail mb-2 mt-1'></i><span
-                                            class="text_racourcis">employés</span></span></a>
-                            </div class="btn_racourcis">
+                            @endcanany
+                            @canany(['isReferent','isManager','isReferentSimple'])
+                                <div class="btn_racourcis me-4">
+                                    <a href="{{route('employes.liste')}}" class="employe text-center" role="button"><span
+                                            class="d-flex flex-column"><i class='bx bxs-user-detail mb-2 mt-1'></i><span
+                                                class="text_racourcis">employés</span></span></a>
+                                </div class="btn_racourcis">
+                            @endcanany
                             {{-- <div class="btn_racourcis me-4">
-                                <a href="{{route('employes')}}" class="text-center equipe" role="button"><span
+                                <a href="{{route('employes')}}" class="text-center" role="button"><span
                                         class="d-flex flex-column"><i class='bx bxs-group mb-2 mt-1'></i><span
                                             class="text_racourcis">Equipe</span></span></a>
                             </div> --}}
                         </div>
                     </div>
-                    @endcan
+
+
 
                     {{-- @canany(['isCFP','isFormateur'])
                     <div class="row">
@@ -700,25 +729,25 @@
                 </div>
                 <div class="col-5 header-right align-items-center d-flex flex-row">
                     <div class="col-4 d-flex flex-row justify-content-center apprendCreer pb-3">
-                        @can('isStagiaire')
+                        {{-- @can('isStagiaire')
                         <div class="col-5 header-right">
                             <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
                                 <div class="btn_racourcis" id="text_apprendre">
                                     {{-- <span class="text_apprendre" role="button"><i class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
+                                    {{-- <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        @endcan
-                        @can('isManager')
+                        @endcan --}}
+                        {{-- @can('isManager')
                         <div class="col-5 header-right">
                             <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
                                 <div class="btn_racourcis" id="text_apprendre">
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
-                                    <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
+                                    {{-- <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
                                 </div>
@@ -943,11 +972,11 @@
                                                 <i class="bx bx-customize icon_plus"></i>&nbsp; Nouveau Module
                                             </a>
                                         </li>
-                                        <li id="formateurs">
+                                        {{-- <li id="formateurs">
                                             <a class="dropdown-item" href="{{route('nouveau_formateur')}}">
                                                 <i class="bx bxs-user-rectangle icon_plus "></i>&nbsp; Nouveau Formateur
                                             </a>
-                                        </li>
+                                        </li> --}}
                                         @can('isPremium')
                                             <li id="projet">
                                                 <a class="dropdown-item"
@@ -970,7 +999,7 @@
                                     </ul>
                                     @canany(['isCFPPrincipale','isPremium'])
                                         <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog icon_creer_admin'></i></a>
-                                        <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuLink">
+                                        <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuParametre">
                                             <li id="parametre">
                                                 <a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}">
                                                     <i class="bx bx-info-circle icon_plus  "></i>&nbsp; Information légales
@@ -1004,9 +1033,9 @@
                                                     @can('isStagiairePrincipale')
                                                         <a href="{{route('profile_stagiaire')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
                                                     @endcan
-                                                    @can('isReferentPrincipale')
+                                                    @canany(['isReferent','isReferentSimple'])
                                                         <a href="{{route('profil_referent')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
-                                                    @endcan
+                                                    @endcanany
                                                     @can('isCFPPrincipale')
                                                         <a href="{{route('profil_du_responsable')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
                                                     @endcan
@@ -1038,7 +1067,7 @@
                                         <div class="card-title">
                                             <div class="row px-3">
                                                 <div class="col-7">
-                                                    <span class="titre_card"><img src="{{asset('img/logos_all/iconFormation.webp')}}" alt="logo_mini" title="logo formation.mg" width="30px" height="30px">Formation.mg</span>
+                                                    <span class="titre_card_profil"><img src="{{asset('img/logos_all/iconFormation.webp')}}" alt="logo_mini" title="logo formation.mg" width="30px" height="30px">Formation.mg</span>
                                                 </div>
                                                 <div class="col-5 text-center">
                                                     <div class="logout">
@@ -1248,7 +1277,7 @@
                                             de formation</span></a>
                                 </div>
                             </li>
-                            <li class="list-group-item  align-items-start">
+                            {{-- <li class="list-group-item  align-items-start">
                                 <a class="accordion-toggle d-flex justify-content-between listeApprendre"
                                     id="accApprForm" data-bs-toggle="collapse" data-bs-parent="#accordion"
                                     href="#apprFormateur">
@@ -1261,14 +1290,14 @@
                                     <hr>
                                     <a href="{{route('nouveau_formateur')}}"><span>Cliquer ici pour ajouter un formateur</span></a>
                                 </div>
-                            </li>
+                            </li> --}}
 
                             <li class="list-group-item align-items-start listeApprendre">
                                 <a class="accordion-toggle d-flex justify-content-between listeApprendre"
                                     id="accApprInter" data-bs-toggle="collapse" data-bs-parent="#accordion"
                                     href="#apprInter">
                                     <div class="ms-2 me-auto">
-                                        <div class=" text-sm">3. Collaborer avec les entreprises qui ont des projets en
+                                        <div class=" text-sm">2. Collaborer avec les entreprises qui ont des projets en
                                             commun avec vous </div>
                                     </div>
                                     <span class="fas fa-angle-down"></span>
@@ -1287,7 +1316,7 @@
                     <div class="tutorielApprendreStagiaire">Stagiaire</div>
                     @endcan
 
-                    @can('isReferent')
+                    @canany(['isReferent','isReferentSimple'])
                     <div class="tutorielApprendreReferent">Referent</div>
                     @endcan
 
@@ -1463,6 +1492,7 @@
         });
 
         $(document).ready(function() {
+
             var pdp = "";
             $.ajax({
                 url: '{{ route("profile_resp") }}'

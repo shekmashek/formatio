@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\NiveauController;
+use App\PlanFormation;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,7 @@ Route::get('/homertdbq/{id?}', 'HomeControllerRTDBQ@index')->name('homertdbq');
 Route::get('budget_previsionnel', 'HomeController@budget_previsionnel')->name('budget_previsionnel');
 
 Route::get('/liste_projet/{id?}/{page?}', 'HomeController@liste_projet')->name('liste_projet');
+/* Route::get('/liste_projet_stagiaire', 'HomeController@liste_projet_stagiaire')->name('liste_projet_stagiaire'); */
 Route::get('/liste', 'HomeController@liste')->name('liste');
 Route::get('/compte', 'HomeController@compte')->name('compte');
 Route::get('/detail_projet/{id}', 'HomeController@detail')->name('detail_projet');
@@ -167,6 +169,7 @@ Route::get('destroy_groupe/{id}', 'GroupeController@destroy')->name('destroy_gro
 Route::post('update_groupe/{idGroupe}', 'GroupeController@update')->name('update_groupe');
 Route::post('nouveau_session_inter', 'GroupeController@storeInter')->name('nouveau_session_inter');
 Route::get('session_inter/{id?}', 'GroupeController@sessionInter')->name('session_inter');
+Route::get('controlle_module','GroupeController@controlle_module')->name('controlle_module');
 //route entreprise
 Route::resource('entreprise', 'EntrepriseController')->except([
     'create', 'edit', 'destroy', 'update'
@@ -245,6 +248,13 @@ Route::post('/update_email_formateur/{id}', 'ProfController@update_email_formate
 Route::post('/update_telephone_prof/{id}','ProfController@update_telephone_prof')->name('update_telephone_prof');
 Route::post('/update_niveau_prof/{id}','ProfController@update_niveau_prof')->name('update_niveau_prof');
 Route::post('/update_photos_prof/{id}','ProfController@update_photos_prof')->name('update_photos_prof');
+Route::post('/update_description_formateur/{id}','ProfController@update_description_formateur')->name('update_description_formateur');
+Route::post('/update_specialite_prof/{id}','ProfController@update_specialite_prof')->name('update_specialite_prof');
+Route::post('/update_fin_travail/{id}','ProfController@update_fin_travail')->name('update_fin_travail');
+Route::post('/update_debut_travail/{id}','ProfController@update_debut_travail')->name('update_debut_travail');
+Route::post('/addCompetence/{id}','ProfController@addCompetence')->name('addCompetence');
+Route::post('/addExperience/{id}','ProfController@addExperience')->name('addExperience');
+
 //collabforfateur
 Route::get('/collabformateur', 'ProfController@affiche')->name('collabformateur');
 //route formateur profil
@@ -252,7 +262,9 @@ Route::get('/profile_formateur/{id?}', 'ProfController@profile_formateur')->name
 Route::middleware(['can:isReferent' || 'can:isSuperAdmin'])->group(function () {
     Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 });
+Route::get('/accueilFormateur', 'ProfController@accueil')->name('accueilFormateur');
 //Route update par champs prof
+Route::get('/editer_cv/{id?}', 'ProfController@editCVProf')->name('edit_cv');
 Route::get('/editer_nom/{id}', 'ProfController@editer_nom')->name('editer_nom');
 Route::get('/editer_naissance/{id}', 'ProfController@editer_naissance')->name('editer_naissance');
 Route::get('/editer_genre/{id}', 'ProfController@editer_genre')->name('editer_genre');
@@ -270,7 +282,12 @@ Route::get('/editer_domaine/{id}', 'ProfController@editer_domaine')->name('edite
 Route::get('/editer_poste/{id}', 'ProfController@editer_poste')->name('editer_poste');
 Route::get('/editer_nom_etp/{id}', 'ProfController@editer_nom_etp')->name('editer_nom_etp');
 Route::get('/editer_fonction/{id}', 'ProfController@editer_fonction')->name('editer_fonction');
-
+Route::get('/editer_specialite/{id?}', 'ProfController@editer_specialite')->name('editer_specialite');
+Route::get('/editer_about/{id?}', 'ProfController@editer_about')->name('editer_about');
+Route::get('/editer_debut/{id?}', 'ProfController@editer_debut')->name('editer_debut');
+Route::get('/editer_fin/{id?}', 'ProfController@editer_fin')->name('editer_fin');
+Route::get('/ajout_competence/{id?}', 'ProfController@ajout_competence')->name('ajout_competence');
+Route::get('/ajout_experience/{id?}', 'ProfController@ajout_experience')->name('ajout_experience');
 
 
 
@@ -283,6 +300,7 @@ Route::get('/editer_fonction/{id}', 'ProfController@editer_fonction')->name('edi
 
 Route::get('/liste_formateur/{id?}', 'ProfController@index')->name('liste_formateur');
 Route::get('/nouveau_formateur','ProfController@nouveau_formateur')->name('nouveau_formateur');
+Route::get('/inscription_formateur','ProfController@inscription_formateur')->name('inscription_formateur');
 // Route::get('/nouveau_formateur', function () {
 //     return view('admin.formateur.nouveauFormateur');
 // })->name('nouveau_formateur');
@@ -330,11 +348,15 @@ Route::get('/edit_matricule_resp/{id}', 'ResponsableController@edit_matricule')-
 Route::get('/edit_entreprise_resp/{id}', 'ResponsableController@edit_entreprise')->name('edit_entreprise_resp');
 Route::get('/edit_niveau_resp/{id}', 'ResponsableController@edit_niveau')->name('edit_niveau_resp');
 Route::get('/edit_departement_resp/{id}', 'ResponsableController@edit_departement')->name('edit_departement_resp');
-Route::get('/edit_branche_resp/{id}', 'ResponsableController@edit_branche')->name('edit_branche_resp');
+//Route::get('/edit_branche_resp/{id}', 'ResponsableController@edit_branche')->name('edit_branche_resp');
 Route::get('/edit_photos_resp/{id}', 'ResponsableController@edit_photos')->name('edit_photos_resp');
 Route::get('/edit_pwd_resp/{id}', 'ResponsableController@edit_pwd')->name('edit_pwd_resp');
 Route::get('/edit_poste_resp/{id}', 'ResponsableController@edit_poste')->name('edit_poste_resp');
-
+Route::get('/edit_departement_service/{id}','ResponsableController@edit_departement')->name('edit_departement_service');
+Route::get('get_service','ResponsableController@get_service')->name('get_service');
+Route::post('/update_departemennt_service/{id}','ResponsableController@update_departemennt_service')->name('update_departemennt_service');
+Route::get('/edit_branche/{id}', 'ResponsableController@edit_branche')->name('edit_branche');
+Route::post('/update_branche_emp/{id}','ResponsableController@update_branche')->name('update_branche_emp');
 // ======================= desactiver personne =====================
 Route::get('desactiver_personne','ResponsableCfpController@desactiver_personne')->name('desactiver_personne');
 Route::get('activer_personne','ResponsableCfpController@activer_personne')->name('activer_personne');
@@ -369,7 +391,8 @@ Route::get('/edit_matricule/{id}', 'ParticipantController@edit_matricule')->name
 Route::get('/edit_entreprise/{id}', 'ParticipantController@edit_entreprise')->name('edit_entreprise');
 Route::get('/edit_niveau/{id}', 'ParticipantController@edit_niveau')->name('edit_niveau');
 Route::get('/edit_departement/{id}', 'ParticipantController@edit_departement')->name('edit_departement');
-Route::get('/edit_branche/{id}', 'ParticipantController@edit_branche')->name('edit_branche');
+// Route::get('/edit_departement/{id}', 'ParticipantController@edit_departement')->name('edit_departement');
+
 Route::get('/edit_photos/{id}', 'ParticipantController@edit_photos')->name('edit_photos');
 Route::get('/edit_pwd/{id}', 'ParticipantController@edit_pwd')->name('edit_pwd');
 
@@ -377,11 +400,11 @@ Route::get('/edit_pwd/{id}', 'ParticipantController@edit_pwd')->name('edit_pwd')
 
 Route::get('/destroy_participant/{id}', 'ParticipantController@destroy')->name('destroy_participant');
 Route::post('/update_participant', 'ParticipantController@update')->name('update_participant');
-Route::post('/update_stagiaire/{id}', 'ParticipantController@update_stagiaire')->name('update_stagiaire');
+
 Route::post('/update_photo_stagiaire/{id}', 'ParticipantController@update_photo_stagiaire')->name('update_photo_stagiaire');
-Route::post('/update_mot_de_passe_stagiaire/{id}','ParticipantController@update_mot_de_passe_stagiaire')->name('update_mot_de_passe_stagiaire');
-Route::post('/update_email_stagiaire/{id}','ParticipantController@update_email_stagiaire')->name('update_email_stagiaire');
-Route::post('/update_niveau_stagiaire/{id}','ParticipantController@update_niveau_stagiaire')->name('update_niveau_stagiaire');
+
+
+Route::post('/update_niveau/{id}','ParticipantController@update_niveau_stagiaire')->name('update_niveau');
 // profile_stagiaire
 // Route::get('/profile_stagiare/{id?}','ParticipantController@profile_stagiaire')->name('profile_stagiaire');
 
@@ -788,6 +811,26 @@ Route::get('formationParDomaine', 'PlanFormationController@domaineParFormation')
 Route::post('enregistrerPlan', 'PlanFormationController@enregistrer_planFormation')->name('enregistrerPlan');
 Route::get('recherchePlanAnnee/{annee?}', 'PlanFormationController@rechercheDemandeAnnee')->name('recherchePlanAnnee');
 Route::get('/searchDemandeAnnee', 'PlanFormationController@getAnnee')->name('searchDemandeAnnee');
+Route::post('/modifBesoin/{id}','PlanFormationController@modification_besoin')->name('besoin.modif');
+
+
+
+
+
+////////////////// modification mahafaly /////////////////////////////////
+Route::get('/demandeFormation/{id}','PlanFormationController@demande')->name('plan.demande');
+Route::get('/ListedemandeFormation/{id}','PlanFormationController@liste')->name('liste.demande');
+Route::get('/ListedemandeFormationValidé/{id}','PlanFormationController@listeV')->name('liste.demandeV');
+Route::get('/ajoutPlan/{id}','PlanFormationController@ajout')->name('ajout.plan');
+Route::post('/creationPla','PlanFormationController@cree')->name('plan.cree');
+Route::post('/edtitPlan/{id}','PlanFormationController@modifier')->name('plan.modifier');
+Route::post('/creationDemande','PlanFormationController@creation')->name('plan.creation');
+Route::get('/getanneP','PlanFormationController@getplan')->name('getanneP');
+Route::get('/countPlan','PlanFormationController@countplan')->name('countPlan');
+Route::get('/exportPD/{id}','PlanFormationController@besoin_PD')->name('besoin.PDF');
+Route::get('/delete/{id}','PlanformationController@delete')->name('besoin.delete');
+/////////////////fin modification Mahafaly //////////////////////////////
+
 //ajouter nouveau plan
 Route::get('ajout_plan', function () {
     return view('referent.ajout_plan');
@@ -802,7 +845,7 @@ Route::get('ajoutPlan', 'PlanFormationController@afficherDetail')->name('ajoutPl
 Route::resource('departement','DepartementController');
 Route::get('/show_dep','DepartementController@show')->name('show_dep');
 Route::get('employes','DepartementController@liste')->name('employes');
-Route::get('/affProfilChefDepart', 'DepartementController@affProfilChefDepart')->name('affProfilChefDepartement');
+Route::get('/profil_manager', 'DepartementController@affProfilChefDepart')->name('profil_manager');
 
 
 Route::get('employes.liste/{nbPag?}','ParticipantController@liste_employer')->name('employes.liste');
@@ -818,6 +861,7 @@ Route::get('employes.liste.activer','ParticipantController@activer_stagiaire')->
 Route::get('employes.new','ParticipantController@new_emp')->name('employes.new');
 Route::get('employes.liste.desactiver','ParticipantController@desactiver_stagiaire')->name('employes.liste.desactiver');
 
+Route::get('employes.liste_referent','ParticipantController@liste_referent')->name('employes.liste_referent');
 // ===================== CHEF DE DEPARTEMENT
 Route::resource('ajoutChefDepartement', 'ChefDepartementController');
 Route::get('/destroy_chefDepartement', 'ChefDepartementController@destroy')->name('destroy_chefDepartement');
@@ -887,9 +931,9 @@ Route::post('enregistrer_modification_abonnement_of/{id}','AbonnementController@
 Route::get('modifier_abonnement_entreprise/{id}','AbonnementController@modifier_abonnement_entreprise')->name('modifier_abonnement_entreprise');
 Route::post('enregistrer_modification_abonnement_etp/{id}','AbonnementController@enregistrer_modification_abonnement_etp')->name('enregistrer_modification_abonnement_etp');
 //ajouter nouveau plan
-Route::get('ajout_plan', function () {
-    return view('referent.ajout_plan');
-})->name('ajout_plan');
+// Route::get('ajout_plan', function () {
+//     return view('referent.ajout_plan');
+// })->name('ajout_plan');
 Route::get('enregistter', 'PlanFormationController@enregistrer_plan')->name('enregistrer');
 //Route::get('enregistrer','PlanFormationController@enregistrer_plan')->name('enregistrer');
 Route::get('listePlanFormation', 'PlanFormationController@liste_plan')->name('listePlanFormation');
@@ -1132,8 +1176,8 @@ Route::get('affichage_role', 'HomeController@affichage_role')->name('affichage_r
 Route::get('change_role_user/{user_id}/{role_id}', 'RoleController@change_role_user')->name('change_role_user');
 
 //remplir information manquante
-Route::post('remplir_info_resp', 'HomeController@remplir_info_resp')->name('remplir_info_resp');
-Route::post('remplir_info_stagiaire', 'HomeController@remplir_info_stagiaire')->name('remplir_info_stagiaire');
+//Route::post('remplir_information', 'HomeController@remplir_info_resp')->name('remplir_information');
+Route::post('remplir_information', 'HomeController@remplir_info_stagiaire')->name('remplir_information');
 Route::post('remplir_info_manager', 'HomeController@remplir_info_manager')->name('remplir_info_manager');
 
 //================ saisir employé,responsable,chef de département
@@ -1330,7 +1374,7 @@ Route::post('enregistrer_assujetti_cfp/{id}','CfpController@enregistrer_assujett
 Route::get('/modification_slogan/{id}', 'CfpController@edit_slogan')->name('modification_slogan');
 Route::get('/modification_site_web/{id}', 'CfpController@edit_site')->name('modification_site_web');
 Route::get('/modification_email/{id}', 'CfpController@edit_mail')->name('modification_email');
-Route::get('/modification_telephone{id}', 'CfpController@edit_phone')->name('modification_telephone');
+Route::get('/modification_telephone/{id}', 'CfpController@edit_phone')->name('modification_telephone');
 
 
 Route::get('/modification_horaire/{id}', 'CfpController@edit_horaire')->name('modification_horaire');
@@ -1496,4 +1540,28 @@ Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
 
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
+
+/**Ajout chef de departement */
+Route::post('ajouter_manager','DepartementController@ajouter_manager')->name('ajouter_manager');
+/**Modifier chef de departement */
+Route::post('modifier_manager','DepartementController@modifier_manager')->name('modifier_manager');
+
+/** Ajouter un employé comme référent*/
+Route::get('employes.ajouter.referent','ParticipantController@role_referent')->name('employes.ajouter.referent');
+/** Ajouter un employé comme référent principal*/
+Route::get('employes.ajouter.referent_principal/{id}','ParticipantController@role_referent_principal')->name('employes.ajouter.referent_principal');
+
+/**Supprimer role referent d'un employé */
+Route::get('employes.supprimer.referent','ParticipantController@supprimer_role_referent')->name('employes.supprimer.referent');
 // >>>>>>> origin/debug_version_1
+
+//evaluation A froid
+Route::get('/evaluation_froid/{groupe?}','EvaluationFroidController@index')->name('evaluation_froid');
+Route::post('evaluation_froid/ajouter','EvaluationFroidController@store')->name('evaluation_froid/ajouter');
+Route::get('evaluation_froid/resultat/{groupe?}','EvaluationFroidController@show')->name('evaluation_froid/resultat');
+Route::get('/teste', 'PlanFormationController@teste');
+
+Route::get('/valideStatut/{id}','PlanFormationController@valideStatut')->name('valideStatut');
+Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('refuseSatut');
+
+

@@ -152,8 +152,10 @@
                                 <div class="col-md-5">
                                     <div align="right" class="me-1">
                                         <h5>Facture N°: {{$facture[0]->num_facture}}</h5>
-                                        <h6>Date de facturation: {{$facture[0]->invoice_date}}</h6>
-                                        <h6>Date d'échéance: {{$facture[0]->due_date}}</h6>
+
+
+                                        <h6>Date de facturation:  @php echo date("d-m-Y",strtotime($facture[0]->invoice_date)) @endphp </h6>
+                                        <h6>Date d'échéance:   @php echo date("d-m-Y",strtotime($facture[0]->due_date)) @endphp </h6>
                                         @if ($facture[0]->nom_type != "Gratuit")
                                             <h6>Mode de paiement:
                                                 <select class="form-select-lg mb-3" name="" id="paiement">
@@ -263,7 +265,8 @@
                                             @if($dates_abonnement[0]->date_debut == null)
                                                 <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : <span style="color: red" > En attente d'activation </span> <br> Fin: <span style="color: red">En attente d'activation</span>  </td>
                                             @else
-                                                <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : {{$dates_abonnement[0]->date_debut}} <br> Fin: {{$dates_abonnement[0]->date_fin}}</td>
+
+                                                <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : @php echo date("d-m-Y",strtotime($dates_abonnement[0]->date_debut)) @endphp <br> Fin: @php echo date("d-m-Y",strtotime($dates_abonnement[0]->date_fin)) @endphp</td>
                                             @endif
                                             <td>{{number_format($facture[0]->montant_facture, 0, ',', '.')}} Ar</td>
                                         </tr>

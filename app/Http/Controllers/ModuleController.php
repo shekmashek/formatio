@@ -51,7 +51,9 @@ class ModuleController extends Controller
 
         // $cfp_id = cfp::where('user_id', $id_user)->value('id');
         if (Gate::allows('isCFP')) {
+
             $cfp_id  = $fonct->findWhereMulitOne("responsables_cfp",["user_id"],[$id_user])->cfp_id;
+
             $cfp = $fonct->findWhereMulitOne("cfps", ["id"], [$cfp_id]);
             $infos = DB::select('select * from moduleformation where cfp_id = ?', [$cfp_id]);
             $categorie = formation::all();

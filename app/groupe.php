@@ -16,17 +16,12 @@ class Groupe extends Model
         return $this->belongsTo('App\projet');
     }
 
-    public function generateNomSession($projet_id){
-        $num_projet = DB::select("select max(nom_groupe) as nom_groupe from groupes");
-       $num_session = 0;
-        if($num_projet[0]->nom_groupe==NULL){
-            $num_session=1;
-        } else{
-            $str = explode("-",$num_projet[0]->nom_groupe);
-            $num_session=intval($str[1])+1;
+    public function generateNomSession(){
+        $groupe = DB::select("select max(id)+1 as nom_groupe from groupes");
+        if($groupe[0]->nom_groupe==NULL){
+            $groupe[0]->nom_groupe=1;
         }
-            $nom_session ="Sess-".$num_session;
-            return $nom_session;
+        return "Sess-".$groupe[0]->nom_groupe;
     }
 
 

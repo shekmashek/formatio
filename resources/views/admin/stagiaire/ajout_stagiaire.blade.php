@@ -34,18 +34,22 @@
         @endcan
     @endif
     @if ($type_formation_id == 2)
-        @can('isReferent')
+        @canany(['isReferent','isReferentSimple','isManager'])
             {{-- Nouveau apreanant --}}
+
             <section class="section_recherche m-0 p-2">
                 <div class="d-flex py-1 align-items-center align-content-center">
+
                     <p class="titre_ajout_apprenant my-3">Pour ajouter un(e) nouvel(le) apprenant(e), veuillez insérer son numéro de matricule ou son nom :</p>&nbsp;
                     <input type="text" id="matricule_search" data-id="{{ $entreprise_id }}" name="matricule_stg" placeholder="Entrez le matricule ou le nom  . . ." class="matricule_search_input form-control">
                     <input type="hidden" id="id_entreprise" value="{{ $entreprise_id }}">
                     <button type="submit" class="btn btn-outline-secondary m-0 rechercher">
                         <i class="fa fa-search"></i>
                     </button>
+
                 </div>
                 <div class="d-flex mb-3" id="ajout_stg_mat"></div>
+
                 <div class="d-flex mb-3">
                     <span class="span_matricule" id="image_stg"></span>
                     <span class="span_matricule"> <input type="text" class="label_text" id="matricule" disabled> </span>
@@ -57,8 +61,9 @@
                     </span>
                 </div>
             </section><br>
+
             {{-- fin nouveau apprenant --}}
-        @endcan
+        @endcanany
     @endif
     {{-- <div class="d-flex justify-content-between">
         <h6>Liste des apprenants inscrits(es) au projet</h6>
@@ -134,7 +139,7 @@
                 <tr id="row_{{ $stg->stagiaire_id }}">
                     <td>
                         @if ($stg->photos != null)
-                            <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">
+                            <img src="{{ asset('images/employes/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">
                         @else
                             <span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">{{ $stg->sans_photos }}
                             </span>
@@ -321,7 +326,7 @@ td{
                         if(userData[0].photos == null){
                             html = '<span class="m-0 p-0" style="background-color:rgb(238, 238, 238); font-size: 16px; border: none; border-radius: 100%; height:30px; width:30px ; display: grid; place-content: center;">'+userData[0].sans_photo+'</span>';
                         }else{
-                            html = '<img src="{{ asset("images/stagiaires/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
+                            html = '<img src="{{ asset("images/employes/:?") }}" alt="" height="30px" width="30px" style="border-radius: 50%;">';
                             html = html.replace(":?",userData[0].photos);
                         }
                         $("#image_stg").append(html);

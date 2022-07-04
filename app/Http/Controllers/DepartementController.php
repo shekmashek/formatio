@@ -114,7 +114,7 @@ class DepartementController extends Controller
 
         $funct = new FonctionGenerique();
         $emps = $funct->afficheInfoNewOne($user_id);
-        
+
         return response()->json($emps);
     }
 
@@ -272,26 +272,17 @@ class DepartementController extends Controller
 
     public function affProfilChefDepart()
     {
-
-        $idChef = chefDepartement::where('user_id', Auth::user()->id)->value('id');
-        $depEtpId = chefDepartementEntreprise::where('chef_departement_id', $idChef)->value('departement_entreprise_id');
-        $departement = DepartementEntreprise::with('departement', 'entreprise')->where('id', $depEtpId)->get();
+        $fonct = new FonctionGenerique();
+        // $idChef = chefDepartement::where('user_id', Auth::user()->id)->value('id');
+        $id_chef = $fonct->findWhereMulitOne("chef_departements",["user_id"],[Auth::user()->id]);
+        $departement = $fonct->findWhereMulitOne("v_chef_departement_entreprise",["chef_departements_id"],[$id_chef->id]);
         $user_id =  $users = Auth::user()->id;
         $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
 
-        if ($chef_connecte) {
-
-            $vars = chefDepartement::with('entreprise')->where('user_id', $user_id)->get();
-        } else {
-            $idChef = request()->id_chef;
-            $depEtpId = chefDepartementEntreprise::where('chef_departement_id', $idChef)->value('departement_entreprise_id');
-            $departement = DepartementEntreprise::with('departement', 'entreprise')->where('id', $depEtpId)->get();
-            $vars = chefDepartement::with('entreprise')->where('id', $idChef)->get();
-        }
-        if($vars[0]->genre_id == 1) $genre = "Femme";
-        if($vars[0]->genre_id == 2) $genre = "Homme";
-        if($vars[0]->genre_id == null) $genre = '';
-        return view('admin/chefDepartement/profilChefDepartement', compact('genre','vars', 'departement'));
+        if($id_chef->genre_id == 1) $genre = "Femme";
+        if($id_chef->genre_id == 2) $genre = "Homme";
+        if($id_chef->genre_id == null) $genre = '';
+        return view('admin/chefDepartement/profilChefDepartement', compact('genre','id_chef', 'departement'));
     }
     //enregistrer departement
     public function store(Request $request)
@@ -349,32 +340,38 @@ class DepartementController extends Controller
     //fonction qui montre les départements, services,branches de l'entreprise connecté
     public function show_departement(Request $request)
     {
-        if (Gate::allows('isReferentPrincipale')) {
-            $rqt = DB::select('select * from responsables where user_id = ?', [Auth::user()->id]);
-            $id_etp = $rqt[0]->entreprise_id;
-        }
-        if (Gate::allows('isStagiairePrincipale')) {
-            $rqt = DB::select('select * from stagiaires where user_id = ?', [Auth::user()->id]);
-            $id_etp = $rqt[0]->entreprise_id;
-        }
-        if (Gate::allows('isManagerPrincipale')) {
-            $rqt = DB::select('select * from chef_departements where user_id = ?', [Auth::user()->id]);
-            $id_etp = $rqt[0]->entreprise_id;
-        }
-        $rqt = db::select('select * from departement_entreprises where entreprise_id = ?', [$id_etp]);
+        $fonct = new FonctionGenerique();
+        $id_etp = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
+
+        $employes = $fonct->findWhere("employers",["entreprise_id","activiter"],[$id_etp,1]);
+
+        $rqt = db::select('select * from v_chef_departement_entreprise where entreprise_id = ?', [$id_etp]);
 
         $nb = count($rqt);
         $service_departement = DB::select("select * ,GROUP_CONCAT(nom_service) as nom_service from v_departement_service_entreprise  where entreprise_id = ? group by nom_departement", [$id_etp]);
         $service_departement_tous = DB::select("select *  from v_departement_service_entreprise  where entreprise_id = ? ", [$id_etp]);
         $nb_serv = count($service_departement);
         $branches = DB::select('select * from branches where entreprise_id = ?', [$id_etp]);
+        $manager = $fonct->findWhere("chef_departements",["entreprise_id"],[$id_etp]);
         $nb_branche = count($branches);
-            return view('admin.departememnt.nouveau_departement', compact('rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tous','branches', 'nb_branche'));
+
+        return view('admin.departememnt.nouveau_departement', compact('manager','employes','rqt', 'nb', 'nb_serv', 'service_departement', 'service_departement_tous','branches', 'nb_branche'));
     }
     public function delete_dep($id)
     {
-        DB::delete('delete from departement_entreprises where id = ?', [$id]);
-        return back();
+        $fonct = new FonctionGenerique();
+        $verification = $fonct->findWhere("employers",["departement_entreprises_id"],[$id]);
+        $verification_service = $fonct->findWhere("services",["departement_entreprise_id"],[$id]);
+        if($verification != null){
+            return back()->with('erreur','Vous ne pouvez pas supprimer, il y a des employés rattachés à ce département');
+        }
+        if($verification_service != null){
+            return back()->with('erreur','Vous ne pouvez pas supprimer, il y a des services rattachés à ce département');
+        }
+        else{
+            DB::delete('delete from departement_entreprises where id = ?', [$id]);
+            return back();
+        }
 
     }
     public function update_dep(Request $request)
@@ -385,8 +382,20 @@ class DepartementController extends Controller
     public function delete_service(Request $request)
     {
         $ids=$request->ids;
-        service::whereIn('id',$ids)->delete();
-        return back();
+        if($ids == null) return back()->with('erreur','Veuillez sélectionnez le service que vous voulez supprimer');
+        else{
+            $id = service::whereIn('id',$ids)->get();
+            $fonct = new FonctionGenerique();
+            $verification = $fonct->findWhere("employers",["service_id"],[$id[0]->id]);
+            if($verification != null){
+                return back()->with('erreur','Vous ne pouvez pas supprimer, il y a des employés rattachés à ce service');
+            }
+            else{
+                service::whereIn('id',$ids)->delete();
+                return back();
+            }
+        }
+
     }
     public function update_services(Request $request)
     {
@@ -412,8 +421,15 @@ class DepartementController extends Controller
     }
     public function delete_branche($id)
     {
-        DB::delete('delete from branches where id=?',[$id]);
-        return back();
+        $fonct = new FonctionGenerique();
+        $verification = $fonct->findWhere("employers",["branche_id"],[$id]);
+        if($verification != null){
+            return back()->with('erreur','Vous ne pouvez pas supprimer, il y a des employés rattachés à cette branche');
+        }
+        else{
+            DB::delete('delete from branches where id=?',[$id]);
+            return back();
+        }
     }
     public function update_branche(Request $request)
     {
@@ -481,5 +497,42 @@ class DepartementController extends Controller
         $id_etp = $rqt[0]->entreprise_id;
         $nom_dep = DB::select('select * from departement_entreprises where entreprise_id = ?', [$id_etp]);
         return response()->json($nom_dep);
+    }
+    /**Ajout chef de departement */
+    public function ajouter_manager(Request $request){
+        $fonct = new FonctionGenerique();
+        if($request->manager != "null"){
+            $dep_id = $request->dep_id;
+            DB::insert('insert into chef_dep_entreprises (departement_entreprise_id, chef_departement_id) values (?, ?)', [$dep_id, $request->manager]);
+            $emp_info = $fonct->findWhereMulitOne("employers",["id"],[$request->manager]);
+
+            DB::update('update role_users set activiter = 0 where user_id = ? and role_id != ?', [$emp_info->user_id,5]);
+            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?,?,?,?)', [$emp_info->user_id,5,0,1]);
+            return back();
+        }
+        else{
+            return back()->with('erreur_manager',"Choisissez un manager avant d'enregistrer");
+        }
+    }
+    /**Modifier chef de departement */
+    public function modifier_manager(Request $request){
+        $fonct = new FonctionGenerique();
+        if($request->manager != "null"){
+            $dep_id = $request->dep_id;
+            /**modification  ancien manager*/
+            DB::delete('delete from chef_dep_entreprises where departement_entreprise_id = ? and chef_departement_id = ?', [$dep_id,$request->ancien_chef]);
+            DB::delete('delete from role_users where user_id = ? and role_id = ?', [$request->ancien_user_chef,5]);
+
+             /**ajout  nouveau manager*/
+            DB::insert('insert into chef_dep_entreprises (departement_entreprise_id, chef_departement_id) values (?, ?)', [$dep_id, $request->manager]);
+            $emp_info = $fonct->findWhereMulitOne("employers",["id"],[$request->manager]);
+
+            DB::update('update role_users set activiter = 0 where user_id = ? and role_id != ?', [$emp_info->user_id,5]);
+            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?,?,?,?)', [$emp_info->user_id,5,0,1]);
+            return back();
+        }
+        else{
+            return back()->with('erreur_manager',"Choisissez un manager avant d'enregistrer");
+        }
     }
 }

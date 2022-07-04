@@ -131,7 +131,7 @@ class SessionController extends Controller
         $module_session = DB::select('select reference,nom_module, module_id from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
         $dataMontantSession = [];
         if(Gate::allows('isCFP')){
-            $drive = new getImageModel();
+            // $drive = new getImageModel();
             $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
             $cfp_id = $resp->cfp_id;
             $cfp_nom = $resp->nom_cfp;
@@ -172,6 +172,7 @@ class SessionController extends Controller
             //     }
             // }
             if(count($frais_annex)>0){
+
                 if($frais_annex[0]->cfp_id == $projet[0]->cfp_id && $frais_annex[0]->entreprise_id == $projet[0]->entreprise_id && $frais_annex[0]->projet_id == $projet[0]->projet_id){
                     $frais_annex[0] = $frais_annex[0]->hors_taxe;
                 }
@@ -186,24 +187,16 @@ class SessionController extends Controller
 
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
 
-            $drive = new getImageModel();
-            $drive->create_folder($cfp_nom);
-            $drive->create_sub_folder($cfp_nom, "Mes documents");
-            $documents = $drive->file_list($cfp_nom,"Mes documents");
+            // $drive = new getImageModel();
+            // $drive->create_folder($cfp_nom);
+            // $drive->create_sub_folder($cfp_nom, "Mes documents");
+            // $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
-        if(Gate::allows('isReferent')){
-            $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where groupe_id=?",[$id]);
+        if(Gate::allows('isReferent') or Gate::allows('isReferentSimple') or Gate::allows('isManager')){
 
-            if (Gate::allows('isReferentPrincipale')) {
-                $etp_id = responsable::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isStagiairePrincipale')) {
-                $etp_id = stagiaire::where('user_id', $user_id)->value('entreprise_id');
-            }
-            if (Gate::allows('isManagerPrincipale')) {
-                $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
-            }
+            $etp_id = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
+
             $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
             $datas = $fonct->findWhere("v_detail_session", ["groupe_id"], [$id]);
 
@@ -223,7 +216,12 @@ class SessionController extends Controller
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
             $frais_annexe = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id]);
 
-            $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);
+           if(Gate::allows('isManager')) {
+                $dep = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->departement_entreprises_id;
+
+                $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? and departement_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id,$dep]);
+           }
+           else $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);
             $documents = DB::select('select * from mes_documents where groupe_id = ?',[$id]);
             $entreprise_id = $etp_id;
         }
@@ -254,6 +252,7 @@ class SessionController extends Controller
 
 
         // public
+
         $competences = DB::select('select * from competence_a_evaluers where module_id = ?',[$projet[0]->module_id]);
         $evaluation_stg = DB::select('select * from evaluation_stagiaires where groupe_id = ?', [$id]);
         $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
@@ -326,13 +325,13 @@ class SessionController extends Controller
         $etp = $request->etp;
         $groupe = $request->groupe;
         // $stagiaire = DB::select('select id from stagiaires where matricule = ? and entreprise_id = ?',[$id,$etp]);
-        $stagiaire = DB::select('select * from stagiaires where matricule like "%'.$id.'%" or nom_stagiaire like "%'.$id.'%" or prenom_stagiaire like "%'.$id.'%" and entreprise_id='.$etp);
+        $stagiaire = DB::select('select * from stagiaires where matricule = "'.$id.'" or nom_stagiaire = "'.$id.'" or prenom_stagiaire = "'.$id.'" and entreprise_id='.$etp);
 
         $existe = 0;
         if(count($stagiaire) > 0){
-            $stg_id = DB::select('select * from stagiaires where matricule like "%'.$id.'%" or nom_stagiaire like "%'.$id.'%" or prenom_stagiaire like "%'.$id.'%"')[0]->id;
+            $stg_id = DB::select('select * from stagiaires where matricule =  "'.$id.'" or nom_stagiaire = "'.$id.'" or prenom_stagiaire = "'.$id.'"')[0]->id;
             $existe = DB::select('select count(stagiaire_id) as nombre from participant_groupe where stagiaire_id = ? and groupe_id = ?',[$stg_id,$groupe])[0]->nombre;
-            $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule like "%'.$id.'%" or nom_stagiaire like "%'.$id.'%" or prenom_stagiaire like "%'.$id.'%" and entreprise_id ='.$etp);
+            $stg = DB::select('select *,concat(SUBSTRING(nom_stagiaire, 1, 1),SUBSTRING(prenom_stagiaire, 1, 1)) as sans_photo from stagiaires where matricule = "'.$id.'" or nom_stagiaire = "'.$id.'" or prenom_stagiaire = "'.$id.'" and entreprise_id ='.$etp);
             return response()->json(['status'=>'200','stagiaire'=>$stg,'inscrit'=>$existe]);
         }else{
             return response()->json(['status'=>'400']);

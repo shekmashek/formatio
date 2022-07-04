@@ -81,7 +81,9 @@
                 <li class="me-5"><a href="#programme"><i class='bx bx-list-minus encre_icon me-2'></i>programme</a></li>
                 <li class="me-5"><a href="#avis"><i class='bx bxs-edit-alt encre_icon me-2'></i>Avis</a></li>
                 <li class="me-5"><a href="#dates"><i class='bx bxs-calendar-check encre_icon me-2'></i>dates</a></li>
+                @can('isReferent')
                 <li class="me-5"><a href="{{route('demande_devis_client',$infos[0]->module_id)}}"><i class='bx bxs-cart-download encre_icon me-2'></i>Demander un devis</a></li>
+                @endcan
                 <li class="me-5"><a class="print_to_pdf"><i class='bx bxs-download encre_icon me-2'></i>telecharger en pdf</a></li>
 
             </ul>
@@ -119,7 +121,7 @@
                             <img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid" style="width: 200px; height:100px;">
                         </div>
                     </a>
-                    @if($avis_etoile != null)
+                    @if($avis_etoile!=null)
                         @if($avis_etoile[0]->pourcentage != null)
                         <div class="d-flex flex-row justify-content-center mt-2">
                             @if($avis_etoile[0]->pourcentage != null)
@@ -143,6 +145,7 @@
                             </div>
                             <br>
                         </div>
+                        @else
                         <div class="text-center">
                             <span>Avis sur le centre de formation</span>
                         </div>
@@ -543,7 +546,7 @@
                                         <span>{{ number_format($infos[0]->prix, 0, ' ', ' ') }} AR HT</span>
                                     </div>
                                     {{-- @canany(['isManager','isReferent','isStagiaire']) --}}
-                                    @canany(['isReferent'])
+                                    @canany(['isReferent','isReferentSimple'])
                                         <div class="col-3 text-center">
                                             <a href="{{route('inscriptionInter',[$data->groupe_id,$data->type_formation_id])}}" class="btn_enregistrer" role="button">
                                                 @php

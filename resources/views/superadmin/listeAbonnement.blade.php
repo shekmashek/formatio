@@ -24,13 +24,13 @@
         <div class="m-4" role="tabpanel">
             <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
                 <li class="nav-item active">
-                    <a href="#service" class="nav-link active" data-toggle="tab"><i class="bi bi-list-task"></i>&nbsp;&nbsp;Historique des services</a>
+                    <a href="#service" class="nav-link active" data-bs-toggle="tab"><i class="bi bi-list-task"></i>&nbsp;&nbsp;Historique des services</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#abonnement" class="nav-link " data-toggle="tab"><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;Abonnements</a>
+                    <a href="#abonnement" class="nav-link " data-bs-toggle="tab"><i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp;Abonnements</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#facture" class="nav-link" data-toggle="tab"><i class="bi bi-receipt"></i>&nbsp;&nbsp;Factures</a>
+                    <a href="#fact" class="nav-link" data-bs-toggle="tab"><i class="bi bi-receipt"></i>&nbsp;&nbsp;Factures</a>
                 </li>
             </ul>
 
@@ -135,10 +135,9 @@
                                 <?php $i+=1; ?>
                             @endforeach
                         @endcan
-
                     </div>
-                </div><br>
-                <div class="tab-pane fade show" id="facture">
+                </div>
+                <div class="tab-pane fade show" id="fact">
                     <table class="table">
                         <thead>
                         <tr>
@@ -160,12 +159,10 @@
                             @foreach ($facture as $fact )
                                 <tr>
                                     <td><a href="{{route('detail_facture_abonnement',$fact->facture_id)}}" style="text-decoration: underline">{{$fact->num_facture}}</a></td>
-
-
                                     <td>{{$fact->nom_type}}&nbsp,&nbspMensuel</td>
                                     <td>{{number_format($fact->montant_facture, 0, ',', '.')}} Ar</td>
-                                    <td>{{$fact->invoice_date}}</td>
-                                    <td>{{$fact->due_date}}</td>
+                                    <td> @php echo date("d-m-Y",strtotime($fact->invoice_date)) @endphp</td>
+                                    <td> @php echo date("d-m-Y",strtotime($fact->due_date)) @endphp</td>
                                     @if($fact->status_facture == "Non payé")
                                         <td><span style="background-color: red;padding:5px;color:white;border-radius:10px">{{$fact->status_facture}}</span></td>
                                     @else
@@ -174,11 +171,9 @@
                                     @if ($fact->nom_type == "Gratuit" && $fact->status_facture == "Non payé")
                                         <td scope="col"><button class="btn btn-primary"> <a href="{{route('activer_compte_gratuit',$fact->abonnement_id)}}"> Payer </a></button></td>
                                     @endif
-
                                 </tr>
                                 @php $i += 1; @endphp
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -211,10 +206,10 @@
                             @php $i = 0; @endphp
                             @foreach ($facture as $fact )
                                 <tr>
-                                    <td>{{$fact->invoice_date}}</td>
 
+                                    <td> @php echo date("d-m-Y",strtotime($fact->invoice_date)) @endphp</td>
                                     <td>{{$fact->nom_type}}&nbsp;, Mensuel, &nbsp; {{number_format($fact->montant_facture, 0, ',', '.')}}Ar</td>
-                                    <td>{{$facture_suivant[$i]}}</td>
+                                    <td> @php echo date("d-m-Y",strtotime($facture_suivant[$i])) @endphp</td>
                                     @if($fact->activite == 1)
                                         <td><span style="background-color: green;padding:5px;color:white;border-radius:10px"> En cours </span></td>
                                     @elseif ($fact->status == "En attente")
@@ -266,120 +261,11 @@
         </div>
     </div>
 
-
-    {{-- filter abonnement --}}
-    {{-- <div class="filtrer mt-3 testFilter">
-        <div class="row">
-            <div class="row">
-                <div class="col-md-11">
-                    <p class="m-0" style="color: #0052D4; text-transform: uppercase">Filter vos Abonnements</p>
-                </div>
-                <div class="col-md-1 text-end">
-                    <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
-                </div>
-            </div>
-            <hr class="mt-2">
-            <div class="col-12 pe-3">
-                <div class="row mb-3 p-2 pt-0">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                Historique des services
-                                </button>
-                            </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <form action="/referents/filtre/query/fonction" method="post" >
-                                        @csrf
-                                        <input style="width: 265px" type="text" name="fonctionReferent" id="fonctionReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
-                                    </form>
-                                    <hr>
-                                    <form action="/referents/filtre/query/name" method="post" >
-                                        @csrf
-                                        <input style="width: 265px" type="text" name="nameReferent" id="nameReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
-                                    </form>
-                                    <form action="/referents/filtre/query/matricule" method="post">
-                                        @csrf
-                                        <input style="width: 265px" type="text" name="matriculeReferent" id="matriculeReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
-                                    </form>
-                                    <form action="/referents/filtre/query/role" method="post">
-                                        @csrf
-                                        <input style="width: 265px" type="text" name="roleReferent" id="roleReferent" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
-                                    </form>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                Abonnements
-                                </button>
-                            </h2>
-                            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <form action="/employes/filtre/query/fonction" method="post">
-                                        @csrf
-                                        <input style="width: 265px" type="text" name="test" id="test" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
-                                    </form>
-                                    <hr>
-                                    <form action="/employes/filtre/query/name" method="post" >
-                                        @csrf
-                                        <input style="width: 265px" type="text" name="name" id="name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
-                                    </form>
-                                    <form action="/employes/filtre/query/matricule" method="post">
-                                        @csrf
-                                        <input style="width: 265px" type="text" name="matricule" id="matricule" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
-                                    </form>
-                                    <form action="/employes/filtre/query/role" method="post">
-                                        @csrf
-                                        <input style="width: 265px" type="text" name="role_name" id="role_name" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
-                                    </form>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
-                                    Factures
-                                </button>
-                                </h2>
-                                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        <form action="/chefs/filtre/query" method="post">
-                                            @csrf
-                                            <form action="/chefs/filtre/query/fonction" method="post" >
-                                                @csrf
-                                                <input style="width: 265px" type="text" name="fonctionChef" id="fonctionChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une fonction ...">
-                                            </form>
-                                        </form>
-                                        <hr>
-                                        <form action="/chefs/filtre/query/name" method="post" >
-                                            @csrf
-                                            <input style="width: 265px" type="text" name="nameChef" id="nameChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un nom ...">
-                                        </form>
-                                        <form action="/chefs/filtre/query/matricule" method="post">
-                                            @csrf
-                                            <input style="width: 265px" type="text" name="matriculeChef" id="matriculeChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez une matricule ...">
-                                        </form>
-                                        <form action="/chefs/filtre/query/role" method="post">
-                                            @csrf
-                                            <input style="width: 265px" type="text" name="roleChef" id="roleChef" class="mt-3 form-control form-control-sm mb-2" placeholder="Entrez un rôle ...">
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     <script>
 
 
 
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
                 let lien = ($(e.target).attr('href'));
                 localStorage.setItem('abonnement', lien);
                 ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');

@@ -217,11 +217,11 @@ class NouveauCompteController extends Controller
                 $data["secteur_id"] = $req->secteur_id;
 
                 // ======= responsable
-                $resp["matricule"] = $req->matricule_resp_etp;
-                $resp["nom_resp"] = $req->nom_resp_etp;
-                $resp["prenom_resp"] = $req->prenom_resp_etp;
-                $resp["cin_resp"] = $req->cin_resp_etp;
-                $resp["email_resp"] = $req->email_resp_etp;
+                $resp["matricule_emp"] = $req->matricule_resp_etp;
+                $resp["nom_emp"] = $req->nom_resp_etp;
+                $resp["prenom_emp"] = $req->prenom_resp_etp;
+                $resp["cin_emp"] = $req->cin_resp_etp;
+                $resp["email_emp"] = $req->email_resp_etp;
                 // $resp["tel_resp"] = $req->tel_resp_etp;
                 // $resp["fonction_resp"] = $req->fonction_resp_etp;
 

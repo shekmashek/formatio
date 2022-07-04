@@ -85,7 +85,7 @@ ALTER TABLE chef_departements
   `objet` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
   `etp_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
-  `resp_etp_id` bigint(20) UNSIGNED NOT NULL REFERENCES responsables(id) ON DELETE CASCADE,
+  `resp_etp_id` bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
   `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
   `module_id` bigint(20) UNSIGNED NOT NULL REFERENCES modules(id) ON DELETE CASCADE,
   `vue` boolean not null default false,
@@ -93,6 +93,6 @@ ALTER TABLE chef_departements
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-    
+
 
 

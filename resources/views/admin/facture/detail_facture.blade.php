@@ -38,7 +38,7 @@
                         <button class="btn"><i class="bx bxs-file-pdf"></i> PDF </button> </a>
             </li>
             @endcanany
-            @canany(['isReferentPrincipale','isManagerPrincipale','isReferent','isManager'])
+            @canany(['isReferentSimple','isManagerPrincipale','isReferent','isManager'])
             <li class="nav-item ">
                 <a class="nav-link pdf_download  {{ Route::currentRouteNamed('imprime_feuille_facture_etp') ? 'active' : '' }}" href="{{route('imprime_feuille_facture_etp',[$cfp->id,$montant_totale->num_facture])}}">
                     <button class="btn"><i class="bx bxs-file-pdf"></i> PDF </button></a>
@@ -201,12 +201,12 @@
                                         <td></td>
                                         <td>
                                             <div align="left">
-                                                {{$devise->reference." ".number_format($frais_annexe->pu,0,","," ")}}
+                                                {{$devise->devise." ".number_format($frais_annexe->pu,0,","," ")}}
                                             </div>
                                         </td>
                                         <td>
                                             <div align="right">
-                                                {{$devise->reference." ".number_format($frais_annexe->hors_taxe,0,","," ")}}
+                                                {{$devise->devise." ".number_format($frais_annexe->hors_taxe,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>

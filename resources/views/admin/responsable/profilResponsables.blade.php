@@ -21,7 +21,7 @@
                         </span>
                         @else
                             <span class="text-end">
-                                <img src="{{asset('images/responsables/'.$refs->photos)}}" alt="image du responsable" class="img-fluid rounded-circle">
+                                <img src="{{asset('images/employes/'.$refs->photos)}}" alt="image du responsable" class="img-fluid rounded-circle">
                             </span>
                         @endif
                     </a>
@@ -67,8 +67,10 @@
                 <i class='bx bxs-user-pin icon_infos3 p-0'></i>
             </div>
             <div class="row ps-2 ">
-                <p class="nb_modules m-0 p-0">{{count($chef_departements_counts)}}</p>
-                <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Managers</p>
+                <a href="{{route('liste_departement')}}">
+                    <p class="nb_modules m-0 p-0">{{count($chef_departements_counts)}}</p>
+                    <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Managers</p>
+                </a>
             </div>
         </div>
         <div class="row row_bas g-0">
@@ -201,7 +203,23 @@
                             <img src="{{asset('images/entreprises/'.$entreprise->logo)}}" alt="Logo de l'entreprise" class="img-fluid">
                         </span>
                     @endif
-                    <p class="mt-4">{{$entreprise->nom_etp}}</p>
+                    {{-- <p class="mt-4">{{$entreprise->nom_etp}}</p> --}}
+
+                        @if($refs->service_id == NULL)
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-buildings icon_sociaux2'></i>&nbsp;Dep  --------------------- </p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        @else
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-buildings icon_sociaux2'></i>&nbsp;Dep: {{$refs->nom_departement}}</p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        @endif
+                        @if($refs->service_id == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-building icon_sociaux2'></i>&nbsp;Serv -------------------</p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        @else
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-building icon_sociaux2'></i>&nbsp;Serv: {{$refs->nom_service}}</p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        @endif
+                        @if($refs->branche_id == NULL)
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-building-house icon_sociaux2'></i>&nbsp;Branche ------------</p><p class="text-end"><a href="{{route('edit_branche',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        @else
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;Branche: {{$refs->nom_branche}}</p><p class="text-end"><a href="{{route('edit_branche',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        @endif
                 </div>
             </div>
         </div>

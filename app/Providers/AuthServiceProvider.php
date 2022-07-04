@@ -155,8 +155,8 @@ class AuthServiceProvider extends ServiceProvider
                 if( $rqt[0]->role_id == 1)
                     return "isAdminPrincipale";
         });
-        Gate::define('isReferentPrincipale',function($users_roles){
-            $rqt =  DB::select('select * from role_users  where user_id = ? and activiter=true limit 1',[Auth::id()]);
+        Gate::define('isReferentSimple',function($users_roles){
+            $rqt =  DB::select('select * from role_users  where user_id = ? and prioriter = false and activiter = true',[Auth::id()]);
             if($rqt!=null)
                 if( $rqt[0]->role_id == 2)
                     return "referentPrincipale";
@@ -211,7 +211,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('isReferent',function($users_roles){
-            $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
+            $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true and prioriter = true', [Auth::id()]);
             if($rqt!=null){
                 for ($i=0; $i < count($rqt); $i++) {
                     if( $rqt[$i]->role_id == 2)

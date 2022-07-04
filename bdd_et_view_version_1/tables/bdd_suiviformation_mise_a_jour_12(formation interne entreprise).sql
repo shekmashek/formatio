@@ -1,4 +1,4 @@
-
+DROP TABLE IF EXISTS formateurs_interne;
 CREATE TABLE formateurs_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_formateur varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE formateurs_interne (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- ts de ilaina ^
 
-
+DROP TABLE IF EXISTS projets_interne;
 CREATE TABLE projets_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_projet varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE projets_interne (
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
+DROP TABLE IF EXISTS groupes_interne;
 CREATE TABLE groupes_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   max_participant varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE groupes_interne (
   updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+DROP TABLE IF EXISTS participant_groupe_interne;
 CREATE TABLE participant_groupe_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
@@ -79,7 +79,7 @@ CREATE TABLE presences_interne (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-
+DROP TABLE IF EXISTS modules_interne;
 CREATE TABLE modules_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   reference varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -106,6 +106,7 @@ CREATE TABLE modules_interne (
 alter table modules_interne add status int(11) default 2;
 alter table modules_interne add etat_id bigint(20) NOT NULL DEFAULT 1 REFERENCES etats(id) ON DELETE CASCADE;
 
+DROP TABLE IF EXISTS programmes_interne;
 CREATE TABLE programmes_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   titre varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -114,7 +115,7 @@ CREATE TABLE programmes_interne (
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+DROP TABLE IF EXISTS cours_interne;
 CREATE TABLE cours_interne (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   titre_cours varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -123,7 +124,7 @@ CREATE TABLE cours_interne (
   updated_at timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+DROP TABLE IF EXISTS competence_a_evaluers_interne;
 CREATE TABLE `competence_a_evaluers_interne` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `titre_competence` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -132,7 +133,7 @@ CREATE TABLE `competence_a_evaluers_interne` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
+DROP TABLE IF EXISTS avis_interne;
 CREATE TABLE avis_interne(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,

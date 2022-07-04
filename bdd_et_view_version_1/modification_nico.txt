@@ -256,3 +256,7 @@ alter table modules add date_eval_froid int(2) NULL;
 
 recreer les view dans bdd_suiviformation_view_30(formation_interne).sql
 
+-----------28 juin ----------------
+copier les requettes bdd_evaluation_froid.sql
+
+alter table modules add column date_eval_froid int(2) default 3;

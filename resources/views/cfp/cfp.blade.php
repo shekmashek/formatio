@@ -24,7 +24,7 @@
     border: none;
 }
 
-.nav-item.active .nav-link {
+.nav-item .nav-link.active {
     border-bottom: 3px solid #7635dc !important;
     border: none;
     color: #7635dc;
@@ -48,12 +48,12 @@
 <!-- Tabs navs -->
 <div class="container-fluid mt-4 p-5 ">
     <ul class="nav nav-tabs mb-3 navigation_module" id="myTab" role="tablist">
-        <li class="nav-item active" id="collabore-tab" role="presentation">
+        <li class="nav-item" id="collabore-tab" role="presentation">
           <a
             class="nav-link active collabore"
             id="ex1-tab-1"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             href="#collabore"
             role="tab"
             aria-controls="ex1-tabs-1"
@@ -66,7 +66,7 @@
             class="nav-link invitation"
             id="ex1-tab-2"
             data-mdb-toggle="tab"
-            data-toggle="tab"
+            data-bs-toggle="tab"
             href="#invitation   "
             role="tab"
             aria-controls="ex1-tabs-2"
@@ -111,15 +111,16 @@
                         {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->telephone}}</td> --}}
                         <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>
 
-                       {{-- @if($centre->photos_resp_cfp)
+                       @if($centre->photos_resp_cfp == null)
                             <span class="d-flex flex-row">
-                                <div class='randomColor photo_users' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center"></div>
+                                <div class='randomColor' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">{{$centre->initial}}</div>
                                 <span class="d-flex flex-end ms-3 align-items-center">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
                             </span>
-                          @else --}}
+                          @else
 
                             <img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
                             </td>
+                        @endif
 
                         {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->email}}</td> --}}
 
@@ -207,13 +208,13 @@
                     <div class="col-md-12">
                         <ul class="nav navbar-nav navbar-list me-auto mb-2 mb-lg-0 d-flex flex-row nav_bar_list text-center">
                             <li class="nav-item" style="width: 300px;">
-                                <a href="#" class="nav-link active "  style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation_attente" type="button" role="tab" aria-controls="invitation_attente" aria-selected="true">
+                                <a href="#" class="nav-link active "  style="border-bottom: 3px solid black" id="home-tab" data-bs-toggle="tab" data-bs-target="#invitation-attente" type="button" role="tab" aria-controls="invitation-attente" aria-selected="true">
                                     Invitations en attentes
                                 </a>
                             </li>
                             <li class="nav-item ms-5" style="width: 300px;">
                                 <a href="#" class="nav-link" id="profile-tab" style="border-bottom: 3px solid black" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                                    Invitations réfuser
+                                    Invitations réfusées
                                 </a>
                             </li>
                         </ul>
@@ -221,7 +222,7 @@
                 </div>
                 <div class="tab-content" id="myTabContent">
 
-                    <div class="tab-pane fade show active" id="invitation_attente" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade show active" id="invitation-attente" role="tabpanel" aria-labelledby="home-tab">
                         <div class="table-responsive text-center">
 
                             <table class="table  table-hover table-sm mt-4" >
@@ -263,7 +264,7 @@
 
                     </div>
 
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane show fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                         <div class="table-responsive text-center">
                             <table class="table  table-borderless table-sm mt-4">

@@ -171,7 +171,7 @@ th{
                                                 @endphp
                                             </td>
                                             <td class="td_hover" role="button" style="vertical-align: middle">{{$responsables_cfp->fonction_resp_cfp}}</td>
-                                            
+
                                             <td style="vertical-align: middle" class="text-center">
                                                 @if($responsables_cfp->prioriter == 1 && $responsables_cfp->activiter == 1 && $responsables_cfp->id == $resp_connecte->id)
                                                     <span data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Résponsable principale" role="button" class="td_hover" style="vertical-align: middle; font-size:23px; color:gold" align="center"><i data-bs-toggle="modal" data-bs-target="#staticBackdrop" class='bx bxs-star'></i></span>
@@ -231,7 +231,7 @@ th{
                                                         <button style="font-size: 13px" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body mt-3">
-                                                        <span>Vous êtes sur de designer cette personne comme referent principale?</span>
+                                                        <span>Vous êtes sur le point de designer cette personne comme referent principale?</span>
                                                         <input name="id_resp" type="hidden" class="responsable_cible" value="{{$responsables_cfp->id}}">
                                                     </div>
                                                     <div class="modal-footer mt-5">

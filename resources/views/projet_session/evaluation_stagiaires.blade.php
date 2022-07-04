@@ -24,7 +24,7 @@
                                 @if ($stg->photos == null)
                                     <span class="me-2">{{ $stg->sans_photos }}</span>
                                 @else
-                                    <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }} </div>
+                                    <img src="{{ asset('images/employes/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }} </div>
                                 @endif
                             </td>
                             @for ($i = 0; $i < count($competences); $i++)
@@ -67,7 +67,7 @@
                                     @if ($stg->photos == null)
                                         <span class="me-2">{{ $stg->sans_photos }}</span>
                                     @else
-                                        <img src="{{ asset('images/stagiaires/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }} </div>
+                                        <img src="{{ asset('images/employes/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }} </div>
                                     @endif
                                 </td>
                                 @for ($i = 0; $i < count($competences); $i++)

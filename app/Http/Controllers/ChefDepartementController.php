@@ -130,7 +130,6 @@ class ChefDepartementController extends Controller
     public function editer_photos($id, Request $request)
     {
         $user_id =  $users = Auth::user()->id;
-        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
         $chef =DB::select('select *  from chef_departements where id = ?',[$id])[0];
         if($chef->genre_id == 1) $genre = "Femme";
         if($chef->genre_id == 2) $genre = "Homme";
@@ -254,7 +253,7 @@ class ChefDepartementController extends Controller
     public function update_photos_chef(Request $request)
     {
         $image = $request->file('image');
-      
+
         $fonct = new FonctionGenerique();
         if($image != null){
             //dd( $image->getSize());
@@ -262,16 +261,16 @@ class ChefDepartementController extends Controller
                 return redirect()->back()->with('error_logo', 'La taille maximale doit être de 1.7 MB');
             }
             else{
-           
+
                 $user_id =  $users = Auth::user()->id;
 
                    $chef = $fonct->findWhereMulitOne("chef_departements",["user_id"],[$user_id]);
                     $image_ancien =$chef->photos;
-                  
-                    
+
+
                     //supprimer l'ancienne image
                     File::delete(public_path("images/chefDepartement/".$image_ancien));
-                   
+
                     //enregiistrer la nouvelle photo
                     $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->file('image')->getClientOriginalExtension());
                     $destinationPath = 'images/chefDepartement';
@@ -279,9 +278,9 @@ class ChefDepartementController extends Controller
                     $image_name = $nom_image;
 
                     $destinationPath = public_path('images/chefDepartement');
-                   
+
                     $resize_image = Image::make($image->getRealPath());
-                    
+
                     $resize_image->resize(228,128, function($constraint){
                         $constraint->aspectRatio();
                     })->save($destinationPath . '/' .  $image_name);

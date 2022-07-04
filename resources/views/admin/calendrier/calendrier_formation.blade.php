@@ -276,14 +276,14 @@
                         <div>
                             <i class='bx bx-building-house ms-3' style="font-size: 1rem;"></i> </label> &nbsp;<label id="etp" class="contenu"> </label> <label for="logo" id="logo_etp"></label>
                             <i class='bx bx-buildings ms-3' style="font-size: 1rem;"></i><label id="cfp" class="contenu"> </label><label for="logo" id="logo_cfp"></label><br>
-                            <label class="ps-3 pt-2"">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
+                            <label class="ps-3 pt-2">Formateur:</label><br><br><div class="d-flex flex-row mb-3"><span for="logo" id="logo_formateur" class='randomColor photo_users ms-4 me-4' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"></span>&nbsp;&nbsp;<span id="formateur" class="contenu"></span></div>
 
                         </div>
 
                         <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
 
-                        @canany(['isReferent','isCFP','isFormateur'])
+                        @canany(['isReferent','isCFP','isFormateur','isManager','isReferentSimple'])
                             <label class="gauche" for="">Liste des apprenants</label><br>
                             <table class="table">
                                 <thead>
@@ -406,6 +406,7 @@
                 , success: function(data) {
                     var event = Array();
                     var userDataDetail = JSON.parse(data);
+                    console.log("allEventEntreprise",userDataDetail);
                     var details = userDataDetail['details'];
 
                     var groupe_entreprises = userDataDetail['groupe_entreprises'];
@@ -419,9 +420,9 @@
                             @can('isStagiaire')
                                 title: details[$i].nom_formation
                             @endcan
-                            @can('isReferent')
+                            @canany(['isReferent','isReferentSimple','isManager'])
                             title: details[$i].nom_formation
-                            @endcan
+                            @endcanany
                             , start: details[$i].date_detail
                             ,backgroundColor:getRandomColor()
                             , nom_projet: details[$i].nom_projet
@@ -527,7 +528,7 @@
                                         lieu.innerHTML = '';
                                         var salle = document.getElementById('salle');
                                         salle.innerHTML = '';
-                                        @canany(['isReferent','isCFP','isFormateur'])
+                                        @canany(['isReferent','isCFP','isFormateur','isManager','isReferentSimple'])
                                         var liste_app = document.getElementById('liste_app');
                                         liste_app.innerHTML = '';
                                         var nb_apprenant = document.getElementById('nb_apprenant');
@@ -538,6 +539,7 @@
                                         // alert(JSON.stringify(response));
 
                                         var userDataDetail = JSON.parse(response);
+                                        console.log("information_module",userDataDetail);
                                         // alert(userData.length);
                                         var userData = userDataDetail['detail'];
 
@@ -547,13 +549,13 @@
                                         var nb_seance = userDataDetail['nb_seance'];
                                         var test_photo = userDataDetail['photo_form'];
                                         var photo_formateur = userDataDetail['initial'];
-                                        var initial_stg = userDataDetail['initial_stg'];
+                                        // var initial_stg = userDataDetail['initial_stg'];
                                         var entreprises = userDataDetail['entreprises'];
                                         var formations = userDataDetail['formations'];
                                         var nombre_stg = userDataDetail['nombre_stg'];
                                         var id_detail = userDataDetail['id_detail'];
                                         var res=userDataDetail["ressource"];
-                                        console.log(res);
+
                                         var images = '';
                                         var html = '';
                                         var formation = '';
@@ -675,12 +677,12 @@
                                             t4 = stg[$a].telephone_stagiaire.substr(6,2);
 
                                             if(stg[$a].photos == null) {
-                                                html = '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+initial_stg[$a][0].nm + initial_stg[$a][0].pr+'</a></span>';
+                                                html = '<tr><td><span style="background-color:grey;color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px ; display: grid; place-content: center"><a href="{{url("profile_stagiaire/:?")}}" target = "_blank">'+stg[$a].nm + stg[$a].pr+'</a></span>';
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html += '</td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + "&nbsp" + t2 + "&nbsp"+ t3 + "&nbsp" + t4 + '</td><td>'+stg[$a].nom_departement +'<br>'+stg[$a].nom_service+'</td></tr>'
                                             }
                                             else{
-                                                html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/stagiaires/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + '&nbsp' + t2 + '&nbsp'+ t3 + '&nbsp' + t4 + '</td><td>'+stg[$a].nom_departement+'<br>'+stg[$a].nom_service+'</td></tr>'
+                                                html = '<tr><td><a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><img src = "{{asset('images/employes/:!')}}" class = "rounded-circle" style="width:50px"></a></td><td>'+stg[$a].nom_stagiaire+' '+stg[$a].prenom_stagiaire+'<br>'+stg[$a].matricule+'</td><td>'+stg[$a].fonction_stagiaire+'</td><td>'+stg[$a].mail_stagiaire+'<br>'+ t1 + '&nbsp' + t2 + '&nbsp'+ t3 + '&nbsp' + t4 + '</td><td>'+stg[$a].nom_departement+'<br>'+stg[$a].nom_service+'</td></tr>'
                                                 html = html.replace(":?",stg[$a].stagiaire_id);
                                                 html = html.replace(":!",stg[$a].photos);
                                             }

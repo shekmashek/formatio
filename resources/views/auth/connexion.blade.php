@@ -55,7 +55,7 @@
                         <a href="{{ route('password.request') }}" >Mot de passe oublie?</a>
                         <button type="submit" id="tes"    class=" btn btn-info btn-block mt-2" style="width:100%;background-color: #7367f0;color: white;"> Se connecter</button>
                     </form>
-                    <p class="text-center mt-2"> Nouveaux dans le plateforme? <a href="{{route('create+compte+client')}}">Crée une compte</a> </p>
+                    <p class="text-center mt-2"> Nouveaux dans le plateforme? <a href="{{route('create+compte+client')}}">Créer un compte</a> </p>
                 </div>
                 {{-- <hr style="padding: 100px"> --}}
             </div>

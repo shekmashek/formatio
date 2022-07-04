@@ -70,7 +70,7 @@
 
         <div class="row dashboard">
             <div class="row">
-                <h3 class="text-center">Bonjour, vous allez bientôt accéder à votre espace.Aidez nous à paramétrer votre compte en fournissant les informations manquantes pour une meilleure utilisation de votre logiciel.</h3>
+                <h3 class="text-center">Bonjour, vous allez bientôt accéder à votre espace.Aidez nous à paramétrer votre compte en fournissant les informations manquantes pour une meilleure utilisation de votre application.</h3>
                 @if (\Session::has('error'))
                     <div class="alert alert-danger">
                         <ul>

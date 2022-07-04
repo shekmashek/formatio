@@ -16,6 +16,9 @@ class Stagiaire extends Model
     {
         return $this->belongsTo('App\Departement');
     }
+    public function besoins(){
+        return $this->hasMany('App\besoins');
+    }
 
     public function entreprise()
     {
@@ -58,19 +61,19 @@ class Stagiaire extends Model
     public function insert_multi($doner, $user_id,$entreprise_id)
     {
         $data = [
-            $doner["matricule"],$doner["nom"],$doner["prenom"],$doner["cin"],$doner["email"],
+            $doner["matricule_emp"],$doner["nom_emp"],$doner["prenom_emp"],$doner["cin_emp"],$doner["email_emp"],
             $entreprise_id,$user_id
         ];
-        DB::insert('insert into stagiaires (matricule,nom_stagiaire,prenom_stagiaire,cin,mail_stagiaire,entreprise_id,user_id,created_at) values (?,?,?,?,?,?,?,NOW())', $data);
+        DB::insert('insert into employers (matricule_emp,nom_emp,prenom_emp,cin_emp,email_emp,entreprise_id,user_id,created_at) values (?,?,?,?,?,?,?,NOW())', $data);
         DB::commit();
     }
 
     public function desactiver($user_id, $emp_id,$entreprise_id){
-        DB::update("UPDATE stagiaires SET activiter=FALSE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
+        DB::update("UPDATE employers SET activiter=FALSE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
         return ["status" =>"activer"];
     }
     public function activer($user_id, $emp_id,$entreprise_id){
-        DB::update("UPDATE stagiaires SET activiter=TRUE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
+        DB::update("UPDATE employers SET activiter=TRUE WHERE user_id=? AND id=? AND entreprise_id=?",[$user_id, $emp_id,$entreprise_id]);
         return ["status" =>"desactiver"];
     }
 }

@@ -591,12 +591,12 @@ ul li a {
     padding: 0;
 }
 
-.card_profile .titre_card{
+.card_profile .titre_card_profil{
     font-size: 0.8rem;
 }
 .card_profile .logout{
     font-size: .9rem;
-    padding-top: 5px;
+    padding-top: 3px;
     padding-bottom: 5px;
 }
 .card_profile .logout:hover{

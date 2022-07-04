@@ -141,3 +141,9 @@ create table detail_evaluation_action_formation(
     foreign key(evaluation_action_formation_id) references evaluation_action_formation(id) on delete cascade,
     foreign key(groupe_id) references groupes(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE detail_evaluation_action_formation
+	DROP FOREIGN KEY detail_evaluation_action_formation_ibfk_2;
+
+
+

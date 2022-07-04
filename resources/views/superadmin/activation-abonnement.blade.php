@@ -68,16 +68,16 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item">
-                <a href="#types" class="nav-link active" data-toggle="tab">Liste des abonnements</a>
+                <a href="#types" class="nav-link active" data-bs-toggle="tab">Liste des abonnements</a>
             </li>
             <li class="nav-item">
-                <a href="#entreprise" class="nav-link" data-toggle="tab">Entreprise</a>
+                <a href="#entreprise" class="nav-link" data-bs-toggle="tab">Entreprise</a>
             </li>
             <li class="nav-item">
-                <a href="#of" class="nav-link " data-toggle="tab">Organisme de formation</a>
+                <a href="#of" class="nav-link " data-bs-toggle="tab">Organisme de formation</a>
             </li>
             <li class="nav-item">
-                <a href="#coupon" class="nav-link " data-toggle="tab">Coupon</a>
+                <a href="#coupon" class="nav-link " data-bs-toggle="tab">Coupon</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -350,7 +350,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
             let lien = ($(e.target).attr('href'));
             localStorage.setItem('abonnement_admin', lien);
     });

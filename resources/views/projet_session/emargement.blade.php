@@ -94,7 +94,7 @@
                                     @if ($pre->photos == null)
                                         <span class="me-2" height="30px" width="30px" style="border-radius: 50%;">{{ $pre->sans_photos }}</span>{{$pre->matricule }}
                                     @else
-                                        <img src="{{ asset('images/stagiaires/'.$pre->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{$pre->matricule }}
+                                        <img src="{{ asset('images/employes/'.$pre->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{$pre->matricule }}
                                     @endif
                                 </div>
                                 <div class="col-md-2 text-center">{{ $pre->nom_stagiaire }}</div>
@@ -144,7 +144,7 @@
                                     @if ($pre->photos == null)
                                         <span class="me-2" height="30px" width="30px" style="border-radius: 50%;">{{ $pre->sans_photos }}</span>{{$pre->matricule }}
                                     @else
-                                        <img src="{{ asset('images/stagiaires/'.$pre->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{$pre->matricule }}
+                                        <img src="{{ asset('images/employes/'.$pre->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;"> {{$pre->matricule }}
                                     @endif
                                 </div>
                                 <div class="col-md-2 text-center">{{ $pre->nom_stagiaire }}</div>

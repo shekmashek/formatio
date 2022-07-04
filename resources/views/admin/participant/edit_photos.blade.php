@@ -37,7 +37,7 @@
         <p style="text-align: left">Photos de profil
              <strong>Taille du fichier: (1.7 MB max)</strong>
             </p><br>
-        <form   class="btn-submit" action="{{route('update_photo_stagiaire',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
+        <form   class="btn-submit" action="{{route('update_photos_resp',$stagiaire->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
                     <input type="hidden" value="   {{ $stagiaire->nom_stagiaire }}" class="form-control test"  name="nom">
@@ -80,15 +80,7 @@
                         </select>
 
 
-                        <select hidden value="{{$stagiaire->titre}}"  name="titre" class="form-control test" id="titre">
-                            <option value="Mr">Mr</option>
-                            <option value="Mme">Mme</option>
-                            <option value="Mlle">Mlle</option>
-                            <option value="Dr">Dr</option>
-                            <option value="Prof">Prof</option>
-                            <option value="Dir">Dir</option>
-                            <option value="PDG">PDG</option>
-                        </select>
+
 
 
 
@@ -126,7 +118,7 @@
 
                     <input type="hidden" class="form-control test"  name="entreprise"  value="   {{ optional(optional($stagiaire)->entreprise)->nom_etp}}">
 
-                    <input type="hidden" value="   {{ $branche->id }}"  class="form-control test"  name="lieu_travail" placeholder="Matricule" >
+
 
 
                   </div>

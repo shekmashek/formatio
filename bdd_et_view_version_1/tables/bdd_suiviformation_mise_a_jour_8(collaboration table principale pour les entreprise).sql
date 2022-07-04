@@ -1,3 +1,4 @@
+
 create table demmande_cfp_etp(
     id bigint(20) unsigned primary key not null auto_increment,
     demmandeur_cfp_id bigint(20) unsigned not null,
@@ -10,6 +11,7 @@ create table demmande_cfp_etp(
     foreign key(demmandeur_cfp_id) references cfps(id) on delete cascade,
     foreign key(inviter_etp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 
 create table demmande_etp_cfp(
@@ -37,7 +39,6 @@ create table demmande_cfp_formateur(
     foreign key(demmandeur_cfp_id) references cfps(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
 create table demmande_formateur_cfp(
     id bigint(20) unsigned primary key not null auto_increment,
     demmandeur_formateur_id bigint(20) unsigned not null,
@@ -49,7 +50,6 @@ create table demmande_formateur_cfp(
     foreign key(demmandeur_formateur_id) references formateurs(id) on delete cascade,
     foreign key(inviter_cfp_id) references cfps(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 create table refuse_demmande_cfp_etp(
     id bigint(20) unsigned primary key not null auto_increment,
@@ -63,7 +63,6 @@ create table refuse_demmande_cfp_etp(
     foreign key(inviter_etp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
 create table refuse_demmande_etp_cfp(
     id bigint(20) unsigned primary key not null auto_increment,
     demmandeur_etp_id bigint(20) unsigned not null,
@@ -75,25 +74,4 @@ create table refuse_demmande_etp_cfp(
     foreign key(inviter_cfp_id) references cfps(id) on delete cascade,
     foreign key(demmandeur_etp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
-
-alter table refuse_demmande_etp_cfp add column resp_etp_id bigint(20) unsigned not null references responsables(id) on delete cascade;
-alter table refuse_demmande_etp_cfp add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
-
-alter table refuse_demmande_cfp_etp add column resp_etp_id bigint(20) unsigned not null references responsables(id) on delete cascade;
-alter table refuse_demmande_cfp_etp add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
-
-alter table demmande_formateur_cfp add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
-alter table demmande_cfp_formateur add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
-
-alter table demmande_etp_cfp add column resp_etp_id bigint(20) unsigned not null references responsables(id) on delete cascade;
-alter table demmande_etp_cfp add column resp_cfp_id bigint(20) unsigned;
-
-alter table demmande_cfp_etp add column resp_etp_id bigint(20) unsigned ;
-alter table demmande_cfp_etp add column resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade;
-
-
-
 

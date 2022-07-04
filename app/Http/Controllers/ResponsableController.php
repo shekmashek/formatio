@@ -278,7 +278,7 @@ class ResponsableController extends Controller
         $fonct = new FonctionGenerique();
 
         $user_id = Auth::user()->id;
-         if (Gate::allows('isReferentPrincipale')) {
+         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
 
 
             // if ($id != null) {
@@ -326,7 +326,8 @@ class ResponsableController extends Controller
             // } else {
                 $id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
                 $branche = $fonct->findWhereMulitOne('branches',['entreprise_id'],[$id]);
-                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+                $refs = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where entreprise_id  = ?',[$id])[0];
+
                 $entreprise = $this->fonct->findWhereMulitOne("entreprises",["id"],[$refs->entreprise_id]);
                 $secteur = DB::select('select nom_secteur from secteurs where id = ?',[$entreprise->secteur_id]);
                 $projets_counts = $fonct->findWhere("groupe_entreprises",["entreprise_id"],[$refs->entreprise_id]);
@@ -451,6 +452,7 @@ class ResponsableController extends Controller
     {
         $user_id =  $users = Auth::user()->id;
         $responsable_connecte = responsable::where('user_id', $user_id)->exists();
+
         $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_cin', compact('responsable'));
     }
@@ -533,6 +535,32 @@ class ResponsableController extends Controller
         $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
         return view('admin.responsable.edit_poste', compact('responsable'));
     }
+    public function edit_departement($id,Request $request){
+        $fonct = new FonctionGenerique();
+        $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+        $departement = $fonct->findWhere("v_departement_service_entreprise",["entreprise_id"],[$responsable->entreprise_id]);
+        return view('admin.responsable.edit_departement',compact('departement','responsable'));
+    }
+    public function get_service(Request $request){
+        $fonct = new FonctionGenerique();
+        $service = $fonct->findWhere("services", ["departement_entreprise_id"], [$request->id]);
+        return response()->json($service);
+    }
+    public function edit_branche($id, Request $request)
+    {
+        $fonct = new FonctionGenerique();
+        if(Gate::allows('isReferent')){
+            $responsable = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where id = ?',[$id])[0];
+            $liste_branche = $fonct->findWhere("branches", ["entreprise_id"], [$responsable->entreprise_id]);
+            return view('admin.responsable.edit_branche', compact('liste_branche','responsable', 'liste_branche'));
+        }
+        if(Gate::allows('isStagiaire')){
+            $stagiaire = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from stagiaires where id = ?',[$id])[0];
+            $liste_branche = $fonct->findWhere("branches", ["entreprise_id"], [$stagiaire->entreprise_id]);
+            return view('admin.participant.edit_branche', compact('liste_branche','stagiaire', 'liste_branche'));
+        }
+
+    }
     public function update_etp(Request $request, $id)
     {
         $fonct = new FonctionGenerique();
@@ -555,6 +583,7 @@ class ResponsableController extends Controller
             //return redirect()->route('profil_referent');
         }
     }
+
     //modification photos
     public function update_photos_resp(Request $request)
     {
@@ -567,18 +596,19 @@ class ResponsableController extends Controller
             }
             elseif(in_array($request->image->extension(),$extension_type)){
                 $user_id =  $users = Auth::user()->id;
-                $responsable = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$user_id]);
+                $responsable = $this->fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
                 $image_ancien = $responsable->photos;
                 //supprimer l'ancienne image
-                File::delete(public_path("images/responsables/".$image_ancien));
+                File::delete(public_path("images/employes/".$image_ancien));
                 //enregiistrer la nouvelle photo
                 $nom_image = str_replace(' ', '_', $request->nom . ' ' . $request->prenom . '.' . $request->image->extension());
-                $destinationPath = 'images/responsables';
+
+                $destinationPath = 'images/employes';
                  //imager  resize
 
                  $image_name = $nom_image;
 
-                 $destinationPath = public_path('images/responsables');
+                 $destinationPath = public_path('images/employes');
 
                  $resize_image = Image::make($image->getRealPath());
 
@@ -586,9 +616,13 @@ class ResponsableController extends Controller
                      $constraint->aspectRatio();
                  })->save($destinationPath . '/' .  $image_name);
                 // $image->move($destinationPath, $nom_image);
-                $url_photo = URL::to('/')."/images/responsables/".$nom_image;
-                DB::update('update responsables set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
-                return redirect()->route('profil_referent');
+
+                $url_photo = URL::to('/')."/images/employes/".$nom_image;
+
+                DB::update('update employers set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
+                if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+                if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
+                if(Gate::allows('isManager')) return redirect()->route('profil_manager');
             }
             else{
                 return redirect()->back()->with('error_format', 'Le format de votre fichier n\'est pas acceptable,choisissez entre : .jpeg,.jpg,.png,.gif,.psd,.ai,.svg');
@@ -614,7 +648,9 @@ class ResponsableController extends Controller
             $new_password = Hash::make($request->new_password);
             if (Hash::check($request->get('ancien_password'), $pwd)) {
                 DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
-                return redirect()->route('profil_referent');
+                if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+                if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
+                if(Gate::allows('isManager')) return redirect()->route('profil_manager');
             } else {
                 return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
             }
@@ -628,18 +664,31 @@ class ResponsableController extends Controller
         }
         else{
             DB::update('update users set email = ? where id = ?', [$request->mail_resp, Auth::id()]);
-            DB::update('update responsables set email_resp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
-            return redirect()->route('profil_referent');
+            DB::update('update employers set email_emp = ? where user_id = ?', [$request->mail_resp, Auth::id()]);
+
+            if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+            if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
         }
+    }
+    public function update_departemennt_service($id,Request $request){
+        DB::update('update employers set service_id = ? , departement_entreprises_id = ? where id = ?', [$request->serv,$request->dep,$id]);
+        if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+        if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
+    }
+    public function update_branche(Request $request,$id){
+
+        DB::update('update employers set branche_id = ? where id = ?', [$request->branche,$id]);
+        if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+        if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
     }
     public function update(Request $request, $id)
     {
 
 
-        if (Gate::allows('isReferent')) {
+
             $fonct = new FonctionGenerique();
 
-            $resp_etp = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
+            // $resp_etp = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
 
             //modifier les données
             $nom = $request->nom;
@@ -647,6 +696,7 @@ class ResponsableController extends Controller
             $date_naiss = $request->date_naissance;
             $cin = $request->cin;
             $genre = $request->genre;
+
             $code_postal = $request->code_postal;
             $ville = $request->ville;
             $region = $request->region;
@@ -658,7 +708,6 @@ class ResponsableController extends Controller
             $phone =  $request->phone;
             $mdp = $request->password;
             $mdpHash = Hash::make($mdp);
-
             $input = $request->image;
             //stocker logo dans google drive
             //stocker logo dans google drive
@@ -669,8 +718,8 @@ class ResponsableController extends Controller
 
 
             if ($image = $request->file('image')) {
-
-                $destinationPath = 'images/responsables';
+                if(Gate::allows('isReferent')) $destinationPath = 'images/responsables';
+                if(Gate::allows('isStagiaire')) $destinationPath = 'images/stagiaires';
                 $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
                 $image->move($destinationPath, $profileImage);
                 $input = "$profileImage";
@@ -688,52 +737,22 @@ class ResponsableController extends Controller
                 return back()->with('error_cin','Entrez votre CIN avant  de cliquer sur enregistrer');
             }
             elseif($lot == null || $ville == null || $region == null || $quartier == null || $code_postal == null){
+
                 return back()->with('error_adresse','Entrez votre adresse complète avant  de cliquer sur enregistrer');
             }
             elseif($fonction == null){
+
                 return back()->with('error_fonction','Entrez votre fonction avant de cliquer sur enregistrer');
             }
             else{
                 if ($input != null) {
 
-                    responsable::where('id', $id)
-                        ->update([
-                            'nom_resp' => $nom,
-                            'prenom_resp' => $prenom,
-                            'fonction_resp' => $fonction,
-                            'email_resp' => $mail,
-                            'telephone_resp' => $phone,
-                            'date_naissance_resp' => $date_naiss,
-                            'genre_id' => $genre,
-                            'cin_resp' => $cin,
-                            'adresse_lot' => $lot,
-                            'adresse_code_postal' => $code_postal,
-                            'adresse_quartier' => $quartier,
-                            'adresse_ville' => $ville,
-                            'adresse_region' => $region,
-                            'poste_resp' => $poste,
-                            'photos' => $input
-                        ]);
+                    DB::update('update employers set nom_emp = ? , prenom_emp = ?,date_naissance_emp = ?, cin_emp = ?,telephone_emp = ?,fonction_emp = ?,genre_id = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_lot = ?,adresse_ville = ?,adresse_region = ? where id = ?',
+                    [$nom,$prenom,$date_naiss,$cin,$phone,$fonction,$genre,$quartier,$code_postal,$lot,$ville,$region,$id]);
 
                 } else {
-                    responsable::where('id', $id)
-                        ->update([
-                            'nom_resp' => $nom,
-                            'prenom_resp' => $prenom,
-                            'fonction_resp' => $fonction,
-                            'email_resp' => $mail,
-                            'telephone_resp' => $phone,
-                            'date_naissance_resp' => $date_naiss,
-                            'genre_id' => $genre,
-                            'cin_resp' => $cin,
-                            'adresse_lot' => $lot,
-                            'adresse_code_postal' => $code_postal,
-                            'adresse_quartier' => $quartier,
-                            'adresse_ville' => $ville,
-                            'adresse_region' => $region,
-                            'poste_resp' => $poste,
-
-                        ]);
+                    DB::update('update employers set nom_emp = ? , prenom_emp = ?, date_naissance_emp = ?,cin_emp = ?,telephone_emp = ?,fonction_emp = ?,genre_id = ?,adresse_quartier = ?,adresse_code_postal = ?,adresse_lot = ?,adresse_ville = ?,adresse_region = ? where id = ?',
+                    [$nom,$prenom,$date_naiss,$cin,$phone,$fonction,$genre,$quartier,$code_postal,$lot,$ville,$region,$id]);
                 }
 
             }
@@ -743,69 +762,9 @@ class ResponsableController extends Controller
             DB::update('update users set telephone = ? where id = ?', [$phone,Auth::user()->id]);
             // DB::update('update users set cin = ? where id = ?', [$cin,Auth::user()->id]);
 
-            return redirect()->route('profil_referent');
-        }
-
-
-        if (Gate::allows('isSuperAdmin') || Gate::allows('isReferent')) {
-            $id = $request->Id;
-            $user_id = responsable::where('id', $id)->value('user_id');
-            //modifier les données
-            // $dossier = 'stagiaire';
-            // $stock_stg = new getImageModel();
-            //  $stock_stg->store_image($dossier, $input, $request->file('image')->getContent());
-            $input = $request->image;
-            if ($image = $request->file('image')) {
-                $destinationPath = 'images/stagiaires';
-                $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                $image->move($destinationPath, $profileImage);
-                $input = "$profileImage";
-            }
-            $nom = $request->Nom;
-            $prenom = $request->Prenom;
-            $mail = $request->Mail;
-            $fonction = $request->Fonction;
-            $phone =  $request->Phone;
-            if ($input != null) {
-
-
-                responsable::where('id', $id)
-                    ->update([
-                        'nom_resp' => $nom,
-                        'prenom_resp' => $prenom,
-                        'fonction_resp' => $fonction,
-                        'email_resp' => $mail,
-                        'telephone_resp' => $phone,
-                        'photos' => $input,
-                        'adresse_lot' => $request->lot,
-                        'adresse_region' => $request->region,
-                        'adresse_ville' => $request->ville,
-                        'adresse_quartier' => $request->quartier,
-                        'adresse_code_postal' => $request->code_postal
-                    ]);
-
-            } else {
-                responsable::where('id', $id)
-                    ->update([
-                        'nom_resp' => $nom,
-                        'prenom_resp' => $prenom,
-                        'fonction_resp' => $fonction,
-                        'email_resp' => $mail,
-                        'telephone_resp' => $phone,
-                        'adresse_lot' => $request->lot,
-                        'adresse_region' => $request->region,
-                        'adresse_ville' => $request->ville,
-                        'adresse_quartier' => $request->quartier,
-                        'adresse_code_postal' => $request->code_postal
-                    ]);
-            }
-            User::where('id', $user_id)
-                ->update([
-                    'name' => $nom,
-                    'email' => $mail
-                ]);
-            return redirect()->route('liste_responsable');
-        }
+            if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
+            if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
+            if(Gate::allows('isManager')) return redirect()->route('profil_manager');
     }
 
     public function destroy(Request $request)

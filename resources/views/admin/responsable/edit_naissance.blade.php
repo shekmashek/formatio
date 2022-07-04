@@ -12,7 +12,7 @@
 
 <div class="col-lg-4">
     <div class="p-3 form-control">
-       
+
         <form   class="btn-submit" action="{{route('update_responsable',$responsable->id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
