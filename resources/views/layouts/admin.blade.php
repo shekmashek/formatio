@@ -1067,7 +1067,7 @@
                                         <div class="card-title">
                                             <div class="row px-3">
                                                 <div class="col-7">
-                                                    <span class="titre_card"><img src="{{asset('img/logos_all/iconFormation.webp')}}" alt="logo_mini" title="logo formation.mg" width="30px" height="30px">Formation.mg</span>
+                                                    <span class="titre_card_profil"><img src="{{asset('img/logos_all/iconFormation.webp')}}" alt="logo_mini" title="logo formation.mg" width="30px" height="30px">Formation.mg</span>
                                                 </div>
                                                 <div class="col-5 text-center">
                                                     <div class="logout">
