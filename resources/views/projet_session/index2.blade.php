@@ -4,15 +4,7 @@
 @endsection
 
 @inject('groupe', 'App\groupe')
-
 @section('content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
-    {{-- <link rel="stylesheet" href="{{ asset('assets/css/projets.css') }}"> --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/configAll.css') }}">
-
-<link href="https://nightly.datatables.net/fixedheader/css/fixedHeader.dataTables.css?_=f0de745b101295e88f1504c17177ff49.css" rel="stylesheet" type="text/css" />
-<script src="https://nightly.datatables.net/fixedheader/js/dataTables.fixedHeader.js?_=f0de745b101295e88f1504c17177ff49"></script>
     <style>
         .dropdown-item.active{
             background-color: transparent !important;
@@ -330,7 +322,43 @@
             float: right;
             margin-bottom: 14px;
         }
-    </style>
+
+        /* multi-select */
+        body {
+  padding: 15px;
+}
+
+.checkbox-menu li label {
+    display: block;
+    padding: 3px 10px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+    margin:0;
+    transition: background-color .4s ease;
+}
+.checkbox-menu li input {
+    margin: 0px 5px;
+    top: 2px;
+    position: relative;
+}
+
+.checkbox-menu li.active label {
+    background-color: #cbcbff;
+    font-weight:bold;
+}
+
+.checkbox-menu li label:hover,
+.checkbox-menu li label:focus {
+    background-color: #f5f5f5;
+}
+
+.checkbox-menu li.active label:hover,
+.checkbox-menu li.active label:focus {
+    background-color: #b8b8ff;
+} </style>
 
     <div class="container-fluid mb-5">
         {{-- <div class="d-flex flex-row justify-content-end mt-3">
@@ -386,52 +414,174 @@
                         </div>
                     @endif
                     <div class="row">
-                        <div class="col-8 mb-4">
+                        <div class="col-md-8">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <form action=" {{ route('project.filterBydate') }} " method="post">
-                                        @csrf
-                                        <label for="dateD">Début projet</label>
-                                        <input type="date" name="from" id="from" value=" {{ date('d M Y') }}" class="form-control form-control-sm">
-                                        <label for="dateF">Fin projet</label>
-                                        <input type="date" name="to" id="to" value=" {{ date('Y-m-d')}} " class="form-control form-control-sm">
-                                        <input type="submit" value="Rechercher" class="btn btn-sm btn-primary mt-2">
-                                    </form>
-                                    
-                                    <a href=" {{route('liste_projet')}} " class="btn btn-sm btn-success mt-2">Actualiser</a>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Date debut</label>
+                                        <input type="date" name="dateDebut" id="start_date" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Date fin</label>
+                                        <input type="date" name="dateFin" id="end_date" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Type Session</label>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected>-- choisir une session --</option>
+                                            <option value="1">Intra</option>
+                                            <option value="2">Inter</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    {{-- <form action=" {{ route('client.searchByMission') }} " method="post">
-                                        @csrf
-                                        <label for="from">Début mission</label>
-                                        <input type="date" name="from" id="from" value=" {{ date('Y-m-d')}} " class="form-control form-control-sm">
-                                        <label for="to">Fin mission</label>
-                                        <input type="date" name="to" id="to" value=" {{ date('Y-m-d')}} " class="form-control form-control-sm">
-                                        <input type="submit" value="Rechercher" class="btn btn-sm btn-primary mt-2">
-                                    </form> --}}
+                                
+                                <div class="col-md-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" 
+                                            id="dropdownMenu1" data-bs-toggle="dropdown" 
+                                            aria-haspopup="true" aria-expanded="true">
+                                            <i class='bx bxs-down-arrow-circle'></i> Status
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul id="statusFilter" class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1"  style="width: 300px">
+                                            <li>
+                                                <input type="text" class="form-control form-control-sm" style="width: 288px;" >
+                                            </li>
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="status" value="A venir"> A venir 
+                                                    </label>
+                                                </li>
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="status" value="Annulée"> Annulée 
+                                                    </label>
+                                                </li>
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="status" value="Complète"> Complète 
+                                                    </label>
+                                                </li>
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="status" value="Cloturé"> Cloturé 
+                                                    </label>
+                                                </li>
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="status" value="En cours"> En cours 
+                                                    </label>
+                                                </li>
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="status" value="Réporté"> Réporté 
+                                                    </label>
+                                                </li>
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="status" value="Prévisionnel"> Prévisionnel 
+                                                    </label>
+                                                </li>
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="status" value="Reprogrammer"> Reprogrammer 
+                                                    </label>
+                                                </li>
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="status" value="Terminé"> Terminé 
+                                                    </label>
+                                                </li>
+                                                
+                                        </ul>
+                                    </div>
+
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" 
+                                                id="dropdownMenu2" data-bs-toggle="dropdown" 
+                                                aria-haspopup="true" aria-expanded="true">
+                                                <i class='bx bxs-customize' style="color: #2e3950"></i> Modules
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul id="modules" class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu2"  style="width: 300px">
+                                            <li>
+                                                <input type="text" name="" id="" class="form-control form-control-sm" style="width: 288px;" >
+                                            </li>
+                                            @foreach ($module as $mdl)
+                                                <li >
+                                                    <label>
+                                                        <input type="checkbox" name="modules" value="{{ $mdl->nom_module }}"> {{ $mdl->nom_module}}
+                                                    </label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" 
+                                                id="dropdownMenu1" data-bs-toggle="dropdown" 
+                                                aria-haspopup="true" aria-expanded="true">
+                                                <i class='bx bx-calendar-check' ></i> Modalité
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul id="modalites" class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1"  style="width: 300px">
+                                            <li>
+                                                <input type="text" name="" id="" class="form-control form-control-sm" style="width: 288px;" >
+                                            </li>
+                                            <li >
+                                                <label>
+                                                    <input type="checkbox" name="modalites" value="Présentiel"> Présentiel
+                                                </label>
+                                            </li>
+                                            <li >
+                                                <label>
+                                                    <input type="checkbox" name="modalites" value="En ligne"> En ligne
+                                                </label>
+                                            </li>
+                                            <li >
+                                                <label>
+                                                    <input type="checkbox" name="modalites" value="Présentiel/En ligne"> Présentiel/En ligne
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4">
                             <div class="row" >
-                                <div class="col-md-5">
-                                    <select id="select-column" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                        <option selected value="0">Projets</option>
-                                        <option value="1" style="display: none">Session</option>
-                                        <option value="2" style="display: none">Module</option>
-                                        <option value="3">Entreprise</option>
-                                        <option value="4" style="display: none">Modalité</option>
-                                        <option value="5" style="display: none">Date du projet</option>
-                                        <option value="6" style="display: none">Ville</option>
-                                        <option value="7" style="display: none">Status</option>
-                                        <option value="8">Type</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-7 mb-3">
-                                    <input class="form-control form-control-sm" type="text" id="search-by-column" placeholder="votre recherche..." autofocus value=" ">
-                                </div>
+                                <table>
+                                    <thead>
+                                        <form action="{{ route('project.filterBydate') }}" method="post">
+                                            @csrf
+                                            <tr>
+                                                <th style="font-size: 14px; font-weight: 400;">De</th>
+                                                <th style="font-size: 14px; font-weight: 400;">A</th>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <div class="input-group input-group-sm" style="width: 98%;">
+                                                        <input type="date" name="from" id="from" value=" {{ date('d M Y') }}" class="form-control form-control-sm">
+                                                        <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' style="font-size: 20px"></i></span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="input-group input-group-sm" style="width: 98%;">
+                                                        <input type="date" name="to" id="to" value=" {{ date('Y-m-d')}} " class="form-control form-control-sm">
+                                                        <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' style="font-size: 20px"></i></span>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <button type="submit" class="btn btn-sm btn-primary">Afficher <i class='bx bx-search-alt-2' style="font-size: 20px; vertical-align: middle;"></i></button>
+                                                </th>
+                                            </tr>
+                                        </form>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
+
                         <div class="fixedTop" >
                             <table id="myDatatablesa" class="display nowrap table shadow-sm">
                                 <thead style="position: sticky; top: 0; z-index:1">
@@ -463,7 +613,7 @@
                                         @if ($prj->totale_session <= 0)
                                             <span> Aucune session</span>
                                         @else
-                                            <tr>
+                                            <tr class="listes">
                                                 <td style="vertical-align: top;">
                                                     @php
                                                         if ($prj->totale_session == 1) {
@@ -490,7 +640,7 @@
                                                     @foreach ($data as $pj)
                                                         @if ($prj->projet_id == $pj->projet_id)
                                                         <span>
-                                                            <a data-bs-toggle='collapse' href="#collapseExample_{{ $pj->groupe_id}}" role='button' aria-expanded='false' aria-controls='collapseExample'><i class="bi bi-arrow-down-circle"></i></a>
+                                                            <a data-bs-toggle='collapse' href="#collapseExample_{{ $pj->groupe_id}}" role='button' aria-expanded='false' aria-controls='collapseExample'><i class='bx bx-down-arrow-circle'></i></a>
                                                         </span>
                                                         <span style="display: inline-block; margin-bottom: 15px;">{{ $pj->nom_groupe}}</span> <br><hr>
                                                         @endif
@@ -499,9 +649,7 @@
                                                 <td style="display: none">
                                                     @foreach ($data as $pj)
                                                         @if ($prj->projet_id == $pj->projet_id)
-                                                            <span style="display: inline-block; margin-bottom: 15px;">
-                                                                {{ $pj->nom_module}}     
-                                                            </span> <br>
+                                                            <span style="display: inline-block; margin-bottom: 15px;">{{ $pj->nom_module}}</span> <br>
                                                         @endif
                                                     @endforeach
                                                 </td>
@@ -527,24 +675,34 @@
                                                     @foreach ($data as $pj)
                                                         @if ($prj->projet_id == $pj->projet_id)
                                                             @php
-                                                                echo "<span  style='display: inline-block; margin-bottom: 15px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span><br>";
+                                                                echo "<span class='date_debut'  style='display: inline-block; margin-bottom: 15px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut))."</span>"; echo "<span class='date_fin'>".strftime('%d-%m-%y', strtotime($pj->date_fin))."</span><br>";
                                                             @endphp
                                                         @endif
                                                     @endforeach
                                                 </td>
-                                                <td style="display: none;"></td>
                                                 <td style="display: none">
                                                     @foreach ($data as $pj)
                                                         @if ($prj->projet_id == $pj->projet_id)
-                                                            <span style="display: inline-block; margin-bottom: 15px;">{{ $pj->item_status_groupe }}</span> <br>
+                                                            @php
+                                                                $ville = $groupe->dataVille($pj->groupe_id);
+                                                                $salle = explode(',  ', $ville);
+                                                            @endphp
+                                                        @endif
+                                                    @endforeach
+                                                    <span style="font-size: 12px;">{{ $salle[0] }}</span>
+                                                </td>
+                                                <td style="display: none">
+                                                    @foreach ($data as $pj)
+                                                        @if ($prj->projet_id == $pj->projet_id)
+                                                            <span style="display: inline-block; margin-bottom: 15px;" class="nom_status">{{ $pj->item_status_groupe }}</span> <br>
                                                         @endif
                                                     @endforeach
                                                 </td>
                                                 <td colspan="8" style="padding: 0; margin: 0">
                                                     <table class="table" id="myTable">
                                                         <thead>
-                                                            <tr>
-                                                                <th style="vertical-align: top; width: 13.2%">
+                                                            <tr class="listes">
+                                                                <th style="vertical-align: top; width: 12%">
                                                                     @if ($prj->type_formation_id == 1)
                                                                         <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 2px 10px; font-weight: 400; letter-spacing: 1px;">
                                                                             {{ $prj->type_formation }}
@@ -559,19 +717,19 @@
                                                                     @foreach ($data as $pj)
                                                                         @if ($prj->projet_id == $pj->projet_id)
                                                                         <span>
-                                                                            <a data-bs-toggle='collapse' href="#collapseExample_{{ $pj->groupe_id}}" role='button' aria-expanded='false' aria-controls='collapseExample'><i class="bi bi-arrow-down-circle"></i></a>
+                                                                            <a data-bs-toggle='collapse' href="#collapseExample_{{ $pj->groupe_id}}" role='button' aria-expanded='false' aria-controls='collapseExample'><i class='bx bx-down-arrow-circle'></i></a>
                                                                         </span>
                                                                         {{ $pj->nom_groupe}} <br><hr>
                                                                         @endif
                                                                     @endforeach
                                                                 </th>
                                                                 
-                                                                <th style="width: 13.9%">
+                                                                <th style="width: 11.9%">
                                                                     
                                                                 </th>
-                                                                <th style="width: 12%"></th>
-                                                                <th style="width: 13.2%"></th>
-                                                                <th style="width: 13.2%"></th>
+                                                                <th style="width: 12.4%"></th>
+                                                                <th style="width: 12.4%"></th>
+                                                                <th style="width: 15%"></th>
                                                                 <th style="width: 13.2%"></th>
                                                                 <th style="width: 13.2%;">
                                                                     @can('isCFP')
@@ -584,7 +742,7 @@
                                                                         @endif 
                                                                     @endcan
                                                                 </th>
-                                                                <th style="width: 13.2%">
+                                                                <th style="width: 12%">
                                                                     
                                                                 </th>
                                                             </tr>
@@ -592,10 +750,10 @@
                                                         <tbody>
                                                             @foreach ($data as $pj)
                                                                 @if ($prj->projet_id == $pj->projet_id)
-                                                                <tr>
-                                                                    <td style="">
+                                                                <tr class="listes">
+                                                                    <td>
                                                                         <span>
-                                                                            <a data-bs-toggle="collapse" href="#collapseExample_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-down-circle"></i></a>
+                                                                            <a data-bs-toggle="collapse" href="#collapseExample_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class='bx bx-down-arrow-circle' style="font-size: 20px; vertical-align: middle;"></i></a>
                                                                         </span>
                                                                         <a href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">
                                                                             <span style="border-bottom: 3px solid #673ab7; font-size: 14px"  class="spanClass">{{ $pj->nom_groupe }}</span>
@@ -618,23 +776,23 @@
                                                                     </td>
                                                                     <td>
                                                                         @php
-                                                                            echo "<span style='padding-left: 18px; font-size: 10px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";    
+                                                                            echo "<span style='font-size: 13px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";    
                                                                         @endphp
                                                                     </td>
-                                                                    <td>
-                                                                            @php
-                                                                                $ville = $groupe->dataVille($pj->groupe_id);
-                                                                                $salle = explode(',  ', $ville);
-                                                                            @endphp
-                                                                            <span style="font-size: 12px;">{{ $salle[0] }}</span><br>
+                                                                    <td class="text-center">
+                                                                        @php
+                                                                            $ville = $groupe->dataVille($pj->groupe_id);
+                                                                            $salle = explode(',  ', $ville);
+                                                                        @endphp
+                                                                        <span style="font-size: 12px;">{{ $salle[0] }}</span>
                                                                     </td>
                                                                     <td>
-                                                                        <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1 text-center">
+                                                                        <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1 text-center nom_status">
                                                                             {{ $pj->item_status_groupe }}
                                                                         </p>
                                                                     </td>
                                                                     <td class="text-center" style="width: 180px;">
-                                                                        <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                                                        <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.4rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                                                         <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
                                                                             @can('isCFP')
                                                                                 <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static" style="cursor: pointer;">Modifier</span></li>
@@ -1853,6 +2011,139 @@
                 integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+                <script type="text/javascript">
+                    // filter status
+                    $(document).ready( function(){
+                        $('#statusFilter').on('change', function (e) { 
+                            $.each($("input[name='status']:checked"), function(){
+                                var valueSelected = $(this).val();
+                                $(".nom_status").each(function( index ) {
+                                    if($( this ).text()!=valueSelected){
+                                        if (!$( ".listes" ).eq( index ).hasClass("checked")) {
+                                            $( ".listes" ).eq( index ).css('display','none');
+                                        }
+                                    }else if($( this ).text()==valueSelected){
+                                        $( ".listes" ).eq( index ).addClass('checked');
+                                        $( ".listes" ).eq( index ).css('display','flex');
+                                    }
+                                    if(valueSelected=='null'){
+                                        $( ".listes" ).css('display','flex');
+                                    }
+                                });
+                            });
+                            $(".listes").removeClass("checked");
+                        });
+                    });
+
+                    // Modules
+                    $(document).ready( function(){
+                        $('#modules').on('change', function (e) { 
+                            $.each($("input[name='modules']:checked"), function(){
+                                var valueSelected = $(this).val();
+                                $(".nom_modules").each(function( index ) {
+                                    if($( this ).text()!=valueSelected){
+                                        if (!$( ".listes" ).eq( index ).hasClass("checked")) {
+                                            $( ".listes" ).eq( index ).css('display','none');
+                                        }
+                                    }else if($( this ).text()==valueSelected){
+                                        $( ".listes" ).eq( index ).addClass('checked');
+                                        $( ".listes" ).eq( index ).css('display','flex');
+                                    }
+                                    if(valueSelected=='null'){
+                                        $( ".listes" ).css('display','flex');
+                                    }
+                                });
+                            });
+                            $(".listes").removeClass("checked");
+                        });
+                    });
+
+                    // filter date
+                    $('#start_date').on('input', function (e) {
+                        var end = $('#end_date').val();
+                        if(end==''){
+                            $(".date_debut").each(function( index ) {
+                                var debut = $( this ).text();
+                                var start = $('#start_date').val();
+                                var split_date_debut = debut.split('-');
+                                var date_debut = new Date('20'+split_date_debut[2],split_date_debut[1],split_date_debut[0]);
+                                var split_date_start = start.split('-');
+                                var date_start = new Date(split_date_start[0],split_date_start[1],split_date_start[2]);
+                                if(date_debut<date_start){
+                                        $( ".listes" ).eq( index ).css('display','none');
+                                }else{
+                                    $( ".listes" ).eq( index ).css('display','flex');
+                                }
+                            });
+                        }else{
+                            $(".date_debut").each(function( index ) {
+                                var fin = $(".date_fin").eq( index ).text();
+                                var debut = $( this ).text();
+                                var start = $('#start_date').val();
+                                var split_date_debut = debut.split('-');
+                                var date_debut = new Date('20'+split_date_debut[2],split_date_debut[1],split_date_debut[0]);
+                                var split_date_start = start.split('-');
+                                var date_start = new Date(split_date_start[0],split_date_start[1],split_date_start[2]);
+                                var end = $('#end_date').val();
+                                var split_date_fin = fin.split('-');
+                                var date_fin = new Date('20'+split_date_fin[2],split_date_fin[1],split_date_fin[0]);
+                                var split_date_end = end.split('-');
+                                var date_end = new Date(split_date_end[0],split_date_end[1],split_date_end[2]);
+                                if(date_debut<date_start || date_fin>date_end){
+                                        $( ".listes" ).eq( index ).css('display','none');
+                                }else{
+                                    $( ".listes" ).eq( index ).css('display','flex');
+                                }
+                            });
+                        }
+                        
+                    });
+
+                    //Modules
+                    // $('#module').on('change', function (e) {
+                    //     $.each($("input[name='module']:checked"), function(){
+                    //         var valueSelected = $(this).val();
+                    //         console.log(valueSelected);
+                    //         $(".nom_module").each(function( index ) {
+                    //             if($( this ).text()!=valueSelected){
+                    //                 if (!$( ".listes" ).eq( index ).hasClass("checked")) {
+                    //                     $( ".listes" ).eq( index ).css('display','none');
+                    //                 }
+                    //             }else if($( this ).text()==valueSelected){
+                    //                 $( ".listes" ).eq( index ).addClass('checked');
+                    //                 $( ".listes" ).eq( index ).css('display','flex');
+                    //             }
+                    //             if(valueSelected=='null'){
+                    //                 $( ".listes" ).css('display','flex');
+                    //             }
+                    //         });
+                    //     });
+                    //     $(".listes").removeClass("checked");
+                    // });
+
+                    // modalités
+                    $('#modalites').on('change', function (e) {
+                        $.each($("input[name='modalites']:checked"), function(){
+                            var valueSelected = $(this).val();
+                            console.log(valueSelected);
+                            $(".nom_modalite").each(function( index ) {
+                                if($( this ).text()!=valueSelected){
+                                    if (!$( ".listes" ).eq( index ).hasClass("checked")) {
+                                        $( ".listes" ).eq( index ).css('display','none');
+                                    }
+                                }else if($( this ).text()==valueSelected){
+                                    $( ".listes" ).eq( index ).addClass('checked');
+                                    $( ".listes" ).eq( index ).css('display','flex');
+                                }
+                                if(valueSelected=='null'){
+                                    $( ".listes" ).css('display','flex');
+                                }
+                            });
+                        });
+                        $(".listes").removeClass("checked");
+                    });
+                </script>
+
                 <script>
                     $(document).ready( function () {
                         
@@ -1892,15 +2183,15 @@
                             scrollCollapse: true,
                             columnDefs: [
                                     { 
-                                        width: "10%", targets: 0,
-                                        width: "15%", targets: 1,
-                                        width: "12%", targets: 2,
-                                        width: "12%", targets: 3,
-                                        width: "10%", targets: 4,
+                                        // width: "10%", targets: 0,
+                                        // width: "15%", targets: 1,
+                                        width: "15%", targets: 2,
+                                        // width: "12%", targets: 3,
+                                        // width: "10%", targets: 4,
                                         width: "15%", targets: 5,
-                                        width: "10%", targets: 6,
-                                        width: "8%", targets: 7,
-                                        width: "8%", targets: 8,
+                                        // width: "10%", targets: 6,
+                                        // width: "8%", targets: 7,
+                                        // width: "8%", targets: 8,
                                     }
                                 ],
                             orderCellsTop: true,

@@ -130,7 +130,7 @@ class SessionController extends Controller
         $module_session = DB::select('select reference,nom_module, module_id from groupes,modules where groupes.module_id = modules.id and groupes.id = ?',[$id])[0];
         $dataMontantSession = DB::select("select * from v_liste_facture where groupe_id=?",[$id]);
         if(Gate::allows('isCFP')){
-            $drive = new getImageModel();
+            // $drive = new getImageModel();
 
             $fonct = new FonctionGenerique();
             $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
@@ -174,7 +174,7 @@ class SessionController extends Controller
             // $drive = new getImageModel();
             // $drive->create_folder($cfp_nom);
             // $drive->create_sub_folder($cfp_nom, "Mes documents");
-            $documents = $drive->file_list($cfp_nom,"Mes documents");
+            // $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
         if(Gate::allows('isReferent')){
