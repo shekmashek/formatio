@@ -684,9 +684,7 @@ class ResponsableController extends Controller
     public function update(Request $request, $id)
     {
 
-
-
-            $fonct = new FonctionGenerique();
+        $fonct = new FonctionGenerique();
 
             // $resp_etp = $fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id]);
 

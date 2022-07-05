@@ -25,6 +25,7 @@ class CreateTableBesoinStagiaire extends Migration
             $table->string('organisme');
             $table->string('statut')->default(0);
             $table->string('type');
+            $table->string('reponse_stagiaire')->default(1);
             $table->timestamps();
         });
     }

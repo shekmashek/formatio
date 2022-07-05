@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\PlanFormation;
 use App\recueil_information;
@@ -19,6 +20,7 @@ use App\entreprise;
 use App\User;
 use App\besoins;
 use PDF;
+use Illuminate\Support\Facades\Mail;
 use App\Models\FonctionGenerique;
 use Google\Service\Adsense\Alert;
 
@@ -63,8 +65,11 @@ class PlanFormationController extends Controller
 
         $collaborateur_id = stagiaire::where('user_id', $users_id)->value('user_id');
         // $besoin = DB::select('select * from besoin_stagiaire where stagiaire_id = ?',[$stagiaire_id]);
-        $besoin = besoins::where('stagiaire_id',$stagiaire_id)->get();
-
+        $besoin = besoins::where('stagiaire_id',$stagiaire_id)->where('reponse_stagiaire',1)->get();
+        // $besoin = DB::table('besoin_stagiaire')
+        //         ->where('stagiaire_id',$stagiaire_id)
+        //         ->where('reponse_stagiaire', '<>', 1)
+        //         ->get();
         // foreach ($besoin as $b){
         //     $domaines_id = $b->domaines_id;
         // }
@@ -190,7 +195,6 @@ class PlanFormationController extends Controller
             'anneePlan_id'=>'required',
             'objectif'=>'required',
             'date_previsionnelle'=>'required',
-
             'type'=>'required'
         ]);
         besoins::create($request->all());
@@ -257,15 +261,6 @@ class PlanFormationController extends Controller
     {
         $fonct = new FonctionGenerique();
         $users = Auth::user()->id;
-        $besoins ="";
-
-        // $role_id = User::where('email', Auth::user()->email)->value('role_id');
-
-        // foreach($plan as $p){
-        //     $id = $p->id;
-        // }
-
-
 
         $yearNow = Carbon::now()->format('Y');
         // $idAnnee = annee_plan::where('Annee', $yearNow)->value('id');
@@ -283,7 +278,6 @@ class PlanFormationController extends Controller
                 return view('referent.ajout_plan',compact('entreprise_id'));
             }
             else{
-
                 $besoin_count  = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'])->get();
                 $besoinV_count = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'=>function($query){
                     $query->where('statut','=','1');
@@ -295,29 +289,134 @@ class PlanFormationController extends Controller
                 $nombr = count($employ);
                 return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoin_count','besoinV_count','besoinN_count'));
             }
-
         }
+    }
 
-        //$besoin_count = $fonct->findWhere("besoin_stagiaire",["anneePlan_id"],[$id]);
+    public function getEmailEmploye(Request $req){
+        $fonct = new FonctionGenerique();
+        
+        $users = Auth::user()->id;
+        if (Gate::allows('isManager')) {
+            $departement_id = $fonct->findWhereMulitOne("employers",["user_id"],[$users])->departement_entreprises_id;
+            $entreprise_id = $fonct->findWhereMulitOne("chef_departements",["user_id"],[$users])->entreprise_id;
+            $employe = $fonct->findWhereMulitOne('employers',["id","departement_entreprises_id","entreprise_id"],[$req->id, $departement_id, $entreprise_id])->email_emp;
+        //    $employe = DB::select('select email_emp from employers where id = ?,departement_entreprises_id = ? ,entreprise_id', [$req->id, $departement_id, $entreprise_id]);
+            return response()->json($employe);
+        }
+    }
 
-        // dd($besoinV_count);
-        // $besoin dd($besoin_count);
+    public function  listes_demandes_stagiaires(){
+        $fonct = new FonctionGenerique();
+        $users = Auth::user()->id;
+        if (Gate::allows('isManager')) {
+            $departement_id = $fonct->findWhereMulitOne("employers",["user_id"],[$users])->departement_entreprises_id;
+            $entreprise_id = $fonct->findWhereMulitOne("chef_departements",["user_id"],[$users])->entreprise_id;
+            
+            $plan = DB::select('select * from plan_formation_valide where entreprise_id = ?', [$entreprise_id]);
+            $besoins = $fonct->findWhere("v_besoins_stagiaires", ["entreprise_id","departement_entreprises_id","reponse_stagiaire"], [$entreprise_id,$departement_id,1]);
+            $propositions = $fonct->findWhereParam("v_besoins_stagiaires",["entreprise_id","departement_entreprises_id","reponse_stagiaire"],["=","=","<>"],[$entreprise_id,$departement_id,1]);
+            // // $liste = recueil_information::with('formation', 'annee_plan')->where('entreprise_id', $entreprise_id)->get();
+            return view('manager.demande_stagiaires.listeDemandeStagiaire', compact( 'plan','besoins','propositions'));
+        }
+    }
+
+    public function envoye_demande_stg(Request $req,$anneePlan_id){
+        $fonct = new FonctionGenerique();
+        $users =Auth::user()->id;
+        $planAn_id = PlanFormation::where('id',$anneePlan_id)->value('id');
+        if(Gate::allows('isManager')){
+            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+            $departement_id = $fonct->findWhereMulitOne("employers",["user_id"],[$users])->departement_entreprises_id;
+            $stagiaires = $fonct->findWhereParam("stagiaires",["entreprise_id","departement_entreprises_id","user_id"],["=","=","<>"],[$entreprise_id,$departement_id,$users]);
+            // dd($stagiaires);
+            $domaines = Domaine::all();
+            $themes =formation::all();
+            return view('manager.autreDemandeFormation',compact('stagiaires','domaines','planAn_id'));
+        }
+    }
+
+    public function enregistrer_demande_stagiaire(Request $request,$id){
+        $fonct = new FonctionGenerique();
+        $users =Auth::user()->id;
+        if(Gate::allows('isManager')){
+            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+            $plan_id = $id;
+            $statut = 1;
+            $reponse = 0;
+           
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'stagiaire_id'=>'required',
+                    'domaines_id'=>'required',
+                    'thematique_id'=>'required',
+                    'objectif'=>'required',
+                    'date_previsionnelle'=>'required',
+                    'organisme'=>'required',
+                    'type'=>'required'
+                ],
+                [
+                    'stagiaire_id'=>'Veuillez remplir le champ',
+                    'domaines_id'=>'Veuillez remplir le champ',
+                    'thematique_id'=>'Veuillez remplir le champ',
+                    'objectif'=>'Veuillez remplir le champ',
+                    'date_previsionnelle'=>'Veuillez remplir le champ',
+                    'organisme'=>'Veuillez remplir le champ',
+                    'type'=>'Veuillez remplir le champ',
+                ]
+            );
+            if ($validator->fails()) {
+               return back();
+            } else {
+                $stagiaire_id = $request->stagiaire_id;
+                $domaine_id = $request->domaines_id;
+                $thematique_id =$request->thematique_id;
+                $objectif= $request->objectif;
+                $date_prev = $request->date_previsionnelle;
+                $organisme = $request->organisme;
+                $type = $request->type;
+
+                $demande_manager = DB::insert('insert into besoin_stagiaire (stagiaire_id,entreprise_id,domaines_id,thematique_id,anneePlan_id,objectif,date_previsionnelle,organisme,statut,type,reponse_stagiaire) 
+            values (?,?,?,?,?,?,?,?,?,?,?)', [$stagiaire_id,$entreprise_id,$domaine_id,$thematique_id,$plan_id,$objectif,$date_prev,$organisme,$statut,$type,$reponse]);
+                DB::commit();
+                return redirect()->route('listes_demandes_stagiaires');                                                                                                           
+            }
+            
+            
+        }
+    }
+
+    public function modif_demande_stagiaire($id){
+        $users = Auth::user()->id;
+        if (Gate::allows('isManager')) {
+            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+            $besoin = besoins::find($id);
+            $domaines = Domaine::all();
+            $themes =formation::all();
+
+            return view('manager.demande_stagiaires.modifDemandeStagiaire',compact('besoin','domaines','themes'));
+        }
+    }
+
+    public function update_demande_stg(Request $request,$id){
+        $users = Auth::user()->id;
+        $stagiaire_id = $request->stagiaire_id;
 
         if (Gate::allows('isManager')) {
             $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
-            $plan = DB::select('select * from plan_formation_valide where entreprise_id = ?', [$entreprise_id]);
-            $besoins = besoins::where('entreprise_id',$entreprise_id)->get();
-            $employ = DB::select('select * from stagiaires where entreprise_id = ?', [$entreprise_id]);
-            $nombr = count($employ);
-            // $liste = recueil_information::with('formation', 'annee_plan')->where('entreprise_id', $entreprise_id)->get();
-            return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoins'));
+            $data = DB::table('besoin_stagiaire')->where('id',$id)
+            ->where('entreprise_id',$entreprise_id)->where('stagiaire_id',$stagiaire_id)
+            ->update([
+                'domaines_id'=>$request->domaines_id,
+                'thematique_id'=>$request->thematique_id,
+                'objectif'=>$request->objectif,
+                'date_previsionnelle'=>$request->date_previsionnelle,
+                'organisme'=>$request->organisme,
+                'type'=>$request->type
+            ]);
+            return redirect()->route('listes_demandes_stagiaires');
         }
-
-        // echo ($entreprise_id);
-
-        // return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoins'));
-        // return view('referent.listeDemandeFormation',compact('entreprise_id','plan','employ','nombr'));
-
+        
     }
 
     public function valideStatut($id){
@@ -354,6 +453,40 @@ class PlanFormationController extends Controller
         ->update(['statut'=>$status]);
         if($data){
             return back();
+        }
+    }
+
+    // public function formulaire_email($id){
+    //     $plan = DB::select('select debut_rec,fin_rec from plan_formation_valide where id = ?', [$id]);
+    //     // dd($plan);
+    //     return view('referent.formulaire_email',compact('plan'));
+    // }
+
+    public function sendEmail(Request $req){
+        $user = Auth::user()->id;
+        $id = $req->id;
+        if (Gate::allows('isReferent')) {
+            $entreprise_id =  responsable::where('user_id', $user)->value('entreprise_id');
+            $email_resp = responsable::where('user_id', $user)->value('email_resp');
+        
+            $date_debut = PlanFormation::where('id',$id)->where('entreprise_id',$entreprise_id)->value('debut_rec');
+            $date_fin = PlanFormation::where('id',$id)->where('entreprise_id',$entreprise_id)->value('fin_rec');
+        
+            $email =  responsable::where('user_id', $user)->value('email_resp');
+            $employes = DB::select('select * from employers where entreprise_id = ?', [$entreprise_id]);
+            $date_debut = $date_debut;
+            $date_fin =  $date_fin;
+            $mail_resp = $email_resp;
+
+            foreach($employes as $employe){
+                $nom_empl = $employe->nom_emp;
+                $prenom_empl =$employe->prenom_emp;
+                $mail_emp = $employe->email_emp;
+
+                Mail::to($email_resp)->send(new \App\Mail\PlanStagiaire($mail_resp,$nom_empl,$prenom_empl,$date_debut, $date_fin));
+            }
+        
+            return back()->withText("Message envoyé");
         }
     }
 

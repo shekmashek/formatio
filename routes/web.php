@@ -28,6 +28,7 @@ Route::get('contact', function () {
 Route::get('contacts', function () {
     return view('contacts');
 });
+
 //Rout send email
 Route::post('/envoyer', 'SendEmailController@sendMail')->name('contact');
 Route::post('/mail_demande_devis', 'Send_devis_mail@mail_demande_devis')->name('mail_demande_devis');
@@ -1529,5 +1530,15 @@ Route::get('/teste', 'PlanFormationController@teste');
 
 Route::get('/valideStatut/{id}','PlanFormationController@valideStatut')->name('valideStatut');
 Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('refuseSatut');
+Route::get('/listes_demandes_stagiaires','PlanFormationController@listes_demandes_stagiaires')->name('listes_demandes_stagiaires');
+Route::get('/envoye_autre_demande/{anneePlan_id}','PlanFormationController@envoye_demande_stg')->name('envoye_autre_demande');
+Route::get('/modifie_demande_stagiaire/{id}','PlanFormationController@modif_demande_stagiaire')->name('modifDemandeStagiaire');
+Route::post('/update_demande_stagiaire/{id}','PlanFormationController@update_demande_stg')->name('update_demande_stg');
+Route::get('/get_email_employe','PlanFormationController@getEmailEmploye')->name('getEmailEmploye');
+Route::post('/enregistrer_demande_stagiaire/{planAn_id}','PlanFormationController@enregistrer_demande_stagiaire')->name('enregistrer_demande_stagiaire');
+Route::post('/send_email_collecte','PlanFormationController@sendEmail')->name('send_email_collecte');
+// Route::get('/formulaire_email/{plan_id}','PlanFormationController@formulaire_email')->name('formulaire_email');
+
+
 
 

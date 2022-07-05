@@ -13,6 +13,6 @@ SELECT
     departement_entreprises.nom_departement
 FROM
     departement_entreprises
-LEFT JOIN   chef_departements on  chef_departements.entreprise_id =  departement_entreprises.entreprise_id
+LEFT JOIN  chef_departements on  chef_departements.entreprise_id =  departement_entreprises.entreprise_id
 and chef_departements.departement_entreprises_id = departement_entreprises.id
 

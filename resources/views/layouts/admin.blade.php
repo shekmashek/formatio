@@ -461,10 +461,25 @@
             @endcanany
 
             {{-- plan de formation --}}
-            @canany(['isStagiaire','isManager','isReferent','isReferentSimple'])
+            @canany(['isReferent','isReferentSimple'])
             <li>
-                <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
-                    href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
+                <a href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
+                    <i class="fa-solid fa-earth-asia"></i>
+                    <span class="links_name">Plan</span>
+                </a>
+            </li>
+            @endcanany
+            @canany(['isStagiaire'])
+            <li>
+                <a  href="{{route('planFormation.index')}}" class="d-flex nav_linke">
+                    <i class="fa-solid fa-earth-asia"></i>
+                    <span class="links_name">Plan</span>
+                </a>
+            </li>
+            @endcanany
+            @canany(['isManager'])
+            <li>
+                <a  href="{{route('listes_demandes_stagiaires')}}" class="d-flex nav_linke">
                     <i class="fa-solid fa-earth-asia"></i>
                     <span class="links_name">Plan</span>
                 </a>

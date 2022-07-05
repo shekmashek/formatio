@@ -54,80 +54,77 @@
                     <tbody>
                         <tr>
                             <td>
-                               
-                                    <div  id="collapseExample_{{$p->AnneePlan}}">
-                                        <div class="card card-body" style="width: 100%">
-                                            <p>Vos demandes:</p>
-                                            @if(session()->has('success'))
-                                                <div class="alert alert-success" style="height: 60px">
-                                                    <p>Modification effectué avec succes &nbsp; 👏🏻</p>
-                                                </div>
-                                            @endif
-                                            @if(session()->has('delete'))
-                                                <div class="alert alert-danger" style="height: 60px">
-                                                    <p>Demande supprimer &nbsp; <span>🥺</span> </p>
-                                                </div>
-                                            @endif
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    
-                                                    <th>Domaine de formation</th>
-                                                    <th>Thematique</th>
-                                                    <th>Date</th>
-                                                    <th>Organisme sugére</th>
-                                                    <th>Statut</th>
-                                                    <th>Priorité</th>
-                                                    @if(strtotime($p->fin_rec) > strtotime('now') )
-                                                        <th>Action</th>    
+                               <div  id="collapseExample_{{$p->AnneePlan}}">
+                                    <div class="card card-body" style="width: 100%">
+                                        <p>Vos demandes:</p>
+                                        @if(session()->has('success'))
+                                            <div class="alert alert-success" style="height: 60px">
+                                                <p>Modification effectué avec succes &nbsp; 👏🏻</p>
+                                            </div>
+                                        @endif
+                                        @if(session()->has('delete'))
+                                            <div class="alert alert-danger" style="height: 60px">
+                                                <p>Demande supprimer &nbsp; <span>🥺</span> </p>
+                                            </div>
+                                        @endif
+                                        <table class="table table-hover text-secondary" style="font-size: .8rem">
+                                            <thead>
+                                                <th>Domaine de formation</th>
+                                                <th>Thematique</th>
+                                                <th>Date</th>
+                                                <th>Organisme sugére</th>
+                                                <th>Statut</th>
+                                                <th>Priorité</th>
+                                                    {{-- @if(strtotime($p->fin_rec) > strtotime('now') )
+                                                        <th></th>    
                                                    
-                                                    @endif
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($besoin as $be)
-                                                       
-                                                        @if ($be->anneePlan_id === $p->id)
+                                                    @endif --}}
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($besoin as $be)
+                                                    @if ($be->anneePlan_id === $p->id)
                                                         <form action="{{route('besoin.modif',$be->id)}}" method="POST">
-                                                            @csrf
-                                                            <tr>
-                                                                <td><input  class="form-control inp{{$be->id}}" type="hidden" name="domaine" id="domaine{{$be->id}}" value="" disabled><span class="spa{{$be->id}}"> {{$be->domaine->nom_domaine}}</span></td>
-                                                                <td><input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" disabled><span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span></td>
-                                                                <td><input type="hidden"  class="form-control inp{{$be->id}}" name="date" id="date{{$be->id}}" value="" ><span class="spa{{$be->id}}">@php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp </span></td>
-                                                                <td><input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->organisme}}</span></td>
-                                                                <td>
-                                                                @if ($be->statut == 0)
-                                                                    <span class="bg-warning p-1 text-sm rounded text-white"><small>En attente</small> </span>
-                                                                @elseif ($be->statut == 1)
-                                                                    <span class="p-1 rounded text-white" style="background:#41D053;"><small>Validé</small></span>
-                                                                @elseif ($be->statut == 2)
-                                                                    <span class="p-1 rounded text-white" style="background:#f54c49;"><small>Refusé</small></span>
-                                                                @endif
-                                                                </td>
-                                                                <td><select style="border:#0dcaf0 1px solid" hidden class="form-control inp{{$be->id}}" name="type" id="type{{$be->id}}" aria-placeholder="tetret" >
-                                                                        <option value="{{$be->type}}" disable selected hidden>{{$be->type}}</option>
-                                                                        <option value="urgent">urgent</option>
-                                                                        <option value="non-urgent">non-urgent</option>
-                                                                    </select>
-                                                                    <span class="spa{{$be->id}}">{{$be->type}}</span></td>
-                                                                @if(strtotime($p->fin_rec) > strtotime('now') )
+                                                        @csrf
+                                                        <tr>
+                                                            <td><input  class="form-control inp{{$be->id}}" type="hidden" name="domaine" id="domaine{{$be->id}}" value="" disabled><span class="spa{{$be->id}}"> {{$be->domaine->nom_domaine}}</span></td>
+                                                            <td><input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" disabled><span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span></td>
+                                                            <td><input type="hidden"  class="form-control inp{{$be->id}}" name="date" id="date{{$be->id}}" value="" ><span class="spa{{$be->id}}">@php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp </span></td>
+                                                            <td><input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->organisme}}</span></td>
+                                                            <td>
+                                                            @if ($be->statut == 0)
+                                                                <span class="bg-warning p-1 text-sm rounded text-white"><small>En attente</small> </span>
+                                                            @elseif ($be->statut == 1)
+                                                                <span class="p-1 rounded text-white" style="background:#41D053;"><small>Validé</small></span>
+                                                            @elseif ($be->statut == 2)
+                                                                <span class="p-1 rounded text-white" style="background:#f54c49;"><small>Refusé</small></span>
+                                                            @endif
+                                                            </td>
+                                                            <td>
+                                                                <select style="border:#0dcaf0 1px solid" hidden class="form-control inp{{$be->id}}" name="type" id="type{{$be->id}}" aria-placeholder="tetret" >
+                                                                    <option value="{{$be->type}}" disable selected hidden>{{$be->type}}</option>
+                                                                    <option value="urgent">urgent</option>
+                                                                    <option value="non-urgent">non-urgent</option>
+                                                                </select>
+                                                                <span class="spa{{$be->id}}">{{$be->type}}</span>
+                                                            </td>
+                                                            @if(strtotime($p->fin_rec) > strtotime('now') )
                                                                 @if($be->statut == '0')
-                                                                <td>
-                                                                    <a id="but{{$be->id}}" onclick='modifier({{$be->id}},"{{$be->domaine->nom_domaine}}","{{$be->formation->nom_formation}}","{{$be->date_previsionnelle}}","{{$be->organisme}}","{{$be->type}}");'  class="btn btn-info text-light">
-                                                                        <i  class="fa-solid fa-pen-to-square"></i></a>
-                                                                    <a id="supp{{$be->id}}" href="{{route('besoin.delete',$be->id)}}" class="btn btn-danger text-light" onclick="return confirm('La suppression sera irréversible !')"><i class="fa-solid fa-trash-can"></i></a>
-                                                                    <button type="submit" id="mod{{$be->id}}" style="display: none;margin-left:12px" href="" style="background-color: " class="btn btn text-light saf">Modifier</button>
-                                                                </td>
+                                                                    <td>
+                                                                        <a id="but{{$be->id}}" onclick='modifier({{$be->id}},"{{$be->domaine->nom_domaine}}","{{$be->formation->nom_formation}}","{{$be->date_previsionnelle}}","{{$be->organisme}}","{{$be->type}}");'  class="btn btn-info text-light">
+                                                                            <i  class="fa-solid fa-pen-to-square"></i></a>
+                                                                        <a id="supp{{$be->id}}" href="{{route('besoin.delete',$be->id)}}" class="btn btn-danger text-light" onclick="return confirm('La suppression sera irréversible !')"><i class="fa-solid fa-trash-can"></i></a>
+                                                                        <button type="submit" id="mod{{$be->id}}" style="display: none;margin-left:12px" href="" style="background-color: " class="btn btn text-light saf">Modifier</button>
+                                                                    </td>
                                                                 @endif
-                                                                @endif
-
+                                                            @endif
                                                             </tr>
                                                         </form>
-                                                        @endif 
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                      </div>
-                                
+                                                    @endif 
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
