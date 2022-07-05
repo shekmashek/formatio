@@ -440,14 +440,18 @@ class FormationController extends Controller
         } else {
             $nom_entiter = $req->nom_entiter;
         }
+        $entreprise_id = $this->fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id]);
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
             $cfps = $this->fonct->findWhereTrieOrderBy("cfps", ["upper(nom)"], ["LIKE"], ["%" . $nom_entiter . "%"], ["nom"], "ASC", ($nbPagination), $nb_limit);
+            $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1,$entreprise_id->entreprise_id]);
+            $type_abonnement = DB::select('select abc.type_abonnement_id, tpof.nom_type, abc.cfp_id from abonnement_cfps as abc join type_abonnements_of as tpof on abc.type_abonnement_id = tpof.id join cfps as cfp on abc.cfp_id = cfp.id where abc.cfp_id = cfp.id and abc.activite = 1');
+            $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis, md.cfp_id from v_nombre_note as vn join moduleformation as md on vn.module_id = md.module_id join cfps as cfp on md.cfp_id = cfp.id where md.cfp_id = cfp.id group by md.cfp_id');
             $totaleData = $this->fonct->getNbrePagination("cfps", "id", ["upper(nom)"], ["LIKE"], ["%" . $nom_entiter . "%"], "AND");
             $pagination = $this->formation->nb_entiter_pagination($nom_entiter,  $nbPagination, $nb_limit);
             $secteurs = $this->fonct->findAll("secteurs");
 
-            return view('referent.catalogue.cfp_tous', compact('nom_entiter', 'secteurs', 'cfps', 'pagination', 'initial'));
+            return view('referent.catalogue.cfp_tous', compact('nom_entiter', 'secteurs', 'cfps', 'pagination', 'initial','collaboration','type_abonnement','avis_etoile'));
         }
     }
 
@@ -658,7 +662,7 @@ class FormationController extends Controller
 
     //========================  Filtre ========================================
 
-    /*
+
     public function filtre_par_entiter(Request $request, $nbPagination_pag = null, $nom_entiter_pag = null)
     {
 
@@ -708,7 +712,6 @@ class FormationController extends Controller
         $datas = DB::select('select module_id,formation_id,date_debut,date_fin,groupe_id,type_formation_id from v_groupe_projet_module where type_formation_id = 2 group by module_id');
         return view('referent.catalogue.liste_formation', compact('formations', 'competences', 'organismes', 'nom_entiter', 'pagination', 'infos', 'datas', 'categorie', 'devise', 'domaines', 'domaine_col1', 'domaine_col2', 'domaine_col3', 'domaine_col4'));
     }
-*/
 
     public function filtre_par_modaliter(Request $request, $nbPagination_pag = null, $nom_entiter_pag = null)
     {

@@ -154,7 +154,7 @@ class FactureController extends Controller
         if (Gate::allows('isCFP')) {
             return $this->listeFacture($nb_pag_full, $nb_pag_inactif, $nb_pag_actif, $nbPagination_payer, $pour_list);
         }
-        if (Gate::allows('isReferent')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
             return $this->listeFacture_referent($nb_pag_full, $nb_pag_actif, $nbPagination_payer, $pour_list);
         }
     }

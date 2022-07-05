@@ -240,6 +240,7 @@ color: #7635dc;
     transition: all .5s ease;
     color: white !important;
     background-color: #637381;
+    cursor: default !important;
 }
 
 .formations:hover{

@@ -1025,7 +1025,7 @@
                                             <div class="row">
                                                 <div class="col-4 px-0 logo_suite">
                                                     @can('isManagerPrincipale')
-                                                        <a href="{{route('affProfilChefDepartement')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
+                                                        <a href="{{route('profil_manager')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
                                                     @endcan
                                                     @can('isFormateurPrincipale')
                                                         <a href="{{route('profile_formateur')}}" class="text-center justify-content-center d-flex flex-column"><i class='bx bxs-user-circle icone_compte '></i><span class="mt-1">compte</span></a>
