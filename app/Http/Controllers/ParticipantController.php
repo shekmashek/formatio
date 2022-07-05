@@ -240,7 +240,7 @@ class ParticipantController extends Controller
 
         }
 
-            return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'pagination'));
+            // return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'pagination'));
         }
         else {
             $emp = $this->fonct->findAll("employers");

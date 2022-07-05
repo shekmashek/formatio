@@ -26,7 +26,8 @@
         "nao-pon/flysystem-google-drive": "~1.1",
         "nesbot/carbon": "^2.58",
         "paragonie/random_compat": "^9.99",
-        "phpseclib/phpseclib": "^2.0"
+        "phpseclib/phpseclib": "^2.0",
+        "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
