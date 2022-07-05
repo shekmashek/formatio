@@ -836,56 +836,55 @@ font-size: 0.850rem;
     margin-bottom: 30px;
     background-size: cover;
     color: white;
-    }
-    .ribbon1 {
-        position: absolute;
-        top: -6.1px;
-        right: 10px;
-    }
-    .ribbon1:after {
-        position: absolute;
-        content: "";
-        width: 0;
-        height: 0;
-        left: -8.5px;
-        bottom: -10.05px;
-        border-left: 53px solid transparent;
-        border-right: 53px solid transparent;
-        border-top: 10px solid #01b5af;
-    }
-    .ribbon1 span {
-        position: relative;
-        display: block;
-        text-align: center;
-        background: linear-gradient(60deg, #02AAB0,#00CDAC);
-        font-size: 14px;
-        line-height: 1;
-        padding: 12px 8px 10px;
-        border-top-right-radius: 8px;
-        width: 90px;
-        color: white;
+}
+.ribbon1 {
+    position: absolute;
+    top: -6.1px;
+    right: 10px;
+}
+.ribbon1:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    left: -8.5px;
+    bottom: -10.05px;
+    border-left: 53px solid transparent;
+    border-right: 53px solid transparent;
+    border-top: 10px solid #01b5af;
+}
+.ribbon1 span {
+    position: relative;
+    display: block;
+    text-align: center;
+    background: linear-gradient(60deg, #02AAB0,#00CDAC);
+    font-size: 14px;
+    line-height: 1;
+    padding: 12px 8px 10px;
+    border-top-right-radius: 8px;
+    width: 90px;
+    color: white;
 
-    }
-    .ribbon1 span:before, .ribbon1 span:after {
-        position: absolute;
-        content: "";
-    }
-    .ribbon1 span:before {
+}
+.ribbon1 span:before, .ribbon1 span:after {
+    position: absolute;
+    content: "";
+}
+.ribbon1 span:before {
     height: 6px;
     width: 6px;
     left: -6px;
     top: 0;
     background: linear-gradient(60deg, #02AAB0,#00CDAC);
-
-    }
-    .ribbon1 span:after {
+}
+.ribbon1 span:after {
     height: 6px;
     width: 8px;
     left: -8px;
     top: 0;
     border-radius: 8px 8px 0 0;
     background: linear-gradient(60deg, #02AAB0,#00CDAC);
-    }
+}
 
 #popup{
     height : auto;

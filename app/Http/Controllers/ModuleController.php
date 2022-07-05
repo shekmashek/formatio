@@ -184,9 +184,8 @@ class ModuleController extends Controller
         $min_pers = 5;
         $max_pers = 10;
         $level = 1;
-        $new_mod = DB::insert('insert into modules(reference,nom_module,formation_id,prix,prix_groupe,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id,created_at)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,NOW())', [$reference, $nom_module, $categorie, $prix,$prix_groupe, $heure, $jour, $prerequis, $objectif, $description, $modalite, $materiel, $level, $cible, $bon_a_savoir, $prestation, $min_pers, $max_pers, $cfp_id]);
+        DB::insert('insert into modules(reference,nom_module,formation_id,prix,prix_groupe,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,min,max,cfp_id,created_at)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())', [$reference, $nom_module, $categorie, $prix,$prix_groupe, $heure, $jour, $prerequis, $objectif, $description, $modalite, $materiel, $level, $cible, $bon_a_savoir, $prestation, $min_pers, $max_pers, $cfp_id]);
         $id = DB::select('select id from modules order by id desc limit 1');
-        $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id[0]->id . ') as moduleExiste');
         $np = 4;
         $npc = 4;
         $nc = 7;
@@ -203,7 +202,7 @@ class ModuleController extends Controller
             for($i = 1; $i < $nc; $i++){
                 DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',['Competence '.$i,(4 + $i),$id[0]->id]);
             }
-            DB::update('update modules set status = ? where id = ?',[2,$id[0]->id]);
+            DB::update('update modules set status = ? where id = ?',[1,$id[0]->id]);
             DB::commit();
             return redirect()->route('nouveau_module_update');
 

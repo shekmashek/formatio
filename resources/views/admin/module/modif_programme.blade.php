@@ -1,6 +1,6 @@
 @extends('./layouts/admin')
 @section('title')
-    <h3 class="text_header m-0 mt-1">Modification programme</h3>
+    <p class="text_header">Modification programme</p>
 @endsection
 @section('content')
 <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
@@ -20,7 +20,7 @@
             </ul>
         </div>
         <div>
-            <a class="new_list_nouvelle " href="{{url()->previous()}}">
+            <a class="new_list_nouvelle " href="{{route('liste_module')}}">
             <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
         </a>
         </div>
