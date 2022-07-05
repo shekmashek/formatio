@@ -274,15 +274,21 @@ class DepartementController extends Controller
     {
         $fonct = new FonctionGenerique();
         // $idChef = chefDepartement::where('user_id', Auth::user()->id)->value('id');
-        $id_chef = $fonct->findWhereMulitOne("chef_departements",["user_id"],[Auth::user()->id]);
-        $departement = $fonct->findWhereMulitOne("v_chef_departement_entreprise",["chef_departements_id"],[$id_chef->id]);
+
+            // $emp_id = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id]);
+        $id_chef = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id]);
+        $nom_etp = $fonct->findWhereMulitOne("entreprises",["id"],[$id_chef->entreprise_id])->nom_etp;
+
         $user_id =  $users = Auth::user()->id;
-        $chef_connecte = chefDepartement::where('user_id', $user_id)->exists();
+
 
         if($id_chef->genre_id == 1) $genre = "Femme";
         if($id_chef->genre_id == 2) $genre = "Homme";
         if($id_chef->genre_id == null) $genre = '';
-        return view('admin/chefDepartement/profilChefDepartement', compact('genre','id_chef', 'departement'));
+
+
+
+        return view('admin/chefDepartement/profilChefDepartement', compact('genre','id_chef','nom_etp'));
     }
     //enregistrer departement
     public function store(Request $request)
