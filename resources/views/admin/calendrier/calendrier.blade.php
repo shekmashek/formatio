@@ -28,6 +28,44 @@
             opacity: 0.7;
         }
 
+        
+        #event_header::before {
+            /* data-before récupérée par javascript : event_status */
+            content: attr(data-before);
+            position: absolute;
+            top: 50px;
+            left: -27%;
+            width: 120px;
+            height: auto;
+            padding: 10px;
+            background-color: rgb(245, 245, 245);
+            border: 1px solid var(--color-event);
+            border-right: none;
+            border-radius: 5px 0 0 5px;
+        }
+
+
+        @media(max-width:400px) {
+            #event_header::before {
+                /* content: attr(data-before);
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: min-content;
+                height: min-content;
+                padding: 2px;
+                background-color: rgb(245, 245, 245);
+                border: 1px solid var(--color-event);
+                border-radius: 5px 0 0 5px; */
+                display: none;
+
+            }
+
+            .offcanvas {
+                max-width: 80%;
+            }
+        }
+
         div#offcanvas_body::-webkit-scrollbar-thumb {
             background-color: var(--color-event);
             border-radius: 5px;
@@ -211,7 +249,7 @@
 
             <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1" 
              data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
-              <div class="offcanvas-header" id="event_details_head">
+              <div class="offcanvas-header" id="event_header">
                 <h5 id="event_title" ></h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
@@ -396,14 +434,34 @@
                     // console.log the description of events when clicking on them
                     eventClick : function(info) {
 
-                // COLORS
-                document.documentElement.style.setProperty('--color-event', info.event.backgroundColor);
-                console.log(info.event.backgroundColor);
-                // event_details_head.style.backgroundColor = info.event.backgroundColor;
-                // type_formation_offcanvas.style.backgroundColor = info.event.backgroundColor+'75';
+                            
+                        var offcanvas_header = document.getElementById('event_header');
 
-                // options for date formating
-                var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+                        // STATUS DE LA FORMATION
+                        var today = new Date();
+                        console.log(today);
+
+                        var groupe_start = new Date (info.event.extendedProps.groupe.date_debut);
+                        var groupe_end = new Date (info.event.extendedProps.groupe.date_fin);
+
+                        if (groupe_start > today) {
+                            var event_status = 'Prévisionnelle';
+                        } else if (groupe_start < today && groupe_end > today) {
+                            var event_status = 'En cours';
+                        } else if (groupe_end < today){
+                            var event_status = 'Terminée';
+                        }
+                        
+                        offcanvas_header.setAttribute('data-before', event_status);
+
+
+                        // COLORS
+                        document.documentElement.style.setProperty('--color-event', info.event.backgroundColor);
+
+
+                        // options for date formating
+                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 
                         var duree_formation = 0;
@@ -457,7 +515,6 @@
                        
 
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
-                        var event_details_head = document.getElementById('event_details_head');
                         var title_offcanvas = document.getElementById('event_title');
                         var projet_offcanvas = document.getElementById('event_project');
                         var type_formation_offcanvas = document.getElementById('event_type_formation');
@@ -578,7 +635,7 @@
                                 html_accordion += '<li class="list-group-item d-flex justify-content-between align-items-start">';
                                 html_accordion += '<div class="ms-2 me-auto">';
                                 html_accordion += '<div class="fw-bold">Email</div>';
-                                html_accordion += '<a href="mailto:'+participant.mail_stagiaire+'">'+participant.mail_stagiaire+'</a>';
+                                html_accordion += '<a href="mailto:'+participant.mail_stagiaire+'" class="hover_purple">'+participant.mail_stagiaire+'</a>';
                                 html_accordion += '</div>';
 
 

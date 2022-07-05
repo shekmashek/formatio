@@ -937,41 +937,7 @@
                         bsOffcanvas.show();
                         
 
-                        // var event = info.event;
-                        // var event_id = event.id;
-                        // var event_title = event.title;
-                        // var event_start = event.start;
-                        // var event_end = event.end;
-                        // var event_description = event.extendedProps.description;
-                        
-                        // var doc = new jsPDF();
-                        // doc.setFontSize(20);
-                        // doc.text(event_title, 10, 10);
-                        // doc.setFontSize(12);
-                        // doc.text(event_description, 10, 20);
-                        // doc.text(event_start, 10, 30);
-                        // doc.text(event_end, 10, 40);
-                        // doc.save('calendrier.pdf');
-
                     },
-
-                    // $('#download_pdf').click(function () {
-                    // var pdf = new jsPDF('p', 'pt', 'letter');
-                    // // source can be HTML-formatted string, or a reference
-                    // // to an actual DOM element from which the text will be scraped.
-                    // source = $('#test')[0];
-
-                    // // we support special element handlers. Register them with jQuery-style 
-                    // // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-                    // // There is no support for any other type of selectors 
-                    // // (class, of compound) at this time.
-                    // specialElementHandlers = {
-                    //     // element with id of "bypass" - jQuery style selector
-                    //     '#bypassme': function (element, renderer) {
-                    //         // true = "handled elsewhere, bypass text extraction"
-                    //         return true
-                    //     }
-                    // };
                     
                     events: events,
 
