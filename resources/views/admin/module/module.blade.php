@@ -737,7 +737,7 @@
                                         <img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
                                     </a>
                                 </div>
-                                <div class="col-2 liste__formation__content">
+                                <div class="col-3 liste__formation__content">
                                     <a href="{{route('select_par_module',$info->module_id)}}">
                                         <div class="liste__formation__item">
                                             <h5>{{$info->nom_module}}</h5>
@@ -830,11 +830,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if($mod->jours_restant > 0)
-                                <div class="col-1">
-                                    <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
-                                </div>
-                                @endif
                                 <div class="modal fade" id="listModal_{{$info->module_id}}" tabindex="-1"
                                     role="dialog" aria-labelledby="listModal" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">

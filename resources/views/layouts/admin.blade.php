@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Formation.mg</title>
+    <title>Formation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
@@ -19,15 +19,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
-    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('img/logos_all/iconFormation.webp') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
-
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
     <style>
         .modal-backdrop{
             z-index: 1 !important;
@@ -175,7 +172,6 @@
                 </a>
 
             </li>
-
             @endcanany
 
             @can('isCFP')
@@ -284,7 +280,7 @@
             @endcanany --}}
             {{-- formateurs --}}
 
-            @canany(['isCFP'])
+            @can('isCFP')
             <li>
                 <a href="{{route('liste_formateur')}}" class="d-flex formateurs nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
@@ -307,7 +303,7 @@
                 </a>
 
             </li> --}}
-            @endcanany
+            @endcan
             {{-- manager --}}
             {{-- @canany(['isSuperAdmin','isAdmin'])
             <li>
@@ -707,7 +703,7 @@
                         </div>
                     </div>
                     @endcanany --}}
-                    @canany('isFormateur')
+                    @canany(['isFormateur','isFormateurInterne'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
                             <div class="d-flex flex-row">
