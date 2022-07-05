@@ -388,6 +388,7 @@
         }
 
         .type_intra:hover,
+        .type_interne:hover,
         .type_inter:hover {
             cursor: default;
             color: white;
@@ -397,6 +398,20 @@
             padding: 0.1rem 0.5rem !important;
             font-size: 0.85rem;
             background-color: #2ebf91;
+            border-radius: 1rem;
+            transition: all 200ms;
+            color: rgb(255, 255, 255);
+            border: none;
+            box-shadow: none;
+            outline: none;
+            position: relative;
+            align-items: center;
+            margin: 0 auto;
+        }
+        .type_interne {
+            padding: 0.1rem 0.5rem !important;
+            font-size: 0.85rem;
+            background-color: #b32cb8;
             border-radius: 1rem;
             transition: all 200ms;
             color: rgb(255, 255, 255);
@@ -464,7 +479,7 @@
                                 class='bx bxs-chevron-left p-0' style="font-size: 2rem;"></i></a>
                         <i class='bx bxs-book-open me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i>
                         <span
-                            class="type_intra" m-2 p-1 ps-2 pe-2">Interne</span>
+                            class="type_interne m-2 p-1 ps-2 pe-2" >Interne</span>
                         <span class="modalite m-2 p-1 ps-2 pe-2"><i
                                 class='bx bxs-group mt-1 me-1'></i>{{ $modalite }}</span>
                         <div class="{{ $projet[0]->class_status_groupe }} m-2 mb-2 me-3">

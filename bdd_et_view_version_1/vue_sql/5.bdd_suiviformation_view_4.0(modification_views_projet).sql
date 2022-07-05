@@ -101,6 +101,8 @@ create or replace view v_groupe_projet_entreprise as
         p.activiter as activiter_projet,
         tf.type_formation,
         vpe.*,
+        m.reference,
+        m.nom_module,
         (cfps.nom) nom_cfp,
         (cfps.adresse_lot) adresse_lot_cfp,
         (cfps.adresse_ville) adresse_ville_cfp,
@@ -117,6 +119,7 @@ create or replace view v_groupe_projet_entreprise as
         (cfps.specialisation) specialisation
     from projets p
     join v_groupe_entreprise vpe on p.id = vpe.projet_id
+    join modules m on m.id = vpe.module_id
     join type_formations tf on p.type_formation_id = tf.id
     join cfps on cfps.id = p.cfp_id;
 
@@ -214,8 +217,6 @@ create or replace view v_groupe_projet_module as
 create or replace view v_groupe_projet_entreprise_module as
     select
         vgpe.*,
-        mf.reference,
-        mf.nom_module,
         mf.prix,
         mf.duree,
         mf.modalite_formation,
@@ -262,8 +263,6 @@ CREATE OR REPLACE VIEW v_detailmodule AS
         g.logo as logo_entreprise,
         g.entreprise_id,
         g.nom_etp,
-        mf.reference,
-        mf.nom_module,
         mf.formation_id,
         dom.id as id_domaine,
         dom.nom_domaine,
@@ -316,8 +315,8 @@ CREATE OR REPLACE VIEW v_detailmodule AS
     g.logo,
     g.entreprise_id,
     g.nom_etp,
-    mf.reference,
-    mf.nom_module,
+    g.reference,
+    g.nom_module,
     mf.formation_id,
     dom.id,
     dom.nom_domaine,
@@ -449,6 +448,7 @@ create or replace view v_projet_cfp as
 create or replace view v_stagiaire_groupe as
 select
         p.id as participant_groupe_id,
+        pr.type_formation_id,
         g.id as groupe_id,
         g.max_participant,
         g.min_participant,
@@ -458,6 +458,30 @@ select
         g.date_debut,
         g.date_fin,
         g.status,
+        case
+        when g.status = 8 then 'Reprogrammer'
+        when g.status = 7 then 'Annulée'
+        when g.status = 6 then 'Reporté'
+        when g.status = 5 then 'Cloturé'
+        when g.status = 2 then
+            case
+                when (g.date_fin - curdate()) < 0 then 'Terminé'
+                when (g.date_debut - curdate()) <= 0 then 'En cours'
+                else 'A venir' end
+        when g.status = 1 then 'Prévisionnel'
+        when g.status = 0 then 'Créer'end item_status_groupe,
+    case
+        when g.status = 8 then 'status_reprogrammer'
+        when g.status = 7 then 'status_annulee'
+        when g.status = 6 then 'status_reporter'
+        when g.status = 5 then 'status_cloturer'
+        when g.status = 2 then
+            case
+                when (g.date_fin - curdate()) < 0 then 'status_termine'
+                when (g.date_debut - curdate()) < 0 then 'statut_active'
+                else 'status_confirme' end
+        when g.status = 1 then 'status_grise'
+        when g.status = 0 then 'Créer'end class_status_groupe,
         g.activiter as activiter_groupe,
         s.id as stagiaire_id,
         s.matricule,
@@ -492,6 +516,7 @@ select
     join
         groupes g
     on g.id = p.groupe_id
+    join projets pr on g.projet_id = pr.id
     join
         stagiaires s
         on s.id = p.stagiaire_id

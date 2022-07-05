@@ -44,6 +44,9 @@ create or replace view v_detail_session_interne as
 create or replace view v_groupe_entreprise_interne as
     select
         p.entreprise_id,
+        p.nom_projet,
+        p.type_formation_id,
+        t.type_formation,
         e.nom_etp,
         e.adresse_rue,
         e.adresse_quartier,
@@ -63,6 +66,7 @@ create or replace view v_groupe_entreprise_interne as
         g.nom_groupe,
         g.projet_interne_id as projet_id,
         g.module_interne_id as module_id,
+        m.nom_module,
         g.date_debut,
         g.date_fin,
         g.status as status_groupe,
@@ -94,11 +98,14 @@ create or replace view v_groupe_entreprise_interne as
         g.activiter as activiter_groupe
     from groupes_interne g
     join projets_interne p on g.projet_interne_id = p.id
+    join type_formations t on p.type_formation_id = t.id
+    join modules_interne m on g.module_interne_id = m.id
     join entreprises e on p.entreprise_id = e.id;
 
 create or replace view v_stagiaire_groupe_interne as
 select
     p.id as participant_groupe_id,
+    pr.type_formation_id,
     g.id as groupe_id,
     g.nom_groupe,
     g.projet_interne_id as projet_id,
@@ -106,6 +113,30 @@ select
     g.date_debut,
     g.date_fin,
     g.status,
+    case
+        when g.status = 8 then 'Reprogrammer'
+        when g.status = 7 then 'Annulée'
+        when g.status = 6 then 'Reporté'
+        when g.status = 5 then 'Cloturé'
+        when g.status = 2 then
+            case
+                when (g.date_fin - curdate()) < 0 then 'Terminé'
+                when (g.date_debut - curdate()) <= 0 then 'En cours'
+                else 'A venir' end
+        when g.status = 1 then 'Prévisionnel'
+        when g.status = 0 then 'Créer'end item_status_groupe,
+    case
+        when g.status = 8 then 'status_reprogrammer'
+        when g.status = 7 then 'status_annulee'
+        when g.status = 6 then 'status_reporter'
+        when g.status = 5 then 'status_cloturer'
+        when g.status = 2 then
+            case
+                when (g.date_fin - curdate()) < 0 then 'status_termine'
+                when (g.date_debut - curdate()) < 0 then 'statut_active'
+                else 'status_confirme' end
+        when g.status = 1 then 'status_grise'
+        when g.status = 0 then 'Créer'end class_status_groupe,
     g.activiter as activiter_groupe,
     s.id as stagiaire_id,
     s.matricule,
@@ -131,16 +162,20 @@ select
     ifnull(s.nom_service,' ') as nom_service,
     mf.reference,
     mf.nom_module,
-    mf.etp_id
+    mf.etp_id,
+    mf.formation_id,
+    f.nom_formation
 from
     participant_groupe_interne p
 join
     groupes_interne g
 on g.id = p.groupe_interne_id
+join projets_interne pr on  pr.id = g.projet_interne_id
 join stagiaires s
     on s.id = p.stagiaire_id
 join modules_interne mf
     on mf.id = g.module_interne_id
+join formations f on f.id = mf.formation_id
 join niveau_etude niveau
     on niveau.id = s.niveau_etude_id order by groupe_id desc;
 
@@ -401,8 +436,122 @@ create or replace view v_groupe_projet_module_interne as
         mf.prerequis,
         mf.description,
         mf.materiel_necessaire,
-        mf.cible
+        mf.cible,
+        mf.formation_id,
+        f.nom_formation
     from groupes_interne g
     join modules_interne mf on mf.id = g.module_interne_id
+    join formations f on f.id = mf.formation_id
     join projets_interne p on p.id = g.projet_interne_id
     join type_formations tf on p.type_formation_id = tf.id;
+
+
+create
+or replace view v_reponse_evaluationchaud_interne as
+select
+    reponse_desc_champ,
+    id_desc_champ,
+    (descr_champs) desc_champ,
+    nb_max,
+    id_qst_fille,
+    stagiaire_id,
+    points,
+    groupe_interne_id as groupe_id,
+    statut
+from
+    reponse_evaluationchaud_interne,
+    description_champ_reponse
+where
+    id_desc_champ = description_champ_reponse.id;
+
+create
+or replace view v_nombre_stagiaire_groupe_interne as
+select
+    groupe_interne_id as groupe_id,
+    count(stagiaire_id) as total_stagiaire
+from
+    participant_groupe_interne
+group by
+    groupe_id;
+
+create
+or replace view v_evaluation_chaud_interne as
+select
+    re.groupe_id,
+    id_qst_fille,
+    qf.qst_fille,
+    count(stagiaire_id) as nombre_stg,
+    re.points,
+    total_stagiaire,
+    qf.point_max
+from
+    v_reponse_evaluationchaud_interne re
+    join v_nombre_stagiaire_groupe_interne nsg on re.groupe_id = nsg.groupe_id
+    join question_fille qf on re.id_qst_fille = qf.id
+group by
+    id_qst_fille,
+    re.groupe_id,
+    re.points,
+    qf.qst_fille,
+    qf.point_max,
+    nsg.total_stagiaire;
+
+create
+or replace view v_question_fille_point_interne as
+select
+    qf.id as id_qst_fille,
+    qf.qst_fille,
+    qf.point_max,
+    p.point,
+    t.groupe_id as groupe_id
+from
+    question_fille qf
+    cross join points p
+    join (
+        select
+            qf.id as id_qst_fille,
+            g.id as groupe_id
+        from
+            question_fille qf
+            cross join groupes_interne g
+    ) as t on t.id_qst_fille = qf.id;
+
+create
+or replace view v_evaluation_chaud_resultat_interne as
+select
+    qfp.groupe_id,
+    qfp.id_qst_fille,
+    qfp.qst_fille,
+    qfp.point,
+    ifnull(ec.points, 0) as point_eval,
+    ifnull(ec.nombre_stg, 0) as nombre_stg,
+    ifnull(ec.total_stagiaire, 0) as total_stagiaire,
+    ifnull(
+        ROUND(
+            (
+                (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
+            ) * 10,
+            1
+        ),
+        0
+    ) as note_sur_10,
+    ifnull(
+        ROUND(
+            (
+                (ec.nombre_stg * ec.points) /(ec.total_stagiaire * qfp.point_max)
+            ) * 100,
+            1
+        ),
+        0
+    ) as pourcentage
+from
+    v_question_fille_point_interne qfp
+    left join v_evaluation_chaud_interne ec on qfp.id_qst_fille = ec.id_qst_fille and qfp.point = ec.points and qfp.groupe_id = ec.groupe_id
+    group by
+        qfp.groupe_id,
+        qfp.id_qst_fille,
+        qfp.qst_fille,
+        qfp.point,
+        ec.points,
+        ec.nombre_stg,
+        ec.total_stagiaire;

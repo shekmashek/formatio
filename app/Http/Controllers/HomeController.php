@@ -770,7 +770,6 @@ class HomeController extends Controller
         }
         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple') or Gate::allows('isManager')) {
             $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
-
             // pagination
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise where entreprise_id = ?', [$entreprise_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
@@ -792,11 +791,17 @@ class HomeController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-            $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
-            $data = DB::select($sql);
+
+            $data = DB::select('select projet_id,nom_projet,type_formation_id,type_formation,groupe_id,nom_groupe,module_id,nom_module,date_debut,date_fin,cfp_id,nom_cfp,modalite,item_status_groupe,class_status_groupe from v_groupe_projet_entreprise where entreprise_id = ?',[$entreprise_id]);
+            $dataInterne = DB::select('select projet_id,nom_projet,type_formation_id,type_formation,groupe_id,nom_groupe,module_id,nom_module,date_debut,date_fin,0 as cfp_id,"-" as nom_cfp,modalite,item_status_groupe,class_status_groupe from v_groupe_entreprise_interne where entreprise_id = ?',[$entreprise_id]);
+            foreach($dataInterne as $interne) {
+                array_push($data,$interne);
+            }
+            // $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise", $request, $nb_par_page, $offset);
+            // $data = DB::select($sql);
             for($i=0;$i<count($data);$i+=1){
-                $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
-                [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
+                $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=?",
+                [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id]);
                 if(count($dataMontantSession)>0){
                         $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
                         $data[$i]->qte = $dataMontantSession[0]->qte;
@@ -989,15 +994,29 @@ class HomeController extends Controller
                 $debut = (($page - 1) * $nb_par_page) + 1;
                 $fin =  $page * $nb_par_page;
             } */
-            $sql = $projet_model->build_requette_stagiare($stg_id,"v_stagiaire_groupe",$request);
-            $data = DB::select($sql);
+            $data = DB::select('select date_debut, date_fin, groupe_id,stagiaire_id,item_status_groupe,class_status_groupe,module_id,nom_module,nom_formation,logo,type_formation_id from v_stagiaire_groupe where stagiaire_id = ?', [$stg_id]);
+            $dataInterne = DB::select('select date_debut, date_fin, groupe_id,stagiaire_id,item_status_groupe,class_status_groupe,module_id,nom_module,nom_formation, "Interne" as logo,type_formation_id from v_stagiaire_groupe_interne where stagiaire_id = ?', [$stg_id]);
+
+            foreach ($dataInterne as $interne) {
+                array_push($data,$interne);
+            }
+            // dd($data);
+            // $sql = $projet_model->build_requette_stagiare($stg_id,"v_stagiaire_groupe",$request);
+            // $data = DB::select($sql);
             $var = [];
+            $var_int = [];
             for($i=0; $i<count($data) ;$i++){
                 $var[$i] = $data[$i]->groupe_id;
             }
-            $ressource ='';
-            $stagiaire ='';
-            $data_detail='';
+            for($i=0; $i<count($dataInterne) ;$i++){
+                $var_int[$i] = $dataInterne[$i]->groupe_id;
+            }
+            $ressource =[];
+            $stagiaire =[];
+            $data_detail=[];
+            $ressource_interne =[];
+            $stagiaire_interne =[];
+            $data_detail_interne=[];
             $modules = DB::select('select nom_module,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by nom_module');
             $formations = DB::select('select nom_formation,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by nom_formation');
             $status = DB::select('select item_status_groupe as status,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_stagiaire_groupe group by item_status_groupe');
@@ -1006,6 +1025,12 @@ class HomeController extends Controller
                 $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id in (' . implode(',',$var) .') order by stagiaire_id asc');
                 $data_detail = DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud) then 0 else 1 end statut_eval from v_participant_groupe_detail where stagiaire_id = ? order by date_debut desc', [$stg_id]);
             }
+            if($dataInterne != null) {
+                $ressource_interne = DB::select('select * from ressources_interne where groupe_id in (' . implode(',',$var_int) .')');
+                $stagiaire_interne =DB::select('select * from v_stagiaire_groupe_interne where groupe_id in (' . implode(',',$var_int) .') order by stagiaire_id asc');
+                $data_detail_interne=DB::select('select *,case when groupe_id not in(select groupe_id from reponse_evaluationchaud_interne) then 0 else 1 end statut_eval from v_participant_groupe_detail_interne where stagiaire_id = ? order by date_debut desc', [$stg_id]);
+            }
+            // dd($ressource_interne);
             // $documents = [];
 
             // $test = 0;
@@ -1021,7 +1046,7 @@ class HomeController extends Controller
 
 
 
-            return view('projet_session.index2', compact('data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status'));
+            return view('projet_session.index2', compact('data', 'status','data_detail','ressource','stagiaire', 'type_formation_id','modules','formations','status','data_detail_interne','ressource_interne','stagiaire_interne'));
         }
     }
 

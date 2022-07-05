@@ -1520,3 +1520,7 @@ Route::post('insert_evaluation_stagiaire_interne', 'ProjetInterneController@inse
 Route::post('modifier_evaluation_stagiaire_interne', 'ProjetInterneController@modifier_evaluation_stagiaire')->name('modifier_evaluation_stagiaire_interne');
 Route::get('competence_stagiaire_interne', 'ProjetInterneController@get_competence_stagiaire')->name('competence_stagiaire_interne');
 Route::post('insert_evaluation_stagiaire_apres_interne', 'ProjetInterneController@insert_evaluation_stagiaire_apres')->name('insert_evaluation_stagiaire_apres_interne');
+Route::get('fiche_technique_interne_pdf/{id}','ProjetInterneController@fiche_technique_pdf')->name('fiche_technique_interne_pdf');
+Route::get('faireEvaluationChaud_interne/{groupe}', 'ProjetInterneController@evaluation_a_chaud')->name('faireEvaluationChaud_interne');
+Route::post('createEvaluationChaud_interne/{groupe}', 'ProjetInterneController@insertion_evaluationChaud_interne')->name('createEvaluationChaud_interne');
+Route::get('resultat_evaluation_interne/{groupe_id}','ProjetInterneController@evaluation_chaud_pdf')->name('resultat_evaluation_interne');

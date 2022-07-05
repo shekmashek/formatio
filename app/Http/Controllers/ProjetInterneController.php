@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\EvaluationChaudInterne;
 use App\Models\FonctionGenerique;
 use App\ProjetInterne;
+use App\Stagiaire;
 use Carbon\Carbon;
 use Exception;
 use Google\Service\AndroidManagement\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use PDF;
 class ProjetInterneController extends Controller
 {
     public function index(){
@@ -78,7 +80,7 @@ class ProjetInterneController extends Controller
         $modalite = DB::select('select modalite from groupes_interne where id = ?',[$id])[0]->modalite;
         $lieu_formation = DB::select('select projet_id,groupe_id,lieu from details where groupe_id = ? AND projet_id=? group by projet_id,groupe_id,lieu', [$projet[0]->groupe_id,$projet[0]->projet_id]);
         $salle_formation = DB::select('select * from salle_formation_etp where etp_id = ?',[$etp_id]);
-        $ressource = DB::select('select * from ressources where groupe_id =?',[$projet[0]->groupe_id]);
+        $ressource = DB::select('select * from ressources_interne where groupe_id =?',[$projet[0]->groupe_id]);
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaire_interne where groupe_interne_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_avant = DB::select('select sum(note_avant) as somme from evaluation_stagiaire_interne where groupe_interne_id = ?',[$projet[0]->groupe_id])[0]->somme;
         $evaluation_stg = DB::select('select * from evaluation_stagiaire_interne where groupe_interne_id = ?', [$id]);
@@ -164,8 +166,8 @@ class ProjetInterneController extends Controller
         $groupe_id = $request->groupe;
         $pris_en_charge = $request->pris_en_charge;
         $note = $request->note;
-        DB::insert('insert into ressources(description,groupe_id,pris_en_charge,note) values(?,?,?,?)',[$ressource,$groupe_id,$pris_en_charge,$note]);
-        $all_ressources = DB::select('select * from ressources where groupe_id = ?',[$groupe_id]);
+        DB::insert('insert into ressources_interne(description,groupe_id,pris_en_charge,note) values(?,?,?,?)',[$ressource,$groupe_id,$pris_en_charge,$note]);
+        $all_ressources = DB::select('select * from ressources_interne where groupe_id = ?',[$groupe_id]);
         return response()->json($all_ressources);
     }
 
@@ -278,5 +280,197 @@ class ProjetInterneController extends Controller
             return back()->with('eval_error',$e->getMessage());
         }
     }
+
+    public function fiche_technique_pdf($id)
+    {
+        try{
+            $info_projet = DB::select('select type_formation,nom_projet,groupe_id,nom_groupe,item_status_groupe,nom_formation,nom_module from v_groupe_projet_module_interne where groupe_id = ?',[$id])[0];
+            $entreprise  = DB::select('select nom_etp,logo from v_groupe_entreprise_interne where groupe_id = ?',[$id])[0];
+            $formateurs  = DB::select('select photos,nom_formateur,prenom_formateur,telephone_formateur,mail_formateur from details_interne d join formateurs_interne f on f.formateur_id = d.formateur_interne_id where d.groupe_interne_id = ? group by photos,nom_formateur,prenom_formateur,telephone_formateur,mail_formateur',[$id]);
+            $lieux       = DB::select('select lieu from details_interne where groupe_interne_id = ? group by lieu',[$id]);
+            $stagiaires  = DB::select('select * from  v_stagiaire_groupe_interne where groupe_id = ?',[$id]);
+            $date_groupe = DB::select('select date_detail,h_debut,h_fin from details_interne where groupe_interne_id = ?',[$id]);
+            // return view('projet_session.fiche_technique_pdf' ,compact('info_projet','formateurs','lieux','stagiaires', 'date_groupe','entreprise'));
+            $pdf = PDF::loadView('projet_interne.fiche_technique_interne_pdf', compact('info_projet','formateurs','lieux','stagiaires', 'date_groupe','entreprise'));
+            return $pdf->download('fiche_technique.pdf');
+        }catch(Exception $e){
+            return back()->with('pdf_error','Impossible de télécharger le pdf.');
+        }
+    }
+
+    public function evaluation_a_chaud()
+    {
+        $evaluation = new EvaluationChaudInterne();
+        $user_id = Auth::user()->id;
+        $fonct = new FonctionGenerique();
+        $stg_id = Stagiaire::where('user_id',$user_id)->value('id');
+        $champ_reponse = $evaluation->findAllChampReponse(); // return desc champs formulaire
+        $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
+        $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
+        $data = $fonct->findWhereMulitOne('v_stagiaire_groupe_interne',['stagiaire_id','groupe_id'],[$stg_id,request()->groupe]); // return les information du project avec detail et information du stagiaire
+        return view("projet_interne.evaluationChaud_interne", compact('data', 'champ_reponse', 'qst_mere', 'qst_fille'));
+    }
+
+    public function insertion_evaluationChaud_interne(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $fonct = new FonctionGenerique();
+            $user_id = Auth::user()->id;
+            $stg_id = stagiaire::where('user_id',$user_id)->value('id');
+
+            $note = $request->nb_qst_fille_1;
+            $commentaire = $request->txt_qst_fille_20;
+            $module = $fonct->findWhereMulitOne("v_stagiaire_groupe_interne",["groupe_id","stagiaire_id"],[$request->groupe,$stg_id]);
+            // DB::insert('insert into avis(stagiaire_id,module_id,note,commentaire,status,date_avis) value(?,?,?,?,?,?)',[$stg_id,$module->module_id,$note,$commentaire,'Fini',date('Y-m-d')]);
+            $evaluation = new EvaluationChaudInterne();
+
+            $message = $evaluation->verificationEvaluation($module->stagiaire_id,$module->groupe_id,$request);
+            // dd($message);
+            DB::commit();
+
+            return redirect()->route('liste_projet',[1]);
+            // return back()->with('avis','avis pour la formation');
+        }catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error_evaluation',$message);
+        }
+    }
+
+    public function evaluation_chaud_pdf(Request $request){
+        try{
+           $eval = new EvaluationChaudInterne();
+           $groupe = $request->groupe_id;
+           // preparation de la formation
+           // q1
+               $res_q1 = $eval->pourcentage_point($groupe,3);
+               $note_10_q1 = $eval->note_question($groupe,3);
+
+               if(count($res_q1)<=0 || count($note_10_q1) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+            //    dd($res_q1,$note_10_q1);
+           //
+           // q2
+               $res_q2 = $eval->pourcentage_point($groupe,4);
+               $note_10_q2 = $eval->note_question($groupe,4);
+               if(count($res_q2)<=0 || count($note_10_q2) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+               // dd($res_q2,$note_10_q2);
+           // end
+
+           // organistion de la formation
+           // q3
+               $res_q3 = $eval->pourcentage_point($groupe,6);
+               $note_10_q3 = $eval->note_question($groupe,6);
+               if(count($res_q3)<=0 || count($note_10_q3) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           // end
+
+           // Deroulement de la formation
+           // q4
+               $res_q4 = $eval->pourcentage_point($groupe,7);
+               $note_10_q4 = $eval->note_question($groupe,7);
+               if(count($res_q4)<=0 || count($note_10_q4) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           //
+           // q5
+               $res_q5 = $eval->pourcentage_point($groupe,8);
+               $note_10_q5 = $eval->note_question($groupe,8);
+               if(count($res_q5)<=0 || count($note_10_q5) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           //
+           // q6
+               $res_q6 = $eval->pourcentage_point($groupe,9);
+               $note_10_q6 = $eval->note_question($groupe,9);
+               if(count($res_q6)<=0 || count($note_10_q6) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           // end
+
+           //le rythme de la formation
+           // q7
+               $res_q7 = DB::select('select * from v_evaluation_chaud_resultat_interne where groupe_id = ? and id_qst_fille = ? and point < 4 order by point desc',[$groupe,10]);
+               if(count($res_q7)<=0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           // end
+
+           // contenu de la formation
+           // q8
+               $res_q8 = $eval->pourcentage_point($groupe,11);
+               $note_10_q8 = $eval->note_question($groupe,11);
+               if(count($res_q8)<=0 || count($note_10_q8) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           //
+           // q9
+               $res_q9 = $eval->pourcentage_point($groupe,12);
+               $note_10_q9 = $eval->note_question($groupe,12);
+               if(count($res_q9)<=0 || count($note_10_q9) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           //
+           // q10
+               $res_q10 = $eval->pourcentage_point($groupe,13);
+               $note_10_q10 = $eval->note_question($groupe,13);
+               if(count($res_q10)<=0 || count($note_10_q10) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           // end
+
+           // efficacite de la formation
+           // q11
+               $res_q11 = $eval->pourcentage_point($groupe,15);
+               $note_10_q11 = $eval->note_question($groupe,15);
+               if(count($res_q11)<=0 || count($note_10_q11) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           //
+           // q12
+               $res_q12 = $eval->pourcentage_point($groupe,16);
+               $note_10_q12 = $eval->note_question($groupe,16);
+               if(count($res_q12)<=0 || count($note_10_q12) <= 0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           // end
+
+           // recommanderiez vous cette formation
+           // q13
+               $res_q13 = DB::select('select * from v_evaluation_chaud_resultat_interne where groupe_id = ? and id_qst_fille = ? and point < 3 order by point desc',[$groupe,17]);
+               if(count($res_q13)<=0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           // end
+
+           // points forts
+           //q14
+               $res_q14 = DB::select('select reponse_desc_champ,case when statut = 0 then concat(nom_stagiaire," ",prenom_stagiaire) when statut = 1 then "Anonyme" end stagiaire from v_reponse_evaluationchaud_interne re join stagiaires s on s.id = re.stagiaire_id where groupe_id = ? and id_qst_fille = ?',[$groupe,20]);
+               if(count($res_q14)<=0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           // end
+
+           // points faibles
+           //q15
+               $res_q15 = DB::select('select reponse_desc_champ,case when statut = 0 then concat(s.nom_stagiaire," ",s.prenom_stagiaire) when statut = 1 then "Anonyme" end stagiaire from v_reponse_evaluationchaud_interne re join stagiaires s on s.id = re.stagiaire_id where groupe_id = ? and id_qst_fille = ?',[$groupe,21]);
+               if(count($res_q15)<=0){
+                   throw new Exception('Impossible de télécharger le pdf.');
+               }
+           // end
+
+           $session = DB::select('select nom_module,nom_formation,date_debut,date_fin from v_groupe_projet_module_interne where groupe_id = ?',[$groupe])[0];
+
+           return view('projet_interne.resultat_evaluation_chaud_interne_pdf',compact('session','res_q1','note_10_q1','res_q2','note_10_q2','res_q3','note_10_q3','res_q4','note_10_q4','res_q5','note_10_q5','res_q6','note_10_q6','res_q7','res_q8','note_10_q8',
+           'res_q9','note_10_q9','res_q10','note_10_q10','res_q11','note_10_q11','res_q12','note_10_q12','res_q13','res_q14','res_q15'));
+           // return $pdf->download('Resulat_evaluation_a_chaud.pdf');
+       }catch(Exception $e){
+           return back()->with('pdf_error','Evaluation à chaud pas encore disponible.');
+       }
+   }
 }
 

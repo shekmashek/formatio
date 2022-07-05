@@ -45,4 +45,5 @@ class ProjetInterne extends Model
             return '#00CDAC';
         }
     }
+    
 }
