@@ -130,7 +130,7 @@
                         <p class="text-capitalize mb-1">{{$mod->nom_module}}</p>
                         <div class="Stars" style="--note: {{ $mod->pourcentage }};">
                         </div>
-                        <span class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
+                        <span class="me-3">{{ $mod->pourcentage }}/5
                             @if($mod->total_avis != null)
                                 ({{$mod->total_avis}} avis)
                             @else
@@ -149,9 +149,12 @@
                                         class='bx bxs-notification me-2'></i>{{$mod->modalite_formation}}</p>
                             </div>
                             <div class="col-6 text-center">
-                                <p class="text-capitalize"><strong>{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></strong> </p>
-                                @if ($mod->prix_groupe != null)
-                                    <p class="text-capitalize"><strong>{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ grp</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></strong> </p>
+                                <p class="text-capitalize">{{$devise->devise}}&nbsp;{{number_format($mod->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span> </p>
+                                @if($mod->prix_groupe != null)
+                                    <div class="pt-1 description">{{$devise->devise}}&nbsp;{{number_format($mod->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;@if($mod->max_pers != 0)/ {{$mod->max_pers}} pax @else / pax @endif</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></div>
+                                @endif
+                                @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                <p class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</p>
                                 @endif
                             </div>
                         </div>

@@ -304,7 +304,8 @@ class PlanFormationController extends Controller
         // $besoin dd($besoin_count);
 
         if (Gate::allows('isManager')) {
-            $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
+            $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$users])->entreprise_id;
+            // $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
             $plan = DB::select('select * from plan_formation_valide where entreprise_id = ?', [$entreprise_id]);
             $besoins = besoins::where('entreprise_id',$entreprise_id)->get();
             $employ = DB::select('select * from stagiaires where entreprise_id = ?', [$entreprise_id]);

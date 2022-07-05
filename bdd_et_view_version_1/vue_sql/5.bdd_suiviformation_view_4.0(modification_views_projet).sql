@@ -57,6 +57,7 @@ create or replace view v_groupe_entreprise as
         g.module_id,
         g.date_debut,
         g.date_fin,
+        g.modalite,
         g.status as status_groupe,
        
         case

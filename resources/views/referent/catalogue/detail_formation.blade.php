@@ -177,12 +177,12 @@
                     @endforeach
                 </div>
                 <div class="col background_contrast"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
-                <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix, 0, ' ', ' ')}}<sup>&nbsp;/ pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @if($res->prix_groupe != null)
-                    <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ {{$res->max_pers}} pers</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
+                    <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ {{$res->max_pers}} pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
                 {{-- <div class="col pt-1" ><a href="#" role="button" class="btn_demander">Demander un dévis</a></div>
-                 <div class="text-center mt-5"><a href="#" role="button" class="btn_demander">Demander un dévis</a></div> --}}
+                <div class="text-center mt-5"><a href="#" role="button" class="btn_demander">Demander un dévis</a></div> --}}
             </div>
         </div>
         {{-- <div class="html2pdf__page-break"></div> --}}
@@ -432,7 +432,7 @@
                                     <div class="col">
                                         <p class="text-muted pt-5 pt-sm-3">{{ $avis->date_avis }}</p>
                                     </div>
-                                    <div class="col text-left d-flex flex-row">
+                                    <div class="col text-left d-flex flex-row align-content-center">
                                         {{-- <p class=""> --}}
                                             <div class="Stars" style="--note: {{ $avis->note }};"></div>
                                             <div class="stars">

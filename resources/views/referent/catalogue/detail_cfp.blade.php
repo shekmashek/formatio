@@ -286,7 +286,7 @@
                                 <div class="Stars" style="--note: 0;"></div>
                                 <div class="rating-box ms-2">
                                     @if($avis_etoile[0]->pourcentage != null)
-                                        <h6 class=""><strong>{{ $avis_etoile[0]->pourcentage }}</strong> sur 5 ({{$avis_etoile[0]->nb_avis}} avis vérifiés)</h6>
+                                        <h6 class="">{{ $avis_etoile[0]->pourcentage }} sur 5 ({{$avis_etoile[0]->nb_avis}} avis vérifiés)</h6>
                                     @else
                                         <h6 class="">0 sur 5 (0 avis)</h6>
                                     @endif
@@ -390,7 +390,7 @@
                             <h2 class="accordion-header" id="{{$frmt->id}}">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#frmt_{{$frmt->id}}" aria-expanded="false" aria-controls="frmt_{{$frmt->id}}">
-                                    <span>Formation sur :<strong>&nbsp;{{$frmt->nom_formation}}</strong></span>
+                                    <span>Formation sur :&nbsp;{{$frmt->nom_formation}}</span>
                                     @foreach ($modules_counts as $mdc)
                                         @if ($frmt->id == $mdc->formation_id)
                                             @if ($mdc->nb_modules != null)
@@ -418,7 +418,7 @@
                                                             <div>
                                                                 <div class="Stars" style="--note: {{ $mod->pourcentage }};">
                                                                 </div>
-                                                                <span class="me-3"><strong>{{ $mod->pourcentage }}</strong>/5
+                                                                <span class="me-3">{{ $mod->pourcentage }}/5
                                                                     @if($mod->total_avis != null)
                                                                         ({{$mod->total_avis}} avis)
                                                                     @else

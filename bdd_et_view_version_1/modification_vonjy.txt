@@ -141,6 +141,9 @@ recréer vue v_groupe_projet_module => bdd_suiviformation_view_4.0(modification_
 
 ------------mai 31
 alter table question_fille add column point_max int(10) default 0;
+modification table reponse_evaluationchaud (bdd_suiviformation_mise_a_jour_5(projet_et_evaluation))
+ALTER TABLE reponse_evaluationchaud add column points int(11) default 0;
+ALTER TABLE reponse_evaluationchaud add column status int(2) NULL;
 
 UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 3;
 UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 4;
@@ -163,8 +166,15 @@ creation vue v_reponse_evaluationchaud => bdd_suiviformation_view_19(evaluationC
 creation vue v_nombre_stagiaire_groupe => bdd_suiviformation_view_19(evaluationChaud)
 creation vue v_evaluation_chaud => bdd_suiviformation_view_19(evaluationChaud)
 
-alter table reponse_evaluationchaud add column statut int(2) default 0;
-
-
 ----juin 13
 copier bdd_suiviformation_view_19(evaluationChaud)
+UPDATE `description_champ_reponse` SET `point_champ`='2' WHERE `descr_champs`='Un peu';
+UPDATE `description_champ_reponse` SET `point_champ`='3' WHERE `descr_champs`='Beaucoup';
+UPDATE `description_champ_reponse` SET `point_champ`='2' WHERE `descr_champs`='Oui';
+UPDATE `description_champ_reponse` SET `point_champ`='1' WHERE `descr_champs`='Pas de Tout';
+UPDATE `description_champ_reponse` SET `point_champ`='2' WHERE `descr_champs`='Insuffisamment';
+UPDATE `description_champ_reponse` SET `point_champ`='3' WHERE `descr_champs`='En partie';
+UPDATE `description_champ_reponse` SET `point_champ`='4' WHERE `descr_champs`='Totalement';
+UPDATE `description_champ_reponse` SET `point_champ`='3' WHERE `descr_champs`='Adapté';
+UPDATE `description_champ_reponse` SET `point_champ`='1' WHERE `descr_champs`='Trop rapide';
+UPDATE `description_champ_reponse` SET `point_champ`='1' WHERE `descr_champs`='Trop lent';

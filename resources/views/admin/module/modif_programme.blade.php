@@ -20,8 +20,7 @@
             </ul>
         </div>
         <div>
-            <a class="new_list_nouvelle {{ Route::currentRouteNamed('liste_formation') ? 'active' : '' }}"
-            href="{{route('liste_module')}}">
+            <a class="new_list_nouvelle " href="{{url()->previous()}}">
             <span class="btn_precedent text-center"><i class='bx bxs-chevron-left me-1'></i>Précedent</span>
         </a>
         </div>
@@ -1054,42 +1053,7 @@
                     </div>
                 </div>
                 <input type="hidden" class="form-control" name="recuperer_module_id" id="mod_id_rec" value="{{$res->module_id}}">
-                {{-- modification niveau --}}
-                {{-- <div class="modal" tabindex="-1" role="dialog" id="ouvrir_flottant">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Changer le niveau</h5>
-                            </div>
-                            <div class="modal-body">
-                                <div class="col-lg-12">
-                                    <div id="myDIV" class="card" >
-                                        <table class="table">
-                                            <tbody>
-                                                @foreach($niveau as $nv)
-                                                <tr align="center">
-                                                    <td>{{$nv->niveau}}</td>
-                                                    <td align="center"><a href="{{route('supprimer_niveau',$nv->id)}}"><i class="bx bx-trash bx_supprimer"></i></a></td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <div class="text-center mb-3">
-                                            <button type="button" class="btn btn_fermer" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                        </div>
-                                        <div id="mydiv" class="text-center px-2 mt-3">
-                                            <form action="{{route('enregistrer_niveau')}}" method="POST">
-                                                @csrf
-                                                <input type="text" class="form-control mb-2 input" name="niveau" placeholder="Nouveau Niveau" required>
-                                                <button type="submit" class="btn btn_enregistrer mb-3" ><i class='bx bx-check me-1'></i>Enregistrer</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+
             </div>
         </div>
     </div>

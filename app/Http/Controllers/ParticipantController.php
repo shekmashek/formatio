@@ -226,15 +226,20 @@ class ParticipantController extends Controller
         //     $chefs[] = $sefo[$i];
         // }
         $ref = [];
+        $form_int = [];
         foreach($employers as $emp){
             $test = $this->fonct->findWhereMulitOne("responsables",["user_id"],[$emp->user_id]);
             if($test!=null) array_push($ref,1);
             if($test==null) array_push($ref,0);
+            $form_test = $this->fonct->findWhereMulitOne("role_users",["user_id","role_id"],[$emp->user_id,8]);
+            if($form_test!=null) array_push($form_int,1);
+            if($form_test==null) array_push($form_int,0);
+
         }
 
 
 // dd($pagination);
-        return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'pagination'));
+        return view("admin.entreprise.employer.liste_employer", compact('ref','responsables', 'employers', 'pagination','form_int'));
     }
 
     public function index()
@@ -1287,11 +1292,33 @@ class ParticipantController extends Controller
 
     }
       /**Ajouter employé comme référent principal*/
-      public function role_referent_principal($id){
+    public function role_referent_principal($id){
         /**modifier prioriter activiter de l'employé séléctionné */
         $user_id = $this->fonct->findWhereMulitOne("employers",["id"],[$id]);
         DB::update('update role_users set prioriter = 1 where user_id = ? and role_id = 2', [$user_id->user_id]);
         DB::update('update role_users set prioriter = 0 where user_id = ? and role_id = 2', [Auth::user()->id]);
         return redirect()->route('employes.liste_referent');
+    }
+    /**Ajouter employé comme formateur interne */
+    public function role_formateur_interne(Request $request){
+        $emp_id = $request->emp_id;
+        /**modifier prioriter activiter de l'employé */
+        $user_id = $this->fonct->findWhereMulitOne("employers",["id"],[$emp_id]);
+        $test = $this->fonct->findWhere("role_users",["user_id","role_id"],[$user_id->user_id,8]);
+        if($test== null){
+            DB::insert('insert into role_users (user_id,role_id,prioriter,activiter) values (?, ?, ?, ?)', [$user_id->user_id, 8,0,0]);
+            DB::update('update role_users set activiter = 0 where user_id = ? and role_id = 3', [$user_id->user_id]);
+        }
+    }
+    /**Supprimer role referent d'un employé */
+    public function supprimer_role_formateur_interne(Request $request){
+        $emp_id = $request->emp_id;
+        /**modifier prioriter activiter de l'employé */
+        $user_id = $this->fonct->findWhereMulitOne("employers",["id"],[$emp_id]);
+        $test = $this->fonct->findWhere("role_users",["user_id","role_id"],[$user_id->user_id,8]);
+        if($test != null){
+            DB::update('delete from role_users where user_id = ? and role_id = 8 ', [$user_id->user_id]);
+            DB::update('update role_users set activiter = 0 where user_id = ? and role_id = 3', [$user_id->user_id]);
+        }
     }
 }

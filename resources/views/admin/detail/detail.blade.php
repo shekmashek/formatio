@@ -179,7 +179,7 @@
                     @endif
                 </th>
                 <th><i class="fa fa-map-marker-alt"></i>&nbsp;Salle de formation</th>
-                @can('isCFP')
+                @canany(['isCFP'])
                 <th>
                     @if ($type_formation_id == 1)
                         <button id="addRow" type="button"><i class="bx bx-plus-circle" style="font-size:1.6rem" style="color:#637381;"></i></button>
@@ -188,10 +188,10 @@
                         <button id="addRow2" type="button"><i class="bx bx-plus-circle" style="font-size:1.6rem" style="color:#637381;"></i></button>
                     @endif
                 </th>
-                @endcan
+                @endcanany
             </tr>
         </thead>
-        @can('isCFP')
+        @canany(['isCFP'])
         <tbody id="body_planning">
             <tr>
                 <td>
@@ -260,10 +260,10 @@
             </tr>
             
         </tbody>
-        @endcan
+        @endcanany
         
     </table>
-    @can('isCFP')
+    @canany(['isCFP'])
     <div class="enregistrer">
         <button type="submit" class="btn btn_enregistrer">Enregistrer</button>
     </div>
@@ -286,7 +286,7 @@
             </div>
         </div>
     </div>
-    @endcan
+    @endcanany
     </form>
 @endif
 
@@ -309,7 +309,7 @@
         color: #7635dc;
     }
 </style>
-@canany(['isReferent', 'isFormateur'])
+@canany(['isReferent', 'isFormateur','isFormateurInterne'])
     @if (count($datas) <= 0)
         <div class="d-flex mt-3 titre_projet p-1 mb-1">
             <span class="text-center">Aucun detail de la session</span>
@@ -411,7 +411,7 @@
                                                     class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
                                         <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span
                                                     class="glyphicon glyphicon-remove"></span> Supprimer</button></td> --}}
-                                            @canany('isCFP')
+                                            @canany(['isCFP'])
                                                 <div class="modal fade" id="delete_detail_{{ $d->detail_id }}"
                                                     tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                                     aria-hidden="true">
@@ -521,7 +521,7 @@
                         </div>
                         </tbody>
                         </table>
-                        @canany('isCFP')
+                        @canany(['isCFP'])
                             <div class="modal fade" id="modal_nouveau_detail">
                                 <div class="modal-dialog">
                                     <div class="modal-content p-3">

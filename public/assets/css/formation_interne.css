@@ -1,0 +1,81 @@
+.liste_domaine{
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.liste_domaine span{
+    font-style: italic;
+}
+
+.liste_domaine:hover{
+    background: rgba(225, 224, 224, 0.354);
+}
+
+.liste_domaine:hover .domaine{
+    color: #4222c3;
+}
+
+.liste_domaine:hover .modifier_domaine,
+.liste_domaine:hover .supprimer_domaine{
+    visibility: visible;
+}
+
+.modifier_domaine,
+.supprimer_domaine{
+    visibility: hidden;
+}
+
+.ribbon {
+    position: relative;
+    margin-bottom: 30px;
+    background-size: cover;
+    color: white;
+    }
+.ribbon2 {
+    position: absolute;
+}
+.ribbon2:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    left: -8.5px;
+    top: 30.05px;
+    border-left: 53px solid transparent;
+    border-right: 53px solid transparent;
+    border-top: 10px solid #01b5af;
+}
+.ribbon2 span {
+    position: relative;
+    display: block;
+    text-align: center;
+    background: linear-gradient(60deg, #02AAB0,#00CDAC);
+    font-size: 14px;
+    line-height: 1;
+    padding: 12px 8px 10px;
+    border-top-right-radius: 8px;
+    width: 90px;
+    color: white;
+    bottom: 20px;
+
+}
+.ribbon2 span:before, .ribbon2 span:after {
+    position: absolute;
+    content: "";
+}
+.ribbon2 span:before {
+height: 6px;
+width: 6px;
+left: -6px;
+top: 0px;
+background: linear-gradient(60deg, #02AAB0,#00CDAC);
+
+}
+.ribbon2 span:after {
+height: 6px;
+width: 8px;
+left: -8px;
+top: 0;
+border-radius: 8px 8px 0 0;
+background: linear-gradient(60deg, #02AAB0,#00CDAC);
+}
