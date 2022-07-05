@@ -115,7 +115,7 @@ $(document).ready(function() {
 });
 $(document).ready(function() {
     $.ajax({
-        url: "/admin_count_et",
+        url: "/admin_count_etp",
         type: "get",
         success: function(response) {
             var nombre = response;

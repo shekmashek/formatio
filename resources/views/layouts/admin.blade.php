@@ -474,7 +474,7 @@
             <li>
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
-                    <i class="fa-solid fa-earth-asia"></i>
+                    <i class='bx bx-bar-chart-square'></i>
                     <span class="links_name">Plan</span>
                 </a>
             </li>
@@ -1648,18 +1648,19 @@
         else localStorage.removeItem('indiceSidebar');
     });
 
-    $(".deconnexion_text").on("click", function(e){
+    $(".deconnexion").on("click", function(e){
         localStorage.clear();
     });
 
-    let Tabactive = localStorage.getItem('indiceSidebar');
     if(!(localStorage.getItem('indiceSidebar')))localStorage.setItem('indiceSidebar', document.getElementById("accueil").href);
-    else if(Tabactive=="parametre")$('.btn_creer.parametre').addClass('active');
+
+    let Tabactive = localStorage.getItem('indiceSidebar');
+    if(Tabactive=="parametre")$('.btn_creer.parametre').addClass('active');
     else if(Tabactive=="vous")$('.btn_vous ').addClass('active');
     else if(Tabactive){
         ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
         ($('.btn_racourcis a[href="' + Tabactive + '"]').closest('div')).addClass('active');
-    }else localStorage.removeItem('indiceSidebar');
+    }
 </script>
 </body>
 
