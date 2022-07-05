@@ -65,10 +65,6 @@ class DetailController extends Controller
     public function listEvent(Request $request)
     {
         $id_user = Auth::user()->id;
-        $module = $request->module;
-        $type_formation = $request->types_formation;
-        $statut_projet = $request->statut_projet;
-        $domaines = $request->domaines;
         $formations = $request->formations;
         if (Gate::allows('isSuperAdmin')) {
             $detail = $this->fonct->findAll('v_detailmodule');
