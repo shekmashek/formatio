@@ -471,13 +471,6 @@
                         // info.el.style.backgroundColor = info.event.backgroundColor;
                         // info.el.classList.add('');
                     },
-                    eventRender: function(event, element)
-                    { 
-                        // element.find('.fc-event-title').append("<br/>" + event.description); 
-                        // element.css('font-weight', '500');
-                        // add the class bg-danger to the event element
-                        // element.find('.fc-daygrid-event').addClass('bg-danger'); 
-                    },
 
                     // show the description of events when hovering over them
                     eventMouseEnter : function(info) {
@@ -503,7 +496,6 @@
 
                         // STATUS DE LA FORMATION
                         var today = new Date();
-                        console.log(today);
 
                         var groupe_start = new Date (info.event.extendedProps.groupe.date_debut);
                         var groupe_end = new Date (info.event.extendedProps.groupe.date_fin);

@@ -440,7 +440,6 @@
 
                         // STATUS DE LA FORMATION
                         var today = new Date();
-                        console.log(today);
 
                         var groupe_start = new Date (info.event.extendedProps.groupe.date_debut);
                         var groupe_end = new Date (info.event.extendedProps.groupe.date_fin);
