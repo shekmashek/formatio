@@ -30,7 +30,7 @@
             </form>
         </div>
     @endcanany
-    @canany(['isReferent','isManager'])
+    @canany(['isReferent','isManager','isChefDeService'])
         <nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
             <span class="titre_detail_session"><strong style="font-size: 14px">Les documents pour la session</strong></span>
         </nav>

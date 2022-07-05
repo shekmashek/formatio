@@ -259,7 +259,7 @@ class DetailController extends Controller
             return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
 
         }
-        if(Gate::allows('isManager')){
+        if(Gate::allows('isManager')or Gate::allows('isChefDeService')){
             $user_id = Auth::user()->id;
             $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
             $entreprise_id = $this->fonct->findWhereMulitOne("employers",['user_id'],[$id_user])->entreprise_id;
@@ -527,7 +527,7 @@ class DetailController extends Controller
             $entreprise_id = stagiaire::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);
             return view('admin.detail.detail', compact('datas', 'projet'));
-        } elseif (Gate::allows('isManager')) {
+        } elseif (Gate::allows('isManager') or Gate::allows('isChefDeService')) {
 
             $entreprise_id = chefDepartement::where('user_id', $users)->value('entreprise_id');
             $datas = $fonct->findWhere("v_detailmodule", ["entreprise_id"], [$entreprise_id]);

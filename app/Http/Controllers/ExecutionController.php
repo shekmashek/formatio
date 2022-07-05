@@ -172,7 +172,7 @@ class ExecutionController extends Controller
             $entreprise_id = responsable::where('user_id',$id_user)->value('entreprise_id');
             $datas = DB::select('select * from v_detail_projet_groupe where entreprise_id = ?', [$entreprise_id]);
         }
-         if (Gate::allows('isManager')) {
+         if (Gate::allows('isManager') or Gate::allows('isChefDeService')) {
             $entreprise_id = chefDepartement::where('user_id',$id_user)->value('entreprise_id');
            $datas = DB::select('select * from v_detail_projet_groupe where entreprise_id = ?', [$entreprise_id]);
         }

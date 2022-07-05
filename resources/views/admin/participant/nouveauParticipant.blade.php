@@ -237,7 +237,7 @@
                             </div><br>
                             @endcan
 
-                            @can('isManager')
+                            @canany('isManager','isChefDeService')
                             <div class="form-group">
                                 <label for="etp">Service</label><br>
                                 <select name="service_id" class="form-control" id="service_id">
@@ -247,7 +247,7 @@
                                     @endfor
                                 </select>
                             </div><br>
-                            @endcan
+                            @endcanany
                                 <div class="form-group">
                                     <label for="fonction">Fonction</label>
                                     <input type="text" class="form-control" id="fonction" name="fonction" placeholder="Fonction">

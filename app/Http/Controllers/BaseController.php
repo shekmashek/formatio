@@ -35,6 +35,9 @@ class BaseController extends Controller
         if (Gate::allow('isManager')) {
             $notifications = null;
         }
+        if (Gate::allow('isChefDeService')) {
+            $notifications = null;
+        }
         if (Gate::allow('isReferent')) {
             $notifications = null;
         }

@@ -86,7 +86,7 @@ class ParticipantController extends Controller
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
         }
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager') or Gate::allows('isChefDeService')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
         }
         $status = $stg->desactiver($user_id, $emp_id, $entreprise_id);
@@ -104,7 +104,7 @@ class ParticipantController extends Controller
         if (Gate::allows('isReferent')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("responsables", ["user_id"], [Auth::user()->id])->entreprise_id;
         }
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager')or Gate::allows('isChefDeService')) {
             $entreprise_id = $this->fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->entreprise_id;
         }
         $status = $stg->activer($user_id, $emp_id, $entreprise_id);
@@ -162,7 +162,7 @@ class ParticipantController extends Controller
             if ($paginations <= 0) {
                 $paginations = 1;
             }
-            if(Gate::allows('isManager')) {
+            if(Gate::allows('isManager') or Gate::allows('isChefDeService')) {
                 $dep =  $this->fonct->findWhereMulitOne("employers", ["user_id"], [$user_id])->departement_entreprises_id;
                 $totale_pag = $this->fonct->getNbrePagination("employers", "id", ["entreprise_id","departement_entreprises_id"], ["=","="], [$entreprise_id,$dep], "AND");
                 $piasa = DB::select("SELECT *, SUBSTRING(nom_stagiaire,1,1) AS nom_stg,SUBSTRING(prenom_stagiaire,1,1) AS prenom_stg FROM stagiaires WHERE entreprise_id=? and departement_entreprises_id = ?  ORDER BY created_at DESC LIMIT " . $nb_limit . " OFFSET 0", [$entreprise_id,$dep]);
@@ -266,7 +266,7 @@ class ParticipantController extends Controller
             // $liste_dep = DepartementEntreprise::with('Departement')->where('entreprise_id', $entreprise_id)->get();
             return view('admin.participant.nouveauParticipant', compact('lieu_travail', 'service', 'liste_dep', 'email_error', 'matricule_error'));
         }
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager') or Gate::allows('isChefDeService')) {
 
             $entreprise_id = chefDepartement::where('user_id', [$user_id])->value('entreprise_id');
             $fonct = new FonctionGenerique();
@@ -387,7 +387,7 @@ class ParticipantController extends Controller
         if (Gate::allows('isReferent')) {
             $entreprise_id = responsable::where('user_id', Auth::user()->id)->value('entreprise_id');
         }
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager') or Gate::allows('isChefDeService')) {
             $entreprise_id = chefDepartement::where('user_id', Auth::user()->id)->value('entreprise_id');
         }
         if (Gate::allows('isSuperAdmin')) {
@@ -501,7 +501,7 @@ class ParticipantController extends Controller
             $user_id =  $users = Auth::user()->id;
             $stagiaire_connecte = stagiaire::where('user_id', $user_id)->exists();
             $stagiaire = stagiaire::findOrFail($id);
-            if (Gate::allows('isReferent') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager')))) {
+            if (Gate::allows('isReferent') || (Gate::allows('isSuperAdmin') || (Gate::allows('isManager') or Gate::allows('isChefDeService')))) {
                 return view('admin.participant.update', compact('stagiaire'));
             } else {
                 return view('admin.participant.update', compact('stagiaire'));
@@ -1148,7 +1148,7 @@ class ParticipantController extends Controller
 
         }
 
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager') or Gate::allows('isChefDeService')) {
             $chef_id = $fonct->findWhereMulitOne("chef_departements", ["user_id"], [$user_id])->id;
             $dep_etp_id = $fonct->findWhereMulitOne("chef_dep_entreprises", ["chef_departement_id"], [$chef_id])->departement_entreprise_id;
             $liste_dep = $fonct->findWhere("v_departement", ["departement_id"], [$dep_etp_id]);

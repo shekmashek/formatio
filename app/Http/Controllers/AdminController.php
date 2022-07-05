@@ -87,6 +87,14 @@ class AdminController extends Controller
             $data["status"] = "CHEF";
             return response()->json($data);
         }
+        if (Gate::allows('isChefDeService')) {
+            $etp_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
+
+            $etp = DB::select('select * from entreprises where id=?', [$etp_id]);
+            $data["donner"] = $etp[0];
+            $data["status"] = "CHEF";
+            return response()->json($data);
+        }
         if (Gate::allows('isStagiaire')) {
             $etp_id = stagiaire::where('user_id', $id_user)->value('entreprise_id');
             $etp = DB::select('select * from entreprises where id=?', [$etp_id]);
@@ -187,6 +195,21 @@ class AdminController extends Controller
             // $user = 'chefDepartement/' . $user;
             return response()->json(['user'=>$user,'photo'=>$photo]);
         }
+        if (Gate::allows('isChefDeService')) {
+            $user = $fonct->findWhereMulitOne(("chef_departements"),["user_id"],[$id_user])->photos;
+            $photo ='';
+            if($user == null){
+                $user = DB::select('select SUBSTRING(nom_chef, 1, 1) AS nm,  SUBSTRING(prenom_chef, 1, 1) AS pr from chef_departements where user_id = ?', [$id_user]);
+                $photo = 'non';
+                //  $user = 'users/users.png';
+            } else{
+                $user = 'images/employes/' . $user;
+                $photo = 'oui';
+            }
+
+            // $user = 'chefDepartement/' . $user;
+            return response()->json(['user'=>$user,'photo'=>$photo]);
+        }
 
         if (Gate::allows('isCFP')) {
 
@@ -239,6 +262,20 @@ class AdminController extends Controller
         $fonct = new FonctionGenerique();
         $id_user = Auth::user()->id;
         if (Gate::allows('isManager')) {
+
+            $etp_id = ChefDepartement::where('user_id', $id_user)->value('entreprise_id');
+
+            $etp = entreprise::where('id', $etp_id)->value('logo');
+
+            if($etp == null){
+                $etp = 'users/users.png';
+            } else{
+                $etp = 'entreprises/' . $etp;
+            }
+
+            return response()->json($etp);
+        }
+        if (Gate::allows('isChefDeService')) {
 
             $etp_id = ChefDepartement::where('user_id', $id_user)->value('entreprise_id');
 

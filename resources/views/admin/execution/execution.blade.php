@@ -59,7 +59,7 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isFormateurInterne','isManager'])
+                                        @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isFormateurInterne','isManager','isChefDeService'])
                                         <th>Projet</th>
                                         <th>Groupe</th>
                                         @canany(['isFormateur', 'isCFP','isFormateurInterne'])
@@ -80,7 +80,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isFormateurInterne','isManager'])
+                                    @canany(['isSuperAdmin','isReferent','isCFP','isFormateur','isFormateurInterne','isManager','isChefDeService'])
                                     @foreach ($datas as $d)
                                     <tr>
                                         <td>{{$d->nom_projet}}</td>

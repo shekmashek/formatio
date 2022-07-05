@@ -622,7 +622,7 @@ class ResponsableController extends Controller
                 DB::update('update employers set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
                 if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
                 if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
-                if(Gate::allows('isManager')) return redirect()->route('profil_manager');
+                if(Gate::allows('isManager')or Gate::allows('isChefDeService')) return redirect()->route('profil_manager');
             }
             else{
                 return redirect()->back()->with('error_format', 'Le format de votre fichier n\'est pas acceptable,choisissez entre : .jpeg,.jpg,.png,.gif,.psd,.ai,.svg');
@@ -650,7 +650,7 @@ class ResponsableController extends Controller
                 DB::update('update users set password = ? where id = ?', [$new_password, Auth::id()]);
                 if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
                 if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
-                if(Gate::allows('isManager')) return redirect()->route('profil_manager');
+                if(Gate::allows('isManager')or Gate::allows(('isChefDeService'))) return redirect()->route('profil_manager');
             } else {
                 return redirect()->back()->with('error', 'L\'ancien mot de passe est incorrect');
             }
@@ -764,7 +764,7 @@ class ResponsableController extends Controller
 
             if(Gate::allows('isReferent')) return redirect()->route('profil_referent');
             if(Gate::allows('isStagiaire')) return redirect()->route('profile_stagiaire');
-            if(Gate::allows('isManager')) return redirect()->route('profil_manager');
+            if(Gate::allows('isManager')or Gate::allows('isChefDeService')) return redirect()->route('profil_manager');
     }
 
     public function destroy(Request $request)

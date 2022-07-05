@@ -283,7 +283,7 @@
                         <label class="gauche" id="nb_seance" for=""></label><br>
                         <ul id="date_formation"></ul>
 
-                        @canany(['isReferent','isCFP','isFormateur','isFormateurInterne','isManager','isReferentSimple'])
+                        @canany(['isReferent','isCFP','isFormateur','isFormateurInterne','isManager','isReferentSimple','isChefDeService'])
                             <label class="gauche" for="">Liste des apprenants</label><br>
                             <table class="table">
                                 <thead>
@@ -420,7 +420,7 @@
                             @can('isStagiaire')
                                 title: details[$i].nom_formation
                             @endcan
-                            @canany(['isReferent','isReferentSimple','isManager'])
+                            @canany(['isReferent','isReferentSimple','isManager','isChefDeService'])
                             title: details[$i].nom_formation
                             @endcanany
                             , start: details[$i].date_detail
@@ -528,7 +528,7 @@
                                         lieu.innerHTML = '';
                                         var salle = document.getElementById('salle');
                                         salle.innerHTML = '';
-                                        @canany(['isReferent','isCFP','isFormateur','isFormateurInterne','isManager','isReferentSimple'])
+                                        @canany(['isReferent','isCFP','isFormateur','isFormateurInterne','isManager','isChefDeService','isReferentSimple'])
                                         var liste_app = document.getElementById('liste_app');
                                         liste_app.innerHTML = '';
                                         var nb_apprenant = document.getElementById('nb_apprenant');

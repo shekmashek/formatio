@@ -330,7 +330,7 @@ class DepartementController extends Controller
         $user = User::where('id', Auth::user()->id)->update([
             'password' => $hashedPwd, 'name' => $nom, 'email' => $mail
         ]);
-        return redirect()->route('affProfilChefDepartement', $id);
+        return redirect()->route('profil_manager', $id);
     }
 
     public function destroy($id)

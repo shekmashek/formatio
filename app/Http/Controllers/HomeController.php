@@ -206,8 +206,10 @@ class HomeController extends Controller
         if (Gate::allows('isFormateurPrincipale')) {
             return redirect()->route('accueilFormateur');
         }
-        if (Gate::allows('isManager')) {
-
+        if (Gate::allows('isManager')  ) {
+            return redirect()->route('profil_manager');
+        }
+        if (Gate::allows('isChefDeService') ) {
             return redirect()->route('profil_manager');
         }
         if (Gate::allows('isStagiaire')) {
@@ -815,7 +817,7 @@ class HomeController extends Controller
             $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
             return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager') or Gate::allows('isChefDeService')) {
             $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
             $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
             // pagination

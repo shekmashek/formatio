@@ -303,7 +303,7 @@ class PlanFormationController extends Controller
         // dd($besoinV_count);
         // $besoin dd($besoin_count);
 
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager') or Gate::allows('isChefDeService')) {
             $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$users])->entreprise_id;
             // $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
             $plan = DB::select('select * from plan_formation_valide where entreprise_id = ?', [$entreprise_id]);
@@ -328,7 +328,7 @@ class PlanFormationController extends Controller
             $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
         }
 
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager') or Gate::allows('isChefDeService')) {
             $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
         }
         $data =DB::table('besoin_stagiaire')
@@ -346,7 +346,7 @@ class PlanFormationController extends Controller
             $entreprise_id = responsable::where('user_id', $users)->value('entreprise_id');
         }
 
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isManager')or Gate::allows('isChefDeService')) {
             $entreprise_id = ChefDepartement::where('user_id', $users)->value('entreprise_id');
         }
         $data =DB::table('besoin_stagiaire')

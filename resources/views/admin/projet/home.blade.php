@@ -131,7 +131,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nom du projet</th>
-                                        @canany(['isAdmin','isManager','isReferent','isSuperAdmin'])
+                                        @canany(['isAdmin','isManager','isChefDeService','isReferent','isSuperAdmin'])
                                         <th>CFP</th>
                                         @endcanany
                                         <th>Entreprise</th>
@@ -163,7 +163,7 @@
                                             </a>
 
                                         </td>
-                                        @canany(['isAdmin','isManager','isReferent','isSuperAdmin'])
+                                        @canany(['isAdmin','isManager','isChefDeService','isReferent','isSuperAdmin'])
                                         <td><strong style="color: blue">{{$pj->nom_cfp}}</strong> </td>
                                         @endcanany
                                         <td>
