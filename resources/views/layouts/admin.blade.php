@@ -993,7 +993,7 @@
                                                     <i class="bx bxl-sketch icon_plus  "></i>&nbsp; Abonnement
                                                 </a>
                                             </li>
-                                            <li id="equipe">
+                                            <li id="parametre">
                                                 <a class="dropdown-item" href="{{route('liste_departement')}}">
                                                     <i class="fas fa-user icon_plus  "></i>&nbsp; Structure de l'entreprise
                                                 </a>
@@ -1117,7 +1117,7 @@
                                                 <h6 class="mb-0 text-center text-muted">{{Auth::user()->email}}</h6>
                                                 <div class="text-center">
                                                     @can('isManagerPrincipale')
-                                                    <a href="{{route('profil_manager')}}"><button
+                                                    <a class="vous" href="{{route('profil_manager')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcan
@@ -1132,7 +1132,7 @@
                                                             compte</button></a><br>
                                                     @endcan
                                                     @canany(['isReferent','isReferentSimple'])
-                                                    <a href="{{route('profil_referent')}}"><button
+                                                    <a class="vous" href="{{route('profil_referent')}}"><button
                                                             class="btn profil_btn mt-4 mb-2">Gérer votre
                                                             compte</button></a><br>
                                                     @endcanany
@@ -1147,7 +1147,7 @@
                                                     <input type="text" value="{{Auth::user()->id}}" id="id_user" hidden>
 
                                                     <p class="text-muted me-3">Connécté en tant que :
-                                                    <ul id="liste_role" class="d-flex flex-column"></ul>
+                                                    <ul id="liste_role" class="d-flex flex-column deconnexion "></ul>
                                                     </p>
 
                                                 </div>
@@ -1159,7 +1159,7 @@
                                                             </a></p>
                                                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                 document.getElementById('logout-form').submit();"
-                                                            class="deconnexion_text text-center">Se Déconnecter</a>
+                                                            class="deconnexion deconnexion_text text-center">Se Déconnecter</a>
                                                         <form action="{{ route('logout') }}" id="logout-form"
                                                             method="POST" class="d-none">
                                                             @csrf
@@ -1718,18 +1718,19 @@
         else localStorage.removeItem('indiceSidebar');
     });
 
-    $(".deconnexion_text").on("click", function(e){
+    $(".deconnexion").on("click", function(e){
         localStorage.clear();
     });
 
-    let Tabactive = localStorage.getItem('indiceSidebar');
     if(!(localStorage.getItem('indiceSidebar')))localStorage.setItem('indiceSidebar', document.getElementById("accueil").href);
-    else if(Tabactive=="parametre")$('.btn_creer.parametre').addClass('active');
+
+    let Tabactive = localStorage.getItem('indiceSidebar');
+    if(Tabactive=="parametre")$('.btn_creer.parametre').addClass('active');
     else if(Tabactive=="vous")$('.btn_vous ').addClass('active');
     else if(Tabactive){
         ($('.nav_list a[href="' + Tabactive + '"]').closest('a')).addClass('active');
         ($('.btn_racourcis a[href="' + Tabactive + '"]').closest('div')).addClass('active');
-    }else localStorage.removeItem('indiceSidebar');
+    }
 </script>
 </body>
 
