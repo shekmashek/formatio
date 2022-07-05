@@ -1546,6 +1546,11 @@ Route::post('ajouter_manager','DepartementController@ajouter_manager')->name('aj
 /**Modifier chef de departement */
 Route::post('modifier_manager','DepartementController@modifier_manager')->name('modifier_manager');
 
+/**Ajout chef de service */
+Route::post('ajouter_chef_de_service','DepartementController@ajouter_chef_de_service')->name('ajouter_chef_de_service');
+/**Modifier chef de service */
+Route::post('modifier_chef_de_service','DepartementController@modifier_chef_de_service')->name('modifier_chef_de_service');
+
 /** Ajouter un employé comme référent*/
 Route::get('employes.ajouter.referent','ParticipantController@role_referent')->name('employes.ajouter.referent');
 /** Ajouter un employé comme référent principal*/

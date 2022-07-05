@@ -1,3 +1,4 @@
+-- Active: 1656400043423@@127.0.0.1@3306@bdd_nicole
 CREATE OR REPLACE VIEW v_chef_departement_entreprise AS SELECT
     dep.id as departement_id,
     dep.nom_departement as departement,
@@ -20,6 +21,3 @@ WHERE
     chef.id = chef_etp.chef_departement_id
 AND
     dep.id = chef_etp.departement_entreprise_id;
-
-
-

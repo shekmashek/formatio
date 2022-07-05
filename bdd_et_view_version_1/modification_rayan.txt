@@ -16,24 +16,34 @@ Modify column  `specialite` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
 Modify column  `niveau_etude_id` varchar(255) COLLATE utf8mb4_unicode_ci  NULL,
 Modify column `activiter` boolean  null default true;
 
-SELECT *
-FROM
-`v_groupe_projet_entreprise`
-WHERE projet_id in (
-    select projet_id
-    from v_stagiaire_groupe
-    where departement_id = 2
-);
 
-SELECT  *,details.id as details_id  from details
-                inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
-                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-                INNER JOIN modules ON groupes.module_id = modules.id
-                INNER JOIN formations ON modules.formation_id = formations.id
-                inner join formateurs on details.formateur_id = formateurs.id
-                inner join projets on details.projet_id = projets.id
-                inner join type_formations on projets.type_formation_id = type_formations.id
-                inner join cfps on details.cfp_id = cfps.id
-                where groupe_entreprises.entreprise_id = 2
-and projets.id in (SELECT `projet_id` FROM `v_participant_groupe_detail`  where detail_id = details.id  and departement_id = 2)
+
+INSERT INTO roles (id,role_name,role_description, created_at, updated_at) VALUES
+(9,'service','chef de service', '2021-10-26 05:45:24', '2021-10-26 05:45:24');
+
+CREATE TABLE `chef_de_service_entreprises` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `service_id` bigint(20) UNSIGNED NOT NULL REFERENCES services(id) ON DELETE CASCADE,
+  `chef_de_service_id` bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
+  `created_at` timestamp default current_timestamp(),
+  `updated_at` timestamp default current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+alter TABLE services add COLUMN `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE;
+
+create or replace view v_chef_de_service_entreprise as
+SELECT
+    services.departement_entreprise_id,
+    services.id,
+    services.nom_service,
+    services.entreprise_id,
+    departement_entreprises.nom_departement,
+    (employers.id) chef_services_id,
+    employers.nom_emp nom_chef,
+    employers.prenom_emp prenom_chef,
+    (employers.user_id) user_id
+FROM
+    services
+JOIN departement_entreprises on departement_entreprises.id = services.departement_entreprise_id
+left JOIN chef_de_service_entreprises on  services.id =  chef_de_service_entreprises.service_id
+left JOIN employers on  chef_de_service_entreprises.chef_de_service_id =  employers.id;

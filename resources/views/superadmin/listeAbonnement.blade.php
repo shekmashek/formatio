@@ -60,7 +60,7 @@
                     </div> --}}
 
                     <div class="col-lg-12 d-flex">
-                        @can('isReferent')
+                        @canany(['isReferent','isReferentSimple'])
                             <?php $i = 0; ?>
                             @foreach ($typeAbonnement as $types_etp)
 
@@ -97,7 +97,7 @@
                                 </div>
                                 <?php $i+=1; ?>
                             @endforeach
-                        @endcan
+                        @endcanany
                         @can('isCFP')
                             <?php $i = 0; ?>
                             @foreach ($typeAbonnement as $types_of)
