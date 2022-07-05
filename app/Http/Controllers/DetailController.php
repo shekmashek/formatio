@@ -261,8 +261,10 @@ class DetailController extends Controller
         }
         if(Gate::allows('isManager')or Gate::allows('isChefDeService')){
             $user_id = Auth::user()->id;
-            $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
+            if(Gate::allows('isManager')) $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
+            if(Gate::allows('isChefDeService')) $id_departement = DB::select('select * from employers  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
             $entreprise_id = $this->fonct->findWhereMulitOne("employers",['user_id'],[$id_user])->entreprise_id;
+
             $formations = $request->formations;
             $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
                 INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id

@@ -16,7 +16,7 @@
                                     </div>
                                     <h6 class="f-w-600">{{$id_chef->nom_chef}} {{$id_chef->prenom_chef}}</h6>
                                     <p>{{$id_chef->fonction_chef}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
-                                    @can('isManager')
+                                    @can('`')
                                         <a href="{{route('edit_manager',$id_chef->id)}}"><i class=" fa fa-edit"></i> &nbsp;Modifier mon profil</a>
                                     @endcan
                                 </div>
