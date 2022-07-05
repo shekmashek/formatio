@@ -276,5 +276,16 @@ class AuthServiceProvider extends ServiceProvider
                 }
             }
         });
+
+        Gate::define('isChefDeService',function($users_roles){
+            // return $users_roles->role_id == 8;
+           $rqt =  DB::select('select * from role_users where  user_id = ?  and activiter=true', [Auth::id()]);
+           if($rqt!=null){
+                for ($i=0; $i < count($rqt); $i++) {
+                    if( $rqt[$i]->role_id == 9)
+                        return "service";
+                }
+            }
+        });
     }
 }

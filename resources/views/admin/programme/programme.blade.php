@@ -34,11 +34,11 @@
                                     <i class="bx bx-list-minus" style="font-size: 20px;"></i><span>&nbsp;Liste des programmes</span></a>
 
                             </li>
-                            @can('isCFP')
+                            @canany(['isCFP',])
                             <li class="nav-item">
                                 <a class="nav-link  {{ Route::currentRouteNamed('nouvelle_programme') || Route::currentRouteNamed('nouvelle_programme') ? 'active' : '' }}" href="{{route('nouvelle_programme')}}"><i class="bx bxs-plus-circle"></i><span>&nbsp;Nouveau Programme</span></a>
                             </li>
-                            @endcan
+                            @endcanany
 
 
                         </ul>
@@ -90,7 +90,7 @@
                                         <td>{{$programme->titre_programme}}</td>
                                         <td>{{$programme->nom_module}}</td>
                                         <td>{{$programme->nom_formation}}</td>
-                                        @canany(['isCFP','isFormateur','isSuperAdmin','isAdmin'])
+                                        @canany(['isCFP','isFormateur','isFormateurInterne','isSuperAdmin','isAdmin'])
                                             <td style="text-align: center;"><button class="btn modifier " data-id = "{{$programme->id_programme}}" data-toggle="modal" data-target="#myModal" id="{{$programme->id_programme}}" ><i class='bx bxs-edit' title="Editer"></button></td>
                                                 <td style="text-align: center;"><button class="btn" data-toggle="modal" data-target="#exampleModal_{{$programme->id_programme}}"><i class='bx bxs-trash' title="Supprimer"></i></button></td>
 

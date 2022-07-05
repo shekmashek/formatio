@@ -1,3 +1,4 @@
+-- Active: 1656400043423@@127.0.0.1@3306@bdd_nicole
 
 
 CREATE TABLE `secteurs` (
@@ -52,6 +53,7 @@ CREATE TABLE `services` (
   `nom_service` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   foreign key(departement_entreprise_id) references departement_entreprises (id) on delete cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+alter TABLE services add COLUMN `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE;
 
 CREATE TABLE `branches` (
   `id` bigint(20) UNSIGNED NOT NULL  PRIMARY KEY AUTO_INCREMENT,
@@ -96,6 +98,14 @@ CREATE TABLE `chef_dep_entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `departement_entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES departement_entreprises(id) ON DELETE CASCADE,
   `chef_departement_id` bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
+  `created_at` timestamp default current_timestamp(),
+  `updated_at` timestamp default current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `chef_de_service_entreprises` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `service_id` bigint(20) UNSIGNED NOT NULL REFERENCES services(id) ON DELETE CASCADE,
+  `chef_de_service_id` bigint(20) UNSIGNED NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
   `created_at` timestamp default current_timestamp(),
   `updated_at` timestamp default current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

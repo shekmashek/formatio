@@ -721,7 +721,7 @@
                                 </button>
                             </a>
                         </div>
-                        @canany(['isCFP', 'isReferent', 'isFormateur','isReferentSimple','isManager'])
+                        @canany(['isCFP', 'isReferent', 'isFormateur','isFormateurInterne','isReferentSimple','isManager'])
                             <div class="nav-item" role="presentation">
                                 <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
@@ -785,7 +785,7 @@
                             <a href="#document" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
                                 <button class="planning d-flex justify-content-between document-tab
-                                    @canany(['isCFP','isFormateur'])
+                                    @canany(['isCFP','isFormateur','isFormateurInterne'])
                                         {{ 'action_animation' }}
                                     @endcan"
                                     onclick="openCity(event, 'document')" style="width: 100%">
@@ -808,7 +808,7 @@
                                 </a>
                             </div>
                         @endcanany
-                        @can('isFormateur')
+                        @canany(['isFormateur','isFormateurInterne'])
                             <div class="nav-item" role="presentation">
                                 <a href="#emargement" class="nav-link p-0" id="emargement-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
@@ -858,7 +858,7 @@
                                     </button>
                                 </a>
                             </div>
-                        @endcan
+                        @endcanany
                         @canany(['isCFP', 'isReferent','isReferentSimple','isManager'])
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
@@ -889,7 +889,7 @@
                         aria-labelledby="detail-tab" style="display: block">
                         @include('admin.detail.detail')
                     </div>
-                    @canany(['isCFP', 'isReferent','isReferentSimple' ,'isFormateur','isManager'])
+                    @canany(['isCFP', 'isReferent','isReferentSimple' ,'isFormateur','isFormateurInterne','isManager'])
                         <div class="tab-pane fade show tabcontent" id="apprenant" role="tabpanel"
                             aria-labelledby="apprenant-tab" style="display: none">
                             @include('admin.stagiaire.ajout_stagiaire')

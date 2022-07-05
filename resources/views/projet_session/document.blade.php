@@ -1,6 +1,6 @@
 
 <div class="row">
-    @canany(['isCFP','isFormateur'])
+    @canany(['isCFP','isFormateur','isFormateurInterne'])
         <nav class="d-flex justify-content-between mb-1 " style="border-bottom: 1px solid black; line-height: 20px">
             <span class="titre_detail_session"><strong style="font-size: 14px">Choisissez le(s) fichier(s) pour cette session</strong></span>
         </nav>

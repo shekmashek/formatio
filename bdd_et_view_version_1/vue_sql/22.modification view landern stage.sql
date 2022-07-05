@@ -1,3 +1,4 @@
+-- Active: 1656400043423@@127.0.0.1@3306@bdd_nicole
 
 
  create or replace view v_participant_groupe_detail as

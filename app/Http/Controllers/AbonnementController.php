@@ -224,7 +224,7 @@ class AbonnementController extends Controller
     public function ListeAbonnement()
     {
 
-        if (Gate::allows('isReferent')) {
+        if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
 
             $responsable =$this->fonct->findWhere('responsables',['user_id'],[Auth::user()->id]);
             $entreprise_id = $responsable[0]->entreprise_id;

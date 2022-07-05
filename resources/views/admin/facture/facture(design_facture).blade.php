@@ -327,7 +327,7 @@
                                     <th scope="col">Date de règlement</th>
                                     <th scope="col">Totale à payer</th>
                                     <th scope="col">Reste à payer</th>
-                                    @canany(['isCFP'])
+                                    @canany(['isCFP','isFormateurInterne'])
                                     <th scope="col" colspan="2">Action</th>
                                     @endcanany
                                 </tr>
@@ -536,7 +536,7 @@
                                             </div>
                                         </a>
                                     </td>
-                                    @canany(['isCFP'])
+                                    @canany(['isCFP','isFormateurInterne'])
                                     <td>
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
@@ -656,7 +656,7 @@
                                             </div>
                                         </a>
                                     </td>
-                                    @canany(['isCFP'])
+                                    @canany(['isCFP','isFormateurInterne'])
                                     <td>
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">
@@ -782,7 +782,7 @@
                                             </div>
                                         </a>
                                     </td>
-                                    @canany(['isCFP'])
+                                    @canany(['isCFP','isFormateurInterne'])
                                     <td>
                                         <div class="dropdown">
                                             <div class="btn-group dropstart">

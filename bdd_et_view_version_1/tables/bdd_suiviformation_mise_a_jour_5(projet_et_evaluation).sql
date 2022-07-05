@@ -163,6 +163,9 @@ CREATE TABLE `reponse_evaluationchaud` (
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE reponse_evaluationchaud add column points int(11) default 0;
+ALTER TABLE reponse_evaluationchaud add column status int(2) NULL;
+
 
 insert into question_mere values(1,'Qualité global de la formation','Donnez une note sur 10 pour votre évaluation globale de la formation:',1,null,null);
 insert into question_mere values(2,'Qualité pédagoqique du formation','Donnez une note sur 10 pour votre évaluation globale de la qualité pédagogique de la formation:',1,null,null);

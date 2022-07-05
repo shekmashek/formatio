@@ -195,6 +195,7 @@ CREATE TABLE modules (
 
 
 alter table modules add etat_id bigint(20) NOT NULL DEFAULT 1 REFERENCES etats(id) ON DELETE CASCADE;
+alter table modules add date_eval_froid int(2) NULL;
 
 INSERT INTO modules (id, reference, nom_module, formation_id, created_at, updated_at, prix, duree,duree_jour,prerequis, objectif, modalite_formation, description ,niveau_id,materiel_necessaire,cible,min,max,bon_a_savoir,prestation,cfp_id) VALUES
 (2, 'MOD_EX02', 'NII.Calculs et Fonctions', 1, NULL, NULL, 300000, 12,4, '', '', '','',1,'pc','RH',0,0,'','',1),

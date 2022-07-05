@@ -1031,7 +1031,7 @@
                     </div>
                 @endcanany
 
-                @can('isFormateur')
+                @canany(['isFormateur','isFormateurInterne'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
@@ -1123,7 +1123,7 @@
                             </tbody>
                         </table>
                     @endif
-                @endcan
+                @endcanany
                 @can('isReferent')
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
@@ -1389,9 +1389,9 @@
                 @canany(['isReferent', 'isCFP'])
                     <div class="col-12 ps-5">
                     @endcanany
-                    @canany(['isFormateur', 'isStagiaire'])
+                    @canany(['isFormateur', 'isStagiaire','isFormateurInterne'])
                         <div class="col-12 ps-5">
-                        @endcanany
+                    @endcanany
                     </div>
                 </div>
 

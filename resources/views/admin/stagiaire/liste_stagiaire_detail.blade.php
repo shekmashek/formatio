@@ -133,7 +133,7 @@
                                     <td>{{$stg->nom_stagiaire}}</td>
                                     <td>{{$stg->prenom_stagiaire}}</td>
 
-                                    @canany(['isFormateur'])
+                                    @canany(['isFormateur','isFormateurInterne'])
                                     <td>
                                         <a href="{{route('evaluation_stagiaire_form',['matricule'=>$stg->stagiaire_id,'groupe_id'=>$stg->groupe_id])}}"><button class="btn btn-primary">Evaluation du stagiaire</button></a>
                                     </td>

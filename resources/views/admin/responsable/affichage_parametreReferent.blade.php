@@ -46,7 +46,7 @@
             </a>
         </div>
         <div class="col-3 second_col">
-            <a href="{{route('liste_participant')}}">
+            <a href="{{route('employes.liste')}}">
                 <div class="row text-end p-0">
                     <i class='bx bxs-user-detail icon_infos2 p-0'></i>
                 </div>
@@ -57,13 +57,15 @@
             </a>
         </div>
         <div class="col-3 second_col">
-            <div class="row text-end p-0">
-                <i class='bx bxs-user-pin icon_infos3 p-0'></i>
-            </div>
-            <div class="row ps-2 ">
-                <p class="nb_modules m-0 p-0">{{count($chef_departements_counts)}}</p>
-                <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Managers</p>
-            </div>
+            <a href="{{route('liste_departement')}}">
+                <div class="row text-end p-0">
+                    <i class='bx bxs-user-pin icon_infos3 p-0'></i>
+                </div>
+                <div class="row ps-2 ">
+                    <p class="nb_modules m-0 p-0">{{count($chef_departements_counts)}}</p>
+                    <p class="text-muted borderBotom_color3 p-0 pb-2 text-uppercase">Managers</p>
+                </div>
+            </a>
         </div>
         <div class="row row_bas g-0">
             <div class="col third_col py-2">

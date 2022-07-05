@@ -532,6 +532,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
+<<<<<<< HEAD
             'reference' => 'fc85ca710fb8d83a64c7349cf58bced9686c04ea',
             'dev_requirement' => false,
         ),
@@ -542,6 +543,9 @@
             'install_path' => __DIR__ . '/../laravel/passport',
             'aliases' => array(),
             'reference' => '192fe387c1c173c12f82784e2a1b51be8bd1bf45',
+=======
+            'reference' => '095dacf34384680d064ec53f53876407de3219eb',
+>>>>>>> origin/gestion_role
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(

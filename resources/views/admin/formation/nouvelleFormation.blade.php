@@ -11,7 +11,7 @@
     <div class="row w-100 g-0 m-0">
         <div class="col-lg-12">
             <div class="row g-0 m-0" style="align-items: center">
-                @can('isCFP')
+                @canany(['isCFP',])
                 <div class="col-12 d-flex justify-content-between" style="align-items: center">
                     <div class="col">
                         <h3 class="mt-2">Nouvelle Module</h3>
@@ -34,8 +34,8 @@
                                 Formation</span>
                         </a>
                     </div>
-                    @endcan
                 </div>
+                @endcanany
 
             </div>
         </div>
