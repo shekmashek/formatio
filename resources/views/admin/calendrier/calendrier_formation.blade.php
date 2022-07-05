@@ -241,7 +241,7 @@
                     {{-- <input type="text" id="event_entreprise" class="form-control border-0 border-bottom" 
                     placeholder="Entreprise" aria-label="Entreprise" 
                     aria-describedby="addon-wrapping"> --}}
-                    <span id="event_entreprise" class="form-control border-0 border-bottom" ></span>
+                    <span id="event_entreprise" class="form-control border-0 border-bottom mt-1" ></span>
                   </div>
                 <div class="input-group mb-4" id="event_sessions">
                     <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-calendar-event text-secondary' ></i></span>
@@ -551,11 +551,13 @@
                         var entreprises = info.event.extendedProps.entreprises;
                         
                         // console.log(entreprises.length);
-                        entreprise_offcanvas.value = '';
                         entreprise_offcanvas.innerHTML = '';
-
+                        var entreprise_offcanvas_link ='';
                         for (var i = 0; i < entreprises.length; i++) {
-                            entreprise_offcanvas.innerHTML += entreprises[i].nom_etp + '<br>';
+                            // entreprise_offcanvas.innerHTML += entreprises[i].nom_etp + '<br>';
+                            entreprise_offcanvas_link += ('<a href = "{{url("profile_entreprise/:?")}}" class="hover_purple" target = "_blank">'+entreprises[i].nom_etp+'</a><br>').replace(":?", entreprises[i].id);
+
+                            entreprise_offcanvas.innerHTML = entreprise_offcanvas_link;
                         }
 
                         title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
@@ -587,7 +589,7 @@
                         
                         // add the number of session before the session list 
                         nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
-                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 mb-3 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
+                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
 
                         session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
                         lieu_offcanvas.value = info.event.extendedProps.lieu;
@@ -622,7 +624,7 @@
 
                                 html_accordion += '<h2 class="accordion-header" id="headingOne'+i+'">';
                                 html_accordion += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-controls="collapseOne">';
-                                html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire;
+                                html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire+('<a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><i class="bx bx-link-external ms-3 fs-5 hover_purple"></i></a>').replace(":?", participant.id);
                                 html_accordion += '</button>';
                                 html_accordion += '</h2>';
                                 

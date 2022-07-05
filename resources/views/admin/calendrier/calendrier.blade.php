@@ -493,9 +493,11 @@
                         
                         // console.log(entreprises.length);
                         entreprise_offcanvas.innerHTML = '';
-
+                        var entreprise_offcanvas_link = '';
                         for (var i = 0; i < entreprises.length; i++) {
-                            entreprise_offcanvas.innerHTML += entreprises[i].nom_etp + '<br>';
+                            entreprise_offcanvas_link += ('<a href = "{{url("profile_entreprise/:?")}}" class="hover_purple" target = "_blank">'+entreprises[i].nom_etp+'</a><br>').replace(":?", entreprises[i].id);
+
+                            entreprise_offcanvas.innerHTML = entreprise_offcanvas_link;
                         }
 
                         
@@ -566,7 +568,7 @@
 
                                 html_accordion += '<h2 class="accordion-header" id="headingOne'+i+'">';
                                 html_accordion += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-controls="collapseOne">';
-                                html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire;
+                                html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire+('<a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><i class="bx bx-link-external ms-3 fs-5 hover_purple"></i></a>').replace(":?", participant.id);
                                 html_accordion += '</button>';
                                 html_accordion += '</h2>';
                                 

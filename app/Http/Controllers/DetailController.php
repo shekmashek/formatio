@@ -795,22 +795,6 @@ class DetailController extends Controller
         $resultat = DB::select('select * from v_detailmodule where nom_module = "'.$nom_module.'"');
         return response()->json($resultat);
     }
-    /*
-    public function index()
-    {
-        $user_id = Auth::user()->id;
-        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
-        $fonct = new FonctionGenerique();
-        $id = request()->id_session;
-        $formateur = Formateur::orderBy('nom_formateur')->get();
-        $formation = Formation::orderBy('nom_formation')->get();
-        $formation_id = Formation::orderBy('nom_formation')->first()->id;
-        $module = Module::orderBy('nom_module')->where('formation_id', $formation_id)->get();
-        $projet = $fonct->findWhere("v_projet", ["cfp_id"], [$cfp_id]);
-        $entreprise = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id"], [$cfp_id]);
-        return view('admin.detail.nouveauDetail', compact('id', 'projet', 'formation', 'module', 'formateur','entreprise'));
-    }
-*/
 
 
     public function index()
