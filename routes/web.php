@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use phpseclib3\Crypt\RC2;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -1575,3 +1575,12 @@ Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('ref
 
 
 
+Route::get('qr-code-g', function () {
+
+    \QrCode::size(500)
+            ->format('png')
+            ->generate('ItSolutionStuff.com', public_path('images/qrcode.png'));
+
+  return view('qrCode');
+
+});
