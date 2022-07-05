@@ -226,11 +226,14 @@
             <div class="tab-pane show fade active" id="publies">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
-                        <div class="col-12">
+                        <div class="col-11">
                             <p class="mb-0 ">Le catalogue en ligne regroupe tous les modules qui sont déjá mises en ligne.
                                 <br>
                                 Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
                                 visibles publiquement.</p>
+                        </div>
+                        <div class="col-1 text-end">
+                            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();"></i>
                         </div>
                     </div>
                     <div class="d-flex">
@@ -711,11 +714,14 @@
             <div class="tab-pane show fade" id="hors_lignes">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
-                        <div class="col-12">
+                        <div class="col-11">
                             <p class="mb-0 ">Le catalogue hors ligne regroupe tous les modules qui sont déjá términer et attendent d'être mises en ligne.
                                 <br>
                                 Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
                                 visibles publiquement s'ils sont mises en lignes.</p>
+                        </div>
+                        <div class="col-1 text-end">
+                            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();"></i>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -725,13 +731,13 @@
                             {{-- {{dd($mod_hors_ligne)}} --}}
                             @foreach ($mod_hors_ligne as $info)
                             {{-- {{dd($info)}} --}}
-                            <div class="row liste__formation justify-content-space-between mb-4">
+                            <div class="row liste__formation justify-content-space-between mb-4 ribbon">
                                 <div class="col-1 d-flex flex-column">
                                     <a href="{{route('detail_cfp',$info->cfp_id)}}" class="justify-content-center text-center">
                                         <img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
                                     </a>
                                 </div>
-                                <div class="col-3 liste__formation__content">
+                                <div class="col-2 liste__formation__content">
                                     <a href="{{route('select_par_module',$info->module_id)}}">
                                         <div class="liste__formation__item">
                                             <h5>{{$info->nom_module}}</h5>
@@ -824,6 +830,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if($mod->jours_restant > 0)
+                                <div class="col-1">
+                                    <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
+                                </div>
+                                @endif
                                 <div class="modal fade" id="listModal_{{$info->module_id}}" tabindex="-1"
                                     role="dialog" aria-labelledby="listModal" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -914,11 +925,14 @@
             <div class="tab-pane show fade active" id="publiees">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
-                        <div class="col-12">
+                        <div class="col-11">
                             <p class="mb-0 ">Le catalogue en ligne regroupe tous les modules qui sont déjá mises en ligne.
                                 <br>
                                 Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
                                 visibles publiquement.</p>
+                        </div>
+                        <div class="col-1 text-end">
+                            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();"></i>
                         </div>
                     </div>
                     <div class="row justify-content-center">
