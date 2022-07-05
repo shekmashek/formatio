@@ -867,10 +867,11 @@ class HomeController extends Controller
             return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isChefDeService')) {
-            $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
-            // $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
+            $employe = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
+            $id_service = DB::select('select * from chef_de_service_entreprises  where chef_de_service_id = ? ', [$employe->id])[0]->service_id;
+            // dd($id_service);
             // pagination
-            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where departement_id = ?) and entreprise_id = ?', [4,$entreprise_id])[0]->nb_projet;
+            $nb_projet = DB::select('select count(projet_id) as nb_projet from v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where service_id = ?) and entreprise_id = ?', [$id_service,$employe->entreprise_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
                 $offset = 0;
@@ -890,11 +891,11 @@ class HomeController extends Controller
                 $fin =  $page * $nb_par_page;
             }
             // fin pagination
-            $sql = $projet_model->build_requette($entreprise_id, "v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where departement_id = 4 )", $request, $nb_par_page, $offset);
+            $sql = $projet_model->build_requette($employe->entreprise_id, "v_groupe_projet_entreprise WHERE projet_id in ( select projet_id from v_stagiaire_groupe where service_id = ".$id_service." )", $request, $nb_par_page, $offset);
             $data = DB::select($sql);
             for($i=0;$i<count($data);$i+=1){
                 $dataMontantSession = DB::select("select cfp_id,projet_id,entreprise_id,groupe_id,hors_taxe,qte,num_facture,valeur_remise_par_session from v_liste_facture where entreprise_id=? AND cfp_id=? AND projet_id=? AND groupe_id=? AND groupe_entreprise_id=?",
-                [$entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
+                [$employe->entreprise_id,$data[$i]->cfp_id,$data[$i]->projet_id,$data[$i]->groupe_id,$data[$i]->groupe_entreprise_id]);
                 if(count($dataMontantSession)>0){
                         $data[$i]->hors_taxe_net = round($dataMontantSession[0]->hors_taxe - $dataMontantSession[0]->valeur_remise_par_session,2);
                         $data[$i]->qte = $dataMontantSession[0]->qte;
@@ -906,13 +907,13 @@ class HomeController extends Controller
                 }
             }
 
-            $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$entreprise_id]);
+            $lieu_formations =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$employe->entreprise_id]);
             if(count($lieu_formations)>0){
                 $lieuFormation = explode(',',$lieu_formations[0]->lieu);
             }else{
                 $lieuFormation = null;
             }
-            $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$entreprise_id]);
+            $stagiaires = DB::select('select * from v_stagiaire_groupe where entreprise_id = ?', [$employe->entreprise_id]);
             return view('projet_session.index2', compact('data','ref','stagiaires','lieuFormation', 'status', 'type_formation_id', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         // if (Gate::allows('isManager')) {

@@ -47,3 +47,5 @@ FROM
 JOIN departement_entreprises on departement_entreprises.id = services.departement_entreprise_id
 left JOIN chef_de_service_entreprises on  services.id =  chef_de_service_entreprises.service_id
 left JOIN employers on  chef_de_service_entreprises.chef_de_service_id =  employers.id;
+
+ajout colonne `s.service_id`dansla vue v_stagiaire_groupe "22.modification view landern stage.sql"
