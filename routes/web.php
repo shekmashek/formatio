@@ -794,7 +794,8 @@ Route::post('/creationDemande','PlanFormationController@creation')->name('plan.c
 Route::get('/getanneP','PlanFormationController@getplan')->name('getanneP');
 Route::get('/countPlan','PlanFormationController@countplan')->name('countPlan');
 Route::get('/exportPD/{id}','PlanFormationController@besoin_PD')->name('besoin.PDF');
-Route::get('/delete/{id}','PlanformationController@delete')->name('besoin.delete');
+Route::get('/delete/{id}','PlanFormationController@delete')->name('besoin.delete');
+Route::get('/ArbitragePlan/{id}','PlanFormationController@arbitrage')->name('besoin.arbitrage');
 /////////////////fin modification Mahafaly //////////////////////////////
 
 //ajouter nouveau plan

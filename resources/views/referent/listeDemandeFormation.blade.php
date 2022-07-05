@@ -122,7 +122,63 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row p-2" style="margin-top: -20px">
+                                        <div class="row " >
+                                            <div class="col ">
+                                                <div class="float-start">
+                                                    <p>Nombre des demande traité par les N+</p>
+                                                </div>
+                                                <div class="float-end">                                                  
+                                                    @foreach ($besoinT_count as $coT)
+                                                        @if($coT->id == $p->id)
+                                                            <p><span class="badge bg-secondary text-light" > {{ $coT->besoins_count }}</span></p>
+                                                        @endif
+                                                    @endforeach   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row " >
+                                            <div class="col ">
+                                                <div class="float-start">
+                                                    <p>Nombre des demande <span style="color: #41D053">validé</span>  par les N+</p>
+                                                </div>
+                                                <div class="float-end">                                                  
+                                                    @foreach ($besoinV_count as $coV)
+                                                        @if($coV->id == $p->id)
+                                                            <p><span class="badge bg-success text-light"> {{ $coV->besoins_count }}</span></p>
+                                                        @endif
+                                                    @endforeach   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row " >
+                                            <div class="col ">
+                                                <div class="float-start">
+                                                    <p>Nombre des demande <span style="color: #de1e44">non validé</span>  par les N+</p>
+                                                </div>
+                                                <div class="float-end">                                                  
+                                                    @foreach ($besoinN_count as $coN)
+                                                        @if($coN->id == $p->id)
+                                                            <p><span class="badge bg-danger text-light"> {{ $coN->besoins_count }}</span></p>
+                                                        @endif
+                                                    @endforeach   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row " >
+                                            <div class="col ">
+                                                <div class="float-start">
+                                                    <p>Nombre des demande <span style="color: rgb(210, 210, 40)">en attente</span> de validation </p>
+                                                </div>
+                                                <div class="float-end">                                                  
+                                                    @foreach ($besoinA_count as $coA)
+                                                        @if($coA->id == $p->id)
+                                                            <p> <span class="badge bg-warning text-light" style="color: rgb(235, 235, 84)">{{ $coA->besoins_count }}</span></p>
+                                                        @endif
+                                                    @endforeach   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3" style="margin-top: -20px">
 
                                             <div>
                                                 <span  class="te "><a href="{{route('liste.demande',$p->id)}}" class="btn btn-info  mt-2 text-light" ><i class="fa-solid fa-eye"></i>&nbsp; Voir liste</a> </span>
@@ -169,7 +225,7 @@
 
                                             </div>
                                         </div> --}}
-                                        <div class="row " >
+                                        {{-- <div class="row " >
                                             <div class="col mt-3">
                                                 <div class="float-start">
                                                     <p>Nombre des demande traité par les N+</p>
@@ -181,14 +237,14 @@
                                                         @endif
                                                     @endforeach   
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row p-2" style="margin-top: -20px">
+                                            </div> --}}
+                                        {{-- </div> --}}
+                                        {{-- <div class="row p-2" style="margin-top: -20px">
                                             <div>
                                                 <a href="{{route('liste.demandeV',$p->id)}}" class="btn btn-warning mt-2 text-light"><i class="fa-solid fa-eye"></i>&nbsp;Voir liste</a>
                                                 <a href="" class="btn btn-primary mt-2 text-light"><i class="fa-solid fa-file-pdf"></i>&nbsp; Export liste</a>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                     </div>

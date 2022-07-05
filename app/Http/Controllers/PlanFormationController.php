@@ -122,16 +122,20 @@ class PlanFormationController extends Controller
     }
     public function liste($id)
     {
+        $users_id = Auth::user()->id;
+        $entreprise_id = stagiaire::where('user_id', $users_id)->value('entreprise_id');
+        $departement = DB::select('select * from v_departement where entreprise_id = ?',[$entreprise_id]);
+        
         $besoin = besoins::where('anneePlan_id',$id)->get();
-        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire');
+        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire,nom_departement,nom_service from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire,nom_departement,nom_service');
         $ids = $id;
-
-        // dd('end');
+        
+        // dd($stagiaire);
             // $besoin = besoins::all()->groupBy('stagiaire_id');
 
             // dd($besoin);
 
-        return view('referent.projet_interne.listedemandestagiaire',compact('besoin','stagiaire','ids'));
+        return view('referent.projet_interne.listedemandestagiaire',compact('besoin','stagiaire','ids','departement'));
     }
 
     public function teste(){
@@ -165,6 +169,23 @@ class PlanFormationController extends Controller
         DB::update('update plan_formation_valide set debut_rec = ?, fin_rec= ? where id = ?',[$debut_rec,$fin_rec,$ids]);
         return back();
 
+    }
+    public function arbitrage($id){
+        $users_id = Auth::user()->id;
+        $entreprise_id = stagiaire::where('user_id', $users_id)->value('entreprise_id');
+        $departement = DB::select('select * from v_departement where entreprise_id = ?',[$entreprise_id]);
+        
+        $besoin = besoins::where('anneePlan_id',$id)->get();
+        $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire,nom_departement,nom_service from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire,nom_departement,nom_service');
+        $ids = $id;
+        
+        // dd($stagiaire);
+            // $besoin = besoins::all()->groupBy('stagiaire_id');
+
+            // dd($besoin);
+
+        return view('referent.arbitrage',compact('besoin','stagiaire','ids','departement'));
+        // return view('referent.arbitrage');
     }
     public function modification_besoin($id,Request $request){
 
@@ -289,11 +310,18 @@ class PlanFormationController extends Controller
                     $query->where('statut','=','1');
                 }])->get();
                 $besoinN_count = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'=>function($query){
-                    $query->where('statut','=','1');
+                    $query->where('statut','=','2');
+                }])->get();
+                $besoinA_count = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'=>function($query){
+                    $query->where('statut','=','0');
+                }])->get();
+                $besoinT_count = PlanFormation::where('entreprise_id',$entreprise_id)->withcount(['besoins'=>function($query){
+                    $query->where('statut','=','2')
+                          ->orwhere('statut','=','1');
                 }])->get();
                 $employ = DB::select('select * from stagiaires where entreprise_id = ?', [$entreprise_id]);
                 $nombr = count($employ);
-                return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoin_count','besoinV_count','besoinN_count'));
+                return view('referent.listeDemandeFormation', compact( 'domaine', 'stagiaire', 'yearNow', 'users','entreprise_id','plan','employ','nombr','besoin_count','besoinV_count','besoinN_count','besoinT_count','besoinA_count'));
             }
 
         }

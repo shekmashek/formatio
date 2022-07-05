@@ -1,35 +1,32 @@
 @extends('./layouts/admin')
 @section('title')
-    <p class="text_header m-0 mt-1">Demande</p>
+    <p class="text_header m-0 mt-1">Arbitrage Plan </p>
 @endsection
 @section('content')
 <link href="https://cdn.jsdelivr.net/gh/akottr/dragtable@master/dragtable.css" rel="stylesheet">
 <link href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css"/>
-
-
 <style>
-    h2{
+    h2,h3,label,p{
         font-weight: 400;
-        font-size: 25px;
         color: gray;
     }
-    table.dataTable td {
-        font-size: 14px;
-    }
-    table.dataTable th{
-        font-size: 16px
-    }
-    .dataTables_length label,
-    .dataTables_filter label {
-        opacity: 0.5;
-        transition: opacity 0.15s ease-in;
-    }
-    .dataTables_length label:hover,
-    .dataTables_filter label:hover {
-        opacity: 1;
-    }
-    .page-item.active .page-link {
+   .arb p{
+       text-align: center;
+       font-size: 20px;
+       margin-top: 5px;
+       color: white;
+       padding: 5px;
+
+   }
+   .nav-tabs .nav-link{
+       color: black;
+   }
+   .nav-tabs .nav-link.active {
+       background: #9359ff;
+       color: white;
+   }
+   .page-item.active .page-link {
         /* margin-top: 10px; */
         /* border-radius: 5rem; */
         border: 1px solid #9359ff;
@@ -41,63 +38,99 @@
         color: white!important;
         transition: 0.3s;
     }
-    .selection p{
-        font-weight: normal;
-        text-align: left;
-        white-space: nowrap;
-        font-family: 'Roboto', sans-serif;
-        color: #212529;
-    }
-
-    
 </style>
-    <div class="container-fluid mt-5 p-5">
+    <div class="container-fluid shadow-sm mt-3 p-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="float-start">
-                    <h2>Liste globale des demandes de formation </h2>
+                    <h2> Arbitrage Plan 2022</h2>
                 </div>
                 <div class="float-end">
-
-                    <a href="{{route('besoin.PDF',$ids)}}" class="btn btn-primary text-light">
-                        Export PDF
-                    </a>
-                    <a href="{{route('besoin.arbitrage',$ids)}}" class="btn btn text-light" style="background: #9359ff">
-                        Passer à l'arbitrage
-                    </a>
-                    <a href="/liste_demande_stagiaire" class="btn btn-dark text-light"><i class="fa-solid fa-caret-left"></i>&nbsp; Retour</a>
+                    <button class="btn btn-dark">Retour</button>
                 </div>
             </div>
-            {{-- <div style="display: flex">
-                Afficher : <a class="toggle-vis" data-column="0">Nom</a> - <a class="toggle-vis" data-column="1">Fonction</a> 
-            </div> --}}
-            
-            <div class="col-md-12 mt-4">
-                
-                <div class="row selection"  style="width:400px">
-                    <div  style="display: flex;margin-left:200px;float:right;position:absolute;z-index:1;width:500px">
-                        {{-- <p style="margin-left:2px;margin-top:4px;color:gray;font-family:'Roboto',sans-serif;">Département:</p> --}}
-                            <select class="form-control menu" id="departement" style="width:300px;height:30px;margin-left:0px;margin-top:0px;font-size:12px" name="" id="">
-                                <option value="" selected hidden>Selection par departement</option>
-                                
-                                <option value="non categorisé">non categorisé</option>
-
-                                @foreach($departement as $dep)
-                                    <option value="{{$dep->nom_departement}}" >{{$dep->nom_departement}}</option>
-                                @endforeach
-                                
-                            </select>
+        </div>
+        <div class="col-md-12 mt-3">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button style="width: 50%" class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Arbitrage par departement</button>
+                  <button style="width: 50%" class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Arbitrage par module</button>
+                  
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr class="text-dark" style="text-align:center">
+                                        <th>Département</th>
+                                        <th>Plan prév</th>
+                                        <th>Budget</th>
+                                        <th>Ecart</th>
+                                    </tr>
+                                    
+                                </thead>
+                                <tbody>
+                                    @foreach ($departement as $dep)
+                                        <tr>
+                                            <td>{{$dep->nom_departement}}</td>
+                                            <td>
+                                                <input type="text" class="form-control" >
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" >
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" disabled>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div  style="display: flex;margin-left:750px;position: absolute;" id="service">
-                        {{-- <p style="margin-left:2px;margin-top:4px;color:gray">Sérvice:</p>
-                            <select class="form-control menu" id="service" style="width:300px;height:30px;margin-left:0px;margin-top:0px;font-size:12px" >
-                                
-                            </select> --}}
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr class="text-dark" style="text-align:center">
+                                        <th>Module</th>
+                                        <th>Participant</th>
+                                        <th>Plan prév</th>
+                                        <th>Budget</th>
+                                        <th>Ecart</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="text-align: center">
+                                        <td>Exel</td>
+                                        <td>0</td>
+                                        <td>
+                                            <input type="text" class="form-control" >
+                                        </td>
+                                        
+                                        <td>
+                                            <input type="text" class="form-control" >
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" >
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                       
                 </div>
                 
-                <table class="table table-hover " style="wifth:600px" id="example" 
+              </div>      
+        </div>
+        <div class="col-md-12 mt-3">
+            <h3 style="font-size: 16px;">Les demandes :</h3>
+            <table class="table table-hover " style="wifth:600px" id="example" 
                 
                 
                 {{-- data-toolbar=".toolbar" --}}
@@ -108,7 +141,7 @@
                 data-reorderable-columns="true"
                 >
                     <thead>
-                        <tr style="background: rgb(240, 237, 237);text-align:center">
+                        <tr >
                             <th>IM</th>
                             <th>Nom </th>
                             
@@ -120,6 +153,8 @@
                             <th>Organisme</th>
                             <th>Priorité</th>
                             <th>N+1</th>
+                            <th>Cout</th>
+                            <th >Action</th>
                         </tr>
                     </thead>
                     
@@ -223,7 +258,7 @@
                                     @if ($be->stagiaire_id == $st->stagiaire_id)            
                                      &nbsp; {{$be->type}} <br>
                                     @endif    
-                            @endforeach
+                                @endforeach
                             </td>
                             <td>    
                                 @foreach($besoin as $be)   
@@ -240,12 +275,26 @@
                                 @endforeach
                                 
                             </td>
+                            <td>
+                                @foreach($besoin as $be)   
+                                    @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                        <input style="height: 30px" type="text" value="300.000 Ar" class="form-control">
+                                    @endif    
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($besoin as $be)   
+                                @if ($be->stagiaire_id == $st->stagiaire_id)            
+                                    <span class="btn btn-info text-light" style="border-radius: 100px;" ><i  class="fa-solid fa-check"></i></span><br>
+                                @endif    
+                                @endforeach
+                            </td>
+                            
                             @endforeach
                         </tr>
                        
                     </tbody>
                 </table>
-            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jqueryui@1.11.1/jquery-ui.min.js"></script>
@@ -255,104 +304,25 @@
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
-<script>
-
-    $(document).ready(function () {
-            var table = $('#example').DataTable({
-                colReorder: true,
-                select: true,
-                responsive:true,
-                language:{
-                    url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/fr-FR.json",
-                },
-            });
-            table.on( 'column-reorder', function ( e, settings, details ) {
-    var headerCell = $( table.column( details.to ).header() );
- 
-    headerCell.addClass( 'reordered' );
- 
-    setTimeout( function () {
-        headerCell.removeClass( 'reordered' );
-    }, 2000 );
-} );
-
-            $("#departement").on('change',function(e){
-                var val = $(this).text()
-                table.column( 3 )
-                .search( val ? $(this).val() : val )
-                .draw();
-                
-            });
-            $(function() {
-                $('#example').bootstrapTable()
-            })  
-            $('a.toggle-vis').on('click', function (e) {
-            e.preventDefault();
-    
-            // Get the column API object
-            var column = table.column($(this).attr('data-column'));
-    
-            // Toggle the visibility
-            column.visible(!column.visible());
-        });
-            // $("#service").each(function(i){
-            //         var label = $('<p style="color: gray;margin-top:4px">Service:</p>'+'&nbsp;').appendTo($(this))
-            //         var select = $(' <select class="form-control" style="width:300px;height:30px;font-size:12px"><option value=""></option></select>')
-	        //         .appendTo( $(this) )
-            //         table.column( 4 ).data().unique().each( function ( d, j ) {  
-			// 		select.append( '<option value="'+d+'">'+d+'</option>' );
-		    //         } );
-
-            //     })
-        // new $.fn.dataTable.FixedHeader(table);
-        // $("#example #mahafaly ").each( function ( i ) {
-		
-		// if ($(this).text() !== '') {
-	        // var isStatusColumn = (($(this).text() == 'Status') ? true : false);
-			// var select = $('<select class="form-control"><option value=""></option></select>')
-	        //     .appendTo( $(this).empty() )
-	        //     .on( 'change', function () {
-	        //         var val = $(this).val();
-			// 		var test = val.replace(/ /g,"")
-            //         // alert(test)
-	        //         table.column( 3 )
-	        //             .search( test ? $(this).val() : test )
-	        //             .draw();
-	        //     } );
-	 		
-			// // Get the Status values a specific way since the status is a anchor/image
-			// if (isStatusColumn) {
-			// 	var statusItems = [];
-				
-            //     /* ### IS THERE A BETTER/SIMPLER WAY TO GET A UNIQUE ARRAY OF <TD> data-filter ATTRIBUTES? ### */
-			// 	table.column( i ).nodes().to$().each( function(d, j){
-			// 		var thisStatus = $(j).attr("data-filter");
-			// 		if($.inArray(thisStatus, statusItems) === -1) statusItems.push(thisStatus);
-			// 	} );
-				
-			// 	statusItems.sort();
-								
-			// 	$.each( statusItems, function(i, item){
-			// 	    select.append( '<option value="'+item+'">'+item+'</option>' );
-			// 	});
-
-			// }
-            // All other non-Status columns (like the example)
-			
-	// 			table.column( 3 ).data().unique().sort().each( function ( d, j ) {  
-	// 				select.append( '<option value="'+d+'">'+d+'</option>' );
-	// 	        } );	
-			
-	        
-	// 	}
-    // } );
-  
+    <script>
+        $(document).ready(function () {
+                    var table = $('#example').DataTable({
+                        colReorder: true,
+                        select: true,
+                        responsive:true,
+                        language:{
+                            url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/fr-FR.json",
+                        },
+                    });
+                    table.on( 'column-reorder', function ( e, settings, details ) {
+                        var headerCell = $( table.column( details.to ).header() );
+                    
+                        headerCell.addClass( 'reordered' );
+                    
+                        setTimeout( function () {
+                            headerCell.removeClass( 'reordered' );
+                        }, 2000 );
+                    } );
     });
-    
-//     $(function() {
-//     $('#example').bootstrapTable()
-//   })  
-    
-
-</script>
+    </script>
 @endsection

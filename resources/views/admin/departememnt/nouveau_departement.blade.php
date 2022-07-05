@@ -111,13 +111,13 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
             <li class="nav-item active">
-                <a href="#departements" class="nav-link active" data-toggle="tab">Départements</a>
+                <a href="#departements" class="nav-link active" data-bs-toggle="tab">Départements</a>
             </li>
             <li class="nav-item">
-                <a href="#services" class="nav-link" data-toggle="tab">Services</a>
+                <a href="#services" class="nav-link" data-bs-toggle="tab">Services</a>
             </li>
             <li class="nav-item">
-                <a href="#branches" class="nav-link" data-toggle="tab">Branches</a>
+                <a href="#branches" class="nav-link" data-bs-toggle="tab">Branches</a>
             </li>
         </ul>
 
