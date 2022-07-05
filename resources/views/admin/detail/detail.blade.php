@@ -172,10 +172,10 @@
                 <th><i class="fa fa-clock"></i>&nbsp;Heure fin </th>
                 <th>
                     @if ($type_formation_id == 1)
-                        <i class="fa fa-user"></i>&nbsp;Formateur 
+                        <i class="fa fa-user"></i>&nbsp;Formateur
                     @endif
                     @if ($type_formation_id == 2)
-                        <i class="fa fa-home"></i>&nbsp;Ville 
+                        <i class="fa fa-home"></i>&nbsp;Ville
                     @endif
                 </th>
                 <th><i class="fa fa-map-marker-alt"></i>&nbsp;Salle de formation</th>
@@ -258,10 +258,10 @@
                     <input type="hidden" name="ville_lieu" id="ville_lieu">
                 </td>
             </tr>
-            
+
         </tbody>
         @endcanany
-        
+
     </table>
     @canany(['isCFP'])
     <div class="enregistrer">
@@ -342,7 +342,7 @@
                                 id="dataTables-example">
                                 <thead style="border-bottom: 1px solid black; line-height: 20px">
                                     <td>Séance</td>
-                                    @canany(['isReferent', 'isManager'])
+                                    @canany(['isReferent', 'isManager', 'isChefDeService'])
                                         <td>CFP</td>
                                     @endcanany
                                     <td>Module</td>
@@ -363,7 +363,7 @@
                                     @foreach ($datas as $d)
                                         <tr>
                                             <td>{{ $i }}</td>
-                                            @canany(['isReferent', 'isManager'])
+                                            @canany(['isReferent', 'isManager','isChefDeService'])
                                                 <td>{{ $d->nom_cfp }}</td>
                                             @endcanany
                                             <td>{{ $d->nom_module }}</td>

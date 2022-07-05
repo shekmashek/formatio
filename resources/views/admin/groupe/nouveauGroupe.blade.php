@@ -61,7 +61,7 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        @canany(['isManager', 'isReferent', 'isSuperAdmin', 'isAdmin'])
+                                        @canany(['isManager','isChefDeService', 'isReferent', 'isSuperAdmin', 'isAdmin'])
                                         <div class="row">
                                             <div class="col">
                                                 <h5 class="card-title">

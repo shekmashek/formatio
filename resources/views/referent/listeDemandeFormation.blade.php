@@ -174,12 +174,12 @@
                                                 <div class="float-start">
                                                     <p>Nombre des demande traité par les N+</p>
                                                 </div>
-                                                <div class="float-end">                                                  
+                                                <div class="float-end">
                                                     @foreach ($besoinV_count as $coV)
                                                         @if($coV->id == $p->id)
                                                             <p><span > {{ $coV->besoins_count }}</span></p>
                                                         @endif
-                                                    @endforeach   
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
@@ -201,7 +201,7 @@
             </div>
         @endcanany
 
-        @can('isManager')
+        @canany('isManager','isChefDeService')
         <div class="row">
             <div class="col">
                 <h3 class="lead">Liste de demande de Formation</h3>
@@ -316,6 +316,6 @@
                 </div>
             </div>
         </div>
-    @endcan
+    @endcanany
 </div>
 @endsection

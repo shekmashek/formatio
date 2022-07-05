@@ -194,7 +194,7 @@
                                                             </button>
                                                         <div class="dropdown-menu">
                                                             <li style="font-size:15px"><a href="{{route('profile_stagiaire',$part->stagiaire_id)}}" class="voir" title="Voir Profile"><i class="fa fa-eye" aria-hidden="true" style="font-size:15px" ></i>&nbsp;Profile</a></li>
-                                                                    @canany(['isReferent','isManager'])
+                                                                    @canany(['isReferent','isManager','isChefDeService','isChefDeService'])
                                                             <li style="font-size:15px"><a href=""   class=" modifier" title="Modifier" id="{{$part->stagiaire_id}}" data-toggle="modal" data-target="#myModal_{{$part->stagiaire_id}}"><i class="fa fa-pencil fa-xs" aria-hidden="true" style="font-size:15px"></i>&nbsp;Modifier</a></li>
                                                             <li style="font-size:15px"><a href="" data-toggle="modal" data-target="#exampleModal_{{$part->stagiaire_id}}"><i class="fa fa-trash-o" aria-hidden="true" style="font-size:15px"></i>&nbsp;Supprimer</a></li>
                                                                     @endcanany

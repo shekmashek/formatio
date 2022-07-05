@@ -102,7 +102,7 @@
                                     </div>
                                     <div  style="border-bottom: solid 1px #e8dfe5;">
                                      <a href="{{route('editer_nom_manager',$id_chef->id)}}" >
-                                     <p class="p-1 m-0" id="nom" style="font-size: 12px;"><i class='bx bx-user' ></i>&nbsp; NOM<span style="float: right;">{{$id_chef->nom_chef}} {{$id_chef->prenom_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" id="nom" style="font-size: 12px;"><i class='bx bx-user' ></i>&nbsp; NOM<span style="float: right;">{{$id_chef->nom_emp}} {{$id_chef->prenom_emp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p></a>
 
@@ -140,14 +140,14 @@
 
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href="{{route('editer_mail_manager',$id_chef->id)}}" >
-                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-envelope' style='' ></i>&nbsp;ADRESSE E-MAIL<span style="float: right;">{{$id_chef->mail_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-envelope' style='' ></i>&nbsp;ADRESSE E-MAIL<span style="float: right;">{{$id_chef->email_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                          </p>
                                              </a>
                                          </div>
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href=" {{route('editer_phone_manager',$id_chef->id)}}" >
-                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone' style='' ></i>&nbsp;TELEPHONE<span style="float: right;">{{$id_chef->telephone_chef}}&nbsp;<i class="fas fa-angle-right"></i> </span>
+                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-phone' style='' ></i>&nbsp;TELEPHONE<span style="float: right;">{{$id_chef->telephone_emp}}&nbsp;<i class="fas fa-angle-right"></i> </span>
 
                                          </p>
                                              </a>
@@ -155,7 +155,7 @@
 
                                          <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                              <a href="{{route('editer_cin_manager',$id_chef->id)}} " >
-                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bxs-user-badge' style='color:rgba(0,0,0,0.49)'  ></i>&nbsp;CIN<span style="float: right;">{{$id_chef->cin_chef}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                         <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bxs-user-badge' style='color:rgba(0,0,0,0.49)'  ></i>&nbsp;CIN<span style="float: right;">{{$id_chef->cin_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
                                          </p>
                                              </a>
                                          </div>
@@ -171,7 +171,7 @@
 
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
 
-                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-id-card'></i>&nbsp;Matricule<span style="float: right;">{{$id_chef->matricule}}&nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-id-card'></i>&nbsp;Matricule<span style="float: right;">{{$id_chef->matricule_emp}}&nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p>
 
@@ -179,7 +179,7 @@
 
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                          <a href="{{route('editer_fonction_manager',$id_chef->id)}}  " >
-                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-list-minus'  ></i>&nbsp;Fonction<span style="float: right;">{{$id_chef->fonction_chef}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                     <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-list-minus'  ></i>&nbsp;Fonction<span style="float: right;">{{$id_chef->fonction_emp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                      </p>
                                          </a>
@@ -187,7 +187,7 @@
                                      </div>
                                      <div style="border-bottom: solid 1px #e8dfe5;" class="hover">
                                         {{-- <a href="{{route('editer_niveau',$id_chef->id)}}  " > --}}
-                                    <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-building'  ></i>&nbsp;Entreprise<span style="float: right;">{{$id_chef->nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
+                                    <p class="p-1 m-0" style="font-size: 12px;"><i class='bx bx-building'  ></i>&nbsp;Entreprise<span style="float: right;">{{$nom_etp}} &nbsp;<i class="fas fa-angle-right"></i></span>
 
                                     </p>
                                         </a>
