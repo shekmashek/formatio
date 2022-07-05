@@ -11,6 +11,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
 
+
+:root {
+            --purple: #8c14fc;
+            --color-event: #f5f5f5;
+        }
+
+        #detail_offcanvas::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3%;
+            height: 100%;
+            margin-right: 10px;
+            background-color: var(--color-event);
+            opacity: 0.7;
+        }
+
+        div#offcanvas_body::-webkit-scrollbar-thumb {
+            background-color: var(--color-event);
+            border-radius: 5px;
+            visibility: hidden;
+        }
+        div#offcanvas_body::-webkit-scrollbar {
+           width: 0.3rem;
+        }
+
         .fc-list-day-text {
             font-weight: bold;
         }
@@ -21,20 +48,20 @@
 
         .fc-button {
             background-color: #faf9f900!important;
-            border-color: #8c14fc!important;
-            color: #8c14fc!important;
+            border-color: var(--purple)!important;
+            color: var(--purple)!important;
         }
         .fc-button:hover {
             background-color: rgba(132, 53, 196, 0.137)!important;
-            border-color: #8c14fc!important;
-            color: #8c14fc!important;
+            border-color: var(--purple)!important;
+            color: var(--purple)!important;
             font-weight: bold!important;
         }
 
         .fc-button-active {
             background-color: #8c14fc0e!important;
-            border-color: #8c14fc!important;
-            color: #8c14fc!important;
+            border-color: var(--purple)!important;
+            color: var(--purple)!important;
             font-weight: bold!important;
         }
 
@@ -48,8 +75,8 @@
 
         .fc-prev-button, .fc-next-button {
             border: none!important;
+            border-radius: 50px!important;
         }
-        
         .tooltip {
             border-radius: 5px!important;
         }
@@ -59,7 +86,7 @@
         
         .tooltip[data-popper-placement^="top"]  {
             background: rgb(245, 245, 245)!important;
-            border: 1px solid #a537fd;
+            border: 1px solid var(--purple);
             margin-bottom: 0.5rem!important;
         }
 
@@ -105,9 +132,21 @@
         }
 
         .background_purple {
-            background-color: #9958cf5e!important;
-            color: #6c1deb!important;
+            background-color: #b467f35e!important;
+            color: var(--purple)!important;
             padding: 0.5rem 1rem!important;
+        }
+
+        .hover_purple:hover {
+            color:var(--purple)!important;
+        }
+
+        .background_event {
+            background-color: var(--event_background)!important;
+        }
+
+        .color_event_hover:hover .bx{
+            color: var(--color-event)!important;
         }
 
         .popover {
@@ -124,6 +163,14 @@
 
         .right_-10 {
             right: -10%!important;
+        }
+
+        .divider {
+            width: 80%;
+            margin: 0 auto;
+            border-radius: 3px;
+            height: 3px;
+            background-color: var(--color-event);
         }
 
 
@@ -174,7 +221,7 @@
                 <h5 id="event_title"></h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
-              <div class="offcanvas-body">
+              <div class="offcanvas-body" id="offcanvas_body">
                 <div class="input-group flex-nowrap mb-4">
                     <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-briefcase text-secondary'></i></span>
                     <span type="text" id="event_project"
@@ -216,7 +263,7 @@
                     placeholder="OF" aria-label="OF" 
                     aria-describedby="basic-addon1">
 
-                    <span type="text" id="event_formateur" class="form-control border-0 border-bottom" 
+                    <span type="text" id="event_formateur" class="form-control border-0 border-bottom mt-1 hover_purple" 
                         aria-label="Formateur" 
                         aria-describedby="basic-addon1">
                     </span>
@@ -413,6 +460,10 @@
                     // console.log the description of events when clicking on them
                     eventClick : function(info) {
 
+                         // COLORS
+                document.documentElement.style.setProperty('--color-event', info.event.backgroundColor);
+                console.log(info.event.backgroundColor);
+
                         var duree_formation = 0;
                         var diff = '';
                         events.forEach(all_event => {
@@ -508,7 +559,7 @@
                         }
 
                         title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
-                        var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" target = "_blank">'+projet+'</a>';
+                        var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+'</a>';
                         projet_link = projet_link.replace("groupe_id", groupe.id);
                         projet_link = projet_link.replace("type_formation_id", info.event.extendedProps.type_formation.id);
                         projet_offcanvas.innerHTML = projet_link;
@@ -545,7 +596,7 @@
 
                         // Lien du formateur
                         var formateur_id = info.event.extendedProps.formateur_obj.id;
-                        var formateur_link = '<a href="{{url("profile_formateur/:?")}}" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
+                        var formateur_link = '<a href="{{url("profile_formateur/:?")}}" class="hover_purple" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
                         formateur_link = formateur_link.replace(":?", formateur_id);
                         formateur_offcanvas.innerHTML = formateur_link;
 

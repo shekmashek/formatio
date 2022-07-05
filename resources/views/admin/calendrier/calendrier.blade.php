@@ -11,6 +11,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
 
+        :root {
+            --purple: #8c14fc;
+            --color-event: #f5f5f5;
+        }
+
+        #detail_offcanvas::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3%;
+            height: 100%;
+            margin-right: 10px;
+            background-color: var(--color-event);
+            opacity: 0.7;
+        }
+
+        div#offcanvas_body::-webkit-scrollbar-thumb {
+            background-color: var(--color-event);
+            border-radius: 5px;
+            visibility: hidden;
+        }
+        div#offcanvas_body::-webkit-scrollbar {
+           width: 0.3rem;
+        }
+
         .fc-list-day-text {
             font-weight: bold;
         }
@@ -21,21 +47,20 @@
 
         .fc-button {
             background-color: #faf9f900!important;
-            border-color: #8c14fc!important;
-            color: #8c14fc!important;
-            transition: 0.3s;
+            border-color: var(--purple)!important;
+            color: var(--purple)!important;
         }
         .fc-button:hover {
             background-color: rgba(132, 53, 196, 0.137)!important;
-            border-color: #8c14fc!important;
-            color: #8c14fc!important;
-            font-weight: bolder!important;
+            border-color: var(--purple)!important;
+            color: var(--purple)!important;
+            font-weight: bold!important;
         }
 
         .fc-button-active {
             background-color: #8c14fc0e!important;
-            border-color: #8c14fc!important;
-            color: #8c14fc!important;
+            border-color: var(--purple)!important;
+            color: var(--purple)!important;
             font-weight: bold!important;
         }
 
@@ -49,7 +74,6 @@
 
         .fc-prev-button, .fc-next-button {
             border: none!important;
-            border-radius: 25px!important;
         }
         
         .tooltip {
@@ -61,7 +85,7 @@
         
         .tooltip[data-popper-placement^="top"]  {
             background: rgb(245, 245, 245)!important;
-            border: 1px solid #a537fd;
+            border: 1px solid var(--purple);
             margin-bottom: 0.5rem!important;
         }
 
@@ -107,9 +131,21 @@
         }
 
         .background_purple {
-            background-color: #9958cf5e!important;
-            color: #6c1deb!important;
+            background-color: #b467f35e!important;
+            color: var(--purple)!important;
             padding: 0.5rem 1rem!important;
+        }
+
+        .hover_purple:hover {
+            color:var(--purple)!important;
+        }
+
+        .background_event {
+            background-color: var(--event_background)!important;
+        }
+
+        .color_event_hover:hover .bx{
+            color: var(--color-event)!important;
         }
 
         .popover {
@@ -126,6 +162,14 @@
 
         .right_-10 {
             right: -10%!important;
+        }
+
+        .divider {
+            width: 80%;
+            margin: 0 auto;
+            border-radius: 3px;
+            height: 3px;
+            background-color: var(--color-event);
         }
 
 
@@ -165,19 +209,17 @@
                 <div id='planning'></div>
             </div>
 
-            {{-- <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#detail_offcanvas" role="button"
-            aria-controls="offcanvasWithBothOptions">
-                Link with href
-            </a> --}}
-
             <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1" 
              data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
-              <div class="offcanvas-header">
-                <h5 id="event_title"></h5>
+              <div class="offcanvas-header" id="event_details_head">
+                <h5 id="event_title" ></h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
-              <div class="offcanvas-body">
-                <div class="input-group flex-nowrap mb-4">
+
+              <div class="mb-1 divider"></div>
+
+              <div class="offcanvas-body" id="offcanvas_body">
+                <div class="input-group flex-nowrap mb-4 ">
                     <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-briefcase text-secondary'></i></span>
                     <span type="text" id="event_project"
                     class="form-control mt-1 border-0 bg-light"  
@@ -186,19 +228,17 @@
 
 
                     <input type="text" id="event_type_formation"
-                    class="form-control border-0 background_purple fw-bolder rounded" 
+                    class="form-control border-0 fw-bolder text-center rounded background_purple" 
                     placeholder="Type de formation" 
                     aria-label="type_formation" aria-describedby="basic-addon1" readonly>
                 </div>
 
-                <div class="input-group mb-4">
+                <div class="input-group mb-4 ">
                     <span class="input-group-text border-0 bg-light fs-2" id="addon-wrapping"><i class='bx bxs-buildings text-secondary'></i></span>
-                    {{-- <input type="text" id="event_entreprise" class="form-control border-0 border-bottom" 
-                    placeholder="Entreprise" aria-label="Entreprise" 
-                    aria-describedby="addon-wrapping"> --}}
+
                     <span id="event_entreprise" class="form-control border-0 border-bottom" ></span>
                   </div>
-                <div class="input-group mb-4" id="event_sessions">
+                <div class="input-group mb-4 " id="event_sessions">
                     <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-calendar-event text-secondary' ></i></span>
                     <input type="text" id="event_nbr_session" 
                     class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
@@ -206,26 +246,26 @@
                     aria-describedby="basic-addon1">
 
                 </div>
-                <div class="input-group mb-4">
+                <div class="input-group mb-4 ">
                     <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-map text-secondary' ></i></span>
                     <input type="text" id="event_lieu" class="form-control border-0 border-bottom" 
                     placeholder="lieu" aria-label="Place" 
                     aria-describedby="basic-addon1">
                 </div>
-                <div class="input-group mb-4">
+                <div class="input-group mb-4 ">
                     <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-chalkboard text-secondary' ></i></span>
                     <input type="text" id="event_OF" class="form-control border-0 border-bottom" 
                     placeholder="OF" aria-label="OF" 
                     aria-describedby="basic-addon1">
 
-                    <span type="text" id="event_formateur" class="form-control border-0 border-bottom" 
+                    <span type="text" id="event_formateur" class="form-control border-0 border-bottom mt-1" 
                         aria-label="Formateur" 
                         aria-describedby="basic-addon1">
                     </span>
                 </div>
 
 
-                <div class="accordion mt-5 input-group" id="materiel_accordion_container">
+                <div class="accordion mt-5 input-group " id="materiel_accordion_container">
                     <label for="materiel_button">
                         <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-wrench text-secondary'></i></span>
                     </label>
@@ -251,7 +291,7 @@
                 </div>
 
 
-                <div class="accordion mt-5 input-group" id="accordion_container">
+                <div class="accordion mt-5 input-group " id="accordion_container">
                     <label for="container_button">
                         <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-group text-secondary' ></i></span>
                     </label>
@@ -279,58 +319,6 @@
 
         </div>
 
-        {{-- filtres --}}
-        {{-- <div class="filtrer mt-3">
-            <div class="row">
-                <div class="col">
-                    <p class="m-0">Filter votre Agenda</p>
-                </div>
-                <div class="col text-end">
-                    <i class="bx bx-x" role="button" onclick="afficherFiltre();"></i>
-                </div>
-                <hr class="mt-2">
-                <div class="col-12">
-                    <div class="">
-                        <div class="card-body">
-                            <button id="tout" class="btn btn-primary">Tout</button><br><br>
-                            <h5 >Filtre par module</h5><br>
-                            <div class="searchBoxMod">
-                                <input class="searchInputMod" type="text" id="nom_module"
-                                    placeholder="Nom du module...">
-                                <button class="searchButtonMod" id="recherche_module">
-                                    <i class="bx bx-search">
-                                    </i>
-                                </button>
-                            </div><br>
-                            <h5>Type de formation</h5>
-                            <select name="" id="type_formation" class="form-control">
-                                <option value="Intra entreprise">Intra entreprise</option>
-                                <option value="Inter entreprise">Inter entreprise</option>
-                            </select><br>
-                            <h5>Statut</h5>
-                            <select name="" id="liste_statut" class="form-control">
-                                @for ($i = 0;$i<count($statut);$i++)
-                                    <option value = "{{$statut[$i]->id}}">{{$statut[$i]->status}}</option>
-                                @endfor
-                            </select><br>
-                            <h5>Domaine</h5>
-                            <select name="" id="domaines" class="form-control">
-                                @for ($i = 0;$i<count($domaines);$i++)
-                                    <option value = "{{$domaines[$i]->id}}">{{$domaines[$i]->nom_domaine}}</option>
-                                @endfor
-                            </select><br>
-                            <h5>Thématique</h5>
-                            <select name="" id="formations" class="form-control">
-                                @for ($i = 0;$i<count($formations);$i++)
-                                    <option value = "{{$formations[$i]->id}}">{{$formations[$i]->nom_formation}}</option>
-                                @endfor
-                            </select><br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        {{-- end-filtres --}}
 
     </div>
 </body>
@@ -389,13 +377,6 @@
                         // info.el.style.backgroundColor = info.event.backgroundColor;
                         // info.el.classList.add('');
                     },
-                    eventRender: function(event, element)
-                    { 
-                        // element.find('.fc-event-title').append("<br/>" + event.description); 
-                        // element.css('font-weight', '500');
-                        // add the class bg-danger to the event element
-                        // element.find('.fc-daygrid-event').addClass('bg-danger'); 
-                    },
 
                     // show the description of events when hovering over them
                     eventMouseEnter : function(info) {
@@ -414,6 +395,16 @@
 
                     // console.log the description of events when clicking on them
                     eventClick : function(info) {
+
+                // COLORS
+                document.documentElement.style.setProperty('--color-event', info.event.backgroundColor);
+                console.log(info.event.backgroundColor);
+                // event_details_head.style.backgroundColor = info.event.backgroundColor;
+                // type_formation_offcanvas.style.backgroundColor = info.event.backgroundColor+'75';
+
+                // options for date formating
+                var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
 
                         var duree_formation = 0;
                         var diff = '';
@@ -463,10 +454,10 @@
                             });
                         });
 
-                        // options for date formating
-                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                       
 
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
+                        var event_details_head = document.getElementById('event_details_head');
                         var title_offcanvas = document.getElementById('event_title');
                         var projet_offcanvas = document.getElementById('event_project');
                         var type_formation_offcanvas = document.getElementById('event_type_formation');
@@ -495,27 +486,29 @@
                         var numero_session = info.event.extendedProps.numero_session + 1;
                         var type_formation = info.event.extendedProps.type_formation.type_formation;
 
-                        // console.log(info.event.extendedProps.type_formation.type_formation);
 
                         var groupe = info.event.extendedProps.groupe;
                         var sessions = info.event.extendedProps.groupe.detail;
                         var entreprises = info.event.extendedProps.entreprises;
                         
                         // console.log(entreprises.length);
-                        entreprise_offcanvas.value = '';
                         entreprise_offcanvas.innerHTML = '';
 
                         for (var i = 0; i < entreprises.length; i++) {
                             entreprise_offcanvas.innerHTML += entreprises[i].nom_etp + '<br>';
                         }
 
+                        
+
                         title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
-                        var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" target = "_blank">'+projet+'</a>';
+                        var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+'<i class=\'bx bx-link-external ms-1 align-middle\'></i></a>';
                         projet_link = projet_link.replace("groupe_id", groupe.id);
                         projet_link = projet_link.replace("type_formation_id", info.event.extendedProps.type_formation.id);
                         projet_offcanvas.innerHTML = projet_link;
 
                         type_formation_offcanvas.value = type_formation;
+                        
+
 
                         var nbr_session = sessions.length;
                         var session_offcanvas_html = '';
@@ -547,7 +540,7 @@
 
                         // Lien du formateur
                         var formateur_id = info.event.extendedProps.formateur_obj.id;
-                        var formateur_link = '<a href="{{url("profile_formateur/:?")}}" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
+                        var formateur_link = '<a href="{{url("profile_formateur/:?")}}" class="hover_purple" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
                         formateur_link = formateur_link.replace(":?", formateur_id);
                         formateur_offcanvas.innerHTML = formateur_link;
 
@@ -675,6 +668,7 @@
 
 
 
+                        
                         bsOffcanvas.show();
                         
 
