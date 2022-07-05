@@ -1575,12 +1575,4 @@ Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('ref
 
 
 
-Route::get('qr-code-g', function () {
-
-    \QrCode::size(500)
-            ->format('png')
-            ->generate('ItSolutionStuff.com', public_path('images/qrcode.png'));
-
-  return view('qrCode');
-
-});
+Route::get("qr_code/{id}", "SimpleQRcodeController@generate")->name('qr_code');

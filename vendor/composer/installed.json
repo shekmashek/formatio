@@ -337,6 +337,49 @@
             "install-path": "../brick/math"
         },
         {
+            "name": "calcinai/php-imagick",
+            "version": "v0.1.2",
+            "version_normalized": "0.1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calcinai/php-imagick.git",
+                "reference": "001530b19560b9862ffe78c3ae29ad5dc2549e6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calcinai/php-imagick/zipball/001530b19560b9862ffe78c3ae29ad5dc2549e6d",
+                "reference": "001530b19560b9862ffe78c3ae29ad5dc2549e6d",
+                "shasum": ""
+            },
+            "suggest": {
+                "ext-imagick": "Native extension"
+            },
+            "time": "2016-12-22T15:09:47+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Imagick": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Calcinai",
+                    "email": "michael@calcin.ai"
+                }
+            ],
+            "description": "PHP wrapper for command line ImageMagick utils compatible with PECL::Imagick",
+            "support": {
+                "issues": "https://github.com/calcinai/php-imagick/issues",
+                "source": "https://github.com/calcinai/php-imagick/tree/master"
+            },
+            "install-path": "../calcinai/php-imagick"
+        },
+        {
             "name": "chartisan/php",
             "version": "1.2.1",
             "version_normalized": "1.2.1.0",
@@ -2040,17 +2083,17 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.255.0",
-            "version_normalized": "0.255.0.0",
+            "version": "v0.256.0",
+            "version_normalized": "0.256.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "2b895ceb08eb106f65e975221e5d2e971cf7470e"
+                "reference": "122e51021eb19b53f831904918460671d1e7259d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/2b895ceb08eb106f65e975221e5d2e971cf7470e",
-                "reference": "2b895ceb08eb106f65e975221e5d2e971cf7470e",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/122e51021eb19b53f831904918460671d1e7259d",
+                "reference": "122e51021eb19b53f831904918460671d1e7259d",
                 "shasum": ""
             },
             "require": {
@@ -2059,7 +2102,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^5.7||^8.5.13"
             },
-            "time": "2022-06-27T01:30:11+00:00",
+            "time": "2022-07-04T01:10:37+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2081,7 +2124,7 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.255.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.256.0"
             },
             "install-path": "../google/apiclient-services"
         },
@@ -6707,17 +6750,17 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.5",
-            "version_normalized": "0.11.5.0",
+            "version": "v0.11.6",
+            "version_normalized": "0.11.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "c23686f9c48ca202710dbb967df8385a952a2daf"
+                "reference": "3f5b5f8aaa979fbd0d1783173f4c82ad529fe621"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/c23686f9c48ca202710dbb967df8385a952a2daf",
-                "reference": "c23686f9c48ca202710dbb967df8385a952a2daf",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/3f5b5f8aaa979fbd0d1783173f4c82ad529fe621",
+                "reference": "3f5b5f8aaa979fbd0d1783173f4c82ad529fe621",
                 "shasum": ""
             },
             "require": {
@@ -6740,7 +6783,7 @@
                 "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
                 "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history."
             },
-            "time": "2022-05-27T18:03:49+00:00",
+            "time": "2022-07-03T16:40:23+00:00",
             "bin": [
                 "bin/psysh"
             ],
@@ -6780,7 +6823,7 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.5"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.6"
             },
             "install-path": "../psy/psysh"
         },
