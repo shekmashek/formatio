@@ -54,7 +54,7 @@
 
     <!--Content starts-->
     <div class="content flex">
-        <p style="font-size: 30px">Formation.mg / <a href="/" style="text-decoration: none">revenir à l'acceuille</a>
+        <p style="font-size: 30px">Formation.mg / <a href="/" style="text-decoration: none">revenir à l'acceuil</a>
         </p>
     </div>
     <!--Content ends-->
