@@ -545,13 +545,15 @@ ul li a {
     padding: 0;
 }
 
-.card_profile .titre_card{
-    font-size: 0.8rem;
+.card_profile .titre_card_profil{
+    font-size: .8rem;
 }
 .card_profile .logout{
     font-size: .9rem;
     padding-top: 5px;
     padding-bottom: 5px;
+    position: relative;
+    bottom: 3px;
 }
 .card_profile .logout:hover{
     background-color: #6373811f;
