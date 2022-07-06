@@ -726,6 +726,98 @@
             
             calendar.render();
 
+            //This checks the browser in use and populates da var accordingly with the browser
+            var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
+                    // var mousewheelevt=(/Chrome/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
+                    
+                    console.log(mousewheelevt);
+
+
+                    //Prevents the scroll event for the windows so you cant scroll the window
+                    function preventDefault(e) {
+                        e = e || window.event;
+                        if (e.preventDefault)
+                            e.preventDefault();
+                        e.returnValue = false;  
+                    }       
+
+
+
+                    //I think this could be eliminated but in the examples i found used it  
+                    function wheel(e) {
+                        preventDefault(e);        
+                    }
+                    
+                    //adds the scroll event to the window       
+                    function disable_scroll(){
+                        if (document.attachEvent) //if IE (and Opera depending on user setting)
+                            document.attachEvent("on"+mousewheelevt, wheel);
+                        else if (document.addEventListener) //WC3 browsers
+                            document.addEventListener(mousewheelevt, wheel, false);                 
+                    }   
+
+                    //removes the scroll event to the window    
+                    function enable_scroll() 
+                    {
+                        if (document.removeEvent) //if IE (and Opera depending on user setting)
+                            document.removeEvent("on"+mousewheelevt, wheel);
+                        else if (document.removeEventListener) //WC3 browsers
+                            document.removeEventListener(mousewheelevt, wheel, false);  
+                    }           
+
+
+                    //binds the scroll event to the calendar's DIV you have made
+                    calendar.el.addEventListener(mousewheelevt, function(e){
+                            var evt = window.event || e; //window.event para Chrome e IE || 'e' para FF
+                            var delta;          
+                            delta = evt.detail ? evt.detail*(-120) : evt.wheelDelta;                    
+                            if(mousewheelevt === "DOMMouseScroll"){
+                                delta = evt.originalEvent.detail ? evt.originalEvent.detail*(-120) : evt.wheelDelta;
+                            }           
+
+                        if(delta > 0){  
+                                calendar.next()    
+                            }
+                            if(delta < 0){             
+                                calendar.prev();      
+                            }  
+
+                    });                   
+
+
+                    //hover event to disable or enable the window scroll
+                    calendar.el.addEventListener('mouseover', function() {
+                        disable_scroll();
+                        // console.log("mouseLeave");
+                    });
+                    calendar.el.addEventListener('mouseout', function() {
+                        enable_scroll();
+                        // console.log("mouseEnter");
+
+                    });
+
+                    // disable the scroll next and prev if the calendar view is timeGridWeek
+                    calendar.on('viewRender', function(view) {
+                        if(view.type === 'timeGridWeek') {
+                            disable_scroll();
+                        } else {
+                            enable_scroll();
+                        }
+                    });
+
+
+                    //binds to the calendar's div the mouseleave event      
+                    calendar.el.addEventListener("mouseleave", function() 
+                    {
+                        enable_scroll();
+                    });
+
+                    //binds to the calendar's div the mouseenter event   
+                    calendar.el.addEventListener("mouseenter", function() 
+                    {
+                        disable_scroll();
+                    });
+
         });
 </script>
 @endpush
