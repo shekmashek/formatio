@@ -493,7 +493,6 @@
 
                         var offcanvas_header = document.getElementById('event_header');
 
-
                         // STATUS DE LA FORMATION
                         var today = new Date();
 
