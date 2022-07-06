@@ -68,6 +68,7 @@ class DemandeDevisController extends Controller
             // dd($resp_etp);
             // dd($etp);
             // ($resp_cfp,$module,$resp_etp,$etp);
+            //envoi mail
            Mail::to("nicrah16@gmail.com ")->send(new demande_devisMail($resp_cfp, $module, $resp_etp, $etp));
             return redirect()->back()->with('message', 'Votre demande de devis a été bien envoyé!');
         }
