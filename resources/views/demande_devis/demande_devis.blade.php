@@ -13,9 +13,9 @@
         {{$detail}}
     </p>
     <p>
-        Référent principale de {{$etp->nom_etp}}<br>
+
         <p>
-            <strong>{{$resp_etp->nom_resp.' '.$resp_etp->prenom_resp}}</strong> responsable {{$resp_etp->fonction_resp}}<br>
+            Référent principale de {{$etp->nom_etp}}<br>
             Téléphone: {{$resp_etp->telephone_resp}}<br>
             E-mail : {{$resp_etp->email_resp}}
         </p>
