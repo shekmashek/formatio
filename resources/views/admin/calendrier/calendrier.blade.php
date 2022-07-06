@@ -174,6 +174,9 @@
             padding: 0.5rem 1rem!important;
         }
 
+        .hover_purple{
+            transition: 0.3s;
+        }
         .hover_purple:hover {
             color:var(--purple)!important;
         }
@@ -205,7 +208,6 @@
         .divider {
             width: 80%;
             margin: 0 auto;
-            border-radius: 3px;
             height: 3px;
             background-color: var(--color-event);
         }
@@ -251,10 +253,16 @@
              data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
               <div class="offcanvas-header" id="event_header">
                 <h5 id="event_title" ></h5>
+
+                <span class="input-group-text border-0 bg-light fs-2" id="event_to_pdf" 
+                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Télécharger en pdf">
+
+                </span>
+
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
 
-              <div class="mb-1 divider"></div>
+              <div class="mb-1 rounded-3 divider"></div>
 
               <div class="offcanvas-body" id="offcanvas_body">
                 <div class="input-group flex-nowrap mb-4 ">
@@ -515,6 +523,7 @@
 
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
                         var title_offcanvas = document.getElementById('event_title');
+                        var event_to_pdf = document.getElementById('event_to_pdf');
                         var projet_offcanvas = document.getElementById('event_project');
                         var type_formation_offcanvas = document.getElementById('event_type_formation');
                         var session_offcanvas = document.getElementById('event_sessions');
@@ -556,7 +565,8 @@
                             entreprise_offcanvas.innerHTML = entreprise_offcanvas_link;
                         }
 
-                        
+                        var event_to_pdf_link = '<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 btn"><i class="bx bxs-file-pdf text-danger fs-1"></i></a>'
+                        event_to_pdf.innerHTML = event_to_pdf_link.replace(":?", info.event.extendedProps.detail_id);
 
                         title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
                         var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+'<i class=\'bx bx-link-external ms-1 align-middle\'></i></a>';

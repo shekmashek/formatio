@@ -202,11 +202,14 @@
             right: -10%!important;
         }
 
+        .top_-20px {
+            top: -20px!important;
+        }
+
         .divider {
             width: 80%;
             margin: 0 auto;
-            border-radius: 3px;
-            height: 3px;
+            height: 5px;
             background-color: var(--color-event);
         }
 
@@ -256,9 +259,18 @@
              data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
               <div class="offcanvas-header" id="event_header">
                 <h5 id="event_title"></h5>
+                <span class="input-group-text border-0 bg-light fs-2" id="event_to_pdf" 
+                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Télécharger en pdf">
+
+                </span>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
+
+              
+              <div class="mb-1 rounded-3 divider"></div>
+
               <div class="offcanvas-body" id="offcanvas_body">
+                
                 <div class="input-group flex-nowrap mb-4">
                     <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-briefcase text-secondary'></i></span>
                     <span type="text" id="event_project"
@@ -421,12 +433,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script> --}}
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
 
@@ -567,6 +573,7 @@
 
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
                         var title_offcanvas = document.getElementById('event_title');
+                        var event_to_pdf = document.getElementById('event_to_pdf');
                         var projet_offcanvas = document.getElementById('event_project');
                         var type_formation_offcanvas = document.getElementById('event_type_formation');
                         var session_offcanvas = document.getElementById('event_sessions');
@@ -611,7 +618,8 @@
                         }
 
 
-                        
+                        var event_to_pdf_link = '<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 btn"><i class="bx bxs-file-pdf text-danger fs-1"></i></a>'
+                        event_to_pdf.innerHTML = event_to_pdf_link.replace(":?", info.event.extendedProps.detail_id);
 
                         title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
                         var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+'</a>';
