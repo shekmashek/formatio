@@ -3,7 +3,7 @@
 <p class="text_header m-0 mt-1">Modules</p>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
+{{-- <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}"> --}}
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlModules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
