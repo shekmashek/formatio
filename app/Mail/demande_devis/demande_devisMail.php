@@ -36,7 +36,7 @@ class demande_devisMail extends Mailable
                 'resp_etp' => $this->resp_etp,
                 'resp_cfp' => $this->resp_cfp,
                 'etp' => $this->etp,
-                'detail' => $this->detail;
+                'detail' => $this->detail
             ]);
     }
 }

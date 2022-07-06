@@ -10,6 +10,7 @@
     <p>
         Bonjour {{$resp_cfp->nom_resp_cfp." ".$resp_cfp->prenom_resp_cfp}}, <br>
         Je suis {{$resp_etp->nom_resp." ".$resp_etp->prenom_resp}} responsable de <strong>{{$etp->nom_etp}}</strong>, je souhaite vous demander un devis à propos du module <strong>{{$module->nom_module}}</strong> de la formation {{$module->nom_formation}} . <br>
+        {{$detail}}
     </p>
     <p>
         Référent principale de {{$etp->nom_etp}}<br>
