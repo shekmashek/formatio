@@ -1061,7 +1061,7 @@
                                 <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuProfil">
                                     <div class="card card_profile pt-3">
                                         <div class="card-title">
-                                            <div class="row px-3">
+                                            <div class="row px-3 mt-2">
                                                 <div class="col-7">
                                                     <span class="titre_card_profil"><img src="{{asset('img/logos_all/iconFormation.webp')}}" alt="logo_mini" title="logo formation.mg" width="30px" height="30px">Formation.mg</span>
                                                 </div>

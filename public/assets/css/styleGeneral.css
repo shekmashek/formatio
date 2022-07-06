@@ -539,19 +539,19 @@ ul li a {
 }
 
 .card_profile{
-    width:350px;
+    width:350px !important;
     height: auto;
     border: none;
-    padding: 0;
+    padding: 0 !important;
 }
 
 .card_profile .titre_card_profil{
     font-size: .8rem;
 }
 .card_profile .logout{
-    font-size: .9rem;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    font-size: .8rem !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
     position: relative;
     bottom: 3px;
 }
@@ -568,7 +568,7 @@ ul li a {
 }
 .card_profile .role_liste{
     background-color: #6373811f;
-    padding: 10px;
+    padding: 10px !important;
     font: .7rem !important;
 }
 .card_profile .card-body{
