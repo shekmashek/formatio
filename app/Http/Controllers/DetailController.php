@@ -61,29 +61,32 @@ class DetailController extends Controller
             $list_details = detail::where('cfp_id', $cfp_id)->get();
             
             // Group $list_details by groupe_id
-            $details = $list_details->groupBy('groupe_id');
+            $list_details->count() > 0 ? $details = $list_details->groupBy('groupe_id') : $details = [];
 
             // $details get all data but it is a multidimansionnal array.
             // We need to get each details as raveled_details (ref numpy.ravel() in python)
             // we don't use collapse() since we neet to add the $numeroè_session and the color
             // foreach group of event
             
-
-            foreach ($details as $key => $detail) {
-                $numero_session = 0;
-
-                // // generate a random color as another attribute
-                $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-                foreach ($detail as $key => $value) {
-                    $value->color = $detail->color;
-                    $value->numero_session = $numero_session;
-                    $numero_session += 1;
-                    $raveled_details[] = $value;
+            if ($details->count() > 0) {
+                foreach ($details as $key => $detail) {
+                    $numero_session = 0;
+    
+                    // generate a random color as another attribute
+                    $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                    foreach ($detail as $key => $value) {
+                        $value->color = $detail->color;
+                        $value->numero_session = $numero_session;
+                        $numero_session += 1;
+                        $raveled_details[] = $value;
+                    }
+                    
                 }
-               
-                
+
+            } else {
+                $raveled_details = [];
             }
-           
+            
             // the collapse() method give the same result as the foreach to get the details (ravel() method in numpy)   
             // $d = collect($details);
             // $s = $d->collapse();
@@ -148,27 +151,30 @@ class DetailController extends Controller
             $list_details = detail::where('formateur_id', $formateur_id)->get();
             
             // Group $list_details by groupe_id
-            $details = $list_details->groupBy('groupe_id');
+            $list_details->count() > 0 ? $details = $list_details->groupBy('groupe_id') : $details = [];
 
             // $details get all data but it is a multidimansionnal array.
             // We need to get each details as raveled_details (ref numpy.ravel() in python)
             // we don't use collapse() since we neet to add the $numeroè_session and the color
             // foreach group of event
             
-
-            foreach ($details as $key => $detail) {
-                $numero_session = 0;
-
-                // // generate a random color as another attribute
-                $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-                foreach ($detail as $key => $value) {
-                    $value->color = $detail->color;
-                    $value->numero_session = $numero_session;
-                    $numero_session += 1;
-                    $raveled_details[] = $value;
+            if ($details->count() > 0) {
+                foreach ($details as $key => $detail) {
+                    $numero_session = 0;
+    
+                    // // generate a random color as another attribute
+                    $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                    foreach ($detail as $key => $value) {
+                        $value->color = $detail->color;
+                        $value->numero_session = $numero_session;
+                        $numero_session += 1;
+                        $raveled_details[] = $value;
+                    }
+                    
                 }
-               
                 
+            } else {
+                $raveled_details = [];
             }
            
             // the collapse() method give the same result as the foreach to get the details (ravel() method in numpy)   
@@ -223,7 +229,7 @@ class DetailController extends Controller
 
         }
 
- 
+
 
         // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
         return view('admin.calendrier.calendrier',compact('events'));
@@ -255,11 +261,17 @@ class DetailController extends Controller
 
 
             // details['groupe_id'] -> groupe_entreprises['groupe_id'] -> groupe['id']
-            foreach ($groupe_etp as $key => $value) {
-                $details[] = detail::whereHas('groupe', function($query) use($value){
-                    $query->where('id', $value->groupe_id);
-                })->get();
-            
+
+            if ($groupe_etp->count() > 0) {
+                foreach ($groupe_etp as $key => $value) {
+                    $details[] = detail::whereHas('groupe', function($query) use($value){
+                        $query->where('id', $value->groupe_id);
+                    })->get();
+                
+                }
+
+            } else {
+                $details = [];
             }
 
             // dd($details);
@@ -267,22 +279,23 @@ class DetailController extends Controller
             // $details get all data but it is a multidimansionnal array.
             // We need to get each details as raveled_details (ref numpy.ravel() in python)
            
-
-            foreach ($details as $key => $detail) {
-                $numero_session = 0;
-                // generate a random color as another attribute
-                $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-                foreach ($detail as $key => $value) {
-                    $value->color = $detail->color;
-                    $value->numero_session = $numero_session;
-                    $numero_session += 1;
-                    $raveled_details[] = $value;
+            if ($details->count() > 0) {
+                foreach ($details as $key => $detail) {
+                    $numero_session = 0;
+                    // generate a random color as another attribute
+                    $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                    foreach ($detail as $key => $value) {
+                        $value->color = $detail->color;
+                        $value->numero_session = $numero_session;
+                        $numero_session += 1;
+                        $raveled_details[] = $value;
+                    }
+                        
                 }
                 
-                
+            } else {
+                $raveled_details = [];
             }
-
-
             
             // the collapse() method give the same result as the foreach to get the details (ravel() method in numpy)   
             // $d = collect($details);
@@ -337,20 +350,26 @@ class DetailController extends Controller
             // return( $events);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
-            foreach ($groupe_etp as $key => $value) {
-                $groupe_entreprises[] = array(
-                    'id' => $value->id,
-                    'groupe_id' => $value->groupe_id,
-                    'groupe' => $value->groupe,
-                    'entreprise' => $value->entreprise,
-                    'module' => $value->groupe->module,
-                    'projet' => $value->groupe->projet,
-                    'formation' => $value->groupe->module->formation,
-                );
+            if ($groupe_etp->count() > 0) {
+                foreach ($groupe_etp as $key => $value) {
+                    $groupe_entreprises[] = array(
+                        'id' => $value->id,
+                        'groupe_id' => $value->groupe_id,
+                        'groupe' => $value->groupe,
+                        'entreprise' => $value->entreprise,
+                        'module' => $value->groupe->module,
+                        'projet' => $value->groupe->projet,
+                        'formation' => $value->groupe->module->formation,
+                    );
+    
+                }
 
+            } else {
+                $groupe_entreprises = [];
             }
 
         }
+
         if (Gate::allows('isStagiaire')) {
             // dd('stagiaire');
             // getting the stagiaire_id of the connected user
@@ -365,30 +384,37 @@ class DetailController extends Controller
 
 
             // details['groupe_id'] -> groupe_entreprises['groupe_id'] -> groupe['id']
-            foreach ($participant_groupe as $key => $value) {
-                $details[] = detail::whereHas('groupe', function($query) use($value){
-                    $query->where('id', $value->groupe_id);
-                })->get();
-            
+            if ($participant_groupe->count() > 0) {
+                foreach ($participant_groupe as $key => $value) {
+                    $details[] = detail::whereHas('groupe', function($query) use($value){
+                        $query->where('id', $value->groupe_id);
+                    })->get();
+                
+                }
             }
-
+            else {
+                $details = null;
+            }
 
             // $details get all data but it is a multidimansionnal array.
             // We need to get each details as raveled_details (ref numpy.ravel() in python)
            
-
-            foreach ($details as $key => $detail) {
-                $numero_session = 0;
-                // generate a random color as another attribute
-                $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-                foreach ($detail as $key => $value) {
-                    $value->color = $detail->color;
-                    $value->numero_session = $numero_session;
-                    $numero_session += 1;
-                    $raveled_details[] = $value;
+            if ($details) {
+                foreach ($details as $key => $detail) {
+                    $numero_session = 0;
+                    // generate a random color as another attribute
+                    $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                    foreach ($detail as $key => $value) {
+                        $value->color = $detail->color;
+                        $value->numero_session = $numero_session;
+                        $numero_session += 1;
+                        $raveled_details[] = $value;
+                    }
+                    
+                    
                 }
-                
-                
+            } else {
+                $raveled_details = [];
             }
 
 
@@ -446,19 +472,23 @@ class DetailController extends Controller
             // return( $events);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
-            foreach ($participant_groupe as $key => $value) {
-                $groupe_entreprises[] = array(
-                    'id' => $value->id,
-                    'groupe_id' => $value->groupe_id,
-                    'groupe' => $value->groupe,
-                    'entreprise' => $value->stagiaire->entreprise,
-                    'module' => $value->groupe->module,
-                    'projet' => $value->groupe->projet,
-                    'formation' => $value->groupe->module->formation,
-                );
+            if($participant_groupe->count() > 0) {
+                foreach ($participant_groupe as $key => $value) {
+                    $groupe_entreprises[] = array(
+                        'id' => $value->id,
+                        'groupe_id' => $value->groupe_id,
+                        'groupe' => $value->groupe,
+                        'entreprise' => $value->stagiaire->entreprise,
+                        'module' => $value->groupe->module,
+                        'projet' => $value->groupe->projet,
+                        'formation' => $value->groupe->module->formation,
+                    );
+    
+                }
 
+            } else {
+                $groupe_entreprises = [];
             }
-
 
         }
 
