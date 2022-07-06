@@ -1524,3 +1524,7 @@ Route::get('fiche_technique_interne_pdf/{id}','ProjetInterneController@fiche_tec
 Route::get('faireEvaluationChaud_interne/{groupe}', 'ProjetInterneController@evaluation_a_chaud')->name('faireEvaluationChaud_interne');
 Route::post('createEvaluationChaud_interne/{groupe}', 'ProjetInterneController@insertion_evaluationChaud_interne')->name('createEvaluationChaud_interne');
 Route::get('resultat_evaluation_interne/{groupe_id}','ProjetInterneController@evaluation_chaud_pdf')->name('resultat_evaluation_interne');
+Route::post('/modifier_detail/{id}', 'ProjetInterneController@modifier_detail')->name('modifier_detail');
+Route::get('/supprimer_detail/{id?}', 'ProjetInterneController@supprimer_detail')->name('supprimer_detail');
+Route::get('supprimer_participant_groupe_interne', 'ProjetInterneController@supprimmer_stagiaire')->name('supprimer_participant_groupe_interne');
+Route::get('supprimer_ressource_interne', 'ProjetInterneController@supprimer_ressource')->name('supprimer_ressource_interne');

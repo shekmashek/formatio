@@ -478,8 +478,8 @@
                         <a href="{{ route('liste_projet') }}" class="retour_projet mt-4"><i
                                 class='bx bxs-chevron-left p-0' style="font-size: 2rem;"></i></a>
                         <i class='bx bxs-book-open me-2 ms-3' style="font-size: 2rem;color :#26a0da"></i>
-                        <span
-                            class="type_interne m-2 p-1 ps-2 pe-2" >Interne</span>
+                        <span style="background: #b32cb8; color: #ffffff; border-radius: 25px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;"
+                            class="m-2 p-1 ps-2 pe-2" >Interne</span>
                         <span class="modalite m-2 p-1 ps-2 pe-2"><i
                                 class='bx bxs-group mt-1 me-1'></i>{{ $modalite }}</span>
                         <div class="{{ $projet[0]->class_status_groupe }} m-2 mb-2 me-3">
@@ -508,6 +508,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 d-flex justify-content-end">
+                    @can('isReferent')
                         <div class="dropdown">
                             <a class="dropdown-toggle btn_modifier_statut" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
                                 aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
@@ -539,8 +540,9 @@
                                 </li>
                             </ul>
                         </div>
+                    @endcan
                     <div>
-                        <p><a href="#" class="pdf_download py-2" ><button class="btn"><i class='bx bxs-file-pdf'></i>&nbsp;&nbsp;&nbsp;PDF</button></a></p>
+                        <p><a href="{{ route('fiche_technique_interne_pdf', [$projet[0]->groupe_id]) }}" class="pdf_download py-2" ><button class="btn"><i class='bx bxs-file-pdf'></i>&nbsp;&nbsp;&nbsp;PDF</button></a></p>
                     </div>
                 </div>
 

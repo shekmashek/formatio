@@ -367,7 +367,7 @@
             var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
             $.ajax({
                 type: "GET"
-                , url: "{{route('supprimer_participant_groupe')}}"
+                , url: "{{route('supprimer_participant_groupe_interne')}}"
                 , data: {
                     Id: id,
                     groupe:groupe_id

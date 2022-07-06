@@ -145,12 +145,6 @@
                     html += '<i class="far fa-check-circle"></i>&nbsp;' + userData[i].description;
                     html += '</section>';
                     html += '</div>';
-
-                    html += '<div class="col-md-2">';
-                    html += '<section>';
-                    html += userData[i].demandeur;
-                    html += '</section>';
-                    html += '</div>';
                     
                     html += '<div class="col-md-2">';
                     html += '<section>';
@@ -189,7 +183,7 @@
         var groupe_id = @php echo $projet[0]->groupe_id; @endphp;
         $.ajax({
             type: "GET",
-            url: "{{ route('supprimer_ressource') }}",
+            url: "{{ route('supprimer_ressource_interne') }}",
             data: {
                 Id: id,
                 groupe: groupe_id

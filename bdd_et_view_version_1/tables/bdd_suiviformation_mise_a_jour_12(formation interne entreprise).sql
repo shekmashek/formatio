@@ -152,3 +152,9 @@ create table salle_formation_etp(
 );
 
 insert into salle_formation_etp(etp_id, salle_formation,ville) values(1, 'Salle 4','Tana');
+
+create table frais_annexe_etp(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  description text NOT NULL,
+  entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprise(id) ON DELETE CASCADE
+);

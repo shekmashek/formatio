@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PDF;
+
+use function Psy\info;
+
 class ProjetInterneController extends Controller
 {
     public function index(){
@@ -78,7 +81,12 @@ class ProjetInterneController extends Controller
         $competences = DB::select('select * from competence_a_evaluers_interne where module_id = ?',[$projet[0]->module_id]);
         $presence_detail = DB::select("select * from v_emargement_interne where groupe_id = ?", [$id]);
         $modalite = DB::select('select modalite from groupes_interne where id = ?',[$id])[0]->modalite;
-        $lieu_formation = DB::select('select projet_id,groupe_id,lieu from details where groupe_id = ? AND projet_id=? group by projet_id,groupe_id,lieu', [$projet[0]->groupe_id,$projet[0]->projet_id]);
+        $lieu_formation = DB::select('select projet_interne_id,groupe_interne_id,lieu from details_interne where groupe_interne_id = ? AND projet_interne_id=? group by projet_interne_id,groupe_interne_id,lieu', [$projet[0]->groupe_id,$projet[0]->projet_id]);
+        if(count($lieu_formation) > 0){
+            $lieu_formation = explode(',  ',$lieu_formation[0]->lieu);
+        }else{
+            $lieu_formation = ['-','-'];
+        }
         $salle_formation = DB::select('select * from salle_formation_etp where etp_id = ?',[$etp_id]);
         $ressource = DB::select('select * from ressources_interne where groupe_id =?',[$projet[0]->groupe_id]);
         $evaluation_apres = DB::select('select sum(note_apres) as somme from evaluation_stagiaire_interne where groupe_interne_id = ?',[$projet[0]->groupe_id])[0]->somme;
@@ -111,6 +119,19 @@ class ProjetInterneController extends Controller
             $stg = DB::select('select * from v_stagiaire_groupe_interne where groupe_id = ?',[$id_groupe]);
             return response()->json($stg);
         }
+    }
+
+    public function supprimmer_stagiaire(Request $request)
+    {
+        $id = $request->Id;
+        $groupe_id = $request->groupe;
+        DB::delete('delete from participant_groupe_interne where stagiaire_id = ? and groupe_interne_id = ?',[$id,$groupe_id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
     }
 
     public function getOneStagiaire(Request $request)
@@ -161,6 +182,41 @@ class ProjetInterneController extends Controller
         }
     }
 
+    public function modifier_detail(Request $request, $id)
+    {
+        //modifier les données
+        $lieu = $request->lieu;
+        $h_debut = $request->debut;
+        $h_fin = $request->fin;
+        $formateur = $request->formateur;
+        $date_detail = $request->date;
+        try{
+            if($lieu== null){
+                throw new Exception("Vous devez completer le champ lieu.");
+            }
+            if($formateur == null){
+                throw new Exception("Vous devez choisir le formateur.");
+            }
+            if($h_debut == null || $h_fin == null){
+                throw new Exception("Vous devez completer l'heure de la scéance.");
+            }
+            if($date_detail == null){
+                throw new Exception("Vous devez choisir le date.");
+            }
+            DB::update('update details_interne set formateur_interne_id = ?, date_detail = ? , h_debut = ? , h_fin = ? , lieu = ? where id = ?',[$formateur,$request->date,$h_debut,$h_fin,$lieu,$id]);
+           
+            return back();
+        }catch(Exception $e){
+            return back()->with('detail_error',$e->getMessage());
+        }
+    }
+
+    public function supprimer_detail(Request $request)
+    {
+        DB::delete('delete from details_interne where id = ?',[$request->id]);
+        return back();
+    }
+
     public function ajout_ressource(Request $request){
         $ressource = $request->ressource;
         $groupe_id = $request->groupe;
@@ -169,6 +225,19 @@ class ProjetInterneController extends Controller
         DB::insert('insert into ressources_interne(description,groupe_id,pris_en_charge,note) values(?,?,?,?)',[$ressource,$groupe_id,$pris_en_charge,$note]);
         $all_ressources = DB::select('select * from ressources_interne where groupe_id = ?',[$groupe_id]);
         return response()->json($all_ressources);
+    }
+
+    public function supprimer_ressource(Request $request)
+    {
+        $id = $request->Id;
+        $groupe_id = $request->groupe;
+        DB::delete('delete from ressources_interne where id = ? and groupe_id = ?',[$id,$groupe_id]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data deleted successfully',
+            ]
+        );
     }
 
     public function get_presence_stg(Request $request){

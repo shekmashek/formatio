@@ -65,10 +65,11 @@
                             <tr>
                                 <td class="text-start"><input type="hidden" value="{{ $stg->stagiaire_id }}" name="stagiaire[{{ $stg->stagiaire_id }}]">
                                     @if ($stg->photos == null)
-                                        <span class="me-2">{{ $stg->sans_photos }}</span>
+                                        <span class="me-2 p-2" style="border-radius: 50%; background-color:#b8368f; color: #fff">{{ $stg->sans_photos }}</span>
                                     @else
                                         <img src="{{ asset('images/employes/'.$stg->photos) }}" alt="" height="30px" width="30px" style="border-radius: 50%;">{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }} </div>
                                     @endif
+                                    &nbsp;{{ $stg->nom_stagiaire.' '.$stg->prenom_stagiaire }}
                                 </td>
                                 @for ($i = 0; $i < count($competences); $i++)
                                     @foreach ($evaluation_stg as $e_stg)

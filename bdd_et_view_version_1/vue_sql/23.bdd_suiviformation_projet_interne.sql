@@ -22,7 +22,7 @@ create or replace view v_detail_session_interne as
         f.nom_formateur,
         f.prenom_formateur,
         f.mail_formateur,
-        f.numero_formateur,
+        f.telephone_formateur,
         p.nom_projet,
         p.type_formation_id,
         p.entreprise_id,
@@ -33,8 +33,8 @@ create or replace view v_detail_session_interne as
         d.groupe_interne_id = g.id
     JOIN modules_interne m ON
         m.id = g.module_interne_id
-    JOIN formateurs f ON
-        f.id = d.formateur_interne_id
+    JOIN formateurs_interne f ON
+        f.formateur_id = d.formateur_interne_id
     JOIN projets_interne p ON
         d.projet_interne_id = p.id
     join type_formations tf

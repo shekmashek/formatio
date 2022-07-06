@@ -213,7 +213,7 @@ class SessionController extends Controller
                 }
 
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
-            $frais_annexe = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id]);
+            $frais_annexe = DB::select('select * from frais_annexe_etp where entreprise_id = ?',[$etp_id]);
 
            if(Gate::allows('isManager')) {
                 $dep = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->departement_entreprises_id;
@@ -678,10 +678,13 @@ class SessionController extends Controller
         if (Gate::allows('isReferentPrincipale')) {
             $etp_id = Responsable::where('user_id', $user_id)->value('entreprise_id');
         }
+        if (Gate::allows('isReferent')) {
+            $etp_id = Responsable::where('user_id', $user_id)->value('entreprise_id');
+        }
         if (Gate::allows('isManagerPrincipale')) {
             $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
         }
-        $frais = DB::select('select * from frais_annexes where entreprise_id = ?', [$etp_id]);
+        $frais = DB::select('select * from frais_annexe_etp where entreprise_id = ?', [$etp_id]);
         return response()->json(['devise'=>$devise,'frais'=>$frais]);
     }
     public function fiche(Request $request){

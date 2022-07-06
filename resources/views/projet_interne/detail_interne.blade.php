@@ -275,10 +275,10 @@
                                             <td>
                                                 @if ($d->photos == null)
                                                     <span class="m-0 p-2" height="50px" width="50px"
-                                                        style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                        style="border-radius: 50%; background-color:#b8368f;color:#fff;">{{ $d->sans_photos }}</span>&nbsp;{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @else
                                                     <img src="{{ asset('images/formateurs/' . $d->photos) }}" alt=""
-                                                        height="30px" width="30px" style="border-radius: 50%;">
+                                                        height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                                                     {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif
                                             </td>
@@ -312,7 +312,7 @@
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal"> Non </button>
                                                         <button type="button" class="btn btn-secondary"><a
-                                                                href="{{ route('destroy_detail', [$d->detail_id]) }}">Oui</a></button>
+                                                                href="{{ route('supprimer_detail', [$d->detail_id]) }}">Oui</a></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -323,10 +323,10 @@
                                                 <div class="modal-content p-3">
                                                     <div class="modal-title pt-3"
                                                         style="height: 50px; align-items: center;">
-                                                        <h5 class="text-center my-auto">Modifier detail</h5>
+                                                        <h5 class="text-center my-auto">Modifier une séances</h5>
                                                     </div>
                                                     <form class="btn-submit"
-                                                        action="{{ route('update_detail', [$d->detail_id]) }}"
+                                                        action="{{ route('modifier_detail', [$d->detail_id]) }}"
                                                         method="post">
                                                         @csrf
                                                         <input type="hidden" name="detail"
