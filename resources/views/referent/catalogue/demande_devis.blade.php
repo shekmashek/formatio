@@ -149,7 +149,7 @@
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="mail" class="col-sm-2 col-form-label">Merci d'ajouter tous les détails liés à votre démande:<sup>*</sup></label>
+            <label for="mail" class="col-sm-2 col-form-label">Merci d'ajouter tous les détails liés à votre demande:<sup>*</sup></label>
             <div class="col-sm-10">
                 <textarea name="details" id="details" class="form-control text_area_form_devis" required></textarea>
             </div>
