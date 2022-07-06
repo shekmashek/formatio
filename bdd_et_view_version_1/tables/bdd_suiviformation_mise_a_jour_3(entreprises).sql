@@ -15,6 +15,17 @@ INSERT INTO `secteurs` (`nom_secteur`) VALUES
 ('Multi Sectoriel'),
 ('Formation équité MPE');
 
+INSERT INTO `secteurs` (`nom_secteur`) VALUES ('Autres');
+
+CREATE TABLE `type_entreprise` (
+    `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `type_entreprise` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `type_entreprise` (`type_entreprise`) VALUES
+('entreprise'),
+('of');
+
 CREATE TABLE entreprises (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_etp varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -38,6 +49,15 @@ CREATE TABLE entreprises (
   url_logo varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE `entreprises` CHANGE `secteur_id` `secteur_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '8';
+
+
+
+ALTER TABLE entreprises
+    ADD slogan varchar(255) COLLATE utf8mb4_unicode_ci default null,
+    ADD presentation text COLLATE utf8mb4_unicode_ci default NULL,
+    ADD specialisation text COLLATE utf8mb4_unicode_ci default NULL,
+    ADD type_entreprise_id bigint(20) UNSIGNED default 1  REFERENCES type_entreprise(id);
 
 CREATE TABLE `departement_entreprises` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -73,9 +93,8 @@ CREATE TABLE employers (
   email_emp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone_emp varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   fonction_emp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  poste_emp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXX',
   service_id bigint(20) UNSIGNED,
-  branche_id bigint(20) UNSIGNED ,
+  branche_id bigint(20) UNSIGNED,
   genre_id bigint(20) unsigned DEFAULT 1  REFERENCES genre(id),
   departement_entreprises_id bigint(20) UNSIGNED,
   adresse_quartier varchar(255) COLLATE utf8mb4_unicode_ci  default NULL,

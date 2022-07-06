@@ -131,7 +131,7 @@ class NouveauCompteController extends Controller
                                     $user_id = User::where('email', $req->email_resp_cfp)->value('id');
                                     $this->new_compte->insert_CFP($data,$url_logo);
 
-                                    $cfp_id = $this->fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp])->id;
+                                    $cfp_id = $this->fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_cfp])->id;
                                     $this->new_compte->insert_resp_CFP($resp, $cfp_id, $user_id);
                                     DB::beginTransaction();
                                     try {
@@ -144,7 +144,7 @@ class NouveauCompteController extends Controller
                                     //============= save image
                                     // $this->img->store_image("entreprise", $data["logo_cfp"], $req->file('logo_cfp')->getContent());
                                     $fonct = new FonctionGenerique();
-                                    $cfp = $fonct->findWhereMulitOne("cfps", ["email"], [$req->email_resp_cfp]);
+                                    $cfp = $fonct->findWhereMulitOne("entreprises", ["email_etp"], [$req->email_resp_cfp]);
                                     //imager  resize
                                      $image = $req->file('logo_cfp');
 
@@ -162,7 +162,7 @@ class NouveauCompteController extends Controller
 
                                  $req->logo_cfp->move($destinationPath,$image_name);
  */
-                                   Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom));
+                                   Mail::to($req->email_resp_cfp)->send(new save_new_compte_cfp_Mail($req->nom_resp_cfp . ' ' . $req->prenom_resp_cfp, $req->email_resp_cfp, $cfp->nom_etp));
                                     // $req->logo_cfp->move(public_path('images/CFP'), $data["logo_cfp"]);  //save image cfp
 
                                     if (Gate::allows('isSuperAdminPrincipale')) {

@@ -23,5 +23,20 @@ copier le script create table employers dans bdd_suiviformation_mis_a_jour_3 : e
 copier le script dans bdd_suiviformation_view_employes
 recopier view v_stagiaire_entreprise dans bdd_suiviformation_view_1(view miasa + avis)
 
+--06Juillet
+alter table dans bdd_suiviformation_mis_a_jour_3(entreprises)
+INSERT INTO `secteurs` (`nom_secteur`) VALUES ('Autres'); dans  bdd_suiviformation_mis_a_jour_3(entreprises)
+changer default value 8 secteur_id dans entreprises : ALTER TABLE `entreprises` CHANGE `secteur_id` `secteur_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '8';
+create table type_entreprise dans bdd_suiviformation_mis_a_jour_3(entreprises)
+CREATE OR REPLACE VIEW CFPS dans bdd_suiviformation_mis_a_jour_1(table mere)
+CREATE OR REPLACE VIEW CFPS dans bdd_suiviformation_mis_a_jour_1(table mere)
+
+
+copier les alter ci-dessous
+
+ALTER TABLE `horaires` DROP cfp_id;
+ALTER TABLE `horaires` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `reseaux_sociaux` DROP cfp_id;
+ALTER TABLE `reseaux_sociaux` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
 
 

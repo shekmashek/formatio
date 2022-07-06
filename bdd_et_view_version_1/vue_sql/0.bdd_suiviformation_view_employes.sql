@@ -1,4 +1,7 @@
 -- Active: 1656588558198@@127.0.0.1@3306@bdd_suivi_formation_version_1.2
+CREATE OR REPLACE
+
+
 CREATE OR REPLACE VIEW v_departement_service_entreprise AS SELECT
      dep.id as departement_entreprise_id,
     serv.id as service_id,
