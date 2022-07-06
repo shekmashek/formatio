@@ -784,6 +784,14 @@ input:-webkit-autofill:active {
     position: relative;
     top: .4rem;
     margin-right: .3rem;
+    padding: 5px;
+}
+
+.icon_creer_admin:hover{
+    ext-decoration: none;
+    background: rgba(192, 192, 192, 0.171);
+    border-radius: 30px;
+    color: black;
 }
 
 .icon_plus{

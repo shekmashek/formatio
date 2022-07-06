@@ -747,7 +747,7 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div class="liste__formation__avis mb-3 d-flex flex-row justify-content-between">
                                         <div>
                                             <div class="Stars" style="--note: {{ $info->pourcentage }};">
@@ -829,6 +829,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- @if($info->jours_restant > 0)
+                                    <div class="col-1">
+                                        <span class="ribbon2"><span>Nouveau<br>J - {{$info->jours_restant}}</span></span>
+                                    </div>
+                                    @endif --}}
                                 </div>
                                 <div class="modal fade" id="listModal_{{$info->module_id}}" tabindex="-1"
                                     role="dialog" aria-labelledby="listModal" aria-hidden="true">

@@ -216,14 +216,14 @@
             </li>
             </li>
             @endcanany --}}
-            @canany(['isReferent','isReferentSimple','isManager'])
+            {{-- @canany(['isReferent','isReferentSimple','isManager'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex projet nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
             </li>
-            @endcanany
+            @endcanany --}}
             @canany(['isReferent','isReferentSimple','isManager','isStagiaire'])
             <li>
                 <a href="{{route('formations')}}" class="d-flex nav_linke">
@@ -770,17 +770,17 @@
                                         listes des notifications
                                     </ul>
                                 </div> --}}
-                                <div class="btn_racourcis dropdown prevent_affichage2 .navigation_module" >
+                                <div class="btn_racourcis dropdown prevent_affichage2" >
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-message-add bx-burst-hover mb-2 mt-1'></i>
+                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
                                         <span class="badge_invitation">9</span>
                                     </a>
                                     <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
                                         <div class="m-4 mt-2" role="tabpanel">
-                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab" style="font-size: 10px;">
+                                            <ul class="nav nav-tabs d-flex flex-row" id="myTab" style="font-size: 10px;">
                                                 <li class="nav-item ">
                                                     <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
                                                 </li>
@@ -827,7 +827,7 @@
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
                                 </div>
-                                <div class="btn_racourcis dropdown prevent_affichage .navigation_module" >
+                                <div class="btn_racourcis dropdown prevent_affichage " >
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     {{-- <a href="#" class="dropdown-toggle" role="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
@@ -839,11 +839,11 @@
                                         listes des notifications
                                     </ul> --}}
                                 </div>
-                                <div class="btn_racourcis dropdown prevent_affichage2 .navigation_module" >
+                                <div class="btn_racourcis dropdown prevent_affichage2" >
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-message-add bx-burst-hover mb-2 mt-1'></i>
+                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
                                         <span class="badge_invitation"></span>
                                     </a>
@@ -926,7 +926,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog icon_creer_admin'></i></a>
+                                    <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog bx-spin-hover icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuParametre">
                                         <li id="parametre">
                                             <a class="dropdown-item" href="{{route('aff_parametre_referent')}}">
@@ -994,7 +994,7 @@
                                         </li>
                                     </ul>
                                     @canany(['isCFPPrincipale','isPremium'])
-                                        <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog icon_creer_admin'></i></a>
+                                        <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog bx-spin-hover icon_creer_admin'></i></a>
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuParametre">
                                             <li id="parametre">
                                                 <a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}">
@@ -1014,7 +1014,7 @@
                                         </ul>
                                     @endcanany
                                 @endcan
-                                <a class="dropdown-toggle p-1" id="dropdownMenuSuite" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-grid-alt icon_creer_admin'></i></a>
+                                <a class="dropdown-toggle p-1" id="dropdownMenuSuite" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-grid-alt bx-burst-hover icon_creer_admin'></i></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuSuite">
                                     <div class="card card_suite">
                                         <div class="card-body py-0">
