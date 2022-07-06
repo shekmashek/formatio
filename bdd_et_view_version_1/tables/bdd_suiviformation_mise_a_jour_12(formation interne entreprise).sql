@@ -158,3 +158,4 @@ create table frais_annexe_etp(
   description text NOT NULL,
   entreprise_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprise(id) ON DELETE CASCADE
 );
+

@@ -132,4 +132,12 @@ WHERE
 
 select count(id) as nb_detail,sum(TIME_TO_SEC(h_fin) - TIME_TO_SEC(h_debut)) as difference from details where groupe_id = 27;
 
-select max(id)+1
+
+create table test_json(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  personne varchar(50) NOT NULL,
+  adresse json
+);
+insert into test_json(id, personne, adresse) values(1,'Vonjy','{"lot":"LOT III 3 D","Ville":"Imeritsiatosika","Province":"Analamanga"}');
+
+select personne,JSON_VALUE(adresse,'$.lot') as lot,JSON_VALUE(adresse,'$.Ville') as ville from test_json;
