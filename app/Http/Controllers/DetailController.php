@@ -255,10 +255,12 @@ class DetailController extends Controller
             return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
 
         }
-        if(Gate::allows('isManager')or Gate::allows('isChefDeService')){
+        if(Gate::allows('isManager')){
             $user_id = Auth::user()->id;
             $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
             $entreprise_id = $this->fonct->findWhereMulitOne("employers",['user_id'],[$id_user])->entreprise_id;
+            $employe = $this->fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
+            $id_service = DB::select('select * from chef_de_service_entreprises  where chef_de_service_id = ? ', [$employe->id])[0]->service_id;
             $formations = $request->formations;
             $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
                 INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
@@ -282,6 +284,42 @@ class DetailController extends Controller
                 inner join cfps on details.cfp_id = cfps.id
                 where projets.id in (SELECT `projet_id` FROM `v_participant_groupe_detail`  where detail_id = details.id  and departement_id = ?)
                 and groupe_entreprises.entreprise_id = ?',[$id_departement,$entreprise_id]);
+            for ($i=0; $i < count($groupe_entreprises); $i++) {
+                array_push($detail_id,DB::select('
+                    SELECT  id as details_id  from details
+                    where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
+            }
+            return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
+
+        }
+        if(Gate::allows('isChefDeService')){
+            $user_id = Auth::user()->id;
+            $id_departement = DB::select('select * from employers  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
+            $entreprise_id = $this->fonct->findWhereMulitOne("employers",['user_id'],[$id_user])->entreprise_id;
+            $employe = $this->fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
+            $id_service = DB::select('select * from chef_de_service_entreprises  where chef_de_service_id = ? ', [$employe->id])[0]->service_id;
+            $formations = $request->formations;
+            $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
+                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+                INNER JOIN modules ON groupes.module_id = modules.id
+                INNER JOIN formations ON modules.formation_id = formations.id
+                WHERE groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
+            $details = array();
+            $detail_id = array();
+            $details = DB::select('
+                SELECT  *,details.id as details_id  from details
+                inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
+                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+                INNER JOIN modules ON groupes.module_id = modules.id
+                INNER JOIN formations ON modules.formation_id = formations.id
+                inner join formateurs on details.formateur_id = formateurs.id
+                inner join projets on details.projet_id = projets.id
+                inner join type_formations on projets.type_formation_id = type_formations.id
+                inner join cfps on details.cfp_id = cfps.id
+                where projets.id in (SELECT `projet_id` FROM `v_participant_groupe_detail`  where detail_id = details.id and service_id = ?)
+                and groupe_entreprises.entreprise_id = ?',[$id_service,$entreprise_id]);
             for ($i=0; $i < count($groupe_entreprises); $i++) {
                 array_push($detail_id,DB::select('
                     SELECT  id as details_id  from details
