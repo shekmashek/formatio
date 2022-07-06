@@ -8,7 +8,7 @@ INSERT INTO `type_formations` (`type_formation`) VALUES ('Intra entreprise'),('I
 CREATE TABLE projets (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_projet varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   type_formation_id bigint(20) UNSIGNED NOT NULL REFERENCES type_formations(id) ON DELETE CASCADE,
   status varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
@@ -68,7 +68,7 @@ create table detail_evaluation_action_formation(
     id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     pourcent decimal(5,2) not null,
     evaluation_action_formation_id bigint(20) UNSIGNED NOT NULL REFERENCES evaluation_action_formation(id) ON DELETE CASCADE,
-    cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+    cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
     created_at timestamp,
     updated_at timestamp,
     groupe_id  bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
@@ -77,7 +77,7 @@ create table detail_evaluation_action_formation(
 
 create table salle_formation_of(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   salle_formation text not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

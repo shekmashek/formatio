@@ -85,7 +85,7 @@ CREATE TABLE modules_interne (
   reference varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   nom_module varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   formation_id bigint(20) UNSIGNED NOT NULL REFERENCES formations(id) ON DELETE CASCADE,
-  etp_id bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  etp_id bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT current_timestamp(),
   duree int(11) NOT NULL,

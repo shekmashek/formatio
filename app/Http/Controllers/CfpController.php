@@ -99,7 +99,7 @@ class CfpController extends Controller
         if ($id_assujeti == null) {
             return back()->withErrors("erreur_assujetti", "Choississez vos type d'assujetti à la TVA de votre entreprise avant de cliquer sur enregistrer");
         } else {
-            DB::update('update cfps set assujetti_id = ? where id = ?', [$request->assujetti, $id]);
+            DB::update('update entreprises set assujetti_id = ? where id = ?', [$request->assujetti, $id]);
             // ('insert into values (?, ?)' entreprises set assujeti_id = ? where id = ?', [$request->assujetti,$id]);
             return redirect()->route('profil_of', [$id]);
         }
@@ -204,7 +204,7 @@ class CfpController extends Controller
                     //onn modifie ainsi l'url
                     $url_logo = URL::to('/')."/images/CFP/".$nom_image;
 
-                    DB::update('update cfps set logo = ?,url_logo = ? where id = ?', [$nom_image,$url_logo,$id]);
+                    DB::update('update entreprises set logo = ?,url_logo = ? where id = ?', [$nom_image,$url_logo,$id]);
                                 return redirect()->route('profil_of', [$id]);
 
 
@@ -225,7 +225,7 @@ class CfpController extends Controller
     //    }
 
     // }
-    // public function modifier_mail($id,Request $request){
+    // public function c($id,Request $request){
     //     if($request->mail == null){
     //      return redirect()->back()->with('error_email', 'Entrez email de votre organisme avant de cliquer sur enregistrer');
     //     }
@@ -235,16 +235,19 @@ class CfpController extends Controller
         if ($request->nom == null) {
             return redirect()->back()->with('error_nom', 'Entrez le nom de votre organisme avant de cliquer sur enregistrer');
         } else {
-            DB::update('update cfps set nom = ?, slogan = ? where id = ?', [$request->nom,$request->slogan, $id]);
+            DB::update('update entreprises set nom_etp = ?, slogan = ? where id = ?', [$request->nom,$request->slogan, $id]);
             return redirect()->route('profil_of', [$id]);
         }
     }
     public function modifier_mail($id, Request $request)
     {
+
         if ($request->mail == null) {
             return redirect()->back()->with('error_email', 'Entrez email de votre organisme avant de cliquer sur enregistrer');
         } else {
-            DB::update('update cfps set email = ? where id = ?', [$request->mail, $id]);
+            DB::update('update entreprises set email_etp = ? where id = ?', [$request->mail, $id]);
+            DB::update('update users set email = ? where id = ?',[$request->mail,Auth::user()->id]);
+            DB::update('update employers set email_emp = ? where user_id = ?',[$request->mail,Auth::user()->id]);
             return redirect()->route('profil_of', [$id]);
         }
     }
@@ -252,13 +255,14 @@ class CfpController extends Controller
     {
 
         if ($request->phone == null) {
-            return redirect()->back()->with('error_phone', 'Entrez téléphone de votre organisme avant de cliquer sur enregistrer');
+            return back()->with('error_phone', 'Entrez téléphone de votre organisme avant de cliquer sur enregistrer');
         } else {
-            $resp_id = $this->fonct->findWhere("responsables_cfp",["cfp_id"],[$id]);
+            $resp_id = $this->fonct->findWhere("employers",["entreprise_id"],[$id]);
             for ($i=0; $i < count($resp_id); $i++) {
-                DB::update('update responsables_cfp set telephone_resp_cfp = ? where id = ?', [$request->phone, $resp_id[$i]->id]);
+                DB::update('update employers set telephone_emp = ? where id = ?', [$request->phone, $resp_id[$i]->id]);
             }
-            DB::update('update cfps set telephone= ? where id = ?', [$request->phone, $id]);
+            DB::update('update entreprises set telephone_etp = ? where id = ?', [$request->phone, $id]);
+            DB::update('update users set telephone = ? where id = ?', [$request->phone, Auth::user()->id]);
             if($request->modification == "cfp")     return redirect()->route('profil_of', [$id]);
             else return redirect()->route('profil_du_responsable');
 
@@ -267,7 +271,7 @@ class CfpController extends Controller
     public function modifier_adresse($id, Request $request)
     {
 
-        DB::update('update cfps set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot, $request->quartier, $request->code_postal, $request->ville, $request->region, $id]);
+        DB::update('update entreprises set adresse_rue = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where id = ?', [$request->lot, $request->quartier, $request->code_postal, $request->ville, $request->region, $id]);
         return redirect()->route('profil_of', [$id]);
     }
     // public function modifier_slogan($id, Request $request)
@@ -309,20 +313,20 @@ class CfpController extends Controller
     }
 
     public function modifier_nif($id,Request $request){
-        DB::update('update cfps set nif = ? where id = ?', [$request->nif, $id]);
+        DB::update('update entreprises set nif = ? where id = ?', [$request->nif, $id]);
                     return redirect()->route('profil_of', [$id]);
 
     }
 
 
     public function modifier_stat($id, Request $request){
-        DB::update('update cfps set stat = ? where id = ?', [$request->stat, $id]);
+        DB::update('update entreprises set stat = ? where id = ?', [$request->stat, $id]);
                     return redirect()->route('profil_of', [$id]);
 
     }
 
     public function modifier_rcs($id, Request $request){
-        DB::update('update cfps set rcs = ? where id = ?', [$request->rcs, $id]);
+        DB::update('update entreprises set rcs = ? where id = ?', [$request->rcs, $id]);
                     return redirect()->route('profil_of', [$id]);
 
     }

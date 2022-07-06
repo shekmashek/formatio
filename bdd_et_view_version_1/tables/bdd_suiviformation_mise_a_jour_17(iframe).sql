@@ -13,7 +13,7 @@ create table iframe_cfp(
     iframe TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
-    foreign key(cfp_id) references cfps(id) on delete cascade
+    foreign key(cfp_id) references entreprises(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 create table iframe_invite(

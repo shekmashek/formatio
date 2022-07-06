@@ -191,7 +191,11 @@ CREATE OR REPLACE VIEW cfps as SELECT
     logo,
     activiter,
     site_etp as site_web,
-    url_logo
+    url_logo,
+    statut_compte_id,
+    presentation,
+    specialisation,
+    assujetti_id
 FROM entreprises WHERE entreprises.type_entreprise_id = 2;
 
 CREATE TABLE horaires (

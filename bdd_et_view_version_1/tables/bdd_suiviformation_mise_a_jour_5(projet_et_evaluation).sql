@@ -8,7 +8,7 @@ INSERT INTO `type_formations` (`type_formation`) VALUES ('Intra entreprise'),('I
 CREATE TABLE projets (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_projet varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   type_formation_id bigint(20) UNSIGNED NOT NULL REFERENCES type_formations(id) ON DELETE CASCADE,
   status varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
@@ -63,7 +63,7 @@ CREATE TABLE `details` (
   `formateur_id` bigint(20) UNSIGNED NOT NULL REFERENCES formateurs(id) ON DELETE CASCADE,
   `groupe_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
   `projet_id` bigint(20) UNSIGNED NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -96,7 +96,7 @@ CREATE TABLE `froid_evaluations` (
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `projet_id` bigint(20) UNSIGNED NOT NULL REFERENCES projets(id) ON DELETE CASCADE,
   `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `cfp_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -119,7 +119,7 @@ CREATE TABLE `question_mere` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `qst_mere` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `desc_reponse` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `cfp_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -143,7 +143,7 @@ CREATE TABLE `description_champ_reponse` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `descr_champs` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_qst_fille` bigint(20) UNSIGNED NOT NULL REFERENCES question_fille(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `cfp_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `nb_max` int(11),
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
@@ -158,7 +158,7 @@ CREATE TABLE `reponse_evaluationchaud` (
   `id_desc_champ` bigint(20) UNSIGNED NOT NULL REFERENCES description_champ_reponse(id) ON DELETE CASCADE,
   `stagiaire_id` bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
   `groupe_id` bigint(20) UNSIGNED NOT NULL REFERENCES groupes(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `cfp_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

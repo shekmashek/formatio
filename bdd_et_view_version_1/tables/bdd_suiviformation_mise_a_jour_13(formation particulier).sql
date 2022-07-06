@@ -1,7 +1,7 @@
 CREATE TABLE projets_particulier (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nom_projet varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   status varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   activiter boolean not null default true,
   created_at timestamp NULL DEFAULT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE presences_particulier (
   status varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   detail_particulier_id bigint(20) UNSIGNED NOT NULL REFERENCES details_particulier(id) ON DELETE CASCADE,
   stagiaire_id bigint(20) UNSIGNED NOT NULL REFERENCES stagiaires(id) ON DELETE CASCADE,
-  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

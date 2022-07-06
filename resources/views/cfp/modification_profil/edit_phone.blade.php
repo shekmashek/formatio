@@ -26,7 +26,7 @@
                 <input type="hidden" value="{{$test}}" name="modification">
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                    <input type="text" value="   {{ $cfp->telephone}}" class="form-control test input"  name="phone">
+                    <input type="text" value="{{$cfp->telephone}}" class="form-control test input"  name="phone" required>
                     <label class="form-control-placeholder ">Téléphone</label>
 
                     </div>
