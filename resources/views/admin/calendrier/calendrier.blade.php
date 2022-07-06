@@ -213,6 +213,8 @@
 
 @push('extra-links')
         <link rel="stylesheet" href="{{ asset('css/calendrier.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datepicker.css') }}">
+
 
         {{-- fullCalendar utilise les icons bootstraps --}}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
@@ -220,6 +222,8 @@
         <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
 
         {{-- utilisation de fullcalendar-scheduler pour avoir accés aux planning --}}
         <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js'></script>
@@ -702,6 +706,23 @@
             }
             );
 
+            $('#event_datepicker').datepicker({
+                
+                    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                    monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+                    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                    dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+                    dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+
+                    inline:true,
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    onSelect: function(dateText, inst) {
+                        var date = new Date(dateText);
+                        // got to the selected date on the fullcalendar
+                        calendar.gotoDate(date);
+                    }
+                });
             
             calendar.render();
 

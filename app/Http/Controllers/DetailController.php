@@ -61,14 +61,14 @@ class DetailController extends Controller
             $list_details = detail::where('cfp_id', $cfp_id)->get();
             
             // Group $list_details by groupe_id
-            $list_details->count() > 0 ? $details = $list_details->groupBy('groupe_id') : $details = [];
+            $list_details->count() > 0 ? $details = $list_details->groupBy('groupe_id') : $details = null;
 
             // $details get all data but it is a multidimansionnal array.
             // We need to get each details as raveled_details (ref numpy.ravel() in python)
             // we don't use collapse() since we neet to add the $numeroè_session and the color
             // foreach group of event
             
-            if ($details->count() > 0) {
+            if ($details) {
                 foreach ($details as $key => $detail) {
                     $numero_session = 0;
     
@@ -151,14 +151,14 @@ class DetailController extends Controller
             $list_details = detail::where('formateur_id', $formateur_id)->get();
             
             // Group $list_details by groupe_id
-            $list_details->count() > 0 ? $details = $list_details->groupBy('groupe_id') : $details = [];
+            $list_details->count() > 0 ? $details = $list_details->groupBy('groupe_id') : $details = null;
 
             // $details get all data but it is a multidimansionnal array.
             // We need to get each details as raveled_details (ref numpy.ravel() in python)
             // we don't use collapse() since we neet to add the $numeroè_session and the color
             // foreach group of event
             
-            if ($details->count() > 0) {
+            if ($details) {
                 foreach ($details as $key => $detail) {
                     $numero_session = 0;
     
@@ -271,7 +271,7 @@ class DetailController extends Controller
                 }
 
             } else {
-                $details = [];
+                $details = null;
             }
 
             // dd($details);
@@ -279,7 +279,9 @@ class DetailController extends Controller
             // $details get all data but it is a multidimansionnal array.
             // We need to get each details as raveled_details (ref numpy.ravel() in python)
            
-            if ($details->count() > 0) {
+            // dd(count($details));
+
+            if ($details) {
                 foreach ($details as $key => $detail) {
                     $numero_session = 0;
                     // generate a random color as another attribute
@@ -493,190 +495,189 @@ class DetailController extends Controller
         }
 
 
-
         // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
         return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations','events', 'groupe_entreprises'));
     }
 
     // evenements for cfps
-    // public function listEvent(Request $request)
-    // {
-    //     $id_user = Auth::user()->id;
-    //     $module = $request->module;
-    //     $type_formation = $request->types_formation;
-    //     $statut_projet = $request->statut_projet;
-    //     $domaines = $request->domaines;
-    //     $formations = $request->formations;
+    public function listEvent(Request $request)
+    {
+        $id_user = Auth::user()->id;
+        $module = $request->module;
+        $type_formation = $request->types_formation;
+        $statut_projet = $request->statut_projet;
+        $domaines = $request->domaines;
+        $formations = $request->formations;
 
 
-    //     if (Gate::allows('isSuperAdmin')) {
-    //         $detail = $this->fonct->findAll('v_detailmodule');
-    //     }
+        if (Gate::allows('isSuperAdmin')) {
+            $detail = $this->fonct->findAll('v_detailmodule');
+        }
 
 
-    //     if (Gate::allows('isCFP')) {
-    //         $fonct = new FonctionGenerique();
-    //         $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[$id_user]);
-    //         $cfp_id = $rqt[0]->cfp_id;
-    //         // $detail =  $this->fonct->findWhere('v_detailmodule',['cfp_id'],[$cfp_id]);
-    //         $detail = DB::select('SELECT details.id as details_id,h_debut,h_fin,date_detail,groupe_id FROM details
-    //         INNER JOIN projets ON details.projet_id = projets.id
-    //         INNER JOIN groupes ON details.groupe_id = groupes.id
-    //         INNER JOIN formateurs ON details.formateur_id = formateurs.id
-    //         INNER JOIN cfps ON details.cfp_id = cfps.id
-    //         WHERE details.cfp_id = ? order by details.groupe_id
-    //         ',[$cfp_id]);
+        if (Gate::allows('isCFP')) {
+            $fonct = new FonctionGenerique();
+            $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[$id_user]);
+            $cfp_id = $rqt[0]->cfp_id;
+            // $detail =  $this->fonct->findWhere('v_detailmodule',['cfp_id'],[$cfp_id]);
+            $detail = DB::select('SELECT details.id as details_id,h_debut,h_fin,date_detail,groupe_id FROM details
+            INNER JOIN projets ON details.projet_id = projets.id
+            INNER JOIN groupes ON details.groupe_id = groupes.id
+            INNER JOIN formateurs ON details.formateur_id = formateurs.id
+            INNER JOIN cfps ON details.cfp_id = cfps.id
+            WHERE details.cfp_id = ? order by details.groupe_id
+            ',[$cfp_id]);
 
-    //         $modules = array();
-    //         $formations = array();
-    //         for ($i=0; $i < count($detail); $i++) {
-    //             array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
-    //         }
+            $modules = array();
+            $formations = array();
+            for ($i=0; $i < count($detail); $i++) {
+                array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
+            }
 
-    //         for ($i=0; $i < count($modules); $i++) {
-    //             array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
-    //         }
+            for ($i=0; $i < count($modules); $i++) {
+                array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
+            }
 
-    //         // $groupe_entreprise = DB::select('
-    //         //     SELECT * FROM groupes
-    //         //     INNER JOIN modules ON groupes.module_id = modules.id
-    //         //     INNER JOIN type_payement ON groupes.type_payement_id = type_payement.id
-    //         //     INNER JOIN status ON groupes.statut_id = status.id
-    //         //     INNER JOIN groupe_entreprises
-    //         //     WHERE groupes.id =
-    //         // ');
-
-
-    //     }
+            // $groupe_entreprise = DB::select('
+            //     SELECT * FROM groupes
+            //     INNER JOIN modules ON groupes.module_id = modules.id
+            //     INNER JOIN type_payement ON groupes.type_payement_id = type_payement.id
+            //     INNER JOIN status ON groupes.statut_id = status.id
+            //     INNER JOIN groupe_entreprises
+            //     WHERE groupes.id =
+            // ');
 
 
+        }
 
-    //     if (Gate::allows('isFormateur')) {
-    //         $formateur_id = formateur::where('user_id', $id_user)->value('id');
-    //         $detail = DB::select('SELECT *,details.id as details_id FROM details
-    //         INNER JOIN projets ON details.projet_id = projets.id
-    //         INNER JOIN groupes ON details.groupe_id = groupes.id
-    //         INNER JOIN formateurs ON details.formateur_id = formateurs.id
-    //         INNER JOIN cfps ON details.cfp_id = cfps.id
-    //         WHERE details.formateur_id = ?
-    //         ',[$formateur_id]);
 
-    //         $modules = array();
-    //         $formations = array();
-    //         for ($i=0; $i < count($detail); $i++) {
-    //             array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
-    //         }
 
-    //         for ($i=0; $i < count($modules); $i++) {
-    //             array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
-    //         }
-    //         // $detail =  $this->fonct->findWhere('v_detailmodule',['formateur_id'],[$formateur_id]);
-    //     }
+        if (Gate::allows('isFormateur')) {
+            $formateur_id = formateur::where('user_id', $id_user)->value('id');
+            $detail = DB::select('SELECT *,details.id as details_id FROM details
+            INNER JOIN projets ON details.projet_id = projets.id
+            INNER JOIN groupes ON details.groupe_id = groupes.id
+            INNER JOIN formateurs ON details.formateur_id = formateurs.id
+            INNER JOIN cfps ON details.cfp_id = cfps.id
+            WHERE details.formateur_id = ?
+            ',[$formateur_id]);
 
-    //     return response()->json(['detail'=>$detail,'modules'=>$modules,'formations'=>$formations]);
-    // }
+            $modules = array();
+            $formations = array();
+            for ($i=0; $i < count($detail); $i++) {
+                array_push($modules,DB::select('select * from groupes inner join modules on groupes.module_id = modules.id where groupes.id = ?',[$detail[$i]->groupe_id]));
+            }
+
+            for ($i=0; $i < count($modules); $i++) {
+                array_push($formations,DB::select('select * from modules inner join formations on modules.formation_id = formations.id where modules.id = ?',[$modules[$i][0]->id]));
+            }
+            // $detail =  $this->fonct->findWhere('v_detailmodule',['formateur_id'],[$formateur_id]);
+        }
+
+        return response()->json(['detail'=>$detail,'modules'=>$modules,'formations'=>$formations]);
+    }
 
     
-    //liste event pour entreprise
-//     public function listEvent_entreprise(Request $request){
-//         $id_user = Auth::user()->id;
+    // liste event pour entreprise
+    public function listEvent_entreprise(Request $request){
+        $id_user = Auth::user()->id;
 
 
-//         if(Gate::allows('isStagiaire')) {
-//             dd('here');
-//             $stagiaire_id = stagiaire::where('user_id', $id_user)->value('id');
+        if(Gate::allows('isStagiaire')) {
+            dd('here');
+            $stagiaire_id = stagiaire::where('user_id', $id_user)->value('id');
 
-//             $module = $request->module;
-//             $type_formation = $request->types_formation;
-//             $statut_projet = $request->statut_projet;
-//             $domaines = $request->domaines;
-//             $formations = $request->formations;
-
-
-//             $groupe_id = DB::select('SELECT * FROM participant_groupe
-//                  WHERE stagiaire_id = ?',[$stagiaire_id]);
-
-//             $groupe_entreprises = array();
-//             for ($i=0; $i < count($groupe_id); $i++) {
-//                 array_push($groupe_entreprises,DB::select('SELECT * FROM groupe_entreprises
-//                 INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-//                 INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-//                 INNER JOIN modules ON groupes.module_id = modules.id
-//                 INNER JOIN formations ON modules.formation_id = formations.id
-//                 WHERE groupe_entreprises.groupe_id = ?',[$groupe_id[$i]->groupe_id]));
-//             }
-
-//             $details = array();
-//             $detail_id = array();
-
-//             $details = DB::select('
-//                 SELECT  *,details.id as details_id  from details
-//                 inner join participant_groupe on details.groupe_id =  participant_groupe.groupe_id
-//                 inner join formateurs on details.formateur_id = formateurs.id
-//                 inner join projets on details.projet_id = projets.id
-//                 inner join type_formations on projets.type_formation_id = type_formations.id
-//                 inner join cfps on details.cfp_id = cfps.id
-//                 INNER JOIN groupes ON details.groupe_id = groupes.id
-//                 INNER JOIN modules ON groupes.module_id = modules.id
-//                 INNER JOIN formations ON modules.formation_id = formations.id
-//                 where participant_groupe.stagiaire_id = ?',[$stagiaire_id]);
-
-//             for ($i=0; $i < count($groupe_id); $i++) {
-//                 array_push($detail_id,DB::select('
-//                      SELECT  id as details_id  from details
-//                      where details.groupe_id = ?',[$groupe_id[$i]->groupe_id]));
-//             }
-//             return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
-
-//         }
+            $module = $request->module;
+            $type_formation = $request->types_formation;
+            $statut_projet = $request->statut_projet;
+            $domaines = $request->domaines;
+            $formations = $request->formations;
 
 
+            $groupe_id = DB::select('SELECT * FROM participant_groupe
+                 WHERE stagiaire_id = ?',[$stagiaire_id]);
 
-//         if( Gate::allows('isReferent')){
+            $groupe_entreprises = array();
+            for ($i=0; $i < count($groupe_id); $i++) {
+                array_push($groupe_entreprises,DB::select('SELECT * FROM groupe_entreprises
+                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+                INNER JOIN modules ON groupes.module_id = modules.id
+                INNER JOIN formations ON modules.formation_id = formations.id
+                WHERE groupe_entreprises.groupe_id = ?',[$groupe_id[$i]->groupe_id]));
+            }
 
-//             $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
-//             $module = $request->module;
-//             $type_formation = $request->types_formation;
-//             $statut_projet = $request->statut_projet;
-//             $domaines = $request->domaines;
-//             $formations = $request->formations;
+            $details = array();
+            $detail_id = array();
 
-//             $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
-//                 INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-//                 INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-//                 INNER JOIN modules ON groupes.module_id = modules.id
-//                 INNER JOIN formations ON modules.formation_id = formations.id
-//                 WHERE groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
+            $details = DB::select('
+                SELECT  *,details.id as details_id  from details
+                inner join participant_groupe on details.groupe_id =  participant_groupe.groupe_id
+                inner join formateurs on details.formateur_id = formateurs.id
+                inner join projets on details.projet_id = projets.id
+                inner join type_formations on projets.type_formation_id = type_formations.id
+                inner join cfps on details.cfp_id = cfps.id
+                INNER JOIN groupes ON details.groupe_id = groupes.id
+                INNER JOIN modules ON groupes.module_id = modules.id
+                INNER JOIN formations ON modules.formation_id = formations.id
+                where participant_groupe.stagiaire_id = ?',[$stagiaire_id]);
 
-//             $details = array();
-//             $detail_id = array();
+            for ($i=0; $i < count($groupe_id); $i++) {
+                array_push($detail_id,DB::select('
+                     SELECT  id as details_id  from details
+                     where details.groupe_id = ?',[$groupe_id[$i]->groupe_id]));
+            }
+            return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
+
+        }
+
+
+
+        if( Gate::allows('isReferent')){
+
+            $entreprise_id = responsable::where('user_id', $id_user)->value('entreprise_id');
+            $module = $request->module;
+            $type_formation = $request->types_formation;
+            $statut_projet = $request->statut_projet;
+            $domaines = $request->domaines;
+            $formations = $request->formations;
+
+            $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
+                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+                INNER JOIN modules ON groupes.module_id = modules.id
+                INNER JOIN formations ON modules.formation_id = formations.id
+                WHERE groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
+
+            $details = array();
+            $detail_id = array();
  
 
-//             $details = DB::select('
-//                 SELECT  *,details.id as details_id  from details
-//                 inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
-//                 INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-//                 INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-//                 INNER JOIN modules ON groupes.module_id = modules.id
-//                 INNER JOIN formations ON modules.formation_id = formations.id
-//                 inner join formateurs on details.formateur_id = formateurs.id
-//                 inner join projets on details.projet_id = projets.id
-//                 inner join type_formations on projets.type_formation_id = type_formations.id
-//                 inner join cfps on details.cfp_id = cfps.id
-//                 where groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
+            $details = DB::select('
+                SELECT  *,details.id as details_id  from details
+                inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
+                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
+                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
+                INNER JOIN modules ON groupes.module_id = modules.id
+                INNER JOIN formations ON modules.formation_id = formations.id
+                inner join formateurs on details.formateur_id = formateurs.id
+                inner join projets on details.projet_id = projets.id
+                inner join type_formations on projets.type_formation_id = type_formations.id
+                inner join cfps on details.cfp_id = cfps.id
+                where groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
 
-// // $entrepise_id = responsable::where('user_id', Auth::user()->id)->entreprise_id;
+            // $entrepise_id = responsable::where('user_id', Auth::user()->id)->entreprise_id;
 
 
-//             for ($i=0; $i < count($groupe_entreprises); $i++) {
-//                 array_push($detail_id,DB::select('
-//                      SELECT  id as details_id  from details
-//                      where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
-//             }
-//         return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
+                        for ($i=0; $i < count($groupe_entreprises); $i++) {
+                            array_push($detail_id,DB::select('
+                                SELECT  id as details_id  from details
+                                where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
+                        }
+                    return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
 
-//         }
-//     }
+                    }
+    }
 
 
     // details sur l'event dans le calendrier
