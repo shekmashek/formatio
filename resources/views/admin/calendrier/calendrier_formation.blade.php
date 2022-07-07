@@ -42,7 +42,7 @@
         {{-- <a href="#" class="btn_creer text-center filter mt-4" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a> --}}
         <div class="row w-100 mt-3 justify-content-between">
 
-            <div class="col-md-3 my-auto" id="event_datepicker">
+            <div class="col-md-3 my-auto mt-5" id="event_datepicker">
 
             </div>
 

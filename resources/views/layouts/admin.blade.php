@@ -28,7 +28,8 @@
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
 
-
+    
+    {{-- Ajoutes les imports externes propres aux pages appelées. Ces imports ne sont ajoutées que s'il y a le @push dans un view --}}
     @stack('extra-links')
 
 </head>
@@ -1413,7 +1414,8 @@
     <script src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/apprendre.js')}}"></script>
 
-    @if (Route::currentRouteName() != 'calendrier_formation')
+    @if (Route::currentRouteName() != 'calendrier_formation' && Route::currentRouteName() != 'calendrier')
+    {{-- ce script bloque le jquery.min et jquery-ui --}}
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     @endif
 
@@ -1578,7 +1580,8 @@
 
     </script>
 
-@stack('extra-js')
+    {{-- Ajoutes les imports externes propres aux pages appelées. Ces imports ne sont ajoutées que s'il y a le @push dans un view --}}
+    @stack('extra-js')
 
 </body>
 

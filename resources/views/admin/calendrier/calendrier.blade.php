@@ -212,24 +212,25 @@
     </style> --}}
 
 @push('extra-links')
-        <link rel="stylesheet" href="{{ asset('css/calendrier.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('css/calendrier.css') }}">
+<link rel="stylesheet" href="{{ asset('css/datepicker.css') }}">
+
+{{-- fullCalendar utilise les icons bootstraps --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
 
 
-        {{-- fullCalendar utilise les icons bootstraps --}}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-
-        <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
 
-        {{-- utilisation de fullcalendar-scheduler pour avoir accés aux planning --}}
-        <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js'></script>
+{{-- utilisation de fullcalendar-scheduler pour avoir accés aux planning --}}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js'></script>
 
-        {{-- les langues pour le calendrier --}}
-        <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
+{{-- les langues pour le calendrier --}}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
+
 @endpush
 
 
@@ -237,7 +238,11 @@
     <div class="container-fluid">
         <div class="row w-100 mt-3">
 
-            <div class="col-md-12 m-50 width_80 my-0 mx-auto">
+            <div class="col-md-3 my-auto mt-5" id="event_datepicker">
+
+            </div>
+
+            <div class="col-md-9 m-50 my-2">
                 <div id='planning'></div>
             </div>
 
@@ -363,7 +368,7 @@
 @endsection
 
 @push('extra-js')
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> --}}
+
 <script>
 
 
@@ -704,6 +709,7 @@
 
             }
             );
+            
 
             $('#event_datepicker').datepicker({
                 
