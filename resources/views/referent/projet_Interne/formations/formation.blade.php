@@ -68,7 +68,7 @@
                                             data-bs-target="#Modal_fomation_{{$domaines[$j]->id}}"
                                             id="{{$domaines[$j]->id}}"
                                             title="modifier domaine et thématiques de formation"><i
-                                                class="bx bx-edit-alt bx_modifier modifier_domaine mb-2 mt-1"></i></a>
+                                                class="bx bxs-edit-alt-alt bx_modifier modifier_domaine mb-2 mt-1"></i></a>
                                         <a role="button" class="supprimer_formation" id="{{$domaines[$j]->id}}"
                                             title="supprimer domaine et thématiques de formation"><i
                                                 class="bx bx-trash bx_supprimer supprimer_domaine"></i></a>
@@ -363,7 +363,7 @@
                                     <div class="col-6 text-center" id="preview_niveau">
                                         <button class="btn modifier pt-0"><a
                                                 href="{{route('modif_programmes_etp',$info->module_id)}}"><i
-                                                    class='bx bx-edit bx_modifier'
+                                                    class='bx bxs-edit-alt bx_modifier'
                                                     title="modifier les informations"></i></a></button>
                                     </div>
                                     <div class="col-6 text-center" id="preview_niveau">

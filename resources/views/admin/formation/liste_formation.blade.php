@@ -293,7 +293,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                     </a>
                                 </td>
                                 <td>
-                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_domaine_{{$one_domaine->id}}"><i class='bx bx-edit bx_modifier'></i></a>
+                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_domaine_{{$one_domaine->id}}"><i class='bx bxs-edit-alt bx_modifier'></i></a>
                                     <a  href="" data-bs-toggle="modal" data-bs-target="#modal_delete_domaine_{{$one_domaine->id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                                 </td>
                                 {{-- modal update  --}}
@@ -395,7 +395,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                     </a>
                                 </td>
                                 <td>
-                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_formation_{{$one_formation->id}}"><i class='bx bx-edit bx_modifier'></i></a>
+                                    <a  href="" data-bs-toggle="modal" data-bs-target="#modal_update_formation_{{$one_formation->id}}"><i class='bx bxs-edit-alt bx_modifier'></i></a>
                                     <a  href="" data-bs-toggle="modal" data-bs-target="#modal_delete_formation_{{$one_formation->id}}"><i class='bx bx-trash bx_supprimer'></i></a>
                                 </td>
                                 {{-- modal update  --}}

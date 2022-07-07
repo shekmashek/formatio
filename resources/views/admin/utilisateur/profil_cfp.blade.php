@@ -36,7 +36,7 @@
                                 <div class="row">
                                     <div class="col">
                                         @canany(['isAdminPrincipale','isSuperAdminPrincipale'])
-                                        <button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#modal"> <i class="bx bx-edit"></i> modifier profile</button>
+                                        <button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $cfp->id }}" id="{{ $cfp->id }}" data-bs-toggle="modal" data-bs-target="#modal"> <i class="bx bxs-edit-alt"></i> modifier profile</button>
                                         @endcanany
                                     </div>
                                 </div>
@@ -53,9 +53,9 @@
                                     @elseif($cfp->assujetti_id == 1)
                                         {{-- <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"> --}}
                                             <span class="mt-2 text-primary text-decoration-underline">Assujetti</span></a>
-                                    @else 
+                                    @else
                                         {{-- <a href="{{route('modification_assujetti_cfp',$cfp->id)}}"> --}}
-                                            <span class="mt-2 text-primary text-decoration-underline">Non assujetti</span></a> 
+                                            <span class="mt-2 text-primary text-decoration-underline">Non assujetti</span></a>
                                     @endif
                                     <hr class="m-0 p-0 mt-0">
                                 </div>
@@ -132,7 +132,7 @@
                                     </div>
 
                                     <div class="col-lg-6">
-                                        
+
                                         <p class="mt-3 m-b-10 f-w-600"><i class="bx bxs-calendar"></i>&nbsp; Horaire d'ouverture</p>
                                         <div class="hover" style="border-bottom: solid 1px #e8dfe5;">
                                             <a href="{{route('modification_horaire',$cfp->id)}}">

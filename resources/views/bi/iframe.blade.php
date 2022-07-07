@@ -203,7 +203,7 @@
                                                                                     <i class="fa fa-ellipsis-v"></i>
                                                                                 </button>
                                                                                 <ul class="dropdown-menu">
-                                                                                    <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$f_etp->entreprise_id}}"> <i class="bx bx-edit"></i> Modifier</button></a>
+                                                                                    <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$f_etp->entreprise_id}}"> <i class="bx bxs-edit-alt"></i> Modifier</button></a>
                                                                                     <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="" id="" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$f_etp->entreprise_id}}" style="color: red">Supprimer</button></a>
                                                                                 </ul>
                                                                             </div>
@@ -391,7 +391,7 @@
                                                                                     <i class="fa fa-ellipsis-v"></i>
                                                                                 </button>
                                                                                 <ul class="dropdown-menu">
-                                                                                    <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modalcfp_{{$f_etp->cfp_id}}"> <i class="bx bx-edit"></i> Modifier</button></a>
+                                                                                    <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modalcfp_{{$f_etp->cfp_id}}"> <i class="bx bxs-edit-alt"></i> Modifier</button></a>
                                                                                     <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="" id="" data-bs-toggle="modal" data-bs-target="#deletecfp_modal_{{$f_etp->cfp_id}}" style="color: red">Supprimer</button></a>
                                                                                 </ul>
                                                                             </div>
@@ -496,7 +496,7 @@
                                                                         <i class="fa fa-ellipsis-v"></i>
                                                                     </button>
                                                                     <ul class="dropdown-menu">
-                                                                        <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modalinviter{{$invite->id}}"> <i class="bx bx-edit"></i> Modifier</button></a>
+                                                                        <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modalinviter{{$invite->id}}"> <i class="bx bxs-edit-alt"></i> Modifier</button></a>
                                                                         <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 " data-id="" id="" data-bs-toggle="modal" data-bs-target="#deleteinviter{{$invite->id}}" style="color: red">Supprimer</button></a>
                                                                     </ul>
                                                                 </div>

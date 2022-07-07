@@ -6,7 +6,7 @@
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
-            
+
             {{-- <h3>Utilisateurs /</h3> --}}
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
@@ -16,7 +16,7 @@
                             <li class="nav-item mx-1">
                                 {{-- <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_entreprise') ? 'active' : '' }}" href="{{route('utilisateur_entreprise')}}"> --}}
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('liste_utilisateur') ? 'active' : '' }}" href="{{route('liste_utilisateur')}}">
-                                    
+
                                     Entreprises</a>
                             </li>
                             {{-- <li class="nav-item mx-1">
@@ -81,7 +81,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                       
+
                         {{-- <li class="nav-item mx-1">
                             <a class="nav-link btn_enregistrer  {{ Route::currentRouteNamed('utilisateur_stagiaire') ? 'active' : '' }}" aria-current="page" href="{{route('utilisateur_stagiaire')}}">
                                 Stagiaires</a>
@@ -108,7 +108,7 @@
                     <th> Logo </th>
                     <th> Entreprises</th>
                     <th> Responsables </th>
-                   
+
                     <th> E-mail </th>
                     <th> Téléphone </th>
                     <th> Date d'inscription </th>
@@ -142,21 +142,21 @@
                     </td>
                     </tr> --}}
 
-                    
+
                     @foreach ($datas as $data)
-                        
-                   
+
+
                     <tr>
                         <td>
                             <img width="80" height="50" class="img-fluid rounded-3" alt="Responsive image" src="{{asset('images/entreprises/'.$data->entreprise->logo)}}" style="cellapading=0;" cellspacing="0">
                         </td>
                         <td><span>{{ $data->entreprise->nom_etp }}</span></td>
                         <td><span>{{ $data->nom_resp}}</span><span class="ms-1">{{ $data->prenom_resp}}(<strong style="color: green" >principale</strong>)</span></td>
-                      
+
                         <td>{{ $data->email_resp}}</td>
                         <td>{{ $data->telephone_resp}}</td>
                         <td>{{ $data->created_at}}</td>
-                        
+
                         {{-- <td>{{ $etp->site_etp }}</td> --}}
                         <td>
 
@@ -167,7 +167,7 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ route('aff_parametre_referent',$data->id)}}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
-                                        {{-- <a class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $etp->id }}" id="{{ $etp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$etp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
+                                        {{-- <a class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $etp->id }}" id="{{ $etp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$etp->id}}"> <i class="bx bxs-edit-alt"></i> Modifier profile</button></a>
                                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$etp->id}}"> <button class="btn btn_enregistrer">Supprimer</button></a> --}}
                                     </ul>
                                 </div>

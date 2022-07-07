@@ -235,6 +235,11 @@ a:focus {
     transition: all 0.5s ease;
     border-radius: 5px;
 }
+.liste__formation .acf-nom-module{
+    font-size: 1rem;
+    font-weight: 300;
+    color: #7635dc !important;
+}
 .liste__formation__item:hover .liste__formation {
     transform: scale(1.5s) !important;
 }

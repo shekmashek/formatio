@@ -44,70 +44,70 @@ $(".suppression_module").on('click', function(e) {
     });
 });
 
-$(document).ready(function() {
-    $("#reference_search").autocomplete({
-        source: function(request, response) {
-            // Fetch data
-            $.ajax({
-                url: "/searchReference"
-                , type: 'get'
-                , dataType: "json"
-                , data: {
-                    //    _token: CSRF_TOKEN,
-                    search: request.term
-                }
-                , success: function(data) {
-                    // alert("eto");
-                    response(data);
-                }
-                , error: function(data) {
-                    alert("error");
-                    //alert(JSON.stringify(data));
-                }
-            });
-        }
-        , select: function(event, ui) {
-            // Set selection
-            $('#reference_search').val(ui.item.label); // display the selected text
-            $('#stagiaireid').val(ui.item.value); // save selected id to input
-            return false;
-        }
-    });
-});
-$(document).ready(function() {
-    $("#categorie_search").autocomplete({
-        source: function(request, response) {
-            // Fetch data
-            $.ajax({
-                url: "/searchCategorie"
-                , type: 'get'
-                , dataType: "json"
-                , data: {
-                    //    _token: CSRF_TOKEN,
-                    recheche: request.term
-                }
-                , success: function(data) {
-                    // alert("eto");
-                    response(data);
-                }
-                , error: function(data) {
-                    alert("error");
-                    //alert(JSON.stringify(data));
-                }
-            });
-        }
-        , select: function(event, ui) {
-            // Set selection
-            $('#categorie_search').val(ui.item.label); // display the selected text
-            $('#stagiaireid').val(ui.item.value); // save selected id to input
-            return false;
-        }
-    });
-});
+// $(document).ready(function() {
+//     $("#reference_search").autocomplete({
+//         source: function(request, response) {
+//             // Fetch data
+//             $.ajax({
+//                 url: "/searchReference"
+//                 , type: 'get'
+//                 , dataType: "json"
+//                 , data: {
+//                     //    _token: CSRF_TOKEN,
+//                     search: request.term
+//                 }
+//                 , success: function(data) {
+//                     // alert("eto");
+//                     response(data);
+//                 }
+//                 , error: function(data) {
+//                     alert("error");
+//                     //alert(JSON.stringify(data));
+//                 }
+//             });
+//         }
+//         , select: function(event, ui) {
+//             // Set selection
+//             $('#reference_search').val(ui.item.label); // display the selected text
+//             $('#stagiaireid').val(ui.item.value); // save selected id to input
+//             return false;
+//         }
+//     });
+// });
+// $(document).ready(function() {
+//     $("#categorie_search").autocomplete({
+//         source: function(request, response) {
+//             // Fetch data
+//             $.ajax({
+//                 url: "/searchCategorie"
+//                 , type: 'get'
+//                 , dataType: "json"
+//                 , data: {
+//                     //    _token: CSRF_TOKEN,
+//                     recheche: request.term
+//                 }
+//                 , success: function(data) {
+//                     // alert("eto");
+//                     response(data);
+//                 }
+//                 , error: function(data) {
+//                     alert("error");
+//                     //alert(JSON.stringify(data));
+//                 }
+//             });
+//         }
+//         , select: function(event, ui) {
+//             // Set selection
+//             $('#categorie_search').val(ui.item.label); // display the selected text
+//             $('#stagiaireid').val(ui.item.value); // save selected id to input
+//             return false;
+//         }
+//     });
+// });
 
-$(document).ready(function(){
-    $("#myTab a:last").tab("show"); // show last tab
-});
+// $(document).ready(function(){
+//     $("#myTab a:last").tab("show"); // show last tab
+// });
 
 function resetForm() {
     document.getElementById("frm_modif_module").reset();

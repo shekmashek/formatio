@@ -113,7 +113,7 @@
                     @if($refs->date_naissance_resp == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-calendar-alt icon_sociaux1'></i>&nbsp;Date de naissance Incomplète</p><p class="text-end"><a href="{{route('edit_naissance_resp',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-calendar-alt icon_sociaux2'></i>Date de naissance :&nbsp;{{$refs->date_naissance_resp}}</p><p class="text-end"><a href="{{route('edit_naissance_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-calendar-alt icon_sociaux2'></i>Date de naissance :&nbsp;{{$refs->date_naissance_resp}}</p><p class="text-end"><a href="{{route('edit_naissance_resp',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>
@@ -122,7 +122,7 @@
                     @if($refs->sexe_resp == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-user-pin icon_sociaux1'></i>&nbsp;Genre Incomplète</p><p class="text-end"><a href="{{route('edit_genre_resp',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-user-pin icon_sociaux1'></i>Genre :&nbsp;{{$refs->sexe_resp}}</p><p class="text-end"><a href="{{route('edit_genre_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-user-pin icon_sociaux1'></i>Genre :&nbsp;{{$refs->sexe_resp}}</p><p class="text-end"><a href="{{route('edit_genre_resp',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>
@@ -131,7 +131,7 @@
                     @if($refs->email_resp == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxl-gmail icon_sociaux1'></i>&nbsp;Email Incomplète</p><p class="text-end"><a href="{{route('edit_mail_resp',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxl-gmail icon_sociaux1'></i>Email :&nbsp;{{$refs->email_resp}}</p><p class="text-end"><a href="{{route('edit_mail_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxl-gmail icon_sociaux1'></i>Email :&nbsp;{{$refs->email_resp}}</p><p class="text-end"><a href="{{route('edit_mail_resp',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>
@@ -140,13 +140,13 @@
                     @if($refs->telephone_resp == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-phone icon_sociaux1'></i>&nbsp;Téléphone Incomplète</p><p class="text-end"><a href="{{route('edit_phone_resp',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-phone icon_sociaux1'></i>Téléphone :&nbsp;{{$refs->telephone_resp}}</p><p class="text-end"><a href="{{route('edit_phone_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-phone icon_sociaux1'></i>Téléphone :&nbsp;{{$refs->telephone_resp}}</p><p class="text-end"><a href="{{route('edit_phone_resp',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col">
-                    <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-lock icon_sociaux1'></i>Mot de passe :  **************</p><p class="text-end"><a href="{{route('edit_pwd_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                    <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-lock icon_sociaux1'></i>Mot de passe :  **************</p><p class="text-end"><a href="{{route('edit_pwd_resp',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                 </div>
             </div>
         </div>
@@ -157,7 +157,7 @@
                     @if($refs->cin_resp == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-grid-vertical icon_sociaux3'></i>&nbsp;CIN Incomplète</p><p class="text-end"><a href="{{route('edit_cin_resp',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-grid-vertical icon_sociaux3'></i>CIN :&nbsp;{{$refs->cin_resp}}</p><p class="text-end"><a href="{{route('edit_cin_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-grid-vertical icon_sociaux3'></i>CIN :&nbsp;{{$refs->cin_resp}}</p><p class="text-end"><a href="{{route('edit_cin_resp',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>
@@ -166,7 +166,7 @@
                     @if($refs->adresse_quartier == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;Adresse Quartier Incomplète</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;{{$refs->adresse_lot}}&nbsp;{{$refs->adresse_quartier}}</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;{{$refs->adresse_lot}}&nbsp;{{$refs->adresse_quartier}}</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>
@@ -175,7 +175,7 @@
                     @if($refs->adresse_ville == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bxs-map-pin icon_sociaux2'></i>&nbsp;Adresse Ville Incomplète</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map-pin icon_sociaux2'></i>&nbsp;{{$refs->adresse_ville}}&nbsp;{{$refs->adresse_code_postal}}</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map-pin icon_sociaux2'></i>&nbsp;{{$refs->adresse_ville}}&nbsp;{{$refs->adresse_code_postal}}</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>
@@ -184,7 +184,7 @@
                     @if($refs->adresse_region == NULL)
                         <div class="p-1 m-0 justify-content-between d-flex flex-row"><p><i class='bx bx-map-alt icon_sociaux2'></i>&nbsp;Adresse Region Incomplète</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}" class="action_other_not">Compléter</a></p></div>
                     @else
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-map-alt icon_sociaux2'></i>&nbsp;{{$refs->adresse_region}}</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-map-alt icon_sociaux2'></i>&nbsp;{{$refs->adresse_region}}</p><p class="text-end"><a href="{{route('edit_adresse_resp',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                     @endif
                 </div>
             </div>
@@ -206,19 +206,19 @@
                     {{-- <p class="mt-4">{{$entreprise->nom_etp}}</p> --}}
 
                         @if($refs->service_id == NULL)
-                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-buildings icon_sociaux2'></i>&nbsp;Dep  --------------------- </p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-buildings icon_sociaux2'></i>&nbsp;Dep  --------------------- </p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                         @else
-                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-buildings icon_sociaux2'></i>&nbsp;Dep: {{$refs->nom_departement}}</p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-buildings icon_sociaux2'></i>&nbsp;Dep: {{$refs->nom_departement}}</p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                         @endif
                         @if($refs->service_id == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-building icon_sociaux2'></i>&nbsp;Serv -------------------</p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-building icon_sociaux2'></i>&nbsp;Serv -------------------</p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                         @else
-                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-building icon_sociaux2'></i>&nbsp;Serv: {{$refs->nom_service}}</p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-building icon_sociaux2'></i>&nbsp;Serv: {{$refs->nom_service}}</p><p class="text-end"><a href="{{route('edit_departement_service',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                         @endif
                         @if($refs->branche_id == NULL)
-                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-building-house icon_sociaux2'></i>&nbsp;Branche ------------</p><p class="text-end"><a href="{{route('edit_branche',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                        <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bx-building-house icon_sociaux2'></i>&nbsp;Branche ------------</p><p class="text-end"><a href="{{route('edit_branche',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                         @else
-                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;Branche: {{$refs->nom_branche}}</p><p class="text-end"><a href="{{route('edit_branche',$refs->id)}}"><i class='bx bx-edit bx_modifier'></i></a></p></div>
+                            <div class="p-1 m-0 justify-content-between d-flex flex-row afficher_icon_modif"><p><i class='bx bxs-map icon_sociaux2'></i>&nbsp;Branche: {{$refs->nom_branche}}</p><p class="text-end"><a href="{{route('edit_branche',$refs->id)}}"><i class='bx bxs-edit-alt bx_modifier'></i></a></p></div>
                         @endif
                 </div>
             </div>

@@ -168,7 +168,7 @@
                                         </div>
                                     </div>
 
-                                    <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i class="bx bx-edit bx_modifier" onclick="changer_niveau()"></i>
+                                    <span id="premier_vue8"> Ajouter un nouveau Niveau de formation : &nbsp;<i class="bx bxs-edit-alt bx_modifier" onclick="changer_niveau()"></i>
                                         <br>
                                         <button type="button" class="btn new_list_nouvelle text-center" onclick="suivant_objectif();"><a href="#preview_haut2" class="btn_suivant">Suivant<i class='bx bxs-chevron-right ms-1'></i></a></button>
                                     </span>

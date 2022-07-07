@@ -116,7 +116,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <a class="dropdown-item" href="#"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
-                                                <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$formateur->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
+                                                <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$formateur->id}}"> <i class="bx bxs-edit-alt"></i> Modifier profile</button></a>
                                                 <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $formateur->id }}" id="{{ $formateur->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$formateur->id}}" style="color: red">Supprimer</button></a>
 
                                             </ul>

@@ -271,7 +271,7 @@
                                                 html_tous +='<td></td>';
                                             }
                                             html_tous +='<td class="td_encaiss"><div class="button_encaiss"><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
-                                            html_tous +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
+                                            html_tous +='<i class="bx bxs-edit-alt bx-modifier"></i></button>&nbsp';
                                             html_tous +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></td></div></tr>';
                                         }
                                     }
@@ -597,7 +597,7 @@
                                                 html_actif +='<td></td>';
                                             }
                                             html_actif +='<td class="td_encaiss"><div class="button_encaiss"><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
-                                            html_actif +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
+                                            html_actif +='<i class="bx bxs-edit-alt bx-modifier"></i></button>&nbsp';
                                             html_actif +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></div></td></tr>';
                                         }
                                     }
@@ -753,7 +753,7 @@
                         html_payer +='<h6><a href="#collapseprojet_payer_'+facture_payer[i_payer].num_facture+'" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>';
                     }
                     html_payer += " </td><td> <a href=" + url_detail_facture + ">";
-                
+
                 if (facture_payer[i_payer].reference_type_facture == "Facture") {
 
                     html_payer += "  <div style='background-color: green; border-radius: 10px; text-align: center;color: white'>" +
@@ -776,7 +776,7 @@
                         " </div>";
                 }
 
-                
+
                 html_payer += "  <td><a href=" + url_detail_facture + ">" + facture_payer[i_payer].num_facture + "   </a> </td> <td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].nom_etp + " </a></td><td>";
                 html_payer += "  <a href=" + url_detail_facture + ">" + facture_payer[i_payer].invoice_date + " </a> </td><td>";
@@ -832,7 +832,7 @@
                                                 html_payer +='<td></td>';
                                             }
                                             html_payer +='<td class="td_encaiss"><div class="button_encaiss"><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="'+encaissement[iencaiss].id+'" id="'+encaissement[iencaiss].id+'" data-bs-toggle="modal" data-bs-target="#modal" style="color:green">';
-                                            html_payer +='<i class="bx bx-edit bx-modifier"></i></button>&nbsp';
+                                            html_payer +='<i class="bx bxs-edit-alt bx-modifier"></i></button>&nbsp';
                                             html_payer +='<a href="'+url_supprimer+'" onclick="return confirm("Êtes-vous sûr de vouloir supprimer cet encaissement ?");"><button class=" btn btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a></div></td></tr>';
                                         }
                                     }
@@ -1187,7 +1187,7 @@
     });
 
     /*--------------------------------------------- Nom Entité-----------------------------------------------------------------------*/
-    
+
     $(".nom_entiter_trie").on('click', function(e) {
         var valiny = $(this).val();
         count_entiter_trie++;
@@ -1288,7 +1288,7 @@
     });
 
     /*--------------------------------------------- Date de règlement -----------------------------------------------------------------------*/
-    
+
     $(".dte_reglement_trie").on('click', function(e) {
         var valiny = $(this).val();
         count_reglement_trie++;
@@ -1388,7 +1388,7 @@
     });
 
     /*--------------------------------------------- Totale à payer -----------------------------------------------------------------------*/
-    
+
     $(".total_payer_trie").on('click', function(e) {
         var valiny = $(this).val();
         count_total_payer_trie++;
@@ -1443,14 +1443,14 @@
             $(".total_payer_trie").val(0);
         }
         $('.icon_trie').remove();
-        var dataValue=null; 
+        var dataValue=null;
         if(count_total_payer_trie < 3){
             dataValue = getDataRequetTrie(".total_payer_trie", "TOTAL_SOLDE");
         }else{
             dataValue = getDataRequetTrie(".dte_fact_trie", "DTE_FACT");
             $(".total_payer_trie").val(0);
         }
-        
+
         $.ajax({
             method: "GET"
             , url: "{{route('facture.trie')}}"
@@ -1477,7 +1477,7 @@
                     count_total_payer_trie=0;
                     $('.total_payer_trie').parent().parent().click();
                 }
-                
+
             }
             , error: function(error) {
                 console.log(error)
@@ -1487,7 +1487,7 @@
 
     /*--------------------------------------------- Totale reste à payer -----------------------------------------------------------------------*/
 
-    
+
     $(".rest_payer_trie").on('click', function(e) {
         var valiny = $(this).val();
         count_rest_payer_trie++;
@@ -1542,7 +1542,7 @@
             $(".rest_payer_trie").val(0);
         }
         $('.icon_trie').remove();
-        var dataValue=null; 
+        var dataValue=null;
         if(count_rest_payer_trie < 3){
             dataValue = getDataRequetTrie(".rest_payer_trie", "RESTE_SOLDE");
         }else{
@@ -1592,7 +1592,7 @@ $('.facture_table th').on('click', function(e) {
             $('.facture_table td').removeAttr("style");
             $('.facture_table th').removeClass("colored_td");
             $('.facture_table th').removeAttr("style");
-            
+
             $('.facture_table tr').each(function() {
                 /* $('.facture_table tr').removeProp("background-color"); */
                 var self = $(this);
@@ -1636,14 +1636,14 @@ $(document).delegate('.encaiss_payement','click',function() {
             html += '  </div></div></div>';
             html += '<input type="hidden" name="encaissement_id" value="' + id + '">';
             html += '<input type="hidden" name="num_facture" value="' + valiny.userData[2] + '">';
-                        
+
             html += '<div class="form-group  mt-3  mx-1">';
             html += '<div class="row">';
             html += '   <div class="col"><span>Mode de paiement<strong style="color:#ff0000;">*</strong></span> </div>';
             html += '<div class="col">';
             html += '<select class="form-select selectP" name="mode_payement" aria-label="Default select example" style="height: 50px;">';
             html += '<option value="' + valiny.mode_finance_edit.id + '" selected>' + valiny.mode_finance_edit.description + '</option>';
-                        
+
             var tab = valiny.mode_finance_list;
             for (var i = 0; i < tab.length; i += 1) {
                 html += '<option value="' + tab[i].id + '">' + tab[i].description + '</option>';
@@ -1654,7 +1654,7 @@ $(document).delegate('.encaiss_payement','click',function() {
                 html += '<textarea autocomplete="off" name="libelle" class="text_description form-control"  rows="5">' + valiny.userData[1] + '</textarea> </div>';
             } else {
                 html += '<textarea autocomplete="off" name="libelle" class="text_description form-control"  rows="5"></textarea> </div>';
-                        
+
             }
             html += '<div class="mt-4 mb-4 d-flex justify-content-between"> <span><button type="button" class="btn btn_creer annuler" style="color: red" data-bs-dismiss="modal" aria-label="Close">Annuler</button></span>';
             html += '<button type="submit" class="btn btn_creer px-3">Modifier</button>';

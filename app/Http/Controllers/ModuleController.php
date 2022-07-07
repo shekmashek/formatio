@@ -67,7 +67,7 @@ class ModuleController extends Controller
             $mod_hors_ligne = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 1 and md.etat_id = 1 and md.cfp_id = ? order by md.nom_formation asc',[$cfp_id]);
             $mod_publies = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.cfp_id = ? group by md.formation_id,vm.nombre order by md.nom_formation asc',[$cfp_id]);
 
-
+            // dd($mod_hors_ligne);
             // $datas = DB::select('select type_formation_id,module_id,cfp_id,groupe_id,projet_id,nom_groupe,date_debut,date_fin,modalite,item_status_groupe,groupe_entreprise_id, entreprise_id,nom_etp,formation_id FROM v_groupe_projet_module JOIN entreprises ON v_groupe_projet_module.entreprise_id= entreprises.id WHERE cfp_id= ? group by module_id,projet_id',[$cfp_id]);
             // // $datas =DB::select('select type_formation_id,cfp_id,groupe_entreprise_id,groupe_id,entreprise_id,nom_etp,projet_id,module_id,date_debut,date_fin,modalite,item_status_groupe,nom_groupe FROM v_groupe_projet_entreprise where cfp_id = ? group by module_id',[$cfp_id]);
 

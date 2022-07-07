@@ -6,8 +6,8 @@ Il faut d'abord importer le fichier css configAll.css :
 
 Modifications des icones et des boutons d'actions :
 
-- bx_modifier -> <i class='bx bx-edit bx_modifier'></i>
+- bx_modifier -> <i class='bx bxs-edit-alt bx_modifier'></i>
 - bx_supprimer -> <i class='bx bx-trash bx_supprimer'></i>
-- bx_ajouter -> <i class='bx bx-edit bx_ajouter'></i>
+- bx_ajouter -> <i class='bx bxs-edit-alt bx_ajouter'></i>
 
 Pour utiliser la classe : il faut l'integrer dans le balise de l'icone

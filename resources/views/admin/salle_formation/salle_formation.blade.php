@@ -37,7 +37,7 @@
                         <tr>
                             <td>{{ $salle->ville }}</td>
                             <td>{{ $salle->salle_formation }}</td>
-                            <td><a href="" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_modifier_salle_{{ $salle->id }}"><i class="bx bx-edit"></i></a></td>
+                            <td><a href="" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_modifier_salle_{{ $salle->id }}"><i class="bx bxs-edit-alt"></i></a></td>
                             <td><a href="{{ route('supprimer_salle',[$salle->id]) }}"><i class="bx bx-trash"></i></a></td>
                         </tr>
                         <div class="modal fade"

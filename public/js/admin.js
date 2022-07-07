@@ -1,90 +1,24 @@
-$(document).ready(function() {
-    var down = false;
-    var down2 = false;
-    var down3 = false;
-    var down4 = false;
 
-    $("#bell").mousedown(function(e) {
-        var color = $(this).text();
-        if (down) {
-            $("#box_notif").css("height", "0px");
-            $("#box_notif").css("opacity", "0");
-            $("#box_notif").css("display", "none");
+// $(document).ready(function() {
+//     $.ajax({
+//         url: "/admin_count",
+//         type: "get",
+//         success: function(response) {
+//             var nombre = response;
+//             $("#entreprise").append(nombre[0]);
+//             $("#projet_en_cours").append(nombre[1]);
+//             $("#projet_terminer").append(nombre[2]);
+//             $("#projet_a_venir").append(nombre[3]);
+//             $("#projets").append(nombre[4]);
+//             $("#formateur").append(nombre[5]);
+//             // alert(nombre);
+//         },
+//         error: function(error) {
+//             console.log(error);
+//         },
+//     });
 
-            down = false;
-        } else {
-            $("#box_notif").css("height", "auto");
-            $("#box_notif").css("opacity", "1");
-            $("#box_notif").css("display", "block");
-            down = true;
-        }
-    });
-    $("#envelope").mousedown(function(e) {
-        var color = $(this).text();
-        if (down2) {
-            $("#box_message").css("height", "0px");
-            $("#box_message").css("opacity", "0");
-            $("#box_message").css("display", "none");
-            down2 = false;
-        } else {
-            $("#box_message").css("height", "auto");
-            $("#box_message").css("opacity", "1");
-            $("#box_message").css("display", "block");
-            down2 = true;
-        }
-    });
-    $(".header_img").mousedown(function(e) {
-        var color = $(this).text();
-        if (down3) {
-            $("#box_profil").css("height", "0px");
-            $("#box_profil").css("opacity", "0");
-            $("#box_profil").css("display", "none");
-            down3 = false;
-        } else {
-            $("#box_profil").css("height", "auto");
-            $("#box_profil").css("opacity", "1");
-            $("#box_profil").css("display", "block");
-            down3 = true;
-        }
-    });
-    $(".header_etp_cfp").mousedown(function(e) {
-        var color = $(this).text();
-        if (down4) {
-            $("#box_etp_cfp").css("height", "0px");
-            $("#box_etp_cfp").css("opacity", "0");
-            $("#box_etp_cfp").css("display", "none");
-            down4 = false;
-        } else {
-            $("#box_etp_cfp").css("height", "auto");
-            $("#box_etp_cfp").css("opacity", "1");
-            $("#box_etp_cfp").css("display", "block");
-            down4 = true;
-        }
-    });
-
-});
-
-
-$(document).ready(function() {
-    $.ajax({
-        url: "/admin_count",
-        type: "get",
-        success: function(response) {
-            var nombre = response;
-            $("#entreprise").append(nombre[0]);
-            $("#projet_en_cours").append(nombre[1]);
-            $("#projet_terminer").append(nombre[2]);
-            $("#projet_a_venir").append(nombre[3]);
-            $("#projets").append(nombre[4]);
-            $("#formateur").append(nombre[5]);
-            // alert(nombre);
-        },
-        error: function(error) {
-            console.log(error);
-        },
-    });
-
-});
+// });
 $(document).ready(function() {
     var id_user = document.getElementById('id_user').value;
     $.ajax({
@@ -168,38 +102,38 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
-    var nom_entreprise="";
-    $.ajax({
-        url: "/admin_nom_etp"
-        , type: 'get'
-        , success: function(response) {
+// $(document).ready(function() {
+//     var nom_entreprise="";
+//     $.ajax({
+//         url: "/admin_nom_etp"
+//         , type: 'get'
+//         , success: function(response) {
 
-    //        alert("tonga "+JSON.stringify(response));
-            if(response.status == "RESP"){
-            nom_entreprise = response.donner.nom_etp;
+//     //        alert("tonga "+JSON.stringify(response));
+//             if(response.status == "RESP"){
+//             nom_entreprise = response.donner.nom_etp;
 
-            }
-            if(response.status == "CHEF"){
-                nom_entreprise = response.donner.nom_etp;
-            }
-            if(response.status == "STG"){
-                nom_entreprise = response.donner.nom_etp;
-            }
-            if(response.status == "CFP"){
-                nom_entreprise = response.donner.nom;
-            }
+//             }
+//             if(response.status == "CHEF"){
+//                 nom_entreprise = response.donner.nom_etp;
+//             }
+//             if(response.status == "STG"){
+//                 nom_entreprise = response.donner.nom_etp;
+//             }
+//             if(response.status == "CFP"){
+//                 nom_entreprise = response.donner.nom;
+//             }
 
-            if(response.status == "FORMT"){
-                nom_entreprise = response.donner.nom_etp;
-            }
-            document.getElementById("nom_etp").innerHTML=nom_entreprise;
-          //  alert(document.getElementById("nom_etp"));
-            }
+//             if(response.status == "FORMT"){
+//                 nom_entreprise = response.donner.nom_etp;
+//             }
+//             document.getElementById("nom_etp").innerHTML=nom_entreprise;
+//           //  alert(document.getElementById("nom_etp"));
+//             }
 
-        , error: function(error) {
-            console.log(error);
-        }
-    });
+//         , error: function(error) {
+//             console.log(error);
+//         }
+//     });
 
-});
+// });
