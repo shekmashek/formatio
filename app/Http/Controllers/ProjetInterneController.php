@@ -204,7 +204,7 @@ class ProjetInterneController extends Controller
                 throw new Exception("Vous devez choisir le date.");
             }
             DB::update('update details_interne set formateur_interne_id = ?, date_detail = ? , h_debut = ? , h_fin = ? , lieu = ? where id = ?',[$formateur,$request->date,$h_debut,$h_fin,$lieu,$id]);
-           
+
             return back();
         }catch(Exception $e){
             return back()->with('detail_error',$e->getMessage());
@@ -377,6 +377,7 @@ class ProjetInterneController extends Controller
         $qst_mere = $evaluation->findAllQuestionMere(); // return question entete mere
         $qst_fille = $evaluation->findAllQuestionFille(); // return question a l'interieur de question mere
         $data = $fonct->findWhereMulitOne('v_stagiaire_groupe_interne',['stagiaire_id','groupe_id'],[$stg_id,request()->groupe]); // return les information du project avec detail et information du stagiaire
+
         return view("projet_interne.evaluationChaud_interne", compact('data', 'champ_reponse', 'qst_mere', 'qst_fille'));
     }
 

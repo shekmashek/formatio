@@ -708,7 +708,7 @@ FROM
 WHERE
     c.id = d.demmandeur_cfp_id AND
     f.id = d.inviter_formateur_id AND
-    g.id = IFNULL(f.genre_id,1) AND d.activiter = 1;
+    g.id = IFNULL(f.genre_id,1) AND d.activiter = 1 AND rsp.prioriter = 1;
 
 
 

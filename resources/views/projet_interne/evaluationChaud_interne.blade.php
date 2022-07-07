@@ -38,7 +38,7 @@
         </div>
     @endif
     <div class="row ms-2 me-2">
-        
+
         <form method="POST" action="{{ route('createEvaluationChaud_interne', [$data->groupe_id]) }}">
             @csrf
             <div class="col-md-12 mb-2">
