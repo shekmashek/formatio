@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use phpseclib3\Crypt\RC2;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 Route::get('sign-in', function () {
     return view('auth.connexion');
 })->name('sign-in');
@@ -1574,3 +1574,5 @@ Route::get('/valideStatut/{id}','PlanFormationController@valideStatut')->name('v
 Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('refuseSatut');
 
 
+
+Route::get("qr_code/{id}", "SimpleQRcodeController@generate")->name('qr_code');

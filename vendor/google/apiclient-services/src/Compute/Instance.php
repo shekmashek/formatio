@@ -65,6 +65,10 @@ class Instance extends \Google\Collection
   /**
    * @var string
    */
+  public $keyRevocationActionType;
+  /**
+   * @var string
+   */
   public $kind;
   /**
    * @var string
@@ -104,6 +108,8 @@ class Instance extends \Google\Collection
   protected $networkInterfacesDataType = 'array';
   protected $networkPerformanceConfigType = NetworkPerformanceConfig::class;
   protected $networkPerformanceConfigDataType = '';
+  protected $paramsType = InstanceParams::class;
+  protected $paramsDataType = '';
   /**
    * @var string
    */
@@ -340,6 +346,20 @@ class Instance extends \Google\Collection
   /**
    * @param string
    */
+  public function setKeyRevocationActionType($keyRevocationActionType)
+  {
+    $this->keyRevocationActionType = $keyRevocationActionType;
+  }
+  /**
+   * @return string
+   */
+  public function getKeyRevocationActionType()
+  {
+    return $this->keyRevocationActionType;
+  }
+  /**
+   * @param string
+   */
   public function setKind($kind)
   {
     $this->kind = $kind;
@@ -504,6 +524,20 @@ class Instance extends \Google\Collection
   public function getNetworkPerformanceConfig()
   {
     return $this->networkPerformanceConfig;
+  }
+  /**
+   * @param InstanceParams
+   */
+  public function setParams(InstanceParams $params)
+  {
+    $this->params = $params;
+  }
+  /**
+   * @return InstanceParams
+   */
+  public function getParams()
+  {
+    return $this->params;
   }
   /**
    * @param string

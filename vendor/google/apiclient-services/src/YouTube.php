@@ -800,6 +800,52 @@ class YouTube extends \Google\Service
                   'type' => 'string',
                 ],
               ],
+            ],'insertCuepoint' => [
+              'path' => 'youtube/v3/liveBroadcasts/cuepoint',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'id' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'onBehalfOfContentOwner' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'onBehalfOfContentOwnerChannel' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'part' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                  'repeated' => true,
+                ],
+                'resource.cueType' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'resource.durationSecs' => [
+                  'location' => 'query',
+                  'type' => 'integer',
+                ],
+                'resource.etag' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'resource.id' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'resource.insertionOffsetTimeMs' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'resource.walltimeMs' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
             ],'list' => [
               'path' => 'youtube/v3/liveBroadcasts',
               'httpMethod' => 'GET',

@@ -185,6 +185,7 @@ return [
         * Application Excel
         */
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
         /*
         * Application de Charts
@@ -245,7 +246,10 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Image' => 'Intervention\Image\Facades\Image'
+        'Image' => 'Intervention\Image\Facades\Image',
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+
+
         //'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
     ],
 

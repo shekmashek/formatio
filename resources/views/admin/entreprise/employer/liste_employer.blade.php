@@ -475,6 +475,7 @@
                                                 data-bs-target="#delete_emp_{{ $employers[$i]->id }}">
                                                 <i class=' bx bxs-trash' style='color:#e21717'></i>
                                         </button>
+                                        <a href="{{route('qr_code',$employers[$i]->id)}}">Badge</a>
                                     @endcan
                                 </td>
 
@@ -827,7 +828,7 @@
                     });
                 }
             });
-            
+
             $('.formateur_interne').click(function(){
                 var emp = $(this).val();
                 if ($(this).is(':checked')) {

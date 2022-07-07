@@ -93,8 +93,9 @@ class ProjectsLocationsTriggers extends \Google\Service\Resource
    * resource exists and does not have a policy set. (triggers.getIamPolicy)
    *
    * @param string $resource REQUIRED: The resource for which the policy is being
-   * requested. See the operation documentation for the appropriate value for this
-   * field.
+   * requested. See [Resource
+   * names](https://cloud.google.com/apis/design/resource_names) for the
+   * appropriate value for this field.
    * @param array $optParams Optional parameters.
    *
    * @opt_param int options.requestedPolicyVersion Optional. The maximum policy
@@ -123,6 +124,10 @@ class ProjectsLocationsTriggers extends \Google\Service\Resource
    * @param string $parent Required. The parent collection to list triggers on.
    * @param array $optParams Optional parameters.
    *
+   * @opt_param string filter Filter field. Used to filter the Triggers to be
+   * listed. Possible filters are described in https://google.aip.dev/160. For
+   * example, using "?filter=destination:gke" would list only Triggers with a gke
+   * destination.
    * @opt_param string orderBy The sorting order of the resources returned. Value
    * should be a comma-separated list of fields. The default sorting order is
    * ascending. To specify descending order for a field, append a `desc` suffix;
@@ -171,8 +176,9 @@ class ProjectsLocationsTriggers extends \Google\Service\Resource
    * `PERMISSION_DENIED` errors. (triggers.setIamPolicy)
    *
    * @param string $resource REQUIRED: The resource for which the policy is being
-   * specified. See the operation documentation for the appropriate value for this
-   * field.
+   * specified. See [Resource
+   * names](https://cloud.google.com/apis/design/resource_names) for the
+   * appropriate value for this field.
    * @param SetIamPolicyRequest $postBody
    * @param array $optParams Optional parameters.
    * @return Policy
@@ -191,8 +197,9 @@ class ProjectsLocationsTriggers extends \Google\Service\Resource
    * This operation may "fail open" without warning. (triggers.testIamPermissions)
    *
    * @param string $resource REQUIRED: The resource for which the policy detail is
-   * being requested. See the operation documentation for the appropriate value
-   * for this field.
+   * being requested. See [Resource
+   * names](https://cloud.google.com/apis/design/resource_names) for the
+   * appropriate value for this field.
    * @param TestIamPermissionsRequest $postBody
    * @param array $optParams Optional parameters.
    * @return TestIamPermissionsResponse
