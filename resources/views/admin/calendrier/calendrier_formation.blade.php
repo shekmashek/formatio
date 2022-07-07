@@ -620,6 +620,7 @@
 
 
                     //This checks the browser in use and populates da var accordingly with the browser
+                    // Ca marche sur Chrome
                     var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
                     // var mousewheelevt=(/Chrome/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
                     
