@@ -193,9 +193,9 @@ class SessionController extends Controller
             // $documents = $drive->file_list($cfp_nom,"Mes documents");
             $salle_formation = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
         }
-        if(Gate::allows('isReferent') or Gate::allows('isReferentSimple') or Gate::allows('isManager')){
+        if(Gate::allows('isReferent') or Gate::allows('isReferentSimple') or Gate::allows('isManager') or Gate::allows('isChefDeService')){
 
-            $etp_id = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
+            $etp_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
 
             $formateur = $fonct->findWhere('v_formateur_projet',['groupe_id'],[$id]);
             $datas = $fonct->findWhere("v_detail_session", ["groupe_id"], [$id]);
@@ -217,11 +217,17 @@ class SessionController extends Controller
             $frais_annexe = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id]);
 
            if(Gate::allows('isManager')) {
-                $dep = $fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id])->departement_entreprises_id;
+                $dep = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->departement_entreprises_id;
 
                 $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? and departement_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id,$dep]);
            }
-           else $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);
+           if(Gate::allows('isChefDeService')) {
+                $employe = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
+                $service = DB::select('select * from chef_de_service_entreprises  where chef_de_service_id = ? ', [$employe->id])[0]->service_id;
+                $dep = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->departement_entreprises_id;
+                $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? and departement_id = ? and service_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id,$dep,$service]);
+            }
+            else $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? and entreprise_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id,$etp_id]);
             $documents = DB::select('select * from mes_documents where groupe_id = ?',[$id]);
             $entreprise_id = $etp_id;
         }

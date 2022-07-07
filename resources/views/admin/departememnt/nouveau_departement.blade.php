@@ -445,7 +445,7 @@
                                                             <form action="{{route('modifier_chef_de_service')}}"  method="post">
                                                                 @csrf
                                                                 <label for="" class="label"> Service</label>
-                                                                <input type="text" class="form-control" required name="service" value="{{$service_departement[$i]->nom_departement}}" readonly>
+                                                                <input type="text" class="form-control" required name="service" value="{{$service_departement[$i]->nom_service}}" readonly>
                                                                 <label for="" class="label"> Chef de Service</label>
                                                                 <input type="hidden" class="form-control" required name="service_id" value="{{$service_departement[$i]->id}}">
                                                                 <input type="hidden" class="form-control" required name="ancien_user_chef" value="{{$service_departement[$i]->user_id}}">

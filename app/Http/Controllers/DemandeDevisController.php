@@ -68,7 +68,8 @@ class DemandeDevisController extends Controller
             // dd($resp_etp);
             // dd($etp);
             // ($resp_cfp,$module,$resp_etp,$etp);
-         //   Mail::to($resp_etp->email_resp)->send(new demande_devisMail($resp_cfp, $module, $resp_etp, $etp));
+            //envoi mail
+           Mail::to($resp_cfp->email_resp_cfp)->send(new demande_devisMail($objet,$resp_cfp, $module, $resp_etp, $etp,$description));
             return redirect()->back()->with('message', 'Votre demande de devis a été bien envoyé!');
         }
 
@@ -82,7 +83,7 @@ class DemandeDevisController extends Controller
      */
     public function show($id)
     {
-     
+
     }
 
     /**
@@ -119,4 +120,3 @@ class DemandeDevisController extends Controller
         //
     }
 }
- 

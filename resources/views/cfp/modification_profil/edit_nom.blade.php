@@ -20,8 +20,8 @@
     @endif
 
     <div class="col-lg-4">
-        <div class="p-3 form-control">
-            <form   class="btn-submit" action="{{route('enregistrer_modification_nom_cfp',$cfp->id)}}" method="post" enctype="multipart/form-data">
+        <div class="p-3">
+            <form class="btn-submit" action="{{route('enregistrer_modification_nom_cfp',$cfp->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">

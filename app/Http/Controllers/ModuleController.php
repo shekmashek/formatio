@@ -64,7 +64,7 @@ class ModuleController extends Controller
             //     select * from v_cours_programme as vcp WHERE mf.module_id = vcp.module_id) and cfp_id = ? order by mf.module_id desc',[$cfp_id]);
             // $mod_non_publies = DB::select('select * from moduleformation as mf where EXISTS (
             //     select * from v_cours_programme as vcp where mf.module_id = vcp.module_id) and status = 1 and cfp_id = ? order by module_id desc',[$cfp_id]);
-            $mod_hors_ligne = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 2 and md.cfp_id = ? order by md.nom_formation asc',[$cfp_id]);
+            $mod_hors_ligne = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 1 and md.etat_id = 1 and md.cfp_id = ? order by md.nom_formation asc',[$cfp_id]);
             $mod_publies = DB::select('select md.*,vm.nombre as total_avis FROM v_nombre_avis_par_module as vm RIGHT JOIN moduleformation as md on md.module_id = vm.module_id where md.status = 2 and md.etat_id = 1 and md.cfp_id = ? group by md.formation_id,vm.nombre order by md.nom_formation asc',[$cfp_id]);
 
 
@@ -184,9 +184,8 @@ class ModuleController extends Controller
         $min_pers = 5;
         $max_pers = 10;
         $level = 1;
-        $new_mod = DB::insert('insert into modules(reference,nom_module,formation_id,prix,prix_groupe,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,status,min,max,cfp_id,created_at)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,NOW())', [$reference, $nom_module, $categorie, $prix,$prix_groupe, $heure, $jour, $prerequis, $objectif, $description, $modalite, $materiel, $level, $cible, $bon_a_savoir, $prestation, $min_pers, $max_pers, $cfp_id]);
+        DB::insert('insert into modules(reference,nom_module,formation_id,prix,prix_groupe,duree,duree_jour,prerequis,objectif,description,modalite_formation,materiel_necessaire,niveau_id,cible,bon_a_savoir,prestation,min,max,cfp_id,created_at)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())', [$reference, $nom_module, $categorie, $prix,$prix_groupe, $heure, $jour, $prerequis, $objectif, $description, $modalite, $materiel, $level, $cible, $bon_a_savoir, $prestation, $min_pers, $max_pers, $cfp_id]);
         $id = DB::select('select id from modules order by id desc limit 1');
-        $test =  DB::select('select exists(select * from moduleformation where module_id = ' . $id[0]->id . ') as moduleExiste');
         $np = 4;
         $npc = 4;
         $nc = 7;
@@ -203,7 +202,7 @@ class ModuleController extends Controller
             for($i = 1; $i < $nc; $i++){
                 DB::insert('insert into competence_a_evaluers(titre_competence,objectif,module_id) values(?,?,?)',['Competence '.$i,(4 + $i),$id[0]->id]);
             }
-            DB::update('update modules set status = ? where id = ?',[2,$id[0]->id]);
+            DB::update('update modules set status = ? where id = ?',[1,$id[0]->id]);
             DB::commit();
             return redirect()->route('nouveau_module_update');
 
@@ -639,7 +638,9 @@ class ModuleController extends Controller
         $reference = $request->reference;
         $prix = $request->prix;
         $prix_groupe = $request->prix_groupe;
-        DB::update('update modules set duree_jour = ?, duree = ?, modalite_formation = ?, reference = ?, prix = ?, prix_groupe = ?, niveau_id = ?  where id = ?',[$jour,$heure,$modalite,$reference,$prix,$prix_groupe,$niveau, $id]);
+        $min_pers = $request->pax_min;
+        $max_pers = $request->pax_max;
+        DB::update('update modules set duree_jour = ?, duree = ?, modalite_formation = ?, reference = ?, prix = ?, prix_groupe = ?, min = ?, max = ?, niveau_id = ?  where id = ?',[$jour,$heure,$modalite,$reference,$prix,$prix_groupe,$min_pers,$max_pers,$niveau, $id]);
         return back();
     }
     public function edit_objectif(Request $request){
@@ -681,15 +682,15 @@ class ModuleController extends Controller
 
     public function mettre_en_ligne(Request $request){
         $id = $request->Id;
-        $etat = 1;
-        DB::update('update modules set etat_id = ? where id = ?',[$etat, $id]);
+        $status = 2;
+        DB::update('update modules set status = ? where id = ?',[$status, $id]);
         return response()->json(['success' =>'ok']);
     }
 
     public function mettre_hors_ligne(Request $request){
         $id = $request->Id;
-        $etat = 2;
-        DB::update('update modules set etat_id = ? where id = ?',[$etat, $id]);
+        $status = 1;
+        DB::update('update modules set status = ? where id = ?',[$status, $id]);
         return response()->json(['success' =>'ok']);
     }
 

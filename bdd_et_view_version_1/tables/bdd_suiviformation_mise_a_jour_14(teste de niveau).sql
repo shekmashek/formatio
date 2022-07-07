@@ -8,7 +8,7 @@ create table demande_test_niveaux(
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(entreprise_id) references entreprises(id) on delete cascade,
-    foreign key(cfp_id) references cfps(id) on delete cascade,
+    foreign key(cfp_id) references entreprises(id) on delete cascade,
     foreign key(formation_id) references formations(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -29,7 +29,7 @@ create table question_evaluations(
     formation_id bigint(20) unsigned not null,
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
-    foreign key(cfp_id) references cfps(id) on delete cascade,
+    foreign key(cfp_id) references entreprises(id) on delete cascade,
     foreign key(formation_id) references formations(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Formation.mg</title>
+    <title>Formation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
@@ -19,15 +19,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
-    <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('img/logos_all/iconFormation.webp') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
-
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    {{-- <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}"> --}}
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
     <style>
         .modal-backdrop{
             z-index: 1 !important;
@@ -175,7 +172,6 @@
                 </a>
 
             </li>
-
             @endcanany
 
             @can('isCFP')
@@ -220,14 +216,14 @@
             </li>
             </li>
             @endcanany --}}
-            @canany(['isReferent','isReferentSimple','isManager'])
+            {{-- @canany(['isReferent','isReferentSimple','isManager'])
             <li>
                 <a href="{{route('liste_projet')}}" class="d-flex projet nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
             </li>
-            @endcanany
+            @endcanany --}}
             @canany(['isReferent','isReferentSimple','isManager','isStagiaire'])
             <li>
                 <a href="{{route('formations')}}" class="d-flex nav_linke">
@@ -255,7 +251,7 @@
 
             </li>
             @endcanany
-            @canany(['isCFP','isReferent','isManager'])
+            @canany(['isCFP','isReferent','isManager','isChefDeService'])
             {{-- <li>
                 <a href="{{route('appel_offre.index')}}" class="d-flex nav_linke">
                     <i class='bx bx-mail-send'></i>
@@ -284,7 +280,7 @@
             @endcanany --}}
             {{-- formateurs --}}
 
-            @canany(['isCFP'])
+            @can('isCFP')
             <li>
                 <a href="{{route('liste_formateur')}}" class="d-flex formateurs nav_linke">
                     <i class='bx bxs-user-rectangle'></i>
@@ -307,7 +303,7 @@
                 </a>
 
             </li> --}}
-            @endcanany
+            @endcan
             {{-- manager --}}
             {{-- @canany(['isSuperAdmin','isAdmin'])
             <li>
@@ -445,7 +441,7 @@
 
             @endcanany
             {{-- competence --}}
-            @canany(['isReferent','isManager'])
+            @canany(['isReferent','isManager','isChefDeService'])
             @canany(['isReferent'])
             {{-- <li>
                 <a href="{{route('demande_test_niveau')}}" class="d-flex nav_linke">
@@ -470,7 +466,7 @@
             @endcanany
 
             {{-- plan de formation --}}
-            @canany(['isStagiaire','isManager','isReferent','isReferentSimple'])
+            @canany(['isStagiaire','isManager','isChefDeService','isChefDeService','isReferent','isReferentSimple'])
             <li>
                 <a @canany(['isStagiaire']) href="{{route('planFormation.index')}}" @endcanany
                     href="{{route('liste_demande_stagiaire')}}" class="d-flex nav_linke">
@@ -514,7 +510,7 @@
                 </a>
             </li>
             @endcan --}}
-            @can(['isCFP'])
+            {{-- @can(['isCFP'])
             <li>
                 <a href="{{route('liste_demande_devis')}}" class="d-flex demandedevis nav_linke">
                     <i class='bx bxs-notepad'></i>
@@ -522,7 +518,7 @@
                 </a>
             </li>
 
-            @endcan
+            @endcan --}}
             @canany(['isFormateur','isFormateurInterne'])
             <li>
                 <a href="{{route('profilProf',Auth::user()->id)}}" class="d-flex moncv nav_linke">
@@ -595,7 +591,7 @@
                             <div style="margin-left:90px;margin-top:-10px;font-size:30px;">@yield('title')</div>--}}
                 </div>
                 <div class="col-4 align-items-center justify-content-start d-flex flex-row ">
-                    @canany(['isReferent','isStagiaire','isManager','isReferentSimple'])
+                    @canany(['isReferent','isStagiaire','isManager','isChefDeService','isReferentSimple'])
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
 
@@ -624,7 +620,7 @@
 
                     <div class="row">
                         <div class="searchBoxMod d-flex flex-row py-2">
-                            @canany(['isReferent','isManager','isReferentSimple','isStagiaire'])
+                            @canany(['isReferent','isManager','isChefDeService','isReferentSimple','isStagiaire'])
                             <div class="btn_racourcis me-4">
                                 <a href="{{route('calendrier_formation')}}" class="text-center agenda" role="button"><span
                                         class="d-flex flex-column text-center"><i
@@ -632,7 +628,7 @@
                                             class="text_racourcis">Agenda</span></span></a>
                             </div>
                             @endcanany
-                            @canany(['isReferent','isManager','isReferentSimple'])
+                            @canany(['isReferent','isManager','isChefDeService','isReferentSimple'])
                                 <div class="btn_racourcis me-4">
                                     <a href="{{route('employes.liste')}}" class="employe text-center" role="button"><span
                                             class="d-flex flex-column"><i class='bx bxs-user-detail mb-2 mt-1'></i><span
@@ -774,17 +770,17 @@
                                         listes des notifications
                                     </ul>
                                 </div> --}}
-                                <div class="btn_racourcis dropdown prevent_affichage2 .navigation_module" >
+                                <div class="btn_racourcis dropdown prevent_affichage2" >
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-message-add bx-burst-hover mb-2 mt-1'></i>
+                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
                                         <span class="badge_invitation">9</span>
                                     </a>
                                     <ul class="dropdown-menu agrandir " aria-labelledby="invitation_cfp">
                                         <div class="m-4 mt-2" role="tabpanel">
-                                            <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab" style="font-size: 10px;">
+                                            <ul class="nav nav-tabs d-flex flex-row" id="myTab" style="font-size: 10px;">
                                                 <li class="nav-item ">
                                                     <a href="#invitation_attente" class="nav-link active" data-bs-toggle="tab">Invitations en attente</a>
                                                 </li>
@@ -831,7 +827,7 @@
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
                                 </div>
-                                <div class="btn_racourcis dropdown prevent_affichage .navigation_module" >
+                                <div class="btn_racourcis dropdown prevent_affichage " >
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     {{-- <a href="#" class="dropdown-toggle" role="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
@@ -843,11 +839,11 @@
                                         listes des notifications
                                     </ul> --}}
                                 </div>
-                                <div class="btn_racourcis dropdown prevent_affichage2 .navigation_module" >
+                                <div class="btn_racourcis dropdown prevent_affichage2" >
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
                                     <a href="#" class="dropdown-toggle" role="button" id="invitation_cfp" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                                        <span class=""><i class='bx bxs-message-add bx-burst-hover mb-2 mt-1'></i>
+                                        <span class=""><i class='bx bxs-message-add mb-2 mt-1'></i>
                                         <span class="text_racourcis"></span></span>
                                         <span class="badge_invitation"></span>
                                     </a>
@@ -907,7 +903,7 @@
                                         </a></li>
                                     </ul>
                                 @endcan
-                                @can('isManager')
+                                @canany(['isManager','isChefDeService'])
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
                                         <li><a class="dropdown-item" href="{{route('planFormation.index')}}"> <i
@@ -920,7 +916,7 @@
                                                     class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
 
                                     </ul>
-                                @endcan
+                                @endcanany
                                 @canany(['isReferent','isReferentSimple'])
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
@@ -930,7 +926,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog icon_creer_admin'></i></a>
+                                    <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog bx-spin-hover icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuParametre">
                                         <li id="parametre">
                                             <a class="dropdown-item" href="{{route('aff_parametre_referent')}}">
@@ -998,7 +994,7 @@
                                         </li>
                                     </ul>
                                     @canany(['isCFPPrincipale','isPremium'])
-                                        <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog icon_creer_admin'></i></a>
+                                        <a class="dropdown-toggle p-1" id="dropdownMenuParametre" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-cog bx-spin-hover icon_creer_admin'></i></a>
                                         <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuParametre">
                                             <li id="parametre">
                                                 <a class="dropdown-item" href="{{route('affichage_parametre_cfp')}}">
@@ -1018,7 +1014,7 @@
                                         </ul>
                                     @endcanany
                                 @endcan
-                                <a class="dropdown-toggle p-1" id="dropdownMenuSuite" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-grid-alt icon_creer_admin'></i></a>
+                                <a class="dropdown-toggle p-1" id="dropdownMenuSuite" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-grid-alt bx-burst-hover icon_creer_admin'></i></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuSuite">
                                     <div class="card card_suite">
                                         <div class="card-body py-0">
@@ -1065,7 +1061,7 @@
                                 <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuProfil">
                                     <div class="card card_profile pt-3">
                                         <div class="card-title">
-                                            <div class="row px-3">
+                                            <div class="row px-3 mt-2">
                                                 <div class="col-7">
                                                     <span class="titre_card_profil"><img src="{{asset('img/logos_all/iconFormation.webp')}}" alt="logo_mini" title="logo formation.mg" width="30px" height="30px">Formation.mg</span>
                                                 </div>

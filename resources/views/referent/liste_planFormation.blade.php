@@ -31,7 +31,7 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                    @canany(['isReferent','isManager','isSuperAdmin'])
+                                    @canany(['isReferent','isManager','isChefDeService','isSuperAdmin'])
                                         @canany(['isSuperAdmin'])
                                             <th>Entreprise</th>
                                         @endcanany

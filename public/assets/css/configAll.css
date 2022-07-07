@@ -91,7 +91,7 @@
     color: var(--txt_color) !important;
     /* background: var(--bg_color_nouveau); */
     /* background-image: linear-gradient(60deg, var(--bg_color_ajouter), var(--bg_color_nouveau)); */
-    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-image: linear-gradient(60deg, #07cd19, #077127);
     position: relative;
     top: 5px;
     border-radius: var(--brd_radius);
@@ -102,8 +102,8 @@
 
 .btn_nouveau:hover{
     text-decoration: none;
-    color: var(--bg_color_enregistrer) !important;
-    border: 1px solid var(--bg_color_enregistrer);
+    color: var(--bg_color_ajouter) !important;
+    border: 1px solid var(--bg_color_ajouter);
     /* background-color: var(--txt_color); */
     background: transparent;
 }
@@ -113,13 +113,13 @@
     top: 1px;
     color: var(--txt_color) !important;
     padding: var(--padding_icon);
-    background-color: var(--bg_enregistrer_bx);
+    background-color: var(--bg_color_ajouter);
     border-radius: var(--brd_radius);
 }
 
 .btn_nouveau:hover .bx{
     color: var(--txt_color);
-    background-image: linear-gradient(60deg, #f206ee, #0765f3);
+    background-image: linear-gradient(60deg, #07cd19, #077127);
 }
 
 /* button annuler */

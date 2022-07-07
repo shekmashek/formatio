@@ -1,3 +1,4 @@
+-- Active: 1656400043423@@127.0.0.1@3306@bdd_nicole
 
 
 CREATE OR REPLACE VIEW v_liste_avis_interne AS SELECT

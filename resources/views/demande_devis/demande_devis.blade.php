@@ -9,19 +9,19 @@
 <body>
     <p>
         Bonjour {{$resp_cfp->nom_resp_cfp." ".$resp_cfp->prenom_resp_cfp}}, <br>
-        {{$resp_etp->nom_resp." ".$resp_etp->prenom_resp}} responsable de <strong>{{$etp->nom_etp}}</strong> souhaite demander un devis à propos du module <strong>{{$module->nom_module}}</strong> de la formation {{$module->nom_formation}} . <br>
+        Je suis {{$resp_etp->nom_resp." ".$resp_etp->prenom_resp}} responsable de <strong>{{$etp->nom_etp}}</strong>, je souhaite vous demander un devis à propos du module <strong>{{$module->nom_module}}</strong> de la formation {{$module->nom_formation}} . <br>
+        {{$detail}}
     </p>
     <p>
-        Pour toute information et assistance concernant <strong>{{$etp->nom_etp}}</strong>,<br>
-        Merci de prendre contact avec : <br>
+
         <p>
-            <strong>{{$resp_etp->nom_resp.' '.$resp_etp->prenom_resp}}</strong> responsable {{$resp_etp->fonction_resp}}<br>
-            tél: {{$resp_etp->telephone_resp}}<br>
-            {{$resp_etp->email_resp}}
+            Référent principale de {{$etp->nom_etp}}<br>
+            Téléphone: {{$resp_etp->telephone_resp}}<br>
+            E-mail : {{$resp_etp->email_resp}}
         </p>
-        Bonne continuation, <br><br>
+
         Cordialement <br>
-        <strong>L’équipe de {{$etp->nom_etp}}</strong> <br>
+
     </p>
 </body>
 </html>

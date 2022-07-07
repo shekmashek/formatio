@@ -42,6 +42,7 @@ select
         s.entreprise_id,
         s.user_id,
         s.photos,
+        s.service_id,
         concat(SUBSTRING(s.nom_stagiaire, 1, 1),SUBSTRING(s.prenom_stagiaire, 1, 1)) as sans_photos,
         (s.departement_entreprises_id) departement_id,
         s.cin,

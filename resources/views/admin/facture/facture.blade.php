@@ -366,11 +366,11 @@
                                             <tr>
                                                 <td>
                                                     @if($actif->facture_encour =="en_cour"  || $actif->facture_encour =="terminer")
-                                                        
+
                                                         <h6><a href="#collapseprojet_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
 
                                                     @endif
-                            
+
                                                 </td>
                                                 <td>
                                                     <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -492,7 +492,7 @@
                                                                     <form action="{{route('valid_facture')}}" method="POST">
                                                                         @csrf
                                                                         <input name="num_facture" type="hidden" value="{{$actif->num_facture}}">
-                                                                        <button type="submit" class="btn "><i class='bx bx-file'></i> Valider</button>
+                                                                        <button type="submit" class="btn "><i class='bx bx-file'></i> Validé</button>
                                                                     </form>
                                                                 </li>
                                                                 <li>
@@ -1236,7 +1236,7 @@
                                                                 @foreach ($facture_payer as $actif)
                                                                 <tr>
                                                                     <td>
-                                                                        <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>   
+                                                                        <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
                                                                     </td>
                                                                     <td>
                                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -1569,7 +1569,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                             {{-- debut modal encaissement --}}
                             <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -1595,6 +1595,6 @@
             </div>
             {{-- inmportation fonction js pour cfp --}} @include("admin.facture.function_js.js_cfp") @endsection
             {{-- <script type="text/javascript">
-           
+
                             </script> --}}
-            
+

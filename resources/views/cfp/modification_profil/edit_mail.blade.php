@@ -28,7 +28,8 @@
                 @csrf
                 <div class="row px-3 mt-4">
                     <div class="form-group mt-1 mb-1">
-                    <input type="email" value="   {{ $cfp->email}}" class="form-control test input"  name="mail">
+                    <input type="hidden" value="resp">
+                    <input type="email" value="{{ $cfp->email}}" class="form-control test input"  name="mail">
                         <label class="form-control-placeholder ">Email</label>
                     </div>
                 </div>

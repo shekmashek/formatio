@@ -1,4 +1,7 @@
 -- Active: 1656588558198@@127.0.0.1@3306@bdd_suivi_formation_version_1.2
+CREATE OR REPLACE
+
+
 CREATE OR REPLACE VIEW v_departement_service_entreprise AS SELECT
      dep.id as departement_entreprise_id,
     serv.id as service_id,
@@ -24,7 +27,6 @@ SELECT
     employers.genre_id,
     (genre.genre) genre_stagiaire,
     (employers.fonction_emp) fonction_stagiaire,
-    employers.poste_emp,
     (employers.email_emp) mail_stagiaire,
     (employers.telephone_emp) telephone_stagiaire,
     employers.user_id,
@@ -69,7 +71,6 @@ SELECT
     employers.genre_id,
     (genre.genre) sexe_resp,
     (employers.fonction_emp) fonction_resp,
-    (employers.poste_emp) poste_resp,
     (employers.email_emp) email_resp,
     (employers.telephone_emp) telephone_resp,
     employers.user_id,
@@ -116,7 +117,6 @@ SELECT
     employers.genre_id,
     (genre.genre) genre_chef,
     (employers.fonction_emp) fonction_chef,
-    employers.poste_emp,
     (employers.email_emp) mail_chef,
     (employers.telephone_emp) telephone_chef,
     employers.user_id,

@@ -257,28 +257,22 @@ ul li {
   margin-bottom: 4rem;
 }
 
-@keyframes images{
-  0%{
-    opacity: 0;
-  }
-  25%{
-    transform: rotate(360deg);
+@keyframes updown{
+  0% , 100%{
+    transform: translateY(0);
   }
   50%{
-    transform: rotate(-180deg);
-  }
-  75%{
-    opacity: 1;
+    transform: translateY(40px);
   }
 }
 
 .section2_img img{
   height: 20rem;
   width: 20rem;
-  animation-name: images;
-  animation-duration: 5s;
+  animation-name: updown;
+  animation-duration: 4s;
   animation-iteration-count: infinite;
-  animation-delay: 5s;
+  animation-delay: 3s;
 }
 
 .section2 h1{

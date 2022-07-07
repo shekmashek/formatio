@@ -10,7 +10,7 @@
     {{-- Lien font awesome icons --}}
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="shortcut icon" href="{{asset('maquette/logo_fmg7635dc.webp') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('img/logos_all/iconFormation.webp') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/index_accueil.css')}}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
@@ -25,7 +25,7 @@
         <nav class="navbar navbar-expand-lg navbar-light fixed-top pb-0">
             <div class="container-fluid">
                 <div class="left_menu ms-2">
-                    <a href="{{route('accueil_perso')}}"><p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('maquette/logo_fmg7635dc.webp') }}" alt="logo"> Formation.mg</p></a>
+                    <a href="{{route('accueil_perso')}}"><p class="titre_text m-0 p-0"><img class="img-fluid" src="{{ asset('img/logos_all/iconFormation.webp') }}" alt="logo"> Formation.mg</p></a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -109,7 +109,7 @@
                 <div class="row">
                     <div class="container">
                         <div class="col-12 section2_img">
-                            <img src="{{asset('maquette/logo_fmg7635dctrans.webp')}}" alt="logo" class="img-fluid">
+                            <img src="{{asset('img/logos_all/iconFormation.webp')}}" alt="logo" class="img-fluid">
                         </div>
                         <h1 class="text-center mb-3">Bienvenue chez Formation.mg</h1>
                         {{-- <h1 class="text-center mb-5">Formation.mg, l'innovation digital au sein des organismes de formations</h1> --}}

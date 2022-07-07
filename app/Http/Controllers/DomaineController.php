@@ -62,7 +62,7 @@ class DomaineController extends Controller
             $domaine_col4 = DB::select('select * from domaines limit '.$offset.' offset '.($offset*3).'');
             return view('referent.catalogue.formation', compact('domaines', 'categorie','domaine_col1','domaine_col2','domaine_col3','domaine_col4'));
         }
-        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager')) {
+        if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager') or Gate::allows('isChefDeService')) {
             //liste formation
             $categorie = formation::orderBy('nom_formation')->get();
             // $domaines = Domaine::all();

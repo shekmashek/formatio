@@ -3,7 +3,7 @@
 <p class="text_header m-0 mt-1">Modules</p>
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
+{{-- <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}"> --}}
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/inputControlModules.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
@@ -38,11 +38,15 @@
             <div class="tab-pane show fade" id="hors_ligne">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
-                        <div class="col-12">
+                        <div class="col-11">
                             <p class="mb-0 ">Le catalogue hors ligne regroupe tous les modules qui sont déjá términer et attendent d'être mises en ligne.
                                 <br>
                                 Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
-                                visibles publiquement s'ils sont mises en lignes.</p>
+                                visibles publiquement s'ils sont mises en lignes.
+                            </p>
+                        </div>
+                        <div class="col-1 text-end">
+                            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();"></i>
                         </div>
                     </div>
                     <div class="d-flex">
@@ -152,7 +156,7 @@
                                             <div class="col-8">
                                                 <div class="new_btn_programme text-center">
                                                     <div class="text-uppercase">
-                                                        @if ($mod->etat_id == 2)
+                                                        @if ($mod->status == 1)
                                                         <div class="form-check form-switch d-flex flex-row">
                                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix_hors_ligne">Hors&nbsp;Ligne</span></label>
                                                             <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch_{{$mod->module_id}}" data-bs-target="#en_ligne_{{$mod->module_id}}" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne">
@@ -222,11 +226,14 @@
             <div class="tab-pane show fade active" id="publies">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
-                        <div class="col-12">
+                        <div class="col-11">
                             <p class="mb-0 ">Le catalogue en ligne regroupe tous les modules qui sont déjá mises en ligne.
                                 <br>
                                 Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
                                 visibles publiquement.</p>
+                        </div>
+                        <div class="col-1 text-end">
+                            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();"></i>
                         </div>
                     </div>
                     <div class="d-flex">
@@ -338,7 +345,7 @@
                                             <div class="col-8">
                                                 <div class="new_btn_programme text-center">
                                                     <div class="text-uppercase">
-                                                        @if ($mod->etat_id == 1)
+                                                        @if ($mod->status == 2)
                                                         <div class="form-check form-switch d-flex flex-row">
                                                             <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;Ligne</span></label>
                                                             <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch2_{{$mod->module_id}}" data-bs-target="#hors_ligne_{{$mod->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked >
@@ -692,10 +699,10 @@
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="mytab">
             <li class="nav-item">
-                <a href="#hors_lignes" class="nav-link" data-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
+                <a href="#hors_lignes" class="nav-link" data-bs-toggle="tab">Catalogue Hors ligne&nbsp;&nbsp;&nbsp;{{count($mod_hors_ligne)}}</a>
             </li>
             <li class="nav-item ">
-                <a href="#publiees" class="nav-link active" data-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
+                <a href="#publiees" class="nav-link active" data-bs-toggle="tab">Catalogue en Ligne&nbsp;&nbsp;&nbsp;{{count($mod_publies)}}</a>
             </li>
             <li class="">
                 <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-2'></i>nouveau module</a>
@@ -707,11 +714,14 @@
             <div class="tab-pane show fade" id="hors_lignes">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
-                        <div class="col-12">
+                        <div class="col-11">
                             <p class="mb-0 ">Le catalogue hors ligne regroupe tous les modules qui sont déjá términer et attendent d'être mises en ligne.
                                 <br>
                                 Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
                                 visibles publiquement s'ils sont mises en lignes.</p>
+                        </div>
+                        <div class="col-1 text-end">
+                            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();"></i>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -721,7 +731,7 @@
                             {{-- {{dd($mod_hors_ligne)}} --}}
                             @foreach ($mod_hors_ligne as $info)
                             {{-- {{dd($info)}} --}}
-                            <div class="row liste__formation justify-content-space-between mb-4">
+                            <div class="row liste__formation justify-content-space-between mb-4 ribbon">
                                 <div class="col-1 d-flex flex-column">
                                     <a href="{{route('detail_cfp',$info->cfp_id)}}" class="justify-content-center text-center">
                                         <img src="{{asset('images/CFP/'.$info->logo)}}" alt="logo" class="img-fluid" style="width: 100px; height:50px;">
@@ -737,14 +747,11 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div class="liste__formation__avis mb-3 d-flex flex-row justify-content-between">
                                         <div>
                                             <div class="Stars" style="--note: {{ $info->pourcentage }};">
                                             </div>
-
-
-
                                             <span class="me-3">{{ $info->pourcentage }}/5
                                                 @if($info->total_avis != null)
                                                 ({{$info->total_avis}} avis)
@@ -775,8 +782,13 @@
                                         </div>
                                         <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
                                         </div>
-                                        <div><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                                        <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                                         </div>
+                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                            <div>
+                                                <span class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-2 text-end">
@@ -806,7 +818,7 @@
                                         <div class="col-12">
                                             <div class="new_btn_programme text-center">
                                                 <div class="text-uppercase">
-                                                    @if ($info->etat_id == 2)
+                                                    @if ($info->status == 1)
                                                     <div class="form-check form-switch d-flex flex-row">
                                                         <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix_hors_ligne">Hors&nbsp;Ligne</span></label>
                                                         <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch_{{$info->module_id}}" data-bs-target="#liste_en_ligne_{{$info->module_id}}" type="checkbox" value="{{$mod->module_id}}" title="activer pour mettre en ligne">
@@ -817,6 +829,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- @if($info->jours_restant > 0)
+                                    <div class="col-1">
+                                        <span class="ribbon2"><span>Nouveau<br>J - {{$info->jours_restant}}</span></span>
+                                    </div>
+                                    @endif --}}
                                 </div>
                                 <div class="modal fade" id="listModal_{{$info->module_id}}" tabindex="-1"
                                     role="dialog" aria-labelledby="listModal" aria-hidden="true">
@@ -908,11 +925,14 @@
             <div class="tab-pane show fade active" id="publiees">
                 <div class="container-fluid p-0 mt-3 me-3">
                     <div class="row instruction mb-3">
-                        <div class="col-12">
+                        <div class="col-11">
                             <p class="mb-0 ">Le catalogue en ligne regroupe tous les modules qui sont déjá mises en ligne.
                                 <br>
                                 Ce sont les modules qui s'afficheront dans votre catalogue de formation et qui seront
                                 visibles publiquement.</p>
+                        </div>
+                        <div class="col-1 text-end">
+                            <i class='bx bx-x-circle fs-5' onclick="cacher_instruction();"></i>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -972,8 +992,13 @@
                                         </div>
                                         <div class="me-2"><i class="bx bxs-devices bx_icon"></i><span>&nbsp;{{$info->modalite_formation}}</span>
                                         </div>
-                                        <div><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
+                                        <div class="me-3"><i class='bx bx-equalizer bx_icon'></i><span>&nbsp;{{$info->niveau}}</span>
                                         </div>
+                                        @if($mod->min_pers != 0 && $mod->max_pers != 0)
+                                            <div>
+                                                <span class="">&nbsp;{{$mod->min_pers}}&nbsp;à&nbsp;{{$mod->max_pers}}&nbsp;pax</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-2 text-end">
@@ -1003,7 +1028,7 @@
                                         <div class="col-12">
                                             <div class="new_btn_programme text-center">
                                                 <div class="text-uppercase">
-                                                    @if ($info->etat_id == 1)
+                                                    @if ($info->status == 2)
                                                     <div class="form-check form-switch d-flex flex-row">
                                                         <label class="form-check-label" for="flexSwitchCheckChecked"><span class="button_choix">En&nbsp;Ligne</span></label>
                                                         <input class="form-check-input  ms-3" data-bs-toggle="modal" id="switch2_{{$info->module_id}}" data-bs-target="#liste_hors_ligne_{{$info->module_id}}" type="checkbox" title="désactiver pour mettre hors ligne" checked >

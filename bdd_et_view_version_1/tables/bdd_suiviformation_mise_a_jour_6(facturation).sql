@@ -53,7 +53,7 @@ CREATE TABLE `factures` (
   `remise` int(11) DEFAULT 0,
   `remise_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1 REFERENCES type_remise(id) ON DELETE CASCADE,
   `other_message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `cfp_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `entreprise_id` bigint(20) UNSIGNED NOT NULL REFERENCES entreprise_id(id) ON DELETE CASCADE
@@ -70,8 +70,8 @@ CREATE TABLE `encaissements` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `num_facture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
-  `resp_cfp_id` bigint(20) NOT NULL REFERENCES responsables_cfp(id) ON DELETE CASCADE,
+  `cfp_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
+  `resp_cfp_id` bigint(20) NOT NULL REFERENCES employers(id) ON DELETE CASCADE,
   `nom_resp_cfp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mode_financement_id` bigint(20) UNSIGNED NOT NULL REFERENCES mode_financements(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -89,7 +89,7 @@ CREATE TABLE `montant_frais_annexes` (
   `pu` int(11) NOT NULL DEFAULT 0,
   `projet_id` bigint(20) UNSIGNED DEFAULT NULL REFERENCES projets(id) ON DELETE CASCADE,
   `entreprise_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
-  `cfp_id` bigint(20) NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  `cfp_id` bigint(20) NOT NULL REFERENCES entreprises(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

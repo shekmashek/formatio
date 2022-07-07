@@ -35,7 +35,7 @@ class FormateurMail extends Mailable
     public function build()
     {
        return $this->from($this->mail_cfp)
-                    ->subject('Convocation à une formation')
+                    ->subject('Invitation de collaboration sur formation.mg')
                     ->view('emails.convocationFormateur')
                     ->with([
                         'nom_formateur' => $this->nom_formateur,

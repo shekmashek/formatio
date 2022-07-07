@@ -9,10 +9,10 @@
 <div class="container" role="tabpanel">
     <ul class="nav nav-tabs navigation_salle mt-4" id="myTab" role="tablist">
         <li class="nav-item active" role="presentation">
-        <a href="#liste_salle" class="nav-link active" id="home-tab" data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="color: black">Vos salles&nbsp;&nbsp;{{ count($salles) }}</a>
+        <a href="#liste_salle" class="nav-link active" id="home-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="color: black">Vos salles&nbsp;&nbsp;{{ count($salles) }}</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a href="#ajout_salle" class="nav-link" id="profile-tab" data-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" style="color: black">Ajouter une salle</a>
+            <a href="#ajout_salle" class="nav-link" id="profile-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" style="color: black">Ajouter une salle</a>
         </li>
     </ul>
     <div class="tab-content"  id="myTabContent">

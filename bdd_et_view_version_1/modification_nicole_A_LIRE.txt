@@ -23,5 +23,317 @@ copier le script create table employers dans bdd_suiviformation_mis_a_jour_3 : e
 copier le script dans bdd_suiviformation_view_employes
 recopier view v_stagiaire_entreprise dans bdd_suiviformation_view_1(view miasa + avis)
 
+--06Juillet
+Les modifications dans bdd_suiviformation_mis_a_jour_3(entreprises):
+
+CREATE TABLE `type_entreprise` (
+    `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `type_entreprise` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `type_entreprise` (`type_entreprise`) VALUES
+('entreprise'),
+('of');
+
+ALTER TABLE entreprises
+    ADD slogan varchar(255) COLLATE utf8mb4_unicode_ci default null,
+    ADD presentation text COLLATE utf8mb4_unicode_ci default NULL,
+    ADD specialisation text COLLATE utf8mb4_unicode_ci default NULL,
+    ADD type_entreprise_id bigint(20) UNSIGNED default 1  REFERENCES type_entreprise(id);
+
+INSERT INTO `secteurs` (`nom_secteur`) VALUES ('Autres'); dans  bdd_suiviformation_mis_a_jour_3(entreprises)
+ALTER TABLE `entreprises` CHANGE `secteur_id` `secteur_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '8';
+
+Les modifications dans bdd_suiviformation_mis_a_jour_1(table mere)
+CREATE OR REPLACE VIEW cfps as SELECT
+    id,
+    nom_etp as nom,
+    adresse_rue as adresse_lot,
+    adresse_quartier,
+    adresse_code_postal,
+    adresse_ville,
+    adresse_region,
+    email_etp as email,
+    telephone_etp as telephone,
+    slogan,
+    nif,
+    stat,
+    rcs,
+    cif,
+    created_at,
+    updated_at,
+    logo,
+    activiter,
+    site_etp as site_web,
+    url_logo,
+    statut_compte_id,
+    presentation,
+    specialisation,
+    assujetti_id
+FROM entreprises WHERE entreprises.type_entreprise_id = 2;
+
+CREATE OR REPLACE view responsables_cfp as SELECT
+    (employers.id)id,
+    nom_emp as nom_resp_cfp,
+    prenom_emp as prenom_resp_cfp,
+    genre_id as sexe_resp_cfp,
+    date_naissance_emp as date_naissance_resp_cfp,
+    cin_emp as cin_resp_cfp,
+    email_emp as email_resp_cfp,
+    telephone_emp as telephone_resp_cfp,
+    fonction_emp as fonction_resp_cfp,
+    adresse_lot,
+    (employers.adresse_quartier) adresse_quartier,
+     (employers.adresse_quartier) adresse_code_postal,
+    (employers.adresse_quartier)  adresse_ville,
+     (employers.adresse_quartier) adresse_region,
+    photos as photos_resp_cfp,
+    entreprise_id as cfp_id,
+    user_id,
+    (employers.activiter) activiter,
+    prioriter,
+    url_photo,
+    (employers.created_at) created_at,
+    (employers.updated_at) updated_at
+FROM
+employers
+JOIN entreprises
+WHERE employers.entreprise_id = entreprises.id and entreprises.type_entreprise_id = 2;
+
+copier les alter ci-dessous
+
+ALTER TABLE `horaires` DROP cfp_id;
+ALTER TABLE `horaires` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `reseaux_sociaux` DROP cfp_id;
+ALTER TABLE `reseaux_sociaux` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `modules` DROP cfp_id;
+ALTER TABLE `modules` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `projets` DROP cfp_id;
+ALTER TABLE `projets` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `details` DROP cfp_id;
+ALTER TABLE `details` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `froid_evaluations` DROP cfp_id;
+ALTER TABLE `froid_evaluations` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `question_mere` DROP cfp_id;
+ALTER TABLE `question_mere` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `description_champ_reponse` DROP cfp_id;
+ALTER TABLE `description_champ_reponse` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `reponse_evaluationchaud` DROP cfp_id;
+ALTER TABLE `reponse_evaluationchaud` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `factures` DROP cfp_id;
+ALTER TABLE `factures` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `encaissements` DROP cfp_id;
+ALTER TABLE `encaissements` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `montant_frais_annexes` DROP cfp_id;
+ALTER TABLE `montant_frais_annexes` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+
+
+DROP TABLE demmande_cfp_etp;
+DROP TABLE demmande_etp_cfp;
+DROP TABLE demmande_cfp_formateur;
+DROP TABLE demmande_formateur_cfp;
+DROP TABLE refuse_demmande_cfp_etp;
+DROP TABLE refuse_demmande_etp_cfp
+
+create table demmande_cfp_etp(
+    id bigint(20) unsigned primary key not null auto_increment,
+    demmandeur_cfp_id bigint(20) unsigned not null,
+    inviter_etp_id bigint(20) unsigned not null,
+    resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade,
+    resp_etp_id bigint(20) unsigned,
+    activiter boolean not null default false,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
+    foreign key(demmandeur_cfp_id) references entreprises(id) on delete cascade,
+    foreign key(inviter_etp_id) references entreprises(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+create table demmande_etp_cfp(
+    id bigint(20) unsigned primary key not null auto_increment,
+    demmandeur_etp_id bigint(20) unsigned not null,
+    inviter_cfp_id bigint(20) unsigned not null,
+    activiter boolean not null default false,
+    resp_etp_id bigint(20) unsigned not null references responsables(id) on delete cascade,
+    resp_cfp_id bigint(20) unsigned,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
+    foreign key(inviter_cfp_id) references entreprises(id) on delete cascade,
+    foreign key(demmandeur_etp_id) references entreprises(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+create table demmande_cfp_formateur(
+    id bigint(20) unsigned primary key not null auto_increment,
+    demmandeur_cfp_id bigint(20) unsigned not null,
+    inviter_formateur_id bigint(20) unsigned not null,
+    resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade,
+    activiter boolean not null default false,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
+    foreign key(inviter_formateur_id) references formateurs(id) on delete cascade,
+    foreign key(demmandeur_cfp_id) references entreprises(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+create table demmande_formateur_cfp(
+    id bigint(20) unsigned primary key not null auto_increment,
+    demmandeur_formateur_id bigint(20) unsigned not null,
+    inviter_cfp_id bigint(20) unsigned not null,
+    resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade,
+    activiter boolean not null default false,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
+    foreign key(demmandeur_formateur_id) references formateurs(id) on delete cascade,
+    foreign key(inviter_cfp_id) references entreprises(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+create table refuse_demmande_cfp_etp(
+    id bigint(20) unsigned primary key not null auto_increment,
+    demmandeur_cfp_id bigint(20) unsigned not null,
+    inviter_etp_id bigint(20) unsigned not null,
+    resp_etp_id bigint(20) unsigned not null references responsables(id) on delete cascade,
+    resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade,
+    activiter boolean not null default false,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    foreign key(demmandeur_cfp_id) references entreprises(id) on delete cascade,
+    foreign key(inviter_etp_id) references entreprises(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+create table refuse_demmande_etp_cfp(
+    id bigint(20) unsigned primary key not null auto_increment,
+    demmandeur_etp_id bigint(20) unsigned not null,
+    inviter_cfp_id bigint(20) unsigned not null,
+    resp_etp_id bigint(20) unsigned not null references responsables(id) on delete cascade,
+    resp_cfp_id bigint(20) unsigned not null references responsables_cfp(id) on delete cascade,
+    activiter boolean not null default false,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    foreign key(inviter_cfp_id) references entreprises(id) on delete cascade,
+    foreign key(demmandeur_etp_id) references entreprises(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+ALTER TABLE `but_objectif` DROP cfp_id;
+ALTER TABLE `but_objectif` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `pedagogique` DROP cfp_id;
+ALTER TABLE `pedagogique` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `recommandation` DROP cfp_id;
+ALTER TABLE `recommandation` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `evaluation_action_formation` DROP cfp_id;
+ALTER TABLE `evaluation_action_formation` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `objectif_globaux` DROP cfp_id;
+ALTER TABLE `objectif_globaux` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `objectif_pedagogique` DROP cfp_id;
+ALTER TABLE `objectif_pedagogique` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `feed_back` DROP cfp_id;
+ALTER TABLE `feed_back` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `conclusion` DROP cfp_id;
+ALTER TABLE `conclusion` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `evaluation_resultat` DROP cfp_id;
+ALTER TABLE `evaluation_resultat` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `detail_recommandation` DROP cfp_id;
+ALTER TABLE `detail_recommandation` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `modules_interne` DROP etp_id;
+ALTER TABLE `modules_interne` ADD etp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `projets_particulier` DROP cfp_id;
+ALTER TABLE `projets_particulier` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `presences_particulier` DROP cfp_id;
+ALTER TABLE `presences_particulier` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+
+
+DROP TABLE demande_test_niveaux;
+create table demande_test_niveaux(
+    id bigint(20) unsigned primary key not null auto_increment,
+    description_test text not null,
+    entreprise_id bigint(20) unsigned not null,
+    cfp_id bigint(20) unsigned not null,
+    formation_id bigint(20) unsigned not null,
+    date_creation date default now(),
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
+    foreign key(entreprise_id) references entreprises(id) on delete cascade,
+    foreign key(cfp_id) references entreprises(id) on delete cascade,
+    foreign key(formation_id) references formations(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE question_evaluations; (supprimer à la main s'il y a une éventuelle erreur)
+create table question_evaluations(
+    id bigint(20) unsigned primary key not null auto_increment,
+    question text not null,
+    cfp_id bigint(20) unsigned not null,
+    formation_id bigint(20) unsigned not null,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
+    foreign key(cfp_id) references entreprises(id) on delete cascade,
+    foreign key(formation_id) references formations(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE iframe_cfp;
+create table iframe_cfp(
+    id bigint(20) unsigned primary key not null auto_increment,
+    cfp_id bigint(20) unsigned not null,
+    iframe TEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+    created_at timestamp NULL DEFAULT current_timestamp(),
+    updated_at timestamp NULL DEFAULT current_timestamp(),
+    foreign key(cfp_id) references entreprises(id) on delete cascade
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+ALTER TABLE `projets` DROP cfp_id;
+ALTER TABLE `projets` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+ALTER TABLE `detail_evaluation_action_formation` DROP cfp_id;
+ALTER TABLE `detail_evaluation_action_formation` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+
+ALTER TABLE `salle_formation_of` DROP cfp_id;
+ALTER TABLE `salle_formation_of` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+
+ALTER TABLE `demande_devis` DROP cfp_id;
+ALTER TABLE `demande_devis` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
+
+ALTER TABLE `encaissements` DROP resp_cfp_id;
+ALTER TABLE `encaissements` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
+
+ALTER TABLE `demmande_cfp_etp` DROP resp_cfp_id;
+ALTER TABLE `demmande_cfp_etp` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
+
+ALTER TABLE `demmande_cfp_formateur` DROP resp_cfp_id;
+ALTER TABLE `demmande_cfp_formateur` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
+
+ALTER TABLE `demmande_formateur_cfp` DROP resp_cfp_id;
+ALTER TABLE `demmande_formateur_cfp` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
+
+ALTER TABLE `refuse_demmande_cfp_etp` DROP resp_cfp_id;
+ALTER TABLE `refuse_demmande_cfp_etp` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
+
+ALTER TABLE `refuse_demmande_etp_cfp` DROP resp_cfp_id;
+ALTER TABLE `refuse_demmande_etp_cfp` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

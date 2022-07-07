@@ -991,7 +991,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
 
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
-            @canany(['isReferent','isReferentSimple','isManager', 'isCFP', 'isFormateur','isFormateurInterne'])
+            @canany(['isReferent','isReferentSimple','isManager','isChefDeService', 'isCFP', 'isFormateur','isFormateurInterne'])
                 <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
                         {{ $nb_projet }}</span>
                     @if ($nb_par_page >= $nb_projet)
@@ -1974,7 +1974,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                         </table>
                     @endif
                 @endcanany
-                @canany(['isReferent','isReferentSimple','isManager'])
+                @canany(['isReferent','isReferentSimple','isManager','isChefDeService'])
                     @if (count($data) <= 0)
                         <div class="d-flex mt-3 titre_projet p-1 mb-1">
                             <span class="text-center">Vous n'avez pas encore du projet.</span>
@@ -2460,7 +2460,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     <i class="bx bx-x " role="button" onclick="afficherFiltre();"></i>
                 </div>
                 <hr class="mt-2">
-                @canany(['isReferent', 'isCFP','isStagiaire','isReferentSimple','isManager'])
+                @canany(['isReferent', 'isCFP','isStagiaire','isReferentSimple','isManager','isChefDeService'])
                     <div class="col-12 pe-3">
                         <div class="row mb-3 p-2 pt-0">
                             <form action="{{ route('liste_projet') }}" method="GET">
@@ -2538,7 +2538,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                     </form>
                 </div>
                 @endcan --}}
-                @canany(['isReferent','isReferentSimple','isManager', 'isCFP'])
+                @canany(['isReferent','isReferentSimple','isManager', 'isCFP','isChefDeService'])
                     <div class="col-12 ps-5">
                 @endcanany
                 @canany(['isFormateur', 'isStagiaire','isFormateurInterne'])

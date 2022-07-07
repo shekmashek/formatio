@@ -256,6 +256,9 @@ a:focus{
     text-decoration: none;
 }
 
+.slogan_text{
+    font-size: .8rem;
+}
 .bx_modifier{
     display: none;
     transition: all .5s;
