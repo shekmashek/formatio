@@ -257,10 +257,10 @@
 
                             // buttonText: '',
 
-                            defaults: {
-                                fixedWeekCount: false,
-                            },
-                            // vuesur 3 mois
+//                             defaults: {
+// -                            fixedWeekCount: false,
+// -                        },
+                            // vue sur 3 mois
                             duration: { months: 3 },
                         },
                     },
@@ -283,9 +283,15 @@
                         });
 
                         $(info.el).tooltip('show');
+                        
                     },
 
-                    // console.log the description of events when clicking on them
+                    // hide the description of events when no longer hovering over them
+                    eventMouseLeave : function(info) {
+                        $(info.el).tooltip('hide');
+                    },
+
+
                     eventClick : function(info) {
 
 
@@ -617,37 +623,48 @@
                     var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
                     // var mousewheelevt=(/Chrome/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
                     
-                    console.log(mousewheelevt);
 
-
-                    //Prevents the scroll event for the windows so you cant scroll the window       
                     function preventDefault(e) {
-                    e = e || window.event;
-                    if (e.preventDefault)
                         e.preventDefault();
-                    e.returnValue = false;  
-                    }       
-
-                    //I think this could be eliminated but in the examples i found used it  
-                    function wheel(e) {
-                        preventDefault(e);        
                     }
-                    //adds the scroll event to the window       
-                    function disable_scroll(){
-                        if (document.attachEvent) //if IE (and Opera depending on user setting)
-                            document.attachEvent("on"+mousewheelevt, wheel);
-                        else if (document.addEventListener) //WC3 browsers
-                            document.addEventListener(mousewheelevt, wheel, false);                 
-                    }   
 
-                    //removes the scroll event to the window    
-                    function enable_scroll() 
-                    {
-                        if (document.removeEvent) //if IE (and Opera depending on user setting)
-                            document.removeEvent("on"+mousewheelevt, wheel);
-                        else if (document.removeEventListener) //WC3 browsers
-                            document.removeEventListener(mousewheelevt, wheel, false);  
-                    }           
+
+
+                    function preventDefaultForScrollKeys(e) {
+                        if (keys[e.keyCode]) {
+                            preventDefault(e);
+                            return false;
+                        }
+                    }
+
+                        // modern Chrome requires { passive: false } when adding event
+                        var supportsPassive = false;
+                    try {
+                        window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+                            get: function () { supportsPassive = true; } 
+                        }));
+                    } catch(e) {}
+
+                        var wheelOpt = supportsPassive ? { passive: false } : false;
+                        var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+                    // call this to Disable
+                    function disableScroll() {
+                        window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
+                        window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
+                        window.addEventListener('touchmove', preventDefault, wheelOpt); // mobile
+                        window.addEventListener('keydown', preventDefaultForScrollKeys, false);
+
+                    }
+
+                    // call this to Enable
+                    function enableScroll() {
+                        window.removeEventListener('DOMMouseScroll', preventDefault, false);
+                        window.removeEventListener(wheelEvent, preventDefault, wheelOpt); 
+                        window.removeEventListener('touchmove', preventDefault, wheelOpt);
+                        window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
+                        
+                    }
 
 
                     //binds the scroll event to the calendar's DIV you have made
@@ -659,41 +676,50 @@
                                 delta = evt.originalEvent.detail ? evt.originalEvent.detail*(-120) : evt.wheelDelta;
                             }           
 
-                        if(delta > 0){  
-                                calendar.next()    
+                            // If the current view if on timeGridWeek, we want to scroll the calendar
+                            if(delta > 0 && calendar.view.type !== 'timeGridWeek'){  
+                                calendar.next();
+                                $('.tooltip').hide();    
+                            } else if (calendar.view.type === 'timeGridWeek') {
+                                enableScroll();
                             }
-                            if(delta < 0){             
-                                calendar.prev();      
-                            }  
+                            if(delta < 0 && calendar.view.type !== 'timeGridWeek'){             
+                                calendar.prev();
+                                $('.tooltip').hide();      
+                            } else if (calendar.view.type === 'timeGridWeek') {
+                                enableScroll();
+                            }
 
                     });                   
 
 
                     //hover event to disable or enable the window scroll
                     calendar.el.addEventListener('mouseover', function() {
-                        disable_scroll();
-                        // console.log("mouseLeave");
+                        // disable_scroll();
+                        disableScroll();
+                        
                     });
                     calendar.el.addEventListener('mouseout', function() {
-                        enable_scroll();
-                        // console.log("mouseEnter");
+                        // enable_scroll();
+                        enableScroll();
 
                     });
-                    
-                    // disable windows scroll when hovering the calendar
-                   
+
 
                     //binds to the calendar's div the mouseleave event      
                     calendar.el.addEventListener("mouseleave", function() 
                     {
-                        enable_scroll();
+                        // console.log('mouse leave');
+                        enableScroll();
                     });
 
                     //binds to the calendar's div the mouseenter event   
                     calendar.el.addEventListener("mouseenter", function() 
                     {
-                        disable_scroll();
+                        // console.log('mouse enter');
+                        disableScroll();
                     });
+
 
         });
 
