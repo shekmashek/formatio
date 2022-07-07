@@ -1,23 +1,4 @@
-DROP TABLE IF EXISTS formateurs_interne;
-CREATE TABLE formateurs_interne (
-  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  nom_formateur varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  prenom_formateur varchar(191) COLLATE utf8mb4_unicode_ci,
-  mail_formateur varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  numero_formateur varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  photos varchar(191) COLLATE utf8mb4_unicode_ci,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL,
-  genre varchar(255) COLLATE utf8mb4_unicode_ci,
-  date_naissance varchar(255) COLLATE utf8mb4_unicode_ci,
-  adresse varchar(255) COLLATE utf8mb4_unicode_ci ,
-  cin varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  specialite varchar(255) COLLATE utf8mb4_unicode_ci,
-  niveau varchar(255) COLLATE utf8mb4_unicode_ci,
-  activiter boolean not null default true,
-  user_id bigint(20) UNSIGNED NOT NULL REFERENCES users(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
--- ts de ilaina ^
+
 
 DROP TABLE IF EXISTS projets_interne;
 CREATE TABLE projets_interne (

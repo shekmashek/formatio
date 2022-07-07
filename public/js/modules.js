@@ -113,4 +113,6 @@ function resetForm() {
     document.getElementById("frm_modif_module").reset();
 }
 
-
+function cacher_instruction() {
+    $(".instruction").hide();
+}

@@ -335,7 +335,7 @@
                                 <i class='bx bx-plus-medical bx_ajouter'></i>
                             </span>
                             @if(count($competences) > 3)
-                                <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_{{$id[0]->id}}" id="{{$id[0]->id}}" title="modifier les competence">
+                                <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_Compt{{$id[0]->id}}" id="{{$id[0]->id}}" title="modifier les competence">
                                     <i class='bx bx-edit bx_modifier'></i>
                                 </span>
                             @endif
@@ -369,14 +369,14 @@
                 </div>
                 <div>
                     <?php $i=0 ?>
-                    <div class="modal fade" id="Modal_{{$id[0]->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="Modal_Compt{{$id[0]->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{route('modifier_competence_etp')}}" method="POST">
                                     @csrf
                                     <input type="hidden" name="id" id="id" value="{{$id[0]->id}}">
                                     <div class="modal-header">
-                                        <h6>Compétences a évaluer</h6>
+                                        <h6>Modifier Compétences a évaluer</h6>
                                     </div>
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
