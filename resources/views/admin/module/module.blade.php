@@ -1565,12 +1565,12 @@
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     let lien = ($(e.target).attr('href'));
     localStorage.setItem('ActiveTabMod', lien);
-    alert(lien);
+    // alert(lien);
     if (lien == '#publiees' || lien == '#hors_lignes') {
     localStorage.setItem('ActiveTabMod', '#publies');
-    alert("okey");
+    // alert("okey");
     }
-    alert(lien);
+    // alert(lien);
 });
 let ActiveTabMod = localStorage.getItem('ActiveTabMod');
 if(ActiveTabMod){
