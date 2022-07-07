@@ -121,7 +121,7 @@ class SessionController extends Controller
         $competences = [];
         $all_frais_annexe = [];
         $frais_annexe = [];
-        $documents = [];
+        // $documents = [];
         $stagiaire = [];
         $formateur_cfp = [];
         $salle_formation = [];
@@ -214,7 +214,7 @@ class SessionController extends Controller
                 }
 
             $all_frais_annexe = DB::select('select * from frais_annexe_formation where groupe_id = ? and entreprise_id = ?',[$id,$etp_id]);
-            $frais_annexe = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id]);
+            $frais_annexe = DB::select('select * from frais_annexe_etp where entreprise_id = ?',[$etp_id]);
 
            if(Gate::allows('isManager')) {
                 $dep = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->departement_entreprises_id;
@@ -232,7 +232,7 @@ class SessionController extends Controller
             $entreprise_id = $etp_id;
         }
         if(Gate::allows('isFormateur')){
-            $drive = new getImageModel();
+            // $drive = new getImageModel();
             $formateur_id = formateur::where('user_id', $user_id)->value('id');
             $cfp_id = DB::select("select cfp_id from v_demmande_cfp_formateur where user_id_formateur = ?",[$user_id])[0]->cfp_id;
             if($type_formation_id  == 1){
@@ -253,7 +253,7 @@ class SessionController extends Controller
             $stagiaire = DB::select('select * from v_stagiaire_groupe where groupe_id = ? order by stagiaire_id asc',[$projet[0]->groupe_id]);
             // $entreprise_id = $projet[0]->entreprise_id;
             $cfp_nom = cfp::where('id',$cfp_id)->value('nom');
-            $documents = $drive->file_list($cfp_nom,"Mes documents");
+            // $documents = $drive->file_list($cfp_nom,"Mes documents");
         }
 
 
@@ -279,7 +279,7 @@ class SessionController extends Controller
         if(count($lieu_formation)>0){
             $lieu_formation = explode(',',$lieu_formation[0]->lieu);
         }
-        return view('projet_session.session', compact('id','ref','test','dataMontantSession','frais_annex','projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','documents','type_formation_id','entreprise_id','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation','frais_annexe'));
+        return view('projet_session.session', compact('id','ref','test','dataMontantSession','frais_annex','projet', 'formateur', 'nombre_stg','datas','stagiaire','ressource','presence_detail','competences','evaluation_avant','evaluation_apres','all_frais_annexe','evaluation_stg','type_formation_id','entreprise_id','devise','module_session','formateur_cfp','modalite','salle_formation','lieu_formation','frais_annexe'));
 
     }
 
@@ -613,19 +613,19 @@ class SessionController extends Controller
         return back();
     }
 
-    public function telecharger_fichier(){
-        $user_id = Auth::user()->id;
-        // $cfp = Cfp::where('user_id', $user_id)->value('nom');
-        // $fonct = new FonctionGenerique();
-        // $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-        // $cfp_id = $resp->cfp_id;
-        // $cfp = $resp->nom_cfp;
-        $namefile = request()->filename;
-        $cfp = request()->cfp;
-        $extension = request()->extension;
-        $drive = new getImageModel();
-        return $drive->download_file($cfp,"Mes documents",$namefile,$extension);
-    }
+    // public function telecharger_fichier(){
+    //     $user_id = Auth::user()->id;
+    //     // $cfp = Cfp::where('user_id', $user_id)->value('nom');
+    //     // $fonct = new FonctionGenerique();
+    //     // $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
+    //     // $cfp_id = $resp->cfp_id;
+    //     // $cfp = $resp->nom_cfp;
+    //     $namefile = request()->filename;
+    //     $cfp = request()->cfp;
+    //     $extension = request()->extension;
+    //     $drive = new getImageModel();
+    //     return $drive->download_file($cfp,"Mes documents",$namefile,$extension);
+    // }
 
     public function get_presence_stg(Request $request){
         $stg = $request->stagiaire;
@@ -685,10 +685,13 @@ class SessionController extends Controller
         if (Gate::allows('isReferentPrincipale')) {
             $etp_id = Responsable::where('user_id', $user_id)->value('entreprise_id');
         }
+        if (Gate::allows('isReferent')) {
+            $etp_id = Responsable::where('user_id', $user_id)->value('entreprise_id');
+        }
         if (Gate::allows('isManagerPrincipale')) {
             $etp_id = ChefDepartement::where('user_id', $user_id)->value('entreprise_id');
         }
-        $frais = DB::select('select * from frais_annexes where entreprise_id = ?', [$etp_id]);
+        $frais = DB::select('select * from frais_annexe_etp where entreprise_id = ?', [$etp_id]);
         return response()->json(['devise'=>$devise,'frais'=>$frais]);
     }
     public function fiche(Request $request){

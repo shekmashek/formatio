@@ -121,8 +121,17 @@ class Groupe extends Model
         return $format;
     }
 
-    public function statut_valuation_chaud($groupe_id,$stagiaire_id){
+    public function statut_evaluation_chaud($groupe_id,$stagiaire_id){
         $result = DB::select('select stagiaire_id from reponse_evaluationchaud where groupe_id = ? and stagiaire_id = ?',[$groupe_id,$stagiaire_id]);
+        if(count($result)>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    public function statut_evaluation_chaud_interne($groupe_id,$stagiaire_id){
+        $result = DB::select('select stagiaire_id from reponse_evaluationchaud_interne where groupe_interne_id = ? and stagiaire_id = ?',[$groupe_id,$stagiaire_id]);
         if(count($result)>0){
             return 1;
         }else{

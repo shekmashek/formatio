@@ -1576,3 +1576,33 @@ Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('ref
 
 
 Route::get("qr_code/{id}", "SimpleQRcodeController@generate")->name('qr_code');
+
+//projet interne
+Route::get('projet_interne/creation','ProjetInterneController@index')->name('projet_interne/creation');
+Route::post('projet_interne/enregistrement','ProjetInterneController@enregistrement')->name('projet_interne/enregistrement');
+Route::get('projet_interne/detail_session/{groupe?}','ProjetInterneController@detail_session')->name('projet_interne/detail_session');
+Route::get('detail_session_interne/{groupe?}', 'ProjetInterneController@detail_session')->name('detail_session_interne');
+Route::get('all_formateurs_interne', 'ProjetInterneController@getFormateur')->name('all_formateurs_interne');
+Route::get('add_participant_groupe_interne', 'ProjetInterneController@addParticipantGroupe')->name('add_participant_groupe_interne');
+Route::get('one_stagiaire_interne', 'ProjetInterneController@getOneStagiaire')->name('one_stagiaire_interne');
+Route::post('inserer_detail', 'ProjetInterneController@inserer_detail')->name('inserer_detail');
+Route::get('add_ressource_interne', 'ProjetInterneController@ajout_ressource')->name('add_ressource_interne');
+Route::get('get_presence_stg_interne', 'ProjetInterneController@get_presence_stg')->name('get_presence_stg_interne');
+Route::post('insert_presence_detail_interne', 'ProjetInterneController@insert_presence')->name('insert_presence_detail_interne');
+Route::post('insert_evaluation_stagiaire_interne', 'ProjetInterneController@insert_evaluation_stagiaire')->name('insert_evaluation_stagiaire_interne');
+Route::post('modifier_evaluation_stagiaire_interne', 'ProjetInterneController@modifier_evaluation_stagiaire')->name('modifier_evaluation_stagiaire_interne');
+Route::get('competence_stagiaire_interne', 'ProjetInterneController@get_competence_stagiaire')->name('competence_stagiaire_interne');
+Route::post('insert_evaluation_stagiaire_apres_interne', 'ProjetInterneController@insert_evaluation_stagiaire_apres')->name('insert_evaluation_stagiaire_apres_interne');
+Route::get('fiche_technique_interne_pdf/{id}','ProjetInterneController@fiche_technique_pdf')->name('fiche_technique_interne_pdf');
+Route::get('faireEvaluationChaud_interne/{groupe}', 'ProjetInterneController@evaluation_a_chaud')->name('faireEvaluationChaud_interne');
+Route::post('createEvaluationChaud_interne/{groupe}', 'ProjetInterneController@insertion_evaluationChaud_interne')->name('createEvaluationChaud_interne');
+Route::get('resultat_evaluation_interne/{groupe_id}','ProjetInterneController@evaluation_chaud_pdf')->name('resultat_evaluation_interne');
+Route::post('/modifier_detail/{id}', 'ProjetInterneController@modifier_detail')->name('modifier_detail');
+Route::get('/supprimer_detail/{id?}', 'ProjetInterneController@supprimer_detail')->name('supprimer_detail');
+Route::get('supprimer_participant_groupe_interne', 'ProjetInterneController@supprimmer_stagiaire')->name('supprimer_participant_groupe_interne');
+Route::get('supprimer_ressource_interne', 'ProjetInterneController@supprimer_ressource')->name('supprimer_ressource_interne');
+
+Route::get('parametrage_salle_etp','SalleFormationEtpController@index')->name('parametrage_salle_etp');
+Route::post('enregistrer_salle_etp','SalleFormationEtpController@store')->name('enregistrer_salle_etp');
+Route::get('supprimer_salle_etp/{id?}','SalleFormationEtpController@destroy')->name('supprimer_salle_etp');
+Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->name('modifier_salle_etp');

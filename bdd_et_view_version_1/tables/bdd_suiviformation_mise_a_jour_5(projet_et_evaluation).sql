@@ -3,7 +3,7 @@ create table type_formations(
   type_formation varchar(250) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `type_formations` (`type_formation`) VALUES ('Intra entreprise'),('Inter entreprise');
+INSERT INTO `type_formations` (`type_formation`) VALUES ('Intra'),('Inter');
 
 CREATE TABLE projets (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -183,54 +183,41 @@ insert into question_mere values(13,'Quels sont les points faibles de cette form
 insert into question_mere values(14,'Autres remarques','Repondre au question',1,null,null);
 
 
-insert into question_fille values (1,"Qualité Globale de la formation",1,1,null,null,null);
+insert into question_fille values (1,"Qualité Globale de la formation",1,1,null,null,0);
 
-insert into question_fille values (2,'Qualité Globale de la formation',1,2,null,null,null);
+insert into question_fille values (2,'Qualité Globale de la formation',1,2,null,null,0);
 
-insert into question_fille values (3,'Les objectifs de la formation ont-ils été clairement annoncés ?',2,3,null,null,null);
-insert into question_fille values (4,'Avez-vous eu une discussion avec notre hiérarchie concernant cette formation ?',2,3,null,null,null);
+insert into question_fille values (3,'Les objectifs de la formation ont-ils été clairement annoncés ?',2,3,null,null,4);
+insert into question_fille values (4,'Avez-vous eu une discussion avec notre hiérarchie concernant cette formation ?',2,3,null,null,4);
 
-insert into question_fille values (5,"Etes-vous satisfait de l'organisation du logistique et matériels utilisé (salle,ordinateur,vidéoprojecteur) ?",2,4,null,null,null);
-insert into question_fille values (6,"La durée du stage de 12 heures vous a-telle semblé adaptée ?",2,4,null,null,null);
+insert into question_fille values (5,"Etes-vous satisfait de l'organisation du logistique et matériels utilisé (salle,ordinateur,vidéoprojecteur) ?",2,4,null,null,0);
+insert into question_fille values (6,"La durée du stage de 12 heures vous a-telle semblé adaptée ?",2,4,null,null,4);
 
-insert into question_fille values (7,"Le formateur étail-il clair et dynamique ?",2,5,null,null,null);
-insert into question_fille values (8,"les exercices et activités étaient-ils pertinents ?",2,5,null,null,null);
-insert into question_fille values (9,"Le formateur a-t-il adapté la formation aux stagiaires ?",2,5,null,null,null);
+insert into question_fille values (7,"Le formateur étail-il clair et dynamique ?",2,5,null,null,4);
+insert into question_fille values (8,"les exercices et activités étaient-ils pertinents ?",2,5,null,null,4);
+insert into question_fille values (9,"Le formateur a-t-il adapté la formation aux stagiaires ?",2,5,null,null,4);
 
-insert into question_fille values (10,"Le rythme de la formation était-il?",2,6,null,null,null);
+insert into question_fille values (10,"Le rythme de la formation était-il?",2,6,null,null,3);
 
-insert into question_fille values (11,"Le programme étail-il clair et précis ?",2,7,null,null,null);
-insert into question_fille values (12,"Le programme étail-il adapté à vos besoins ?",2,7,null,null,null);
-insert into question_fille values (13,"Les supports de la formation étaient-ils clairs et utiles ?",2,7,null,null,null);
+insert into question_fille values (11,"Le programme étail-il clair et précis ?",2,7,null,null,4);
+insert into question_fille values (12,"Le programme étail-il adapté à vos besoins ?",2,7,null,null,4);
+insert into question_fille values (13,"Les supports de la formation étaient-ils clairs et utiles ?",2,7,null,null,4);
 
-insert into question_fille values (14,"Les objectifs du programme de formation sont-ils atteints ?",2,8,null,null,null);
+insert into question_fille values (14,"Les objectifs du programme de formation sont-ils atteints ?",2,8,null,null,4);
 
-insert into question_fille values (15,"Cette formation améliore-t-elle compétences ?",2,9,null,null,null);
-insert into question_fille values (16,"Ces nouvelles compétences vont-elles etre applicables dans votre travail ?",2,9,null,null,null);
+insert into question_fille values (15,"Cette formation améliore-t-elle compétences ?",2,9,null,null,4);
+insert into question_fille values (16,"Ces nouvelles compétences vont-elles etre applicables dans votre travail ?",2,9,null,null,4);
 
-insert into question_fille values (17,"",2,10,null,null,null);
-insert into question_fille values (18,"Vos commentaires: ",3,10,null,null,null);
+insert into question_fille values (17,"",2,10,null,null,2);
+insert into question_fille values (18,"Vos commentaires: ",3,10,null,null,0);
 
-insert into question_fille values (19,"",3,11,null,null,null);
+insert into question_fille values (19,"",3,11,null,null,0);
 
-insert into question_fille values (20,"",3,12,null,null,null);
+insert into question_fille values (20,"",3,12,null,null,0);
 
-insert into question_fille values (21,"",3,13,null,null,null);
+insert into question_fille values (21,"",3,13,null,null,0);
 
-insert into question_fille values (22,"",3,14,null,null,null);
-
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 3;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 4;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 6;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 7;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 8;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 9;
-UPDATE `question_fille` SET `point_max` = '3' WHERE `question_fille`.`id` = 10;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 11;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 12;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 13;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 15;
-UPDATE `question_fille` SET `point_max` = '4' WHERE `question_fille`.`id` = 16;
+insert into question_fille values (22,"",3,14,null,null,0);
 
 
 insert into description_champ_reponse values (1,'Note sur 10',1,1,10,null,null,0);
@@ -317,6 +304,18 @@ insert into description_champ_reponse values (61,'',21,1,null,null,null,0);
 
 insert into description_champ_reponse values (62,'',22,1,null,null,null,0);
 
+update description_champ_reponse set point_champ = 1 where descr_champs = 'Pas du tout';
+update description_champ_reponse set point_champ = 2 where descr_champs = 'Insuffisamment';
+update description_champ_reponse set point_champ = 3 where descr_champs = 'En partie';
+update description_champ_reponse set point_champ = 4 where descr_champs = 'Totalement';
+update description_champ_reponse set point_champ = 1 where descr_champs = 'Trop rapide';
+update description_champ_reponse set point_champ = 1 where descr_champs = 'Trop lent';
+update description_champ_reponse set point_champ = 3 where descr_champs = 'Adapté';
+update description_champ_reponse set point_champ = 1 where descr_champs = 'Non';
+update description_champ_reponse set point_champ = 2 where descr_champs = 'Oui';
+update description_champ_reponse set point_champ = 2 where descr_champs = 'Un peu';
+update description_champ_reponse set point_champ = 3 where descr_champs = 'Beaucoup';
+
 
 
 
@@ -368,3 +367,23 @@ create table status(
 
 
 insert into `status` (`status`)  VALUES   ('Prévisionnel'),('A venir'),('En cours'),('Terminé');
+
+drop table if exists detail_evaluation_action_formation;
+create table detail_evaluation_action_formation(
+    id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    pourcent decimal(5,2) not null,
+    evaluation_action_formation_id bigint(20) UNSIGNED NOT NULL REFERENCES evaluation_action_formation(id) ON DELETE CASCADE,
+    cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+    created_at timestamp,
+    updated_at timestamp,
+    groupe_id  bigint(20) UNSIGNED  NOT NULL REFERENCES groupes(id) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+create table salle_formation_of(
+  id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  cfp_id bigint(20) UNSIGNED NOT NULL REFERENCES cfps(id) ON DELETE CASCADE,
+  salle_formation text not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+alter table salle_formation_of add column ville VARCHAR(200);

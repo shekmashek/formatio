@@ -59,18 +59,6 @@
         text-align: center;
     }
 
-    /* .icon_plus {
-        color: #b8368f;
-        margin-top: -1rem;
-        font-size: 3rem;
-        position: sticky;
-        margin-left: 90%;
-    }
-
-    .icon_plus:hover {
-        cursor: pointer;
-    } */
-
     p {
         text-align: center !important;
     }
@@ -147,146 +135,65 @@
             }
         @endphp
     </span>
-    @canany(['isCFP'])
+    @can('isReferent')
         <a aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_nouveau_detail">
-            <button class="btn btn_nouveau"><i class='bx bx-plus-medical'></i>
-                Ajouter une séance</button></a>
-    @endcanany
+        <button class="btn btn_nouveau"><i class='bx bx-plus-medical'></i>Ajouter une séance</button></a>
+    @endcan
+        
 </nav>
 @if (count($datas) <= 0)
-    @if ($type_formation_id == 1)
-        <form onsubmit="change_active()" id="non_existante" action="{{ route('detail.store') }}" method="post">
-    @endif
-    @if ($type_formation_id == 2)
-        <form onsubmit="change_active()" id="non_existante" action="{{ route('store_detailInter') }}" method="post">
-    @endif
-    @csrf
-    <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
-    <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
+    <form onsubmit="change_active()" id="non_existante" action="{{ route('inserer_detail') }}" method="post">
+        @csrf
+        <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
+        <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
 
-    <table class="table table-bordered my-3" id="detail_panning">
-        <thead>
-            <tr>
-                <th><i class="fa fa-calendar-day entete"></i>&nbsp;Date </th>
-                <th><i class="fa fa-clock"></i>&nbsp;Heure début</th>
-                <th><i class="fa fa-clock"></i>&nbsp;Heure fin </th>
-                <th>
-                    @if ($type_formation_id == 1)
-                        <i class="fa fa-user"></i>&nbsp;Formateur
-                    @endif
-                    @if ($type_formation_id == 2)
-                        <i class="fa fa-home"></i>&nbsp;Ville
-                    @endif
-                </th>
-                <th><i class="fa fa-map-marker-alt"></i>&nbsp;Salle de formation</th>
-                @canany(['isCFP'])
-                <th>
-                    @if ($type_formation_id == 1)
-                        <button id="addRow" type="button"><i class="bx bx-plus-circle" style="font-size:1.6rem" style="color:#637381;"></i></button>
-                    @endif
-                    @if ($type_formation_id == 2)
-                        <button id="addRow2" type="button"><i class="bx bx-plus-circle" style="font-size:1.6rem" style="color:#637381;"></i></button>
-                    @endif
-                </th>
-                @endcanany
-            </tr>
-        </thead>
-        @canany(['isCFP'])
-        <tbody id="body_planning">
-            <tr>
-                <td>
-                    <input type="date" min="{{ $projet[0]->date_debut }}" max="{{ $projet[0]->date_fin }}" style="color:#637381;" name="date[]" placeholder="" class="form-control input text-center" required>
-                </td>
-                <td>
-                    <input type="time" name="debut[]" class="form-control input text-center" style="color:#637381;" required>
-                </td>
-                <td>
-                    <input type="time" name="fin[]" class="form-control input text-center" style="color:#637381;" required>
-                </td>
-                <td>
-                    @if ($type_formation_id == 1)
+        <table class="table table-bordered my-3" id="detail_panning">
+            <thead>
+                <tr>
+                    <th><i class="fa fa-calendar-day entete"></i>&nbsp;Date </th>
+                    <th><i class="fa fa-clock"></i>&nbsp;Heure début</th>
+                    <th><i class="fa fa-clock"></i>&nbsp;Heure fin </th>
+                    <th><i class="fa fa-user"></i>&nbsp;Formateur</th>
+                    <th><i class="fa fa-map-marker-alt"></i>&nbsp;Salle de formation</th>
+                    <th><button id="addRow" type="button"><i class="bx bx-plus-circle" style="font-size:1.6rem" style="color:#637381;"></i></button></th>
+                </tr>
+            </thead>
+            <tbody id="body_planning">
+                <tr>
+                    <td>
+                        <input type="date" min="{{ $projet[0]->date_debut }}" max="{{ $projet[0]->date_fin }}" style="color:#637381;" name="date[]" placeholder="" class="form-control input text-center" required>
+                    </td>
+                    <td>
+                        <input type="time" name="debut[]" class="form-control input text-center" style="color:#637381;" required>
+                    </td>
+                    <td>
+                        <input type="time" name="fin[]" class="form-control input text-center" style="color:#637381;" required>
+                    </td>
+                    <td>
                         <select name="formateur[]" id="" class="form-control input" style="color:#637381;" required>
                         @foreach ($formateur as $format)
                             <option value="{{ $format->formateur_id }}">{{ $format->nom_formateur . ' ' . $format->prenom_formateur }}</option>
                         @endforeach
                         </select>
-                    @elseif ($type_formation_id == 2)
-                        <select name="ville[]" id="ville"  class="form-control input" required onblur="ville_Lieu();" style="color:#637381;">
-                            <option value="Tananarive">Tananarive</option>
-                            <option value="Tamatave">Tamatave</option>
-                            <option value="Antsirabé">Antsirabé</option>
-                            <option value="Fianarantsoa">Fianarantsoa</option>
-                            <option value="Majunga">Majunga</option>
-                            <option value="Tuléar">Tuléar</option>
-                            <option value="Diego-Suarez">Diego-Suarez</option>
-                            <option value="Antanifotsy">Antanifotsy</option>
-                            <option value="Ambovombe">Ambovombe</option>
-                            <option value="Amparafaravola">Amparafaravola</option>
-                            <option value="Tôlanaro">Tôlanaro</option>
-                            <option value="Ambatondrazaka">Ambatondrazaka</option>
-                            <option value="Mananara Nord">Mananara Nord</option>
-                            <option value="Soavinandriana">Soavinandriana</option>
-                            <option value="Mahanoro">Mahanoro</option>
-                            <option value="Soanierana Ivongo">Soanierana Ivongo</option>
-                            <option value="Faratsiho">Faratsiho</option>
-                            <option value="Nosy Varika">Nosy Varika</option>
-                            <option value="Vavatenina">Vavatenina</option>
-                            <option value="Morondava">Morondava</option>
-                            <option value="Amboasary">Amboasary</option>
-                            <option value="Manakara">Manakara</option>
-                            <option value="Antalaha">Antalaha</option>
-                            <option value="Ikongo">Ikongo</option>
-                            <option value="Manjakandriana">Manjakandriana</option>
-                            <option value="Sambava">Sambava</option>
-                            <option value="Fandriana">Fandriana</option>
-                            <option value="Marovoay">Marovoay</option>
-                            <option value="Betioky">Betioky</option>
-                            <option value="Ambanja">Ambanja</option>
-                            <option value="Ambositra">Ambositra</option>
+                    </td>
+                    <td>
+                        <select name="lieu[]" class="form-control salle_de_formation input" style="color:#637381;">
+                            @foreach ($salle_formation as $salle)
+                            <option value="{{ $salle->ville .',  '. $salle->salle_formation }}">{{ $salle->ville . ',' . $salle->salle_formation }}</option>
+                            @endforeach
                         </select>
-                    @endif
-                </td>
-                <td>
-                    <select name="lieu[]" class="form-control salle_de_formation input" style="color:#637381;">
-                        @foreach ($salle_formation as $salle)
-                        <option value="{{ $salle->ville .',  '. $salle->salle_formation }}">{{ $salle->ville . ',' . $salle->salle_formation }}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td>
-                    <button id="removeRow" type="button"><i class="bx bx-minus-circle" style="font-size: 1.6rem;"></i></button>
-                    <input type="hidden" name="ville_lieu" id="ville_lieu">
-                </td>
-            </tr>
-
-        </tbody>
-        @endcanany
-
-    </table>
-    @canany(['isCFP'])
-    <div class="enregistrer">
-        <button type="submit" class="btn btn_enregistrer">Enregistrer</button>
-    </div>
-    <div class="modal" tabindex="-1" id="nouvelle_salle">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Nouvelle salle de formation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    {{-- <form action="#" method="POST"> --}}
-                    <label for="salle_formation" class="form-label">Salle</label>
-                    <input type="text" class="form-control" id="salle_formation">
-                    <button type="button" id="enregistrer_salle" class="btn inserer_emargement p-1 mt-1"
-                        data-bs-dismiss="modal">Enregistrer</button>
-                    {{-- </form> --}}
-                </div>
-            </div>
+                    </td>
+                    <td>
+                        <button id="removeRow" type="button"><i class="bx bx-minus-circle" style="font-size: 1.6rem;"></i></button>
+                        <input type="hidden" name="ville_lieu" id="ville_lieu">
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+        <div class="enregistrer">
+            <button type="submit" class="btn btn_enregistrer">Enregistrer</button>
         </div>
-    </div>
-    @endcanany
     </form>
 @endif
 
@@ -309,31 +216,27 @@
         color: #7635dc;
     }
 </style>
-@canany(['isReferent', 'isFormateur','isFormateurInterne'])
-    @if (count($datas) <= 0)
-        <div class="d-flex mt-3 titre_projet p-1 mb-1">
-            <span class="text-center">Aucun detail de la session</span>
-        </div>
-    @endif
-@endcanany
-
+@if (count($datas) < 0)
+    <div class="d-flex mt-3 titre_projet p-1 mb-1">
+        <span class="text-center">Aucun detail de la session</span>
+    </div>
+@endif
 
 {{-- donnee non exiatante --}}
 
 @if (count($datas) > 0)
     <div id="existante">
         <div class="row">
-            @if (count($datas) != 0 && $projet[0]->status_groupe == 1)
+            {{-- @if (count($datas) != 0 && $projet[0]->status_groupe == 1)
                 @can('isReferent')
                     <div class="col-md-12 m-1">
                         Confirmer la session "<Strong style="color: #822164">{{ $projet[0]->nom_groupe }}</Strong>" du
                         {{ $projet[0]->date_debut }} au {{ $projet[0]->date_fin }} et les details ci-dessous
                         <a href="{{ route('acceptation_session', [$projet[0]->groupe_id]) }}"><button type="button"
                                 class="btn btn-success" data-dismiss="modal">Accepter</button></a>
-                        {{-- <a href=""><button type="button" class="btn  btn-danger" data-dismiss="modal">Refuser</button></a> --}}
                     </div>
                 @endcan
-            @endif
+            @endif --}}
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -342,9 +245,6 @@
                                 id="dataTables-example">
                                 <thead style="border-bottom: 1px solid black; line-height: 20px">
                                     <td>Séance</td>
-                                    @canany(['isReferent', 'isManager', 'isChefDeService'])
-                                        <td>CFP</td>
-                                    @endcanany
                                     <td>Module</td>
                                     <td>Ville</td>
                                     <td width="30%">Salle de formation</td>
@@ -352,9 +252,9 @@
                                     <td>Début</td>
                                     <td>Fin</td>
                                     <td>Formateur</td>
-                                    @canany(['isCFP'])
+                                    @can('isReferent')
                                         <td>Action</td>
-                                    @endcanany
+                                    @endcan
                                 </thead>
                                 <tbody>
                                     @php
@@ -363,9 +263,6 @@
                                     @foreach ($datas as $d)
                                         <tr>
                                             <td>{{ $i }}</td>
-                                            @canany(['isReferent', 'isManager','isChefDeService'])
-                                                <td>{{ $d->nom_cfp }}</td>
-                                            @endcanany
                                             <td>{{ $d->nom_module }}</td>
                                             @php
                                                 $salle = explode(',', $d->lieu);
@@ -378,139 +275,122 @@
                                             <td>
                                                 @if ($d->photos == null)
                                                     <span class="m-0 p-2" height="50px" width="50px"
-                                                        style="border-radius: 50%; background-color:#b8368f;">{{ $d->sans_photos }}</span>{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                        style="border-radius: 50%; background-color:#b8368f;color:#fff;">{{ $d->sans_photos }}</span>&nbsp;{{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @else
                                                     <img src="{{ asset('images/formateurs/' . $d->photos) }}" alt=""
-                                                        height="30px" width="30px" style="border-radius: 50%;">
+                                                        height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                                                     {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
                                                 @endif
                                             </td>
-                                            @canany(['isCFP'])
+                                            @can('isReferent')
                                                 <td>
                                                     <a href="" aria-current="page" data-bs-toggle="modal"
                                                         data-bs-target="#modal_modifier_detail_{{ $d->detail_id }}"><i
-                                                            class="bx bxs-edit-alt bx_modifier ms-2"></i></a>
-                                                    {{-- <a href="{{ route('destroy_detail',[$d->detail_id]) }}"><i
-                                                    class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></a> --}}
+                                                            class="bx bx-edit bx_modifier ms-2"></i></a>
                                                     <button type="button" style="background: none" data-bs-toggle="modal"
                                                         data-bs-target="#delete_detail_{{ $d->detail_id }}"><i
                                                             class="bx bx-trash bx_supprimer ms-4"></i></button>
                                                 </td>
-                                            @endcanany
-                                            {{-- @canany(['isFormateur'])
-                                        <td><i data-toggle="collapse" href="#stagiaire_presence" class="fa fa-edit"
-                                                style="color:rgb(130,33,100);">Emargement</i></td>
-                                        @endcanany --}}
-                                            {{-- <td>
-                                            <a href="{{route('execution',[$d->detail_id])}}" class="btn btn-info"
-                                                id="{{$d->detail_id}}"><span
-                                                    class="glyphicon glyphicon-eye-open"></span></a>
-                                        </td>
-                                        <td><button class="btn btn-success modifier" id="{{$d->detail_id}}"
-                                                data-toggle="modal" data-target="#myModal"><span
-                                                    class="glyphicon glyphicon-pencil"></span> Modifier</button></td>
-                                        <td><button class="btn btn-danger supprimer" id="{{$d->detail_id}}"><span
-                                                    class="glyphicon glyphicon-remove"></span> Supprimer</button></td> --}}
-                                            @canany(['isCFP'])
-                                                <div class="modal fade" id="delete_detail_{{ $d->detail_id }}"
-                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header  d-flex justify-content-center"
-                                                                style="background-color:rgb(224,182,187);">
-                                                                <h6 class="modal-title">Avertissement !</h6>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <small>Vous êtes sur le point d'effacer une donnée, cette
-                                                                    action est irréversible. Continuer ?</small>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal"> Non </button>
-                                                                <button type="button" class="btn btn-secondary"><a
-                                                                        href="{{ route('destroy_detail', [$d->detail_id]) }}">Oui</a></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal fade"
-                                                    id="modal_modifier_detail_{{ $d->detail_id }}">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content p-3">
-                                                            <div class="modal-title pt-3"
-                                                                style="height: 50px; align-items: center;">
-                                                                <h5 class="text-center my-auto">Modifier detail</h5>
-                                                            </div>
-                                                            <form class="btn-submit"
-                                                                action="{{ route('update_detail', [$d->detail_id]) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="detail"
-                                                                    value="{{ $d->detail_id }}">
-                                                                <div class="row">
-                                                                    <div class="form-group mx-auto col-md-12">
-                                                                        <label for="formateur">Formateur</label><br>
-                                                                        <select class="form-control" id="formateur"
-                                                                            name="formateur">
-                                                                            <option value="{{ $d->formateur_id }}">
-                                                                                {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
-                                                                            </option>
-                                                                            @foreach ($formateur as $format)
-                                                                                <option
-                                                                                    value="{{ $format->formateur_id }}">
-                                                                                    {{ $format->nom_formateur }}
-                                                                                    {{ $format->prenom_formateur }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        <p><strong style="color: red"
-                                                                                id="err_formateur"></strong>
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="form-group mx-auto col-md-12">
-                                                                        <label for="lieu">Salle de formation</label>
-                                                                        <input type="text" class="form-control" id="lieu"
-                                                                            name="lieu" placeholder="Lieu"
-                                                                            value="{{ $d->lieu }}">
-
-                                                                    </div>
-                                                                    <div class="form-group mx-auto col-md-12">
-                                                                        <label for="date">Date</label>
-                                                                        <input type="date" class="form-control"
-                                                                            id="date_detail" name="date"
-                                                                            min="{{ $projet[0]->date_debut }}"
-                                                                            max="{{ $projet[0]->date_fin }}"
-                                                                            value="{{ $d->date_detail }}">
-                                                                    </div>
-                                                                    <div class="form-group mx-auto col-md-12">
-                                                                        <label for="debut">Heure début</label>
-                                                                        <input type="time" class="form-control" id="debut"
-                                                                            name="debut" min="07:00" max="17:00"
-                                                                            value="{{ $d->h_debut }}">
-                                                                    </div>
-                                                                    <div class="form-group mx-auto col-md-12">
-                                                                        <label for="fin">Heure fin</label>
-                                                                        <input type="time" class="form-control" id="fin"
-                                                                            name="fin" min="08:00" max="18:08"
-                                                                            value="{{ $d->h_fin }}">
-                                                                    </div>
-                                                                    <div
-                                                                        class="d-flex justify-content-around mt-3 col-md-12">
-                                                                        <button class="btn btn-danger"
-                                                                            data-bs-dismiss="modal">Annuler</button>
-                                                                        <input type="submit" id="ajouter"
-                                                                            style="background-color: #822164"
-                                                                            class="btn btn-primary" value="Modifier">
-                                                                    </div>
-                                                                </div>
-
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endcanany
+                                            @endcan
+                                            
                                         </tr>
+
+                                        <div class="modal fade" id="delete_detail_{{ $d->detail_id }}"
+                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header  d-flex justify-content-center"
+                                                        style="background-color:rgb(224,182,187);">
+                                                        <h6 class="modal-title">Avertissement !</h6>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <small>Vous êtes sur le point d'effacer une donnée, cette
+                                                            action est irréversible. Continuer ?</small>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal"> Non </button>
+                                                        <button type="button" class="btn btn-secondary"><a
+                                                                href="{{ route('supprimer_detail', [$d->detail_id]) }}">Oui</a></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade"
+                                            id="modal_modifier_detail_{{ $d->detail_id }}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content p-3">
+                                                    <div class="modal-title pt-3"
+                                                        style="height: 50px; align-items: center;">
+                                                        <h5 class="text-center my-auto">Modifier une séances</h5>
+                                                    </div>
+                                                    <form class="btn-submit"
+                                                        action="{{ route('modifier_detail', [$d->detail_id]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="detail"
+                                                            value="{{ $d->detail_id }}">
+                                                        <div class="row">
+                                                            <div class="form-group mx-auto col-md-12">
+                                                                <label for="formateur">Formateur</label><br>
+                                                                <select class="form-control" id="formateur"
+                                                                    name="formateur">
+                                                                    <option value="{{ $d->formateur_id }}">
+                                                                        {{ $d->nom_formateur . ' ' . $d->prenom_formateur }}
+                                                                    </option>
+                                                                    @foreach ($formateur as $format)
+                                                                        <option
+                                                                            value="{{ $format->formateur_id }}">
+                                                                            {{ $format->nom_formateur }}
+                                                                            {{ $format->prenom_formateur }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <p><strong style="color: red"
+                                                                        id="err_formateur"></strong>
+                                                                </p>
+                                                            </div>
+                                                            <div class="form-group mx-auto col-md-12">
+                                                                <label for="lieu">Salle de formation</label>
+                                                                <input type="text" class="form-control" id="lieu"
+                                                                    name="lieu" placeholder="Lieu"
+                                                                    value="{{ $d->lieu }}">
+                                                            </div>
+                                                            <div class="form-group mx-auto col-md-12">
+                                                                <label for="date">Date</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="date_detail" name="date"
+                                                                    min="{{ $projet[0]->date_debut }}"
+                                                                    max="{{ $projet[0]->date_fin }}"
+                                                                    value="{{ $d->date_detail }}">
+                                                            </div>
+                                                            <div class="form-group mx-auto col-md-12">
+                                                                <label for="debut">Heure début</label>
+                                                                <input type="time" class="form-control" id="debut"
+                                                                    name="debut" min="07:00" max="17:00"
+                                                                    value="{{ $d->h_debut }}">
+                                                            </div>
+                                                            <div class="form-group mx-auto col-md-12">
+                                                                <label for="fin">Heure fin</label>
+                                                                <input type="time" class="form-control" id="fin"
+                                                                    name="fin" min="08:00" max="18:08"
+                                                                    value="{{ $d->h_fin }}">
+                                                            </div>
+                                                            <div
+                                                                class="d-flex justify-content-around mt-3 col-md-12">
+                                                                <button class="btn btn-danger"
+                                                                    data-bs-dismiss="modal">Annuler</button>
+                                                                <input type="submit" id="ajouter"
+                                                                    style="background-color: #822164"
+                                                                    class="btn btn-primary" value="Modifier">
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                         @php
                                             $i = $i + 1;
                                         @endphp
@@ -521,14 +401,13 @@
                         </div>
                         </tbody>
                         </table>
-                        @canany(['isCFP'])
                             <div class="modal fade" id="modal_nouveau_detail">
                                 <div class="modal-dialog">
                                     <div class="modal-content p-3">
                                         <div class="modal-title pt-3" style="height: 50px; align-items: center;">
                                             <h5 class="text-center my-auto">Nouvelle séance</h5>
                                         </div>
-                                        <form class="btn-submit" action="{{ route('detail.store') }}" method="post">
+                                        <form class="btn-submit" action="{{ route('inserer_detail') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="projet" value="{{ $projet[0]->projet_id }}">
                                             <input type="hidden" name="groupe" value="{{ $projet[0]->groupe_id }}">
@@ -581,7 +460,6 @@
                                     </div>
                                 </div>
                             </div>
-                        @endcanany
 
                         <div class="modal fade" id="myModal">
                             <div class="modal-dialog">
@@ -628,8 +506,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -857,7 +733,7 @@
     $(document).on('click', '#addRow', function() {
         $('#frais').empty();
         $.ajax({
-            url: "{{ route('all_formateurs') }}",
+            url: "{{ route('all_formateurs_interne') }}",
             type: 'get',
             success: function(response) {
                 var userData = response['formateur'];

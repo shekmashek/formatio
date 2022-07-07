@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{asset('img/logos_all/iconFormation.webp') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
@@ -233,15 +234,7 @@
 
             </li>
             @endcanany
-            @canany(['isReferent','isReferentSimple'])
-            <li>
-                <a href="{{route('formateurs')}}" class="d-flex nav_linke">
-                    <i class='bx bxs-user-pin'></i>
-                    <span class="links_name">Formateurs</span>
-                </a>
 
-            </li>
-            @endcanany
             @canany(['isStagiaire'])
             <li>
                 <a href="{{route('liste_projet',['id'=>1])}}" class="d-flex projet nav_linke">
@@ -914,7 +907,6 @@
                                                 formation</a></li>
                                         <li id="BI"><a class="dropdown-item" href="{{route('budget')}}"><i
                                                     class="fas fa-money-check icon_plus"></i>&nbsp;Budgetisation</a></li>
-
                                     </ul>
                                 @endcanany
                                 @canany(['isReferent','isReferentSimple'])
@@ -923,6 +915,11 @@
                                         <li id="employe">
                                             <a class="dropdown-item" href="{{route('employes.new')}}">
                                                 <i class="fas fa-user icon_plus  "></i>&nbsp; Nouveau Employés
+                                            </a>
+                                        </li>
+                                        <li id="employe">
+                                            <a class="dropdown-item" href="{{route('projet_interne/creation')}}">
+                                                <i class="bx bx-library icon_plus  "></i>&nbsp; Projet Interne
                                             </a>
                                         </li>
                                     </ul>
@@ -949,6 +946,9 @@
                                                 <i class="bx bx-money-withdraw icon_plus  "></i>&nbsp; Frais annexes
                                             </a>
                                         </li>
+                                        <li id="parametre"><a class="dropdown-item" href="{{route('parametrage_salle_etp')}}">
+                                            <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
+                                        </a></li>
                                     </ul>
                                 @endcanany
                                 @can('isCFP')
@@ -1413,9 +1413,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
         integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+    {{-- <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
         integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
-    </script>
+    </script> --}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js" integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

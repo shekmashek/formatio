@@ -31,7 +31,7 @@ class FraisAnnexesController extends Controller
         $fonct = new FonctionGenerique();
         $salle = [];
         $etp_id = $this->fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
-        $frais = DB::select('select * from frais_annexes where entreprise_id = ?',[$etp_id->entreprise_id]);
+        $frais = DB::select('select * from frais_annexe_etp where entreprise_id = ?',[$etp_id->entreprise_id]);
         return view('admin.frais_annexe.frais_annexe', compact('frais'));
 
     }
@@ -51,7 +51,7 @@ class FraisAnnexesController extends Controller
             if($request->description == null){
                 throw new Exception('Vous devez completer le champ description.');
             }
-            DB::insert('insert into frais_annexes(description,entreprise_id) values(?,?)',[$request->description,$etp_id->entreprise_id]);
+            DB::insert('insert into frais_annexe_etp(description,entreprise_id) values(?,?)',[$request->description,$etp_id->entreprise_id]);
             return back();
                 // return redirect()->back()->withInput(['tabName'=>'insertion_salle']);
         }catch(Exception $e){
@@ -78,7 +78,7 @@ class FraisAnnexesController extends Controller
             if($request->description == null){
                 throw new Exception('Vous devez completer le champ description.');
             }
-            DB::update('update frais_annexes set description = ? where id  = ?',[$request->description,$id]);
+            DB::update('update frais_annexe_etp set description = ? where id  = ?',[$request->description,$id]);
             return back();
         }catch(Exception $e){
             return back()->with('salle_error', $e->getMessage());
@@ -88,7 +88,7 @@ class FraisAnnexesController extends Controller
 
     public function destroy($id)
     {
-        DB::delete('delete from frais_annexes where id = ?',[$id]);
+        DB::delete('delete from frais_annexe_etp where id = ?',[$id]);
         return back();
     }
 }

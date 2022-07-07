@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\FonctionGenerique;
-use Illuminate\Http\Request;
-use App\Niveau;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
 
-class SalleFormationController extends Controller
+class SalleFormationEtpController extends Controller
 {
     public function __construct()
     {
@@ -27,13 +24,10 @@ class SalleFormationController extends Controller
         $user_id = Auth::user()->id;
         $fonct = new FonctionGenerique();
         $salle = [];
-        if(Gate::allows('isCFP')){
-            $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-            $cfp_id = $resp->cfp_id;
-
-            $salles = DB::select('select * from salle_formation_of where cfp_id = ?',[$cfp_id]);
-            return view('admin.salle_formation.salle_formation', compact('salles'));
-        }
+        $user_id = Auth::user()->id;
+        $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
+        $salles = DB::select('select * from salle_formation_etp where etp_id = ?',[$entreprise_id]);
+        return view('admin.salle_formation.salle_formation_etp', compact('salles'));
     }
 
 
@@ -54,9 +48,9 @@ class SalleFormationController extends Controller
                 throw new Exception('Vous devez completer le champ salle de formation.');
             }
             $fonct = new FonctionGenerique();
-            $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
-            $cfp_id = $resp->cfp_id;
-            DB::insert('insert into salle_formation_etp(etp_id,salle_formation,ville) values(?,?,?)',[$cfp_id,$request->salle,$request->ville]);
+            $user_id = Auth::user()->id;
+            $entreprise_id = $fonct->findWhereMulitOne("employers",["user_id"],[$user_id])->entreprise_id;
+            DB::insert('insert into salle_formation_etp(etp_id,salle_formation,ville) values(?,?,?)',[$entreprise_id,$request->salle,$request->ville]);
             return back();
                 // return redirect()->back()->withInput(['tabName'=>'insertion_salle']);
         }catch(Exception $e){
@@ -86,7 +80,7 @@ class SalleFormationController extends Controller
             if($request->ville == null){
                 throw new Exception('Vous devez completer le champ ville.');
             }
-            DB::update('update salle_formation_of set salle_formation = ? ,ville = ? where id  = ?',[$request->salle,$request->ville,$id]);
+            DB::update('update salle_formation_etp set salle_formation = ? ,ville = ? where id  = ?',[$request->salle,$request->ville,$id]);
             return back();
         }catch(Exception $e){
             return back()->with('salle_error', $e->getMessage());
@@ -96,7 +90,7 @@ class SalleFormationController extends Controller
 
     public function destroy($id)
     {
-        DB::delete('delete from salle_formation_of where id = ?',[$id]);
+        DB::delete('delete from salle_formation_etp where id = ?',[$id]);
         return back();
     }
 }
