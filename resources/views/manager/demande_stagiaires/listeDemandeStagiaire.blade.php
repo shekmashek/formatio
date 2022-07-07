@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col-8 pt-1">{{ \Carbon\Carbon::parse($plan_recueil->debut_rec)->translatedFormat("j F Y")}} au {{ \Carbon\Carbon::parse($plan_recueil->fin_rec)->translatedFormat("j F Y")}}</div>
                                 <div class="col-1 text-end">
-                                    @if (count($besoins) > 0)
+                                    @if (count($besoins) > 0 && $besoins[0]->anneePlan_id == $plan_recueil->id)
                                         <button class="btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$plan_recueil->id}}" aria-expanded="false" aria-controls="collapse">
                                             <i class="fas fa-caret-down"></i>
                                         </button>
@@ -80,7 +80,7 @@
                                     <div class="tab-content" id="pills-tabContent">
                                         <div class="tab-pane fade show active col-12" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                             <div class="table-responsive">
-                                                    <table class="table table-hover text-secondary my-3" style="font-size: .8rem;" class="liste_formation_demander" style="width:100%">
+                                                    <table class="table table-hover text-secondary my-3 liste_formation_demander" style="font-size: .8rem;" style="width:100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Matricule</th>
@@ -134,7 +134,6 @@
                                                                             </td>
                                                                         @endif
                                                                     </tr> 
-                                                                    
                                                                 @endif
                                                             @endforeach
                                                         </tbody>

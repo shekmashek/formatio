@@ -331,7 +331,7 @@
 //     $(function() {
 //     $('#example').bootstrapTable()
 //   })  
-    
+
 
 </script>
 @endsection

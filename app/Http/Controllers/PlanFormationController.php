@@ -707,4 +707,6 @@ class PlanFormationController extends Controller
         DB::insert('insert into budgetisation (entreprise_id, departement_entreprise_id,budget_total,date_creation,annee) values (?, ?,?,?,?)', [$entreprise_id[0]->entreprise_id,$departement,$budget,$todayDate,$annee]);
         return back()->with('success','Budget previsionnel enregistré avec succès');
     }
+
+    
 }
