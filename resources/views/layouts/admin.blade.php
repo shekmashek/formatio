@@ -1006,6 +1006,9 @@
                                                     <i class="bx bx-money-withdraw icon_plus  "></i>&nbsp; Frais annexes
                                                 </a>
                                             </li>
+                                            <li id="parametre"><a class="dropdown-item" href="{{route('parametrage_salle_etp')}}">
+                                                <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
+                                            </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -1084,6 +1087,9 @@
                                             <li id="parametre"><a class="dropdown-item" href="{{route('parametrage_salle')}}">
                                                     <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
                                                 </a></li>
+                                            <li id="parametre"><a class="dropdown-item" href="{{route('parametrage_salle_of')}}">
+                                                <i class='bx bxs-door-open icon_plus'></i>&nbsp;Salle de formation
+                                            </a></li>
                                         </ul>
                                     </div>
                                 </div>

@@ -56,12 +56,12 @@ class ProjetInterneController extends Controller
             $last_insert_projet = DB::table('projets_interne')->latest('id')->first();
             $nom_groupe = $projet->nom_session();
             DB::insert(
-                'insert into groupes_interne(nom_groupe,projet_interne_id,module_interne_id,date_debut,date_fin,status,modalite,activiter) values(?,?,?,?,?,1,?,TRUE)',
+                'insert into groupes_interne(nom_groupe,projet_interne_id,module_interne_id,date_debut,date_fin,status,modalite,activiter) values(?,?,?,?,?,2,?,TRUE)',
                 [$nom_groupe, $last_insert_projet->id, $request->module_id, $request->date_debut, $request->date_fin,$request->modalite]
             );
-
+            $last_insert_groupe = DB::table('groupes_interne')->latest('id')->first();
             DB::commit();
-            // return redirect()->route('detail_session', ['id_session' => $last_insert_groupe->id]);
+            return redirect()->route('detail_session_interne', ['groupe' => $last_insert_groupe->id]);
         } catch (Exception $e) {
             DB::rollback();
             return back()->with('groupe_error', $e->getMessage());

@@ -201,12 +201,12 @@
                                         <td></td>
                                         <td>
                                             <div align="left">
-                                                {{$devise->reference." ".number_format($frais_annexe->pu,0,","," ")}}
+                                                {{$devise->devise." ".number_format($frais_annexe->pu,0,","," ")}}
                                             </div>
                                         </td>
                                         <td>
                                             <div align="right">
-                                                {{$devise->reference." ".number_format($frais_annexe->hors_taxe,0,","," ")}}
+                                                {{$devise->devise." ".number_format($frais_annexe->hors_taxe,0,","," ")}}
                                             </div>
                                         </td>
                                     </tr>

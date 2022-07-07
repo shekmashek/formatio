@@ -1528,3 +1528,8 @@ Route::post('/modifier_detail/{id}', 'ProjetInterneController@modifier_detail')-
 Route::get('/supprimer_detail/{id?}', 'ProjetInterneController@supprimer_detail')->name('supprimer_detail');
 Route::get('supprimer_participant_groupe_interne', 'ProjetInterneController@supprimmer_stagiaire')->name('supprimer_participant_groupe_interne');
 Route::get('supprimer_ressource_interne', 'ProjetInterneController@supprimer_ressource')->name('supprimer_ressource_interne');
+
+Route::get('parametrage_salle_etp','SalleFormationEtpController@index')->name('parametrage_salle_etp');
+Route::post('enregistrer_salle_etp','SalleFormationEtpController@store')->name('enregistrer_salle_etp');
+Route::get('supprimer_salle_etp/{id?}','SalleFormationEtpController@destroy')->name('supprimer_salle_etp');
+Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->name('modifier_salle_etp');
