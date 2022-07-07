@@ -1,3 +1,47 @@
+CREATE OR REPLACE view formateurs_interne as
+SELECT
+    employers.id as formateur_id,
+    employers.entreprise_id,
+    (employers.matricule_emp) matricule,
+    (employers.nom_emp) nom_formateur,
+    (employers.prenom_emp) prenom_formateur,
+    employers.genre_id,
+    (genre.genre) genre_formateur,
+    (employers.fonction_emp) fonction_formateur,
+    (employers.email_emp) mail_formateur,
+    (employers.telephone_emp) telephone_formateur,
+    employers.user_id,
+    (employers.prioriter) prioriter_emp,
+    employers.service_id,
+    vd.nom_service,
+    employers.branche_id,
+    url_photo,
+    employers.departement_entreprises_id,
+     vd.nom_departement,
+    employers.photos,
+    (employers.cin_emp) cin,
+    (employers.date_naissance_emp) date_naissance,
+    employers.activiter,
+    (employers.adresse_quartier) quartier,
+    (employers.adresse_code_postal) code_postal,
+    (employers.adresse_ville) ville,
+    (employers.adresse_region) region,
+    (employers.adresse_lot) lot,
+    bc.nom_branche,
+    role_users.role_id,
+    role_users.prioriter,
+employers.created_at,
+employers.updated_at,
+niveau_etude_id,
+niveau_etude.niveau_etude
+FROM employers
+LEFT JOIN v_departement_service_entreprise vd ON vd.service_id = employers.service_id and vd.departement_entreprise_id = employers.departement_entreprises_id
+LEFT JOIN branches bc ON bc.id = employers.branche_id
+JOIN role_users ON role_users.user_id =  employers.user_id
+JOIN genre ON genre.id = employers.genre_id
+JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
+WHERE role_users.role_id=8;
+
 create or replace view v_detail_session_interne as
     select
         d.id AS detail_id,
@@ -228,50 +272,7 @@ create or replace view v_detail_presence_stagiaire_interne as
     join employers stg on dp.stagiaire_id = stg.id;
 
 
-CREATE OR REPLACE view formateurs_interne as
-SELECT
-    employers.id as formateur_id,
-    employers.entreprise_id,
-    (employers.matricule_emp) matricule,
-    (employers.nom_emp) nom_formateur,
-    (employers.prenom_emp) prenom_formateur,
-    employers.genre_id,
-    (genre.genre) genre_formateur,
-    (employers.fonction_emp) fonction_formateur,
-    employers.poste_emp,
-    (employers.email_emp) mail_formateur,
-    (employers.telephone_emp) telephone_formateur,
-    employers.user_id,
-    (employers.prioriter) prioriter_emp,
-    employers.service_id,
-    vd.nom_service,
-    employers.branche_id,
-    url_photo,
-    employers.departement_entreprises_id,
-     vd.nom_departement,
-    employers.photos,
-    (employers.cin_emp) cin,
-    (employers.date_naissance_emp) date_naissance,
-    employers.activiter,
-    (employers.adresse_quartier) quartier,
-    (employers.adresse_code_postal) code_postal,
-    (employers.adresse_ville) ville,
-    (employers.adresse_region) region,
-    (employers.adresse_lot) lot,
-    bc.nom_branche,
-    role_users.role_id,
-    role_users.prioriter,
-employers.created_at,
-employers.updated_at,
-niveau_etude_id,
-niveau_etude.niveau_etude
-FROM employers
-LEFT JOIN v_departement_service_entreprise vd ON vd.service_id = employers.service_id and vd.departement_entreprise_id = employers.departement_entreprises_id
-LEFT JOIN branches bc ON bc.id = employers.branche_id
-JOIN role_users ON role_users.user_id =  employers.user_id
-JOIN genre ON genre.id = employers.genre_id
-JOIN niveau_etude ON niveau_etude.id = employers.niveau_etude_id
-WHERE role_users.role_id=8;
+
 
 create or replace view v_participant_groupe_detail_interne as
     select
@@ -332,9 +333,7 @@ create or replace view v_projet_formateur_interne as
     select
         gpm.*,
         fp.formateur_id,
-        m.reference,
-        m.nom_module,
-        p.nom_projet
+        m.reference
     from
         v_formateur_projet fp
     join v_groupe_entreprise_interne gpm on gpm.groupe_id = fp.groupe_id
@@ -353,17 +352,17 @@ create or replace view v_evaluation_stagiaire_competence_interne as
         es.note_avant,
         es.note_apres,
         es.status,
-        case 
+        case
             when es.status = 1 then 'checked'
             when es.status = 2 then ''
             when es.status = 3 then ''
         end non_acquis,
-        case 
+        case
             when es.status = 1 then ''
             when es.status = 2 then 'checked'
             when es.status = 3 then ''
         end en_cours,
-        case 
+        case
             when es.status = 1 then ''
             when es.status = 2 then ''
             when es.status = 3 then 'checked'
@@ -371,14 +370,14 @@ create or replace view v_evaluation_stagiaire_competence_interne as
     from competence_a_evaluers_interne c
     join evaluation_stagiaire_interne es on c.id = es.competence_a_evaluers_interne_id;
 
-create or replace view v_evaluation_globale_interne as 
-    select 
+create or replace view v_evaluation_globale_interne as
+    select
         *,
-        case 
+        case
             when status = 1 then 'checked'
             when status = 2 then ''
         end non_valide,
-        case 
+        case
             when status = 1 then ''
             when status = 2 then 'checked'
         end valide
@@ -428,7 +427,6 @@ create or replace view v_groupe_projet_module_interne as
         g.activiter as activiter_groupe,
         mf.reference,
         mf.nom_module,
-        mf.prix,
         mf.duree,
         mf.modalite_formation,
         mf.duree_jour,
