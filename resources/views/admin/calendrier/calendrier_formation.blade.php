@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ asset('css/calendrier.css') }}">
         <link rel="stylesheet" href="{{ asset('css/datepicker.css') }}">
 
+        {{-- bootstrap.min.css est importé dans admin.blade.php --}}
         {{-- fullCalendar utilise les icons bootstraps --}}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
@@ -317,6 +318,10 @@
                         // COLORS
                         document.documentElement.style.setProperty('--color-event', info.event.backgroundColor);
 
+
+                         // options for date formating
+                         var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
                         var duree_formation = 0;
                         var diff = '';
                         events.forEach(all_event => {
@@ -366,8 +371,7 @@
                             });
                         });
 
-                        // options for date formating
-                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                       
 
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
                         var title_offcanvas = document.getElementById('event_title');
@@ -455,7 +459,7 @@
                         OF_offcanvas.value = info.event.extendedProps.nom_cfp;
 
 
-                        // Lien du formateur
+                        // Lien du proril formateur
                         var formateur_id = info.event.extendedProps.formateur_obj.id;
                         var formateur_link = '<a href="{{url("profile_formateur/:?")}}" class="hover_purple" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
                         formateur_link = formateur_link.replace(":?", formateur_id);
@@ -583,10 +587,7 @@
                             materiel_button.setAttribute('disabled', 'true');
                         }
 
-                        
-
                         bsOffcanvas.show();
-                        
 
                     },
                     

@@ -4,6 +4,7 @@
 @endsection
 
 
+{{-- styles inclus de css/calendrier.css --}}
     {{-- <style>
 
         :root {
@@ -574,7 +575,7 @@
                     OF_offcanvas.value = info.event.extendedProps.nom_cfp;
 
 
-                    // Lien du formateur
+                    // Lien du profil formateur
                     var formateur_id = info.event.extendedProps.formateur_obj.id;
                     var formateur_link = '<a href="{{url("profile_formateur/:?")}}" class="hover_purple" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
                     formateur_link = formateur_link.replace(":?", formateur_id);
@@ -709,7 +710,7 @@
 
             }
             );
-            
+
 
             $('#event_datepicker').datepicker({
                 

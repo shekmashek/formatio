@@ -26,9 +26,11 @@
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
 
-    
+    {{-- n'est plus utilisé --}}
+    {{-- <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}"> --}}
+
+
     {{-- Ajoutes les imports externes propres aux pages appelées. Ces imports ne sont ajoutées que s'il y a le @push dans un view --}}
     @stack('extra-links')
 
@@ -1582,6 +1584,8 @@
 
     {{-- Ajoutes les imports externes propres aux pages appelées. Ces imports ne sont ajoutées que s'il y a le @push dans un view --}}
     @stack('extra-js')
+
+    
 
 </body>
 
