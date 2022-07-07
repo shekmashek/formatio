@@ -27,124 +27,175 @@
     .saf{
         background: rgb(36, 213, 12);
     }
+
+    tr .actio{
+        visibility: hidden;
+        display:none;
+    }
+
+    tr:hover .actio{
+        visibility: visible;
+        display: block;
+        height: 2%;
+    }
 </style>
 <div id="page-wrapper">
     <div class="container  mt-5 p-4">
         <div class="row">
             <h1>Recueil besoin en formation</h1>
         </div>
-        <div class="row mt-3 p-3">
-            <table class="table text-center">
-                <thead>
+        <div class="row my-2">
+            <div class="tab-content my-2" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="liste_dmd_formation" role="tabpanel" aria-labelledby="pills-home-tab">
                     @foreach ($plan as $p)
-                    <tr style="background: rgb(250, 248, 248)">
-                        <td class="p"  colspan="1"><span style="padding-top: 30px">Années :{{$p->AnneePlan}}</span>  &nbsp;  Debut du recueil : {{ \Carbon\Carbon::parse($p->debut_rec)->format('d/m/Y')}} &nbsp; fin du recueil : {{ \Carbon\Carbon::parse($p->fin_rec)->format('d/m/Y')}} 
-                            @if(strtotime($p->fin_rec) > strtotime('now') )
-                                <a href="{{route('plan.demande',$p->id)}} " class="btn btn-info text-light" style="float: right">Demander un formation</a>
-                            @else
-                                <a class="btn btn-danger text-light" style="float: right">Términer</a>
-                            @endif
-                        </th>
-                        <th class="" colspan="0">
-                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample_{{$p->AnneePlan}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <i style="color:white" class="fa-solid fa-arrow-down-long"></i>
-                            </a>
-                        </th>
-                    </tr>
-                    <tbody>
-                        <tr>
-                            <td>
-                               <div  id="collapseExample_{{$p->AnneePlan}}">
-                                    <div class="card card-body" style="width: 100%">
-                                        <p>Vos demandes:</p>
-                                        @if(session()->has('success'))
-                                            <div class="alert alert-success" style="height: 60px">
-                                                <p>Modification effectué avec succes &nbsp; 👏🏻</p>
-                                            </div>
-                                        @endif
-                                        @if(session()->has('delete'))
-                                            <div class="alert alert-danger" style="height: 60px">
-                                                <p>Demande supprimer &nbsp; <span>🥺</span> </p>
-                                            </div>
-                                        @endif
-                                        <table class="table table-hover text-secondary" style="font-size: .8rem">
-                                            <thead>
-                                                <th>Domaine de formation</th>
-                                                <th>Thematique</th>
-                                                <th>Date</th>
-                                                <th>Organisme sugére</th>
-                                                <th>Statut</th>
-                                                <th>Priorité</th>
-                                                    {{-- @if(strtotime($p->fin_rec) > strtotime('now') )
-                                                        <th></th>    
-                                                   
-                                                    @endif --}}
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($besoin as $be)
-                                                    @if ($be->anneePlan_id === $p->id)
-                                                        <form action="{{route('besoin.modif',$be->id)}}" method="POST">
-                                                        @csrf
-                                                        <tr>
-                                                            <td><input  class="form-control inp{{$be->id}}" type="hidden" name="domaine" id="domaine{{$be->id}}" value="" disabled><span class="spa{{$be->id}}"> {{$be->domaine->nom_domaine}}</span></td>
-                                                            <td><input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" disabled><span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span></td>
-                                                            <td><input type="hidden"  class="form-control inp{{$be->id}}" name="date" id="date{{$be->id}}" value="" ><span class="spa{{$be->id}}">@php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp </span></td>
-                                                            <td><input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->organisme}}</span></td>
-                                                            <td>
-                                                            @if ($be->statut == 0)
-                                                                <span class="bg-warning p-1 text-sm rounded text-white"><small>En attente</small> </span>
-                                                            @elseif ($be->statut == 1)
-                                                                <span class="p-1 rounded text-white" style="background:#41D053;"><small>Validé</small></span>
-                                                            @elseif ($be->statut == 2)
-                                                                <span class="p-1 rounded text-white" style="background:#f54c49;"><small>Refusé</small></span>
-                                                            @endif
-                                                            </td>
-                                                            <td>
-                                                                <select style="border:#0dcaf0 1px solid" hidden class="form-control inp{{$be->id}}" name="type" id="type{{$be->id}}" aria-placeholder="tetret" >
-                                                                    <option value="{{$be->type}}" disable selected hidden>{{$be->type}}</option>
-                                                                    <option value="urgent">urgent</option>
-                                                                    <option value="non-urgent">non-urgent</option>
-                                                                </select>
-                                                                <span class="spa{{$be->id}}">{{$be->type}}</span>
-                                                            </td>
-                                                            @if(strtotime($p->fin_rec) > strtotime('now') )
-                                                                @if($be->statut == '0')
-                                                                    <td>
-                                                                        <a id="but{{$be->id}}" onclick='modifier({{$be->id}},"{{$be->domaine->nom_domaine}}","{{$be->formation->nom_formation}}","{{$be->date_previsionnelle}}","{{$be->organisme}}","{{$be->type}}");'  class="btn btn-info text-light">
-                                                                            <i  class="fa-solid fa-pen-to-square"></i></a>
-                                                                        <a id="supp{{$be->id}}" href="{{route('besoin.delete',$be->id)}}" class="btn btn-danger text-light" onclick="return confirm('La suppression sera irréversible !')"><i class="fa-solid fa-trash-can"></i></a>
-                                                                        <button type="submit" id="mod{{$be->id}}" style="display: none;margin-left:12px" href="" style="background-color: " class="btn btn text-light saf">Modifier</button>
-                                                                    </td>
-                                                                @endif
-                                                            @endif
-                                                            </tr>
-                                                        </form>
-                                                    @endif 
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                        <div class="row p-1 my-2 rounded justify-content-between text-secondary" style="background: rgb(245,242,242);">
+                            <div class="col-11 pt-1">Années :{{$p->AnneePlan}}</span>  &nbsp;  Debut du recueil : {{ \Carbon\Carbon::parse($p->debut_rec)->format('d/m/Y')}} &nbsp; fin du recueil : {{ \Carbon\Carbon::parse($p->fin_rec)->format('d/m/Y')}} 
+                                @if(strtotime($p->fin_rec) > strtotime('now') )
+                                    <a href="{{route('plan.demande',$p->id)}} " class="btn btn-info text-light" style="float: right">Demander un formation</a>
+                                @else
+                                    <a class="btn btn-danger text-light" style="float: right">Términer</a>
+                                @endif
+                            </div>
+                            <div class="col-1 text-end">
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample_{{$p->AnneePlan}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <i style="color:white" class="fa-solid fa-arrow-down-long"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="collapse p-3" id="collapseExample_{{$p->AnneePlan}}">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        {{-- <h6 class="text-secondary lead">Tous les demandes de votre équipe</h6> --}}
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                              <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Tous les demandes</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Demande de proposition</button>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                    </tbody>
+                                <div class="tab-content w-100" id="pills-tabContent">
+                                    <div class="tab-pane fade show active col-12" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                        <div class="table-responsive">
+                                                <table class="table table-hover text-secondary my-3 w-100" style="font-size: .8rem;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Domaine de formation</th>
+                                                            <th>Thematique</th>
+                                                            <th>Date</th>
+                                                            <th>Organisme sugére</th>
+                                                            <th>Statut</th>
+                                                            <th>Priorité</th>                                                          
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($besoin as $be)
+                                                            @if ($be->anneePlan_id === $p->id)
+                                                                <form action="{{route('besoin.modif',$be->id)}}" method="POST">
+                                                                @csrf
+                                                                    <tr>
+                                                                        <td><input  class="form-control inp{{$be->id}}" type="hidden" name="domaine" id="domaine{{$be->id}}" value="" disabled><span class="spa{{$be->id}}"> {{$be->domaine->nom_domaine}}</span></td>
+                                                                        <td><input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" disabled><span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span></td>
+                                                                        <td><input type="hidden"  class="form-control inp{{$be->id}}" name="date" id="date{{$be->id}}" value="" ><span class="spa{{$be->id}}">@php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp </span></td>
+                                                                        <td><input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->organisme}}</span></td>
+                                                                        <td>
+                                                                        @if ($be->statut == 0)
+                                                                            <span class="bg-warning p-1 text-sm rounded text-white"><small>En attente</small> </span>
+                                                                        @elseif ($be->statut == 1)
+                                                                            <span class="p-1 rounded text-white" style="background:#41D053;"><small>Validé</small></span>
+                                                                        @elseif ($be->statut == 2)
+                                                                            <span class="p-1 rounded text-white" style="background:#f54c49;"><small>Refusé</small></span>
+                                                                        @endif
+                                                                        </td>
+                                                                        <td>
+                                                                            <select style="border:#0dcaf0 1px solid" hidden class="form-control inp{{$be->id}}" name="type" id="type{{$be->id}}" aria-placeholder="tetret" >
+                                                                                <option value="{{$be->type}}" disable selected hidden>{{$be->type}}</option>
+                                                                                <option value="urgent">urgent</option>
+                                                                                <option value="non-urgent">non-urgent</option>
+                                                                            </select>
+                                                                            <span class="spa{{$be->id}}">{{$be->type}}</span>
+                                                                        </td>
+                                                                        @if(strtotime($p->fin_rec) > strtotime('now') )
+                                                                            @if($be->statut == '0')
+                                                                                <td class="actio">
+                                                                                    <a id="but{{$be->id}}" onclick='modifier({{$be->id}},"{{$be->domaine->nom_domaine}}","{{$be->formation->nom_formation}}","{{$be->date_previsionnelle}}","{{$be->organisme}}","{{$be->type}}");' class="btn btn-info text-light btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                                                    <a id="supp{{$be->id}}" href="{{route('besoin.delete',$be->id)}}" class="btn btn-danger text-light btn-sm" onclick="return confirm('La suppression sera irréversible !')"><i class="fa-solid fa-trash-can"></i></a>
+                                                                                    <button type="submit" id="mod{{$be->id}}" style="display: none;margin-left:12px" class="btn btn-sm text-light saf">Modifier</button>
+                                                                                </td>
+                                                                            @endif
+                                                                        @endif
+                                                                    </tr>
+                                                                </form>
+                                                            @endif 
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover text-secondary my-3 w-100" style="font-size: .8rem;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Domaine de formation</th>
+                                                            <th>Thematique</th>
+                                                            <th>Date</th>
+                                                            <th>Organisme sugére</th>
+                                                            <th>Statut</th>
+                                                            <th>Priorité</th> 
+                                                            <th>Actions</th>                                                         
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($besoin_valide_stgs as $besoin_valide_stg)
+                                                            @if ($besoin_valide_stg->anneePlan_id === $p->id)
+                                                                <tr>
+                                                                    <td>{{$besoin_valide_stg->domaine->nom_domaine}}</td>
+                                                                    <td>{{$besoin_valide_stg->formation->nom_formation}}</td>
+                                                                    <td>{{date('m-Y',strtotime($besoin_valide_stg->date_previsionnelle))}}</td>
+                                                                    <td>{{$besoin_valide_stg->organisme}}</td>
+                                                                    <td>
+                                                                    @if ($besoin_valide_stg->reponse_stagiaire == 0)
+                                                                        <span class="bg-warning p-1 text-sm rounded text-white"><small>En attente</small> </span>
+                                                                    @elseif ($besoin_valide_stg->reponse_stagiaire == 1)
+                                                                        <span class="p-1 rounded text-white" style="background:#41D053;"><small>Accepté</small></span>
+                                                                    @elseif ($besoin_valide_stg->reponse_stagiaire == 2)
+                                                                        <span class="p-1 rounded text-white" style="background:#f54c49;"><small>Refusé</small></span>
+                                                                    @endif
+                                                                    </td>
+                                                                    <td>{{$besoin_valide_stg->type}}</td>
+                                                                    @if(strtotime($p->fin_rec) > strtotime('now') )
+                                                                        @if($besoin_valide_stg->reponse_stagiaire == '0')
+                                                                            <td>
+                                                                                <a href="{{route('valideStatutstg',$besoin_valide_stg->id)}}" class="btn" id="{{$besoin_valide_stg->id}}"><i class="bx bx-check bx-sm ml-1" style="color: #41D053;"></i></a>
+                                                                                <a href="{{route('refuseSatutstg',$besoin_valide_stg->id)}}" class="btn" id="{{$besoin_valide_stg->id}}"><i class="bx bx-x bx-sm ml-1" style="color: #F00E0B;"></i></a>
+                                                                            </td>
+                                                                        @endif
+                                                                        @if($besoin_valide_stg->reponse_stagiaire == '2')
+                                                                            <td>
+                                                                                <a href="{{route('valideStatutstg',$besoin_valide_stg->id)}}" class="btn" id="{{$besoin_valide_stg->id}}"><i class="bx bx-check bx-sm ml-1" style="color: #41D053;"></i></a>
+                                                                            </td>
+                                                                        @endif
+                                                                    @endif
+                                                                </tr>
+                                                            @endif 
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
-                    {{-- <tr style="background: rgb(250, 248, 248)">
-                        <th >2021</th>
-                        <th><span class="badge  " style="background: rgb(61, 158, 50)">Términer</span></th>
-                        <th></th>
-                        <th style="float: right"><i class="fa-solid fa-angle-down"></i></th>
-                    </tr>
-                    <tr style="background: rgb(250, 248, 248)">
-                        <th >2020</th>
-                        <th><span class="badge  " style="background: rgb(61, 158, 50)">Términer</span></th>
-                        <th></th>
-                        <th style="float: right"><i class="fa-solid fa-angle-down"></i></th>
-                    </tr> --}}
-                </thead>
-                
-            </table>
+                </div>
+            </div>
         </div>
+             
     </div>
 </div>
 <script>

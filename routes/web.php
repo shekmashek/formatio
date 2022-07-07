@@ -795,7 +795,8 @@ Route::post('/creationDemande','PlanFormationController@creation')->name('plan.c
 Route::get('/getanneP','PlanFormationController@getplan')->name('getanneP');
 Route::get('/countPlan','PlanFormationController@countplan')->name('countPlan');
 Route::get('/exportPD/{id}','PlanFormationController@besoin_PD')->name('besoin.PDF');
-Route::get('/delete/{id}','PlanformationController@delete')->name('besoin.delete');
+Route::get('/delete/{id}','PlanFormationController@delete')->name('besoin.delete');
+Route::get('/ArbitragePlan/{id}','PlanFormationController@arbitrage')->name('besoin.arbitrage');
 /////////////////fin modification Mahafaly //////////////////////////////
 
 //ajouter nouveau plan
@@ -1530,6 +1531,8 @@ Route::get('/teste', 'PlanFormationController@teste');
 
 Route::get('/valideStatut/{id}','PlanFormationController@valideStatut')->name('valideStatut');
 Route::get('/refuseSatut/{id}','PlanFormationController@refuseSatut')->name('refuseSatut');
+Route::get('/valideStatutstg/{id}','PlanFormationController@valideStatutstg')->name('valideStatutstg');
+Route::get('/refuseSatutstg/{id}','PlanFormationController@refuseSatutstg')->name('refuseSatutstg');
 Route::get('/listes_demandes_stagiaires','PlanFormationController@listes_demandes_stagiaires')->name('listes_demandes_stagiaires');
 Route::get('/envoye_autre_demande/{anneePlan_id}','PlanFormationController@envoye_demande_stg')->name('envoye_autre_demande');
 Route::get('/modifie_demande_stagiaire/{id}','PlanFormationController@modif_demande_stagiaire')->name('modifDemandeStagiaire');
@@ -1537,7 +1540,6 @@ Route::post('/update_demande_stagiaire/{id}','PlanFormationController@update_dem
 Route::get('/get_email_employe','PlanFormationController@getEmailEmploye')->name('getEmailEmploye');
 Route::post('/enregistrer_demande_stagiaire/{planAn_id}','PlanFormationController@enregistrer_demande_stagiaire')->name('enregistrer_demande_stagiaire');
 Route::post('/send_email_collecte','PlanFormationController@sendEmail')->name('send_email_collecte');
-// Route::get('/formulaire_email/{plan_id}','PlanFormationController@formulaire_email')->name('formulaire_email');
 
 
 

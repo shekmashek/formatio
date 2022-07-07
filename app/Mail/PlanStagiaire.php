@@ -38,7 +38,7 @@ class PlanStagiaire extends Mailable
     {
         return $this->from($this->mail_resp)
         ->subject('Annonce: Récueil de Besoin')
-        ->view('emails.nouveauPlan')
+        ->view('  emails.nouveauPlan')
         ->with([
             'date_debut' => $this->date_debut,
             'date_fin' => $this->date_fin,

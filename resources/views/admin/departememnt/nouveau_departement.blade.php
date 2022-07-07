@@ -138,7 +138,7 @@
         @endif
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">
-            <li class="nav-item ">
+            <li class="nav-item active">
                 <a href="#departements" class="nav-link active" data-bs-toggle="tab">Départements</a>
             </li>
             <li class="nav-item">

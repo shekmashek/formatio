@@ -75,7 +75,7 @@ GROUP BY
 ALTER TABLE chef_departements
   add column `updated_at` timestamp NULL DEFAULT current_timestamp();
   ALTER TABLE chef_departements
- add column  genre_id bigint(20) unsigned
+ add column  genre_id integer(20) unsigned;
 
 
  CREATE TABLE `demande_devis`(
