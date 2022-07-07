@@ -1400,8 +1400,6 @@ Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
 
-// test Sarobidy
-Route::get('/dataVille/{groupe_id}/{projet_id}', 'TestController@dataVille');
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
 
 

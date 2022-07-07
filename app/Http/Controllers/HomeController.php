@@ -890,9 +890,18 @@ class HomeController extends Controller
 
             // $entreprise = DB::select('select groupe_id,entreprise_id,nom_etp from v_groupe_projet_entreprise where cfp_id = ?',[$cfp_id]);
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
+
+            // filter multi select
+            $nomEntreprises = DB::select('select nom_etp,groupe_id  from v_groupe_entreprise group by nom_etp');
+            $nomSessions = DB::select('select nom_groupe from v_groupe_projet_module group by nom_groupe');
+            $nomModalites = DB::select('select modalite from v_groupe_projet_module group by modalite');
+            $nomModules = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
+            $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module group by item_status_groupe');
+            $nomTypes = DB::select('select type_formation from v_projet_session group by type_formation');
+
             
             // dd($data);
-            return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise'));
+            return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'nomTypes', 'nomModalites', 'nomModules', 'nomStatuts'));
             // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isFormateur')) {
@@ -977,6 +986,11 @@ class HomeController extends Controller
         $type_formation_id = $request->type_formation;
         $data = [];
 
+        $request->validate([
+            'from' => 'required',
+            'to' => 'required'
+        ]);
+
         if (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
@@ -1018,35 +1032,33 @@ class HomeController extends Controller
             $entreprise = DB::select('select entreprise_id,groupe_id,nom_etp from v_groupe_entreprise');
             
 
-            // $dataGroupe = DB::table('v_projet_session')
-            //     ->join('v_groupe_projet_module', 'v_groupe_projet_module.projet_id', 'v_projet_session.projet_id')
-            //     ->select('v_projet_session.nom_projet', 'v_projet_session.type_formation', 'v_groupe_projet_module.date_debut',
-            //      'v_groupe_projet_module.date_fin', 'v_groupe_projet_module.groupe_id',
-            //     'v_groupe_projet_module.type_formation_id')
-            //      ->where('v_groupe_projet_module.cfp_id', '=', $cfp_id)
-            //      ->where('v_groupe_projet_module.date_debut', '>=', $request->from)
-            //      ->where('v_groupe_projet_module.date_debut', '<=', $request->to)
-            //      ->groupBy('v_projet_session.nom_projet')
-            //     ->get();
-                // dd($dataGroupe);
-
             $data = DB::table('v_projet_session')
                 ->join('v_groupe_projet_module', 'v_groupe_projet_module.projet_id', 'v_projet_session.projet_id')
+                ->join('entreprises', 'v_groupe_projet_module.entreprise_id' ,'entreprises.id' )
                 ->select('v_projet_session.nom_projet', 'v_projet_session.projet_id', 'v_projet_session.type_formation', 'v_projet_session.totale_session', 
                 'v_groupe_projet_module.cfp_id', 'v_groupe_projet_module.date_projet', 'v_groupe_projet_module.groupe_id',
                  'v_groupe_projet_module.nom_groupe', 'v_groupe_projet_module.date_debut', 'v_groupe_projet_module.date_fin', 'v_groupe_projet_module.modalite',
                  'v_groupe_projet_module.item_status_groupe', 'v_groupe_projet_module.nom_module', 'v_groupe_projet_module.modalite_formation', 
                  'v_groupe_projet_module.entreprise_id', 'v_groupe_projet_module.prix', 'v_groupe_projet_module.min_participant', 'v_groupe_projet_module.max_participant', 
                  'v_groupe_projet_module.formation_id', 'v_groupe_projet_module.nom_formation', 'v_groupe_projet_module.module_id', 'v_groupe_projet_module.type_payement_id', 
-                 'v_groupe_projet_module.type', 'v_groupe_projet_module.type_formation_id', 'v_groupe_projet_module.class_status_groupe')
+                 'v_groupe_projet_module.type', 'v_groupe_projet_module.type_formation_id', 'v_groupe_projet_module.class_status_groupe', 'entreprises.nom_etp')
                  ->where('v_groupe_projet_module.cfp_id', '=', $cfp_id)
                  ->where('v_groupe_projet_module.date_debut', '>=', $request->from)
                  ->where('v_groupe_projet_module.date_debut', '<=', $request->to)
-                //  ->groupBy('v_projet_session.nom_projet')
+                //  ->groupBy('v_projet_session.nom_projet', 'entreprises.nom_etp')
                 ->get();
             
                 // dd($data);
-            return view('projet_session.index2FilterTest', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise'));
+
+                // filter multi select
+                $nomModules = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
+                $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module group by item_status_groupe');
+                $nomSessions = DB::select('select nom_groupe from v_groupe_projet_module group by nom_groupe');
+                $nomModalites = DB::select('select nom_projet, nom_groupe, modalite, nom_module from v_groupe_projet_module group by nom_groupe');
+                $nomTypes = DB::select('select type_formation from v_projet_session group by type_formation');
+                $nomEntreprises = DB::select('select nom_etp from v_groupe_entreprise group by nom_etp');
+
+            return view('projet_session.index2FilterTest', compact('nomStatuts','nomModules', 'nomModalites' ,'nomTypes','nomSessions', 'nomEntreprises', 'projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise'));
         }
     }
 
