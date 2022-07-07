@@ -448,6 +448,7 @@ class HomeController extends Controller
 
                 //date now
                 $dtNow = Carbon::today()->toDateString();
+                dd($dtNow);
                 $etp_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$etp_id]);
                 if ($etp_ab != null && $etp_ab[0]->status != "Désactivé" &&  $etp_ab[0]->status != "En attente" ) {
                     if($etp_ab[0]->date_fin == $dtNow){
