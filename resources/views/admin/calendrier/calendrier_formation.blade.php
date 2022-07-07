@@ -68,17 +68,16 @@
               <div class="offcanvas-body" id="offcanvas_body">
                 
                 <div class="input-group flex-nowrap mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-briefcase text-secondary'></i></span>
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_projet"><i class='bx bxs-briefcase text-secondary'></i></span>
                     <span type="text" id="event_project"
                     class="form-control mt-1 border-0 bg-light"  
-                    aria-label="projet" aria-describedby="basic-addon1"></span>
-
+                    aria-label="projet" aria-describedby="basic-addon_projet"></span>
 
 
                     <input type="text" id="event_type_formation"
                     class="form-control border-0 background_purple fw-bolder rounded" 
                     placeholder="Type de formation" 
-                    aria-label="type_formation" aria-describedby="basic-addon1" readonly>
+                    aria-label="type_formation" aria-describedby="basic-addon_projet" readonly>
                 </div>
 
                 <div class="input-group mb-4">
@@ -89,35 +88,35 @@
                     <span id="event_entreprise" class="form-control border-0 border-bottom mt-1" ></span>
                   </div>
                 <div class="input-group mb-4" id="event_sessions">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-calendar-event text-secondary' ></i></span>
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_sessions"><i class='bx bxs-calendar-event text-secondary' ></i></span>
                     <input type="text" id="event_nbr_session" 
                     class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
                     placeholder="Nombre session" aria-label="nbr_session" 
-                    aria-describedby="basic-addon1">
+                    aria-describedby="basic-addon_sessions">
 
                 </div>
                 <div class="input-group mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-map text-secondary' ></i></span>
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_lieu"><i class='bx bxs-map text-secondary' ></i></span>
                     <input type="text" id="event_lieu" class="form-control border-0 border-bottom" 
                     placeholder="lieu" aria-label="Place" 
-                    aria-describedby="basic-addon1">
+                    aria-describedby="basic-addon_lieu">
                 </div>
                 <div class="input-group mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-chalkboard text-secondary' ></i></span>
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_of_formateur"><i class='bx bxs-chalkboard text-secondary' ></i></span>
                     <input type="text" id="event_OF" class="form-control border-0 border-bottom" 
                     placeholder="OF" aria-label="OF" 
-                    aria-describedby="basic-addon1">
+                    aria-describedby="basic-addon_of_formateur">
 
                     <span type="text" id="event_formateur" class="form-control border-0 border-bottom mt-1 hover_purple" 
                         aria-label="Formateur" 
-                        aria-describedby="basic-addon1">
+                        aria-describedby="basic-addon_of_formateur">
                     </span>
                 </div>
 
 
                 <div class="accordion mt-5 input-group" id="materiel_accordion_container">
                     <label for="materiel_button">
-                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-wrench text-secondary'></i></span>
+                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_materiel"><i class='bx bxs-wrench text-secondary'></i></span>
                     </label>
                     <div class="accordion-item width_80 border-0">
                         
@@ -143,7 +142,7 @@
 
                 <div class="accordion mt-5 input-group" id="accordion_container">
                     <label for="container_button">
-                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-group text-secondary' ></i></span>
+                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_participants"><i class='bx bxs-group text-secondary' ></i></span>
                     </label>
                     <div class="accordion-item border-0 width_80">
                         <h2 class="accordion-header border-0 border-bottom" id="headingTwo">
@@ -445,14 +444,14 @@
                         sessions.forEach((session, i) => {
                             var date = new Date(session.date_detail);
                             // console.log(date.toLocaleDateString('fr-FR',options));                            
-                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30 right_-10" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon1">';
+                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30 right_-10" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon_n_seance">';
 
                         });
                         
                         
                         // add the number of session before the session list 
-                        nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
-                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
+                        nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon_nbr_session"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
+                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon_nbr_session">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
 
                         session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
                         lieu_offcanvas.value = info.event.extendedProps.lieu;
