@@ -80,7 +80,7 @@
                                     <div class="tab-content" id="pills-tabContent">
                                         <div class="tab-pane fade show active col-12" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                             <div class="table-responsive">
-                                                    <table class="table table-hover text-secondary my-3" style="font-size: .8rem;" class="liste_formation_demander" style="width:100%">
+                                                    <table class="table table-hover text-secondary my-3 liste_formation_demander" style="font-size: .8rem;" style="width:100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Matricule</th>
