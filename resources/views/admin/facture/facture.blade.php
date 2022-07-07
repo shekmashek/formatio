@@ -366,11 +366,11 @@
                                             <tr>
                                                 <td>
                                                     @if($actif->facture_encour =="en_cour"  || $actif->facture_encour =="terminer")
-                                                        
+
                                                         <h6><a href="#collapseprojet_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
 
                                                     @endif
-                            
+
                                                 </td>
                                                 <td>
                                                     <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -588,7 +588,7 @@
                                                                             <td>{{ $info->description }}</td>
                                                                             <td>{{ $info->date_encaissement }}</td>
                                                                             <td>{{ $info->libelle }}</td>
-                                                                            <td class="td_encaiss"><div class="button_encaiss"><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                            <td class="td_encaiss"><div class="button_encaiss"><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i class="bx bxs-edit-alt bx-modifier"></i></button>&nbsp;
                                                                                 <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
                                                                             </div></td>
                                                                         </tr>
@@ -1101,7 +1101,7 @@
                                                                                     <td>{{ $info->description }}</td>
                                                                                     <td>{{ $info->date_encaissement }}</td>
                                                                                     <td>{{ $info->libelle }}</td>
-                                                                                    <td class="td_encaiss"><div class="button_encaiss"><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                                    <td class="td_encaiss"><div class="button_encaiss"><button class="btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i class="bx bxs-edit-alt bx-modifier"></i></button>&nbsp;
                                                                                         <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class="btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
                                                                                     </div></td>
                                                                                 </tr>
@@ -1236,7 +1236,7 @@
                                                                 @foreach ($facture_payer as $actif)
                                                                 <tr>
                                                                     <td>
-                                                                        <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>   
+                                                                        <h6><a href="#collapseprojet_payer_{{$actif->num_facture}}" class="mb-0 changer_carret d-flex pt-2" data-bs-toggle="collapse" role="button"><i class="bx bx-caret-down carret-icon"></i></a></h6>
                                                                     </td>
                                                                     <td>
                                                                         <a href="{{route('detail_facture',$actif->num_facture)}}">
@@ -1348,7 +1348,7 @@
                                                                                             <td>{{ $info->description }}</td>
                                                                                             <td>{{ $info->date_encaissement }}</td>
                                                                                             <td>{{ $info->libelle }}</td>
-                                                                                            <td class="td_encaiss"><div class="button_encaiss"><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                                            <td class="td_encaiss"><div class="button_encaiss"><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i class="bx bxs-edit-alt bx-modifier"></i></button>&nbsp;
                                                                                                 <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
                                                                                             </div></td>
                                                                                         </tr>
@@ -1569,7 +1569,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                             {{-- debut modal encaissement --}}
                             <div id="modal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -1595,6 +1595,6 @@
             </div>
             {{-- inmportation fonction js pour cfp --}} @include("admin.facture.function_js.js_cfp") @endsection
             {{-- <script type="text/javascript">
-           
+
                             </script> --}}
-            
+

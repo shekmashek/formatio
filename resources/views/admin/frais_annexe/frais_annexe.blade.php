@@ -60,7 +60,7 @@
                     @foreach ($frais as $fr)
                         <tr>
                             <td>{{ $fr->description }}</td>
-                            <td><a href="" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_modifier_frais_{{ $fr->id }}"><i style="font-size: 1rem !important" class="bx bx-edit bx_modifier"></i></a></td>
+                            <td><a href="" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal_modifier_frais_{{ $fr->id }}"><i style="font-size: 1rem !important" class="bx bxs-edit-alt bx_modifier"></i></a></td>
                             <td><a href="{{ route('supprimer_frais',[$fr->id]) }}"><i class="bx bx-trash bx_supprimer" style="font-size: 1rem !important"></i></a></td>
                         </tr>
                         <div class="modal fade"

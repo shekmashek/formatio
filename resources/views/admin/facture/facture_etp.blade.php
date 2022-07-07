@@ -799,7 +799,7 @@
                                                                                 <td>{{ $info->description }}</td>
                                                                                 <td>{{ $info->date_encaissement }}</td>
                                                                                 <td>{{ $info->libelle }}</td>
-                                                                                <td><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i         class="bx bx-edit bx-modifier"></i></button>&nbsp;
+                                                                                <td><button class=" btn btn_creer btn-block mb-2 encaiss_payement" data-id="{{ $info->id }}" id="{{ $info->id }}" data-bs-toggle="modal" data-bs-target="#modal" style="color:green"><i class="bx bxs-edit-alt bx-modifier"></i></button>&nbsp;
                                                                                     <a href="{{ route('supprimer',[$info->id]) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet encaissement ?');"><button class=" btn btn_creer btn-block mb-2 supprimer" style="color: red; "><i class="bx bx-trash bx-supprimer"></i></button></a>
                                                                                 </td>
                                                                             </tr>

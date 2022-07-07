@@ -130,7 +130,7 @@
                     </ul>
                 </div>
                 <div class="col-md-1 text-center"><a href="" aria-current="page" data-bs-toggle="modal"
-                        data-bs-target="#modal_modifier_ressource_{{ $frais->id }}"><i class="bx bx-edit bx_modifier"
+                        data-bs-target="#modal_modifier_ressource_{{ $frais->id }}"><i class="bx bxs-edit-alt bx_modifier"
                             style="font-size:1.1rem !important"></i></a>
                 </div>
                 <div class="col-md-1"><a href="{{ route('supprimer_frais_annexes',[$frais->id]) }}" aria-current="page"><i class="bx bx-trash bx_supprimer" style="font-size:1.1rem !important"></i></a>
@@ -161,7 +161,7 @@
                     </div>
                 </div>
             </div>
-            
+
             @php
                 $somme += $frais->montant;
             @endphp
@@ -212,20 +212,20 @@
     }
 
     .modif_frais{
-        background-color : #a91dcb; 
+        background-color : #a91dcb;
         color: #ffffff;
     }
     .modif_frais:hover{
-        background-color : #d4d2d2; 
+        background-color : #d4d2d2;
         color: #9f00a4;
     }
 
     .annuler_frais{
-        background-color : #d22626; 
+        background-color : #d22626;
         color: #ffffff;
     }
     .annuler_frais:hover{
-        background-color : #d4d2d2; 
+        background-color : #d4d2d2;
         color: #cb0909;
     }
 
@@ -296,7 +296,7 @@
 
                     html += '<div class="col-md-3 d-flex mt-2">';
                         html += '<button><i id="removeRow_frais" class="fal fa-minus-circle mx-5 mt-3" style="font-size : 1.3rem"></i> </button>';
-                    html += '</div>';                
+                    html += '</div>';
 
                 html += '</div>';
 

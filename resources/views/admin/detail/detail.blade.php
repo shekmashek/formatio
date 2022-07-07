@@ -172,10 +172,10 @@
                 <th><i class="fa fa-clock"></i>&nbsp;Heure fin </th>
                 <th>
                     @if ($type_formation_id == 1)
-                        <i class="fa fa-user"></i>&nbsp;Formateur 
+                        <i class="fa fa-user"></i>&nbsp;Formateur
                     @endif
                     @if ($type_formation_id == 2)
-                        <i class="fa fa-home"></i>&nbsp;Ville 
+                        <i class="fa fa-home"></i>&nbsp;Ville
                     @endif
                 </th>
                 <th><i class="fa fa-map-marker-alt"></i>&nbsp;Salle de formation</th>
@@ -258,10 +258,10 @@
                     <input type="hidden" name="ville_lieu" id="ville_lieu">
                 </td>
             </tr>
-            
+
         </tbody>
         @endcan
-        
+
     </table>
     @can('isCFP')
     <div class="enregistrer">
@@ -389,7 +389,7 @@
                                                 <td>
                                                     <a href="" aria-current="page" data-bs-toggle="modal"
                                                         data-bs-target="#modal_modifier_detail_{{ $d->detail_id }}"><i
-                                                            class="bx bx-edit bx_modifier ms-2"></i></a>
+                                                            class="bx bxs-edit-alt bx_modifier ms-2"></i></a>
                                                     {{-- <a href="{{ route('destroy_detail',[$d->detail_id]) }}"><i
                                                     class="fa fa-trash-alt ms-4" style="color:rgb(130,33,100);"></i></a> --}}
                                                     <button type="button" style="background: none" data-bs-toggle="modal"

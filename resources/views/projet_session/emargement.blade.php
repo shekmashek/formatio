@@ -155,7 +155,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-1">
-                                    <i type="button" class="bx bx-edit bx_modifier edit_presence" style="1rem !important;" data-detail="{{ $dt->detail_id }}" data-stagiaire="{{ $pre->stagiaire_id }}"></i>
+                                    <i type="button" class="bx bxs-edit-alt bx_modifier edit_presence" style="1rem !important;" data-detail="{{ $dt->detail_id }}" data-stagiaire="{{ $pre->stagiaire_id }}"></i>
                                 </div>
                             </div>
                         @endif

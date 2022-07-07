@@ -48,7 +48,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-              
+
                 {{-- <li class="nav-item mx-1">
                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_formateur') ? 'active' : '' }}" href="{{route('utilisateur_formateur')}}">
                         Formateurs</a>
@@ -107,7 +107,7 @@
                         <li><a href="{{route('utilisateur_cfp')}}">Tout</a></li>
                     </ul>
                 </div>
-            </form> --}} 
+            </form> --}}
 
             {{-- <form action="{{ route('utilisateur_new_cfp') }}">
                 @csrf
@@ -117,7 +117,7 @@
     </p>
 </form> --}}
 <div class="container-fluid">
-    
+
     <div class="d-flex flex-row justify-content-end mt-3">
         <span class="nombre_pagination"><span style="position: relative; bottom: -0.2rem">{{ $debut . '-' . $fin }} sur
                 {{ $nb_resp }}</span>
@@ -153,7 +153,7 @@
             <th> Responsables Principales</th>
             <th> E-mail </th>
             <th> Téléphone </th>
-           
+
             <th>Date d'inscription</th>
 
             <th> Action </th>
@@ -169,8 +169,8 @@
                 <td> <a class="dropdown-item" href=""><span>{{ $resp->nom_resp_cfp}}</span><span class="ms-1">{{ $resp->prenom_resp_cfp}}</span>  </a></td>
                 <td>{{ $resp->email_resp_cfp}}</td>
                 <td>
-                    
-                    
+
+
                 </td>
                 <td>{{ $resp->created_at}}</td>
                 <td>
@@ -182,7 +182,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('affichage_parametre_cfp',$resp->id) }}"><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
-                                {{-- <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
+                                {{-- <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 edit_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bxs-edit-alt"></i> Modifier profile</button></a>
                                 <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$resp->id}}" style="color: red">Supprimer</button></a> --}}
 
                             </ul>
@@ -303,7 +303,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}} 
+            </div> --}}
             {{-- fin --}}
 
 

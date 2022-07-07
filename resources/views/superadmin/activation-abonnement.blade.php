@@ -273,7 +273,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                                 @endif
                                 <td>
                                     <span role="button" data-bs-toggle="modal" data-bs-target="#modif_coupon_{{ $coupon->id}}">
-                                        <i class='bx bx-edit bx_modifier' title="Modifier coupon"></i>
+                                        <i class='bx bxs-edit-alt bx_modifier' title="Modifier coupon"></i>
                                     </span>
                                     <span role="button" data-bs-toggle="modal" data-bs-target="#supp_coupon_{{ $coupon->id}}">
                                         <i class='bx bx-trash bx_supprimer' title="Supprimer coupon"></i>

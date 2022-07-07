@@ -15,7 +15,7 @@
                 <li class="me-5"><a href="#objectif"><i class='bx bx-target-lock encre_icon me-2'></i>objectif</a></li>
                 <li class="me-5"><a href="#pour_qui"><i class='bx bx-user encre_icon me-2'></i>pour qui ?</a></li>
                 <li class="me-5"><a href="#programme"><i class='bx bx-list-minus encre_icon me-2'></i>programme</a></li>
-                <li class="me-5"><a href="#avis"><i class='bx bx-list-minus encre_icon me-2'></i>Avis</a></li>
+                <li class="me-5"><a href="#avis"><i class='bx bxs-message-alt-edit encre_icon me-2'></i>Avis</a></li>
                 <li class="me-5"><a class="print_to_pdf"><i class='bx bxs-download encre_icon me-2'></i>telecharger en pdf</a></li>
             </ul>
         </div>
@@ -32,10 +32,10 @@
             <div class="col-lg-6 col-md-6 ">
                 <div class="">
                     @foreach ($infos as $res)
-                    <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bx-edit bx_modifier' title="modifier titre module"></i></span></h4>
+                    <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier titre module"></i></span></h4>
                     <p class="text_black">{{$res->nom_formation}}</p>
                     <div class="d-flex">
-                        <p class="text_black">{{$res->description}}</p>&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#description"><i class='bx bx-edit bx_modifier' title="modifier description module"></i></span>
+                        <p class="text_black">{{$res->description}}</p>&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#description"><i class='bx bxs-edit-alt bx_modifier' title="modifier description module"></i></span>
                     </div>
                     <div class="detail__formation__result__avis d-flex flex-row">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
@@ -120,7 +120,7 @@
                     <div class="col background_contrast" ><span >{{$devise->devise}}&nbsp;{{number_format($res->prix_groupe, 0, ' ', ' ')}}<sup>&nbsp;/ {{$res->max_pers}} pax</sup>&nbsp;<span class="text-muted hors_taxe">HT</span></span></div>
                 @endif
                 <div class="col">
-                    <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
+                    <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bxs-edit-alt bx_modifier' title="modifier details module"></i></span>
                 </div>
             </div>
         </div>
@@ -129,7 +129,7 @@
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h4 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i><i class='bx bx-target-lock encre__icon_cacher me-2'></i>Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h4>
+                <h4 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i><i class='bx bx-target-lock encre__icon_cacher me-2'></i>Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></h4>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
                         {{-- <p>@php echo html_entity_decode($res->objectif) @endphp</p> --}}
@@ -144,7 +144,7 @@
                 <div class="row detail__formation__item__left__adresse pe-4">
                     <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3></span>
+                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></h3></span>
                             <div class="col-12 ps-4">
                                 {{-- <p>@php echo html_entity_decode($res->cible) @endphp</p> --}}
                                 <p id="cible_content">{{$res->cible}}</p>
@@ -154,7 +154,7 @@
                     </div>
                     <div class="col module_detail_objet">
                         <div class="row d-flex flex-row w-100">
-                            <span class="adresse__text"><i class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                            <span class="adresse__text"><i class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12 ps-4">
                                 {{-- <p>@php echo html_entity_decode($res->prerequis) @endphp</p> --}}
                                 <p id="prerequis_content">{{$res->prerequis}}</p>
@@ -166,7 +166,7 @@
                 <div class="row detail__formation__item__left__adresse pe-4">
                     <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                            <span class="adresse__text"><i class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12 ps-4">
                                 {{-- <p>@php echo html_entity_decode($res->materiel_necessaire) @endphp</p> --}}
                                 <p id="equipement_content">{{$res->materiel_necessaire}}</p>
@@ -177,7 +177,7 @@
 
                     <div class="col module_detail_objet">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                            <span class="adresse__text"><i class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12 ps-4">
                                 {{-- <p>@php echo html_entity_decode($res->bon_a_savoir) @endphp</p> --}}
                                 <p id="bon_a_savoir_content">{{$res->bon_a_savoir}}</p>
@@ -194,7 +194,7 @@
                             <div class="row d-flex flex-row">
                                 <span class="adresse__text"><i
                                     class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></span>
                                 <div class="col-12 ps-4">
                                     {{-- <p>@php echo html_entity_decode($res->prestation) @endphp</p> --}}
                                     <p id="prestation_content">{{$res->prestation}}</p>
@@ -239,7 +239,7 @@
                                                 <i class='bx bx-plus-medical bx_ajouter'></i>
                                             </div>
                                             <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" id="{{$prgc->id}}" title="modifier le programme">
-                                                <i class='bx bx-edit bx_modifier'></i>
+                                                <i class='bx bxs-edit-alt bx_modifier'></i>
                                             </div>
                                             <div class="suppression_programme" title="Supprimer le programme" id="{{$prgc->id}}">
                                                 <i class='bx bx-trash bx_supprimer'></i>
@@ -355,7 +355,6 @@
                                 </div>
                                 <?php $i++ ?>
                                 @endforeach
-                                <div id="avis"></div>
                             </div>
                         </div>
                     </div>
@@ -370,9 +369,10 @@
                     </div>
                 </div>
                 <div class="html2pdf__page-break"></div>
+                <div id="avis"></div>
                 <div class="row detail__formation__programme__avis">
                     <div>
-                        <h3 class="pt-5 pb-0"><i class='bx bxs-edit-alt encre__icon me-2'></i><i class='bx bxs-edit-alt encre__icon_cacher me-2'></i>Avis sur la formation</h3>
+                        <h3 class="pt-5 pb-0"><i class='bx bxs-message-alt-edit encre__icon me-2'></i><i class='bx bxs-message-alt-edit encre__icon_cacher me-2'></i>Avis sur la formation</h3>
                     </div>
                     @if($liste_avis_count > 0)
                     <div class="col-12 mb-5">
@@ -607,7 +607,7 @@
                             </span>
                             @if(count($competences) > 3)
                                 <span class=" ms-2 mb-2 mt-2 pb-2 .show_modal" data-bs-toggle="modal" data-bs-target="#Modal_{{$id}}" id="{{$id}}" title="modifier les competence" role="button">
-                                    <i class='bx bx-edit bx_modifier'></i>
+                                    <i class='bx bxs-edit-alt bx_modifier'></i>
                                 </span>
                             @endif
                         </div>

@@ -86,7 +86,7 @@
                                                     @for($ii = 0; $ii < count($roles_not_actif_referent[$i]["role_inactif"]); $ii++)
                                                     @if($referent[$i]->user_id == $roles_not_actif_referent[$i]["user_id"])
                                                     <span style="color:blueviolet">attribué role pour {{$roles_not_actif_referent[$i]["role_inactif"][$ii]->role_name}}
-                                                        <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$referent[$i]->user_id,$roles_not_actif_referent[$i]["role_inactif"][$ii]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                        <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$referent[$i]->user_id,$roles_not_actif_referent[$i]["role_inactif"][$ii]->id])}}"><i class='bx bxs-edit-alt background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
                                                     </span> <br>
                                                     @endif
                                                     @endfor
@@ -236,7 +236,7 @@
                                                 @for($ii = 0; $ii < count($roles_not_actif_stg[$i]["role_inactif"]); $ii++)
                                                 @if($stagiaires[$i]->user_id == $roles_not_actif_stg[$i]["user_id"])
                                                 <span style="color:blueviolet">attribué role pour {{$roles_not_actif_stg[$i]["role_inactif"][$ii]->role_name}}
-                                                    <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$stagiaires[$i]->user_id,$roles_not_actif_stg[$i]["role_inactif"][$ii]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                    <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$stagiaires[$i]->user_id,$roles_not_actif_stg[$i]["role_inactif"][$ii]->id])}}"><i class='bx bxs-edit-alt background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
                                                 </span> <br>
                                                 @endif
                                                 @endfor
@@ -362,7 +362,7 @@
                                                 @for($i = 0; $i < count($roles_not_actif_manager[$i]["role_inactif"]); $i++)
                                                     @if($chef[$i]->user_id == $roles_not_actif_manager[$i]["user_id"])
                                                     <span style="color:blueviolet">attribué role pour {{$roles_not_actif_manager[$i]["role_inactif"][$i]->role_name}}
-                                                        <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$chef[$i]->user_id,$roles_not_actif_manager[$i]["role_inactif"][$i]->id])}}"><i class='bx bx-edit background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
+                                                        <button class="btn modifier pt-0"><a href="{{route('add_role_user',[$chef[$i]->user_id,$roles_not_actif_manager[$i]["role_inactif"][$i]->id])}}"><i class='bx bxs-edit-alt background_grey' style="color: #0052D4 !important;font-size: 15px" title="modifier les informations"></i></a></button>
                                                     </span> <br>
                                                     @endif
                                                 @endfor

@@ -31,7 +31,7 @@
 
 /* components */
 /* icon */
-/* icon à utiliser pour modifier <i class='bx bx-edit bx_modifier'></i> */
+/* icon à utiliser pour modifier <i class='bx bxs-edit-alt bx_modifier'></i> */
 .bx_modifier{
     padding: var(--padding_icon);
     background-color: var(--bgd_all);

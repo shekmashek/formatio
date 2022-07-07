@@ -930,45 +930,45 @@
 
 {{-- nombre dynamique dans la side-bar --}}
 <script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '{{ route("admin_count") }}'
-            , type: 'get'
-            , success: function(response) {
-                var nombre = response;
-                $("#entreprise").append(nombre[0]);
-                $("#projet_en_cours").append(nombre[1]);
-                $("#projet_terminer").append(nombre[2]);
-                $("#projet_a_venir").append(nombre[3]);
-                $("#projets").append(nombre[4]);
-                $("#formateur").append(nombre[5]);
-                // alert(nombre);
-            }
-            , error: function(error) {
-                console.log(error);
-            }
-        });
-    });
-    $(document).ready(function() {
-        $.ajax({
-            url: '{{ route("admin_count_etp") }}'
-            , type: 'get'
-            , success: function(response) {
-                var nombre = response;
-                $("#cfp").append(nombre[0]);
-                $("#projet_en_cours_etp").append(nombre[1]);
-                $("#projet_terminer_etp").append(nombre[2]);
-                $("#projet_a_venir_etp").append(nombre[3]);
-                $("#projets_etp").append(nombre[4]);
-                $("#stagiaire").append(nombre[5]);
-                $("#manager").append(nombre[6]);
-                // alert(nombre);
-            }
-            , error: function(error) {
-                console.log(error);
-            }
-        });
-    });
+    // $(document).ready(function() {
+    //     $.ajax({
+    //         url: '{{ route("admin_count") }}'
+    //         , type: 'get'
+    //         , success: function(response) {
+    //             var nombre = response;
+    //             $("#entreprise").append(nombre[0]);
+    //             $("#projet_en_cours").append(nombre[1]);
+    //             $("#projet_terminer").append(nombre[2]);
+    //             $("#projet_a_venir").append(nombre[3]);
+    //             $("#projets").append(nombre[4]);
+    //             $("#formateur").append(nombre[5]);
+    //             // alert(nombre);
+    //         }
+    //         , error: function(error) {
+    //             console.log(error);
+    //         }
+    //     });
+    // });
+    // $(document).ready(function() {
+    //     $.ajax({
+    //         url: '{{ route("admin_count_etp") }}'
+    //         , type: 'get'
+    //         , success: function(response) {
+    //             var nombre = response;
+    //             $("#cfp").append(nombre[0]);
+    //             $("#projet_en_cours_etp").append(nombre[1]);
+    //             $("#projet_terminer_etp").append(nombre[2]);
+    //             $("#projet_a_venir_etp").append(nombre[3]);
+    //             $("#projets_etp").append(nombre[4]);
+    //             $("#stagiaire").append(nombre[5]);
+    //             $("#manager").append(nombre[6]);
+    //             // alert(nombre);
+    //         }
+    //         , error: function(error) {
+    //             console.log(error);
+    //         }
+    //     });
+    // });
 
     $(document).ready(function() {
         $('.ui-helper-hidden-accessible').hide();

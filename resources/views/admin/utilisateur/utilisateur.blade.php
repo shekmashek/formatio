@@ -21,7 +21,7 @@
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('utilisateur_entreprise') ? 'active' : '' }}" href="{{route('utilisateur_entreprise')}}">
                                         Entreprises</a>
                                 </li>
-                                
+
                                 {{-- <li class="nav-item mx-1">
                                     <a class="nav-link btn_enregistrer {{ Route::currentRouteNamed('liste_entreprise') ? 'active' : '' }}" href="{{route('liste_entreprise')}}">
                                         Entreprises</a>
@@ -102,7 +102,7 @@
                                 </thead>
 
                                 <tbody>
-                               
+
 
                                     @foreach($datas as $resp)
                                     <tr>
@@ -112,7 +112,7 @@
                                             @else
 
                                             <img class="img-fluid " alt="Responsive image" src="{{asset('images/responsables/'.$resp->photos)}}"  style="height:50px; width:50px;border-radius:100%" ></a>
-                                        
+
                                             @endif
                                         </td>
                                         <td>{{$resp->nom_resp." ".$resp->prenom_resp}}</td>
@@ -134,7 +134,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         <a class="dropdown-item" href="{{route('profil_referent',$resp)}}" ><button type="text" class="btn btn_enregistrer">Afficher</button> </a>
-                                                        {{-- <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bx-edit"></i> Modifier profile</button></a>
+                                                        {{-- <a href="#" class="dropdown-item"><button class="btn btn_enregistrer my-2 " data-bs-toggle="modal" data-bs-target="#modal_{{$resp->id}}"> <i class="bx bxs-edit-alt"></i> Modifier profile</button></a>
                                                         <a class="dropdown-item" href="#"><button class="btn btn_enregistrer my-2 delete_pdp_cfp" data-id="{{ $resp->id }}" id="{{ $resp->id }}" data-bs-toggle="modal" data-bs-target="#delete_modal_{{$resp->id}}" style="color: red">Supprimer</button></a> --}}
                                                     </ul>
                                                 </div>

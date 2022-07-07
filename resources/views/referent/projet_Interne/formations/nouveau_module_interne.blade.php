@@ -37,10 +37,10 @@
             <div class="col-lg-6 col-md-6 ">
                 <div class="">
                     @foreach ($infos as $res)
-                    <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bx-edit bx_modifier' title="modifier titre module"></i></span></h4>
+                    <h4 class="py-4">{{$res->nom_module}}&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#nom_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier titre module"></i></span></h4>
                     <p class="text_black">{{$res->nom_formation}}</p>
                     <div class="d-flex">
-                        <p class="text_black">{{$res->description}}</p>&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#description"><i class='bx bx-edit bx_modifier' title="modifier description module"></i></span>
+                        <p class="text_black">{{$res->description}}</p>&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#description"><i class='bx bxs-edit-alt bx_modifier' title="modifier description module"></i></span>
                     </div>
                     <div class="detail__formation__result__avis">
                         <div class="Stars" style="--note: {{ $res->pourcentage }};"></div>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="col background_contrast"><i class='bx bx-clipboard bx_icon'></i><span>&nbsp;{{$res->reference}}</span></div>
                 <div class="col">
-                    <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bx-edit bx_modifier' title="modifier details module"></i></span>
+                    <span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#refs"><i class='bx bxs-edit-alt bx_modifier' title="modifier details module"></i></span>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
                 <div id="pour_qui"></div>
                 {{-- section 0 --}}
                 {{-- FIXME:mise en forme de design --}}
-                <h4 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i>Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h4>
+                <h4 class="pb-3"><i class='bx bx-target-lock encre__icon me-2'></i>Objectifs de la formation&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#objectif_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></h4>
                 <div class="row detail__formation__item__left__objectif">
                     <div class="col-lg-12">
                         <p id="objectif_content">{{$res->objectif}}</p>
@@ -109,7 +109,7 @@
                 <div class="row detail__formation__item__left__adresse pe-4">
                     <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></h3></span>
+                            <span class="adresse__text"><i class="bx bx-user py-2 pb-3 adresse__icon"></i>&nbsp;Pour qui ?&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#cible"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></h3></span>
                             <div class="col-12 ps-4">
                                 <p id="cible_content">{{$res->cible}}</p>
 
@@ -118,7 +118,7 @@
                     </div>
                     <div class="col module_detail_objet">
                         <div class="row d-flex flex-row w-100">
-                            <span class="adresse__text"><i class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                            <span class="adresse__text"><i class="bx bx-list-plus py-2 pb-3 adresse__icon"></i>&nbsp;Prérequis&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prerequis_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12 ps-4">
                                 <p id="prerequis_content">{{$res->prerequis}}</p>
                             </div>
@@ -129,7 +129,7 @@
                 <div class="row detail__formation__item__left__adresse pe-4">
                     <div class="col d-flex flex-row module_detail_objet me-3">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                            <span class="adresse__text"><i class="bx bxs-cog py-2 pb-3 adresse__icon"></i>&nbsp;Equipement necessaire&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#equipement_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12 ps-4">
 
                                 <p id="equipement_content">{{$res->materiel_necessaire}}</p>
@@ -140,7 +140,7 @@
 
                     <div class="col module_detail_objet">
                         <div class="row d-flex flex-row">
-                            <span class="adresse__text"><i class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                            <span class="adresse__text"><i class="bx bxs-message-check py-2 pb-3 adresse__icon"></i>&nbsp;Bon a savoir&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#bon_a_savoir_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></span>
                             <div class="col-12 ps-4">
                                 <p id="bon_a_savoir_content">{{$res->bon_a_savoir}}</p>
 
@@ -156,7 +156,7 @@
                             <div class="row d-flex flex-row">
                                 <span class="adresse__text"><i
                                     class="bx bx-hive py-2 pb-3 adresse__icon"></i>&nbsp;Prestations
-                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bx-edit bx_modifier' title="modifier objectif de la formation"></i></span></span>
+                                pedagogiques&nbsp;<span class="icon_modif" role="button" data-bs-toggle="modal" data-bs-target="#prestation_module"><i class='bx bxs-edit-alt bx_modifier' title="modifier objectif de la formation"></i></span></span>
                                 <div class="col-12 ps-4">
                                     <p id="prestation_content">{{$res->prestation}}</p>
                                 </div>
@@ -213,7 +213,7 @@
                                                 <i class='bx bx-plus-medical bx_ajouter'></i>
                                             </div>
                                             <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" id="{{$prgc->id}}" title="modifier le programme">
-                                                <i class='bx bx-edit bx_modifier'></i>
+                                                <i class='bx bxs-edit-alt bx_modifier'></i>
                                             </div>
                                             <div class="suppression_programme" title="Supprimer le programme" id="{{$prgc->id}}">
                                                 <i class='bx bx-trash bx_supprimer'></i>
@@ -323,7 +323,7 @@
                         <span class="aide_competence"><i class='bx bx-help-circle '></i>
                             <div class="text_aide">
                                 <p>Attribuez des compétences à vos intervenants et à vos programmes de formation pour faciliter le suivi de vos formations. <br>
-                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i> et les modifer sur <i class='bx bx-edit bx_modifier'></i>. Vous pouvez entrer au maximum 10 compétences et 3 minimum et une note allant de 1 à 10 !</p>
+                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i> et les modifer sur <i class='bx bxs-edit-alt bx_modifier'></i>. Vous pouvez entrer au maximum 10 compétences et 3 minimum et une note allant de 1 à 10 !</p>
                             </div>
                         </span>
                     </h5>
@@ -336,7 +336,7 @@
                             </span>
                             @if(count($competences) > 3)
                                 <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_Compt{{$id[0]->id}}" id="{{$id[0]->id}}" title="modifier les competence">
-                                    <i class='bx bx-edit bx_modifier'></i>
+                                    <i class='bx bxs-edit-alt bx_modifier'></i>
                                 </span>
                             @endif
                         </div>
