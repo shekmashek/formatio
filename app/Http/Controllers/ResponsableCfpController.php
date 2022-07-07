@@ -143,8 +143,8 @@ class ResponsableCfpController extends Controller
         // dd($request->all());
         $fonct = new FonctionGenerique();
         $cfp_id = $fonct->findWhereMulitOne('responsables_cfp', ["user_id"], [Auth::id()])->cfp_id;
-        DB::update('update responsables_cfp set prioriter = 0 where cfp_id = ?',[$cfp_id]);
-        DB::update('update responsables_cfp set prioriter = 1 where cfp_id = ? and id = ?', [$cfp_id,$request->id_resp]);
+        DB::update('update employers set prioriter = 0 where entreprise_id = ?',[$cfp_id]);
+        DB::update('update employers set prioriter = 1 where entreprise_id = ? and id = ?', [$cfp_id,$request->id_resp]);
         return back();
     }
 
@@ -324,7 +324,7 @@ class ResponsableCfpController extends Controller
         }
     }
     public function update_dtn_responsable($id,Request $request){
-         DB::update('update responsables_cfp set date_naissance_resp_cfp = ? where user_id = ?', [$request->date_naissance, Auth::id()]);
+         DB::update('update employers set date_naissance_emp = ? where user_id = ?', [$request->date_naissance, Auth::id()]);
         return redirect()->route('profil_du_responsable');
     }
     public function update_genre_responsable($id,Request $request){
@@ -384,7 +384,7 @@ class ResponsableCfpController extends Controller
             return back()->with('error_cin','Entrez votre CIN avant de cliquer sur enregistrer');
         }
         DB::update('update users set cin = ? where id = ?', [$request->cin, Auth::id()]);
-        DB::update('update responsables_cfp set cin_resp_cfp = ? where user_id = ?', [$request->cin, Auth::id()]);
+        DB::update('update employers set cin_emp = ? where user_id = ?', [$request->cin, Auth::id()]);
         return redirect()->route('profil_du_responsable');
     }
     public function update_adresse_responsable($id,Request $request){
@@ -392,7 +392,7 @@ class ResponsableCfpController extends Controller
             return back()->with('error_adresse','Entrez votre adresse complète avant  de cliquer sur enregistrer');
         }
         else{
-            DB::update('update responsables_cfp set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where user_id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, Auth::id()]);
+            DB::update('update employers set adresse_lot = ?, adresse_quartier = ?, adresse_code_postal = ?, adresse_ville = ?, adresse_region = ? where user_id = ?', [$request->lot,$request->quartier,$request->code_postal,$request->ville,$request->region, Auth::id()]);
             return redirect()->route('profil_du_responsable');
         }
 
@@ -440,7 +440,7 @@ class ResponsableCfpController extends Controller
 					// $image->move($destinationPath, $nom_image);
 					$url_photo = URL::to('/')."/images/responsables/".$nom_image;
 
-					DB::update('update responsables_cfp set photos_resp_cfp = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
+					DB::update('update employers set photos = ?,url_photo = ? where user_id = ?', [$nom_image,$url_photo, Auth::id()]);
 					return redirect()->route('profil_du_responsable');
 			}
             else{
@@ -454,14 +454,14 @@ class ResponsableCfpController extends Controller
     public function desactiver_personne(Request $request){
         $id  = $request->Id;
         $activiter = 0;
-        DB::update('update responsables_cfp set activiter = ? where id = ?', [$activiter, $id]);
+        DB::update('update employers set activiter = ? where id = ?', [$activiter, $id]);
         return response()->json(['success' => 'ok']);
     }
 
     public function activer_personne(Request $request){
         $id  = $request->Id;
         $activiter = 1;
-        DB::update('update responsables_cfp set activiter = ? where id = ?', [$activiter, $id]);
+        DB::update('update employers set activiter = ? where id = ?', [$activiter, $id]);
         return response()->json(['success' => 'ok']);
     }
 }

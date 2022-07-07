@@ -50,8 +50,8 @@ class ResponsableCfpModel extends Model
         ];
         DB::beginTransaction();
         try {
-            DB::insert('insert into responsables_cfp(nom_resp_cfp,prenom_resp_cfp,cin_resp_cfp,email_resp_cfp,telephone_resp_cfp,fonction_resp_cfp
-        ,cfp_id,user_id,activiter,created_at) values(?,?,?,?,?,?,?,?,1,NOW())', $data);
+            DB::insert('insert into employers(nom_emp,prenom_emp,cin_emp,email_emp,telephone_emp,fonction_emp
+        ,entreprise_id,user_id,activiter,prioriter,created_at) values(?,?,?,?,?,?,?,?,1,0,NOW())', $data);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();

@@ -127,7 +127,20 @@ class CfpController extends Controller
     }
     public function edit_mail($id, Request $request)
     {
-        $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$id]);
+        $url_previous = str_replace(url('/'), '', url()->previous());
+        if($url_previous == "/affichage_parametre_cfp") {
+            $test = "cfp";
+            $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$id]);
+        }
+        elseif($url_previous == "/profil_du_responsable") {
+            $test = "referent";
+            $ref = $this->fonct->findWhereMulitOne("responsables_cfp",["id"],[$id])->cfp_id;
+            $cfp = $this->fonct->findWhereMulitOne("cfps", ["id"], [$ref]);
+        }
+
+
+
+
         return view('cfp.modification_profil.edit_mail', compact('cfp', 'id'));
     }
     public function edit_phone($id, Request $request)
@@ -245,11 +258,17 @@ class CfpController extends Controller
         if ($request->mail == null) {
             return redirect()->back()->with('error_email', 'Entrez email de votre organisme avant de cliquer sur enregistrer');
         } else {
-            DB::update('update entreprises set email_etp = ? where id = ?', [$request->mail, $id]);
-            DB::update('update users set email = ? where id = ?',[$request->mail,Auth::user()->id]);
-            DB::update('update employers set email_emp = ? where user_id = ?',[$request->mail,Auth::user()->id]);
-            return redirect()->route('profil_of', [$id]);
+            //si le responsable connecté est le responsable principal, c-a-d a comme priorité 1, alors son email est le même que l'email de l'OF
+            $priorite = $this->fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id]);
+            if($priorite->prioriter == 1){
+                DB::update('update entreprises set email_etp = ? where id = ?', [$request->mail, $id]);
+                DB::update('update users set email = ? where id = ?',[$request->mail,Auth::user()->id]);
+                DB::update('update employers set email_emp = ? where user_id = ?',[$request->mail,Auth::user()->id]);
+            }
+            else  DB::update('update employers set email_emp = ? where user_id = ?',[$request->mail,Auth::user()->id]);
         }
+        if(isset($request->resp)) return redirect()->route('profil_du_responsable');
+        else    return redirect()->route('profil_of', [$id]);
     }
     public function modifier_phone($id, Request $request)
     {
@@ -259,7 +278,7 @@ class CfpController extends Controller
         } else {
             $resp_id = $this->fonct->findWhere("employers",["entreprise_id"],[$id]);
             for ($i=0; $i < count($resp_id); $i++) {
-                DB::update('update employers set telephone_emp = ? where id = ?', [$request->phone, $resp_id[$i]->id]);
+                DB::update('update employers set telephone_emp = ? where id = ? and prioriter = 1', [$request->phone, $resp_id[$i]->id]);
             }
             DB::update('update entreprises set telephone_etp = ? where id = ?', [$request->phone, $id]);
             DB::update('update users set telephone = ? where id = ?', [$request->phone, Auth::user()->id]);
