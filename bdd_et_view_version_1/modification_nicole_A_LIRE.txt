@@ -24,12 +24,53 @@ copier le script dans bdd_suiviformation_view_employes
 recopier view v_stagiaire_entreprise dans bdd_suiviformation_view_1(view miasa + avis)
 
 --06Juillet
-alter table dans bdd_suiviformation_mis_a_jour_3(entreprises)
+Les modifications dans bdd_suiviformation_mis_a_jour_3(entreprises):
+
+CREATE TABLE `type_entreprise` (
+    `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `type_entreprise` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `type_entreprise` (`type_entreprise`) VALUES
+('entreprise'),
+('of');
+
+ALTER TABLE entreprises
+    ADD slogan varchar(255) COLLATE utf8mb4_unicode_ci default null,
+    ADD presentation text COLLATE utf8mb4_unicode_ci default NULL,
+    ADD specialisation text COLLATE utf8mb4_unicode_ci default NULL,
+    ADD type_entreprise_id bigint(20) UNSIGNED default 1  REFERENCES type_entreprise(id);
+
 INSERT INTO `secteurs` (`nom_secteur`) VALUES ('Autres'); dans  bdd_suiviformation_mis_a_jour_3(entreprises)
-changer default value 8 secteur_id dans entreprises : ALTER TABLE `entreprises` CHANGE `secteur_id` `secteur_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '8';
-create table type_entreprise dans bdd_suiviformation_mis_a_jour_3(entreprises)
-CREATE OR REPLACE VIEW CFPS dans bdd_suiviformation_mis_a_jour_1(table mere)
-CREATE OR REPLACE VIEW CFPS dans bdd_suiviformation_mis_a_jour_1(table mere)
+ALTER TABLE `entreprises` CHANGE `secteur_id` `secteur_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '8';
+
+Les modifications dans bdd_suiviformation_mis_a_jour_1(table mere)
+CREATE OR REPLACE VIEW cfps as SELECT
+    id,
+    nom_etp as nom,
+    adresse_rue as adresse_lot,
+    adresse_quartier,
+    adresse_code_postal,
+    adresse_ville,
+    adresse_region,
+    email_etp as email,
+    telephone_etp as telephone,
+    slogan,
+    nif,
+    stat,
+    rcs,
+    cif,
+    created_at,
+    updated_at,
+    logo,
+    activiter,
+    site_etp as site_web,
+    url_logo,
+    statut_compte_id,
+    presentation,
+    specialisation,
+    assujetti_id
+FROM entreprises WHERE entreprises.type_entreprise_id = 2;
 
 
 copier les alter ci-dessous
@@ -187,7 +228,7 @@ create table demande_test_niveaux(
     foreign key(formation_id) references formations(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE question_evaluations;
+DROP TABLE question_evaluations; (supprimer à la main s'il y a une éventuelle erreur)
 create table question_evaluations(
     id bigint(20) unsigned primary key not null auto_increment,
     question text not null,

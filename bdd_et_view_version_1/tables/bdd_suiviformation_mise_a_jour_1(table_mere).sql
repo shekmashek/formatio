@@ -221,8 +221,6 @@ CREATE TABLE reseaux_sociaux (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-alter table cfps add presentation text COLLATE utf8mb4_unicode_ci NULL;
-alter table cfps add specialisation text COLLATE utf8mb4_unicode_ci NULL;
 
 
 
