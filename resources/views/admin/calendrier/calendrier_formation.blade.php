@@ -257,9 +257,9 @@
 
                             // buttonText: '',
 
-//                             defaults: {
-// -                            fixedWeekCount: false,
-// -                        },
+                            // defaults: {
+                            //     fixedWeekCount: false,
+                            // },
                             // vue sur 3 mois
                             duration: { months: 3 },
                         },
