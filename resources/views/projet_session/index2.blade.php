@@ -315,6 +315,27 @@
             font-size: 13px;
         }
 
+        .redClass{
+            color: #f44336 !important;
+        }
+
+        .arrowDrop{
+            color: #1e9600;
+            transition: 0.3s !important;
+            transform: rotate(360deg) !important;
+        }
+        .mivadika{
+            transform: rotate(180deg) !important;
+            color: red !important;
+            transition: 0.3s !important;
+        }
+
+        #example_length select{
+            height: 25px;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
     </style>
 
     <div class="container-fluid mb-5">
@@ -503,31 +524,31 @@
                         </div>
 
                         <div class="fixedTop" >
-                            <table id="example">
+                            <table id="example" class="table">
                                 <thead>
                                     <tr>
-                                        <th class="headProject"><i class='bx bx-library'></i> Projet</th>
-                                        <th class="headProject"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
-                                        <th class="headProject"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
-                                        <th class="headProject"><i class='bx bx-building-house'></i> Entreprise</th>
-                                        <th class="headProject"><i class='bx bx-calendar-check' ></i> Modalité</th>
-                                        <th class="headProject"><i class='bx bx-time-five' ></i> Date du projet</th>
-                                        <th class="headProject"><i class='bx bx-home' ></i> Ville</th>
-                                        <th class="headProject"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
-                                        <th class="headProject">Type formation</th>
-                                        <th class="headProject"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
+                                        <th class="headProject" style="width: 104px"><i class='bx bx-library'></i> Projet</th>
+                                        <th class="headProject" style="width: 124px"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
+                                        <th class="headProject" style="width: 158px"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
+                                        <th class="headProject" style="width: 144px"><i class='bx bx-building-house'></i> Entreprise</th>
+                                        <th class="headProject" style="width: 114px"><i class='bx bx-calendar-check' ></i> Modalité</th>
+                                        <th class="headProject" style="width: 144px"><i class='bx bx-time-five' ></i> Date du projet</th>
+                                        <th class="headProject" style="width: 144px"><i class='bx bx-home' ></i> Ville</th>
+                                        <th class="headProject" style="width: 124px"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
+                                        <th class="headProject" style="width: 104px">Type formation</th>
+                                        <th class="headProject" style="width: 80px"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
                                     </tr>
                                     <tr>
-                                        <th>Projet</th>
-                                        <th>Session</th>
-                                        <th>Module</th>
-                                        <th>Entreprise</th>
-                                        <th>Modalité</th>
-                                        <th id="hideDate">Date du projet</th>
-                                        <th id="hideVille">Ville</th>
-                                        <th>Statut</th>
-                                        <th>Type formation</th>
-                                        <th id="hideAction">Action</th>
+                                        <th style="width: 104px">Projet</th>
+                                        <th style="width: 124px">Session</th>
+                                        <th style="width: 158px">Module</th>
+                                        <th style="width: 144px">Entreprise</th>
+                                        <th style="width: 114px">Modalité</th>
+                                        <th style="width: 144px" id="hideDate">Date du projet</th>
+                                        <th style="width: 144px" id="hideVille">Ville</th>
+                                        <th style="width: 124px">Statut</th>
+                                        <th style="width: 104px">Type formation</th>
+                                        <th style="width: 80px" id="hideAction">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -538,7 +559,7 @@
                                             </tr>
                                         @else
 
-                                            <tr style="background: #cccccc;">
+                                            <tr style="background: #e7e7e7; height: 50px;">
                                                 <td colspan="7">
                                                     @php
                                                         if ($prj->totale_session == 1) {
@@ -582,8 +603,7 @@
                                                         @endif
                                                     @endforeach
                                                 </td>
-                                                <td></td>
-                                                <td>
+                                                <td style="padding-left: 1px">
                                                     @can('isCFP')
                                                         @if ($prj->type_formation_id == 1)
                                                             <span role="button" data-bs-toggle="modal"
@@ -593,6 +613,9 @@
                                                             </span>
                                                         @endif 
                                                     @endcan
+                                                </td>
+                                                <td>
+                                                    
                                                 </td>
                                                 <td style="display: none">
                                                     @foreach ($data as $pj)
@@ -663,52 +686,53 @@
                                                             @endif
                                                         </td>
                                                         <td style="display: none"></td>
-                                                        <td colspan="10">
+                                                        <td colspan="10" style="border: none">
                                                             <div>
                                                                 <table>
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td></td>
-                                                                            
-                                                                            <td>
+                                                                            <td style="width: 105px;">
                                                                                 <span>
-                                                                                    <a data-bs-toggle="collapse" href="#collapseProject_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class='bx bx-down-arrow-circle' style="font-size: 20px; vertical-align: middle;"></i></a>
+                                                                                    <a data-bs-toggle="collapse" href="#collapseProject_{{$pj->groupe_id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><i class='bx bx-down-arrow-circle arrowDrop ' data-id="{{$pj->groupe_id}}"  style="font-size: 20px; vertical-align: middle; color: #1e9600"></i></a>
                                                                                 </span>
+                                                                            </td>
+                                                                            <td style="width: 125px;">
+                                                                                
                                                                                 <a href="{{ route('detail_session', [$pj->groupe_id, $prj->type_formation_id]) }}">
-                                                                                    <span style="border-bottom: 3px solid #673ab7; font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }}</span>
+                                                                                    <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
                                                                                 </a>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="width: 164px">
                                                                                 <span style="font-size: 13px">{{ $pj->nom_module }}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="width: 147px">
                                                                                 @foreach ($entreprise as $etp)
                                                                                     @if ($etp->groupe_id == $pj->groupe_id)
                                                                                     <span style="font-size: 13px">{{ $etp->nom_etp }}</span>
                                                                                     @endif
                                                                                 @endforeach
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="width: 115px">
                                                                                 <span style="font-size: 13px">{{ $pj->modalite }}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="width: 144px">
                                                                                 @php
                                                                                     echo "<span style='font-size: 13px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";    
                                                                                 @endphp
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="width: 144px">
                                                                                 @php
                                                                                     $ville = $groupe->dataVille($pj->groupe_id);
                                                                                     $salle = explode(',  ', $ville);
                                                                                 @endphp
                                                                                 <span style="font-size: 13px;">{{ $salle[0] }}</span>
                                                                             </td>
-                                                                            <td>
-                                                                                <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1 text-center nom_status" style="width: 120px;">
+                                                                            <td style="width: 128px">
+                                                                                <p class="{{ $pj->class_status_groupe }} m-0 ps-1 pe-1 text-center nom_status" style="width: 100px;">
                                                                                     <span style="font-size: 13px">{{ $pj->item_status_groupe }}</span>
                                                                                 </p>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="width: 104px" class="text-center">
                                                                                 @if ($prj->type_formation_id == 1)
                                                                                     <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 7px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
                                                                                         {{ $prj->type_formation }}
@@ -719,11 +743,11 @@
                                                                                     </span>
                                                                                 @endif
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="width: 70px" class="text-center">
                                                                                 <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.4rem;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                                                                 <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
                                                                                     @can('isCFP')
-                                                                                        <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static" style="cursor: pointer;">Modifier</span></li>
+                                                                                        <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal_modifier_session_{{ $pj->groupe_id }}" data-backdrop="static" style="cursor: pointer; font-size: 13px">Modifier</span></li>
                                                                                     @endcan
                                                                                     <li class="action_projet"><a class="dropdown-item" href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">Expoter en PDF</a></li>
                                                                                     <li class="action_projet"><a class="dropdown-item" href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
@@ -761,10 +785,10 @@
                                     
                                                                                                                 @if ( count($dataDetails) > 0)
                                                                                                                     @foreach ($dataDetails as $dataDetail)
-                                                                                                                        <span class='rounded-pill' style='padding: 4px 8px; color: #fff; background-color: #2193b0; font-size: 14px;'>{{ $dataDetail->nom_formateur }}</span>
+                                                                                                                        <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 14px;'>{{ $dataDetail->nom_formateur }}</span>
                                                                                                                     @endforeach
                                                                                                                 @elseif(count($dataDetails) <= 0)
-                                                                                                                    <span class='rounded-pill' style='padding: 2px 7px; color: #fff; background-color: #014f70'>{{"--"}}</span>
+                                                                                                                    <span class='rounded-pill' style='padding: 2px 7px; border: 1px solid #e4e4e498; color: #011e2a;'>{{"--"}}</span>
                                                                                                                 @endif
                                                                                                             </a>
                                                                                                         </div>
@@ -784,10 +808,10 @@
                                     
                                                                                                                 @if ( count($dataApprs) > 0)
                                                                                                                     @foreach ($dataApprs as $dataAppr)
-                                                                                                                        <span class='rounded-pill' style='padding: 2px 6px; color: #fff; background-color: #014f70; display: inline-block; margin-bottom: 1px; font-size: 13px'>{{ $dataAppr->nom_stagiaire." ".$dataAppr->prenom_stagiaire }}</span>
+                                                                                                                        <span class='rounded-pill' style='padding: 2px 6px; border: 1px solid #e4e4e498; color: #011e2a; display: inline-block; margin-bottom: 1px; font-size: 13px'>{{ $dataAppr->nom_stagiaire." ".$dataAppr->prenom_stagiaire }}</span>
                                                                                                                     @endforeach
                                                                                                                 @elseif(count($dataApprs) <= 0)
-                                                                                                                    <span class='rounded-pill' style='padding: 2px 7px; color: #fff; background-color: #014f70'>{{"--"}}</span>
+                                                                                                                    <span class='rounded-pill' style='padding: 2px 7px; border: 1px solid #e4e4e498; color: #011e2a;'>{{"--"}}</span>
                                                                                                                 @endif
                                                                                                             </a>
                                                                                                         </div>
@@ -811,7 +835,7 @@
                                                                                                                     }
                                                                                                                 @endphp
                                                                                                                 
-                                                                                                            <span style="color: #275b75; font-size: 15px">{{ number_format($somme, 2, ',', ' ') }} <span>{{ $devise }}</span></span>  
+                                                                                                            <span style="color: #011e2a; font-size: 13px">{{ number_format($somme, 2, ',', ' ') }} <span>{{ $devise }}</span></span>  
                                                                                                                 
                                                                                                         </div>
                                                                                                     </div>
@@ -834,7 +858,7 @@
                                                                                                                     }
                                                                                                                 @endphp
                                                                                                                 
-                                                                                                            <span style="color: #275b75; font-size: 15px">{{ number_format($pj->prix, 2) }} <span>{{ $devise }}</span></span>
+                                                                                                            <span style="color: #011e2a; font-size: 13px">{{ number_format($pj->prix, 2) }} <span>{{ $devise }}</span></span>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
@@ -842,7 +866,7 @@
                                                                                             <div class="col-md-7">
                                                                                                 <div class="card-body">
                                                                                                     <h5 class="card-title">
-                                                                                                        <i class="bi bi-calendar2-week" style="color: #011e2a;"></i>
+                                                                                                        <i class='bx bx-calendar' style="color: #011e2a;"></i>
                                                                                                         <span style="color: #011e2a; font-weight: 500;">Calendrier des séances</span>
                                                                                                     </h5>
                                                                                                     <hr>
@@ -851,7 +875,19 @@
                                                                                                         $dataSessions = $groupe->dataSession($pj->groupe_id);
                                                                                                     @endphp
                                                                                                     <div class="row">
-                                                                                                        <div class="col-md-12" style="background: #014f70; color: #fff;">
+                                                                                                        @php
+                                                                                                            $info = $groupe->infos_session($pj->groupe_id);
+                                                                                                            if ($info->difference == null && $info->nb_detail == 0) {
+                                                                                                                echo "<span style='font-size: 13px'>".$info->nb_detail . ' séance , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m'."</span>";
+                                                                                                            } elseif ($info->difference != null && $info->nb_detail == 1) {
+                                                                                                                echo "<span style='font-size: 13px'>".$info->nb_detail . ' séance , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m'."</span>";
+                                                                                                            } elseif ($info->difference != null && $info->nb_detail > 1) {
+                                                                                                                echo "<span style='font-size: 13px'>".$info->nb_detail . ' séances , durée totale : ' . gmdate('H', $info->difference) . ' h ' . gmdate('i', $info->difference) . ' m'."</span>";
+                                                                                                            }
+                                                                                                        @endphp
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <div class="col-md-12" style="background: #e4e4e498;">
                                                                                                             <div class="row">
                                                                                                                 <div class="col-md-2" >
                                                                                                                     <span class="head">Séances</span>
@@ -909,7 +945,7 @@
                                                                                                                 @elseif( count($dataSessions) <= 0)
                                                                                                                 <div class="row">
                                                                                                                         <div class="col-md-12">
-                                                                                                                            <span style="color: rgb(56, 121, 207)">Aucune séance</span>
+                                                                                                                            <span style="font-size: 13px; color: #011e2a">Aucune séance</span>
                                                                                                                         </div>
                                                                                                                 </div>
                                                                                                                 @endif
@@ -1981,7 +2017,8 @@
                     $("#myDatatablesa_filter").detach().appendTo('#new-search-area');
                 },
                 scrollY:        "500px",
-      
+                // scrollX:        true,
+                // scrollCollapse: true,
                 orderCellsTop: true,
                 fixedHeader: true,
                 "language": {
@@ -2044,6 +2081,17 @@
             });
 
             searchByColumn(table);
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.arrowDrop').on('click', function(){
+                if ($(this).hasClass('mivadika')){
+                    $(this).removeClass('mivadika');
+                } else {
+                    $(this).addClass('mivadika');
+                }
+            });
         });
     </script>
     {{-- end filter multiple --}}
