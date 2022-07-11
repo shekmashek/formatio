@@ -291,7 +291,7 @@ class HomeController extends Controller
             // cfp_id
             //  $cfp_id = Cfp::where('user_id', $user_id)->value('id');
             $cfp_id = $fonct->findWhereMulitOne("responsables_cfp", ["user_id"], [$user_id])->cfp_id;
-
+            // dd($user_id);
             $cfp = Cfp::where('id', $cfp_id)->value('nom');
 
             $cfps = $fonct->findWhereMulitOne("cfps",["id"],[$cfp_id]);

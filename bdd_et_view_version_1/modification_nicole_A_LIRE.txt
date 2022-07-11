@@ -128,12 +128,12 @@ ALTER TABLE `montant_frais_annexes` DROP cfp_id;
 ALTER TABLE `montant_frais_annexes` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
 
 
-DROP TABLE demmande_cfp_etp;
-DROP TABLE demmande_etp_cfp;
-DROP TABLE demmande_cfp_formateur;
-DROP TABLE demmande_formateur_cfp;
-DROP TABLE refuse_demmande_cfp_etp;
-DROP TABLE refuse_demmande_etp_cfp
+DROP TABLE if exists demmande_cfp_etp;
+DROP TABLE if exists demmande_etp_cfp;
+DROP TABLE if exists demmande_cfp_formateur;
+DROP TABLE if exists demmande_formateur_cfp;
+DROP TABLE if exists refuse_demmande_cfp_etp;
+DROP TABLE if exists refuse_demmande_etp_cfp;
 
 create table demmande_cfp_etp(
     id bigint(20) unsigned primary key not null auto_increment,
@@ -212,31 +212,31 @@ create table refuse_demmande_etp_cfp(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-ALTER TABLE `but_objectif` DROP cfp_id;
+ALTER TABLE `but_objectif` DROP if exists cfp_id;
 ALTER TABLE `but_objectif` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `pedagogique` DROP cfp_id;
+ALTER TABLE `pedagogique` DROP if exists cfp_id;
 ALTER TABLE `pedagogique` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `recommandation` DROP cfp_id;
+ALTER TABLE `recommandation` DROP if exists cfp_id;
 ALTER TABLE `recommandation` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
 ALTER TABLE `evaluation_action_formation` DROP cfp_id;
 ALTER TABLE `evaluation_action_formation` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `objectif_globaux` DROP cfp_id;
+ALTER TABLE `objectif_globaux` DROP if exists cfp_id;
 ALTER TABLE `objectif_globaux` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `objectif_pedagogique` DROP cfp_id;
+ALTER TABLE `objectif_pedagogique` DROP if exists cfp_id;
 ALTER TABLE `objectif_pedagogique` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `feed_back` DROP cfp_id;
+ALTER TABLE `feed_back` DROP if exists cfp_id;
 ALTER TABLE `feed_back` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `conclusion` DROP cfp_id;
+ALTER TABLE `conclusion` DROP if exists cfp_id;
 ALTER TABLE `conclusion` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `evaluation_resultat` DROP cfp_id;
+ALTER TABLE `evaluation_resultat` DROP if exists cfp_id;
 ALTER TABLE `evaluation_resultat` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `detail_recommandation` DROP cfp_id;
+ALTER TABLE `detail_recommandation` DROP if exists cfp_id;
 ALTER TABLE `detail_recommandation` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `modules_interne` DROP etp_id;
+ALTER TABLE `modules_interne` DROP if exists etp_id;
 ALTER TABLE `modules_interne` ADD etp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `projets_particulier` DROP cfp_id;
+ALTER TABLE `projets_particulier` DROP if exists cfp_id;
 ALTER TABLE `projets_particulier` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
-ALTER TABLE `presences_particulier` DROP cfp_id;
+ALTER TABLE `presences_particulier` DROP if exists cfp_id;
 ALTER TABLE `presences_particulier` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
 
 
@@ -255,7 +255,7 @@ create table demande_test_niveaux(
     foreign key(formation_id) references formations(id) on delete cascade
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE question_evaluations; (supprimer à la main s'il y a une éventuelle erreur)
+DROP TABLE if exists question_evaluations cascade;
 create table question_evaluations(
     id bigint(20) unsigned primary key not null auto_increment,
     question text not null,
@@ -278,33 +278,33 @@ create table iframe_cfp(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-ALTER TABLE `projets` DROP cfp_id;
+ALTER TABLE `projets` DROP if exists cfp_id;
 ALTER TABLE `projets` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
 ALTER TABLE `detail_evaluation_action_formation` DROP cfp_id;
 ALTER TABLE `detail_evaluation_action_formation` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
 
-ALTER TABLE `salle_formation_of` DROP cfp_id;
+ALTER TABLE `salle_formation_of` DROP if exists cfp_id;
 ALTER TABLE `salle_formation_of` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
 
-ALTER TABLE `demande_devis` DROP cfp_id;
+ALTER TABLE `demande_devis` DROP if exists cfp_id;
 ALTER TABLE `demande_devis` ADD cfp_id bigint(20) UNSIGNED not null REFERENCES entreprises(id);
 
-ALTER TABLE `encaissements` DROP resp_cfp_id;
+ALTER TABLE `encaissements` DROP if exists resp_cfp_id;
 ALTER TABLE `encaissements` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
 
-ALTER TABLE `demmande_cfp_etp` DROP resp_cfp_id;
+ALTER TABLE `demmande_cfp_etp` DROP if exists resp_cfp_id;
 ALTER TABLE `demmande_cfp_etp` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
 
-ALTER TABLE `demmande_cfp_formateur` DROP resp_cfp_id;
+ALTER TABLE `demmande_cfp_formateur` DROP if exists resp_cfp_id;
 ALTER TABLE `demmande_cfp_formateur` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
 
-ALTER TABLE `demmande_formateur_cfp` DROP resp_cfp_id;
+ALTER TABLE `demmande_formateur_cfp` DROP if exists resp_cfp_id;
 ALTER TABLE `demmande_formateur_cfp` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
 
-ALTER TABLE `refuse_demmande_cfp_etp` DROP resp_cfp_id;
+ALTER TABLE `refuse_demmande_cfp_etp` DROP if exists resp_cfp_id;
 ALTER TABLE `refuse_demmande_cfp_etp` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
 
-ALTER TABLE `refuse_demmande_etp_cfp` DROP resp_cfp_id;
+ALTER TABLE `refuse_demmande_etp_cfp` DROP if exists resp_cfp_id;
 ALTER TABLE `refuse_demmande_etp_cfp` ADD resp_cfp_id bigint(20) UNSIGNED not null REFERENCES employers(id);
 
 
