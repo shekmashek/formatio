@@ -132,6 +132,8 @@ class SessionController extends Controller
         $dataMontantSession = [];
         if(Gate::allows('isCFP')){
             // $drive = new getImageModel();
+
+            $fonct = new FonctionGenerique();
             $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
             $cfp_id = $resp->cfp_id;
             $cfp_nom = $resp->nom_cfp;

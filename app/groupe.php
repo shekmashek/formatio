@@ -241,6 +241,7 @@ class Groupe extends Model
                 ->select('*')
                 ->where('cfp_id', $cfp_id)
                 ->where('groupe_id', $groupe_id)
+                ->limit(2)
                 ->get();
 
             $entreprise_id = $projet[0]->entreprise_id;
@@ -250,6 +251,7 @@ class Groupe extends Model
                 ->select('*')
                 ->where('cfp_id', $cfp_id)
                 ->where('groupe_id', $groupe_id)
+                ->limit(2)
                 ->get();
 
         }
@@ -257,9 +259,25 @@ class Groupe extends Model
         $stagiaire = DB::table('v_stagiaire_groupe')
             ->select('*')
             ->where('groupe_id', $groupe_id)
+            ->limit(2)
             ->get();
 
         return $stagiaire;
+    }
+
+    public function dataApprenantAll($groupe_id){ 
+        $stagiaire = DB::table('v_stagiaire_groupe')
+            ->select('*')
+            ->where('groupe_id', $groupe_id)
+            ->get();
+
+        return $stagiaire;
+    }
+
+    public function dataNombre($groupe_id){
+        $req = DB::select('select count(stagiaire_id) as nombre from participant_groupe where groupe_id = ?', [$groupe_id]);
+
+        return $req;
     }
 
     public function dataSession($groupe_id){
@@ -269,6 +287,17 @@ class Groupe extends Model
                 ->where('groupe_id', $groupe_id)
                 ->get();
         return $datas;
+    }
+
+    public function dataVille($groupe_id){
+        $villes = DB::table("details")
+            ->select("lieu")
+            ->where("groupe_id", "=", $groupe_id)
+            ->get();
+        if(count($villes) > 0){
+            return $villes[0]->lieu;
+        }   
+        return '-';
     }
 }
 ?>
