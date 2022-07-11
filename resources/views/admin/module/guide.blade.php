@@ -19,7 +19,7 @@ integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg
                     <h5 class="title"></h5>
                     <p class="text"></p>
                     <p class="text">Nous invitons à créer votre premier module de formation en cliquant sur le bouton créer maintenant</p>
-                    <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button">Créer maintenant</a>
+                    <a data-bs-toggle="modal" data-bs-target="#nouveau_module" class=" btn_nouveau" role="button"><i class='bx bx-plus-medical me-1'></i>Créer maintenant</a>
                 </div>
             </div>
         </div>

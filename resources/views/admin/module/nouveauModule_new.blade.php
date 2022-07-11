@@ -1088,9 +1088,9 @@ $('#pax_max').on('change keyup', function(e){
 //         $("#ouvrir_flottant").modal("show");
 // }
 
-// $('.hors_ligne_redirect').on('click', function (e) {
-//         localStorage.setItem('ActiveTabMod', '#hors_ligne');
-//     });
+$('.hors_ligne_redirect').on('click', function (e) {
+        localStorage.setItem('ActiveTabMod', '#hors_ligne');
+    });
 
 
 function afficher_radar(label,competence){
