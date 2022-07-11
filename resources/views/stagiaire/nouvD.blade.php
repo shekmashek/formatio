@@ -68,8 +68,12 @@
                         <p id="domaine_id_err" style="font-size: 14px;color:blue" >Choisissez une zone de formation, puis sélectionnez le thème du coparrainant.</p>
                     </div>
                     <div class="input-groupe mt-2">
-                        <label for="">Objectif attendue :</label>
-                        <input type="text" name="objectif" class="form-control" >
+                        <label for="">Raison de la formation :</label>
+                        <select name="" id="" class="form-control">
+                            <option value="">Adaptation au poste</option>
+                            <option value="">Evolution dans l'empoi</option>
+                            <option value="">Développement de competence</option>
+                        </select>
                     </div>
                 
                 </div>
@@ -80,6 +84,10 @@
                     </div>
                     <div class="input-groupe mt-2">
                         <label for="">Organisme sugére:</label>
+                        <input type="text" name="organisme" class="form-control" >
+                    </div>
+                    <div class="input-groupe mt-2">
+                        <label for="">heure de:</label>
                         <input type="text" name="organisme" class="form-control" >
                     </div>
                     <div class="input-groupe mt-3">

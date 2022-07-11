@@ -3,6 +3,11 @@
     <p class="text_header m-0 mt-1">Demande</p>
 @endsection
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
 <link href="https://cdn.jsdelivr.net/gh/akottr/dragtable@master/dragtable.css" rel="stylesheet">
 <link href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css"/>
@@ -58,7 +63,9 @@
                     <h2>Liste globale des demandes de formation </h2>
                 </div>
                 <div class="float-end">
-
+                    <a class="btn btn-secondary text-light" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Ajouter une demande
+                    </a>
                     <a href="{{route('besoin.PDF',$ids)}}" class="btn btn-primary text-light">
                         Export PDF
                     </a>
@@ -71,7 +78,92 @@
             {{-- <div style="display: flex">
                 Afficher : <a class="toggle-vis" data-column="0">Nom</a> - <a class="toggle-vis" data-column="1">Fonction</a> 
             </div> --}}
-            
+            <div class="col-md-12 mt-2">
+                <div class="" id="collapseExample">
+                    <div class="card card-body">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>IM</th>
+                                <th>Nom </th> 
+                                <th>Fonction</th>
+                                <th>Département</th>
+                                <th>Service</th>
+                                <th>domaine</th>
+                                <th>thematique</th>
+                                <th>date prévisionnelle</th>
+                                <th>Organisme</th>
+                                <th>Urgence</th> 
+                                <th></th>
+                            </tr>
+                            <tbody>
+                                <tr>
+                                    <th style="width: 50px">
+                                        <select name="" class="form-control" id="matricule" style="width: 40px;height:30px;font-size:12px" id="">
+                                            @foreach($employer as $em)
+                                            <option value="{{$em->matricule_emp}}" >{{$em->matricule_emp}}</option>
+                                            @endforeach
+                                        </select>
+                                    </th>
+
+                                    <th>
+                                        <select name="" class="form-control nom" id="nom" style="width: 100px;height:30px;font-size:12px" id="">
+                                            {{-- @foreach($employer as $em)
+                                            <option value="" >{{$em->nom_emp}}</option>
+                                            @endforeach --}}
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select name="" class="form-control fonction" id="fonction" style="width: 100px;height:30px;font-size:12px" id="">
+                                            {{-- @foreach($employer as $em)
+                                            <option value="" >{{$em->fonction_emp}}</option>
+                                            @endforeach --}}
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select name="" class="form-control departementC" id="departementC" style="width: 160px;height:30px;font-size:12px" id="">
+                                            {{-- @foreach($employer as $em)
+                                            <option value="" >{{$em->}}</option>
+                                            @endforeach --}}
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select name="" class="form-control service" id="service" style="width: 100px;height:30px;font-size:12px" id="">
+                                            {{-- @foreach($employer as $em)
+                                            <option value="" >{{$em->nom_emp}}</option>
+                                            @endforeach --}}
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select name="" class="form-control domaine" style="width: 150px;height:30px;font-size:12px" id="">
+                                            <option value="" selected hidden>choisir domaine</option>
+                                            @foreach($domaine as $dom)
+                                            <option value="{{$dom->id}}" >{{$dom->nom_domaine}}</option>
+                                            @endforeach
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select name="" class="form-control thematique" id="thematique" style="width: 150px;height:30px;font-size:12px" id="">
+                                            {{-- @foreach($employer as $em)
+                                            <option value="" >{{$em->nom_emp}}</option>
+                                            @endforeach --}}
+                                        </select>
+                                    </th>
+                                    <th><input type="date" style="width: 100px;height:30px;font-size:12px" class="form-control"></th>
+                                    <th><input style="width: 100px;height:30px;font-size:12px" type="text" class="form-control"></th>
+                                    <th>
+                                        <select name="" class="form-control" style="width: 150px;height:30px;font-size:12px" id="">
+                                            <option value="" >urgent</option>
+                                            <option value="" >non-urgent</option>    
+                                        </select>
+                                    </th>
+                                    <th><button class="btn btn-info text-light" style="width: 90px;height:30px;font-size:12px">Ajouter</button></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
             <div class="col-md-12 mt-4">
                 
                 <div class="row selection"  style="width:400px">
@@ -87,6 +179,7 @@
                                 @endforeach
                                 
                             </select>
+                            <button class="btn  p-1 reload" style="height: 30px;border:1px solid gray"><i style="" class="fa-solid fa-arrows-rotate"></i></button>
                     </div>
                     <div  style="display: flex;margin-left:750px;position: absolute;" id="service">
                         {{-- <p style="margin-left:2px;margin-top:4px;color:gray">Sérvice:</p>
@@ -110,15 +203,14 @@
                     <thead>
                         <tr style="background: rgb(240, 237, 237);text-align:center">
                             <th>IM</th>
-                            <th>Nom </th>
-                            
+                            <th>Nom </th> 
                             <th>Fonction</th>
                             <th>Département</th>
                             <th>Service</th>
                             <th>thematique</th>
                             <th>date prévisionnelle</th>
                             <th>Organisme</th>
-                            <th>Priorité</th>
+                            <th>Urgence</th>
                             <th>N+1</th>
                         </tr>
                     </thead>
@@ -179,9 +271,7 @@
                                     
                                     @endif 
                                 @endforeach
-                                @if($fonc == null) 
-                                    <?php echo('non categorisé'); ?>
-                                @else
+                                @if(isset($fonc))
                                     {{ $fonc}}
                                 @endif
                             </td>
@@ -191,10 +281,12 @@
                                     <?php $fonc = $st->nom_service ?> 
                                     @endif 
                                 @endforeach
-                                @if($fonc == null) 
-                                    <?php echo('non categorisé'); ?>
-                                @else
-                                    {{ $fonc}}
+                                @if(isset($fonc))
+                                    @if($fonc == null)
+                                        <?php echo ('non categorisé')?>
+                                    @else
+                                        {{$fonc}}
+                                    @endif
                                 @endif
                             </td>
                             <td>    
@@ -267,16 +359,17 @@
                 },
             });
             table.on( 'column-reorder', function ( e, settings, details ) {
-    var headerCell = $( table.column( details.to ).header() );
- 
-    headerCell.addClass( 'reordered' );
- 
-    setTimeout( function () {
-        headerCell.removeClass( 'reordered' );
-    }, 2000 );
-} );
+                var headerCell = $( table.column( details.to ).header() );
+            
+                headerCell.addClass( 'reordered' );
+            
+                setTimeout( function () {
+                    headerCell.removeClass( 'reordered' );
+                }, 2000 );
+            } );
 
             $("#departement").on('change',function(e){
+                
                 var val = $(this).text()
                 table.column( 3 )
                 .search( val ? $(this).val() : val )
@@ -285,7 +378,11 @@
             });
             $(function() {
                 $('#example').bootstrapTable()
-            })  
+            }) 
+            $(".reload").on('click',function(){
+                $('#example').bootstrapTable().clear().draw();
+                // alert('test')
+            }) 
             $('a.toggle-vis').on('click', function (e) {
             e.preventDefault();
     
@@ -295,63 +392,80 @@
             // Toggle the visibility
             column.visible(!column.visible());
         });
-            // $("#service").each(function(i){
-            //         var label = $('<p style="color: gray;margin-top:4px">Service:</p>'+'&nbsp;').appendTo($(this))
-            //         var select = $(' <select class="form-control" style="width:300px;height:30px;font-size:12px"><option value=""></option></select>')
-	        //         .appendTo( $(this) )
-            //         table.column( 4 ).data().unique().each( function ( d, j ) {  
-			// 		select.append( '<option value="'+d+'">'+d+'</option>' );
-		    //         } );
+        $("#matricule").change(function (e) { 
+            e.preventDefault();
+            var id = $(this).val()
+            $.ajax({
+                type: "get",
+                url: "/getEmployer",
+                data: {
+                    id:id,
+                },
+                dataType: "json",
+                success: function (response) {
+                    var employer = response;
+                    if (employer.length > 0) {
+                        document.getElementById("nom").innerHTML = "";
+                        document.getElementById("fonction").innerHTML = "";
+                        document.getElementById("departementC").innerHTML = "";
+                        document.getElementById("service").innerHTML = "";
+                        for(var i = 0;i < employer.length ; i++){
+                            $(".nom").append(
+                                '<option value="'+employer[i].nom_emp+'">'+employer[i].nom_emp+'</option>'
+                            )
+                            
+                            $(".fonction").append(
+                                '<option value="'+employer[i].fonction_emp+'">'+employer[i].fonction_emp+'</option>'
+                            )
 
-            //     })
-        // new $.fn.dataTable.FixedHeader(table);
-        // $("#example #mahafaly ").each( function ( i ) {
-		
-		// if ($(this).text() !== '') {
-	        // var isStatusColumn = (($(this).text() == 'Status') ? true : false);
-			// var select = $('<select class="form-control"><option value=""></option></select>')
-	        //     .appendTo( $(this).empty() )
-	        //     .on( 'change', function () {
-	        //         var val = $(this).val();
-			// 		var test = val.replace(/ /g,"")
-            //         // alert(test)
-	        //         table.column( 3 )
-	        //             .search( test ? $(this).val() : test )
-	        //             .draw();
-	        //     } );
-	 		
-			// // Get the Status values a specific way since the status is a anchor/image
-			// if (isStatusColumn) {
-			// 	var statusItems = [];
-				
-            //     /* ### IS THERE A BETTER/SIMPLER WAY TO GET A UNIQUE ARRAY OF <TD> data-filter ATTRIBUTES? ### */
-			// 	table.column( i ).nodes().to$().each( function(d, j){
-			// 		var thisStatus = $(j).attr("data-filter");
-			// 		if($.inArray(thisStatus, statusItems) === -1) statusItems.push(thisStatus);
-			// 	} );
-				
-			// 	statusItems.sort();
-								
-			// 	$.each( statusItems, function(i, item){
-			// 	    select.append( '<option value="'+item+'">'+item+'</option>' );
-			// 	});
+                            $(".departementC").append(
+                                '<option value="'+employer[i].nom_departement+'">'+employer[i].nom_departement+'</option>'
+                            )
+                            $(".service").append(
+                                '<option value="'+employer[i].nom_service+'">'+employer[i].nom_service+'</option>'
+                            )
+                        }
+                    }else{
 
-			// }
-            // All other non-Status columns (like the example)
-			
-	// 			table.column( 3 ).data().unique().sort().each( function ( d, j ) {  
-	// 				select.append( '<option value="'+d+'">'+d+'</option>' );
-	// 	        } );	
-			
-	        
-	// 	}
-    // } );
+                    }
+                }
+            });
+        });
+
+        $(".domaine").change(function (e) { 
+            
+            e.preventDefault();
+            var id = $(this).val();
+            $.ajax({
+                url: "/get_formation",
+                type: "get",
+                data: {
+                    id: id,
+                },
+                success: function (response) {
+                    var userData = response;
+                    if(userData.length > 0){
+                        document.getElementById("thematique").innerHTML = "";
+                        for (var $i = 0; $i < userData.length; $i++) {
+                            $('.thematique').append(
+                                '<option value="' +
+                                userData[$i].id +
+                                '" data-value="' +
+                                userData[$i].nom_formation +
+                                '" >' +
+                                userData[$i].nom_formation +
+                                "</option>"
+                            )   
+                        }
+                    }
+                }
+            });
+            
+        });
   
     });
     
-//     $(function() {
-//     $('#example').bootstrapTable()
-//   })  
+ 
     
 
 </script>
