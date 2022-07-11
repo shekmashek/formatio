@@ -536,7 +536,7 @@
                                         <th class="headProject" style="width: 144px"><i class='bx bx-time-five' ></i> Date du projet</th>
                                         <th class="headProject" style="width: 144px"><i class='bx bx-home' ></i> Ville</th>
                                         <th class="headProject" style="width: 120px"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
-                                        <th class="headProject" style="width: 117px"><i class='bx bx-book-content'></i>Type formation</th>
+                                        <th class="headProject" style="width: 117px"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type formation</th>
                                         <th class="headProject" style="width: 75px"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
                                     </tr>
                                     <tr>
