@@ -14,12 +14,15 @@ use App\projet;
 use App\session;
 use App\formateur;
 use App\formation;
+use App\Ressource;
 use App\stagiaire;
 use App\entreprise;
 use App\responsable;
-use App\responsable_cfp;
+use App\DetailInterne;
 use App\chefDepartement;
+use App\responsable_cfp;
 use App\GroupeEntreprise;
+use App\GroupeInterne;
 use App\participant_groupe;
 use RecursiveArrayIterator;
 use Illuminate\Http\Request;
@@ -274,7 +277,37 @@ class DetailController extends Controller
                 $details = null;
             }
 
-            // dd($details);
+            $details_interne = DetailInterne::whereHas('projet_interne', function($query) use($entreprise_id){
+                $query->where('entreprise_id', $entreprise_id);
+            })->get();
+
+            
+            
+            $details_internes = $details_interne->groupBy('groupe_interne_id');
+            // dd($details_internes);
+            // combine the details and details_interne to get the details
+            // dd($details_internes);
+
+            if ($details_internes->count() > 0) {
+                foreach ($details_internes as $key => $detail_interne) {
+                    $numero_session = 0;
+                    // generate a random color as another attribute
+                    $detail_interne->color = '#ffffff';
+                    foreach ($detail_interne as $key => $value) {
+                        $value->color = $detail_interne->color;
+                        $value->numero_session = $numero_session;
+                        $numero_session += 1;
+                        $raveled_details_interne[] = $value;
+                    }
+                        
+                }
+                
+            } else {
+                $raveled_details_interne = [];
+            }
+            
+
+            // dd($raveled_details_interne);
 
             // $details get all data but it is a multidimansionnal array.
             // We need to get each details as raveled_details (ref numpy.ravel() in python)
@@ -299,57 +332,94 @@ class DetailController extends Controller
                 $raveled_details = [];
             }
             
+            // add $raveled_details_interne to $raveled_details
+            $raveled_details = array_merge($raveled_details, $raveled_details_interne);
+
             // the collapse() method give the same result as the foreach to get the details (ravel() method in numpy)   
             // $d = collect($details);
             // $s = $d->collapse();
 
-            
+
+
 
             // getting the elements for ech events from the groupe class relationships 
             foreach ($raveled_details as $key => $value) {
-
                 
-                foreach ($value->groupe->groupe_entreprise as $key => $group) {
+
+                if (isset($value->projet_interne_id)) {
+                    $events[] = array(
                     
+
+                        'detail_id' => $value->id,
+                        'title' => $value->groupe_interne->module_interne->formation_interne->nom_formation.' - '.$value->groupe_interne->module_interne->reference.' - '.$value->lieu,
+                        'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
+                        'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
+                        'description' => $value->groupe_interne->module_interne->nom_module,
+                        'nom_projet' => $value->groupe_interne->projet_interne->nom_projet,
+                        'lieu' => $value->lieu,
+                        'formation' => $value->groupe_interne->module_interne->formation_interne,
+                        'formateur_obj' => $value->formateur_interne,
+                        'formateur' => ucfirst($value->formateur_interne->nom_formateur).' '.ucfirst($value->formateur_interne->prenom_formateur),
+                        'groupe' => $value->groupe_interne,
+                        'participants' => $value->groupe_interne->participant_interne->pluck('stagiaire'),
+                        'materiel' => $value->groupe_interne->ressources,
+    
+                        // Etabli la relation entre un participant(stagiaire) et son entreprise(entreprise)
+                        // La relation 'entreprises' devient en attribut du 'participants' et contient le tableau d'entreprises
+                        'participants_entreprises' => $value->groupe_interne->participant_interne->pluck('stagiaire')->pluck('entreprise'),
+                        // get all the groupe_entreprise->entreprise as an array of objects
+                        // the pluck() method return an array of the specified attribute of each objects
+                        'entreprises' => $value->groupe_interne->projet_interne->entreprise->toArray(),
+                        'sessions' => $value->groupe_interne->details_interne,
+                        'numero_session' => $value->numero_session,
+                        // 'duree' => date_diff(strtotime("$value->date_detail $value->h_debut"),strtotime("$value->date_detail $value->h_fin")),
+                        'projet' => $value->groupe_interne->projet_interne,
+                        'type_formation' => $value->groupe_interne->projet_interne->type_formation ? $value->groupe_interne->projet_interne->type_formation : 'Interne',
+                        'backgroundColor' => $value->color,
+                        'borderColor' => $value->color,
+                    );
+                } else {
+                    $events[] = array(
+                    
+
+                        'detail_id' => $value->id,
+                        'title' => $value->groupe->module->formation->nom_formation.' - '.$value->groupe->module->reference.' - '.$value->lieu,
+                        'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
+                        'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
+                        'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
+                        'nom_projet' => $value->groupe->projet->nom_projet,
+                        'lieu' => $value->lieu,
+                        'formation' => $value->groupe->module->formation,
+                        'formateur_obj' => $value->formateur,
+                        'formateur' => ucfirst($value->formateur->nom_formateur).' '.ucfirst($value->formateur->prenom_formateur),
+                        'groupe' => $value->groupe,
+                        'groupe_entreprise' => $value->groupe->groupe_entreprise,
+                        'participants' => $value->groupe->participants->pluck('stagiaire'),
+                        'materiel' => $value->groupe->ressources,
+    
+                        // Etabli la relation entre un participant(stagiaire) et son entreprise(entreprise)
+                        // La relation 'entreprises' devient en attribut du 'participants' et contient le tableau d'entreprises
+                        'participants_entreprises' => $value->groupe->participants->pluck('stagiaire')->pluck('entreprise'),
+                        // get all the groupe_entreprise->entreprise as an array of objects
+                        // the pluck() method return an array of the specified attribute of each objects
+                        'entreprises' => $value->groupe->groupe_entreprise->pluck('entreprise')->toArray(),
+    
+                        'sessions' => $value->groupe->detail,
+                        'numero_session' => $value->numero_session,
+                        // 'duree' => date_diff(strtotime("$value->date_detail $value->h_debut"),strtotime("$value->date_detail $value->h_fin")),
+                        'projet' => $value->groupe->projet,
+                        'nom_projet' => $value->groupe->projet->nom_projet,
+                        'type_formation' => $value->groupe->projet->type_formation,
+                        'nom_type_formation' => $value->groupe->projet->type_formation->type_formation,
+                        'nom_cfp' => $value->groupe->projet->cfp->nom,
+                        'backgroundColor' => $value->color,
+                        'borderColor' => $value->color,
+                    );
                 }
 
-                $events[] = array(
-                    
-
-                    'detail_id' => $value->id,
-                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->groupe->module->reference.' - '.$value->lieu,
-                    'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
-                    'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
-                    'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
-                    'nom_projet' => $value->groupe->projet->nom_projet,
-                    'lieu' => $value->lieu,
-                    'formation' => $value->groupe->module->formation,
-                    'formateur_obj' => $value->formateur,
-                    'formateur' => ucfirst($value->formateur->nom_formateur).' '.ucfirst($value->formateur->prenom_formateur),
-                    'groupe' => $value->groupe,
-                    'groupe_entreprise' => $value->groupe->groupe_entreprise,
-                    'participants' => $value->groupe->participants->pluck('stagiaire'),
-                    'materiel' => $value->groupe->ressources,
-
-                    // Etabli la relation entre un participant(stagiaire) et son entreprise(entreprise)
-                    // La relation 'entreprises' devient en attribut du 'participants' et contient le tableau d'entreprises
-                    'participants_entreprises' => $value->groupe->participants->pluck('stagiaire')->pluck('entreprise'),
-                    // get all the groupe_entreprise->entreprise as an array of objects
-                    // the pluck() method return an array of the specified attribute of each objects
-                    'entreprises' => $value->groupe->groupe_entreprise->pluck('entreprise')->toArray(),
-
-                    'sessions' => $value->groupe->detail,
-                    'numero_session' => $value->numero_session,
-                    // 'duree' => date_diff(strtotime("$value->date_detail $value->h_debut"),strtotime("$value->date_detail $value->h_fin")),
-                    'projet' => $value->groupe->projet,
-                    'type_formation' => $value->groupe->projet->type_formation,
-                    'nom_cfp' => $value->groupe->projet->cfp->nom,
-                    'backgroundColor' => $value->color,
-                    'borderColor' => $value->color,
-                );
             }
 
-            return($events);
+            // return($events);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             if ($groupe_etp->count() > 0) {

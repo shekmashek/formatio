@@ -8,15 +8,21 @@ use Illuminate\Support\Facades\DB;
 class Groupe extends Model
 {
     protected $table = "groupes";
+    protected $morphClass = 'Groupe';
     protected $fillable = [
         'nom_groupe','projet_id','max_participant','min_participant','module_id','date_debut','date_fin','status','activiter'
     ];
 
 
-    public function ressources()
-    {
-        return $this->hasMany('App\Ressource', 'groupe_id');
+    // utilise un alias 'Groupe' pour accéder à la classe groupe
+    public function ressources() {
+        return $this->morphMany('App\Ressource', 'ressoursable');
     }
+
+    // public function ressources()
+    // {
+    //     return $this->hasMany('App\Ressource', 'groupe_id');
+    // }
 
     public function participants(){
         return $this->hasMany('App\participant_groupe', 'groupe_id');

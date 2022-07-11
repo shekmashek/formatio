@@ -15,4 +15,8 @@ class Ressource extends Model
         return $this->belongsTo('App\groupe', 'groupe_id');
     }
 
+    public function ressoursable(){
+        return $this->morphTo();
+    }
+
 }

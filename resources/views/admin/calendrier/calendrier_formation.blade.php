@@ -398,24 +398,36 @@
                         var description = info.event.extendedProps.description;
                         var title = info.event.title;
                         var id = info.event.extendedProps.detail_id;
-                        var projet = info.event.extendedProps.projet.nom_projet;
+                        var projet = info.event.extendedProps.nom_projet;
                         var numero_session = info.event.extendedProps.numero_session + 1;
-                        var type_formation = info.event.extendedProps.type_formation.type_formation;
 
+                        if (typeof(info.event.extendedProps.type_formation) === 'object') {
+                            var type_formation = info.event.extendedProps.type_formation.type_formation;
+                            type_formation_offcanvas.classList.remove('h-100', 'm-auto', 'text-center', 'ms-5')
+                        } else {
+                            var type_formation = info.event.extendedProps.type_formation;
+                            type_formation_offcanvas.classList.add('h-100', 'm-auto', 'text-center', 'ms-5');
+                        }
                         // console.log(info.event.extendedProps.type_formation.type_formation);
 
                         var groupe = info.event.extendedProps.groupe;
-                        var sessions = info.event.extendedProps.groupe.detail;
+                        var sessions = info.event.extendedProps.sessions;
                         var entreprises = info.event.extendedProps.entreprises;
+
+                        
                         
                         // console.log(entreprises.length);
                         entreprise_offcanvas.innerHTML = '';
                         var entreprise_offcanvas_link ='';
-                        for (var i = 0; i < entreprises.length; i++) {
-                            // entreprise_offcanvas.innerHTML += entreprises[i].nom_etp + '<br>';
-                            entreprise_offcanvas_link += ('<a href = "{{url("profile_entreprise/:?")}}" class="hover_purple" target = "_blank">'+entreprises[i].nom_etp+'</a><br>').replace(":?", entreprises[i].id);
 
-                            entreprise_offcanvas.innerHTML = entreprise_offcanvas_link;
+                        if (entreprises.length > 0) {
+                                for (var i = 0; i < entreprises.length; i++) {
+                                // entreprise_offcanvas.innerHTML += entreprises[i].nom_etp + '<br>';
+                                entreprise_offcanvas_link += ('<a href = "{{url("profile_entreprise/:?")}}" class="hover_purple" target = "_blank">'+entreprises[i].nom_etp+'</a><br>').replace(":?", entreprises[i].id);
+                                entreprise_offcanvas.innerHTML = entreprise_offcanvas_link;
+                            }
+                        } else {
+                            entreprise_offcanvas.innerHTML = ('<a href = "{{url("profile_entreprise/:?")}}" class="hover_purple" target = "_blank">'+entreprises.nom_etp+'</a><br>').replace(":?", entreprises.id);
                         }
 
 
@@ -455,8 +467,13 @@
 
                         session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
                         lieu_offcanvas.value = info.event.extendedProps.lieu;
-                        OF_offcanvas.value = info.event.extendedProps.nom_cfp;
-
+                        
+                        if (info.event.extendedProps.nom_cfp) {
+                            OF_offcanvas.value = info.event.extendedProps.nom_cfp;
+                        } else {
+                            // display none to the OF_offcanvas
+                            OF_offcanvas.style.display = 'none';
+                        }
 
                         // Lien du proril formateur
                         var formateur_id = info.event.extendedProps.formateur_obj.id;
@@ -584,6 +601,7 @@
                         } else {
                             materiel_button.innerHTML = 'Aucun matériel nécessaire';
                             materiel_button.setAttribute('disabled', 'true');
+                            materiel_button.classList.add('collapsed');
                         }
 
                         bsOffcanvas.show();

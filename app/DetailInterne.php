@@ -11,7 +11,9 @@ class DetailInterne extends Model
     protected $fillable = [
         'id', 'lieu', 'date_detail', 'h_debut', 'h_fin', 'groupe_interne_id', 'formateur_interne_id','projet_interne_id'
     ];
+
     
+
     public function groupe_interne()
     {
         return $this->belongsTo('App\GroupeInterne', 'groupe_interne_id');
