@@ -2,25 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\cfp;
-use App\chefDepartement;
-use Illuminate\Http\Request;
-use App\detail;
-use App\projet;
-use App\module;
-use App\groupe;
-use App\entreprise;
-use App\formation;
-use App\formateur;
-use App\stagiaire;
-use App\responsable;
-use App\session;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use App\Models\FonctionGenerique;
-use Exception;
 use PDF;
+// use Barryvdh\DomPDF\PDF;
+use App\cfp;
+use App\User;
+use Exception;
+use App\detail;
+use App\groupe;
+use App\module;
+use App\projet;
+use App\session;
+use App\formateur;
+use App\formation;
+use App\stagiaire;
+use App\entreprise;
+use App\responsable;
+use App\responsable_cfp;
+use App\chefDepartement;
+use App\GroupeEntreprise;
+use App\participant_groupe;
+use RecursiveArrayIterator;
+use Illuminate\Http\Request;
+use RecursiveIteratorIterator;
+use App\Models\FonctionGenerique;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class DetailController extends Controller
 {
@@ -34,41 +41,477 @@ class DetailController extends Controller
         $this->fonct = new FonctionGenerique();
         $this->groupes = new groupe();
     }
+
+    // calendrier coté cfp
     public function calendrier(){
 
-         $domaines = $this->fonct->findAll('domaines');
-        $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
+        $cfp_id = responsable_cfp::where('user_id', Auth::user()->id)->first()->cfp_id;
 
-        $statut = $this->fonct->findAll('status');
+        $events = array();
 
+        // si l'utilisateur est un résponsable d'entreprise
         if (Gate::allows('isCFP')) {
-            $cfp_id = $rqt[0]->cfp_id;
 
-            $formations = $this->fonct->findWhere('v_formation',['cfp_id'],[$cfp_id]);
+            // getting the cfp if the connected user
+            $cfp = cfp::find($cfp_id);
 
+
+
+            // get the details from model detail where cfp_id = $cfp_id and group it by groupe_id
+            $list_details = detail::where('cfp_id', $cfp_id)->get();
+
+            // Group $list_details by groupe_id
+            $list_details->count() > 0 ? $details = $list_details->groupBy('groupe_id') : $details = null;
+
+            // $details get all data but it is a multidimansionnal array.
+            // We need to get each details as raveled_details (ref numpy.ravel() in python)
+            // we don't use collapse() since we neet to add the $numeroè_session and the color
+            // foreach group of event
+
+            if ($details) {
+                foreach ($details as $key => $detail) {
+                    $numero_session = 0;
+
+                    // generate a random color as another attribute
+                    $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                    foreach ($detail as $key => $value) {
+                        $value->color = $detail->color;
+                        $value->numero_session = $numero_session;
+                        $numero_session += 1;
+                        $raveled_details[] = $value;
+                    }
+
+                }
+
+            } else {
+                $raveled_details = [];
+            }
+
+            // the collapse() method give the same result as the foreach to get the details (ravel() method in numpy)
+            // $d = collect($details);
+            // $s = $d->collapse();
+
+            // getting the elements for ech events from the groupe class relationships
+            foreach ($raveled_details as $key => $value) {
+
+
+                foreach ($value->groupe->groupe_entreprise as $key => $group) {
+
+                }
+
+                $events[] = array(
+
+
+                    'detail_id' => $value->id,
+                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->lieu,
+                    'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
+                    'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
+                    'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
+                    'nom_projet' => $value->groupe->projet->nom_projet,
+                    'lieu' => $value->lieu,
+                    'formation' => $value->groupe->module->formation,
+                    'formateur_obj' => $value->formateur,
+                    'formateur' => ucfirst($value->formateur->nom_formateur).' '.ucfirst($value->formateur->prenom_formateur),
+                    'groupe' => $value->groupe,
+                    'groupe_entreprise' => $value->groupe->groupe_entreprise,
+                    'participants' => $value->groupe->participants->pluck('stagiaire'),
+                    'materiel' => $value->groupe->ressources,
+
+                    // Etabli la relation entre un participant(stagiaire) et son entreprise(entreprise)
+                    // La relation 'entreprises' devient en attribut du 'participants' et contient le tableau d'entreprises
+                    'participants_entreprises' => $value->groupe->participants->pluck('stagiaire')->pluck('entreprise'),
+                    // get all the groupe_entreprise->entreprise as an array of objects
+                    // the pluck() method return an array of the specified attribute of each objects
+                    'entreprises' => $value->groupe->groupe_entreprise->pluck('entreprise')->toArray(),
+
+                    'sessions' => $value->groupe->detail,
+                    'numero_session' => $value->numero_session,
+                    // 'duree' => date_diff(strtotime("$value->date_detail $value->h_debut"),strtotime("$value->date_detail $value->h_fin")),
+                    'projet' => $value->groupe->projet,
+                    'type_formation' => $value->groupe->projet->type_formation,
+                    'nom_cfp' => $value->groupe->projet->cfp->nom,
+                    'backgroundColor' => $value->color,
+                    'borderColor' => $value->color,
+                );
+            }
+
+            // return( $events);
 
         }
-        else{
-            $formations = DB::select('select * from formations ');
+
+        if (Gate::allows('isFormateur')) {
+
+            $formateur_id = formateur::where('user_id', Auth::user()->id)->value('id');
+
+            $cfp = cfp::find($cfp_id);
+
+
+
+            // get the details from model detail where cfp_id = $cfp_id and group it by groupe_id
+            $list_details = detail::where('formateur_id', $formateur_id)->get();
+
+            // Group $list_details by groupe_id
+            $list_details->count() > 0 ? $details = $list_details->groupBy('groupe_id') : $details = null;
+
+            // $details get all data but it is a multidimansionnal array.
+            // We need to get each details as raveled_details (ref numpy.ravel() in python)
+            // we don't use collapse() since we neet to add the $numeroè_session and the color
+            // foreach group of event
+
+            if ($details) {
+                foreach ($details as $key => $detail) {
+                    $numero_session = 0;
+
+                    // // generate a random color as another attribute
+                    $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                    foreach ($detail as $key => $value) {
+                        $value->color = $detail->color;
+                        $value->numero_session = $numero_session;
+                        $numero_session += 1;
+                        $raveled_details[] = $value;
+                    }
+
+                }
+
+            } else {
+                $raveled_details = [];
+            }
+
+            // the collapse() method give the same result as the foreach to get the details (ravel() method in numpy)
+            // $d = collect($details);
+            // $s = $d->collapse();
+
+            // getting the elements for ech events from the groupe class relationships
+            foreach ($raveled_details as $key => $value) {
+
+
+                foreach ($value->groupe->groupe_entreprise as $key => $group) {
+
+                }
+
+                $events[] = array(
+
+
+                    'detail_id' => $value->id,
+                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->lieu,
+                    'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
+                    'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
+                    'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
+                    'nom_projet' => $value->groupe->projet->nom_projet,
+                    'lieu' => $value->lieu,
+                    'formation' => $value->groupe->module->formation,
+                    'formateur_obj' => $value->formateur,
+                    'formateur' => ucfirst($value->formateur->nom_formateur).' '.ucfirst($value->formateur->prenom_formateur),
+                    'groupe' => $value->groupe,
+                    'groupe_entreprise' => $value->groupe->groupe_entreprise,
+                    'participants' => $value->groupe->participants->pluck('stagiaire'),
+                    'materiel' => $value->groupe->ressources,
+
+                    // Etabli la relation entre un participant(stagiaire) et son entreprise(entreprise)
+                    // La relation 'entreprises' devient en attribut du 'participants' et contient le tableau d'entreprises
+                    'participants_entreprises' => $value->groupe->participants->pluck('stagiaire')->pluck('entreprise'),
+                    // get all the groupe_entreprise->entreprise as an array of objects
+                    // the pluck() method return an array of the specified attribute of each objects
+                    'entreprises' => $value->groupe->groupe_entreprise->pluck('entreprise')->toArray(),
+
+                    'sessions' => $value->groupe->detail,
+                    'numero_session' => $value->numero_session,
+                    // 'duree' => date_diff(strtotime("$value->date_detail $value->h_debut"),strtotime("$value->date_detail $value->h_fin")),
+                    'projet' => $value->groupe->projet,
+                    'type_formation' => $value->groupe->projet->type_formation,
+                    'nom_cfp' => $value->groupe->projet->cfp->nom,
+                    'backgroundColor' => $value->color,
+                    'borderColor' => $value->color,
+                );
+            }
+
+            // return( $events);
+
         }
 
-        return view('admin.calendrier.calendrier',compact('domaines','formations','statut'));
+
+
+        // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
+        return view('admin.calendrier.calendrier',compact('events'));
     }
     //calendrier entreprise
     public function calendrier_formation(){
+
         $domaines = $this->fonct->findAll('domaines');
         $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[Auth::user()->id]);
         $statut = $this->fonct->findAll('status');
         $formations = DB::select('select * from formations ');
-        return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations'));
+
+
+        $events = array();
+
+        // si l'utilisateur est un résponsable d'entreprise ou un superadmin
+
+        if (Gate::allows('isReferent') || Gate::allows('isSuperAdmin')) {
+            $entreprise_id = responsable::where('user_id', Auth::user()->id)->first()->entreprise_id;
+
+            // getting the entreprise if the connected user
+            $entreprise = entreprise::find($entreprise_id);
+
+            // getting the groupe_entreprises belonging to $entreprise
+            $groupe_etp = GroupeEntreprise::where('entreprise_id', $entreprise_id)->get();
+
+            // we get many groupe_entreprises so loop foreach element to get the details
+            // matching with the groupe_id
+
+
+            // details['groupe_id'] -> groupe_entreprises['groupe_id'] -> groupe['id']
+
+            if ($groupe_etp->count() > 0) {
+                foreach ($groupe_etp as $key => $value) {
+                    $details[] = detail::whereHas('groupe', function($query) use($value){
+                        $query->where('id', $value->groupe_id);
+                    })->get();
+
+                }
+
+            } else {
+                $details = null;
+            }
+
+            // dd($details);
+
+            // $details get all data but it is a multidimansionnal array.
+            // We need to get each details as raveled_details (ref numpy.ravel() in python)
+
+            // dd(count($details));
+
+            if ($details) {
+                foreach ($details as $key => $detail) {
+                    $numero_session = 0;
+                    // generate a random color as another attribute
+                    $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                    foreach ($detail as $key => $value) {
+                        $value->color = $detail->color;
+                        $value->numero_session = $numero_session;
+                        $numero_session += 1;
+                        $raveled_details[] = $value;
+                    }
+
+                }
+
+            } else {
+                $raveled_details = [];
+            }
+
+            // the collapse() method give the same result as the foreach to get the details (ravel() method in numpy)
+            // $d = collect($details);
+            // $s = $d->collapse();
+
+
+
+            // getting the elements for ech events from the groupe class relationships
+            foreach ($raveled_details as $key => $value) {
+
+
+                foreach ($value->groupe->groupe_entreprise as $key => $group) {
+
+                }
+
+                $events[] = array(
+
+
+                    'detail_id' => $value->id,
+                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->lieu,
+                    'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
+                    'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
+                    'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
+                    'nom_projet' => $value->groupe->projet->nom_projet,
+                    'lieu' => $value->lieu,
+                    'formation' => $value->groupe->module->formation,
+                    'formateur_obj' => $value->formateur,
+                    'formateur' => ucfirst($value->formateur->nom_formateur).' '.ucfirst($value->formateur->prenom_formateur),
+                    'groupe' => $value->groupe,
+                    'groupe_entreprise' => $value->groupe->groupe_entreprise,
+                    'participants' => $value->groupe->participants->pluck('stagiaire'),
+                    'materiel' => $value->groupe->ressources,
+
+                    // Etabli la relation entre un participant(stagiaire) et son entreprise(entreprise)
+                    // La relation 'entreprises' devient en attribut du 'participants' et contient le tableau d'entreprises
+                    'participants_entreprises' => $value->groupe->participants->pluck('stagiaire')->pluck('entreprise'),
+                    // get all the groupe_entreprise->entreprise as an array of objects
+                    // the pluck() method return an array of the specified attribute of each objects
+                    'entreprises' => $value->groupe->groupe_entreprise->pluck('entreprise')->toArray(),
+
+                    'sessions' => $value->groupe->detail,
+                    'numero_session' => $value->numero_session,
+                    // 'duree' => date_diff(strtotime("$value->date_detail $value->h_debut"),strtotime("$value->date_detail $value->h_fin")),
+                    'projet' => $value->groupe->projet,
+                    'type_formation' => $value->groupe->projet->type_formation,
+                    'nom_cfp' => $value->groupe->projet->cfp->nom,
+                    'backgroundColor' => $value->color,
+                    'borderColor' => $value->color,
+                );
+            }
+
+            // return( $events);
+
+            // grouping groupe, entreprise, module, projet, formation related to the connected user
+            if ($groupe_etp->count() > 0) {
+                foreach ($groupe_etp as $key => $value) {
+                    $groupe_entreprises[] = array(
+                        'id' => $value->id,
+                        'groupe_id' => $value->groupe_id,
+                        'groupe' => $value->groupe,
+                        'entreprise' => $value->entreprise,
+                        'module' => $value->groupe->module,
+                        'projet' => $value->groupe->projet,
+                        'formation' => $value->groupe->module->formation,
+                    );
+
+                }
+
+            } else {
+                $groupe_entreprises = [];
+            }
+
+        }
+
+        if (Gate::allows('isStagiaire')) {
+            // dd('stagiaire');
+            // getting the stagiaire_id of the connected user
+            $stagiaire_id = stagiaire::where('user_id', Auth::user()->id)->first()->id;
+
+            $participant_groupe = participant_groupe::where('stagiaire_id', $stagiaire_id)->get();
+            // $groupe_id = $participant_groupe->id;
+            // getting the groupe_entreprises belonging to $entreprise
+
+            // we get many groupe_entreprises so loop foreach element to get the details
+            // matching with the groupe_id
+
+
+            // details['groupe_id'] -> groupe_entreprises['groupe_id'] -> groupe['id']
+            if ($participant_groupe->count() > 0) {
+                foreach ($participant_groupe as $key => $value) {
+                    $details[] = detail::whereHas('groupe', function($query) use($value){
+                        $query->where('id', $value->groupe_id);
+                    })->get();
+
+                }
+            }
+            else {
+                $details = null;
+            }
+
+            // $details get all data but it is a multidimansionnal array.
+            // We need to get each details as raveled_details (ref numpy.ravel() in python)
+
+            if ($details) {
+                foreach ($details as $key => $detail) {
+                    $numero_session = 0;
+                    // generate a random color as another attribute
+                    $detail->color = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                    foreach ($detail as $key => $value) {
+                        $value->color = $detail->color;
+                        $value->numero_session = $numero_session;
+                        $numero_session += 1;
+                        $raveled_details[] = $value;
+                    }
+
+
+                }
+            } else {
+                $raveled_details = [];
+            }
+
+
+
+            // the collapse() method give the same result as the foreach to get the details (ravel() method in numpy)
+            // $d = collect($details);
+            // $s = $d->collapse();
+
+
+
+            // getting the elements for ech events from the groupe class relationships
+            foreach ($raveled_details as $key => $value) {
+
+
+                foreach ($value->groupe->groupe_entreprise as $key => $group) {
+
+                }
+
+                $events[] = array(
+
+
+                    'detail_id' => $value->id,
+                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->lieu,
+                    'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
+                    'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
+                    'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
+                    'nom_projet' => $value->groupe->projet->nom_projet,
+                    'lieu' => $value->lieu,
+                    'formation' => $value->groupe->module->formation,
+                    'formateur_obj' => $value->formateur,
+                    'formateur' => ucfirst($value->formateur->nom_formateur).' '.ucfirst($value->formateur->prenom_formateur),
+                    'groupe' => $value->groupe,
+                    'groupe_entreprise' => $value->groupe->groupe_entreprise,
+                    'participants' => $value->groupe->participants->pluck('stagiaire'),
+                    'materiel' => $value->groupe->ressources,
+
+                    // Etabli la relation entre un participant(stagiaire) et son entreprise(entreprise)
+                    // La relation 'entreprises' devient en attribut du 'participants' et contient le tableau d'entreprises
+                    'participants_entreprises' => $value->groupe->participants->pluck('stagiaire')->pluck('entreprise'),
+                    // get all the groupe_entreprise->entreprise as an array of objects
+                    // the pluck() method return an array of the specified attribute of each objects
+                    'entreprises' => $value->groupe->groupe_entreprise->pluck('entreprise')->toArray(),
+
+                    'sessions' => $value->groupe->detail,
+                    'numero_session' => $value->numero_session,
+                    // 'duree' => date_diff(strtotime("$value->date_detail $value->h_debut"),strtotime("$value->date_detail $value->h_fin")),
+                    'projet' => $value->groupe->projet,
+                    'type_formation' => $value->groupe->projet->type_formation,
+                    'nom_cfp' => $value->groupe->projet->cfp->nom,
+                    'backgroundColor' => $value->color,
+                    'borderColor' => $value->color,
+                );
+            }
+
+            // return( $events);
+
+            // grouping groupe, entreprise, module, projet, formation related to the connected user
+            if($participant_groupe->count() > 0) {
+                foreach ($participant_groupe as $key => $value) {
+                    $groupe_entreprises[] = array(
+                        'id' => $value->id,
+                        'groupe_id' => $value->groupe_id,
+                        'groupe' => $value->groupe,
+                        'entreprise' => $value->stagiaire->entreprise,
+                        'module' => $value->groupe->module,
+                        'projet' => $value->groupe->projet,
+                        'formation' => $value->groupe->module->formation,
+                    );
+
+                }
+
+            } else {
+                $groupe_entreprises = [];
+            }
+
+        }
+
+        // return($events);
+
+        // return view('admin.calendrier.planning_etp',compact('domaines','formations','statut'));
+        return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations','events', 'groupe_entreprises'));
     }
+
+    // evenements for cfps
     public function listEvent(Request $request)
     {
         $id_user = Auth::user()->id;
         $formations = $request->formations;
+
+
         if (Gate::allows('isSuperAdmin')) {
             $detail = $this->fonct->findAll('v_detailmodule');
         }
+
+
         if (Gate::allows('isCFP')) {
             $rqt = $this->fonct->findWhere('responsables_cfp',['user_id'],[$id_user]);
             $cfp_id = $rqt[0]->cfp_id;
@@ -104,6 +547,9 @@ class DetailController extends Controller
 
 
         }
+
+
+
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $id_user)->value('id');
             $detail = DB::select('SELECT *,details.id as details_id FROM details
@@ -128,9 +574,12 @@ class DetailController extends Controller
 
         return response()->json(['detail'=>$detail,'modules'=>$modules,'formations'=>$formations]);
     }
-    //liste event pour referent
+
+
+    // liste event pour entreprise
     public function listEvent_entreprise(Request $request){
         $id_user = Auth::user()->id;
+
 
         if(Gate::allows('isStagiaire')) {
 
@@ -158,16 +607,7 @@ class DetailController extends Controller
 
             $details = array();
             $detail_id = array();
-            // for ($i=0; $i < count($groupe_id); $i++) {
-            //     array_push($details,DB::select('
-            //     SELECT  *,details.id as details_id  from details
-            //     inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
-            //     inner join formateurs on details.formateur_id = formateurs.id
-            //     inner join projets on details.projet_id = projets.id
-            //     inner join type_formations on projets.type_formation_id = type_formations.id
-            //     inner join cfps on details.cfp_id = cfps.id
-            //     where details.groupe_id = ?',[$groupe_id[$i]->groupe_id]));
-            // }
+
             $details = DB::select('
                 SELECT  *,details.id as details_id  from details
                 inner join participant_groupe on details.groupe_id =  participant_groupe.groupe_id
@@ -189,8 +629,6 @@ class DetailController extends Controller
 
         }
 
-        // if(Gate::allows('isManager')) $entreprise_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
-
 
 
         if( Gate::allows('isReferent') or Gate::allows('isReferentSimple')){
@@ -204,7 +642,6 @@ class DetailController extends Controller
             $domaines = $request->domaines;
             $formations = $request->formations;
 
-
             $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
                 INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
                 INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
@@ -212,27 +649,10 @@ class DetailController extends Controller
                 INNER JOIN formations ON modules.formation_id = formations.id
                 WHERE groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
 
-            // dd($groupe_entreprises);
             $details = array();
             $detail_id = array();
-            // for ($i=0; $i < count($groupe_entreprises); $i++) {
-            //     // array_push($details,DB::select('
-            //     // SELECT  *,details.id as details_id  from details
-            //     // inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
-            //     // inner join formateurs on details.formateur_id = formateurs.id
-            //     // inner join projets on details.projet_id = projets.id
-            //     // inner join type_formations on projets.type_formation_id = type_formations.id
-            //     // inner join cfps on details.cfp_id = cfps.id
-            //     // where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
-            //     $details[$i] = DB::select('
-            //     SELECT  *,details.id as details_id  from details
-            //     inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
-            //     inner join formateurs on details.formateur_id = formateurs.id
-            //     inner join projets on details.projet_id = projets.id
-            //     inner join type_formations on projets.type_formation_id = type_formations.id
-            //     inner join cfps on details.cfp_id = cfps.id
-            //     where groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
-            // }
+
+
             $details = DB::select('
                 SELECT  *,details.id as details_id  from details
                 inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
@@ -246,91 +666,21 @@ class DetailController extends Controller
                 inner join cfps on details.cfp_id = cfps.id
                 where groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
 
+            // $entrepise_id = responsable::where('user_id', Auth::user()->id)->entreprise_id;
 
-            for ($i=0; $i < count($groupe_entreprises); $i++) {
-                array_push($detail_id,DB::select('
-                    SELECT  id as details_id  from details
-                    where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
-            }
-            return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
 
-        }
-        if(Gate::allows('isManager')){
-            $user_id = Auth::user()->id;
-            if(Gate::allows('isManager')) $id_departement = DB::select('select * from chef_departements  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
-            if(Gate::allows('isChefDeService')) $id_departement = DB::select('select * from employers  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
-            $entreprise_id = $this->fonct->findWhereMulitOne("employers",['user_id'],[$id_user])->entreprise_id;
-            $employe = $this->fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
-            $id_service = DB::select('select * from chef_de_service_entreprises  where chef_de_service_id = ? ', [$employe->id])[0]->service_id;
-            $formations = $request->formations;
-            $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
-                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-                INNER JOIN modules ON groupes.module_id = modules.id
-                INNER JOIN formations ON modules.formation_id = formations.id
-                WHERE groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
-            // dd($groupe_entreprises);
-            $details = array();
-            $detail_id = array();
-            $details = DB::select('
-                SELECT  *,details.id as details_id  from details
-                inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
-                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-                INNER JOIN modules ON groupes.module_id = modules.id
-                INNER JOIN formations ON modules.formation_id = formations.id
-                inner join formateurs on details.formateur_id = formateurs.id
-                inner join projets on details.projet_id = projets.id
-                inner join type_formations on projets.type_formation_id = type_formations.id
-                inner join cfps on details.cfp_id = cfps.id
-                where projets.id in (SELECT `projet_id` FROM `v_participant_groupe_detail`  where detail_id = details.id  and departement_id = ?)
-                and groupe_entreprises.entreprise_id = ?',[$id_departement,$entreprise_id]);
-            for ($i=0; $i < count($groupe_entreprises); $i++) {
-                array_push($detail_id,DB::select('
-                    SELECT  id as details_id  from details
-                    where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
-            }
-            return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
+                        for ($i=0; $i < count($groupe_entreprises); $i++) {
+                            array_push($detail_id,DB::select('
+                                SELECT  id as details_id  from details
+                                where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
+                        }
+                    return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
 
-        }
-        if(Gate::allows('isChefDeService')){
-            $user_id = Auth::user()->id;
-            $id_departement = DB::select('select * from employers  where user_id = ? ', [$user_id])[0]->departement_entreprises_id;
-            $entreprise_id = $this->fonct->findWhereMulitOne("employers",['user_id'],[$id_user])->entreprise_id;
-            $employe = $this->fonct->findWhereMulitOne("employers",["user_id"],[$user_id]);
-            $id_service = DB::select('select * from chef_de_service_entreprises  where chef_de_service_id = ? ', [$employe->id])[0]->service_id;
-            $formations = $request->formations;
-            $groupe_entreprises = DB::select('SELECT * FROM groupe_entreprises
-                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-                INNER JOIN modules ON groupes.module_id = modules.id
-                INNER JOIN formations ON modules.formation_id = formations.id
-                WHERE groupe_entreprises.entreprise_id = ?',[$entreprise_id]);
-            $details = array();
-            $detail_id = array();
-            $details = DB::select('
-                SELECT  *,details.id as details_id  from details
-                inner join groupe_entreprises on details.groupe_id =  groupe_entreprises.groupe_id
-                INNER JOIN groupes ON groupe_entreprises.groupe_id = groupes.id
-                INNER JOIN entreprises ON groupe_entreprises.entreprise_id = entreprises.id
-                INNER JOIN modules ON groupes.module_id = modules.id
-                INNER JOIN formations ON modules.formation_id = formations.id
-                inner join formateurs on details.formateur_id = formateurs.id
-                inner join projets on details.projet_id = projets.id
-                inner join type_formations on projets.type_formation_id = type_formations.id
-                inner join cfps on details.cfp_id = cfps.id
-                where projets.id in (SELECT `projet_id` FROM `v_participant_groupe_detail`  where detail_id = details.id and service_id = ?)
-                and groupe_entreprises.entreprise_id = ?',[$id_service,$entreprise_id]);
-            for ($i=0; $i < count($groupe_entreprises); $i++) {
-                array_push($detail_id,DB::select('
-                    SELECT  id as details_id  from details
-                    where details.groupe_id = ?',[$groupe_entreprises[$i]->groupe_id]));
-            }
-            return response()->json(['details'=>$details,'groupe_entreprises'=>$groupe_entreprises,'formations'=>$formations,'detail_id' =>$detail_id]);
-
-        }
+                    }
     }
 
+
+    // details sur l'event dans le calendrier
     public function informationModule(Request $request)
     {
         $id = $request->Id;
@@ -463,17 +813,20 @@ class DetailController extends Controller
             $lieu_formation[1]='';
         }
          /** Recuperer duree total de la session */
-        $nb_seance = '';
-        $info = $this->groupes->infos_session($id_groupe);
-        if ($info->difference == null && $info->nb_detail == 0) {
-            $nb_seance = $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
-        }elseif ($info->difference != null && $info->nb_detail == 1) {
-            $nb_seance = $info->nb_detail. ' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
-        }elseif ($info->difference != null && $info->nb_detail > 1) {
-            $nb_seance = $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
-        }
-        $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('nb_seance','lieu_formation','nb_stg','status','detail', 'stg', 'date_groupe','ressource'));
-       // return view('admin.calendrier.detail_pdf' ,compact('nb_seance','status','detail', 'stg','date_groupe','nb_stg','lieu_formation','ressource'));
+         $nb_seance = '';
+         $info = $this->groupes->infos_session($id_groupe);
+
+
+
+         if ($info->difference == null && $info->nb_detail == 0) {
+             $nb_seance = $info->nb_detail.' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+         }elseif ($info->difference != null && $info->nb_detail == 1) {
+             $nb_seance = $info->nb_detail. ' séance , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+         }elseif ($info->difference != null && $info->nb_detail > 1) {
+             $nb_seance = $info->nb_detail. ' séances , durée totale : '.gmdate("H", $info->difference).' h '.gmdate("i", $info->difference).' m';
+         }
+         $pdf = PDF::loadView('admin.calendrier.detail_pdf', compact('nb_seance','lieu_formation','nb_stg','status','detail', 'stg', 'date_groupe','ressource'));
+        //return view('admin.calendrier.detail_pdf' ,compact('nb_seance','status','detail', 'stg','date_groupe','nb_stg','lieu_formation','ressource'));
        return $pdf->download('Detail du projet.pdf');
     }
     //filtre calendrier
@@ -482,22 +835,6 @@ class DetailController extends Controller
         $resultat = DB::select('select * from v_detailmodule where nom_module = "'.$nom_module.'"');
         return response()->json($resultat);
     }
-    /*
-    public function index()
-    {
-        $user_id = Auth::user()->id;
-        $cfp_id = Cfp::where('user_id', $user_id)->value('id');
-        $fonct = new FonctionGenerique();
-        $id = request()->id_session;
-        $formateur = Formateur::orderBy('nom_formateur')->get();
-        $formation = Formation::orderBy('nom_formation')->get();
-        $formation_id = Formation::orderBy('nom_formation')->first()->id;
-        $module = Module::orderBy('nom_module')->where('formation_id', $formation_id)->get();
-        $projet = $fonct->findWhere("v_projet", ["cfp_id"], [$cfp_id]);
-        $entreprise = $fonct->findWhere("v_entreprise_par_projet", ["cfp_id"], [$cfp_id]);
-        return view('admin.detail.nouveauDetail', compact('id', 'projet', 'formation', 'module', 'formateur','entreprise'));
-    }
-*/
 
 
     public function index()

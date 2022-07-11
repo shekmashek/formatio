@@ -12,6 +12,11 @@ class Stagiaire extends Model
     protected $fillable = [
         'nom_stagiaire', 'prenom_stagiaire', 'genre_stagiaire', 'fonction_stagiaire', 'mail_stagiaire', 'telephone_stagiaire', 'entreprise_id', 'user_id', 'photos', 'service_id', 'cin', 'date_delivrance', 'date_naissance', 'adresse', 'niv_etude'
     ];
+
+    public function participant_groupes() {
+        return $this->hasMany('App\participant_groupe', 'stagiaire_id');
+    }
+
     public function departement()
     {
         return $this->belongsTo('App\Departement');

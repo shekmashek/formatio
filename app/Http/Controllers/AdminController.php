@@ -77,7 +77,7 @@ class AdminController extends Controller
             $etp = DB::select('select *  from entreprises where id=?', [$etp_id]);
             $data["donner"] = $etp[0];
             $data["status"] = "RESP";
-            return response()->json($data);
+            return response()->json($data,'an error occured');
         }
         if (Gate::allows('isManager')) {
             $etp_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
@@ -85,7 +85,7 @@ class AdminController extends Controller
             $etp = DB::select('select * from entreprises where id=?', [$etp_id]);
             $data["donner"] = $etp[0];
             $data["status"] = "CHEF";
-            return response()->json($data);
+            return response()->json($data,'an error occured');
         }
         if (Gate::allows('isChefDeService')) {
             $etp_id = chefDepartement::where('user_id', $id_user)->value('entreprise_id');
@@ -93,14 +93,14 @@ class AdminController extends Controller
             $etp = DB::select('select * from entreprises where id=?', [$etp_id]);
             $data["donner"] = $etp[0];
             $data["status"] = "CHEF";
-            return response()->json($data);
+            return response()->json($data,'an error occured');
         }
         if (Gate::allows('isStagiaire')) {
             $etp_id = stagiaire::where('user_id', $id_user)->value('entreprise_id');
             $etp = DB::select('select * from entreprises where id=?', [$etp_id]);
             $data["donner"] = $etp[0];
             $data["status"] = "STG";
-            return response()->json($data);
+            return response()->json($data,'an error occured');
         }
         if (Gate::allows('isCFP')) {
             $rqt = DB::select('select * from responsables_cfp where user_id = ?', [$id_user]);
@@ -108,7 +108,7 @@ class AdminController extends Controller
             $etp = DB::select('select * from cfps where id=?', [$cfp_id]);
             $data["donner"] = $etp[0];
             $data["status"] = "CFP";
-            return response()->json($data);
+            return response()->json($data,'an error occured');
         }
 
         if (Gate::allows('isFormateur')) {
@@ -116,7 +116,7 @@ class AdminController extends Controller
             $etp = DB::select('select * from entreprises where id=?', [$etp_id]);
             $data["donner"] = $etp[0];
             $data["status"] = "FORMT";
-            return response()->json($data);
+            return response()->json($data,'an error occured');
         }
     }
 

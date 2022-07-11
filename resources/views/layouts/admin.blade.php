@@ -16,7 +16,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
         integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" /> --}}
@@ -31,6 +35,9 @@
             z-index: 1 !important;
         }
     </style>
+
+@stack('extra-links')
+
 </head>
 <body>
     @if ($message = Session::get('creation_inter_error'))
@@ -1183,6 +1190,8 @@
             <div class="container-fluid content_body px-0 " style="padding-bottom: 1rem; padding-top: 4.5rem;">
                 @yield('content')
 
+                @yield('planningEtp')
+
             </div>
             {{-- content --}}
             {{-- footer --}}
@@ -1409,7 +1418,6 @@
     </div>
 
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
         integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -1422,7 +1430,12 @@
 
     <script src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/apprendre.js')}}"></script>
+
+    @if (Route::currentRouteName() != 'calendrier_formation' && Route::currentRouteName() != 'calendrier')
+    {{-- ce script bloque le jquery.min et jquery-ui --}}
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    @endif
+
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <script type="text/javascript">
@@ -1658,6 +1671,9 @@
         ($('.btn_racourcis a[href="' + Tabactive + '"]').closest('div')).addClass('active');
     }
 </script>
+
+@stack('extra-js')
+
 </body>
 
 </html>

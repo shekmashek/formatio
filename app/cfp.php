@@ -2,9 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\detail;
+use App\projet;
 use App\Models\FonctionGenerique;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 class Cfp extends Model
 {
@@ -16,6 +18,15 @@ class Cfp extends Model
     ];
 
 
+    /**
+     * Get all of the details for the cfp
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function details()
+    {
+        return $this->hasMany(detail::class, 'cfp_id');
+    }
 
     // ----------------------------------------
     public function getCfpIdCollaborer($list)

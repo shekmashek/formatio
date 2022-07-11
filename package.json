@@ -29,6 +29,7 @@
         "@fullcalendar/interaction": "^5.9.0",
         "@fullcalendar/vue": "^5.9.0",
         "chart.js": "^3.5.0",
-        "fullcalendar-scheduler": "^5.9.0"
+        "fullcalendar-scheduler": "^5.9.0",
+        "jspdf": "^2.5.1"
     }
 }

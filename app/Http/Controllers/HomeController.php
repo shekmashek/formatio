@@ -922,7 +922,7 @@ class HomeController extends Controller
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
             // $facture = $this->fonct->findWhere("v_liste_facture", ["cfp_id"], [ $cfp_id]);
             // $montant_facture = $this->fonct->findWhereMulitOne("v_facture_existant", ["cfp_id"], [$cfp_id]);
-
+            $lieuFormation = '';
             $nb_projet = DB::select('select count(projet_id) as nb_projet from v_projet_session where cfp_id = ?', [$cfp_id])[0]->nb_projet;
             $fin_page = ceil($nb_projet / $nb_par_page);
             if ($page == 1) {
