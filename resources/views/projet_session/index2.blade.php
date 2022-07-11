@@ -1566,6 +1566,28 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                                             <div class="row mt-2">
                                                                                                 <div
                                                                                                     class="col-lg-6 text-end mt-2">
+                                                                                                    <span>Module<strong
+                                                                                                            class="text-danger">*</strong>
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                <div class="col-lg-6 text-end">
+                                                                                                    <select
+                                                                                                        class="form-select input_select"
+                                                                                                        name="module"
+                                                                                                        aria-label="Default select example"
+                                                                                                        style="width: 15rem;"
+                                                                                                        required>
+                                                                                                        <option value="null">
+                                                                                                            Sélectionnez</option>
+                                                                                                        @foreach ($module as $modu)
+                                                                                                            <option value="{{ $modu->id }}">{{ $modu->nom_module }}</option>
+                                                                                                        @endforeach
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row mt-2">
+                                                                                                <div
+                                                                                                    class="col-lg-6 text-end mt-2">
                                                                                                     <span>Modalité<strong
                                                                                                             class="text-danger">*</strong>
                                                                                                     </span>
