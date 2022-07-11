@@ -22,4 +22,9 @@ class DetailInterne extends Model
         return $this->belongsTo('App\ProjetInterne', 'projet_interne_id');
     }
 
+    public function formateur_interne()
+    {
+        return $this->belongsTo('App\FormateurInterne', 'formateur_interne_id');
+    }
+
 }
