@@ -12,8 +12,31 @@ class Groupe extends Model
     protected $fillable = [
         'nom_groupe','projet_id','max_participant','min_participant','module_id','date_debut','date_fin','status','activiter'
     ];
+
+
+    public function ressources()
+    {
+        return $this->hasMany('App\Ressource', 'groupe_id');
+    }
+
+    public function participants(){
+        return $this->hasMany('App\participant_groupe', 'groupe_id');
+    }
+
+    public function groupe_entreprise (){
+        return $this->hasMany('App\GroupeEntreprise', 'groupe_id');
+    }
+
+    public function detail(){
+        return $this->hasMany('App\detail', 'groupe_id');
+    }
+
+    public function module(){
+        return $this->belongsTo('App\module', 'module_id');
+    }
+
     public function projet(){
-        return $this->belongsTo('App\projet');
+        return $this->belongsTo('App\projet', 'projet_id');
     }
 
     public function generateNomSession(){
@@ -109,7 +132,7 @@ class Groupe extends Model
     }
 
     public function module_projet($projet_id){
-        return DB::select('select groupe_id,nom_module from v_groupe_projet_module where projet_id = ? group by nom_module',[$projet_id]);
+        return DB::select('select nom_module from v_groupe_projet_module where projet_id = ? group by nom_module',[$projet_id]);
     }
 
 

@@ -1,16 +1,16 @@
 @extends('./layouts/admin')
 @inject('groupe', 'App\groupe')
 @section('content')
-<style>
-    .corps_planning .nav-link {
-        color: #637381;
-        padding: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: all 200ms;
-        text-transform: uppercase;
-        padding-top: 10px;
-    }
+    <style>
+        .corps_planning .nav-link {
+            color: #637381;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 200ms;
+            text-transform: uppercase;
+            padding-top: 10px;
+        }
 
 
         .nav-item .nav-link button.active {
@@ -20,8 +20,8 @@
         }
 
         /* .nav-item .nav-link.active {
-            border-bottom: none !important;
-        } */
+                border-bottom: none !important;
+            } */
 
         .nav-tabs .nav-link:hover {
             background-color: rgb(245, 243, 243);
@@ -34,13 +34,13 @@
             text-decoration-line: none;
         }
 
-    .shadow {
-        height: auto;
-    }
+        .shadow {
+            height: auto;
+        }
 
-    * {
-        font-size: 1rem;
-    }
+        * {
+            font-size: 1rem;
+        }
 
         .body_nav p {
             font-size: 0.9rem;
@@ -51,13 +51,13 @@
         }
 
         /*
-        .corps_planning {
-            font-size: 1.5rem;
-        } */
+            .corps_planning {
+                font-size: 1.5rem;
+            } */
 
         .body_nav {
             /* background-color: #e8e8e9;
-        color: rgb(3, 0, 0); */
+            color: rgb(3, 0, 0); */
             padding: 6px 8px;
             border-radius: 4px 4px 0 0;
         }
@@ -240,9 +240,9 @@
             color: white;
         }
 
-        .card {
+        /* .card {
             position: absolute;
-        }
+        } */
 
         /* Style the tab content */
         .tabcontent {
@@ -318,9 +318,9 @@
         }
 
         /* .btn_modifier_statut:focus{
-        color: blue;
-        text-decoration: none;
-    } */
+            color: blue;
+            text-decoration: none;
+        } */
 
         .icon_creer {
             background-image: linear-gradient(60deg, #f206ee, #0765f3);
@@ -523,7 +523,7 @@
                                     </span>
                                     {{ $ref }}</strong></p>
                         @endcan
-                    @canany(['isReferent','isReferentSimple','isManager','isChefDeService'])
+                        @canany(['isReferent', 'isReferentSimple', 'isManager', 'isChefDeService'])
                             <p class="m-0"><i class="bx bx-dollar mt-2"></i></p>
                             <p class="text-dark mt-3"> CP : <strong>
                                     @if (count($dataMontantSession) > 0)
@@ -572,15 +572,16 @@
                             <div class="d-flex flex-row">
                                 <p class="p-0 mt-3 text-center"> Responsable de l'organisme de formation
                                     {{ $projet[0]->nom_cfp }}</p>&nbsp;&nbsp;
-                                <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt="" class="mt-2"
-                                    height="30px" width="30px" style="border-radius: 50%;">&nbsp;
+                                <img src="{{ asset('images/CFP/' . $projet[0]->logo_cfp) }}" alt=""
+                                    class="mt-2" height="30px" width="30px" style="border-radius: 50%;">&nbsp;
                             </div>
                         </div>
                         @canany(['isCFP'])
                             <div class="chiffre_d_affaire">
                                 <div class="d-flex flex-row">
                                     @if (count($formateur_cfp) > 0)
-                                        <p class="p-0 me-2 text-center" style="margin-top: 1.9rem !important"> Formateur(s) :&nbsp;</p>
+                                        <p class="p-0 me-2 text-center" style="margin-top: 1.9rem !important"> Formateur(s)
+                                            :&nbsp;</p>
                                     @endif
                                     @foreach ($formateur_cfp as $form)
                                         <img src="{{ asset('images/formateurs/' . $form->photos) }}" alt=""
@@ -594,11 +595,12 @@
                     </div>
                 </div>
                 <div class="col-md-3 d-flex justify-content-end">
-                    @canany(['isReferent','isCFP'])
+                    @canany(['isReferent', 'isCFP'])
                         <div class="dropdown">
 
-                            <a class="dropdown-toggle btn_modifier_statut" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
-                                aria-expanded="false" aria-haspopup="true" style="text-decoration: none">
+                            <a class="dropdown-toggle btn_modifier_statut" href="#" role="button" id="dropdownMenuLink"
+                                data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"
+                                style="text-decoration: none">
                                 <i class='bx bx-slider icon_creer'></i>Modifier statut
 
                             </a>
@@ -630,7 +632,9 @@
                         </div>
                     @endcanany
                     <div>
-                        <p><a href="{{ route('fiche_technique_pdf', [$projet[0]->groupe_id]) }}" class="pdf_download py-2" ><button class="btn"><i class='bx bxs-file-pdf'></i>&nbsp;&nbsp;&nbsp;PDF</button></a></p>
+                        <p><a href="{{ route('fiche_technique_pdf', [$projet[0]->groupe_id]) }}"
+                                class="pdf_download py-2"><button class="btn"><i
+                                        class='bx bxs-file-pdf'></i>&nbsp;&nbsp;&nbsp;PDF</button></a></p>
                     </div>
                     {{-- <div>
                         <p class="text-end"><a href="{{ route('liste_projet') }}" ><button class="btn liste_projet ms-1"> <span>Retour sur les projets</span></button></a></p>
@@ -705,7 +709,7 @@
                             </button>
                         </a>
                     </div>
-                    @canany(['isCFP', 'isReferent', 'isFormateur', 'isReferentSimple', 'isManager'])
+                    {{-- @canany(['isCFP', 'isReferent', 'isFormateur', 'isReferentSimple', 'isManager'])
                         <div class="nav-item" role="presentation">
                             <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
@@ -728,23 +732,24 @@
                                     @endif
                                 </button>
                             </a>
-                        </div>
-                        @canany(['isCFP', 'isReferent', 'isFormateur','isFormateurInterne','isReferentSimple','isManager','isChefDeService'])
+                        </div> --}}
+                        @canany(['isCFP', 'isReferent', 'isFormateur', 'isFormateurInterne', 'isReferentSimple', 'isManager',
+                            'isChefDeService'])
                             <div class="nav-item" role="presentation">
                                 <a href="#apprenant" class="nav-link p-0" id="apprenant-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between apprenant-tab
+                                    <button
+                                        class="planning d-flex justify-content-between apprenant-tab
                                     @if ($type_formation_id == 1)
                                         @can('isCFP')
-                                            {{ 'action_animation' }}
+                                            {{ ' action_animation' }}
                                         @endcan
                                     @endif
                                     @if ($type_formation_id == 2)
-                                        @canany(['isReferent','isReferentSimple','isManager','isChefDeService'])
-                                            {{ 'action_animation' }}
+                                        @canany(['isReferent', 'isReferentSimple', 'isManager', 'isChefDeService'])
+                                            {{ ' action_animation' }}
                                         @endcanany
-                                    @endif
-                                     "
+                                    @endif"
                                         onclick="openCity(event, 'apprenant')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">APPRENANTS</p>
                                         @if (count($stagiaire) == 0)
@@ -758,27 +763,27 @@
                             </div>
                         @endcanany
 
-                    @canany(['isReferent', 'isReferentSimple'])
-                        <div class="nav-item" role="presentation">
-                            <a href="#frais" class="nav-link p-0" id="frais-tab" data-toggle="tab" type="button"
-                                role="tab" aria-controls="home" aria-selected="true">
-                                <button class="planning d-flex justify-content-between action_animation frais-tab"
-                                    onclick="openCity(event, 'frais')" style="width: 100%">
-                                    <p class="m-0 pt-2 pb-2">FRAIS ANNEXES</p>
-                                    @if (count($all_frais_annexe) <= 0)
-                                        <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
-                                    @else
-                                        <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
-                                    @endif
-                                </button>
-                        </div>
-                    @endcanany
+                        @canany(['isReferent', 'isReferentSimple'])
+                            <div class="nav-item" role="presentation">
+                                <a href="#frais" class="nav-link p-0" id="frais-tab" data-toggle="tab" type="button"
+                                    role="tab" aria-controls="home" aria-selected="true">
+                                    <button class="planning d-flex justify-content-between action_animation frais-tab"
+                                        onclick="openCity(event, 'frais')" style="width: 100%">
+                                        <p class="m-0 pt-2 pb-2">FRAIS ANNEXES</p>
+                                        @if (count($all_frais_annexe) <= 0)
+                                            <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
+                                        @else
+                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                        @endif
+                                    </button>
+                            </div>
+                        @endcanany
 
                         {{-- <div class="nav-item" role="presentation">
                             <a href="#document" class="nav-link p-0" id="document-tab" data-toggle="tab" type="button"
                                 role="tab" aria-controls="home" aria-selected="true">
                                 <button class="planning d-flex justify-content-between document-tab
-                                    @canany(['isCFP','isFormateur','isFormateurInterne'])
+                                    @canany(['isCFP', 'isFormateur', 'isFormateurInterne'])
                                         {{ 'action_animation' }}
                                     @endcan"
                                     onclick="openCity(event, 'document')" style="width: 100%">
@@ -797,7 +802,8 @@
                                         <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                     </button>
                                 </a>
-                            </div> @endcanany
+                            </div>
+                        @endcanany
                         @can('isFormateur') <div class="nav-item" role="presentation">
                                 <a href="#emargement" class="nav-link p-0" id="emargement-tab" data-toggle="tab" type="button"
                                     role="tab" aria-controls="home" aria-selected="true">
@@ -808,7 +814,7 @@
                                             $pres = $groupe->statut_presences($projet[0]->groupe_id);
                                             if ($pres == '#00ff00') {
                                                 echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
-                                            }elseif ($pres == '#bdbebd') {
+                                            } elseif ($pres == '#bdbebd') {
                                                 echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
                                             }
                                         @endphp
@@ -824,30 +830,31 @@
                                         @if ($evaluation_avant <= 0)
                                             <i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>
                                         @else
-                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i> @endif
+                                            <i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>
+                                        @endif
                                     </button>
                                 </a>
                             </div>
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                    <button class="planning d-flex justify-content-between action_animation evaluation_pre_formation-tab"
+                                    <button
+                                        class="planning d-flex justify-content-between action_animation evaluation_pre_formation-tab"
                                         onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
                                         <p class="m-0 pt-2 pb-2">EVALUATION</p>
                                         @php
                                             $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
-                                            if($statut_eval == 0){
+                                            if ($statut_eval == 0) {
                                                 echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
-                                            }
-                                            elseif ($statut_eval == 1) {
+                                            } elseif ($statut_eval == 1) {
                                                 echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
                                             }
                                         @endphp
                                     </button>
                                 </a>
                             </div>
-                        @endcanany
-                        @canany(['isCFP', 'isReferent','isReferentSimple','isManager','isChefDeService'])
+                        @endcan
+                        @canany(['isCFP', 'isReferent', 'isReferentSimple', 'isManager', 'isChefDeService'])
                             <div class="nav-item" role="presentation">
                                 <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
                                     data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
@@ -864,211 +871,212 @@
                                         @endphp
                                     </button>
                                 </a>
+                            </div>
+                        @endcanany
+                        @canany(['isCFP', 'isReferent', 'isReferentSimple', 'isManager'])
+                            <div class="nav-item" role="presentation">
+                                <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
+                                    data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
+                                    <button class="planning d-flex justify-content-between evaluation_pre_formation-tab"
+                                        onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
+                                        <p class="m-0 pt-2 pb-2">EVALUATION</p>
+                                        @php
+                                            $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
+                                            if ($statut_eval == 0) {
+                                                echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
+                                            } elseif ($statut_eval == 1) {
+                                                echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
+                                            }
+                                        @endphp
+                                    </button>
+                                </a>
+                            </div>
+                        @endcanany
                     </div>
-                @endcan
-                @canany(['isCFP', 'isReferent', 'isReferentSimple', 'isManager'])
-                    <div class="nav-item" role="presentation">
-                        <a href="#evaluation_pre_formation" class="nav-link p-0" id="evaluation_pre_formation-tab"
-                            data-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true">
-                            <button class="planning d-flex justify-content-between evaluation_pre_formation-tab"
-                                onclick="openCity(event, 'evaluation_pre_formation')" style="width: 100%">
-                                <p class="m-0 pt-2 pb-2">EVALUATION</p>
-                                @php
-                                    $statut_eval = $groupe->statut_evaluation($projet[0]->groupe_id);
-                                    if ($statut_eval == 0) {
-                                        echo '<i class="fal fa-dot-circle me-2 mt-2" style="color: grey"></i>';
-                                    } elseif ($statut_eval == 1) {
-                                        echo '<i class="fa fa-check-circle me-2 mt-2" style="color: chartreuse"></i>';
-                                    }
-                                @endphp
-                            </button>
-                        </a>
-                    </div>
-                @endcanany
-            </div>
-        </div>
+                </div>
 
-        <div class="tab-content col-md-10">
+                <div class="tab-content col-md-10">
 
 
                     <div class="tab-pane fade show active tabcontent" id="detail" role="tabpanel"
                         aria-labelledby="detail-tab" style="display: block">
                         @include('admin.detail.detail')
                     </div>
-                    @canany(['isCFP', 'isReferent','isReferentSimple' ,'isFormateur','isFormateurInterne','isManager','isChefDeService'])
+                    @canany(['isCFP', 'isReferent', 'isReferentSimple', 'isFormateur', 'isFormateurInterne', 'isManager',
+                        'isChefDeService'])
                         <div class="tab-pane fade show tabcontent" id="apprenant" role="tabpanel"
                             aria-labelledby="apprenant-tab" style="display: none">
                             @include('admin.stagiaire.ajout_stagiaire')
                         </div>
                     @endcanany
 
-            <div id="ressource" class="tab-pane fade show tabcontent" id="ressource" role="tabpanel"
-                aria-labelledby="ressource-tab" style="display: none">
-                @include('projet_session.ressource')
-            </div>
-            <div id="frais" class="tab-pane fade show tabcontent" id="frais" role="tabpanel"
-                aria-labelledby="frais-tab" style="display: none">
-                @include('projet_session.frais_annexe')
-            </div>
-            {{-- <div id="document" class="tab-pane fade show tabcontent" role="tabpanel" aria-labelledby="document-tab"
+                    <div id="ressource" class="tab-pane fade show tabcontent" id="ressource" role="tabpanel"
+                        aria-labelledby="ressource-tab" style="display: none">
+                        @include('projet_session.ressource')
+                    </div>
+                    <div id="frais" class="tab-pane fade show tabcontent" id="frais" role="tabpanel"
+                        aria-labelledby="frais-tab" style="display: none">
+                        @include('projet_session.frais_annexe')
+                    </div>
+                    {{-- <div id="document" class="tab-pane fade show tabcontent" role="tabpanel" aria-labelledby="document-tab"
                 style="display: none">
                 @include('projet_session.document')
             </div> --}}
-            @canany(['isStagiaire'])
-                <div id="chaud" class="tab-pane fade show tabcontent" role="tabpanel" aria-labelledby="document-tab"
-                    style="display: none">
-                    {{-- @include('projet_session.index_evaluation') --}}
-                    @include('admin.evaluation.evaluationChaud.evaluationChaud')
+                    @canany(['isStagiaire'])
+                        <div id="chaud" class="tab-pane fade show tabcontent" role="tabpanel" aria-labelledby="document-tab"
+                            style="display: none">
+                            {{-- @include('projet_session.index_evaluation') --}}
+                            @include('admin.evaluation.evaluationChaud.evaluationChaud')
+                        </div>
+                    @endcanany
+                    <div id="emargement" class=" tab-pane fade show tabcontent" role="tabpanel"
+                        aria-labelledby="emargement-tab" style="display: none">
+                        @include('projet_session.emargement')
+                    </div>
+                    <div id="evaluation" class=" tab-pane fade show tabcontent" role="tabpanel"
+                        aria-labelledby="evaluation-tab" style="display: none">
+                        @include('projet_session.evaluation_stagiaires')
+                    </div>
+                    <div id="evaluation_pre_formation" class="tab-pane fade show tabcontent" role="tabpanel"
+                        aria-labelledby="evaluation_pre_formation-tab" style="display: none">
+                        {{-- @include('projet_session.evaluation_stagiaires_pre') --}}
+                        @include('projet_session.evaluation_chaud')
+                    </div>
                 </div>
-            @endcanany
-            <div id="emargement" class=" tab-pane fade show tabcontent" role="tabpanel"
-                aria-labelledby="emargement-tab" style="display: none">
-                @include('projet_session.emargement')
             </div>
-            <div id="evaluation" class=" tab-pane fade show tabcontent" role="tabpanel"
-                aria-labelledby="evaluation-tab" style="display: none">
-                @include('projet_session.evaluation_stagiaires')
             </div>
-            <div id="evaluation_pre_formation" class="tab-pane fade show tabcontent" role="tabpanel"
-                aria-labelledby="evaluation_pre_formation-tab" style="display: none">
-                {{-- @include('projet_session.evaluation_stagiaires_pre') --}}
-                @include('projet_session.evaluation_chaud')
-            </div>
-        </div>
-    </div>
-</div>
 
-    <script>
-        $('.evaluation_pre_formation-tab').on('click',function(e){
-            localStorage.setItem('activeTab', 'evaluation_pre_formation');
-        });
-        $('.evaluation-tab').on('click',function(e){
-            localStorage.setItem('activeTab', 'evaluation');
-        });
-        $('.emargement-tab').on('click',function(e){
-            localStorage.setItem('activeTab', 'emargement');
-        });
-        $('.chaud-tab').on('click',function(e){
-            localStorage.setItem('activeTab', 'chaud');
-        });
-        $('.document-tab').on('click',function(e){
-            localStorage.setItem('activeTab', 'document');
-        });
-        $('.frais-tab').on('click',function(e){
-            localStorage.setItem('activeTab', 'frais');
-        });
-        $('.ressource-tab').on('click',function(e){
-            localStorage.setItem('activeTab', 'ressource');
-        });
-        $('.apprenant-tab').on('click',function(e){
-            localStorage.setItem('activeTab', 'apprenant');
-        });
-        $('.detail-tab').on('click',function(e){
-            localStorage.setItem('activeTab', 'detail');
-        });
+            <script>
+                $('.evaluation_pre_formation-tab').on('click', function(e) {
+                    localStorage.setItem('activeTab', 'evaluation_pre_formation');
+                });
+                $('.evaluation-tab').on('click', function(e) {
+                    localStorage.setItem('activeTab', 'evaluation');
+                });
+                $('.emargement-tab').on('click', function(e) {
+                    localStorage.setItem('activeTab', 'emargement');
+                });
+                $('.chaud-tab').on('click', function(e) {
+                    localStorage.setItem('activeTab', 'chaud');
+                });
+                $('.document-tab').on('click', function(e) {
+                    localStorage.setItem('activeTab', 'document');
+                });
+                $('.frais-tab').on('click', function(e) {
+                    localStorage.setItem('activeTab', 'frais');
+                });
+                $('.ressource-tab').on('click', function(e) {
+                    localStorage.setItem('activeTab', 'ressource');
+                });
+                $('.apprenant-tab').on('click', function(e) {
+                    localStorage.setItem('activeTab', 'apprenant');
+                });
+                $('.detail-tab').on('click', function(e) {
+                    localStorage.setItem('activeTab', 'detail');
+                });
 
-        let activeTab = localStorage.getItem('activeTab');
+                let activeTab = localStorage.getItem('activeTab');
 
-        if(activeTab){
-            $('.tabcontent').css('display','none');
-            $('#' + activeTab).show();
-            tablinks = document.getElementsByClassName("planning");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            $('.'+activeTab+'-tab').addClass("active");
-        }
-        $('.' + activeTab + '-tab').addClass("active");
-    }
-</script>
-{{-- keep nav in refresh --}}
+                if (activeTab) {
+                    $('.tabcontent').css('display', 'none');
+                    $('#' + activeTab).show();
+                    tablinks = document.getElementsByClassName("planning");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    $('.' + activeTab + '-tab').addClass("active");
+                }
+                $('.' + activeTab + '-tab').addClass("active");
+                }
+            </script>
+            {{-- keep nav in refresh --}}
 
-<script type="text/javascript">
-    function openCity(evt, cityName) {
-        // Declare all variables
-        var i, tabcontent, tablinks;
+            <script type="text/javascript">
+                function openCity(evt, cityName) {
+                    // Declare all variables
+                    var i, tabcontent, tablinks;
 
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("planning");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-
-    function myFunction_commentaire() {
-        var x = document.getElementById("myDIV");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
-</script>
-
-{{-- info session --}}
-{{-- etp --}}
-<script>
-    $('.showSessionEtp').on('click', function() {
-        var etpId = $(this).data("id");
-        // console.log(etpId);
-        $.ajax({
-            type: "get",
-            url: "/info/session/etp",
-            data: {
-                Id: etpId
-            },
-            dataType: "html",
-            success: function(response) {
-                let userData = JSON.parse(response);
-                console.log(userData);
-                for (let i = 0; i < userData.length; i++) {
-                    let logo =
-                        '<img src="{{ asset('images/entreprises/:url_img') }}" style="width:120px;height:120px;border-radius:100%">';
-                    logo = logo.replace(":url_img", userData[i].logo);
-                    $("#lEtp").html(" ");
-                    $("#lEtp").append(logo);
-                    $("#status").text(userData[i].nom_statut);
-                    $("#nEtp").text(userData[i].nom_etp);
-                    $("#juridic").text(': ' + userData[i].nom_type);
-                    $("#nif").text(': ' + userData[i].nif);
-                    $("#stat").text(': ' + userData[i].stat);
-                    $("#tel").text(': ' + userData[i].telephone_etp);
-                    $("#mail").text(': ' + userData[i].email_etp);
-                    $("#adrlot").text(': ' + userData[i].adresse_lot);
-                    $("#adrlot2").text(userData[i].adresse_quartier);
-
-                    $("#adrlot3").text(userData[i].adresse_ville);
-                    $("#adrlot4").text(userData[i].adresse_region);
-                    $("#site").text(': ' + userData[i].site_etp);
-
-
-                    var status = $('#status');
-                    // console.log(status);
-
-                    if (status.text() == "Premium") {
-                        status.addClass('green');
-                    } else if (status.text() == "Invité") {
-                        status.addClass('red');
-                    } else if (status.text() == "Pending") {
-                        status.addClass('yellow');
-                    } else {
-                        console.log('ereur');
+                    // Get all elements with class="tabcontent" and hide them
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
                     }
 
-                }
-            }
-        });
+                    // Get all elements with class="tablinks" and remove the class "active"
+                    tablinks = document.getElementsByClassName("planning");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
 
-    });
-</script>
-@endsection
+                    // Show the current tab, and add an "active" class to the button that opened the tab
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+
+                function myFunction_commentaire() {
+                    var x = document.getElementById("myDIV");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+                }
+            </script>
+
+            {{-- info session --}}
+            {{-- etp --}}
+            <script>
+                $('.showSessionEtp').on('click', function() {
+                    var etpId = $(this).data("id");
+                    // console.log(etpId);
+                    $.ajax({
+                        type: "get",
+                        url: "/info/session/etp",
+                        data: {
+                            Id: etpId
+                        },
+                        dataType: "html",
+                        success: function(response) {
+                            let userData = JSON.parse(response);
+                            console.log(userData);
+                            for (let i = 0; i < userData.length; i++) {
+                                let logo =
+                                    '<img src="{{ asset('images/entreprises/:url_img') }}" style="width:120px;height:120px;border-radius:100%">';
+                                logo = logo.replace(":url_img", userData[i].logo);
+                                $("#lEtp").html(" ");
+                                $("#lEtp").append(logo);
+                                $("#status").text(userData[i].nom_statut);
+                                $("#nEtp").text(userData[i].nom_etp);
+                                $("#juridic").text(': ' + userData[i].nom_type);
+                                $("#nif").text(': ' + userData[i].nif);
+                                $("#stat").text(': ' + userData[i].stat);
+                                $("#tel").text(': ' + userData[i].telephone_etp);
+                                $("#mail").text(': ' + userData[i].email_etp);
+                                $("#adrlot").text(': ' + userData[i].adresse_lot);
+                                $("#adrlot2").text(userData[i].adresse_quartier);
+
+                                $("#adrlot3").text(userData[i].adresse_ville);
+                                $("#adrlot4").text(userData[i].adresse_region);
+                                $("#site").text(': ' + userData[i].site_etp);
+
+
+                                var status = $('#status');
+                                // console.log(status);
+
+                                if (status.text() == "Premium") {
+                                    status.addClass('green');
+                                } else if (status.text() == "Invité") {
+                                    status.addClass('red');
+                                } else if (status.text() == "Pending") {
+                                    status.addClass('yellow');
+                                } else {
+                                    console.log('ereur');
+                                }
+
+                            }
+                        }
+                    });
+
+                });
+            </script>
+        @endsection

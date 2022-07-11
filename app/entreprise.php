@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\groupe;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 class entreprise extends Model
 {
@@ -13,6 +14,26 @@ class entreprise extends Model
         'nom_etp', 'adresse', 'logo', 'nif', 'stat', 'rcs', 'cif', 'secteur_id', 'email_etp', 'site_etp', 'telephone_etp',
         
     ];
+
+    /**
+     * Get all of the groupe_entreprise for the entreprise
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function groupe_entreprise()
+    {
+        return $this->hasMany('App\GroupeEntreprise', 'entreprise_id');
+    }
+
+    /**
+     * Get all of the groupe for the entreprise
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function groupe()
+    {
+        return $this->hasManyThrough(groupe::class, GroupeEntreprise::class);
+    }
 
     public function secteur()
     {

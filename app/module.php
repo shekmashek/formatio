@@ -14,7 +14,7 @@ class Module extends Model
         'id','nom_module','formation_id'
     ];
     public function formation(){
-        return $this->belongsTo('App\formation');
+        return $this->belongsTo('App\formation', 'formation_id');
     }
     public function Niveau(){
         return $this->belongsTo('App\Niveau');

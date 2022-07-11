@@ -2,136 +2,245 @@
 @section('title')
     <p class="text_header m-0 mt-1">Calendrier</p>
 @endsection
-
-
-@push('extra-links')
-        <link rel="stylesheet" href="{{ asset('css/calendrier.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datepicker.css') }}">
-
-        {{-- bootstrap.min.css est importé dans admin.blade.php --}}
-        {{-- fullCalendar utilise les icons bootstraps --}}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-
-        <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
-        {{-- <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script> --}}
-
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
-        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-
-
-        {{-- <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
-        <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script> --}}
-
-
-        {{-- utilisation de fullcalendar-scheduler pour avoir accés aux planning --}}
-        <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js'></script>
-
-        {{-- les langues pour le calendrier --}}
-        <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
-
-
-        {{-- Pour utiliser jquery sur fullCalendar --}}
-        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/fr.js"></script> --}}
-
-@endpush
-
 @section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
 
+        .fc-list-day-text {
+            font-weight: bold;
+        }
+
+        .fc-event-title {
+            font-weight: 500!important;
+        }
+
+        .fc-button {
+            background-color: #faf9f900!important;
+            border-color: #8c14fc!important;
+            color: #8c14fc!important;
+        }
+        .fc-button:hover {
+            background-color: rgba(132, 53, 196, 0.137)!important;
+            border-color: #8c14fc!important;
+            color: #8c14fc!important;
+            font-weight: bold!important;
+        }
+
+        .fc-button-active {
+            background-color: #8c14fc0e!important;
+            border-color: #8c14fc!important;
+            color: #8c14fc!important;
+            font-weight: bold!important;
+        }
+
+        .fc-day-today {
+            background-color: #83838323!important;
+        }
+        
+        .fc-daygrid-day-number {
+            opacity: 0.7;
+        }
+
+        .fc-prev-button, .fc-next-button {
+            border: none!important;
+        }
+        
+        .tooltip {
+            border-radius: 5px!important;
+        }
+        .tooltip::before {
+            border-radius: 5px!important;
+        }
+        
+        .tooltip[data-popper-placement^="top"]  {
+            background: rgb(245, 245, 245)!important;
+            border: 1px solid #a537fd;
+            margin-bottom: 0.5rem!important;
+        }
+
+        .tooltip[data-popper-placement^="top"] .tooltip-arrow {
+            visibility: hidden;
+            border-color: rgba(255, 250, 240, 0)!important;
+            background: rgba(196, 196, 196, 0)!important;
+        }
+        .tooltip[data-popper-placement^="top"] .tooltip-arrow::before{
+            visibility: visible!important;
+            border-top-color: #000!important;
+            transform: translate(-10px, 10px)!important;
+            margin-left: 7px!important;
+        }
+
+        .tooltip[data-popper-placement^="top"] .tooltip-inner{
+            background: rgba(253, 253, 253, 0)!important;
+            color: rgb(20, 20, 20)!important;
+            font-size: 1rem;
+        }
+
+        .tooltip.show {
+            opacity: 1!important;
+        }
+
+
+        .marge_left-30 {
+            margin-left: 30px!important;
+        }
+
+        .width_90 {
+            width: 90%!important;
+        }
+
+        .width_80 {
+            width: 80%!important;
+        }
+
+        .btn_purple {
+            background-color: #7367F0!important;
+            border-color: #7367F0!important;
+            color: #fff!important;
+        }
+
+        .background_purple {
+            background-color: #9958cf5e!important;
+            color: #6c1deb!important;
+            padding: 0.5rem 1rem!important;
+        }
+
+        .popover {
+            z-index: 1070!important;
+        }
+
+        .padding_0 {
+            padding: 0!important;
+        }
+
+        .font_size_init {
+            font-size:initial!important;
+        }
+
+        .right_-10 {
+            right: -10%!important;
+        }
+
+
+
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    
+    <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+    <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+
+    
+    
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/main.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.0/locales-all.min.js"></script>
+
+
+    {{-- Pour utiliser jquery sur fullCalendar --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/fr.js"></script> --}}
+
+
+
+</head>
+<body>
     <div class="container-fluid">
         {{-- <a href="#" class="btn_creer text-center filter mt-4" role="button" onclick="afficherFiltre();"><i class='bx bx-filter icon_creer'></i>Afficher les filtres</a> --}}
-        <div class="row w-100 mt-3 justify-content-between">
+        <div class="row w-100 mt-3">
 
-            <div class="col-md-3 my-auto mt-5" id="event_datepicker">
-
-            </div>
-
-            <div class="col-md-9 m-50 my-2">
+            <div class="col-md-12 m-50 width_80 my-0 mx-auto">
                 <div id='planning'></div>
             </div>
 
-            <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1"
-             data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
-              <div class="offcanvas-header" id="event_header">
-                <h5 id="event_title"></h5>
-                <span class="input-group-text border-0 bg-light fs-2" id="event_to_pdf"
-                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Télécharger en pdf">
+            {{-- <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#detail_offcanvas" role="button"
+            aria-controls="offcanvasWithBothOptions">
+                Link with href
+            </a> --}}
 
-                </span>
+            <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1" 
+             data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
+              <div class="offcanvas-header">
+                <h5 id="event_title"></h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
-
-
-              <div class="mb-1 rounded-3 divider"></div>
-
-              <div class="offcanvas-body" id="offcanvas_body">
-
+              <div class="offcanvas-body">
                 <div class="input-group flex-nowrap mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_projet"><i class='bx bxs-briefcase text-secondary'></i></span>
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-briefcase text-secondary'></i></span>
                     <span type="text" id="event_project"
-                    class="form-control mt-1 border-0 bg-light"
-                    aria-label="projet" aria-describedby="basic-addon_projet"></span>
+                    class="form-control mt-1 border-0 bg-light"  
+                    aria-label="projet" aria-describedby="basic-addon1"></span>
+
 
 
                     <input type="text" id="event_type_formation"
-                    class="form-control border-0 background_purple fw-bolder rounded"
-                    placeholder="Type de formation"
-                    aria-label="type_formation" aria-describedby="basic-addon_projet" readonly>
+                    class="form-control border-0 background_purple fw-bolder rounded" 
+                    placeholder="Type de formation" 
+                    aria-label="type_formation" aria-describedby="basic-addon1" readonly>
                 </div>
 
                 <div class="input-group mb-4">
                     <span class="input-group-text border-0 bg-light fs-2" id="addon-wrapping"><i class='bx bxs-buildings text-secondary'></i></span>
-                    {{-- <input type="text" id="event_entreprise" class="form-control border-0 border-bottom"
-                    placeholder="Entreprise" aria-label="Entreprise"
+                    {{-- <input type="text" id="event_entreprise" class="form-control border-0 border-bottom" 
+                    placeholder="Entreprise" aria-label="Entreprise" 
                     aria-describedby="addon-wrapping"> --}}
-                    <span id="event_entreprise" class="form-control border-0 border-bottom mt-1" ></span>
+                    <span id="event_entreprise" class="form-control border-0 border-bottom" ></span>
                   </div>
                 <div class="input-group mb-4" id="event_sessions">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_sessions"><i class='bx bxs-calendar-event text-secondary' ></i></span>
-                    <input type="text" id="event_nbr_session"
-                    class="form-control border-0 border-bottom d-block w-auto marge_left-30"
-                    placeholder="Nombre session" aria-label="nbr_session"
-                    aria-describedby="basic-addon_sessions">
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-calendar-event text-secondary' ></i></span>
+                    <input type="text" id="event_nbr_session" 
+                    class="form-control border-0 border-bottom d-block w-auto marge_left-30" 
+                    placeholder="Nombre session" aria-label="nbr_session" 
+                    aria-describedby="basic-addon1">
 
                 </div>
                 <div class="input-group mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_lieu"><i class='bx bxs-map text-secondary' ></i></span>
-                    <input type="text" id="event_lieu" class="form-control border-0 border-bottom"
-                    placeholder="lieu" aria-label="Place"
-                    aria-describedby="basic-addon_lieu">
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-map text-secondary' ></i></span>
+                    <input type="text" id="event_lieu" class="form-control border-0 border-bottom" 
+                    placeholder="lieu" aria-label="Place" 
+                    aria-describedby="basic-addon1">
                 </div>
                 <div class="input-group mb-4">
-                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_of_formateur"><i class='bx bxs-chalkboard text-secondary' ></i></span>
-                    <input type="text" id="event_OF" class="form-control border-0 border-bottom"
-                    placeholder="OF" aria-label="OF"
-                    aria-describedby="basic-addon_of_formateur">
+                    <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-chalkboard text-secondary' ></i></span>
+                    <input type="text" id="event_OF" class="form-control border-0 border-bottom" 
+                    placeholder="OF" aria-label="OF" 
+                    aria-describedby="basic-addon1">
 
-                    <span type="text" id="event_formateur" class="form-control border-0 border-bottom mt-1 hover_purple"
-                        aria-label="Formateur"
-                        aria-describedby="basic-addon_of_formateur">
+                    <span type="text" id="event_formateur" class="form-control border-0 border-bottom" 
+                        aria-label="Formateur" 
+                        aria-describedby="basic-addon1">
                     </span>
                 </div>
 
 
                 <div class="accordion mt-5 input-group" id="materiel_accordion_container">
                     <label for="materiel_button">
-                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_materiel"><i class='bx bxs-wrench text-secondary'></i></span>
+                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-wrench text-secondary'></i></span>
                     </label>
                     <div class="accordion-item width_80 border-0">
-
+                        
                         <h2 class="form-control accordion-header border-0 border-bottom" id="materiel_heading">
-                            <button class="accordion-button p-2 collapsed" id="materiel_button" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button p-2 collapsed" id="materiel_button" type="button" data-bs-toggle="collapse" 
                                 data-bs-target="#materiel_collapse" aria-expanded="false" aria-controls="materiel_collapse">
                               Materiel nécessaire
                             </button>
                         </h2>
 
-                          <div id="materiel_collapse" class="accordion-collapse collapse border-bottom mb-2" aria-labelledby="headingThree"
+                          <div id="materiel_collapse" class="accordion-collapse collapse border-bottom mb-2" aria-labelledby="headingThree" 
                                 data-bs-parent="#materiel_accordion_container">
                             <div class="accordion-body padding_0">
                                 <div class="accordion accordion-flush px-2" id="materiel_accordion">
-
+                        
                                 </div>
                             </div>
                           </div>
@@ -142,11 +251,11 @@
 
                 <div class="accordion mt-5 input-group" id="accordion_container">
                     <label for="container_button">
-                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon_participants"><i class='bx bxs-group text-secondary' ></i></span>
+                        <span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class='bx bxs-group text-secondary' ></i></span>
                     </label>
                     <div class="accordion-item border-0 width_80">
                         <h2 class="accordion-header border-0 border-bottom" id="headingTwo">
-                            <button class="accordion-button p-2 collapsed" id="container_button" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button p-2 collapsed" id="container_button" type="button" data-bs-toggle="collapse" 
                                 data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                               Participants
                             </button>
@@ -155,7 +264,7 @@
                           <div id="collapseTwo" class="accordion-collapse collapse border-bottom" aria-labelledby="headingTwp" data-bs-parent="#accordion_container">
                             <div class="accordion-body padding_0">
                                 <div class="accordion accordion-flush px-2" id="accordionExample">
-
+                        
                                 </div>
                             </div>
                           </div>
@@ -222,20 +331,30 @@
         {{-- end-filtres --}}
 
     </div>
+</body>
 
-@endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-@push('extra-js')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<script>
-    // calendrier planning
-        document.addEventListener('DOMContentLoaded', function() {
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-            var events = {!! json_encode($events, JSON_HEX_TAG) !!};
-            var calendarEl = document.getElementById('planning');
-            var calendar = new FullCalendar.Calendar(calendarEl,
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script> --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+
+
+        // calendrier planning
+            document.addEventListener('DOMContentLoaded', function() {
+
+                var events = {!! json_encode($events, JSON_HEX_TAG) !!};
+                var calendarEl = document.getElementById('planning');
+                var calendar = new FullCalendar.Calendar(calendarEl, 
                 {
-
+                
 
                 // views : resourceTimeline,resourceTimelineWeek,listMonth,dayGridMonth,timeGridWeek
 
@@ -246,7 +365,7 @@
                     nowIndicator: true,
                     headerToolbar: {
                                     right: 'prev,next today',
-                                    center: 'title',
+                                    center: 'title', 
                                     left: 'dayGridMonth,timeGridWeek,listMonth'
 
                                 },
@@ -257,10 +376,9 @@
 
                             // buttonText: '',
 
-                            // defaults: {
-                            //     fixedWeekCount: false,
-                            // },
-                            // vue sur 3 mois
+                            defaults: {
+                                fixedWeekCount: false,
+                            },
                             duration: { months: 3 },
                         },
                     },
@@ -268,6 +386,13 @@
                     eventDidMount: function(info) {
                         // info.el.style.backgroundColor = info.event.backgroundColor;
                         // info.el.classList.add('');
+                    },
+                    eventRender: function(event, element)
+                    { 
+                        // element.find('.fc-event-title').append("<br/>" + event.description); 
+                        // element.css('font-weight', '500');
+                        // add the class bg-danger to the event element
+                        // element.find('.fc-daygrid-event').addClass('bg-danger'); 
                     },
 
                     // show the description of events when hovering over them
@@ -283,43 +408,10 @@
                         });
 
                         $(info.el).tooltip('show');
-
                     },
 
-                    // hide the description of events when no longer hovering over them
-                    eventMouseLeave : function(info) {
-                        $(info.el).tooltip('hide');
-                    },
-
-
+                    // console.log the description of events when clicking on them
                     eventClick : function(info) {
-
-
-                        var offcanvas_header = document.getElementById('event_header');
-
-                        // STATUS DE LA FORMATION
-                        var today = new Date();
-
-                        var groupe_start = new Date (info.event.extendedProps.groupe.date_debut);
-                        var groupe_end = new Date (info.event.extendedProps.groupe.date_fin);
-
-                        if (groupe_start > today) {
-                            var event_status = 'Prévisionnelle';
-                        } else if (groupe_start < today && groupe_end > today) {
-                            var event_status = 'En cours';
-                        } else if (groupe_end < today){
-                            var event_status = 'Terminée';
-                        }
-
-                        offcanvas_header.setAttribute('data-before', event_status);
-
-
-                        // COLORS
-                        document.documentElement.style.setProperty('--color-event', info.event.backgroundColor);
-
-
-                         // options for date formating
-                         var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
                         var duree_formation = 0;
                         var diff = '';
@@ -332,7 +424,7 @@
                                     var diff = end.getTime() - start.getTime();
                                     duree_formation = duree_formation + diff;
                                 }
-
+                                
                             });
 
 
@@ -349,7 +441,6 @@
                                 var duration = hh + "h " + mm + "m ";
                                 return (duration);
                             }
-
 
                             // console.log(houreFormat(duree_formation));
 
@@ -370,11 +461,11 @@
                             });
                         });
 
-
+                        // options for date formating
+                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
                         var title_offcanvas = document.getElementById('event_title');
-                        var event_to_pdf = document.getElementById('event_to_pdf');
                         var projet_offcanvas = document.getElementById('event_project');
                         var type_formation_offcanvas = document.getElementById('event_type_formation');
                         var session_offcanvas = document.getElementById('event_sessions');
@@ -383,14 +474,14 @@
                         var lieu_offcanvas = document.getElementById('event_lieu');
                         var OF_offcanvas = document.getElementById('event_OF');
                         var formateur_offcanvas = document.getElementById('event_formateur');
-
+                        
                         var test_offcanvas = document.getElementById('test_offcanvas');
 
                         var accordion_Participants = document.getElementById('accordionExample');
                         var container_button = document.getElementById('container_button');
                         var materiel_button = document.getElementById('materiel_button');
                         var materiel_collapse = document.getElementById('materiel_collapse');
-
+                    
 
 
                         // Filling the values of the offcanvas with the attributes of the event
@@ -407,23 +498,17 @@
                         var groupe = info.event.extendedProps.groupe;
                         var sessions = info.event.extendedProps.groupe.detail;
                         var entreprises = info.event.extendedProps.entreprises;
-
+                        
                         // console.log(entreprises.length);
+                        entreprise_offcanvas.value = '';
                         entreprise_offcanvas.innerHTML = '';
-                        var entreprise_offcanvas_link ='';
-                        for (var i = 0; i < entreprises.length; i++) {
-                            // entreprise_offcanvas.innerHTML += entreprises[i].nom_etp + '<br>';
-                            entreprise_offcanvas_link += ('<a href = "{{url("profile_entreprise/:?")}}" class="hover_purple" target = "_blank">'+entreprises[i].nom_etp+'</a><br>').replace(":?", entreprises[i].id);
 
-                            entreprise_offcanvas.innerHTML = entreprise_offcanvas_link;
+                        for (var i = 0; i < entreprises.length; i++) {
+                            entreprise_offcanvas.innerHTML += entreprises[i].nom_etp + '<br>';
                         }
 
-
-                        var event_to_pdf_link = '<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 btn"><i class="bx bxs-file-pdf text-danger fs-1"></i></a>'
-                        event_to_pdf.innerHTML = event_to_pdf_link.replace(":?", info.event.extendedProps.detail_id);
-
                         title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
-                        var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+' '+info.event.extendedProps.groupe.nom_groupe +'</a>';
+                        var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" target = "_blank">'+projet+'</a>';
                         projet_link = projet_link.replace("groupe_id", groupe.id);
                         projet_link = projet_link.replace("type_formation_id", info.event.extendedProps.type_formation.id);
                         projet_offcanvas.innerHTML = projet_link;
@@ -438,38 +523,38 @@
 
                         // for (let i = 0; i < sessions.length; i++) {
                             //     session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30" value="Séance '+ parseInt(i+1) +' : ' + (sessions[i].date_detail).toDateString() + '" aria-label="Username" aria-describedby="basic-addon1">';
-
+                            
                             // }
-
+                            
                         sessions.forEach((session, i) => {
                             var date = new Date(session.date_detail);
-                            // console.log(date.toLocaleDateString('fr-FR',options));
-                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30 right_-10" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon_n_seance">';
+                            // console.log(date.toLocaleDateString('fr-FR',options));                            
+                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30 right_-10" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon1">';
 
                         });
-
-
-                        // add the number of session before the session list
-                        nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon_nbr_session"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
-                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon_nbr_session">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
+                        
+                        
+                        // add the number of session before the session list 
+                        nbr_session_offcanvas += '<span class="input-group-text border-0 bg-light fs-2" id="basic-addon1"><i class=\'bx bxs-calendar-event text-secondary\'></i></span>';
+                        nbr_session_offcanvas += '<span value="'+ nbr_session+' Séance(s) " type="text" id="event_nbr_session" class="form-control d-block border-0 border-bottom d-block mt-1 mb-3 width_80" placeholder="Nombre session" aria-label="nbr_session" aria-describedby="basic-addon1">'+ nbr_session+' Séance(s) - Durée : '+houreFormat(duree_formation)+'</span>';
 
                         session_offcanvas.innerHTML = nbr_session_offcanvas + session_offcanvas_html;
                         lieu_offcanvas.value = info.event.extendedProps.lieu;
                         OF_offcanvas.value = info.event.extendedProps.nom_cfp;
 
 
-                        // Lien du proril formateur
+                        // Lien du formateur
                         var formateur_id = info.event.extendedProps.formateur_obj.id;
-                        var formateur_link = '<a href="{{url("profile_formateur/:?")}}" class="hover_purple" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
+                        var formateur_link = '<a href="{{url("profile_formateur/:?")}}" target = "_blank" >'+info.event.extendedProps.formateur+'</a>';
                         formateur_link = formateur_link.replace(":?", formateur_id);
                         formateur_offcanvas.innerHTML = formateur_link;
 
                         // Récupération des participants et du materile dans des tableaux
                         var participants = info.event.extendedProps.participants;
                         var materiel = info.event.extendedProps.materiel;
-
+                        
                         accordion_Participants.innerHTML = '';
-
+                        
                         container_button.innerHTML = '';
                         var html_pop = '';
                         var html_accordion = '';
@@ -479,50 +564,50 @@
                             container_button.removeAttribute('disabled', 'true');
                             container_button.innerHTML += '<span class="my-0 mx-auto">Participants</span>';
                             container_button.innerHTML += '<span class="badge background_purple rounded-pill float-end">'+participants.length+'</span>';
-
-                            participants.forEach((participant,i) => {
-
+                            
+                            participants.forEach((participant,i) => {      
+                                
                                 html_accordion += '<div class="accordion-item">';
 
                                 html_accordion += '<h2 class="accordion-header" id="headingOne'+i+'">';
                                 html_accordion += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-controls="collapseOne">';
-                                html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire+('<a href="{{url("profile_stagiaire/:?")}}" target = "_blank"><i class="bx bx-link-external ms-3 fs-5 hover_purple"></i></a>').replace(":?", participant.id);
+                                html_accordion += participant.nom_stagiaire+' '+participant.prenom_stagiaire;
                                 html_accordion += '</button>';
                                 html_accordion += '</h2>';
-
+                                
                                 html_accordion += '<div id="collapseOne'+i+'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">';
                                 html_accordion += '<div class="accordion-body">';
                                 html_accordion += '<ul class="list-group list-group">';
                                 html_accordion += '<li class="list-group-item d-flex justify-content-between align-items-start">';
                                 html_accordion += '<div class="ms-2 me-auto">';
                                 html_accordion += '<div class="fw-bold">Email</div>';
-                                html_accordion += '<a href="mailto:'+participant.mail_stagiaire+'" class="hover_purple">'+participant.mail_stagiaire+'</a>';
+                                html_accordion += '<a href="mailto:'+participant.mail_stagiaire+'">'+participant.mail_stagiaire+'</a>';
                                 html_accordion += '</div>';
 
 
-                                html_accordion += '<span class="badge position-absolute end-0 mr bg-primary rounded-pill">'+participant.entreprise.nom_etp+'</span>';
+                                html_accordion += '<span class="badge bg-primary rounded-pill">'+participant.entreprise.nom_etp+'</span>';
                                 html_accordion += '</li>';
                                 html_accordion += '</ul>';
-
+            
                                 html_accordion += '</div>';
                                 html_accordion += '</div>';
                                 html_accordion += '</div>';
 
 
                                 accordion_Participants.innerHTML = html_accordion;
-
+                                
 
                             });
 
                         } else {
                             container_button.innerHTML = 'Aucun participant';
                             container_button.setAttribute('disabled', 'true');
-
+                                                                                    
                         }
 
 
                         materiel_collapse.innerHTML = '';
-
+                        
                         materiel_button.innerHTML = '';
                         var materiel_accordion_html = '';
                         if (materiel.length > 0) {
@@ -531,21 +616,21 @@
                             materiel_button.removeAttribute('disabled', 'true');
                             materiel_button.innerHTML += '<span class="my-0 mx-auto">Matériel</span>';
                             materiel_button.innerHTML += '<span class="badge background_purple rounded-pill float-end">'+materiel.length+'</span>';
-
-                            materiel.forEach((materiel,i) => {
-
+                            
+                            materiel.forEach((materiel,i) => {      
+                                
                                 materiel_accordion_html += '<div class="accordion-item border-0">';
 
                                 materiel_accordion_html += '<h2 class="accordion-header" id="headingOne'+i+'">';
 
                                     // bouton d'ouverture avec le nom du materiel
-                                materiel_accordion_html += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo'+i+'" aria-controls="collapseOne">';
+                                materiel_accordion_html += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne'+i+'" aria-controls="collapseOne">';
                                 materiel_accordion_html += materiel.description;
                                 materiel_accordion_html += '</button>';
                                 materiel_accordion_html += '</h2>';
+                                
 
-
-                                materiel_accordion_html += '<div id="collapseTwo'+i+'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">';
+                                materiel_accordion_html += '<div id="collapseOne'+i+'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">';
                                 materiel_accordion_html += '<div class="accordion-body">';
                                 materiel_accordion_html += '<ul class="list-group list-group">';
 
@@ -570,14 +655,14 @@
                                 materiel_accordion_html += '</li>';
 
                                 materiel_accordion_html += '</ul>';
-
+            
                                 materiel_accordion_html += '</div>';
                                 materiel_accordion_html += '</div>';
                                 materiel_accordion_html += '</div>';
 
 
                                 materiel_collapse.innerHTML = materiel_accordion_html;
-
+                                
 
                             });
 
@@ -586,148 +671,25 @@
                             materiel_button.setAttribute('disabled', 'true');
                         }
 
+
+
                         bsOffcanvas.show();
 
-                    },
 
+                    },
+                    
                     events: events,
 
                 }
-            );
+                );
 
+                
+                calendar.render();
 
-            $('#event_datepicker').datepicker({
-
-                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-                monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-                dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-                dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-
-                inline:true,
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                onSelect: function(dateText, inst) {
-                    var date = new Date(dateText);
-                    // got to the selected date on the fullcalendar
-                    calendar.gotoDate(date);
-                }
             });
-
-
-            calendar.render();
-
-
-
-                    //This checks the browser in use and populates da var accordingly with the browser
-                    // Ca marche sur Chrome
-                    var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
-                    // var mousewheelevt=(/Chrome/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
-
-
-                    function preventDefault(e) {
-                        e.preventDefault();
-                    }
-
-
-
-                    function preventDefaultForScrollKeys(e) {
-                        if (keys[e.keyCode]) {
-                            preventDefault(e);
-                            return false;
-                        }
-                    }
-
-                        // modern Chrome requires { passive: false } when adding event
-                        var supportsPassive = false;
-                    try {
-                        window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
-                            get: function () { supportsPassive = true; }
-                        }));
-                    } catch(e) {}
-
-                        var wheelOpt = supportsPassive ? { passive: false } : false;
-                        var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-
-                    // call this to Disable
-                    function disableScroll() {
-                        window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
-                        window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
-                        window.addEventListener('touchmove', preventDefault, wheelOpt); // mobile
-                        window.addEventListener('keydown', preventDefaultForScrollKeys, false);
-
-                    }
-
-                    // call this to Enable
-                    function enableScroll() {
-                        window.removeEventListener('DOMMouseScroll', preventDefault, false);
-                        window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
-                        window.removeEventListener('touchmove', preventDefault, wheelOpt);
-                        window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
-
-                    }
-
-
-                    //binds the scroll event to the calendar's DIV you have made
-                    calendar.el.addEventListener(mousewheelevt, function(e){
-                            var evt = window.event || e; //window.event para Chrome e IE || 'e' para FF
-                            var delta;
-                            delta = evt.detail ? evt.detail*(-120) : evt.wheelDelta;
-                            if(mousewheelevt === "DOMMouseScroll"){
-                                delta = evt.originalEvent.detail ? evt.originalEvent.detail*(-120) : evt.wheelDelta;
-                            }
-
-                            // If the current view if on timeGridWeek, we want to scroll the calendar
-                            if(delta > 0 && calendar.view.type !== 'timeGridWeek'){
-                                calendar.next();
-                                $('.tooltip').hide();
-                            } else if (calendar.view.type === 'timeGridWeek') {
-                                enableScroll();
-                            }
-                            if(delta < 0 && calendar.view.type !== 'timeGridWeek'){
-                                calendar.prev();
-                                $('.tooltip').hide();
-                            } else if (calendar.view.type === 'timeGridWeek') {
-                                enableScroll();
-                            }
-
-                    });
-
-
-                    //hover event to disable or enable the window scroll
-                    calendar.el.addEventListener('mouseover', function() {
-                        // disable_scroll();
-                        disableScroll();
-
-                    });
-                    calendar.el.addEventListener('mouseout', function() {
-                        // enable_scroll();
-                        enableScroll();
-
-                    });
-
-
-                    //binds to the calendar's div the mouseleave event
-                    calendar.el.addEventListener("mouseleave", function()
-                    {
-                        // console.log('mouse leave');
-                        enableScroll();
-                    });
-
-                    //binds to the calendar's div the mouseenter event
-                    calendar.el.addEventListener("mouseenter", function()
-                    {
-                        // console.log('mouse enter');
-                        disableScroll();
-                    });
-
-
-        });
-
+   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-</script>
-@endpush
+    </script>
+</html>
+@endsection

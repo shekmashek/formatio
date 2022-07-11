@@ -1,0 +1,208 @@
+
+
+:root {
+    --purple: #8c14fc;
+    --color-event: #f5f5f5;
+}
+
+#detail_offcanvas::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3%;
+    height: 100%;
+    margin-right: 10px;
+    background-color: var(--color-event);
+    opacity: 0.7;
+}
+
+
+#event_header::before {
+    /* data-before récupérée par javascript : event_status */
+    content: attr(data-before);
+    position: absolute;
+    top: 50px;
+    left: -27%;
+    width: 120px;
+    height: auto;
+    padding: 10px;
+    background-color: rgb(245, 245, 245);
+    border: 1px solid var(--color-event);
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+}
+
+
+@media(max-width:400px) {
+    #event_header::before {
+        /* content: attr(data-before);
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: min-content;
+        height: min-content;
+        padding: 2px;
+        background-color: rgb(245, 245, 245);
+        border: 1px solid var(--color-event);
+        border-radius: 5px 0 0 5px; */
+        display: none;
+
+    }
+
+    .offcanvas {
+        max-width: 80%;
+    }
+}
+
+div#offcanvas_body::-webkit-scrollbar-thumb {
+    background-color: var(--color-event);
+    border-radius: 5px;
+    visibility: hidden;
+}
+div#offcanvas_body::-webkit-scrollbar {
+   width: 0.3rem;
+}
+
+.fc-list-day-text {
+    font-weight: bold;
+}
+
+.fc-event-title {
+    font-weight: 500!important;
+}
+
+.fc-button {
+    background-color: #faf9f900!important;
+    border-color: var(--purple)!important;
+    color: var(--purple)!important;
+}
+.fc-button:hover {
+    background-color: rgba(132, 53, 196, 0.137)!important;
+    border-color: var(--purple)!important;
+    color: var(--purple)!important;
+    font-weight: bold!important;
+}
+
+.fc-button-active {
+    background-color: #8c14fc0e!important;
+    border-color: var(--purple)!important;
+    color: var(--purple)!important;
+    font-weight: bold!important;
+}
+
+.fc-day-today {
+    background-color: #83838323!important;
+}
+
+.fc-daygrid-day-number {
+    opacity: 0.7;
+}
+
+.fc-prev-button, .fc-next-button {
+    border: none!important;
+    border-radius: 50px!important;
+}
+
+.tooltip {
+    border-radius: 5px!important;
+}
+.tooltip::before {
+    border-radius: 5px!important;
+}
+
+.tooltip[data-popper-placement^="top"]  {
+    background: rgb(245, 245, 245)!important;
+    border: 1px solid var(--purple);
+    margin-bottom: 0.5rem!important;
+}
+
+.tooltip[data-popper-placement^="top"] .tooltip-arrow {
+    visibility: hidden;
+    border-color: rgba(255, 250, 240, 0)!important;
+    background: rgba(196, 196, 196, 0)!important;
+}
+.tooltip[data-popper-placement^="top"] .tooltip-arrow::before{
+    visibility: visible!important;
+    border-top-color: #000!important;
+    transform: translate(-10px, 10px)!important;
+    margin-left: 7px!important;
+}
+
+.tooltip[data-popper-placement^="top"] .tooltip-inner{
+    background: rgba(253, 253, 253, 0)!important;
+    color: rgb(20, 20, 20)!important;
+    font-size: 1rem;
+}
+
+.tooltip.show {
+    opacity: 1!important;
+}
+
+
+.marge_left-30 {
+    margin-left: 30px!important;
+}
+
+.width_90 {
+    width: 90%!important;
+}
+
+.width_80 {
+    width: 80%!important;
+}
+
+.btn_purple {
+    background-color: #7367F0!important;
+    border-color: #7367F0!important;
+    color: #fff!important;
+}
+
+.background_purple {
+    background-color: #b467f35e!important;
+    color: var(--purple)!important;
+    padding: 0.5rem 1rem!important;
+}
+
+.hover_purple{
+    transition: 0.3s;
+}
+.hover_purple:hover {
+    color:var(--purple)!important;
+}
+
+.background_event {
+    background-color: var(--event_background)!important;
+}
+
+.color_event_hover:hover .bx{
+    color: var(--color-event)!important;
+}
+
+.popover {
+    z-index: 1070!important;
+}
+
+.padding_0 {
+    padding: 0!important;
+}
+
+.font_size_init {
+    font-size:initial!important;
+}
+
+.right_-10 {
+    right: -10%!important;
+}
+
+.top_-20px {
+    top: -20px!important;
+}
+
+.divider {
+    width: 80%;
+    margin: 0 auto;
+    height: 5px;
+    background-color: var(--color-event);
+}
+

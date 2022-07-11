@@ -10,6 +10,10 @@ class Detail extends Model
         'lieu','h_debut','h_fin','date','projet_id','groupe_id','session_id','module_id','formateur_id'
     ];
 
+    public function cfp(){
+        return $this->belongsTo('App\cfp', 'cfp_id');
+    }
+
 
     public function module(){
         return $this->belongsTo('App\module');
@@ -31,9 +35,7 @@ class Detail extends Model
         return $this->belongsTo('App\projet');
     }
     public function groupe(){
-        return $this->belongsTo('App\groupe');
+        return $this->belongsTo('App\groupe', 'groupe_id');
     }
-
-
 
 }
