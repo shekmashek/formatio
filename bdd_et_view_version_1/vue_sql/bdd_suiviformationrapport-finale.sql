@@ -5,6 +5,8 @@ select
     from v_detailmoduleformationprojetformateur group by
     projet_id,formateur_id,nom_projet,nom_formateur,prenom_formateur,photos;
 
+
+-- La table 'upskill-conge.participantsessions' n'existe pas
 create or replace view v_liste_stagiaire_groupe as
 select
     stagiaire_id,nom_stagiaire,prenom_stagiaire,groupe_id,nom_groupe,
@@ -51,9 +53,9 @@ create table but_objectif(
     updated_at timestamp NULL DEFAULT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into but_objectif values(1,"Objectifs globaux de la formation :",NULL,NULL);
-insert into but_objectif values(2,"Objectif pédagogique de la formation Compétences clé :",NULL,NULL);
-insert into but_objectif values(3,"Objectif pédagogique de la formation Business Intelligence :",NULL,NULL);
+insert into but_objectif values(1,"Objectifs globaux de la formation :",1,NULL, NULL);
+insert into but_objectif values(2,"Objectif pédagogique de la formation Compétences clé :",1,NULL, NULL);
+insert into but_objectif values(3,"Objectif pédagogique de la formation Business Intelligence :",1,NULL, NULL);
 
 
 create table objectif_globaux(
@@ -68,10 +70,10 @@ create table objectif_globaux(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-insert into objectif_globaux values(1,"Se perfectionner et élargir ses connaissances sur Excel",1,14,NULL,NULL);
-insert into objectif_globaux values(2,"Maîtriser les techniques de calculs (avancés) qu’importe la difficulté et la complexité des formules",1,14,NULL,NULL);
-insert into objectif_globaux values(3,"Être en mesure de concevoir et analyser les données",1,14,NULL,NULL);
-insert into objectif_globaux values(4,"Gagner du temps et augmenter sa productivité",1,14,NULL,NULL);
+insert into objectif_globaux values(1,"Se perfectionner et élargir ses connaissances sur Excel",1,14,NULL,NULL, NULL);
+insert into objectif_globaux values(2,"Maîtriser les techniques de calculs (avancés) qu’importe la difficulté et la complexité des formules",1,14,NULL,NULL, NULL);
+insert into objectif_globaux values(3,"Être en mesure de concevoir et analyser les données",1,14,NULL,NULL, NULL);
+insert into objectif_globaux values(4,"Gagner du temps et augmenter sa productivité",1,14,NULL,NULL, NULL);
 
 insert into objectif_globaux values(5,"Acquérir les fondamentaux sine qua non à la bonne pratique d’utilisation du logiciel Microsoft Excel.",2,14,NULL,NULL);
 insert into objectif_globaux values(6,"Savoir créer et comprendre une formule qu’importe la complexité et la longueur",2,14,NULL,NULL);
@@ -274,6 +276,8 @@ insert into participant_groupe(stagaire_id,groupe_id,created_at,updated_at) valu
 (8,5,NOW(),NOW()),
 (9,5,NOW(),NOW());
 
+
+-- Champ 'stagaire_id' inconnu dans field list
 create or replace view v_participant_groupe as
 select
     (participant_groupe.id) participant_groupe_id,stagaire_id,groupe_id,nom_stagiaire,prenom_stagiaire,nom_groupe,projet_id
@@ -306,6 +310,8 @@ from
 where
     v_stagiaire_groupe.participant_groupe_id = detail_evaluation_apprenants.participant_groupe_id ;
 
+
+-- Champ 'projet_id' inconnu dans field list
 create or replace view v_tmp_verify_evaluaction_action_formation as
     select
         (evaluation_action_formation.id) evaluation_action_formation_id,pourcent,projet_id

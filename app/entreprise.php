@@ -20,6 +20,16 @@ class entreprise extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+
+    public function groupes_interne()
+    {
+        return $this->hasManyThrough(GroupeInterne::class, ProjetInterne::class);
+    }
+
+    public function projets_interne() {
+        return $this->hasMany('App\ProjetInterne', 'entreprise_id');
+    }
+
     public function groupe_entreprise()
     {
         return $this->hasMany('App\GroupeEntreprise', 'entreprise_id');

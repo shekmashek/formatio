@@ -12,7 +12,7 @@ INSERT INTO genre (id,genre, created_at, updated_at) VALUES
 CREATE TABLE roles (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   role_name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL;
+  role_description varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   created_at timestamp NULL DEFAULT current_timestamp(),
   updated_at timestamp NULL DEFAULT  current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -95,6 +95,7 @@ INSERT INTO `mode_financements` (`id`, `description`, `created_at`, `updated_at`
 (3, 'Espece', NULL, NULL);
 
 
+-- change 255 to 191 if you get error : Index column size too large
 CREATE TABLE users (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -214,7 +215,7 @@ CREATE TABLE responsables_cfp(
   nom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   prenom_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
   sexe_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci  default 'XXXXXXX',
-  date_naissance_resp_cfp date default current_timestamp(),
+  date_naissance_resp_cfp datetime default current_timestamp(),
   cin_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'XXXXXXX',
   email_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   telephone_resp_cfp varchar(255) COLLATE utf8mb4_unicode_ci,

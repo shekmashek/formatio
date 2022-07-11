@@ -70,15 +70,15 @@ GROUP BY
     valeur_ariary,
     updated_at;
 
-    //table chef departement
+    -- table chef departement
 
 ALTER TABLE chef_departements
   add column `updated_at` timestamp NULL DEFAULT current_timestamp();
-  ALTER TABLE chef_departements
- add column  genre_id bigint(20) unsigned
+
+ALTER TABLE chef_departements add column  genre_id bigint(20) unsigned;
 
 
- CREATE TABLE `demande_devis`(
+create TABLE `demande_devis`(
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

@@ -73,7 +73,7 @@ CREATE OR REPLACE VIEW v_detailmoduleformationprojetformateur AS SELECT
     (f.adresse) adresse_formateur,
     f.cin,
     f.specialite,
-    f.niveau,
+    f.niveau_etude_id,
     (f.activiter) activiter_formateur,
     pj.id,
     pj.nom_projet,

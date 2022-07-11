@@ -548,7 +548,7 @@
                     event_to_pdf.innerHTML = event_to_pdf_link.replace(":?", info.event.extendedProps.detail_id);
 
                     title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
-                    var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+'<i class=\'bx bx-link-external ms-1 align-middle\'></i></a>';
+                    var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+' '+info.event.extendedProps.groupe.nom_groupe +'<i class=\'bx bx-link-external ms-1 align-middle\'></i></a>';
                     projet_link = projet_link.replace("groupe_id", groupe.id);
                     projet_link = projet_link.replace("type_formation_id", info.event.extendedProps.type_formation.id);
                     projet_offcanvas.innerHTML = projet_link;

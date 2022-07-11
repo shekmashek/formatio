@@ -103,7 +103,7 @@ class DetailController extends Controller
                     
 
                     'detail_id' => $value->id,
-                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->lieu,
+                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->groupe->module->reference.' - '.$value->lieu,
                     'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
                     'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
                     'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
@@ -193,7 +193,7 @@ class DetailController extends Controller
                     
 
                     'detail_id' => $value->id,
-                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->lieu,
+                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->groupe->module->reference.' - '.$value->lieu,
                     'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
                     'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
                     'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
@@ -317,7 +317,7 @@ class DetailController extends Controller
                     
 
                     'detail_id' => $value->id,
-                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->lieu,
+                    'title' => $value->groupe->module->formation->nom_formation.' - '.$value->groupe->module->reference.' - '.$value->lieu,
                     'start' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_debut")),
                     'end' => date( 'Y-m-d H:i:s', strtotime("$value->date_detail $value->h_fin")),
                     'description' => $value->groupe->module->nom_module.' - '.$value->groupe->projet->cfp->nom,
@@ -349,7 +349,7 @@ class DetailController extends Controller
                 );
             }
 
-            // return( $events);
+            // return($events);
 
             // grouping groupe, entreprise, module, projet, formation related to the connected user
             if ($groupe_etp->count() > 0) {

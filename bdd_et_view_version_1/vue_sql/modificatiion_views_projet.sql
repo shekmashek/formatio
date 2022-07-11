@@ -253,7 +253,7 @@ CREATE OR REPLACE VIEW v_participant_groupe AS
         s.mail_stagiaire,
         s.telephone_stagiaire,
         s.user_id AS user_id_stagiaire,
-        s.photos,
+        s.photos as photo_stagiaire,
         s.cin,
         s.date_naissance,
         (s.lot) adresse,

@@ -23,6 +23,8 @@ create table iframe_invite(
     updated_at timestamp NULL DEFAULT current_timestamp()
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+-- executer 18 before this
 CREATE OR REPLACE VIEW v_entreprise_iframe as SELECT
     e.id as entreprise_id,
     e.statut_compte_id,

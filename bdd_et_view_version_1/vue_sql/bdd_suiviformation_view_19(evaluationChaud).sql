@@ -27,6 +27,8 @@ from
 where
     id_type_champs = type_champs.id;
 
+
+-- Champ 'points' inconnu dans field list
 create
 or replace view v_reponse_evaluationchaud as
 select
@@ -56,6 +58,7 @@ from
 group by
     groupe_id;
 
+-- La table 'upskill-conge.v_reponse_evaluationchaud' n'existe pas
 create
 or replace view v_evaluation_chaud as
 select

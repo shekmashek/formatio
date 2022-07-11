@@ -144,6 +144,8 @@ select
 
 
 
+-- Champ 'projet_id' inconnu dans field list
+
 CREATE OR REPLACE VIEW v_evaluation_action_formation AS SELECT
     (evaluation_action_formation.id) action_formation_id,
     titre,
@@ -151,12 +153,14 @@ CREATE OR REPLACE VIEW v_evaluation_action_formation AS SELECT
     projet_id,
     evaluation_action_formation.cfp_id
 FROM
-    detail_evaluation_action_formation,
+    detail_evaluation_action_formation deaf,
     evaluation_action_formation
 WHERE
     evaluation_action_formation_id = evaluation_action_formation.id AND evaluation_action_formation.cfp_id = evaluation_action_formation.cfp_id;
 
 
+
+-- Champ 'projet_id' inconnu dans field list
 
 CREATE OR REPLACE VIEW v_pourcent_globale_evaluation_action_formation AS SELECT
     (ROUND(AVG(pourcent),

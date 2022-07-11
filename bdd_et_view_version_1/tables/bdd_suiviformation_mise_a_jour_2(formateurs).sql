@@ -33,7 +33,7 @@ CREATE TABLE `experience_formateurs` (
   `nom_entreprise` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `poste_occuper` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `debut_travail` date NOT NULL,
-  `fin_travail` date default current_timestamp(),
+  `fin_travail` datetime default current_timestamp(),
   `taches` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `formateur_id` bigint(20) UNSIGNED NOT NULL REFERENCES formateurs(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT current_timestamp(),

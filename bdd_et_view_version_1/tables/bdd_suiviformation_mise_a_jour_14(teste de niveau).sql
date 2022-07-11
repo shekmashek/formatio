@@ -4,7 +4,7 @@ create table demande_test_niveaux(
     entreprise_id bigint(20) unsigned not null,
     cfp_id bigint(20) unsigned not null,
     formation_id bigint(20) unsigned not null,
-    date_creation date default now(),
+    date_creation datetime default CURRENT_TIMESTAMP(),
     created_at timestamp NULL DEFAULT current_timestamp(),
     updated_at timestamp NULL DEFAULT current_timestamp(),
     foreign key(entreprise_id) references entreprises(id) on delete cascade,
