@@ -367,6 +367,7 @@
                             <div class="col-md-8"></div>
                             <div class="col-md-4">
                                 <div class="row" >
+                                    
                                     <table>
                                         <thead>
                                             <form action="{{ route('project.filterBydate') }}" method="post">
@@ -388,7 +389,7 @@
                                                     </th>
                                                     <th>
                                                         <div class="input-group input-group-sm" style="width: 98%;">
-                                                            <input type="date" name="to" id="to" value=" {{ date('Y-m-d')}} " class="form-control form-control-sm @error('to') is-invalid @enderror" style="font-size: 13px">
+                                                            <input type="date" name="to" id="to" value="{{ date('Y-m-d')}}" class="form-control form-control-sm @error('to') is-invalid @enderror" style="font-size: 13px">
                                                             <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' style="font-size: 20px"></i></span>
                                                             @error('to')
                                                                 <span class="text-danger" style="font-size: 12px">{{ "Ce champs est obligatoire" }}</span>
@@ -528,27 +529,27 @@
                                 <thead>
                                     <tr>
                                         <th class="headProject" style="width: 104px"><i class='bx bx-library'></i> Projet</th>
-                                        <th class="headProject" style="width: 124px"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
+                                        <th class="headProject" style="width: 120px"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
                                         <th class="headProject" style="width: 158px"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
                                         <th class="headProject" style="width: 144px"><i class='bx bx-building-house'></i> Entreprise</th>
                                         <th class="headProject" style="width: 114px"><i class='bx bx-calendar-check' ></i> Modalité</th>
                                         <th class="headProject" style="width: 144px"><i class='bx bx-time-five' ></i> Date du projet</th>
                                         <th class="headProject" style="width: 144px"><i class='bx bx-home' ></i> Ville</th>
-                                        <th class="headProject" style="width: 124px"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
-                                        <th class="headProject" style="width: 104px">Type formation</th>
-                                        <th class="headProject" style="width: 80px"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
+                                        <th class="headProject" style="width: 120px"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statuts</th>
+                                        <th class="headProject" style="width: 117px"><i class='bx bx-book-content'></i>Type formation</th>
+                                        <th class="headProject" style="width: 75px"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
                                     </tr>
                                     <tr>
                                         <th style="width: 104px">Projet</th>
-                                        <th style="width: 124px">Session</th>
+                                        <th style="width: 120px">Session</th>
                                         <th style="width: 158px">Module</th>
                                         <th style="width: 144px">Entreprise</th>
                                         <th style="width: 114px">Modalité</th>
                                         <th style="width: 144px" id="hideDate">Date du projet</th>
                                         <th style="width: 144px" id="hideVille">Ville</th>
-                                        <th style="width: 124px">Statut</th>
-                                        <th style="width: 104px">Type formation</th>
-                                        <th style="width: 80px" id="hideAction">Action</th>
+                                        <th style="width: 120px">Statut</th>
+                                        <th style="width: 117px">Type formation</th>
+                                        <th style="width: 75px" id="hideAction">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -603,7 +604,7 @@
                                                         @endif
                                                     @endforeach
                                                 </td>
-                                                <td style="padding-left: 1px">
+                                                <td style="padding-left: 6px">
                                                     @can('isCFP')
                                                         @if ($prj->type_formation_id == 1)
                                                             <span role="button" data-bs-toggle="modal"
@@ -804,15 +805,42 @@
                                                                                                             <a href="#">
                                                                                                                 @php
                                                                                                                     $dataApprs = $groupe->dataApprenant($pj->cfp_id, $pj->groupe_id);
+                                                                                                                    $dataNombres = $groupe->dataNombre($pj->groupe_id);
                                                                                                                 @endphp
-                                    
+                                                                                                                
                                                                                                                 @if ( count($dataApprs) > 0)
                                                                                                                     @foreach ($dataApprs as $dataAppr)
                                                                                                                         <span class='rounded-pill' style='padding: 2px 6px; border: 1px solid #e4e4e498; color: #011e2a; display: inline-block; margin-bottom: 1px; font-size: 13px'>{{ $dataAppr->nom_stagiaire." ".$dataAppr->prenom_stagiaire }}</span>
                                                                                                                     @endforeach
                                                                                                                 @elseif(count($dataApprs) <= 0)
-                                                                                                                    <span class='rounded-pill' style='padding: 2px 7px; border: 1px solid #e4e4e498; color: #011e2a;'>{{"--"}}</span>
+                                                                                                                    {{-- @foreach ($dataNombres as $nbr)
+                                                                                                                        <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 13px;'>{{$nbr->nombre}}</span>
+                                                                                                                    @endforeach --}}
                                                                                                                 @endif
+                                                                                                            </a>
+                                                                                                            @foreach ($dataNombres as $nbr)
+                                                                                                                <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 13px;'>{{$nbr->nombre}}</span>
+                                                                                                            @endforeach
+                                                                                                            
+                                                                                                            <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                                                                                <i class='bx bx-chevron-down' style="vertical-align: middle; font-size: 25px;"></i>
+                                                                                                                <div class="collapse" id="collapseExample">
+                                                                                                                    <div class="card card-body">
+                                                                                                                        <a href="#">
+                                                                                                                            @php
+                                                                                                                                $dataAllApprs = $groupe->dataApprenantAll($pj->groupe_id);
+                                                                                                                            @endphp
+                                                                                                                            
+                                                                                                                            @if ( count($dataAllApprs) > 0)
+                                                                                                                                @foreach ($dataAllApprs as $dataAllAppr)
+                                                                                                                                    <span class='rounded-pill' style='padding: 2px 6px; border: 1px solid #e4e4e498; color: #011e2a; display: inline-block; margin-bottom: 1px; font-size: 13px'>{{ $dataAllAppr->nom_stagiaire." ".$dataAllAppr->prenom_stagiaire }}</span>
+                                                                                                                                @endforeach
+                                                                                                                            @elseif(count($dataAllApprs) <= 0)
+                                                                                                                                <span class='rounded-pill' style='padding: 4px 8px; border: 1px solid #e4e4e498; color: #011e2a; font-size: 13px;'>0</span>
+                                                                                                                            @endif
+                                                                                                                        </a>
+                                                                                                                    </div>
+                                                                                                                </div>
                                                                                                             </a>
                                                                                                         </div>
                                                                                                     </div>
@@ -1985,7 +2013,8 @@
         $(document).ready( function () {
             $('#example thead tr:eq(1) th').each( function () {
                 var title = $(this).text();
-                $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
+                $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
+                // $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
                 $( "th#hideAction > input" ).prop( "disabled", true ).attr( "placeholder", "" );
                 $( "th#hideDate > input" ).prop( "disabled", true ).attr( "placeholder", "" );
                 $( "th#hideVille > input" ).prop( "disabled", true ).attr( "placeholder", "" );

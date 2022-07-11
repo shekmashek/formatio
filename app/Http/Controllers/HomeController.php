@@ -898,7 +898,6 @@ class HomeController extends Controller
             $nomModules = DB::select('select nom_module from v_groupe_projet_module group by nom_module');
             $nomStatuts = DB::select('select item_status_groupe from v_groupe_projet_module group by item_status_groupe');
             $nomTypes = DB::select('select type_formation from v_projet_session group by type_formation');
-
             
             // dd($data);
             return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'nomTypes', 'nomModalites', 'nomModules', 'nomStatuts'));
@@ -994,7 +993,6 @@ class HomeController extends Controller
         if (Gate::allows('isCFP')) {
             $cfp_id = $fonct->findWhereMulitOne("v_responsable_cfp", ["user_id"], [$user_id])->cfp_id;
 
-            // $projet = DB::select('select * from v_projet_session where cfp_id = ? and date_debut >= ? and date_debut <= ?',[$cfp_id, $request->from, $request->to]);
             $projet = DB::table('v_projet_session')
                 ->join('v_groupe_projet_module', 'v_groupe_projet_module.projet_id', 'v_projet_session.projet_id')
                 ->select('v_projet_session.nom_projet', 'v_projet_session.projet_id', 'v_projet_session.type_formation', 'v_projet_session.totale_session', 
@@ -1010,6 +1008,7 @@ class HomeController extends Controller
                  ->groupBy('v_projet_session.nom_projet')
                 ->get();
 
+            // $projet = DB::select('select * from v_projet_session, v_groupe_projet_module where (v_groupe_projet_module.cfp_id = ? and v_groupe_projet_module.date_debut = ? and v_groupe_projet_module.date_debut = ?)',[$cfp_id, $request->from, $request->to]);
             $devise = DB::select('select * from devise')[0]->devise;
         
             $lieu_formation =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$cfp_id]);
@@ -1018,7 +1017,6 @@ class HomeController extends Controller
             }
             $ref = DB::select('select * from devise')[0]->description;
 
-            // $data = $fonct->findWhere("v_groupe_projet_module", ["cfp_id"], [$cfp_id]);
 
             $type_formation = DB::select('select * from type_formations');
 
@@ -1058,7 +1056,7 @@ class HomeController extends Controller
                 $nomTypes = DB::select('select type_formation from v_projet_session group by type_formation');
                 $nomEntreprises = DB::select('select nom_etp from v_groupe_entreprise group by nom_etp');
 
-            return view('projet_session.index2FilterTest', compact('nomStatuts','nomModules', 'nomModalites' ,'nomTypes','nomSessions', 'nomEntreprises', 'projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise'));
+            return view('projet_session.index2Filter', compact('nomStatuts','nomModules', 'nomModalites' ,'nomTypes','nomSessions', 'nomEntreprises', 'projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise'));
         }
     }
 
