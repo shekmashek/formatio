@@ -240,9 +240,9 @@
             color: white;
         }
 
-        .card {
+        /* .card {
             position: absolute;
-        }
+        } */
 
         /* Style the tab content */
         .tabcontent {
