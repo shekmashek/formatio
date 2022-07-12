@@ -68,8 +68,12 @@
                         <p id="domaine_id_err" style="font-size: 14px;color:blue" >Choisissez une zone de formation, puis sélectionnez le thème du coparrainant.</p>
                     </div>
                     <div class="input-groupe mt-2">
-                        <label for="">Objectif attendue :</label>
-                        <input type="text" name="objectif" class="form-control" >
+                        <label for="">Raison de la formation :</label>
+                        <select name="objectif" id="" class="form-control">
+                            <option value="">Adaptation au poste</option>
+                            <option value="">Evolution dans l'empoi</option>
+                            <option value="">Développement de competence</option>
+                        </select>
                     </div>
                 
                 </div>
@@ -82,10 +86,32 @@
                         <label for="">Organisme sugére:</label>
                         <input type="text" name="organisme" class="form-control" >
                     </div>
+                    <div class="input-groupe mt-2">
+                        <label for="">heure de formation:</label>
+                        <input type="number" name="dure" class="form-control" >
+                    </div>
+                    <div class="input-groupe mt-2">
+                        <label for="">Type de demande:</label>
+                        <select name="t_dem" id="" class="form-control">
+                            <option value="" selected hidden> Choisissez le type du demande</option>
+                            <option value="Collectif">Collectif</option>
+                            <option value="Individuel">Individuel</option>
+                            
+                        </select>
+                    </div>
+                    <div class="input-groupe mt-4">
+                        <label for="">Priorité:</label>
+                        <select name="priorite" id="" class="form-control">
+                            <option value="Peu critique" > Peu critique</option>
+                            <option value="Critique">Critique</option>
+                            <option value="Trés critique">Trés critique</option>
+                            
+                        </select>
+                    </div>
                     <div class="input-groupe mt-3">
-                        <label for="">Type:</label>
+                        <label for="">Urgence:</label>
                     </div> 
-                    <div class="div mt-2" style="display: flex">
+                    <div class="div mt-1" style="display: flex">
                         <input type="radio" class="mt-1" style="" name="type" value="urgent" id="type">&nbsp;&nbsp;<p class="m-2">Urgent</p>
                         <input type="radio" class="mt-1" style="margin-left:200px" value="non-urgent" name="type" id="type">&nbsp;&nbsp;<p class="m-2">Non urgent</p>
                     </div>

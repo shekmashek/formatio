@@ -23,11 +23,11 @@
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{  asset('maquette/logo_fmg7635dc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}">
+    
 
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
     <style>
         .modal-backdrop{
             z-index: 1 !important;
@@ -1487,7 +1487,7 @@
         {{-- footer --}}
     </div>
 
-    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+    {{-- <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}

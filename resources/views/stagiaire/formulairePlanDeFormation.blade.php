@@ -7,6 +7,14 @@
 <script src="jquery-ui.js"></script>
 <script src="jquery.dragtable.js"></script>
 <script src="extensions/reorder-columns/bootstrap-table-reorder-columns.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/akottr/dragtable@master/dragtable.css" rel="stylesheet">
+<link href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css"/>
 <style>
     h1{
         font-weight: 400;
@@ -27,8 +35,18 @@
     .saf{
         background: rgb(36, 213, 12);
     }
-
-    tr .actio{
+    /* .page-item.active .page-link {
+        background-color:  !important;
+        color: #fff !important;
+    } */
+    .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #9359ff;
+    }
+    .nav-link{
+        color: black;
+    }
+    /* tr .actio{
         visibility: hidden;
         display:none;
     }
@@ -37,10 +55,10 @@
         visibility: visible;
         display: block;
         height: 2%;
-    }
+    } */
 </style>
 <div id="page-wrapper">
-    <div class="container  mt-5 p-4">
+    <div class="container-fluid  mt-5 " style="padding: 40px">
         <div class="row">
             <h1>Recueil besoin en formation</h1>
         </div>
@@ -63,32 +81,35 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="collapse p-3" id="collapseExample_{{$p->AnneePlan}}">
-                                <div class="d-flex">
+                            <div  id="collapseExample_{{$p->AnneePlan}}">
+                                {{-- <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        {{-- <h6 class="text-secondary lead">Tous les demandes de votre équipe</h6> --}}
+                                        <h6 class="text-secondary lead">Tous les demandes de votre équipe</h6>
                                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                             <li class="nav-item" role="presentation">
-                                              <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Tous les demandes</button>
+                                              <button class="nav-link active " id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Tous les demandes</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                               <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Demande de proposition</button>
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="tab-content w-100" id="pills-tabContent">
                                     <div class="tab-pane fade show active col-12" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                         <div class="table-responsive">
-                                                <table class="table table-hover text-secondary my-3 w-100" style="font-size: .8rem;">
+                                                <table class="table table-hover text-secondary my-3 w-100" id="tabulos" style="font-size: 16px">
                                                     <thead>
                                                         <tr>
-                                                            <th>Domaine de formation</th>
                                                             <th>Thematique</th>
                                                             <th>Date</th>
                                                             <th>Organisme sugére</th>
                                                             <th>Statut</th>
-                                                            <th>Priorité</th>                                                          
+                                                            <th>Urgence</th>  
+                                                            <th>Démandé par:</th> 
+                                                            <th>Priorité</th>  
+                                                            <th>Durée(h)</th>  
+                                                            <th>Action</th>                                                   
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -97,7 +118,7 @@
                                                                 <form action="{{route('besoin.modif',$be->id)}}" method="POST">
                                                                 @csrf
                                                                     <tr>
-                                                                        <td><input  class="form-control inp{{$be->id}}" type="hidden" name="domaine" id="domaine{{$be->id}}" value="" disabled><span class="spa{{$be->id}}"> {{$be->domaine->nom_domaine}}</span></td>
+                                                                        
                                                                         <td><input type="hidden"  class="form-control inp{{$be->id}}" name="formation" id="formation{{$be->id}}" value="" disabled><span class="spa{{$be->id}}">{{$be->formation->nom_formation}}</span></td>
                                                                         <td><input type="hidden"  class="form-control inp{{$be->id}}" name="date" id="date{{$be->id}}" value="" ><span class="spa{{$be->id}}">@php echo(date('m-Y',strtotime($be->date_previsionnelle))) @endphp </span></td>
                                                                         <td><input type="hidden" class="form-control inp{{$be->id}}" name="organisme" id="organisme{{$be->id}}" value="" ><span class="spa{{$be->id}}">{{$be->organisme}}</span></td>
@@ -118,6 +139,18 @@
                                                                             </select>
                                                                             <span class="spa{{$be->id}}">{{$be->type}}</span>
                                                                         </td>
+                                                                        <td>
+                                                                            @if($be->reponse_stagiaire == '1')
+                                                                                Moi même
+                                                                            @elseif($be->reponse_stagiaire == '0')
+                                                                                Manager
+                                                                            @else
+                                                                                RH
+                                                                            @endif
+                                                                        
+                                                                        </td>
+                                                                        <td>{{$be->priorite}}</td>
+                                                                        <td>{{$be->dure}} </td>
                                                                         @if(strtotime($p->fin_rec) > strtotime('now') )
                                                                             @if($be->statut == '0')
                                                                                 <td class="actio">
@@ -127,6 +160,7 @@
                                                                                 </td>
                                                                             @endif
                                                                         @endif
+                                                                        
                                                                     </tr>
                                                                 </form>
                                                             @endif 
@@ -135,7 +169,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                        {{-- <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                                             <div class="table-responsive">
                                                 <table class="table table-hover text-secondary my-3 w-100" style="font-size: .8rem;">
                                                     <thead>
@@ -186,7 +220,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -198,6 +232,13 @@
              
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jqueryui@1.11.1/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/akottr/dragtable@master/jquery.dragtable.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.20.2/dist/extensions/reorder-columns/bootstrap-table-reorder-columns.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
 <script>
     function modifier(id,domaine,formation,date,organisme,type){
         var a = 'spa'+id;
@@ -240,6 +281,15 @@
         
     
     };
-    
+    // $(document).ready(function () {
+    //     $('#tabulos').DataTable({
+    //             colReorder: true,
+    //             select: true,
+    //             responsive:true,
+    //             language:{
+    //                 url: "https://cdn.datatables.net/plug-ins/1.12.0/i18n/fr-FR.json",
+    //             },
+    //         });
+    // });
 </script>
 @endsection

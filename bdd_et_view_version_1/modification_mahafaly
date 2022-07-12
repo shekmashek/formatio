@@ -1,0 +1,9 @@
+CREATE TABLE `budget_plan` (
+    `id` bigint(20)  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `departement_id` integer NOT NULL,
+    `thematique_id` integer NOT NULL,
+    `plan_id` integer NOT NULL,
+    `budget` varchar(100) NOT NULL,
+    `created_at` timestamp NULL DEFAULT  current_timestamp(),
+  	`updated_at` timestamp NULL DEFAULT  current_timestamp()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

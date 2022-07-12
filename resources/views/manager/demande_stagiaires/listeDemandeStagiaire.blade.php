@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.4/css/fixedHeader.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.7/css/scroller.dataTables.min.css">
 <style>
-     tr .action{
+     /* tr .action{
         visibility: hidden;
         display:none;
     }
@@ -18,7 +18,7 @@
         display: block;
         cursor: pointer;
         height: 2%;
-    }
+    } */
     .page-item.active .page-link {
         background-color: #9359ff !important;
         color: #fff !important;
@@ -80,7 +80,7 @@
                                     <div class="tab-content" id="pills-tabContent">
                                         <div class="tab-pane fade show active col-12" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                             <div class="table-responsive">
-                                                    <table class="table table-hover text-secondary my-3 liste_formation_demander" style="font-size: .8rem;" style="width:100%">
+                                                    <table class="table table-hover text-secondary my-3 liste_formation_demander" style="font-size: 16px;" style="width:100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Matricule</th>
@@ -92,7 +92,8 @@
                                                                 <th class="text-center">Date prév.</th>
                                                                 <th>CFP souhaitée</th>
                                                                 <th>Priorité</th>
-                                                                <th class="text-center">Status</th>                                                           
+                                                                <th class="text-center">Status</th>      
+                                                                <th></th>                                                   
                                                             </tr>
                                                         </thead>
                                                         <tbody>

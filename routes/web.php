@@ -797,6 +797,15 @@ Route::get('/countPlan','PlanFormationController@countplan')->name('countPlan');
 Route::get('/exportPD/{id}','PlanFormationController@besoin_PD')->name('besoin.PDF');
 Route::get('/delete/{id}','PlanFormationController@delete')->name('besoin.delete');
 Route::get('/ArbitragePlan/{id}','PlanFormationController@arbitrage')->name('besoin.arbitrage');
+Route::post('/arbitrageP','PlanFormationController@modifA')->name('besoin.modifA');
+Route::post('/delarbitrage','PlanFormationController@delarbitrage');
+Route::post('/budgetPlan','PlanFormationController@budget');
+Route::post('/budgetPlanMod','PlanFormationController@budgetMod');
+Route::post('/ajoutRH','PlanFormationController@ajoutRH')->name('besoin.ajoutRH');
+Route::post('/budgetthematique','PlanFormationController@ajoutThematique');
+Route::post('/Modthematique','PlanFormationController@modthematique');
+Route::get('/getEmployer','PlanFormationController@getemployer');
+Route::post('/modcout','PlanFormationController@modcout');
 /////////////////fin modification Mahafaly //////////////////////////////
 
 //ajouter nouveau plan
