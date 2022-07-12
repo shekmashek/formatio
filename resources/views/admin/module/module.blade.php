@@ -64,7 +64,7 @@
                                                             <span class="acf-nom_module">{{$mod->nom_module}}</span>
                                                         </div>
                                                         <div class="col-2">
-                                                            <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
+                                                            <span class="ribbon1"><span>Nouveau<br></span></span>
                                                         </div>
                                                         @else
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
@@ -252,7 +252,7 @@
                                                             <span class="acf-nom_module">{{$mod->nom_module}}</span>
                                                         </div>
                                                         <div class="col-2">
-                                                            <span class="ribbon1"><span>Nouveau<br>J - {{$mod->jours_restant}}</span></span>
+                                                            <span class="ribbon1"><span>Nouveau<br></span></span>
                                                         </div>
                                                         @else
                                                         <span class="acf-nom_module">{{$mod->nom_module}}</span>
@@ -886,7 +886,7 @@
                                 </div>
                                 @if($info->jours_restant > 0)
                                 <div class="col-1">
-                                    <span class="ribbon2"><span>Nouveau<br>J - {{$info->jours_restant}}</span></span>
+                                    <span class="ribbon2"><span>Nouveau<br></span></span>
                                 </div>
                                 @endif
                                 <div class="modal fade" id="listModal_{{$info->module_id}}" tabindex="-1"
@@ -1129,7 +1129,7 @@
                                 </div>
                                 @if($info->jours_restant > 0)
                                 <div class="col-1">
-                                    <span class="ribbon2"><span>Nouveau<br>J - {{$info->jours_restant}}</span></span>
+                                    <span class="ribbon2"><span>Nouveau<br></span></span>
                                 </div>
                                 @endif
 
@@ -1438,15 +1438,6 @@
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     let lien = ($(e.target).attr('href'));
     localStorage.setItem('ActiveTabMod', lien);
-    // alert(lien);
-
-    if (lien == '#publiees' || lien == '#hors_lignes') {
-        localStorage.setItem('ActiveTabMod', '#publies');
-        let actTab = localStorage.getItem('ActiveTabMod');
-        $('#myTab a[href="' + actTab + '"]').tab('show');
-        $('#myTab a[href="' + actTab + '"]').addClass('active');
-        // alert("okey");
-    }
 });
 
 let ActiveTabMod = localStorage.getItem('ActiveTabMod');
@@ -1459,20 +1450,20 @@ function show(shown, hidden) {
     document.getElementById(hidden).style.display='none';
     if (shown == "Page2") {
         // alert(shown);
-        localStorage.setItem('ActiveTabModPage', '#publiees');
-        let ActiveTabModP = localStorage.getItem('ActiveTabModPage');
-        // alert(ActiveTabModP);
-        $('#mytab a[href="' + ActiveTabModP + '"]').tab('show');
-        $('#mytab a[href="' + ActiveTabModP + '"]').addClass('active');
+        // localStorage.setItem('ActiveTabModPage', '#publiees');
+        // let ActiveTabModP = localStorage.getItem('ActiveTabModPage');
+        // // alert(ActiveTabModP);
+        // $('#mytab a[href="' + ActiveTabModP + '"]').tab('show');
+        // $('#mytab a[href="' + ActiveTabModP + '"]').addClass('active');
     }
     if (shown == "Page1") {
         // alert(shown);
-        localStorage.removeItem('ActiveTabModPage');
-        localStorage.setItem('ActiveTabMod', '#publies');
-        let ActiveTabModP = localStorage.getItem('ActiveTabMod');
-        // alert(ActiveTabModP);
-        $('#myTab a[href="' + ActiveTabModP + '"]').tab('show');
-        $('#myTab a[href="' + ActiveTabModP + '"]').addClass('active');
+        // localStorage.removeItem('ActiveTabModPage');
+        // localStorage.setItem('ActiveTabMod', '#publies');
+        // let ActiveTabModP = localStorage.getItem('ActiveTabMod');
+        // // alert(ActiveTabModP);
+        // $('#myTab a[href="' + ActiveTabModP + '"]').tab('show');
+        // $('#myTab a[href="' + ActiveTabModP + '"]').addClass('active');
     }
     return false;
 }

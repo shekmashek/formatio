@@ -378,7 +378,7 @@
                         @endcanany
                         @if($info->jours_restant > 0)
                         <div class="col-1">
-                            <span class="ribbon2"><span>Nouveau<br>J - {{$info->jours_restant}}</span></span>
+                            <span class="ribbon2"><span>Nouveau<br></span></span>
                         </div>
                         @endif
                         <div class="modal fade" id="listModal_{{$info->module_id}}" tabindex="-1"
