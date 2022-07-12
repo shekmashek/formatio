@@ -47,7 +47,7 @@ class PlanFormationController extends Controller
         $stagiaire = DB::select('select stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire from besoin_stagiaire b join stagiaires s on s.id = b.stagiaire_id GROUP BY stagiaire_id,nom_stagiaire,prenom_stagiaire,mail_stagiaire,matricule,fonction_stagiaire');
 
 
-        $pdf = PDF::loadView('referent.projet_interne.besoin_PDF', compact('plan','entreprise','stagiaire','besoin'))->setPaper('a4', 'landscape');;
+        $pdf = PDF::loadView('referent.projet_Interne.besoin_PDF', compact('plan','entreprise','stagiaire','besoin'))->setPaper('a4', 'landscape');;
 
         return $pdf->download('plan_previesionele_.pdf');
 
@@ -131,7 +131,7 @@ class PlanFormationController extends Controller
 
             // dd($besoin);
 
-        return view('referent.projet_interne.listedemandestagiaire',compact('besoin','stagiaire','ids'));
+        return view('referent.projet_Interne.listedemandestagiaire',compact('besoin','stagiaire','ids'));
     }
 
     public function teste(){

@@ -1263,7 +1263,7 @@
                     <div class="tutorielApprendreCfp">
                         <h5>Créer un nouveau projet de formation</h5>
                         <p class="m-0 p-1">
-                            <span>Pour créer un nouveau de formation, il faut au préalable compléter les prérequis
+                            <span>Pour créer une nouvelle de formation, il faut au préalable compléter les prérequis
                                 suivant :</span>
                         </p>
                         <div class="list-group list-group-flush" id="accordion">
@@ -1417,7 +1417,6 @@
         {{-- footer --}}
     </div>
 
-<<<<<<< HEAD
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
         integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
@@ -1427,36 +1426,16 @@
     </script> --}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js" integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-=======
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src=" {{ asset('js/datatables.min.js') }} "></script>
-
-    @yield('script')
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
-        integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
-    </script>
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"
-        integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-
->>>>>>> origin/modifdesignSession
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/apprendre.js')}}"></script>
-<<<<<<< HEAD
 
     @if (Route::currentRouteName() != 'calendrier_formation' && Route::currentRouteName() != 'calendrier')
     {{-- ce script bloque le jquery.min et jquery-ui --}}
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     @endif
 
-=======
->>>>>>> origin/modifdesignSession
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <script type="text/javascript">

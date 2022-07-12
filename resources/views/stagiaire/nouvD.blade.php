@@ -18,8 +18,8 @@
     <div class="row">
          @if ($message = Session::get('success'))
             <div class="alert alert-primary" role="alert">
-                <p style="text-align: center;" class="align-middle mt-2 p-1" >Demande envoyer!!</p>
-            </div> 
+                <p style="text-align: center;" class="align-middle mt-2 p-1" >Demande envoyée!!</p>
+            </div>
         @endif
         <div class="col-md-12">
             <div class="float-start">
@@ -28,7 +28,7 @@
             <div class="float-end">
                 <a href="/planFormation" class="btn btn-dark text-light"> <i class="fa-solid fa-caret-left"></i> &nbsp;Retour à la liste</a>
             </div>
-           
+
         </div>
     </div>
     @foreach ($collaborateur as $c)
@@ -56,9 +56,9 @@
                             <option value="null" disable selected hidden>Choisissez la
                                 domaine de formation ...</option>
                             @foreach ($domaine as $d)
-                                <option value="{{$d->id}}" data-value="{{$d->nom_domaine}}">{{$d->nom_domaine}}</option>  
+                                <option value="{{$d->id}}" data-value="{{$d->nom_domaine}}">{{$d->nom_domaine}}</option>
                             @endforeach
-                            
+
                         </select>
                     </div>
                     <div class="input-groupe mt-2">
@@ -71,7 +71,7 @@
                         <label for="">Objectif attendue :</label>
                         <input type="text" name="objectif" class="form-control" >
                     </div>
-                
+
                 </div>
                 <div class="col-md-6">
                     <div class="input-groupe mt-3">
@@ -84,14 +84,14 @@
                     </div>
                     <div class="input-groupe mt-3">
                         <label for="">Type:</label>
-                    </div> 
+                    </div>
                     <div class="div mt-2" style="display: flex">
                         <input type="radio" class="mt-1" style="" name="type" value="urgent" id="type">&nbsp;&nbsp;<p class="m-2">Urgent</p>
                         <input type="radio" class="mt-1" style="margin-left:200px" value="non-urgent" name="type" id="type">&nbsp;&nbsp;<p class="m-2">Non urgent</p>
                     </div>
                 <button type="submit" style="float: right" class="btn btn-info mt-4 text-light">Envoyer la demande</button>
                 </div>
-            
+
         </div>
     </form>
     @endforeach

@@ -38,9 +38,9 @@
                 <thead>
                     @foreach ($plan as $p)
                     <tr style="background: rgb(250, 248, 248)">
-                        <td class="p"  colspan="1"><span style="padding-top: 30px">Années :{{$p->AnneePlan}}</span>  &nbsp;  Debut du recueil : {{ \Carbon\Carbon::parse($p->debut_rec)->format('d/m/Y')}} &nbsp; fin du recueil : {{ \Carbon\Carbon::parse($p->fin_rec)->format('d/m/Y')}} 
+                        <td class="p"  colspan="1"><span style="padding-top: 30px">Années :{{$p->AnneePlan}}</span>  &nbsp;  Debut du recueil : {{ \Carbon\Carbon::parse($p->debut_rec)->format('d/m/Y')}} &nbsp; fin du recueil : {{ \Carbon\Carbon::parse($p->fin_rec)->format('d/m/Y')}}
                             @if(strtotime($p->fin_rec) > strtotime('now') )
-                                <a href="{{route('plan.demande',$p->id)}} " class="btn btn-info text-light" style="float: right">Demander un formation</a>
+                                <a href="{{route('plan.demande',$p->id)}} " class="btn btn-info text-light" style="float: right">Demander une formation</a>
                             @else
                                 <a class="btn btn-danger text-light" style="float: right">Términer</a>
                             @endif
@@ -54,7 +54,7 @@
                     <tbody>
                         <tr>
                             <td>
-                               
+
                                     <div  id="collapseExample_{{$p->AnneePlan}}">
                                         <div class="card card-body" style="width: 100%">
                                             <p>Vos demandes:</p>
@@ -70,7 +70,7 @@
                                             @endif
                                             <table class="table table-hover">
                                                 <thead>
-                                                    
+
                                                     <th>Domaine de formation</th>
                                                     <th>Thematique</th>
                                                     <th>Date</th>
@@ -78,13 +78,13 @@
                                                     <th>Statut</th>
                                                     <th>Priorité</th>
                                                     @if(strtotime($p->fin_rec) > strtotime('now') )
-                                                        <th>Action</th>    
-                                                   
+                                                        <th>Action</th>
+
                                                     @endif
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($besoin as $be)
-                                                       
+
                                                         @if ($be->anneePlan_id === $p->id)
                                                         <form action="{{route('besoin.modif',$be->id)}}" method="POST">
                                                             @csrf
@@ -121,13 +121,13 @@
 
                                                             </tr>
                                                         </form>
-                                                        @endif 
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                       </div>
-                                
+
                             </td>
                         </tr>
                     </tbody>
@@ -145,7 +145,7 @@
                         <th style="float: right"><i class="fa-solid fa-angle-down"></i></th>
                     </tr> --}}
                 </thead>
-                
+
             </table>
         </div>
     </div>
@@ -179,7 +179,7 @@
         document.getElementById(f).value = date;
         document.getElementById(j).value = organisme;
         document.getElementById(o).value = type;
-       
+
         var g =document.getElementById(h);
         g.style.display = "none";
         var k =document.getElementById(m);
@@ -189,9 +189,9 @@
         let se = document.getElementById("type"+id);
         se.removeAttribute("hidden");
         se.value=type;
-        
-    
+
+
     };
-    
+
 </script>
 @endsection

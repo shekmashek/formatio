@@ -441,6 +441,7 @@ class FormationController extends Controller
             $nom_entiter = $req->nom_entiter;
         }
         if (Gate::allows('isReferent') || Gate::allows('isStagiaire') || Gate::allows('isManager') or Gate::allows('isChefDeService')) {
+            $entreprise_id = $this->fonct->findWhereMulitOne("employers",["user_id"],[Auth::user()->id]);
             $initial = DB::select('select distinct(LEFT(nom,1)) as initial from cfps order by initial asc');
             $cfps = $this->fonct->findWhereTrieOrderBy("cfps", ["upper(nom)"], ["LIKE"], ["%" . $nom_entiter . "%"], ["nom"], "ASC", ($nbPagination), $nb_limit);
             $collaboration = DB::select('select decs.* from demmande_etp_cfp as decs join cfps as cfp on decs.inviter_cfp_id = cfp.id where decs.activiter = ? and decs.demmandeur_etp_id = ? and decs.inviter_cfp_id = cfp.id',[1,$entreprise_id->entreprise_id]);
