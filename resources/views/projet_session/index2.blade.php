@@ -988,7 +988,34 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
     }
 /* timeline */
     </style>
+    <style>
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            padding: 4px 1rem !important;
+            border-radius: 5px !important;
+            box-sizing: border-box !important;
+            color: #637381 !important;
+            font-size: 16px !important;
+            letter-spacing: 1px !important;
+            height: 40px !important;
+        }
 
+        .select2-container .select2-selection--single :focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border-bottom: 2px solid #28a7eb !important;
+            outline-width: 0 !important;
+        }
+
+        .select2-container .select2-selection--single{
+            height: 40px !important;
+            border: 1px solid #28a7eb !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 35px !important;
+        }
+    </style>
     <div class="container-fluid mb-5">
         <div class="d-flex flex-row justify-content-end mt-3">
             @canany(['isReferent','isReferentSimple','isManager','isChefDeService', 'isCFP', 'isFormateur','isFormateurInterne'])
@@ -1514,7 +1541,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                             {{-- debut modal nouveau session --}}
                                                             <div>
                                                                 <div id="modal_{{ $pj->projet_id }}"
-                                                                    class="modal fade modal_projets">
+                                                                    class="modal fade modal_projets" role="dialog">
                                                                     <div class="modal-dialog">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
@@ -1570,7 +1597,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                                                             class="text-danger">*</strong>
                                                                                                     </span>
                                                                                                 </div>
-                                                                                                <div class="col-lg-6 text-end">
+                                                                                                <div class="col-lg-6 text-start">
                                                                                                     <select
                                                                                                         class="form-select input_select"
                                                                                                         name="module"
@@ -1592,7 +1619,7 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                                                                                             class="text-danger">*</strong>
                                                                                                     </span>
                                                                                                 </div>
-                                                                                                <div class="col-lg-6 text-end">
+                                                                                                <div class="col-lg-6 text-start">
                                                                                                     <select
                                                                                                         class="form-select input_select"
                                                                                                         name="modalite"
@@ -2911,7 +2938,15 @@ VERTICAL TIMELINE ( BOOTSTRAP 5)
                                 </div>
                         </div>
                 </div>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                {{-- <script type="text/javascript">
+                    $(document).ready(function() {
+                        $(".input_select").select2({
+                            dropdownParent: $('#modal_7');
+                        });
+                    });
+            
+                </script> --}}
+                {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
                 <script src="{{ asset('js/index2.js') }}"></script>
                 @include("projet_session.functions.projet_stg")
                 <script>

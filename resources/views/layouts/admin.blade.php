@@ -1415,9 +1415,9 @@
 
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
     
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
         integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{-- <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
         integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
     </script> --}}
