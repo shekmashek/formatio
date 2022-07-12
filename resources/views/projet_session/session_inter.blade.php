@@ -49,12 +49,12 @@
                         </div>
                     </div>
                     <div class="row mt-3">
+                        <div class="col-lg-6 text-end"><button type="submit" form="formPayement"
+                            class="btn btn_nouveau py-1"><i class='bx bx-check me-1'></i>Créer</button>
+                        </div>
                         <div class="col-lg-6">
                             <a href="{{ route('nouveau_groupe_inter',[2]) }}"><button type="button" class="btn  btn_enregistrer py-1"
                             data-dismiss="modal"><i class='bx bxs-chevron-left me-1'></i>Retour en arrière</button></a>
-                        </div>
-                        <div class="col-lg-6 text-end"><button type="submit" form="formPayement"
-                            class="btn btn_nouveau py-1"><i class='bx bx-check me-1'></i>Créer</button>
                         </div>
                     </div>
             </div>

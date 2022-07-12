@@ -39,6 +39,9 @@
             color: #637381 !important;
         }
 
+        .select2-results_option[id*="Ajouter un nouveau module"] {
+            color: bleu !important;
+        }
     </style>
     {{-- end --}}
     <div class="container pt-1">

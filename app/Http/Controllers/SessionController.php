@@ -755,4 +755,8 @@ class SessionController extends Controller
 
         return response()->json($info);
     }
+
+    public function invitation_ajouter_employer(Request $request){
+        dd("mail d'invitation");
+    }
 }

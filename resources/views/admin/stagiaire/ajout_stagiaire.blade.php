@@ -252,7 +252,7 @@ td{
 
 
 
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{{-- <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> --}}
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
@@ -350,7 +350,14 @@ td{
                     $("#fonction").val('');
                     $(".span_ajout").hide();
                     $("#image_stg").html('');
-                    $('#ajout_stg_mat').append('<span style="color:red">Matricule ou Nom introuvable</span>');
+                    @can('isCFP')
+                        text = "<span style='color:black'>Matricule ou nom introuvable<span style='color:black'>,&nbsp;voulez vous <a href = '{{ route('invitation_ajouter_employer',["+etp_id+"]) }}'><span style='color:blue'>inviter</a></span> l'entreprise à ajouter '"+id+"' dans ses employers</span></span>";
+                        // text = text.replace(':?',etp_id);
+                    @endcan
+                    @can('isReferent')
+                    var text = "<span style='color:black'>Matricule ou nom introuvable<span style='color:black'>,&nbsp;voulez vous <a href = '{{ route('employes.liste') }}'><span style='color:blue'>inviter</a></span> l'entreprise à ajouter '"+id+"' dans ses employers</span></span>";
+                    @endcan
+                    $('#ajout_stg_mat').append(text);
                 }
            },
            error:function(error){
