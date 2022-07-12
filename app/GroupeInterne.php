@@ -8,7 +8,7 @@ class GroupeInterne extends Model
 {
     protected $table = "groupes_interne";
     protected $fillable = [
-        'max_participant', 'min_participant','nom_groupe','projet_interne_id', 'module_id', 'date_debut','date_fin','status','activiter'
+        'max_participant', 'min_participant','nom_groupe','projet_interne_id', 'module_id', 'date_debut','date_fin','status','activiter', 'couleur'
     ];
 
     public function ressources() {

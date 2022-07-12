@@ -13,7 +13,7 @@ class Employe extends Model
 
     public function service()
     {
-        return $this->belongsTo('App\Service', 'service_id');
+        return $this->belongsTo('App\service', 'service_id');
     }
 
 }

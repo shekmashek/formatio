@@ -707,6 +707,7 @@ class ComposerStaticInita81baad5868038acf1fdb1c7166dfd6c
         'App\\Http\\Controllers\\DomaineController' => __DIR__ . '/../..' . '/app/Http/Controllers/DomaineController.php',
         'App\\Http\\Controllers\\Email' => __DIR__ . '/../..' . '/app/Http/Controllers/Email.php',
         'App\\Http\\Controllers\\EmargementController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmargementController.php',
+        'App\\Http\\Controllers\\EmployeController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeController.php',
         'App\\Http\\Controllers\\EmployeurController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeurController.php',
         'App\\Http\\Controllers\\EncaissementController' => __DIR__ . '/../..' . '/app/Http/Controllers/EncaissementController.php',
         'App\\Http\\Controllers\\EntrepriseController' => __DIR__ . '/../..' . '/app/Http/Controllers/EntrepriseController.php',

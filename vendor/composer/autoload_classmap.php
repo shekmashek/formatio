@@ -57,6 +57,7 @@ return array(
     'App\\Http\\Controllers\\DomaineController' => $baseDir . '/app/Http/Controllers/DomaineController.php',
     'App\\Http\\Controllers\\Email' => $baseDir . '/app/Http/Controllers/Email.php',
     'App\\Http\\Controllers\\EmargementController' => $baseDir . '/app/Http/Controllers/EmargementController.php',
+    'App\\Http\\Controllers\\EmployeController' => $baseDir . '/app/Http/Controllers/EmployeController.php',
     'App\\Http\\Controllers\\EmployeurController' => $baseDir . '/app/Http/Controllers/EmployeurController.php',
     'App\\Http\\Controllers\\EncaissementController' => $baseDir . '/app/Http/Controllers/EncaissementController.php',
     'App\\Http\\Controllers\\EntrepriseController' => $baseDir . '/app/Http/Controllers/EntrepriseController.php',

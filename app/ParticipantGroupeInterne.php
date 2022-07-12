@@ -16,4 +16,7 @@ class ParticipantGroupeInterne extends Model
         return $this->belongsTo('App\GroupeInterne', 'groupe_interne_id');
     }
     
+    public function stagiaire(){
+        return $this->belongsTo('App\stagiaire', 'stagiaire_id');
+    }
 }

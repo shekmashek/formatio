@@ -10,7 +10,7 @@ class Groupe extends Model
     protected $table = "groupes";
     protected $morphClass = 'Groupe';
     protected $fillable = [
-        'nom_groupe','projet_id','max_participant','min_participant','module_id','date_debut','date_fin','status','activiter'
+        'nom_groupe','projet_id','max_participant','min_participant','module_id','date_debut','date_fin','status','activiter', 'couleur'
     ];
 
 

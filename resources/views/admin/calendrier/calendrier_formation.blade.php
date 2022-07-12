@@ -54,6 +54,9 @@
             <div id="detail_offcanvas" class="offcanvas offcanvas-end" tabindex="-1" 
              data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
               <div class="offcanvas-header" id="event_header">
+
+                <input type="color" name="event_group_color" id="event_group_color">
+                
                 <h5 id="event_title"></h5>
                 <span class="input-group-text border-0 bg-light fs-2" id="event_to_pdf" 
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="Télécharger en pdf">
@@ -263,11 +266,22 @@
                             // vue sur 3 mois
                             duration: { months: 3 },
                         },
+
+                        timeGridWeek: {
+
+                        },
+
                     },
 
                     eventDidMount: function(info) {
-                        // info.el.style.backgroundColor = info.event.backgroundColor;
+                        // if the view is timelineWeek, set color black if the backgroundColor is white
+                        // if (info.view.type === 'timeGridWeek') {
+                        //     if (info.event.backgroundColor === '#ffffff') {
+                        //         info.el.style.color = '#000000';
+                        //     }
+                        // }
                         // info.el.classList.add('');
+                        
                     },
 
                     // show the description of events when hovering over them
@@ -319,7 +333,9 @@
 
 
                          // options for date formating
-                         var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                         var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+                         var date_options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+                         var time_options = { hour: '2-digit', minute: '2-digit'};
 
                         var duree_formation = 0;
                         var diff = '';
@@ -370,7 +386,54 @@
                             });
                         });
 
-                       
+
+                       var event_group_color = document.getElementById('event_group_color');
+                       event_group_color.id = 'event_group_color'+info.event._instance.defId;
+
+                    //    console.log(info.event._instance.defId);
+
+                       event_group_color.value = info.event.backgroundColor;
+                       var type = '';
+
+                        $('#event_group_color'+info.event._instance.defId).on('change',function(){
+                            var event_c = $(this).val();
+
+                            var event_props = info.event.extendedProps;
+                            
+                            // console.log(info.event._instance.defId+' '+type);
+                            // console.log(info.event.extendedProps);
+                            $.ajax({
+                                method:'GET',
+                                url:'/change_group_color',
+                                
+                                data: {
+                                    event_color:event_c,
+                                    event: event_props,
+                                },
+                                dataType:'JSON',
+                                success:function(response){
+                                    console.log(response);
+                                },
+                            });
+
+                            
+                            
+                            // donne une erruer, mais empêche la sortie en boucle des actions au changement
+                            // event_c.val('');
+                            $(this).off('change');
+                            
+                        })
+                        event_group_color.id = 'event_group_color';
+
+                        // event_group_color.addEventListener('change', function() {
+                        //     // var event_c = [];
+                        //     // event_c.push(event_group_color.value);
+                        //     // // var event_type = info.event.extendedProps.type_formation.type_formation;
+                            
+                        //     // alert(event_c);
+                        
+
+                        // });
 
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
                         var title_offcanvas = document.getElementById('event_title');
@@ -432,7 +495,15 @@
 
 
                         var event_to_pdf_link = '<a href = "{{url("detail_printpdf/:?")}}" target = "_blank" class="m-0 ps-1 pe-1 btn"><i class="bx bxs-file-pdf text-danger fs-1"></i></a>'
-                        event_to_pdf.innerHTML = event_to_pdf_link.replace(":?", info.event.extendedProps.detail_id);
+                        
+                        
+                        // Vérifier l'existence d'une pripriété qu'une formation interne ne possède pas.
+                        // Si ce n'est pas une formation interne, on affiche le bouton de génération de PDF. 
+                        if (info.event.extendedProps.groupe.projet) {
+                            event_to_pdf.innerHTML = event_to_pdf_link.replace(":?", info.event.extendedProps.detail_id);
+                        } else {
+                            event_to_pdf.innerHTML = '';
+                        }
 
                         title_offcanvas.innerHTML = title + ' '+'<br>'+ 'Séance n°'+numero_session;
                         var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+' '+info.event.extendedProps.groupe.nom_groupe +'</a>';
@@ -454,9 +525,9 @@
                             // }
                             
                         sessions.forEach((session, i) => {
-                            var date = new Date(session.date_detail);
-                            // console.log(date.toLocaleDateString('fr-FR',options));                            
-                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30 right_-10" value="Séance '+ parseInt(i+1) +': ' + date.toLocaleDateString('fr-FR',options) + '" aria-label="Username" aria-describedby="basic-addon_n_seance">';
+                            var debut = new Date(session.date_detail+'T'+session.h_debut);
+                            var fin = new Date(session.date_detail+'T'+session.h_fin);                            
+                            session_offcanvas_html += '<input type="text" class="form-control border-0 border-bottom d-block w-auto marge_left-30 right_-10" value="Séance '+ parseInt(i+1) +': ' + debut.toLocaleDateString('fr-FR',date_options) +' • '+ debut.toLocaleTimeString('fr-FR',time_options) +' - '+ fin.toLocaleTimeString('fr-FR', time_options) +'" aria-label="Username" aria-describedby="basic-addon_n_seance">';
 
                         });
                         

@@ -537,6 +537,7 @@ Route::post('test_avis', 'EvaluationChaudController@test_avis')->name('test_avis
 Route::get('/calendrier', 'DetailController@calendrier')->name('calendrier');
 Route::get('allEvent', 'DetailController@listEvent')->name('allEvent');
 
+
 //calendrier entreprise
 Route::get('/calendrier_formation', 'DetailController@calendrier_formation')->name('calendrier_formation');
 Route::get('allEventEntreprise', 'DetailController@listEvent_entreprise')->name('allEventEntreprise');
@@ -1445,3 +1446,6 @@ Route::get('/info/of/{idOf}', 'SessionController@info_resp_of');
 
 
 Route::get('/info_etp_new/{id_grp}', 'HomeController@etpInfoNew');
+
+
+Route::get('/change_group_color', 'Detailcontroller@change_group_color');
