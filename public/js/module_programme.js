@@ -1,32 +1,32 @@
-$(document).ready(function() {
-  $("#reference_search").autocomplete({
-    source: function(request, response) {
-      // Fetch data
-      $.ajax({
-        url: "/search__formation",
-        type: "get",
-        dataType: "json",
-        data: {
-          //    _token: CSRF_TOKEN,
-          search: request.term,
-        },
-        success: function(data) {
-          // alert("eto");
-          response(data);
-        },
-        error: function(data) {
-          alert("error");
-          //alert(JSON.stringify(data));
-        },
-      });
-    },
-    select: function(event, ui) {
-      // Set selection
-      $("#reference_search").val(ui.item.label); // display the selected text
-      return false;
-    },
-  });
-});
+// $(document).ready(function() {
+//   $("#reference_search").autocomplete({
+//     source: function(request, response) {
+//       // Fetch data
+//       $.ajax({
+//         url: "/search__formation",
+//         type: "get",
+//         dataType: "json",
+//         data: {
+//           //    _token: CSRF_TOKEN,
+//           search: request.term,
+//         },
+//         success: function(data) {
+//           // alert("eto");
+//           response(data);
+//         },
+//         error: function(data) {
+//           alert("error");
+//           //alert(JSON.stringify(data));
+//         },
+//       });
+//     },
+//     select: function(event, ui) {
+//       // Set selection
+//       $("#reference_search").val(ui.item.label); // display the selected text
+//       return false;
+//     },
+//   });
+// });
 
 toastr.options = {
   "closeButton": false,
@@ -46,26 +46,27 @@ toastr.options = {
   "hideMethod": "fadeOut"
 }
 
-$(".suppression").on("click", function(e) {
-  let id = $(e.target).closest('.suppression').attr("id");
-  $.ajax({
-    type: "GET",
-    url: "/suppression_cours",
-    data: {
-      Id: id,
-    },
-    success: function(response) {
-        $("#cours" + id).remove();
-        // Display a success toast, with a title
-        toastr.success('Une cours à été supprimer 💪 ');
+// $(".suppression").on("click", function(e) {
+//   let id = $(e.target).closest('.suppression').attr("id");
+//   alert(id);
+//   // $.ajax({
+//   //   type: "GET",
+//   //   url: "/suppression_cours",
+//   //   data: {
+//   //     Id: id,
+//   //   },
+//   //   success: function(response) {
+//   //       $("#cours_" + id).remove();
+//   //       // Display a success toast, with a title
+//   //       toastr.success('Une cours à été supprimer 💪 ');
 
-        // window.location.reload();
-    },
-    error: function(error) {
-      console.log(error);
-    },
-  });
-});
+//   //       // window.location.reload();
+//   //   },
+//   //   error: function(error) {
+//   //     console.log(error);
+//   //   },
+//   // });
+// });
 
 $(".suppression_programme").on("click", function(e) {
   let id = $(e.target).closest('.suppression_programme').attr("id");
@@ -123,11 +124,11 @@ $(".suppression_competence").on("click", function(e) {
 
 
 
-$.ajaxSetup({
-  headers: {
-    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-  },
-});
+// $.ajaxSetup({
+//   headers: {
+//     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+//   },
+// });
 
 $(".domaine").on("mouseover", function(e) {
   var id = $(this).data("id");
@@ -611,9 +612,9 @@ for (i = 0; i < acc.length; i++) {
   });
 }
 
-$(function() {
-  $("#accordion").accordion();
-});
+// $(function() {
+//   $("#accordion").accordion();
+// });
 
 var accItem = document.getElementsByClassName("accordionItem");
 var accHD = document.getElementsByClassName("accordionItemHeading");
@@ -637,8 +638,7 @@ function Cours() {
   html += '<div class="col-11">';
   html += '<div class="form-group">';
   html += '<div class="form-row">';
-  html +=
-    '<input type="text" name="cours[]" id="cours" class="form-control input" placeholder="Nouveau Point" required>';
+  html += '<input type="text" name="cours_new[]" id="cours" class="form-control input" placeholder="Nouveau Point" required>';
   html += '<label for="cours" class="form-control-placeholder">Nouveau Point';
   html += "</label>";
   html += "</div>";

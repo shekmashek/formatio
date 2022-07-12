@@ -273,7 +273,7 @@
     border-bottom: 2px solid #7635dc;
     font-size: 16px;
     transition: all .5s ease;
-    background-color: rgba(247, 221, 238, 0.295);
+    /* background-color: rgba(247, 221, 238, 0.295); */
     border-radius: 5px;
     text-transform: capitalize
 }
@@ -304,3 +304,6 @@ outline: none;
     justify-content: center !important;
     text-transform: uppercase !important;
 }
+/* .accordionWrapper{
+    position: relative ;
+} */

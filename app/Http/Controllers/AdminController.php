@@ -49,24 +49,24 @@ class AdminController extends Controller
     }
     public function admin_etp()
     {
-        $id_user = Auth::user()->id;
+        // $id_user = Auth::user()->id;
 
-        $id_etp = responsable::where('user_id', $id_user)->value('id');
+        // $id_etp = responsable::where('user_id', $id_user)->value('id');
 
-        $cfp_etp = DB::select('select COUNT(*) as cfp_etp FROM `demmande_cfp_etp` where inviter_etp_id = ? and activiter = ?', [$id_etp, 1])[0]->cfp_etp;
-        $etp_cfp = DB::select('select COUNT(*) as etp_cfp FROM `demmande_etp_cfp` where demmandeur_etp_id = ? and activiter = ?', [$id_etp, 1])[0]->etp_cfp;
-        $cfp = $etp_cfp + $cfp_etp;
+        // $cfp_etp = DB::select('select COUNT(*) as cfp_etp FROM `demmande_cfp_etp` where inviter_etp_id = ? and activiter = ?', [$id_etp, 1])[0]->cfp_etp;
+        // $etp_cfp = DB::select('select COUNT(*) as etp_cfp FROM `demmande_etp_cfp` where demmandeur_etp_id = ? and activiter = ?', [$id_etp, 1])[0]->etp_cfp;
+        // $cfp = $etp_cfp + $cfp_etp;
 
-        $projet_en_cours_etp = DB::select('select count(*) as projet_en_cours FROM `projets` where entreprise_id = ? and status = ?', [$id_etp, 'En Cours'])[0]->projet_en_cours;
-        $projet_termime_etp = DB::select('select count(*) as projet_termine FROM `projets` where entreprise_id = ? and status = ?', [$id_etp, 'termine'])[0]->projet_termine;
-        $projet_a_venir_etp = DB::select('select count(*) as projet_a_venir FROM `projets` where entreprise_id = ? and status = ?', [$id_etp, 'A venir'])[0]->projet_a_venir;
-        $projet_etp = DB::select('select count(*) as all_projet from projets where entreprise_id =?', [$id_etp])[0]->all_projet;
+        // $projet_en_cours_etp = DB::select('select count(*) as projet_en_cours FROM `projets` where entreprise_id = ? and status = ?', [$id_etp, 'En Cours'])[0]->projet_en_cours;
+        // $projet_termime_etp = DB::select('select count(*) as projet_termine FROM `projets` where entreprise_id = ? and status = ?', [$id_etp, 'termine'])[0]->projet_termine;
+        // $projet_a_venir_etp = DB::select('select count(*) as projet_a_venir FROM `projets` where entreprise_id = ? and status = ?', [$id_etp, 'A venir'])[0]->projet_a_venir;
+        // $projet_etp = DB::select('select count(*) as all_projet from projets where entreprise_id =?', [$id_etp])[0]->all_projet;
 
-        $stagiaire = DB::select('select count(*) as stagiaire_dans_entreprise from stagiaires where entreprise_id = ?', [$id_etp])[0]->stagiaire_dans_entreprise;
+        // $stagiaire = DB::select('select count(*) as stagiaire_dans_entreprise from stagiaires where entreprise_id = ?', [$id_etp])[0]->stagiaire_dans_entreprise;
 
-        $manager = DB::select('select count(*) as manager_entreprise from chef_departements where entreprise_id = ?', [$id_etp])[0]->manager_entreprise;
+        // $manager = DB::select('select count(*) as manager_entreprise from chef_departements where entreprise_id = ?', [$id_etp])[0]->manager_entreprise;
 
-        return response()->json([$cfp, $projet_en_cours_etp, $projet_termime_etp, $projet_a_venir_etp, $projet_etp, $stagiaire, $manager]);
+        // return response()->json([$cfp, $projet_en_cours_etp, $projet_termime_etp, $projet_a_venir_etp, $projet_etp, $stagiaire, $manager]);
     }
     public function get_name_etp()
     {
