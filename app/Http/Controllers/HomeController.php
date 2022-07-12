@@ -953,7 +953,7 @@ class HomeController extends Controller
             // $lieu_formation =DB::table('details')->groupBy("groupe_id")->get();
             $lieu_formation =DB::select("select projet_id,groupe_id,lieu from details where cfp_id=? group by projet_id,groupe_id,lieu",[$cfp_id]);
             if(count($lieu_formation)>0){
-                $lieuFormation = explode(',',$lieu_formation[1]->lieu);
+                $lieuFormation = explode(',',$lieu_formation[0]->lieu);
             }
             else{
                 $lieuFormation = null;

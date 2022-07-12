@@ -665,12 +665,55 @@ WHERE
     d.activiter = 1;
 
 
+-- CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
+--     d.activiter AS activiter_demande,
+--     rsp.email_resp_cfp,
+--     rsp.nom_resp_cfp,
+--     rsp.prenom_resp_cfp,
+--     rsp.photos_resp_cfp,
+
+--     c.id AS cfp_id,
+--     c.nom,
+--     c.adresse_lot,
+--     c.adresse_ville,
+--     c.adresse_region,
+--     c.email,
+--     c.telephone,
+--     c.slogan,
+--     c.nif,
+--     c.stat,
+--     c.rcs,
+--     c.cif,
+--     c.logo,
+--     c.activiter AS activiter_cfp,
+--     c.site_web,
+--     f.user_id,
+--     f.id AS formateur_id,
+--     f.nom_formateur,
+--     f.prenom_formateur,
+--     f.mail_formateur,
+--     f.numero_formateur,
+--     f.photos,
+--     f.genre_id,
+--     (IFNULL(g.genre,1)) genre,
+--     f.date_naissance,
+--     f.adresse,
+--     f.cin,
+--     f.specialite,
+--     f.niveau_etude_id,
+--     f.activiter AS activiter_formateur,
+--     f.user_id AS user_id_formateur
+-- FROM
+--     demmande_cfp_formateur d,cfps c,formateurs f,genre g,responsables_cfp rsp
+-- WHERE
+--     c.id = d.demmandeur_cfp_id AND
+--     f.id = d.inviter_formateur_id AND
+--     g.id = IFNULL(f.genre_id,1) AND d.activiter = 1 AND rsp.prioriter = 1;
+
+
+
 CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     d.activiter AS activiter_demande,
-    rsp.email_resp_cfp,
-    rsp.nom_resp_cfp,
-    rsp.prenom_resp_cfp,
-    rsp.photos_resp_cfp,
 
     c.id AS cfp_id,
     c.nom,
@@ -704,15 +747,12 @@ CREATE OR REPLACE VIEW v_demmande_cfp_formateur AS SELECT
     f.activiter AS activiter_formateur,
     f.user_id AS user_id_formateur
 FROM
-    demmande_cfp_formateur d,cfps c,formateurs f,genre g,responsables_cfp rsp
-WHERE
-    c.id = d.demmandeur_cfp_id AND
-    f.id = d.inviter_formateur_id AND
-    g.id = IFNULL(f.genre_id,1) AND d.activiter = 1 AND rsp.prioriter = 1;
-
-
-
-
+    demmande_cfp_formateur d
+JOIN
+    cfps c on c.id = d.demmandeur_cfp_id
+JOIN formateurs f on f.id = d.inviter_formateur_id
+JOIN genre g ON g.id = IFNULL(f.genre_id,1)
+where d.activiter = 1;
 
 
 CREATE OR REPLACE VIEW v_refuse_demmande_cfp_etp AS SELECT

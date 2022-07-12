@@ -573,16 +573,6 @@
                         </div>
 
                         <div class="fixedTop" >
-                            <table id="testDT">
-                                <thead>
-                                    <table><th>fdfdf</th></table>
-                                    <tbody>
-                                        <tr>
-                                            <td>hhh</td>
-                                        </tr>
-                                    </tbody>
-                                </thead>
-                            </table>
                             <table id="example" class="table">
                                 <thead>
                                     <tr>
