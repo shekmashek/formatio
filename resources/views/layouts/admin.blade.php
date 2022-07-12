@@ -236,13 +236,13 @@
             @endcanany
 
             @canany(['isStagiaire'])
-            <li>
+            {{-- <li>
                 <a href="{{route('liste_projet',['id'=>1])}}" class="d-flex projet nav_linke">
                     <i class='bx bx-library'></i>
                     <span class="links_name">Projets</span>
                 </a>
 
-            </li>
+            </li> --}}
             @endcanany
             @canany(['isCFP','isReferent','isManager','isChefDeService'])
             {{-- <li>

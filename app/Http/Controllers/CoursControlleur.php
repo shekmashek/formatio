@@ -68,7 +68,6 @@ class CoursControlleur extends Controller
                 $cours = DB::insert('insert into cours(titre_cours,programme_id) values(?,?)',[$donnees['cours'][$i],$id]);
             }
         }
-
         return back();
     }
 

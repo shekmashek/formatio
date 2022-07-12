@@ -228,17 +228,14 @@
                         </div>
                         <br>
                         <div class="row detail__formation__item__left__accordion ">
-                            <div class="accordionWrapper">
+                            <div class="accordionWrapper" id="accordio_drag">
                                 <?php $i=0 ?>
                                 @foreach ($programmes as $prgc)
                                 <div class="accordionItem open" id="programme{{$prgc->id}}">
                                     <h6 class="accordionItemHeading py-2 ps-3 pe-3 justify-content-between d-flex flex-row">
-                                        <div class="pt-2">{{$i+1}} - {{$prgc->titre}}</div>
+                                        <div class="pt-2"> {{$prgc->titre}}</div>
                                         <div class="d-flex flex-row test_affichage">
-                                            <div role="button" data-bs-toggle="modal" class="ajouter_cours me-2" data-bs-target="#Modal_cours_{{$prgc->id}}" id="{{$prgc->id}}" title="ajouter une nouvelle point">
-                                                <i class='bx bx-plus-medical bx_ajouter'></i>
-                                            </div>
-                                            <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" id="{{$prgc->id}}" title="modifier le programme">
+                                            <div role="button" data-bs-toggle="modal" class="modifier_cours me-2" data-bs-target="#Modal_{{$prgc->id}}"  id="{{$prgc->id}}" title="modifier le programme">
                                                 <i class='bx bxs-edit-alt bx_modifier'></i>
                                             </div>
                                             <div class="suppression_programme" title="Supprimer le programme" id="{{$prgc->id}}">
@@ -246,108 +243,41 @@
                                             </div>
                                         </div>
                                     </h6>
-                                    <div class="accordionItemContent">
+                                    <div class="accordionItemContent ">
                                         @foreach ($cours as $c)
                                         @if($c->programme_id == $prgc->id)
                                         <div id="cours{{$c->cours_id}}" class="ps-4 m-0 pb-3 pt-2 p-0 cours_hover d-flex flex-row justify-content-between">
                                             <div class="pt-2"><i class="bx bx-chevron-right"></i>&nbsp;{{$c->titre_cours}}</div>
-                                            <div class="me-2">
-                                                <span class="suppression mt-2" title="Supprimer le Cours" id="{{$c->cours_id}}">
-                                                    <i class='bx bx-trash bx_supprimer'></i>
-                                                </span>
-                                            </div>
+
                                         </div>
                                         @endif
                                         @endforeach
-
                                     </div>
-                                    {{-- data-target="#Modal_{{$prgc->id}}" --}}
                                 </div>
                                 <div>
-                                    <div class="modal fade" id="Modal_{{$prgc->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" role="dialog"
-                                        aria-labelledby="Modal{{$prgc->id}}">
+                                    <div class="modal fade" id="Modal_{{$prgc->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"
+                                        aria-labelledby="Modal_{{$prgc->id}}" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="ModalLabel">Modifier les Cours et le Programme</h5>
                                                 </div>
                                                 <div class="modal-body">
+                                                    <div class="mt-2 text-center">
+                                                        <span class="btn_nouveau text-center" onclick="Cours();" >
+                                                            <i class='bx bx-plus-medical me-1'></i>Ajouter un point
+                                                        </span>
+                                                    </div>
                                                     <form action="{{route('update_prog_cours')}}" method="POST"
                                                         class="form_modif">
                                                         @csrf
                                                         <div class="rowModifier"></div>
-                                                        {{-- <input type="hidden" value="{{$prgc->id}}" name="id_prog">
-                                                        <div class="form-row">
-                                                            <label for="" class="mb-2">Titre de Section</label>
-                                                            <input type="text" name="titre_prog"
-                                                                class="w-100  titre_{{$i}} input" value="{{$prgc->titre}}">
-                                                            <hr>
-                                                            <label for="" class="mb-2">Liste des Points en Cours</label>
-                                                            <div class="d-flex flex-column">
-                                                                <?php $j=0 ?>
-                                                                @foreach ($cours as $c)
-                                                                @if($c->programme_id == $prgc->id)
-                                                                <input type="text"
-                                                                    name="cours_{{$prgc->id}}_{{$c->cours_id}}"
-                                                                    class="w-100 cours_{{$j}} input mb-2"
-                                                                    value="{{$c->titre_cours}}" required>
-                                                                <input type="hidden"
-                                                                    name="id_cours_{{$prgc->id}}_{{$c->cours_id}}"
-                                                                    value="{{$c->cours_id}}">
-                                                                <?php $j++ ?>
-                                                                @endif
-                                                                @endforeach
-                                                            </div>
-                                                        </div> --}}
+                                                        <div class="newRowCours"></div>
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
-                                                    <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                                    <button type="button" class="btn btn_fermer remove_input" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                                    <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
                                                 </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="modal fade" id="Modal_cours_{{$prgc->id}}" tabindex="-1" role="dialog"
-                                        aria-labelledby="Modal_cours_{{$prgc->id}}" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <form action="{{route('insertion_cours')}}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="id_prog" id="id" value="{{$prgc->id}}">
-                                                    <div class="modal-header">
-                                                        <h6>Ajouter des nouvelles Points dans&nbsp;{{$prgc->titre}}</h6>
-                                                    </div>
-                                                    <div class="modal-body mt-2 mb-2">
-                                                        <div class="container">
-                                                            <div class="row mb-5">
-                                                                <div class="mt-2 text-center">
-                                                                    <span class="btn_nouveau text-center" onclick="Cours();" >
-                                                                        <i class='bx bx-plus-medical me-1'></i>Ajouter un point
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="col-12">
-                                                                    <div class="form-group">
-                                                                        <div class="form-row">
-                                                                            <input type="text" name="cours[]" id="cours"
-                                                                                class="form-control input" placeholder="Nouveau Point" required>
-                                                                            <label for="cours"
-                                                                                class="form-control-placeholder">Nouveau Point </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="newRowCours"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn_fermer" id="fermerCours" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
-                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -872,21 +802,21 @@
                                             <label for="reference" class="form-control-placeholder">Référence</label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control module module input" name="prix" required value="{{$res->prix}}" onfocus="(this.type='number')" placeholder="Prix module" >
+                                            <input type="text" class="form-control module module input" name="prix" value="{{$res->prix}}" onfocus="(this.type='number')" placeholder="Prix module" >
                                             <label for="prix" class="form-control-placeholder">Prix en {{$devise->devise}}</label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control module module input" name="prix_groupe" required value="{{$res->prix_groupe}}" onfocus="(this.type='number')" placeholder="Prix en groupe module" >
+                                            <input type="text" class="form-control module module input" name="prix_groupe" value="{{$res->prix_groupe}}" onfocus="(this.type='number')" placeholder="Prix en groupe module" >
                                             <label for="prix_groupe" class="form-control-placeholder">Prix groupe en {{$devise->devise}}</label>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col">
-                                                    <input type="text" class="form-control module module input" id="pax_min" name="pax_min" required value="{{$res->min_pers}}" onfocus="(this.type='number')" max="20" min="3" placeholder=">Pax minimal" >
+                                                    <input type="text" class="form-control module module input" id="pax_min" name="pax_min" value="{{$res->min_pers}}" onfocus="(this.type='number')" max="20" min="3" placeholder="Pax minimal" >
                                                     <label for="prix_groupe" class="form-control-placeholder">Pax minimal</label>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" class="form-control module module input" id="pax_max" name="pax_max" required value="{{$res->max_pers}}" onfocus="(this.type='number')" max="40"  placeholder=">Pax maximal" >
+                                                    <input type="text" class="form-control module module input" id="pax_max" name="pax_max" value="{{$res->max_pers}}" onfocus="(this.type='number')" max="40"  placeholder="Pax maximal" >
                                                     <label for="prix_groupe" class="form-control-placeholder">Pax maximal</label>
                                                 </div>
                                             </div>
@@ -1075,6 +1005,7 @@
 <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="{{ asset('js/module_programme.js') }}"></script>
 <script>
@@ -1105,7 +1036,7 @@ $('.modifier_cours').on('click',function(e){
                         html +=         '<?php $j=0 ?>';
                                         for (let $k = 0; $k < userData['cours'].length; $k++) {
                                             if (userData['cours'][0]['programme_id'] == userData['cours'][$k]['programme_id']) {
-                        html +=                 '<input type="text" name="cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" class="w-100 cours_'+$k+' input mb-2" value="'+userData['cours'][$k]['titre_cours']+'" required>';
+                        html +=                 '<div class="d-flex flex-row cours_'+userData['cours'][$k]['cours_id']+'" ><input type="text" name="cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" class="w-100 me-2 cours_'+userData['cours'][$k]['cours_id']+' input mb-2" value="'+userData['cours'][$k]['titre_cours']+'" required ><span class="suppression mt-2" title="Supprimer le Cours" id="'+userData['cours'][$k]['cours_id']+'"><i class="bx bx-trash bx_supprimer"></i></span></div>';
                         html +=                 '<input type="hidden" name="id_cours_'+userData['cours'][$k]['programme_id']+'_'+userData['cours'][$k]['cours_id']+'" value="'+userData['cours'][$k]['cours_id']+'">';
                                             }
                                         }
@@ -1118,6 +1049,27 @@ $('.modifier_cours').on('click',function(e){
                 $('.rowModifier').empty();
                 $('.rowModifier').append(html);
                 $('#Modal_'+ id).modal('show');
+                $(".suppression").on("click", function(e) {
+                    let id = $(e.target).closest('.suppression').attr("id");
+                    // alert(id);
+                        $.ajax({
+                        type: "GET",
+                        url: "{{route('suppression_cours')}}",
+                        data: {
+                            Id: id,
+                        },
+                        success: function(response) {
+                            $(".cours_" + id).remove();
+                            // Display a success toast, with a title
+                            toastr.success('Une cours à été supprimer 💪 ');
+
+                            // window.location.reload();
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        },
+                        });
+                });
 
             }
             , error: function(error) {
@@ -1220,51 +1172,6 @@ $('.modifier_cours').on('click',function(e){
         $('.dismis_buton').show();
         $("#ouvrir_flottant").modal("show");
 }
-
-// $('#pax_max').on('change keyup', function(e){
-//     let value_max = $(this).val();
-//     let value_min = $('#pax_min').on('change keyup').val();
-
-    // if(value_max =< value_min){
-    //     toastr.warning('la valeur est inferieure au minimale requis');
-    //     $(this).attr({
-    //         "max" : value_min * 2;
-    //     });
-    // }
-//     console.log(value_min,value_max);
-// });
-
-
-$('#pax_min').on('change keyup', function(e){
-    let value_min = $(this).val();
-    let value_max = $('#pax_max').on('change keyup').val();
-    if(parseInt(value_min) >= parseInt(value_max)){
-        toastr.warning('la valeur est supérieur au valeur maximal requis');
-        $(this).val('');
-        $(this).val(parseInt(value_max) - 1);
-    }
-    if(value_min <= 0){
-        toastr.warning('la valeur est ne doit pas être inferieur à 0');
-        $(this).val(5);
-    }
-});
-
-
-$('#pax_max').on('change keyup', function(e){
-    let value_max = $(this).val();
-    let value_min = $('#pax_min').val();
-    $("input[type='number']").prop('min',value_min);
-    if(parseInt(value_max) <= parseInt(value_min)){
-        toastr.warning('la valeur est inferieure au valeur minimale requis');
-        // alert(parseInt(value_min)+1);
-        $(this).val('');
-        $(this).val(parseInt(value_min)+1);
-    }
-});
-
-
-
-
 
 $('.plus_avis').on('click', function(e){
         let id = $(e.target).closest('.plus_avis').attr("id");
@@ -1464,6 +1371,33 @@ $(".print_to_pdf").on('click', function(e){
     html2pdf().set(opt).from(element).save().then(function () {window.location.reload()});
 
 });
+
+let sPositions = localStorage.positions || "{}";
+let positions = JSON.parse(sPositions);
+
+// $("#accordio_drag").accordion({
+//         collapsible: true,
+//         header: "> div > h2",
+//         dropOnEmpty: true,
+//         autoHeight: true,
+//         active: false
+//     }).sortable({
+//             axis: "y",
+//             // containment: "#accordionWrapper",
+//             // scroll: false,
+//             stop: function(event, ui) {
+//                 $.each(positions, function (id, pos) {
+//                     alert(id);
+//                     console.log($("#"+id).css(pos));
+//                 });
+//                 positions[this.id] = ui.position
+//                 localStorage.positions = JSON.stringify(positions);
+//                 console.log(positions);
+//             },
+//             connectWith: '.connectedSortable',
+//             helper: 'clone',
+//             axis: 'y'
+//         });
 
 </script>
 

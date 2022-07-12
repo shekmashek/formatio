@@ -99,8 +99,17 @@ class ProgrammeController extends Controller
                     return back()->with('error', "l'une de ses informations est invalid");
                 }
             }
-            return back();
+
         }
+        if (isset($donnees["cours_new"])) {
+            if ($donnees["cours_new"] != null) {
+                for ($j=0; $j < count($donnees["cours_new"]); $j++) {
+                    DB::insert('insert into cours(titre_cours,programme_id) values(?,?)', [$donnees['cours_new'][$j], $id]);
+                }
+            }
+
+        }
+        return back();
     }
 
     public function show($id)

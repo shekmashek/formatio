@@ -306,8 +306,7 @@
 
 .suppression_programme,
 .ajouter_cours,
-.modifier_cours,
-.suppression{
+.modifier_cours{
     display: none;
     transition: all 1s ;
 }

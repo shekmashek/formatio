@@ -1439,12 +1439,16 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     let lien = ($(e.target).attr('href'));
     localStorage.setItem('ActiveTabMod', lien);
     // alert(lien);
+
     if (lien == '#publiees' || lien == '#hors_lignes') {
-    localStorage.setItem('ActiveTabMod', '#publies');
-    // alert("okey");
+        localStorage.setItem('ActiveTabMod', '#publies');
+        let actTab = localStorage.getItem('ActiveTabMod');
+        $('#myTab a[href="' + actTab + '"]').tab('show');
+        $('#myTab a[href="' + actTab + '"]').addClass('active');
+        // alert("okey");
     }
-    // alert(lien);
 });
+
 let ActiveTabMod = localStorage.getItem('ActiveTabMod');
 if(ActiveTabMod){
     $('#myTab a[href="' + ActiveTabMod + '"]').tab('show');
@@ -1463,7 +1467,8 @@ function show(shown, hidden) {
     }
     if (shown == "Page1") {
         // alert(shown);
-        // localStorage.setItem('ActiveTabMod', '#publies');
+        localStorage.removeItem('ActiveTabModPage');
+        localStorage.setItem('ActiveTabMod', '#publies');
         let ActiveTabModP = localStorage.getItem('ActiveTabMod');
         // alert(ActiveTabModP);
         $('#myTab a[href="' + ActiveTabModP + '"]').tab('show');
