@@ -77,6 +77,7 @@ class GroupeController extends Controller
             $type_formation = request()->type_formation;
             $formations = $fonct->findWhere("v_formation", ["cfp_id"], [$cfp_id]);
             $modules = $fonct->findWhere("moduleformation", ["cfp_id", "status", "etat_id"], [$cfp_id, 2, 1]);
+
             if(count($formations)==0 or count($modules)==0){
                 throw new Exception("Vous n'avez pas encore des modules.");
             }

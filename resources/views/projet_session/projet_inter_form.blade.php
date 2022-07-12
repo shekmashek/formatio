@@ -26,8 +26,8 @@
 
         <div class="tab-content">
             {{-- indice 0 par defaut active --}}
-            @foreach ($modules as $mod1)
-            @if ($formations[0]->id == $mod1->formation_id)
+            @foreach ($formations as $frm)
+            @if($formations[0]->id != $frm->id)
             <div class="tab-pane fade show active " id="formation_{{$formations[0]->id}}">
                 <div class="container d-flex flex-wrap">
                     @foreach ($modules as $mod1)
