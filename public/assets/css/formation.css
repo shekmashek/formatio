@@ -240,8 +240,10 @@ a:focus {
     font-weight: 300;
     color: #7635dc !important;
 }
-.liste__formation__item:hover .liste__formation {
-    transform: scale(1.5s) !important;
+.liste__formation:hover  {
+    background: linear-gradient(60deg, rgba(255, 68, 0, 0.500),#4222c382);
+    color: white;
+    /* transform: scale(1.5s) ; */
 }
 .liste__formation h5 {
     color: #7635dc;

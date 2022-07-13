@@ -54,7 +54,7 @@
             <div class="col-lg-6 col-md-6 ">
                 <div class="detail__formation__result__item2">
                     <a href="#">
-                        <h6 class="py-4 text-center text_black">Formation Proposée par&nbsp;<span>{{$res->nom}}</span>
+                        <h6 class="py-4 text-center text_black">Formation proposée par&nbsp;<span>{{$res->nom}}</span>
                         </h6>
                     </a>
                     <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid"
@@ -287,17 +287,14 @@
                         <span class="aide_competence"><i class='bx bx-help-circle '></i>
                             <div class="text_aide">
                                 <p>Attribuez des compétences à vos intervenants et à vos programmes de formation pour faciliter le suivi de vos formations. <br>
-                                    Vous pouvez également ajouter de nouvelles compétences en cliquant sur l'icone <i class='bx bx-plus-medical bx_ajouter'></i> et les modifer sur <i class='bx bxs-edit-alt bx_modifier'></i>. Vous pouvez entrer au maximum 10 compétences et 3 minimum et une note allant de 1 à 10 !</p>
+                                    Vous pouvez également modifier les compétences en cliquant sur l'icone  <i class='bx bxs-edit-alt bx_modifier'></i>. Vous pouvez entrer au maximum 10 compétences et 3 minimum et une note allant de 1 à 10 !</p>
                             </div>
                         </span>
                     </h5>
                     </div>
                         <canvas id="marksChart" width="1000" height="800" class="justify-content-center"></canvas>
-                        <div class="text-center mb-3">
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id[0]->id}}" id="{{$id[0]->id}}" onclick="competence();" title="ajouter une nouvelle competence">
-                                <i class='bx bx-plus-medical bx_ajouter'></i>
-                            </span>
-                            @if(count($competences) > 3)
+                        <div class="text-center mb-3 mt-3">
+                            @if(count($competences) > 2)
                                 <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#Modal_Compt{{$id[0]->id}}" id="{{$id[0]->id}}" title="modifier les competence">
                                     <i class='bx bxs-edit-alt bx_modifier'></i>
                                 </span>
@@ -305,30 +302,7 @@
                         </div>
                 </div>
                 {{-- @endif --}}
-                <div>
-                    <div class="modal fade" id="ModalCompetence_{{$id[0]->id}}" data-bs-backdrop="static" data-bs-keyboard="false">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action="{{route('ajout_competence')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="id" id="id" value="{{$id[0]->id}}">
-                                    <div class="modal-header">
-                                        <h6>Compétences a évaluer</h6>
-                                    </div>
-                                    <div class="modal-body mt-2 mb-2">
-                                        <div class="container">
-                                            <div class="newRowComp"></div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_fermer" id="fermerComp" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div>
                     <?php $i=0 ?>
                     <div class="modal fade" id="Modal_Compt{{$id[0]->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
@@ -342,6 +316,11 @@
                                     </div>
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
+                                            <div class="text-center mb-3">
+                                                <span class="btn_nouveau ms-2 mb-2 mt-2 pb-2" id="{{$id[0]->id}}" onclick="competence();" title="ajouter une nouvelle competence">
+                                                    <i class='bx bx-plus-medical me-2'></i>Ajouter competence
+                                                </span>
+                                            </div>
                                             @foreach ($competences as $comp)
                                             <div class="d-flex count_input" id="countt_{{$comp->id}}">
                                                 <div class="col-9">
@@ -381,6 +360,7 @@
                                                 </div>
                                             </div>
                                             @endforeach
+                                            <div class="newRowComp"></div>
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-center">
@@ -429,12 +409,13 @@
                                 <form action="{{route('modification_description',$res->module_id)}}" method="POST">
                                     @csrf
                                     <div class="modal-header">
-                                        <h5 class="modal-title text-center">Déscription module</h5>
+                                        <h5 class="modal-title text-center">Description module</h5>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <input type="text" class="form-control module module input" name="description" required value="{{$res->description}}" placeholder="Déscription module" >
-                                            <label for="description" class="form-control-placeholder">Déscription</label>
+                                            <textarea id="description" name="description" class="form-control text_area" required placeholder="Déscription module" maxlength="150">{{$res->description}}</textarea>
+                                            <label for="description" class="form-control-placeholder-text_area">Description courte</label>
+                                            <p class="text-center text-muted" style="font-size: .75rem;">La description courte est limité à 150 caractères !</p>
                                         </div>
                                         <div class="text-center">
                                             <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>

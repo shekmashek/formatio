@@ -85,7 +85,8 @@ class ProfController extends Controller
             adresse_region, email, telephone, slogan, nif, stat, rcs, cif, logo, activiter_cfp, site_web, user_id, formateur_id, nom_formateur, prenom_formateur,mail_formateur,activiter_formateur,numero_formateur,photos from v_demmande_cfp_formateur where cfp_id = ?', [$cfp_id]);
             // dd($formateur);
             // $formateurs=formateur::findorFail($cfp_id);
-
+            $abonnement_cfp = DB::select('select nb_formateur from v_type_abonnement_cfp where cfp_id = ?',[$cfp_id]);
+            // dd($abonnement_cfp);
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
 
             $invitation_formateur = $fonct->findWhere("v_invitation_cfp_pour_formateur", ["inviter_cfp_id"], [$cfp_id]);
@@ -95,7 +96,7 @@ class ProfController extends Controller
 
             // $cfp_formateur = DB::select('select * from v_demmande_cfp_formateur where cfp_id = ?', [$cfp_id]);
 
-            return view('admin.formateur.formateur', compact('formateur','demmande_formateur', 'invitation_formateur'));
+            return view('admin.formateur.formateur', compact('formateur','demmande_formateur', 'invitation_formateur','abonnement_cfp'));
 
             if (count($formateur) <= 0) {
                 return view('admin.formateur.guide');

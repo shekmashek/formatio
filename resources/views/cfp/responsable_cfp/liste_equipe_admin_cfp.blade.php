@@ -113,6 +113,27 @@ th{
     border-color: #939393;
     color: #0d6efd
 }
+#popup{
+    height : auto;
+    background-color: rgba(255, 166, 0, 0.125);
+    position: relative;
+    width: 70%;
+    margin: auto;
+    border:2px solid orange;
+    border-radius: 5px;
+    text-align: center;
+    padding: 15px;
+    color: orange;
+    cursor: default;
+}
+
+#popup a:hover{
+    text-decoration: underline;
+}
+
+.lien_condition:hover{
+    color: #2B32B2 !important;
+}
 </style>
 
 
@@ -121,6 +142,13 @@ th{
 
 
 <div class="container-fluid pb-1">
+    <div class="row d-flex titre_projet p-1 mb-1">
+        <div id="popup">
+            @if(count($cfp) <= $abonnement_cfp[0]->nb_utilisateur)
+                Votre abonnement actuel vous permet de disposez {{$abonnement_cfp[0]->nb_utilisateur}} utilisateurs. Si vous voullez plus d'utilisateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a>
+            @endif
+        </div>
+    </div>
     @if($resp_connecte->activiter == 1)
     <div class="m-4" role="tabpanel">
         <ul class="nav nav-tabs d-flex flex-row navigation_module" id="myTab">

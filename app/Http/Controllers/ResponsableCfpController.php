@@ -134,8 +134,10 @@ class ResponsableCfpController extends Controller
             $cfp_id = $resp_connecte->cfp_id;
             $cfp = DB::select('select SUBSTRING(nom_resp_cfp, 1, 1) AS nom,  SUBSTRING(prenom_resp_cfp, 1, 1) AS pr, id,nom_resp_cfp, prenom_resp_cfp, email_resp_cfp, telephone_resp_cfp, fonction_resp_cfp, adresse_lot, adresse_quartier, adresse_code_postal, adresse_ville, adresse_region, photos_resp_cfp, cfp_id, user_id, activiter, prioriter, url_photo from responsables_cfp where cfp_id = ?' , [$cfp_id]);
             $cfpPrincipale = DB::select('select * from responsables_cfp where prioriter = 1');
+            $abonnement_cfp = DB::select('select nb_utilisateur from v_type_abonnement_cfp where cfp_id = ?',[$cfp_id]);
+
             // $cfpPrincipal = DB::select('select * from responsables_cfp where activiter = 0');
-            return view('cfp.responsable_cfp.liste_equipe_admin_cfp', compact('cfp','resp_connecte','cfpPrincipale'));
+            return view('cfp.responsable_cfp.liste_equipe_admin_cfp', compact('cfp','resp_connecte','cfpPrincipale','abonnement_cfp'));
         }
     }
 

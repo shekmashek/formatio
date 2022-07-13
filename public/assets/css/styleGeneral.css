@@ -5,7 +5,7 @@
     --first-color: white;
     --first-color-light: rgba(238, 238, 238, 0.863);
     --second-color: #b4b4b4dc;
-    --body-font-color: black;
+    --body-font-color: grey;
     --body-font: 'Roboto', sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100;
@@ -40,6 +40,16 @@ a {
     pointer-events: auto;
     cursor: pointer;
 }
+
+.nom_stagiare{
+    color: black !important;
+}
+
+.adresse__icon{
+    font-size: 1.3rem;
+    color: #7635dc;
+}
+
 a:focus,
 .logo_content .logo .logo_name a:hover {
     text-decoration: none;

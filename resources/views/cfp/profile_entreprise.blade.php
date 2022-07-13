@@ -45,8 +45,13 @@
     }
 </style>
 <div class="container-fluid mt-4 p-5 " >
-
-
+    <div class="row d-flex titre_projet p-1 mb-1">
+        <div id="popup">
+            @if($abonnement_cfp[0]->nom_type == "Invité" && $abonnement_cfp[0]->type_abonnements_cfp_id == 1)
+                Votre abonnement actuel vous permet pas d'inviter des collaborateurs. Si vous voullez inviter des collaborateurs, veuillez<a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a>
+            @endif
+        </div>
+    </div>
     @if(Session::has('error'))
 
     <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">

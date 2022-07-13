@@ -74,7 +74,9 @@
 .detail__formation__result__avis span{
     font-size: 0.8rem;
 }
-
+.acf-description{
+    font-size: 0.8rem;
+}
 /* liste modules */
 
 .navigation_module .nav-link {
@@ -179,7 +181,7 @@
 .competence_box h5{
     background-color: #637381;
     color: white;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 .suppression_competence{
@@ -406,7 +408,7 @@
     width: 0;
     height: 0;
     left: -8.5px;
-    top: 30.05px;
+    top: 15px;
     border-left: 53px solid transparent;
     border-right: 53px solid transparent;
     border-top: 10px solid #01b5af;
@@ -462,6 +464,10 @@ background: linear-gradient(60deg, #02AAB0,#00CDAC);
 
 #popup a:hover{
     text-decoration: underline;
+}
+
+.lien_condition:hover{
+    color: #2B32B2 !important;
 }
 
 .aide_pogramme {
@@ -719,8 +725,10 @@ background: linear-gradient(60deg, #02AAB0,#00CDAC);
     transition: all 0.5s ease;
     border-radius: 5px;
 }
-.liste__formation__item:hover .liste__formation {
-    transform: scale(1.5s) !important;
+.liste__formation:hover  {
+    background: linear-gradient(60deg, rgba(255, 68, 0, 0.500),#4222c382);
+    color: white;
+    /* transform: scale(1.5s) ; */
 }
 .liste__formation .liste__formation__item .acf-nom-module{
     color: #7635dc;

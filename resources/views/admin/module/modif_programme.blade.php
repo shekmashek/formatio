@@ -57,7 +57,7 @@
             <div class="col-lg-6 col-md-6">
                 <div class="detail__formation__result__item2">
                     <a href="#">
-                        <h6 class="py-4 text-center text_black">Formation Proposée par&nbsp;<span>{{$res->nom}}</span>
+                        <h6 class="py-4 text-center text_black">Formation proposée par&nbsp;<span>{{$res->nom}}</span>
                         </h6>
                     </a>
                     <div class="text-center"><img src="{{asset('images/CFP/'.$res->logo)}}" alt="logo" class="img-fluid"
@@ -91,7 +91,7 @@
                     @endif
                 </div>
             </div>
-            <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between ">
+            <div class="row row-cols-auto liste__formation__result__item3 justify-content-space-between mt-2">
                 <div id="objectif"></div>
                 <div class="col background_contrast"><i class="bx bxs-alarm bx_icon"></i>
                     <span>
@@ -394,7 +394,7 @@
                             <div class="row">
                                 <div class="d-flex flex-row">
                                     <div class="col">
-                                        <h5 class="mt-3 mb-0">{{ $avis->nom_stagiaire }}.{{ $avis->prenom_stagiaire }}
+                                        <h5 class="mt-3 mb-0 nom_stagiare">{{ $avis->nom_stagiaire }}.{{ $avis->prenom_stagiaire }}
                                         </h5>
                                     </div>
                                     <div class="col">
@@ -416,6 +416,7 @@
                             <div class="row ms-1 mb-3">
                                 <p>{{ $avis->commentaire }}</p>
                             </div>
+                            <hr>
                             @endforeach
                             @if(count($liste_avis_count) >= 10)
                                 <div class="text-end"><a class="btn btn_fermer plus_avis" role="button" role="button" id="{{$infos[0]->module_id}}">voir tous les avis</a></div>
@@ -513,29 +514,14 @@
                     @endif
                 </div>
             </div>
-
             {{-- FIXME:mise en forme de design --}}
             <div class="col-lg-3 g-0 p-0 m-0 cacher_pdf">
-
                 @if($competences != null)
                 <div class="row g-0 competence_box mb-3 ">
-                    <h5 class="text-center py-2">Compétences à Acquérir</h5>
-                        {{-- @foreach ($competences as $comp)
-                        <div class="row text-start g-0 px-1" id="competence_{{$comp->id}}">
-                            <div class="col-1">
-                                <i class="bx bx-check check_comp"></i>&nbsp;
-                            </div>
-                            <div class="col-11 mb-3">
-                                <span class="text-capitalize">{{$comp->titre_competence}}</span>
-                            </div>
-                        </div>
-                        @endforeach --}}
+                    <h5 class="text-center py-2">Compétences à acquérir</h5>
                         <canvas id="marksChart" width="1000" height="800" class="justify-content-center"></canvas>
                         <div class="text-center mb-3">
-                            <span class=" ms-2 mb-2 mt-2 pb-2" data-bs-toggle="modal" data-bs-target="#ModalCompetence_{{$id}}" id="{{$id}}" onclick="competence();" title="ajouter une nouvelle competence">
-                                <i class='bx bx-plus-medical bx_ajouter'></i>
-                            </span>
-                            @if(count($competences) > 3)
+                            @if(count($competences) > 2)
                                 <span class=" ms-2 mb-2 mt-2 pb-2 .show_modal" data-bs-toggle="modal" data-bs-target="#Modal_{{$id}}" id="{{$id}}" title="modifier les competence" role="button">
                                     <i class='bx bxs-edit-alt bx_modifier'></i>
                                 </span>
@@ -543,65 +529,6 @@
                         </div>
                 </div>
                 @endif
-                <div>
-                    <div class="modal fade" id="ModalCompetence_{{$id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action="{{route('ajout_competence')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="id" id="id" value="{{$id}}">
-                                    <div class="modal-header">
-                                        <h6>Compétences a évaluer</h6>
-                                    </div>
-                                    <div class="modal-body mt-2 mb-2">
-                                        <div class="container">
-                                            {{-- <div class="row">
-                                                <div class="mt-2 text-center mb-5">
-                                                    <span id="addRow" class="btn_nouveau text-center " onclick="competence();" >
-                                                        <i class='bx bx-plus-medical me-1'></i>Ajouter une competence
-                                                    </span>
-
-                                                </div>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="col-8">
-                                                    <div class="form-group">
-                                                        <div class="form-row">
-                                                            <input type="text" name="titre_competence[]"
-                                                                id="titre_competence"
-                                                                class="form-control input" placeholder="Compétences"
-                                                                required>
-                                                            <label for="titre_competence"
-                                                                class="form-control-placeholder">Compétences</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="form-group ms-1">
-                                                        <div class="form-row">
-                                                            <input type="text" name="notes[]"
-                                                                id="notes" min="1" max="10"
-                                                                onfocus="(this.type='number')"
-                                                                class="form-control input" placeholder="Notes"
-                                                                required>
-                                                            <label for="notes"
-                                                                class="form-control-placeholder">Notes</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> --}}
-                                            <div class="newRowComp"></div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn_fermer" id="fermerComp" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                        <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div>
                     <?php $i=0 ?>
                     <div class="modal fade" id="Modal_{{$id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -615,9 +542,14 @@
                                     </div>
                                     <div class="modal-body mt-2 mb-2">
                                         <div class="container">
+                                            <div class="text-center mb-3">
+                                                <span class="btn_nouveau ms-2 mb-2 mt-2 pb-2" id="{{$id}}" onclick="competence();" title="ajouter une nouvelle competence">
+                                                    <i class='bx bx-plus-medical me-2'></i>Ajouter competence
+                                                </span>
+                                            </div>
                                             @foreach ($competences as $comp)
                                             <div class="d-flex count_input" id="countt_{{$comp->id}}">
-                                                <div class="col-9">
+                                                <div class="col-8">
                                                     <div class="form-group">
                                                         <div class="form-row">
                                                             <input type="text" name="titre_competence_{{$comp->module_id}}_{{$comp->id}}"
@@ -632,7 +564,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-2">
+                                                <div class="col-3">
                                                     <div class="form-group ms-1">
                                                         <div class="form-row">
                                                             <input type="text" name="notes_{{$comp->module_id}}_{{$comp->id}}"
@@ -653,6 +585,7 @@
                                                 </div>
                                             </div>
                                             @endforeach
+                                            <div class="newRowComp"></div>
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-center">
@@ -704,13 +637,16 @@
                                         <h5 class="modal-title text-center">Déscription module</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control module module input" name="description" required value="{{$res->description}}" placeholder="Déscription module" >
-                                            <label for="description" class="form-control-placeholder">Déscription</label>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
-                                            <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check me-1'></i>Enregistrer</button>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <textarea id="description" name="description" class="form-control text_area" required placeholder="Déscription module" maxlength="150">{{$res->description}}</textarea>
+                                                <label for="description" class="form-control-placeholder-text_area">Description courte</label>
+                                                <p class="text-center text-muted" style="font-size: .75rem;">La description courte est limité à 150 caractères !</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="button" class="btn btn_fermer" id="fermer1" data-bs-dismiss="modal"> <i class='bx bx-block me-1'></i>Fermer</button>
+                                                <button type="submit" class="btn btn_enregistrer "><i class='bx bx-check-double me-1'></i>Enregistrer</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>

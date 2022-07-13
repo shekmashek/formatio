@@ -100,6 +100,13 @@
         <strong> {{Session::get('error')}}</strong>
     </div>
     @endif
+    <div class="row d-flex mt-3 titre_projet p-1 mb-1">
+        <div id="popup">
+            @if(count($formateur) <= $abonnement_cfp[0]->nb_formateur)
+                Votre abonnement actuel vous permet de disposez {{$abonnement_cfp[0]->nb_formateur}} formateurs. Si vous voullez plus de formateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a>
+            @endif
+        </div>
+    </div>
     <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
         <li class="nav-item" role="presentation">
           <a
