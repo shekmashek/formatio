@@ -1607,4 +1607,4 @@ Route::post('enregistrer_salle_etp','SalleFormationEtpController@store')->name('
 Route::get('supprimer_salle_etp/{id?}','SalleFormationEtpController@destroy')->name('supprimer_salle_etp');
 Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->name('modifier_salle_etp');
 
-Route::get('invitation_ajouter_employer/{etp_id?}','SessionController@invitation_ajouter_employer')->name('invitation_ajouter_employer');
+Route::get('invitation_ajouter_employer/{groupe?}/{employe?}','SessionController@invitation_ajouter_employer')->name('invitation_ajouter_employer');

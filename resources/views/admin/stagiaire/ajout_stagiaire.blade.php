@@ -351,11 +351,12 @@ td{
                     $(".span_ajout").hide();
                     $("#image_stg").html('');
                     @can('isCFP')
-                        text = "<span style='color:black'>Matricule ou nom introuvable<span style='color:black'>,&nbsp;voulez vous <a href = '{{ route('invitation_ajouter_employer',["+etp_id+"]) }}'><span style='color:blue'>inviter</a></span> l'entreprise à ajouter '"+id+"' dans ses employers</span></span>";
-                        // text = text.replace(':?',etp_id);
+                        text = "<span style='color:black'>Matricule ou nom introuvable<span style='color:black'>,&nbsp;voulez vous <a href = '{{ route('invitation_ajouter_employer',["groupe","id"]) }}'><span style='color:blue'>inviter</a></span> l'entreprise à ajouter '"+id+"' dans ses employers</span></span>";
+                        text = text.replace('groupe',groupe_id);
+                        text = text.replace('id',id);
                     @endcan
                     @can('isReferent')
-                    var text = "<span style='color:black'>Matricule ou nom introuvable<span style='color:black'>,&nbsp;voulez vous <a href = '{{ route('employes.liste') }}'><span style='color:blue'>inviter</a></span> l'entreprise à ajouter '"+id+"' dans ses employers</span></span>";
+                        var text = "<span style='color:black'>Matricule ou nom introuvable<span style='color:black'>,&nbsp;voulez vous <a href = '{{ route('employes.liste') }}'><span style='color:blue'>ajouter</a></span> '"+id+"' dans vos employers</span></span>";
                     @endcan
                     $('#ajout_stg_mat').append(text);
                 }
