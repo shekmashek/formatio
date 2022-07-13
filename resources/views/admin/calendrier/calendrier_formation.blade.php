@@ -55,8 +55,7 @@
              data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasWithBothOptionsLabel">
               <div class="offcanvas-header" id="event_header">
 
-                <input type="color" name="event_group_color" id="event_group_color">
-                
+                                
                 <h5 id="event_title"></h5>
                 <span class="input-group-text border-0 bg-light fs-2" id="event_to_pdf" 
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="Télécharger en pdf">
@@ -281,7 +280,6 @@
                         //     }
                         // }
                         // info.el.classList.add('');
-                        
                     },
 
                     // show the description of events when hovering over them
@@ -306,8 +304,8 @@
                     },
 
 
-                    eventClick : function(info) {
 
+                    eventClick : function(info) {
 
                         var offcanvas_header = document.getElementById('event_header');
 
@@ -386,54 +384,6 @@
                             });
                         });
 
-
-                       var event_group_color = document.getElementById('event_group_color');
-                       event_group_color.id = 'event_group_color'+info.event._instance.defId;
-
-                    //    console.log(info.event._instance.defId);
-
-                       event_group_color.value = info.event.backgroundColor;
-                       var type = '';
-
-                        $('#event_group_color'+info.event._instance.defId).on('change',function(){
-                            var event_c = $(this).val();
-
-                            var event_props = info.event.extendedProps;
-                            
-                            // console.log(info.event._instance.defId+' '+type);
-                            // console.log(info.event.extendedProps);
-                            $.ajax({
-                                method:'GET',
-                                url:'/change_group_color',
-                                
-                                data: {
-                                    event_color:event_c,
-                                    event: event_props,
-                                },
-                                dataType:'JSON',
-                                success:function(response){
-                                    console.log(response);
-                                },
-                            });
-
-                            
-                            
-                            // donne une erruer, mais empêche la sortie en boucle des actions au changement
-                            // event_c.val('');
-                            $(this).off('change');
-                            
-                        })
-                        event_group_color.id = 'event_group_color';
-
-                        // event_group_color.addEventListener('change', function() {
-                        //     // var event_c = [];
-                        //     // event_c.push(event_group_color.value);
-                        //     // // var event_type = info.event.extendedProps.type_formation.type_formation;
-                            
-                        //     // alert(event_c);
-                        
-
-                        // });
 
                         var detail_offcanvas = document.getElementById('detail_offcanvas');
                         var title_offcanvas = document.getElementById('event_title');
@@ -678,6 +628,7 @@
                         bsOffcanvas.show();
 
                     },
+
                     
                     events: events,
 
@@ -685,23 +636,23 @@
             );
 
             
-            $('#event_datepicker').datepicker({
-                
-                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-                monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-                dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-                dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                $('#event_datepicker').datepicker({
+                    
+                    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                    monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+                    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                    dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+                    dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
 
-                inline:true,
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                onSelect: function(dateText, inst) {
-                    var date = new Date(dateText);
-                    // got to the selected date on the fullcalendar
-                    calendar.gotoDate(date);
-                }
-            });
+                    inline:true,
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    onSelect: function(dateText, inst) {
+                        var date = new Date(dateText);
+                        // got to the selected date on the fullcalendar
+                        calendar.gotoDate(date);
+                    }
+                });
             
             
             calendar.render();

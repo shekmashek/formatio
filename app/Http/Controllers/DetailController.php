@@ -570,7 +570,7 @@ class DetailController extends Controller
                         'projet' => $value->groupe_interne->projet_interne,
                         'type_formation' => $value->groupe_interne->projet_interne->type_formation ? $value->groupe_interne->projet_interne->type_formation : 'Interne',
                         'backgroundColor' => $value->groupe_interne->couleur ? $value->groupe_interne->couleur : $value->color,
-                        'borderColor' => $value->color,
+                        'borderColor' => $value->groupe_interne->couleur ? $value->groupe_interne->couleur : $value->color,
                     );
                 } else {
                     $events[] = array(
@@ -607,7 +607,7 @@ class DetailController extends Controller
                         'nom_type_formation' => $value->groupe->projet->type_formation->type_formation,
                         'nom_cfp' => $value->groupe->projet->cfp->nom,
                         'backgroundColor' => $value->groupe->couleur ? $value->groupe->couleur : $value->color,
-                        'borderColor' => $value->color,
+                        'borderColor' => $value->groupe->couleur ? $value->groupe->couleur : $value->color,
                     );
                 }
                 
@@ -641,55 +641,6 @@ class DetailController extends Controller
         return view('admin.calendrier.calendrier_formation',compact('domaines','statut','formations','events', 'groupe_entreprises'));
     }
 
-
-    public function change_group_color(Request $request)
-    {
-
-        // $type_f = gettype($type_formation);
-
-        $event = $request->event;
-        $type_formation = $event['type_formation'];
-
-        if(gettype($type_formation) == 'array') {
-
-            $event_c = $request->event_color;
-            
-            
-            $event_group_id = $event['groupe']['id'];
-            $groupe = groupe::where('id', $event_group_id);
-
-            $type_f = 'tableau';
-            $groupe->update([
-                'couleur' => $event_c,
-            ]);
-
-            // groupe::updateData($event_group_id, [
-            //     'couleur' => $event_c,
-            // ]);
-
-            // DB::update('update groupes set couleur = ? where id = ?', [$event_c, $event_group_id]);
-
-
-        } elseif (gettype($type_formation) == 'string') {
-
-
-            $event_c = $request->event_color;
-    
-
-            $event_group_id = $event['groupe']['id'];
-            $type_f = 'chaine de caractère';
-        
-            $groupe = GroupeInterne::where('id', $event_group_id);
-            $groupe->update([
-                'couleur' => $event_c,
-            ]);
-            
-            // DB::update('update groupes_interne set couleur = ? where id = ?', [$event_c, $event_group_id]);
-        }
-
-        // exit;
-        return response()->json(['event_c'=>$event_c, 'event'=>$event, 'type_formation'=>$type_f, 'groupe'=>$groupe]);
-    }
 
     // evenements for cfps
     public function listEvent(Request $request)
