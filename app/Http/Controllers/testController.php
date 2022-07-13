@@ -7,15 +7,14 @@ use Illuminate\Support\Facades\DB;
 
 class testController extends Controller
 {
-    public function dataVille($groupe_id, $projet_id){
-        $villes = DB::table("v_detail_session")
-            ->select("lieu")
-            ->where("groupe_id", "=", $groupe_id)
-            ->where("projet_id", "=", $projet_id)
-            ->get();
+    public function dataEmp($etp_id, $secteur_id){
+        $emps = DB::select('select * from employers where entreprise_id = ?', [$etp_id]);
+        $etps = DB::select('select * from entreprises where secteur_id = ?', [$secteur_id]);
 
-        // dd($datas);
-        return view('projet_session.index2', compact('villes'));
+        return response()->json([
+            'emps' => $emps,
+            'etps' => $etps
+        ]);
     }
 
 }

@@ -1,3 +1,4 @@
+-- Active: 1657548149937@@127.0.0.1@3306@mydb2
 CREATE TABLE genre (
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   genre varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -104,7 +105,7 @@ CREATE TABLE users (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO users (id, name, email, email_verified_at, password, remember_token, created_at, updated_at,cin,telephone) VALUES
-(1, 'Levy', 'contact@formation.mg', NULL, '$2y$10$9i0uUmJpIwVtYX1dlEdM5.bNcYXU8CrD8QXDS5loPVAurII6BmbFm', NULL, '2021-08-04 05:53:44', '2021-08-04 05:53:44','301051027178','0321122233');
+(4, 'Levy', 'contact@formation.mg', NULL, '$2y$10$9i0uUmJpIwVtYX1dlEdM5.bNcYXU8CrD8QXDS5loPVAurII6BmbFm', NULL, '2021-08-04 05:53:44', '2021-08-04 05:53:44','301051027178','0321122233');
 
 CREATE TABLE role_users(
   id bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -114,7 +115,7 @@ CREATE TABLE role_users(
    activiter boolean not null default false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO role_users(user_id,role_id,activiter) VALUES (1,6,1);
+INSERT INTO role_users(user_id,role_id,activiter) VALUES (4,6,1);
 
 CREATE TABLE `type_abonnes` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

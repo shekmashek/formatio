@@ -419,7 +419,7 @@ class HomeController extends Controller
         if (Gate::allows('isReferent') or Gate::allows('isReferentSimple')) {
 
             $testNull = DB::select('select *,case when genre_id = 1 then "Femme" when genre_id = 2 then "Homme" end sexe_resp from responsables where user_id  = ? ', [Auth::user()->id]);
-
+           
             $entreprise = DB::select('select * from entreprises where id  = ? ', [$testNull[0]->entreprise_id]);
             $departement = DB::select('select * from departement_entreprises where id  = ? ', [$testNull[0]->departement_entreprises_id]);
 
@@ -1004,7 +1004,6 @@ class HomeController extends Controller
 
             // dd($data);
             return view('projet_session.index2', compact('projet','ref', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'devise', 'nomEntreprises', 'nomSessions', 'nomTypes', 'nomModalites', 'nomModules', 'nomStatuts'));
-            // return view('projet_session.index2', compact('projet','ref','facture','montant_facture', 'data','lieu_formation','lieuFormation','totale_invitation', 'formation', 'module', 'type_formation', 'status', 'type_formation_id', 'entreprise', 'payement', 'page', 'fin_page', 'nb_projet', 'debut', 'fin', 'nb_par_page'));
         }
         if (Gate::allows('isFormateur')) {
             $formateur_id = formateur::where('user_id', $user_id)->value('id');

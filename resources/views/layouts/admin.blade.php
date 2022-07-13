@@ -10,26 +10,15 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Formation</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css"
-        integrity="sha512-8Vtie9oRR62i7vkmVUISvuwOeipGv8Jd+Sur/ORKDD5JiLgTGeBSkI3ISOhc730VGvA5VVQPwKIKlmi+zMZ71w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{asset('assets/css/styleGeneral.css')}}">
     <link rel="shortcut icon" href="{{asset('img/logos_all/iconFormation.webp') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/css/configAll.css')}}">
-    {{-- <link rel="stylesheet" href="{{asset('assets/css/mahafaly.css')}}"> --}}
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
     <style>
         .modal-backdrop{
             z-index: 1 !important;
@@ -753,13 +742,11 @@
                         @canany(['isReferent','isReferentSimple'])
                         <div class="col-5 header-right d-flex flex-row">
                             <div class="col-12 d-flex flex-row justify-content-center apprendCreer apprendreBox">
-                                <div class="btn_racourcis" id="text_apprendre">
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
+                                {{-- <div class="btn_racourcis" id="text_apprendre">
                                     <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="btn_racourcis dropdown prevent_affichage .navigation_module" >
                                     <a href="#" class="dropdown-toggle" role="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                                         <span class=""><i class='bx bxs-bell-ring bx-tada-hover mb-2 mt-1'></i>
@@ -820,13 +807,11 @@
                         @can('isCFP')
                         <div class="col-5 header-right">
                             <div class="col-12 d-flex flex-row justify-content-end apprendCreer apprendreBox">
-                                <div class="btn_racourcis" id="text_apprendre">
-                                    {{-- <span class="text_apprendre" role="button"><i
-                                            class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
+                                {{-- <div class="btn_racourcis" id="text_apprendre">
                                     <a href="#" class="text-center " role="button"><span class="d-flex flex-column"><i class='fa-solid fa-book-open-reader mb-2 mt-1'></i>
                                         <span class="text_racourcis">Apprendre</span></span>
                                     </a>
-                                </div>
+                                </div> --}}
                                 <div class="btn_racourcis dropdown prevent_affichage " >
                                     {{-- <span class="text_apprendre" role="button"><i
                                             class="fa-solid fa-book-open-reader icons_creer"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apprendre</span> --}}
@@ -1416,47 +1401,14 @@
         </div>
         {{-- footer --}}
     </div>
-
-<<<<<<< HEAD
-    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
-        integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    {{-- <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-        integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
-    </script> --}}
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js" integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-=======
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src=" {{ asset('js/datatables.min.js') }} "></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     @yield('script')
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
-        integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
     </script>
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"
-        integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-
->>>>>>> origin/modifdesignSession
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script src="{{asset('js/admin.js')}}"></script>
-    <script src="{{asset('js/apprendre.js')}}"></script>
-<<<<<<< HEAD
-
-    @if (Route::currentRouteName() != 'calendrier_formation' && Route::currentRouteName() != 'calendrier')
-    {{-- ce script bloque le jquery.min et jquery-ui --}}
-    <script src="{{ asset('assets/js/jquery.js') }}"></script>
-    @endif
-
-=======
->>>>>>> origin/modifdesignSession
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <script type="text/javascript">

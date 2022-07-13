@@ -1608,4 +1608,7 @@ Route::get('supprimer_salle_etp/{id?}','SalleFormationEtpController@destroy')->n
 Route::post('modifier_salle_etp/{id?}','SalleFormationEtpController@update')->name('modifier_salle_etp');
 Route::post('/filter_projet/filter/{id?}', 'HomeController@filterProjectDate')->name('project.filterBydate');
 
+// test controller
+Route::get('/jsonEmp/{etp_id}/{secteur}', 'testController@dataEmp');
+
 
