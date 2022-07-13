@@ -459,7 +459,12 @@
                         var projet_link = '<a href = "{{url("detail_session/groupe_id/type_formation_id")}}" class="hover_purple" target = "_blank">'+projet+' '+info.event.extendedProps.groupe.nom_groupe +'</a>';
                         projet_link = projet_link.replace("groupe_id", groupe.id);
                         projet_link = projet_link.replace("type_formation_id", info.event.extendedProps.type_formation.id);
-                        projet_offcanvas.innerHTML = projet_link;
+                        
+                        if (typeof(info.event.extendedProps.type_formation) === 'object') {
+                            projet_offcanvas.innerHTML = projet_link;
+                        } else {
+                            projet_offcanvas.innerHTML =projet+' '+info.event.extendedProps.groupe.nom_groupe;
+                        }
 
                         type_formation_offcanvas.value = type_formation;
 
