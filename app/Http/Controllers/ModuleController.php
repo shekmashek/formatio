@@ -590,7 +590,7 @@ class ModuleController extends Controller
         $id = $request->id;
         $donnees = $request->all();
         $fonct = new FonctionGenerique();
-
+        // dd($donnees);
         $competence = $fonct->findWhere('competence_a_evaluers', ['module_id'], [$id]);
         if ($donnees != null) {
             for ($i = 0; $i < count($competence); $i++) {

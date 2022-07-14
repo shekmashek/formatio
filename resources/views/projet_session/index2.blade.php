@@ -24,9 +24,18 @@
             <div class="col-12 ps-2">
                 @canany(['isCFP'])
                     @if (count($projet) <= 0)
-                        <div class="row d-flex mt-3 titre_projet p-1 mb-1">
+                        <div class="container mt-3 p-1 mb-1">
                             <div id="popup">
-                                Vous n’avez pas encore de projet @if($nb_modules == 0)pour en créer un ajouter d’abord des modules a votre <a data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button" class="text-primary lien_condition">catalogue de formation</a>.@endif @if($nb_formateur == 0)<a href="{{route('liste_formateur')}}" class="text-primary lien_condition">Ajouter des formateurs</a>.@endif @if($nb_collaboration == 0)<a href="{{route('liste_entreprise')}}" class="text-primary lien_condition">Inviter des entreprises</a>@endif. Et ensuite vous pouvez créer votre premier projet de formation <a href="{{route('nouveau_groupe',1)}}" class="text-primary lien_condition">intra</a> ou <a href="{{route('nouveau_groupe_inter',2)}}" class="text-primary lien_condition">inter</a>.
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <i class='bx bxs-plus-circle icon_upgrade me-3'></i>
+                                        @if($abonnement_cfp[0]->illimite != 1)
+                                            @if($nb_formateur == 0 || $nb_formateur == 0 || $nb_collaboration == 0)Vous n’avez pas encore de projet @if($nb_modules == 0)pour en créer un ajouter d’abord des modules a votre <a data-bs-toggle="modal" data-bs-target="#nouveau_module" role="button" class="text-primary lien_condition">catalogue de formation</a>.@endif @if($nb_formateur == 0)<a href="{{route('liste_formateur')}}" class="text-primary lien_condition">Ajouter des formateurs</a>.@endif @if($nb_collaboration == 0)<a href="{{route('liste_entreprise')}}" class="text-primary lien_condition">Inviter des entreprises.</a>@endif .@endif @if($nb_formateur != 0 && $nb_formateur != 0 && $nb_collaboration != 0)Maintenant vous pouvez créer votre premier projet de formation <a href="{{route('nouveau_groupe',1)}}" class="text-primary lien_condition">intra</a> @if($abonnement_cfp != null) ou <a href="{{route('nouveau_groupe_inter',2)}}" class="text-primary lien_condition">inter</a>@endif.@endif
+                                        @else
+                                            <span>Votre abonnement actuel vous permet de faire un nombre illimités de projets.</span>
+                                        @endif 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endif

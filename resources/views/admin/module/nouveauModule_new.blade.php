@@ -27,10 +27,12 @@
     </div>
 </div>
 {{-- <div style="display: none" id="popup"></div> --}}
-<div id="popup">
-    Bonjour, pour pouvoir créer votre module de formation, veuillez modifier le template ci-dessous afin de l'enregistrer. <br>
-    Ceci est un aperçu de présentation de votre module quand il sera mis en ligne. Pour annuler cette création cliquer <a href="{{route('annuler_new_mod',$infos[0]->module_id)}}" class="text-primary retour_back">ici.</a><br>
-    Si vous ne modifier pas vos informations, il sera présenter comme tel. Veuillez à bien vérifier 👀 ! Il sera visible dans l'onglet hors ligne.
+<div class="container">
+    <div id="popup" class="text-center">
+        Bonjour, pour pouvoir créer votre module de formation, veuillez modifier le template ci-dessous afin de l'enregistrer. <br>
+        Ceci est un aperçu de présentation de votre module quand il sera mis en ligne. Pour annuler cette création cliquer <a href="{{route('annuler_new_mod',$infos[0]->module_id)}}" class="text-primary lien_condition">ici.</a><br>
+        Si vous ne modifier pas vos informations, il sera présenter comme tel. Veuillez à bien vérifier 👀 ! Il sera visible dans l'onglet hors ligne.
+    </div>
 </div>
 <section class="detail__formation">
     <div class="container py-4 bg-light">

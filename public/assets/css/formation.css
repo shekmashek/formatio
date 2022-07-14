@@ -800,6 +800,12 @@ input{
     color: transparent;
 }
 
+.detail__formation__programme__avis__donnes hr:last-of-type{
+    display: none;
+}
+
+
+
 /* .afficher_pdf{
     display: none;
 } */

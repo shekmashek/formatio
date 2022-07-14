@@ -113,27 +113,6 @@ th{
     border-color: #939393;
     color: #0d6efd
 }
-#popup{
-    height : auto;
-    background-color: rgba(255, 166, 0, 0.125);
-    position: relative;
-    width: 70%;
-    margin: auto;
-    border:2px solid orange;
-    border-radius: 5px;
-    text-align: center;
-    padding: 15px;
-    color: orange;
-    cursor: default;
-}
-
-#popup a:hover{
-    text-decoration: underline;
-}
-
-.lien_condition:hover{
-    color: #2B32B2 !important;
-}
 </style>
 
 
@@ -142,11 +121,22 @@ th{
 
 
 <div class="container-fluid pb-1">
-    <div class="row d-flex titre_projet p-1 mb-1">
+    <div class="container mt-3 p-1 mb-1">
         <div id="popup">
-            @if(count($cfp) <= $abonnement_cfp[0]->nb_utilisateur)
-                Votre abonnement actuel vous permet de disposez {{$abonnement_cfp[0]->nb_utilisateur}} utilisateurs. Si vous voullez plus d'utilisateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a>
-            @endif
+            <div class="row">
+                <div class="col text-center">
+                    <i class='bx bxs-up-arrow-circle icon_upgrade me-3'></i>
+                    @if($abonnement_cfp != null)
+                        @if(count($cfp) <= $abonnement_cfp[0]->nb_utilisateur)
+                            <span>Votre abonnement actuel vous permet d'inviter @if($abonnement_cfp[0]->illimite == 1) un nombre illimité d'@else {{$abonnement_cfp[0]->nb_utilisateur}} @endif utilisateurs. Si vous voullez plus d'utilisateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a></span>
+                        @elseif($abonnement_cfp[0]->illimite == 1)
+                            <span>Votre abonnement actuel vous permet d'inviter un nombre illimités d'utilisateurs.</span>
+                        @endif
+                    @else
+                        <span>Actuellement vous n'avez aucun abonnement. Si vous voullez plus de formateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a></span>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
     @if($resp_connecte->activiter == 1)

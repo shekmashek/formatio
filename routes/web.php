@@ -146,6 +146,8 @@ Route::get('plus_avis_mod_etp','ProjetControlleur@plus_avis_mod_etp')->name('plu
 Route::get('select_par_module_etp/{id}', 'ProjetControlleur@affichageParModule')->name('select_par_module_etp');
 Route::get('affichage_formation_etp/{id}', 'ProjetControlleur@affichage_formation_etp')->name('affichage_formation_etp');
 Route::get('destroy_module_etp','ProjetControlleur@destroy_module_etp')->name('destroy_module_etp');
+Route::get('plus_avis_module_etp','ProjetControlleur@plus_avis_module_etp')->name('plus_avis_module_etp');
+
 
 
 //route groupe

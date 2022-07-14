@@ -85,7 +85,7 @@ class ProfController extends Controller
             adresse_region, email, telephone, slogan, nif, stat, rcs, cif, logo, activiter_cfp, site_web, user_id, formateur_id, nom_formateur, prenom_formateur,mail_formateur,activiter_formateur,numero_formateur,photos from v_demmande_cfp_formateur where cfp_id = ?', [$cfp_id]);
             // dd($formateur);
             // $formateurs=formateur::findorFail($cfp_id);
-            $abonnement_cfp = DB::select('select nb_formateur from v_type_abonnement_cfp where cfp_id = ?',[$cfp_id]);
+            $abonnement_cfp = DB::select('select nb_formateur, illimite from v_type_abonnement_cfp where cfp_id = ? and status = ?',[$cfp_id,"Activé"]);
             // dd($abonnement_cfp);
             $demmande_formateur = $fonct->findWhere("v_demmande_cfp_pour_formateur", ["demmandeur_cfp_id"], [$cfp_id]);
 

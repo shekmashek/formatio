@@ -5,7 +5,7 @@
     --first-color: white;
     --first-color-light: rgba(238, 238, 238, 0.863);
     --second-color: #b4b4b4dc;
-    --body-font-color: grey;
+    --body-font-color: #6c757d;
     --body-font: 'Roboto', sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100;
@@ -28,6 +28,7 @@ body {
     width: 100%;
     color: var(--body-font-color);
     overflow: auto;
+    font-size: .8.30rem;
 }
 .content_body {
     background: white;
@@ -46,8 +47,8 @@ a {
 }
 
 .adresse__icon{
-    font-size: 1.3rem;
-    color: #7635dc;
+    font-size: 1.3rem !important;
+    color: #7635dc !important;
 }
 
 a:focus,
@@ -991,15 +992,18 @@ a{
 }
 
 .badge_invitation{
-    padding: 0px 6px;
+    padding: 6px ;
     color: white;
-    background-color: red;
+    background-color: orangered;
     font-size: .8rem;
     border: none;
-    border-radius: 30px;
+    border-radius: 50px;
     position: absolute;
     bottom: 25px;
-    left: 20px;
+    right: 20px;
+    height: 19px;
+    display: grid;
+    place-content: center;
 }
 
 .badge_notification{
@@ -1050,4 +1054,33 @@ a{
 .nav-tabs .nav-item a{
     text-decoration: none;
     text-decoration-line: none;
+}
+
+#popup{
+    height : auto;
+    background-color: white;
+    position: relative;
+    width: auto;
+    margin: auto;
+    border-left: 3px solid rgba(255, 68, 0, 0.762);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 10px;
+    cursor: default;
+    font-size: 0.8rem;
+}
+
+.lien_condition{
+    color: orange!important;
+}
+
+.icon_upgrade{
+    color: orangered;
+    font-size: 1.5rem;
+    align-items: center;
+    position: relative;
+    top: 6px;
 }

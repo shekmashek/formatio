@@ -89,7 +89,7 @@
 
 <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
-<div class="container-fluid mt-5">
+<div class="container-fluid">
     @if(Session::has('success'))
     <div class="alert alert-success">
         <strong> {{Session::get('success')}}</strong>
@@ -100,11 +100,22 @@
         <strong> {{Session::get('error')}}</strong>
     </div>
     @endif
-    <div class="row d-flex mt-3 titre_projet p-1 mb-1">
+    <div class="container mt-3 p-1 mb-1">
         <div id="popup">
-            @if(count($formateur) <= $abonnement_cfp[0]->nb_formateur)
-                Votre abonnement actuel vous permet de disposez {{$abonnement_cfp[0]->nb_formateur}} formateurs. Si vous voullez plus de formateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a>
-            @endif
+            <div class="row">
+                <div class="col text-center">
+                    <i class='bx bxs-up-arrow-circle icon_upgrade me-3'></i>
+                    <span>
+                        @if($abonnement_cfp != null)
+                            @if(count($formateur) <= $abonnement_cfp[0]->nb_formateur)
+                                <span>Votre abonnement actuel vous permet d'inviter @if($abonnement_cfp[0]->illimite == 1) un nombre illimités de @else{{$abonnement_cfp[0]->nb_formateur}}@endif formateurs. @if($abonnement_cfp[0]->illimite == 1) @else vous voullez plus de formateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a>@endif</span>
+                            @endif
+                        @else
+                            <span>Actuellement vous n'avez aucun abonnement. Si vous voullez plus de formateurs veuillez <a href="{{route('ListeAbonnement')}}" class="text-primary lien_condition">upgrader votre abonnement</a></span>
+                        @endif
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
     <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">

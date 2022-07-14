@@ -10,7 +10,7 @@ CREATE OR REPLACE VIEW v_liste_avis_interne AS SELECT
     prenom_stagiaire,
     date_avis
 FROM
-    avis a
+    avis_interne a
 JOIN stagiaires s ON
     a.stagiaire_id = s.id
 ORDER BY

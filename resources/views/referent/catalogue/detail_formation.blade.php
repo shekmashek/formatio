@@ -503,7 +503,7 @@
                     <div class="row g-0 m-0">
                         <div class="detail__prix">
                             <div class="">
-                                <p class="pt-2 "><b>Competences a acquérir</b></p>
+                                <p class="pt-2 ">Competences a acquérir</p>
                             </div>
                         </div>
                     </div>
@@ -776,7 +776,7 @@
                 let moduleData = response;
                 if (moduleData['liste_avis'] != null || undefined){
                     let html = '';
-
+                    html += '<hr>';
                     for (let i = 0; i < moduleData['liste_avis'].length; i++) {
                         html += '<div class="row" id="avis">';
                         html +=     '<div class="d-flex flex-row">';
@@ -796,6 +796,8 @@
                         html += '<div class="row ms-1">';
                         html +=     '<p>'+moduleData['liste_avis'][i]['commentaire']+'</p>';
                         html += '</div>';
+                        html += '<hr>';
+
                     }
                     $('.newRowAvis').empty();
                     $('.newRowAvis').append(html);

@@ -481,10 +481,10 @@ class ProjetControlleur extends Controller
             $cours = DB::select('select * from v_cours_programme_interne where module_id = ?', [$id]);
             $programmes = DB::select('select * from programmes_interne where module_id = ?', [$id]);
             $liste_avis = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis_interne where module_id = ? limit 10', [$id]);
-            $liste_avis_count = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis_interne where module_id = ?', [$id]);
+            $liste_avis_count = DB::select('select count(*) from v_liste_avis_interne where module_id = ?', [$id]);
             $statistiques = DB::select('select * from v_statistique_avis_interne where module_id = ?',[$id]);
             $avis_etoile = DB::select('select round(SUM(vn.note) / SUM(vn.nombre_note), 2) as pourcentage, SUM(vn.nombre_note) as nb_avis, md.etp_id from v_nombre_note_interne as vn join v_moduleformation_interne as md on vn.module_id = md.module_id join entreprises as etp on md.etp_id = etp.id where md.etp_id = etp.id group by md.etp_id');
-            // dd($avis_etoile);
+            // dd($liste_avis_count);
             $competences = DB::select('select titre_competence from competence_a_evaluers_interne where module_id = ?',[$id]);
             return view('referent.projet_Interne.formations.detail_formation_interne', compact('devise','infos','niveau','statistiques','avis_etoile', 'cours', 'programmes', 'nb_avis', 'liste_avis','liste_avis_count', 'categorie', 'id','competences'));
         } else
@@ -511,6 +511,13 @@ class ProjetControlleur extends Controller
                 'success' => true,
                 'message' => 'Data deleted successfully',
             ]);
+    }
+
+    public function plus_avis_module_etp(Request $request){
+        $id = $request->Id;
+        $liste_avis_tous = DB::select('select *, SUBSTRING(nom_stagiaire, 1, 1) as nom_stagiaire from v_liste_avis_interne as lsta where module_id = ? order by lsta.date_avis desc limit 30 offset 10', [$id]);
+
+        return response()->json(['liste_avis'=>$liste_avis_tous]);
     }
 
     public function formateurs(){

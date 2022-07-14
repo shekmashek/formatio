@@ -261,4 +261,5 @@ copier les requettes bdd_evaluation_froid.sql
 
 alter table modules add column date_eval_froid int(2) default 3;
 
------------11 juillet ----------------
+-----------14 juillet ----------------
+recreer vue v_liste_avis_interne dans bdd_suiviformation_view_30

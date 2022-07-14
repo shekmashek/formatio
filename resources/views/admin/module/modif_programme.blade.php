@@ -306,7 +306,7 @@
                     </div>
                     @if($liste_avis_count > 0)
                     <div class="col-12 mb-5">
-                        <div class="card p-2 pt-1">
+                        <div class="card p-2 pt-1 hr_last">
                             <div class="row detail__formation__programme__avis__rated d-flex">
                                 <div class="col-md-4 text-center d-flex flex-column">
                                     <div class="rating-box">
@@ -1123,6 +1123,7 @@ $('.plus_avis').on('click', function(e){
                 if (moduleData['liste_avis'] != null || undefined){
                     let html = '';
 
+                    html += '<hr>';
                     for (let i = 0; i < moduleData['liste_avis'].length; i++) {
                         html += '<div class="row" id="avis">';
                         html +=     '<div class="d-flex flex-row">';
@@ -1142,6 +1143,7 @@ $('.plus_avis').on('click', function(e){
                         html += '<div class="row ms-1">';
                         html +=     '<p>'+moduleData['liste_avis'][i]['commentaire']+'</p>';
                         html += '</div>';
+                        html += '<hr>';
                     }
                     $('.newRowAvis').empty();
                     $('.newRowAvis').append(html);

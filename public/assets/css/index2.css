@@ -15,32 +15,6 @@
     border-right:.2rem solid  #7635dc;
 }
 
-
-#popup{
-    height : auto;
-    background-color: rgba(255, 166, 0, 0.125);
-    position: relative;
-    width: 70%;
-    margin: auto;
-    border:2px solid orange;
-    border-radius: 5px;
-    text-align: center;
-    padding: 15px;
-    color: orange;
-    cursor: default;
-}
-
-#popup a:hover{
-    text-decoration: underline;
-}
-
-.lien_condition:hover{
-    color: #2B32B2 !important;
-}
-/* .nav-item .nav-link.active {
-    border-bottom: none !important;
-} */
-
 .nav-tabs .nav-link:hover {
     background-color: rgb(245, 243, 243);
     transform: scale(1.1);

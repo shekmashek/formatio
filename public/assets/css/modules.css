@@ -356,7 +356,7 @@
     bottom: -10.05px;
     border-left: 53px solid transparent;
     border-right: 53px solid transparent;
-    border-top: 10px solid #01b5af;
+    border-top: 10px solid #02c3ad;
 }
 .ribbon1 span {
     position: relative;
@@ -446,28 +446,6 @@ left: -8px;
 top: 0;
 border-radius: 8px 8px 0 0;
 background: linear-gradient(60deg, #02AAB0,#00CDAC);
-}
-
-#popup{
-    height : auto;
-    background-color: rgba(255, 166, 0, 0.125);
-    position: relative;
-    width: 70%;
-    margin: auto;
-    border:2px solid orange;
-    border-radius: 5px;
-    text-align: center;
-    padding: 15px;
-    color: orange;
-    cursor: default;
-}
-
-#popup a:hover{
-    text-decoration: underline;
-}
-
-.lien_condition:hover{
-    color: #2B32B2 !important;
 }
 
 .aide_pogramme {
