@@ -83,6 +83,7 @@ class ProgrammeController extends Controller
     {
         $id = $request->id_prog;
         $donnees = $request->all();
+
         $fonct = new FonctionGenerique();
 
         if ($request->titre_prog != null) {
