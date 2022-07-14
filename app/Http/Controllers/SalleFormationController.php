@@ -56,7 +56,7 @@ class SalleFormationController extends Controller
             $fonct = new FonctionGenerique();
             $resp = $fonct->findWhereMulitOne("v_responsable_cfp",["user_id"],[$user_id]);
             $cfp_id = $resp->cfp_id;
-            DB::insert('insert into salle_formation_etp(etp_id,salle_formation,ville) values(?,?,?)',[$cfp_id,$request->salle,$request->ville]);
+            DB::insert('insert into salle_formation_of(cfp_id,salle_formation,ville) values(?,?,?)',[$cfp_id,$request->salle,$request->ville]);
             return back();
                 // return redirect()->back()->withInput(['tabName'=>'insertion_salle']);
         }catch(Exception $e){

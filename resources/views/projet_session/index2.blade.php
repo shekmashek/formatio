@@ -195,25 +195,6 @@
             margin-right: .3rem;
         }
 
-        .paginationOld {
-            background-clip: text;
-            margin-right: .3rem;
-            font-size: 2rem;
-            position: relative;
-            top: .7rem;
-        }
-
-        .paginationOld:hover {
-            color: #000000;
-            background-color: rgb(239, 239, 239);
-            border-radius: 1.3rem;
-        }
-
-        .nombre_pagination {
-            color: #626262;
-
-        }
-
         .rapport_finale {
             background-color: #F16529 !important;
         }
@@ -1711,8 +1692,8 @@
                                 <span class="text-center">Vous n'avez pas encore du projet.</span>
                             </div>
                         @else
-                            <table class="table shadow-sm table-striped">
-                                <thead style="background: #cccccc" class="text-center">
+                            <table id="modifTable" class="table">
+                                {{-- <thead style="background: #cccccc" class="text-center">
                                     <th>Projet</th>
                                     <th> Session </th>
                                     <th>Type de formation</th>
@@ -1725,40 +1706,92 @@
                                     <th>Modalité</th>
                                     <th> Statut </th>
                                     <th>Actions</th>
+                                </thead> --}}
+
+                                <thead style="position: sticky; top: 0">
+                                    <tr>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-library'></i> Projet</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bxs-book-open' style="color: #2e3950"></i> Session</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bxs-customize' style="color: #2e3950"></i> Module</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-building-house'></i> Centre de formation</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-check' ></i> Modalité</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-time-five' ></i> Date session</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-home' ></i> Ville</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-calendar-x' style="color: #2e3950"></i> Statut</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-book-content' style="vertical-align: middle"></i> Type formation</th>
+                                        <th class="headProject" style="min-width: 10%;"><i class='bx bx-menu' style="vertical-align: middle"></i> Action</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="headProject">Projet</th>
+                                        <th class="headProject">Session</th>
+                                        <th class="headProject">Module</th>
+                                        <th class="headProject">Centre de formation</th>
+                                        <th class="headProject">Modalité</th>
+                                        <th class="headProject">Date session</th>
+                                        <th class="headProject">Ville</th>
+                                        <th class="headProject">Statut</th>
+                                        <th class="headProject">Type formation</th>
+                                        <th class="headProject">Action</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($data as $pj)
                                         <tr>
-                                            <td>{{ $pj->nom_projet }}</td>
+                                            <td>
+                                                <span  style='font-size: 13px;'>{{ $pj->nom_projet }}</span>
+                                            </td>
                                             <td class="text-center">
                                                 @if ($pj->type_formation_id == 3)
                                                 <a href="{{ route('detail_session_interne', [$pj->groupe_id]) }}"><span class="spanClass" style="border-bottom: 3px solid #673ab7">{{ $pj->nom_groupe }}</span></a>
                                                 @else
-                                                    <a href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}"><span class="spanClass" style="border-bottom: 3px solid #673ab7">{{ $pj->nom_groupe }}</span></a>
+                                                    <a href="{{ route('detail_session', [$pj->groupe_id, $pj->type_formation_id]) }}">
+                                                        <span style="font-size: 13px"  class="spanClass">{{ $pj->nom_groupe }} &nbsp;&nbsp;<i class='bx bx-show' style="font-size: 20px; vertical-align: middle;"></i></span>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <span style="font-size: 13px">{{ $pj->nom_module }}</span>
+                                            </td>
+                                            <td> 
+                                                <span style="font-size: 13px">{{ $pj->nom_cfp }}</span>
+                                            </td>
+                                            <td>
+                                                <span style="font-size: 13px">{{ $pj->modalite }}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                @php
+                                                    echo "<span style='font-size: 13px;'>".strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin))."</span>";
+                                                @endphp
+                                            </td>
+                                            <td>
+                                                @if($lieuFormation!=null)
+                                                    <span style="font-size: 13px;">{{$lieuFormation[0]}}</span>
+                                                @else
+                                                    {{"-"}}
                                                 @endif
                                             </td>
                                             <td class="text-center">
+                                                <p class="{{ $pj->class_status_groupe }} m-0" style="width: 100px;">
+                                                    <span style="font-size: 13px">{{ $pj->item_status_groupe }}</span>
+                                                </p>
+                                            </td>
+                                            <td class="text-center">
                                                 @if ($pj->type_formation_id == 1)
-                                                    <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                                    <span style="background: #2193b0; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
                                                         {{ $pj->type_formation }}
                                                     </span>
                                                 @elseif ($pj->type_formation_id == 2)
-                                                    <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                                    <span style="background: #2ebf91; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
                                                         {{ $pj->type_formation }}
                                                     </span>
                                                 @elseif ($pj->type_formation_id == 3)
-                                                    <span style="background: #b32cb8; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px;">
+                                                    <span style="background: #b32cb8; color: #ffffff; border-radius: 5px; text-align: center; padding: 4px 8px; font-weight: 400; letter-spacing: 1px; font-size: 13px">
                                                         {{ $pj->type_formation }}
                                                     </span>
                                                 @endif
                                             </td>
-                                            <td class="text-start">
-                                                {{-- @php
-                                                    echo $groupe->module_session($pj->module_id);
-                                                @endphp --}}
-                                                {{ $pj->nom_module }}
-                                            </td>
-                                            <td class="text-end">
+                                            
+                                            {{-- <td class="text-end">
                                             @if($pj->hors_taxe_net!=null)
                                             {{number_format($pj->hors_taxe_net,0,","," ")}}
                                             @else
@@ -1766,52 +1799,31 @@
                                                         echo "<span>-</span>";
                                                     @endphp
                                             @endif
-                                            </td>
-                                        <td>
-                                            @if($pj->qte!=null)
+                                            </td> --}}
+                                            {{-- <td> --}}
+                                            {{-- @if($pj->qte!=null)
                                                 {{$pj->qte}}
                                             @else
                                                 @php
                                                     echo "<span>-</span>";
                                                 @endphp
                                             @endif
-                                            </td>
+                                            </td> --}}
+                                            
                                             <td class="text-center">
-                                                @php
-                                                    echo strftime('%d-%m-%y', strtotime($pj->date_debut)).' au '.strftime('%d-%m-%y', strtotime($pj->date_fin));
-                                                @endphp
-                                            </td>
-                                            <td>
-                                                @if($lieuFormation!=null)
-                                                {{$lieuFormation[0]}}
-                                                @else
-                                                    {{"-"}}
-                                                @endif
-                                            </td>
-                                            <td class="text-center"> {{ $pj->nom_cfp }} </td>
-                                            {{-- <td> {{ date('d-m-Y', strtotime($pj->date_projet)) }} </td> --}}
-                                            <td>
-                                                <span>{{ $pj->modalite }}</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <p class="{{ $pj->class_status_groupe }} m-0">
-                                                    {{ $pj->item_status_groupe }}
-                                                </p>
-                                            </td>
-                                            <td class="text-center">
-                                                <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.8rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                                <i class='bx bx-chevron-down-circle mt-1' style="font-size: 1.4rem" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                                 <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton1">
                                                     @if ($pj->type_formation_id == 3)
-                                                        <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_interne_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
-                                                        <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation_interne', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
+                                                        <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_interne_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">Expoter en PDF</a></li>
+                                                        <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation_interne', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
                                                     @else
-                                                        <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}">Expoter en PDF</a></li>
-                                                        <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}">Evaluation à chaud</a></li>
+                                                        <li class="action_projet"><a class="dropdown-item " href="{{ route('fiche_technique_pdf', [$pj->groupe_id]) }}" style="font-size: 13px">Expoter en PDF</a></li>
+                                                        <li class="action_projet"><a class="dropdown-item " href="{{ route('resultat_evaluation', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à chaud</a></li>
                                                         @php
                                                             $reponse = $froidEval->periode_froid_evaluation($pj->groupe_id);
                                                         @endphp
                                                         @if($reponse == 1)
-                                                            <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}">Evaluation à froid</a></li>
+                                                            <li class="action_projet"><a class="dropdown-item" href="{{ route('evaluation_froid/resultat', [$pj->groupe_id]) }}" style="font-size: 13px">Evaluation à froid</a></li>
                                                         @endif
                                                     @endif
                                                 </ul>

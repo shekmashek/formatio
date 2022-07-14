@@ -3,49 +3,66 @@
 <p class="text_header m-0 mt-1">Organisme de formation </p>
 @endsection
 @section('content')
-{{-- <link rel="stylesheet" href="{{asset('assets/css/modules.css')}}"> --}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
-    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
-<div class="container-fluid pb-1">
+
 <style>
     .navigation_module .nav-link {
-    color: #637381;
-    padding: 5px;
-    cursor: pointer;
-    font-size: 0.900rem;
-    transition: all 200ms;
-    margin-right: 1rem;
-    text-transform: uppercase;
-    padding-top: 10px;
-    border: none;
-}
+        color: #637381;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 0.900rem;
+        transition: all 200ms;
+        margin-right: 1rem;
+        text-transform: uppercase;
+        padding-top: 10px;
+        border: none;
+    }
 
-.nav-item .nav-link.active {
-    border-bottom: 3px solid #7635dc !important;
-    border: none;
-    color: #7635dc;
-}
+    .nav-item .nav-link.active {
+        border-bottom: 3px solid #7635dc !important;
+        border: none;
+        color: #7635dc;
+    }
 
-.nav-tabs .nav-link:hover {
-    background-color: rgb(245, 243, 243);
+    .nav-tabs .nav-link:hover {
+        background-color: rgb(245, 243, 243);
 
-    border: none;
-}
-.nav-tabs .nav-item a{
-    text-decoration: none;
-    text-decoration-line: none;
-}
+        border: none;
+    }
+    .nav-tabs .nav-item a{
+        text-decoration: none;
+        text-decoration-line: none;
+    }
     label{
         color: rgb(20, 20, 20);
         font-size: 15px;
     }
 
+    #modifTable_length label, #modifTable_length select, #modifTable_filter label, .pagination, .headEtp, .dataTables_info, .dataTables_length, .headProject {
+        font-size: 13px;
+    }
+
+    .redClass{
+        color: #f44336 !important;
+    }
+
+    .arrowDrop{
+        color: #1e9600;
+        transition: 0.3s !important;
+        transform: rotate(360deg) !important;
+    }
+    .mivadika{
+        transform: rotate(180deg) !important;
+        color: red !important;
+        transition: 0.3s !important;
+    }
+
+    #example_length select{
+        height: 25px;
+        font-size: 13px;
+        vertical-align: middle;
+    }
 </style>
-<!-- Tabs navs -->
+
 <div class="container-fluid mt-4 p-5 ">
     <ul class="nav nav-tabs mb-3 navigation_module" id="myTab" role="tablist">
         <li class="nav-item" id="collabore-tab" role="presentation">
@@ -90,58 +107,40 @@
                 <strong> {{Session::get('message')}}</strong>
             </div>
         @endif
-        <table class="table table-hover">
+        <table class="table table-hover" id="modifTable">
             <thead>
                 <tr>
-                    <th>Organisme de Formation</th>
-                    <th>Réferent principal</th>
-                    <th>Action</th>
+                    <th class="headEtp">Organisme de Formation</th>
+                    <th class="headEtp">Réferent principal</th>
+                    <th class="headEtp">Action</th>
                 </tr>
             </thead>
             <tbody id="data_collaboration" style="font-size: 11.5px;">
-
-                @if (count($cfp)<=0) <tr>
-                    <td> Aucun centre de formation collaborer</td>
-                    </tr>
-                    @else
-                    @foreach($cfp as $centre)
+                @if (count($cfp)<=0) 
                     <tr>
-
-                        <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height 80px; width: 80px;"><span class="ms-3">{{$centre->nom}} </span></td>
-                        {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->telephone}}</td> --}}
-                        <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>
-
-                       @if($centre->photos_resp_cfp == null)
-                            <span class="d-flex flex-row">
-                                <div class='randomColor' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">{{$centre->initial}}</div>
-                                <span class="d-flex flex-end ms-3 align-items-center">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
-                            </span>
-                          @else
-
-                            <img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
-                            </td>
-                        @endif
-
-                        {{-- <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>{{$centre->email}}</td> --}}
-
-                        {{-- <td>
-                            <div align="left">
-                                <strong>{{$centre->nom}}</strong>
-                                <p style="color: rgb(238, 150, 18)">{{$centre->email}}</p>
-                                <h6>{{$centre->slogan}}</h6>
-                            </div>
-                        <td>
-                            <div align="rigth">
-                                <h2  style="color: rgb(66, 55, 221)"><i class="bx bx-user-check"></i></h2>
-                            </div>
-                        </td> --}}
-
-                            <td class="align-middle" >
-                                <a href="{{route('liste_projet',$centre->cfp_id)}}" class="btn btn-info btn-sm text-light" >Voir tous les projets</a>
-                                <a  data-bs-toggle="modal" class="ms-3 mt-5"  data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i  class='bx bx-trash bx_supprimer align-middle'></i></a>
-                            </td>
-
+                        <td colspan="3"> Aucun centre de formation collaborer</td>
                     </tr>
+                @else
+                    @foreach($cfp as $centre)
+                        <tr>
+                            <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}><img src="{{asset("images/CFP/".$centre->logo_cfp)}}" style="height 80px; width: 80px;"><span class="ms-3">{{$centre->nom}} </span></td>
+                            <td class="montrer" role="button" onclick="afficherInfos();" data-id={{$centre->cfp_id}} id={{$centre->cfp_id}}>
+                            @if($centre->photos_resp_cfp == null)
+                                <span class="d-flex flex-row">
+                                    <div class='randomColor' style="color:white; font-size: 20px; border: none; border-radius: 100%; height:50px; width:50px; display: grid; place-content: center">{{$centre->initial}}</div>
+                                    <span class="d-flex flex-end ms-3 align-items-center">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
+                                </span>
+                            @else
+
+                                <img src="{{asset("images/responsables/".$centre->photos_resp_cfp)}}" style="height:60px; width:60px;border-radius:100%"><span class="ms-3">{{$centre->nom_resp_cfp}} {{$centre->prenom_resp_cfp}} </span>
+                            </td>
+                            @endif
+                                <td class="align-middle" >
+                                    <a href="{{route('liste_projet',$centre->cfp_id)}}" class="btn btn-info btn-sm text-light" >Voir tous les projets</a>
+                                    <a  data-bs-toggle="modal" class="ms-3 mt-5"  data-bs-target="#exampleModal_{{$centre->cfp_id}}"><i  class='bx bx-trash bx_supprimer align-middle'></i></a>
+                                </td>
+
+                        </tr>
                 {{-- modal delete  --}}
                 <div class="modal fade" id="exampleModal_{{$centre->cfp_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <form action="{{route('mettre_fin_cfp_etp')}}"  method="POST">
@@ -224,12 +223,11 @@
 
                     <div class="tab-pane fade show active" id="invitation-attente" role="tabpanel" aria-labelledby="home-tab">
                         <div class="table-responsive text-center">
-
-                            <table class="table  table-hover table-sm mt-4" >
+                            <table class="table table-hover table-sm mt-4">
                                 <tbody id="data_collaboration" >
-
-                                    @if (count($invitation)<=0) <tr style="text-align:left">
-                                        <td > Aucun invitations en attente</td>
+                                    @if (count($invitation)<=0) 
+                                        <tr style="text-align:left">
+                                            <td > Aucun invitations en attente</td>
                                         </tr>
                                         @else
                                         @foreach($invitation as $invit_cfp)
@@ -314,24 +312,7 @@
             <i class="bx bx-x " role="button" onclick="afficherInfos();"></i>
         </div>
         <hr class="mt-2">
-        {{-- @foreach($ccfp as $centre)
-            <span class="text-center"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
-        <div class="text-center mt-2" style="font-size:14px">
-            <div class="mt-1">
-                <span>{{$centre->nom}}</span>
-            </div>
-            <div class="mt-1">
-                <span>{{$centre->site_web}}</span>
-            </div>
-            <div class="mt-1">
-                <span>{{$centre->email}}</span>
-            </div>
-        </div>
-        @endforeach --}}
         <div class="mt-2" style="font-size:14px">
-            {{-- <div class="mt-1">
-                    <span class="text-center" style="height: 50px; width: 100px"><img src="{{asset('images/CFP/'.$centre->logo_cfp)}}" alt="Logo"></span>
-        </div> --}}
         <div class="mt-1 text-center mb-3">
             <span id="donner"></span>
         </div>
@@ -339,9 +320,6 @@
         <div class="mt-1 text-center">
             <span id="nomEtp" style="color: #64b5f6; font-size: 18px; text-transform: uppercase; font-weight: bold"></span>
         </div>
-        {{-- <div class="mt-1 mb-3 text-center">
-            <span id="prenom" style="font-size: 16px; text-transform: capitalize; font-weight: bold"></span>
-        </div> --}}
         <div class="mt-1">
             <div class="row">
                 <div class="col-md-1"></div>
@@ -394,11 +372,119 @@
     </div>
 </div>
 </div>
+@endsection
 
+@section('script')
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('js/index2.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-<script>
-    $(".montrer").on('click', function(e) {
+    <script>
+        $(document).ready(function () {
+            $('#modifTable thead tr:eq(1) th').each( function () {
+                var title = $(this).text();
+                $(this).html( '<input type="text" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
+                // $(this).html( '<input type="text" placeholder="Afficher par '+title+'" class="column_search form-control form-control-sm" style="font-size:13px;"/>' );
+                $( "th#hideAction > input" ).prop( "disabled", true ).attr( "placeholder", "" );
+                $( "th#hideDate > input" ).prop( "disabled", true ).attr( "placeholder", "" );
+                $( "th#hideVille > input" ).prop( "disabled", true ).attr( "placeholder", "" );
+            } );
 
+            function searchByColumn(table){
+                var defaultSearch = 0;
+
+                $(document).on('change keyup', '#select-column', function(){
+                    defaultSearch = this.value; 
+                });
+
+                $(document).on('change keyup', '#search-by-column', function(){
+                    table.search('').column().search('').draw();
+                    table.column(defaultSearch).search(this.value).draw();
+                });
+            }
+            
+            $( '#modifTable thead'  ).on( 'keyup', ".column_search",function () {
+        
+                table
+                    .column( $(this).parent().index() )
+                    .search( this.value )
+                    .draw();
+            } );
+
+            var table = $('#modifTable').removeAttr('width').DataTable({
+                initComplete : function() {
+                    $("#myDatatablesa_filter").detach().appendTo('#new-search-area');
+                },
+                scrollY:        "500px",
+                // scrollX:        true,
+                // scrollCollapse: true,
+                orderCellsTop: true,
+                fixedHeader: true,
+                "language": {
+                    "paginate": {
+                    "previous": "précédent",
+                    "next": "suivant"
+                    },
+                    "search": "Recherche :",
+                    "zeroRecords":    "Aucun résultat trouvé",
+                    "infoEmpty":      " 0 trouvés",
+                    "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                    "infoFiltered":   "(filtre sur _MAX_ entrées)",
+                    "lengthMenu":     "Affichage _MENU_ ",
+                }
+            });
+            
+            $('input:checkbox').on('change', function () {
+                var Projet = $('input:checkbox[name="Projet"]:checked').map(function() {
+                    return '^' + this.value + '$';
+                }).get().join('|');
+                
+                table.column(0).search(Projet, true, false, false).draw(false);
+
+                var Session = $('input:checkbox[name="session"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(1).search(Session, true, false, false).draw(false);
+
+                var Entreprise = $('input:checkbox[name="entreprise"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(3).search(Entreprise, true, false, false).draw(false);
+
+                var Modalite = $('input:checkbox[name="modalite"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(4).search(Modalite, true, false, false).draw(false);
+                
+                var TypeFormation = $('input:checkbox[name="typeFormation"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(8).search(TypeFormation, true, false, false).draw(false);
+                
+                var Module = $('input:checkbox[name="module"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(2).search(Module, true, false, false).draw(false);
+                
+                var Statut = $('input:checkbox[name="statut"]:checked').map(function() {
+                    return this.value;
+                }).get().join('|');
+                
+                table.column(7).search(Statut, true, false, false).draw(false);
+            
+            });
+
+            searchByColumn(table);
+        });
+
+        $(".montrer").on('click', function(e) {
         let id = $(this).data("id");
         $.ajax({
             method: "GET"
@@ -424,11 +510,7 @@
                     $("#adrlot2").text(userData[$i].adresse_quartier);
                     $("#adrlot3").text(userData[$i].adresse_ville);
                     $("#adrlot4").text(userData[$i].adresse_region);
-                    // $("#adrqurt").text(userData[$i].adresse_Quartier);
-                    // $("#adrv").text(userData[$i].adresse_ville);
-                    // $("#adrr").text(userData[$i].adresse_region);
                     $("#mail").text(': '+userData[$i].email);
-
                     $("#nomEtp").text(userData[$i].nom);
                 }
             }
@@ -446,6 +528,5 @@
     if(activeTab){
         $('#myTab a[href="' + activeTab + '"]').tab('show');
     }
-
-</script>
+    </script>
 @endsection
